@@ -187,5 +187,8 @@ Rails.application.routes.draw do
   mount KepplerCapsules::Engine, at: '/', as: 'capsules'
 
   # Ckeditor routes engine
-  mount Ckeditor::Engine => '/ckeditor' 
+  mount Ckeditor::Engine => '/ckeditor'
+
+  # Farm routes engine
+  mount KepplerFarm::Engine, at: '/', as: 'farm' 
 end

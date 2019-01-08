@@ -1,0 +1,7 @@
+modules:
+  farms:
+    name: Farm
+    model: KepplerFarmFarm
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]

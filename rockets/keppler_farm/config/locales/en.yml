@@ -1,0 +1,22 @@
+en:
+  keppler:
+    sidebar-menu:
+      keppler-farm: Keppler farm
+      keppler-farm-submenu:
+        farm: Farm
+    permissions:
+    models:
+      singularize:
+        farm: farm
+      pluralize:
+        farms: farms
+    modules:
+      admin/farm: Farm
+    messages:
+    actions:
+  activerecord:
+    attributes:
+    errors:
+      messages:
+  errors:
+  helpers:

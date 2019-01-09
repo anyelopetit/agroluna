@@ -1,22 +1,26 @@
 # frozen_string_literal: true
 
 module KepplerFarm
-  # Farm Model
-  class Farm < ApplicationRecord
+  # Photo Model
+  class Photo < ApplicationRecord
     include ActivityHistory
     include CloneRecord
     include Uploadable
     include Downloadable
     include Sortable
     include Searchable
-    mount_uploader :logo, AttachmentUploader
+    mount_uploader :photo, AttachmentUploader
     acts_as_list
     acts_as_paranoid
 
-    has_many :photos
+    belongs_to :farm
+
+    def self.none_cover?
+      self.where(cover: true).count.zero?
+    end
 
     def self.index_attributes
-      %i[logo title photos]
+      %i[photo]
     end
   end
 end

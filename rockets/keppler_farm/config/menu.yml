@@ -6,6 +6,20 @@ menu:
     icon: rocket
     model: User
     submenu:
+    #   - photo:
+    #       name: photo
+    #       url_path: /admin/farm/photos
+    #       icon: layers
+    #       current: ['/admin/farm/photos']
+    #       model: KepplerFarm::Photo
+
+      - process:
+          name: process
+          url_path: /admin/farm/processes
+          icon: layers
+          current: ['/admin/farm/processes']
+          model: KepplerFarm::Process
+
       - farm:
           name: farm
           url_path: /admin/farm/farms

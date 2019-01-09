@@ -224,6 +224,7 @@ en:
       age: Age
       image: Image
       photo: Photo
+      cover: Cover
       attachment: Attachment
       pdf: PDF
       avatar: Avatar

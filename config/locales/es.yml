@@ -236,6 +236,7 @@ es:
       avatar: Avatar
       brand: Logo
       logo: Logo
+      cover: Portada
       favicon: Favicon
       icon: Icono
       image_background: 'Imagen de fondo'

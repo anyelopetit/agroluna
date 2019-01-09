@@ -1,21 +1,32 @@
 es:
   keppler:
     sidebar-menu:
-      keppler-farm: Keppler farm
+      keppler-farm: Fincas
       keppler-farm-submenu:
-        farm: Farm
+        process: Procesos
+        farm: Finca
     permissions:
     models:
       singularize:
-        farm: farm
+        photo: foto
+        process: proceso
+        farm: finca
       pluralize:
-        farms: farms
+        photos: fotos
+        processes: procesos
+        farms: fincas
     modules:
-      admin/farm: Farm
+      admin/photo: Foto
+      admin/process: Procesos
+      admin/farm: Finca
     messages:
     actions:
+      add_photo: Añadir Foto
+      upload_photo: Cargar Foto
+      drop: Arrastra un(a) %{model} o presiona aquí
   activerecord:
     attributes:
+      processes: procesos
     errors:
       messages:
   errors:

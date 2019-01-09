@@ -1,21 +1,33 @@
 en:
   keppler:
     sidebar-menu:
-      keppler-farm: Keppler farm
+      keppler-farm: Farms
       keppler-farm-submenu:
-        farm: Farm
+        photo: Photo
+        process: Processes
+        farm: Farms
     permissions:
     models:
       singularize:
+        photo: photo
+        process: process
         farm: farm
       pluralize:
+        photos: photos
+        processes: processes
         farms: farms
     modules:
+      admin/photo: Photo
+      admin/process: Process
       admin/farm: Farm
     messages:
     actions:
+      add_photo: Add Photo
+      upload_photo: Upload Photo
+      drop: Drop a %{model} or press here
   activerecord:
     attributes:
+      processes: processes
     errors:
       messages:
   errors:

@@ -28,6 +28,13 @@ module ApplicationHelper
   def model_object
     parent = controller.class.parent.to_s.underscore
     parent_sym = parent.remove('keppler_').split('/').first.to_sym
+    model.attribute_names.each do |attrib|
+      if attrib.include?('_id')
+        obj = ("#{parent.remove('/admin')}/#{attrib.remove('_id')}").classify.constantize
+
+        return [:admin, parent_sym, obj.find(params[attrib.to_sym])] 
+      end
+    end
     parent.eql?('admin') ? [:admin] : [:admin, parent_sym]
   end
 end

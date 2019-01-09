@@ -15,6 +15,7 @@ gem 'vuejs-rails', '2.5.13' # VueJS library
 # gem 'rails-assets-sweetalert2', '~> 5.1.1', source: 'https://rails-assets.org'
 # gem 'sweet-alert2-rails'
 # gem 'sweetalert2'
+gem 'select2-rails'
 
 # Server
 gem 'puma', '~> 3.11', '>= 3.11.3'

@@ -43,7 +43,7 @@
       = link_to new_admin_farm_farm_photo_path(@farm), class: 'btn-add' do
         +
         = t('keppler.actions.add_photo')
-  %center.box.slice-box
+  %center.box.slice-box#upload-photo
     .box-header.with-border
       %h3.box-title= t('keppler.actions.upload_photo')
     .box-body.box-body-no-padding
@@ -93,9 +93,16 @@
                         %input{ type:"checkbox", id: "checkbox-#{photo.id}", 'checklist-model' => 'check', 'checklist-value' => "#{photo.id}", '@click' => "listDelete(#{photo.id})"}
                         %span.cr
                           %i.cr-icon.glyphicon.glyphicon-ok
-          = link_to admin_farm_farm_photos_path(@farm, photo) do
+          %a{ onclick: "expandImage('#{photo.photo.url}')"}
             .box-body.class{style: "background: url('#{photo.photo.url}'); height: 300px; background-size: cover; background-position: center"}
 
+:javascript
+  function expandImage(image) {
+    Swal({
+      imageUrl: image,
+      imageAlt: image.split('.')[0]
+    })
+  }
 
 :scss
   .photo-toolbar {

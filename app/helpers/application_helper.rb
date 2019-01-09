@@ -27,14 +27,18 @@ module ApplicationHelper
 
   def model_object
     parent = controller.class.parent.to_s.underscore
+    return [:admin] if parent.eql?('admin')
     parent_sym = parent.remove('keppler_').split('/').first.to_sym
-    model.attribute_names.each do |attrib|
-      if attrib.include?('_id')
-        obj = ("#{parent.remove('/admin')}/#{attrib.remove('_id')}").classify.constantize
-
-        return [:admin, parent_sym, obj.find(params[attrib.to_sym])] 
-      end
-    end
-    parent.eql?('admin') ? [:admin] : [:admin, parent_sym]
+    nested_rocket unless model.reflect_on_all_associations(:belongs_to).count.zero?
+    [:admin, parent_sym]
   end
+end
+
+def nested_rocket
+  # model.reflect_on_all_associations(:belongs_to).each do |assoc|
+  #   father = assoc.active_record.name.constantize
+  #   father_sym = "#{father}_id".underscore.to_sym
+  #   return [:admin, parent_sym, father.try(father_sym)]
+  # end
+  controller_path.remove('admin/')
 end

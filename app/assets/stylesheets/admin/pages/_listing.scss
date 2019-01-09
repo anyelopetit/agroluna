@@ -40,8 +40,18 @@
 }
 
 .add-more-photos {
-  background: #999;
+  background: #bababa;
+  border-radius: 2px;
   color: #fff;
-  height: 20px;
-  width: 30px;
+  height: 25px;
+  width: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: .2s;
+
+  &:hover {
+    background: $keppler-color;
+    transition: .2s;
+  }
 }

@@ -17,6 +17,8 @@ KepplerFarm::Engine.routes.draw do
         get '/clone', action: 'clone'
         post '/upload', action: 'upload', as: :upload
         get '/reload', action: :reload, on: :collection
+        post '/assign_operator', action: :assign_operator
+        delete '/delete_assignment/:user_id', action: :delete_assignment
         delete '/destroy_multiple', action: :destroy_multiple, on: :collection
         resources :photos do
           post '/sort', action: :sort, on: :collection

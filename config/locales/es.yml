@@ -179,6 +179,8 @@ es:
       updated: Actualizado
       add: Agregar
       new: Nuevo
+      add_new: Agregar nuevo
+      select_category: Seleccionar categoría
       show: Ver
       edit: Editar
       clone: Clonar
@@ -270,6 +272,7 @@ es:
       date_end: 'Fecha Final'
       begin: Inicio
       end: Fin
+      operators: Operadores
       check_in: Entrada
       check_out: Salida
       permalink: Permalink

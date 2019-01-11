@@ -6,7 +6,7 @@ class User < ApplicationRecord
   # mount_uploader :avatar, TemplateUploader
   before_save :create_permalink, if: :new_record?
   rolify
-  validates_presence_of :name, :role_ids, :email
+  validates_presence_of :name, :email
   mount_uploader :avatar, AttachmentUploader
   acts_as_paranoid
 
@@ -15,8 +15,15 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :keppler_farm_farms, class_name: 'KepplerFarm::Farm'
+  has_many :assignments, through: :keppler_farm_farms
+
+  def assignments
+    KepplerFarm::Assignment.where(user_id: id)
+  end
+
   def rol
-    roles&.first&.name || 'default'
+    roles&.first&.name || 'No role'
   end
 
   def permissions?

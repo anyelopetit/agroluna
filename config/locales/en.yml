@@ -173,6 +173,8 @@ en:
       update: Update
       deleted: Deleted
       new: New
+      add_new: Add new
+      select_category: Select category
       show: Show
       edit: Edit
       clone: Clone
@@ -257,8 +259,9 @@ en:
       date: Date
       date_begin: 'Date Begin'
       date_end: 'Date End'
-      begin: Inicio
-      end: Fin
+      begin: Begin
+      end: End
+      operators: Operators
       check_in: 'Check In'
       check_out: 'Check Out'
       google_analytics_setting:

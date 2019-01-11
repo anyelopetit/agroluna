@@ -19,6 +19,9 @@ module KepplerFarm
       # GET /farms/1
       def show
         @photo = Photo.new
+        @assignment = Assignment.new(keppler_farm_farm_id: @farm.id)
+        @users = User.all
+        @assignments = Assignment.where(keppler_farm_farm_id: @farm.id)
       end
 
       # GET /farms/new
@@ -75,6 +78,40 @@ module KepplerFarm
 
       def sort
         Farm.sorter(params[:row])
+      end
+
+      def assign_operator
+        @assignment = Assignment.new(
+          keppler_farm_farm_id: params[:farm_id],
+          user_id: params[:assignment][:user_id]
+        )
+
+        if @assignment.exists?
+          flash[:error] = t('keppler.messages.operator.not_assigned', operator: @assignment.user.name)
+        else
+          flash[:notice] = 
+            t('keppler.messages.operator.assigned', operator: @assignment.user.name) if @assignment.save!
+        end
+        redirect_to action: :show, id: params[:farm_id]
+      end
+
+      def delete_assignment
+        @assignment = Assignment.find_by(
+          keppler_farm_farm_id: params[:farm_id],
+          user_id: params[:user_id]
+        )
+
+        if @assignment.try(:exists?)
+          if @assignment.destroy!
+            flash[:notice] = 
+              t('keppler.messages.operator.deleted', operator: @assignment.user.name) if @assignment.destroy!
+          else
+            flash[:error] = t('keppler.messages.operator.not_deleted', operator: a.user.name)
+          end
+        else
+          flash[:error] = t('keppler.messages.operator.doesnt_exist', operator: a.user.name)
+        end
+        redirect_to action: :show, id: params[:farm_id]
       end
 
       private

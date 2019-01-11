@@ -1,40 +1,68 @@
-.row{ style: 'margin-top: 50px' }
-  - objects.each do |photo|
+-# .photo-toolbar
+  - if can?(model).destroy_multiple?
+    .toolbar-item
+      .item-check
+        .checkbox
+          %label{ for: 'checkbox-all' }
+            %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()' }
+            %span.cr
+              %i.cr-icon.glyphicon.glyphicon-ok
+  .toolbar-item
+    %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+      %i.icon-trash
+
+
+.row{ style: 'margin-top: 10px' }
+  - @farm.photos.each do |photo|
     .col-md-4
       .box.slice-box
         .box-header.with-border
           .pull-left
-            = render 'switch', photo: photo
+            = render 'switch', farm: @farm, photo: photo
           .pull-right
-            %a.action-btn.pull-right{:id => "menu-#{photo.id}", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown"}
-              %i.icon-options-vertical
-            %ul.actions.dropdown-menu{"aria-labelledby" => "menu-#{photo.id}" }
-              - if can?(model).index?
-                %li
-                  = link_to admin_farm_farm_photos_path(photo), class: 'new-menu', title: t('keppler.actions.show') do
-                    %i.icon-eye
-                    = t('keppler.actions.show')
-              - if can?(model).update?
-                %li
-                  = link_to edit_admin_farm_farm_photo_path(photo), class: 'new-menu', title: t('keppler.actions.edit') do
-                    %i.icon-pencil
-                    = t('keppler.actions.edit')
-              - if can?(model).clone?
-                %li
-                  = link_to admin_farm_farm_photo_clone_path(photo), class: 'new-menu', title: t('keppler.actions.clone') do
-                    %i.icon-docs
-                    = t('keppler.actions.clone')
-              - if can?(model).destroy?
-                %li
-                  = link_to admin_farm_farm_photo_path(photo), class: 'new-menu', title: t('keppler.actions.delete'), method: :delete, data: { confirm: t("keppler.messages.data_confirm") } do
-                    %i.icon-trash
-                    = t('keppler.actions.delete')
-          .pull-right{style: "margin: 2px 8px 0 0"}
-            - if can?(model).destroy_multiple?
-              .checkbox
-                %label{ for: "checkbox-#{photo.id}" }
-                  %input{ type:"checkbox", id: "checkbox-#{photo.id}", 'checklist-model' => 'check', 'checklist-value' => "#{photo.id}", '@click' => "listDelete(#{photo.id})"}
-                  %span.cr
-                    %i.cr-icon.glyphicon.glyphicon-ok
-        = link_to admin_farm_farm_photos_path(photo) do
+            .item-toolbar
+              -# .item
+                = link_to edit_admin_farm_farm_photo_path(@farm, photo), class: 'new-menu', title: t('keppler.actions.edit') do
+                  %i.icon-pencil
+              .item
+                = link_to admin_farm_farm_photo_path(@farm, photo), class: 'new-menu', title: t('keppler.actions.delete'), method: :delete, data: { confirm: t("keppler.messages.data_confirm") } do
+                  %i.icon-trash
+              -# .pull-right{style: "margin: 2px 8px 0 0"}
+                - if can?(KepplerFarm::Photo).destroy_multiple?
+                  .checkbox
+                    %label{ for: "checkbox-#{photo.id}" }
+                      %input{ type:"checkbox", id: "checkbox-#{photo.id}", 'checklist-model' => 'check', 'checklist-value' => "#{photo.id}", '@click' => "listDelete(#{photo.id})"}
+                      %span.cr
+                        %i.cr-icon.glyphicon.glyphicon-ok
+        %a{ onclick: "expandImage('#{photo.photo.url}')"}
           .box-body.class{style: "background: url('#{photo.photo.url}'); height: 300px; background-size: cover; background-position: center"}
+
+:javascript
+  function expandImage(image) {
+    Swal({
+      imageUrl: image,
+      imageAlt: image.split('.')[0]
+    })
+  }
+
+:scss
+  .photo-toolbar {
+    background: #fff;
+    border-radius: 20px;
+    width: auto;
+    display: inline-flex;
+    padding: 5px 10px;
+
+    .toolbar-item {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .item-toolbar {
+    display: flex;
+
+    .item {
+      margin: 0 5px;
+    }
+  }

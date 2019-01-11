@@ -1,0 +1,23 @@
+%nav.navbar.navbar-expand-lg.navbar_custom
+  %a#navbarDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+    LOGO
+  .dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}
+    %a.dropdown-item{href: "#"} Finca 1
+    %a.dropdown-item{href: "#"} Finca 2
+    %a.dropdown-item{href: "#"} Finca 3
+  %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", type: "button"}
+    %span.navbar-toggler-icon.icofont-navigation-menu
+  #navbarSupportedContent.collapse.navbar-collapse
+    %ul.navbar-nav.mr-auto
+      %li.nav-item
+        %a.nav-link{href: "#"} Módulo 1
+      %li.nav-item
+        %a.nav-link{href: "#"} Módulo 2
+      %li.nav-item.d-lg-none
+        %a.nav-link{href: "#"} Cerrar sesión
+    %ul.navbar-nav.ml-auto
+      %li.nav-item.d-none.d-lg-block
+        %a#profileDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+          %img.avatar{ src: 'https://www.w3schools.com/w3images/avatar6.png' }
+        .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
+          %a.dropdown-item{href: "#"} Cerrar sesión

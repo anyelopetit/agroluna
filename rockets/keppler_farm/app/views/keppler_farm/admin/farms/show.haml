@@ -46,7 +46,7 @@
                 = f.input :user_id, collection: @users, label: false, placeholder: 'hola'
                 = f.input :keppler_farm_farm_id, value: @farm.id, as: :hidden
               .col-sm-4
-                = f.submit :add, value: t('keppler.actions.add')
+                = f.submit :add, value: t('keppler.actions.add'), id: 'add-operator', disabled: true, input_html: { onchage: 'validateOperator()' }
             .operators-list
               - @assignments.each do |a|
                 .operator-item
@@ -68,13 +68,13 @@
       = simple_form_for [:admin, :farm, @farm, @photo], controller: :photos, action: :create do |f|
         .file-uploader
           .file-container
-            = f.input :photo, input_html: { onchange: "validarInput()" }
+            = f.input :photo, input_html: { onchange: "validateFileInput()" }
             = f.input :farm_id, input_html: { value: @farm.id }, as: :hidden
             %i.file-icon.bx.bx-file-image
             %h5.file-text= t('keppler.actions.drop', model: t('keppler.models.singularize.photo'))
           %br
           %span (.JPG, .JPEG, .PNG)
-          %button{ type: 'submit', id: "btn_Validar", disabled: true }
+          %button{ type: 'submit', id: "upload-file", disabled: true }
             %i.bx.bx-upload
             = t 'keppler.actions.upload_photo'
   -# .photo-toolbar
@@ -123,9 +123,16 @@
       imageAlt: image.split('.')[0]
     })
   }
-  function validarInput() {
+
+  function validateFileInput() {
     var ar = $('#photo_photo').val().split('.')
-    document.getElementById('btn_Validar').disabled = !['jpg', 'jpeg', 'png'].includes(ar[ar.length-1])
+    document.getElementById('upload-file').disabled = !['jpg', 'jpeg', 'png'].includes(ar[ar.length-1])
+  }
+
+  function validateOperator() {
+    console.log('entrando')
+    var ar = $('#assignment_user_id')
+    document.getElementById('add-operator').disabled = ($('#assignment_user_id').val() == "")
   }
 
   function formatUser (user) {

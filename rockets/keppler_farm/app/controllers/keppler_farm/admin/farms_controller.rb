@@ -60,6 +60,8 @@ module KepplerFarm
 
       # DELETE /farms/1
       def destroy
+        @assigments = Assignment.where(keppler_farm_farm_id: @farm.id)
+        @assigments.destroy_all
         @farm.destroy
         redirect_to_index(@objects)
       end

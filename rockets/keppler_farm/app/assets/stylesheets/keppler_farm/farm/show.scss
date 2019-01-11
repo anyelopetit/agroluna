@@ -48,6 +48,11 @@
     }
   }
 
+  .operators-list {
+    height: 265px;
+    overflow: scroll;
+  }
+
   .operator-option {
     display: flex;
     align-items: center;

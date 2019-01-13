@@ -65,16 +65,3 @@
     - if can?(KepplerLanguages::Field).create?
       = link_to new_admin_languages_field_path, class: "btn-float" do
         +
-
-:javascript
-  $(document).ready(function(){
-    $('#field').click(function() {
-      $('#upload_file_field').click()
-      $('#upload_file_field').change(function() {
-        $('.waiting').css('display', 'block')
-        $('#upload_form_field').submit()
-      })
-    });
-
-    renderImg();
-  });

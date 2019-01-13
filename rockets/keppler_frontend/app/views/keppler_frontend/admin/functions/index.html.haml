@@ -63,16 +63,3 @@
           = paginate @objects, window: 1
   %aside.control-sidebar
     = render "description"
-
-:javascript
-  $(document).ready(function(){
-    $('#function').click(function() {
-      $('#upload_file_function').click()
-      $('#upload_file_function').change(function() {
-        $('.waiting').css('display', 'block')
-        $('#upload_form_function').submit()
-      })
-    });
-
-    renderImg();
-  });

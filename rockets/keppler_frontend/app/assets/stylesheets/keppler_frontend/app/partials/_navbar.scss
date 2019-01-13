@@ -1,6 +1,7 @@
+// begin navbar
+#navbar {
 .navbar_custom {
   box-shadow: 0 1px 10px rgba(0,0,0,0.2);
-  font-size: 1.5rem;
 }
 
 .dropdown-menu {
@@ -47,3 +48,5 @@
   width: unset;
   height: unset;
 }
+}
+// end navbar

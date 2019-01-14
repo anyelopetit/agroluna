@@ -7,7 +7,7 @@
     .login_left
       %img{ src: 'https://c1.staticflickr.com/5/4230/34343845694_e92f6e996f_b.jpg' }
     .login_right
-      %img.login_logo{ src: 'http://www.stickpng.com/assets/images/5a1d2dc54ac6b00ff574e292.png' }
+      %img.login_logo{ src: @default_logo }
       = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f|
         %p.login-box-msg= t('keppler.login_message')
         .login_card

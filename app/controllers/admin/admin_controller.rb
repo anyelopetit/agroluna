@@ -4,6 +4,7 @@ module Admin
   # AdminController
   class AdminController < ::ApplicationController
     layout 'admin/layouts/application'
+    skip_before_action :verify_authenticity_token
     before_action :authenticate_user!
     before_action :validate_permissions
     before_action :paginator_params

@@ -4,7 +4,7 @@ es:
       keppler-farm: Fincas
       keppler-farm-submenu:
         process: Procesos
-        farm: Finca
+        farm: Fincas
     permissions:
     models:
       singularize:
@@ -16,9 +16,9 @@ es:
         processes: procesos
         farms: fincas
     modules:
-      admin/photo: Foto
+      admin/photo: Fotos
       admin/process: Procesos
-      admin/farm: Finca
+      admin/farm: Fincas
     messages:
       operator:
         assigned: El usuario %{operator} ha sido asignado como operador

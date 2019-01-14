@@ -4,13 +4,13 @@
   %head
     = render 'keppler_frontend/app/frontend/partials/head'
   %body
-    = render 'keppler_frontend/app/frontend/components/navbar'
-    = render 'keppler_frontend/app/frontend/components/profile-banner'
+    = render 'keppler_frontend/app/frontend/components/navbar', farm: @farm, farms: @farms
+    = render 'keppler_frontend/app/frontend/components/profile-banner', farm: @farm
     .container_custom
       .description_land
         %h1 Descripción de la finca
-        %p Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-    = render 'keppler_frontend/app/frontend/components/multiple-carousel'
+        %p= raw @farm.description
+    = render 'keppler_frontend/app/frontend/components/multiple-carousel', farm: @farm
     %script{ src: 'https://code.jquery.com/jquery-3.3.1.min.js' }
     %script{ src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' }
     %script{ src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' }

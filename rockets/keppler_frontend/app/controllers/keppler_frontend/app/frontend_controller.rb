@@ -6,12 +6,14 @@ module KepplerFrontend
     include FrontsHelper
     # layout 'layouts/keppler_frontend/app/layouts/application'
     layout 'layouts/templates/application'
+    before_action :set_farms
 
     def root
       if current_user
         case current_user.role_ids[0]
         when 1
-          redirect_to main_app.dashboard_path
+          # redirect_to main_app.dashboard_path
+          redirect_to index_path
         when 2
           redirect_to index_path
         end
@@ -27,7 +29,11 @@ module KepplerFrontend
 
     # begin index
     def index
-      redirect_to profile_land_path
+      @assign = KepplerFarm::Assignment.where(user_id: current_user.id).first
+      @farm = KepplerFarm::Farm.find(@assign.keppler_farm_farm_id) if @assign
+      if @farm
+        redirect_to profile_land_path(@farm)
+      end
     end
     # end index
 
@@ -38,10 +44,17 @@ module KepplerFrontend
 
     # begin profile_land
     def profile_land
+      @assign = KepplerFarm::Assignment.where(user_id: current_user.id).first
+      @farm = KepplerFarm::Farm.find(@assign.keppler_farm_farm_id) if @assign
     end
     # end profile_land 
 
     private
+
+    def set_farms
+      @farms = KepplerFarm::Farm.all
+    end
+
     # begin callback user_authenticate
     def user_authenticate
       redirect_to '/' unless user_signed_in?

@@ -1,5 +1,5 @@
 .container_custom
-  .profile_banner{ style: 'background-image: url("https://images.unsplash.com/photo-1547046219-d3ce5318c5c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80")' }
+  .profile_banner{ style: "background-image: url('#{farm.photos&.first&.url || 'https://images.unsplash.com/photo-1547046219-d3ce5318c5c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80'}')" }
     .profile_box
-      %h1.profile_name Finca Pao
-      %span.profile_activity Lechera
+      %h1.profile_name= farm.title
+      %span.profile_activity= farm.processes&.split(', ')

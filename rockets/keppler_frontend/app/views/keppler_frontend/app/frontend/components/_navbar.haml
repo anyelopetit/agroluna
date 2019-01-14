@@ -1,10 +1,9 @@
 %nav.navbar.navbar-expand-lg.navbar_custom
   %a#navbarDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
-    LOGO
+    = farm.title
   .dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}
-    %a.dropdown-item{href: "#"} Finca 1
-    %a.dropdown-item{href: "#"} Finca 2
-    %a.dropdown-item{href: "#"} Finca 3
+    - farms.each do |f|
+      %a.dropdown-item{ href: profile_land_path(f) }= f.title
   %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", type: "button"}
     %span.navbar-toggler-icon.icofont-navigation-menu
   #navbarSupportedContent.collapse.navbar-collapse

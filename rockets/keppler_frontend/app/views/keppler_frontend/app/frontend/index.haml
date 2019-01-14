@@ -2,6 +2,7 @@
 %html{ lang: 'en' }
   %head
     = render 'keppler_frontend/app/frontend/partials/head'
+    = render 'keppler_frontend/app/frontend/partials/navbar', farm: @farm, farms: @farms
   %body
     .container
       = render 'keppler_frontend/app/frontend/components/buttons'

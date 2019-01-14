@@ -14,15 +14,19 @@ $raleway: 'Raleway', sans-serif;
 // Fonts size
 $base-font-size: 10px;
 
-// Fonts Weight
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
+$lato: 'Lato', sans-serif;
 $light: 300;
-$normal: 400;
-$semibold: 500;
-$bold: 700;
+$regular: 400;
+$medium: 700;
+$bold: 900;
 
 // Colors
 $primary-color: #f44336;
 $white: #fff;
+$primary: #008500;
+$secundary: #fa6d08;
 
 // Shadow
 $primary-shadow: rgba(0, 0, 0, .17);

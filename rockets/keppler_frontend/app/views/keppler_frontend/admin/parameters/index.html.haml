@@ -64,16 +64,3 @@
     - if can?(KepplerFrontend::Parameter).create?
       = link_to new_admin_frontend_parameter_path, class: "btn-float" do
         +
-
-:javascript
-  $(document).ready(function(){
-    $('#parameter').click(function() {
-      $('#upload_file_parameter').click()
-      $('#upload_file_parameter').change(function() {
-        $('.waiting').css('display', 'block')
-        $('#upload_form_parameter').submit()
-      })
-    });
-
-    renderImg();
-  });

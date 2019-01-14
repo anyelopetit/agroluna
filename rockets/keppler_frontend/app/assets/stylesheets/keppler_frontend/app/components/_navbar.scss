@@ -1,0 +1,49 @@
+.navbar_custom {
+  box-shadow: 0 1px 10px rgba(0,0,0,0.2);
+  font-size: 1.5rem;
+}
+
+.dropdown-menu {
+  border: 0;
+  box-shadow: 0 1px 10px rgba(0,0,0,0.2);
+}
+
+.nav-item {
+  @include respond-to(xs) {
+    text-align: center;
+  }
+}
+
+.nav-link {
+  color: #6f6f6f;
+
+  &:hover {
+    color: $secundary;
+  }
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.navbar_dropdown {
+  left: 25px;
+}
+
+.profile_dropdown {
+  left: unset;
+  right: 0;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.navbar-toggler-icon {
+  color: $secundary;
+  width: unset;
+  height: unset;
+}

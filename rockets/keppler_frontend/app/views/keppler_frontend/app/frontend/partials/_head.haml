@@ -1,0 +1,21 @@
+// Title & Meta tags
+= render 'layouts/keppler_frontend/app/layouts/meta_tags'
+
+// Stylesheets
+= stylesheet_link_tag '/assets/keppler_frontend/app/application', media: 'all', 'data-turbolinks-track': 'reload' , async: true
+
+// Fonts
+= stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Patua+One', async: true
+
+// Javascripts
+= javascript_include_tag '/assets/keppler_frontend/app/application', 'data-turbolinks-track': 'reload'
+= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js', 'data-turbolinks-track': 'reload' , async: true
+
+// Google Analytics
+= render 'layouts/keppler_frontend/app/layouts/google_analytics'
+
+%meta{ charset: 'UTF-8' }
+%meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
+%meta{ name: 'theme-color', content: '#fff' }
+%title Agroluna
+%link{ rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' }

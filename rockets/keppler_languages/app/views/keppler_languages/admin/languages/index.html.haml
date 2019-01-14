@@ -57,19 +57,3 @@
           = paginate @objects, window: 1
   %aside.control-sidebar
     = render "description"
-
-:javascript
-  $(document).ready(function(){
-    $('#language').click(function() {
-      $('#upload_file_language').click()
-      $('#upload_file_language').change(function() {
-        $('.waiting').css('display', 'block')
-        $('#upload_form_language').submit()
-      })
-    });
-    renderImg();
-  });
-
-  function sendPermission(id) {
-    $("#edit_language_"+id).submit()
-  }

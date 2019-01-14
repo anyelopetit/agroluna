@@ -1,0 +1,27 @@
+.description_land {
+  padding: 40px 30px;
+  
+  h1 {
+    font-weight: $bold;
+    font-size: 30px;
+  }
+
+  p {
+    font-size: 15px;
+    font-weight: $light;
+  }
+}
+
+.slick-prev::before, .slick-next::before {
+  color: $secundary;
+  font-family: 'IcoFont';
+  font-size: 30px;
+}
+
+.slick-prev::before {
+  content: "\ea7b";
+}
+
+.slick-next::before {
+  content: "\ea7c";
+}

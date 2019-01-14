@@ -46,18 +46,3 @@
   %aside.control-sidebar
     = render "description"
   %aside#index-show.control-sidebar
-
-:javascript
-  $(document).ready(function(){
-    $('#theme').click(function() {
-      $('#upload_file_theme').click()
-      $('#upload_file_theme').change(function() {
-        $('.waiting').css('display', 'block')
-        $('#upload_form_theme').submit()
-      })
-    });
-
-    renderImg();
-
-    $('.theme-covers').slick();
-  });

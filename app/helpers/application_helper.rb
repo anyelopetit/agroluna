@@ -34,7 +34,7 @@ module ApplicationHelper
         final_array.push(path_array[i].to_sym)
         i += 1
       else
-        final_array.push(find_model(path_array).find(path_array[i + 1]))
+        final_array.push(find_model(path_array, i).find(path_array[i + 1]))
         i += 2
       end
     end
@@ -42,7 +42,7 @@ module ApplicationHelper
   end
 end
 
-def find_model(path_array)
+def find_model(path_array, i)
   parent_module = controller.class.parent.to_s.underscore.remove('/admin')
   "#{parent_module}/#{path_array[i]}".classify.constantize
 end

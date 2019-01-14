@@ -1,0 +1,89 @@
+.label_login {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.input_login {
+  border-radius: 0;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  box-shadow: none;
+
+  &:focus {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+}
+
+
+.login_box {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.login_right, .login_left {
+  position: relative;
+}
+
+.login_left {
+  width: 40%;
+
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  &::before {
+    @include pseudo();
+    background-color: rgba($primary, .5);
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  @include respond-to(xs) {
+    display: none;
+  }
+}
+
+.login_right {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+
+  @include respond-to(xs) {
+    width: 100%;
+  }
+}
+
+.login_logo {
+  max-width: 200px;
+  margin-bottom: 60px;
+}
+
+.login_card {
+  border-radius: 15px;
+  padding: 25px;
+  width: 60%;
+
+  @include respond-to(xs) {
+    width: 100%;
+  }
+}
+
+.powered_by {
+  position: absolute;
+  bottom: 30px;
+
+  a {
+    color: $secundary;
+    font-weight: 600;
+  }
+}

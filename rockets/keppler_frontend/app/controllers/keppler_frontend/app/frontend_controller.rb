@@ -7,6 +7,19 @@ module KepplerFrontend
     # layout 'layouts/keppler_frontend/app/layouts/application'
     layout 'layouts/templates/application'
 
+    def root
+      if current_user
+        case current_user.role_ids[0]
+        when 1
+          redirect_to main_app.dashboard_path
+        when 2
+          redirect_to index_path
+        end
+      else
+        redirect_to main_app.new_user_session_path, locale: :es
+      end
+    end
+
     # begin keppler
     def keppler
     end
@@ -14,6 +27,7 @@ module KepplerFrontend
 
     # begin index
     def index
+      redirect_to profile_land_path
     end
     # end index
 

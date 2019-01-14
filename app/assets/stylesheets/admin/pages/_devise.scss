@@ -3,7 +3,8 @@ $gradient2: rgba(36, 45, 75, 1);
 $gradient3: rgba(30, 43, 64, 1);
 
 .devise-default-img {
-  background: url('profile-menu.jpg'), linear-gradient(to bottom, $gradient1 0%, $gradient2 51%, $gradient3 100%);
+  // background: url('profile-menu.jpg'), linear-gradient(to bottom, $gradient1 0%, $gradient2 51%, $gradient3 100%);
+  background-color: #fff;
   background-position: center;
   background-size: cover;
 }
@@ -15,8 +16,9 @@ $gradient3: rgba(30, 43, 64, 1);
 
 .devise {
   height: 100%;
-  position: absolute;
+  position: absolute;/*  */
   width: 100%;
+  font-size: 1.5rem;
 
   .container {
     animation: animationContainer 1.5s forwards;
@@ -118,11 +120,11 @@ $gradient3: rgba(30, 43, 64, 1);
     color: $error-color;
   }
 
-  img {
-    margin-top: 15px;
-    max-width: 150px;
-    width: 70px;
-  }
+  // img {
+  //   margin-top: 15px;
+  //   max-width: 150px;
+  //   width: 70px;
+  // }
 
   &-horizontal {
     display: flex;

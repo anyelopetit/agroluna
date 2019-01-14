@@ -1,6 +1,7 @@
 KepplerFrontend::Engine.routes.draw do
   
-  root to: 'app/frontend#index', as: :index
+  root to: 'app/frontend#root'
+  get '/index', to: 'app/frontend#index', as: :index
   get '/login', to: 'app/frontend#login', as: :login
   get '/profile_land', to: 'app/frontend#profile_land', as: :profile_land
 

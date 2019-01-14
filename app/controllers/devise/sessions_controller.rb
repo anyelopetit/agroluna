@@ -12,6 +12,7 @@ module Devise
 
     # GET /resource/sign_in
     def new
+      I18n.locale = @locale = :es 
       self.resource = resource_class.new(sign_in_params)
       clean_up_passwords(resource)
       yield resource if block_given?

@@ -1,35 +1,54 @@
-.container
-  .login-box
-    .center
-      .login-container
-        .login-logo
-          %a{ href: '#' }
-            %span{style:"font-family: 'Patua One'"} Keppler
-            Admin
-        / /.login-logo
-        .login-box-body
-          = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f|
-            %p.login-box-msg= t('keppler.login_message')
-            %form{:action => "../../index2.html", :method => "post"}
-              .form-group.has-feedback
-                = f.email_field :email, :autofocus => true, class: "form-control validate", :placeholder => "Email"
-                %i.icon-envelope.input-icon
-              .form-group.has-feedback
-                = f.password_field :password, :autofocus => true, class: "form-control validate #{'invalid' if flash[:alert]}", :placeholder => "Password"
-                %i.icon-lock.input-icon
-              .form-group.has-feedback
-                .devise-errors.center-align
-                  - flash.each do |name, msg|
-                    = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
-              .has-feedback
-                .login-bottom
-                  .pull-left
-                    - if devise_mapping.recoverable?
-                      = link_to new_password_path(resource_name), class: "recoverable" do
-                        = t("devise.sessions.forgot_password")
-                  .pull-right
-                    = f.submit t("devise.sessions.log_in"), class: 'btn-primary'
-              .clearfix
+!!!
+%html{ lang: 'en' }
+  %head
+    = render 'keppler_frontend/app/frontend/partials/head'
+  %body
+  .login_box
+    .login_left
+      %img{ src: 'https://c1.staticflickr.com/5/4230/34343845694_e92f6e996f_b.jpg' }
+    .login_right
+      %img.login_logo{ src: 'http://www.stickpng.com/assets/images/5a1d2dc54ac6b00ff574e292.png' }
+      = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f|
+        %p.login-box-msg= t('keppler.login_message')
+        .login_card
+          .form-group.has-feedback
+            %label.label_custom.label_login= t('activerecord.attributes.email')
+            = f.email_field :email, :autofocus => true, class: "form-control validate"
+            %i.icon-envelope.input-icon
+          .form-group.has-feedback
+            %label.label_custom.label_login= t('activerecord.attributes.password')
+            = f.password_field :password, :autofocus => true, class: "form-control validate #{'invalid' if flash[:alert]}"
+            %i.icon-lock.input-icon
+          .has-feedback
+            .login-bottom
+              .pull-left
+                - if devise_mapping.recoverable?
+                  = link_to new_password_path(resource_name), class: "recoverable" do
+                    = t("devise.sessions.forgot_password")
+              .pull-right
+                = f.submit t("devise.sessions.log_in"), type: 'submit', class: 'btn btn_custom btn--medium btn--filled'
+                -# %button.btn.btn_custom.btn--medium.btn--filled{ type: 'submit' }= t("devise.sessions.log_in")
+          .form-group.has-feedback
+            %center.devise-errors.center-align
+              - flash.each do |name, msg|
+                = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
+        %span.powered_by
+          Powered by
+          %a{ href: 'https://slicegroup.co' } Slice Group
+    %script{ src: 'https://code.jquery.com/jquery-3.3.1.min.js' }
+    %script{ src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' }
+    %script{ src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' }
+    %script{ src: 'assets/js/slick.min.js' }
+    %script{ src: 'assets/js/main.js' }
 
-  .login-footer
-    = "#{t('keppler.powered')} <span>Slice Group</span>".html_safe
+:scss
+  .new_user {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+  }
+
+  .login_card {
+    margin: 0 auto;
+  }

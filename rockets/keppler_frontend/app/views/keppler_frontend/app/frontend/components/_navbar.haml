@@ -20,4 +20,5 @@
         %a#profileDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
           %img.avatar{ src: 'https://www.w3schools.com/w3images/avatar6.png' }
         .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
-          %a.dropdown-item{href: "#"} Cerrar sesión
+          -# %a.dropdown-item{href: "#"} Cerrar sesión
+          = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: 'dropdown-item'

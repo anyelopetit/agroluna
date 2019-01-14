@@ -7,6 +7,7 @@ module KepplerFrontend
     # layout 'layouts/keppler_frontend/app/layouts/application'
     layout 'layouts/templates/application'
     before_action :set_farms
+    before_action :default_logo
 
     def root
       if current_user
@@ -44,15 +45,19 @@ module KepplerFrontend
 
     # begin profile_land
     def profile_land
-      @assign = KepplerFarm::Assignment.where(user_id: current_user.id).first
-      @farm = KepplerFarm::Farm.find(@assign.keppler_farm_farm_id) if @assign
+      @farm = KepplerFarm::Farm.find(params[:farm_id])
     end
     # end profile_land 
 
     private
 
     def set_farms
-      @farms = KepplerFarm::Farm.all
+      @assignments = KepplerFarm::Assignment.where(user_id: current_user&.id)
+      @farms = KepplerFarm::Farm.where(id: @assignments&.map(&:keppler_farm_farm_id)) unless @assignments.count.zero?
+    end
+
+    def default_logo
+      @default_logo = 'http://www.stickpng.com/assets/images/5a1d2dc54ac6b00ff574e292.png'
     end
 
     # begin callback user_authenticate

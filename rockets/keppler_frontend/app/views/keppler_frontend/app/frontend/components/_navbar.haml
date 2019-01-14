@@ -1,9 +1,11 @@
 %nav.navbar.navbar-expand-lg.navbar_custom
   %a#navbarDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
-    = farm.title
-  .dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}
+    = image_tag (farm&.logo&.url || @default_logo), style: 'height: 40px'
+  .farms-menu.dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}
     - farms.each do |f|
-      %a.dropdown-item{ href: profile_land_path(f) }= f.title
+      %a.farm-item.dropdown-item{ href: profile_land_path(f) }
+        .farm-logo= image_tag f&.logo&.url || @default_logo
+        .farm-title= f.title
   %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", type: "button"}
     %span.navbar-toggler-icon.icofont-navigation-menu
   #navbarSupportedContent.collapse.navbar-collapse
@@ -13,11 +15,23 @@
       %li.nav-item
         %a.nav-link{href: "#"} Módulo 2
       %li.nav-item.d-lg-none
-        %a.nav-link{href: "#"} Cerrar sesión
+        = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: 'nav-link'
     %ul.navbar-nav.ml-auto
+      %li.nav-item{ style: 'display: flex;align-items: center;' }
+        %a.float-right{ href: '/admin' }
+          %button.btn.btn_custom.btn--medium.btn--filled Ir a Keppler Admin
       %li.nav-item.d-none.d-lg-block
         %a#profileDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
-          %img.avatar{ src: 'https://www.w3schools.com/w3images/avatar6.png' }
+          %img.avatar{ src: (current_user&.avatar&.url || 'https://www.w3schools.com/w3images/avatar6.png') }
         .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
-          -# %a.dropdown-item{href: "#"} Cerrar sesión
+          = link_to 'Ir a Keppler Admin', main_app.dashboard_path, class: 'dropdown-item'
           = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: 'dropdown-item'
+:scss
+  .farm-logo img {
+    width: 20px;
+    margin-right: 10px;
+  }
+
+  .farm-item {
+    display: flex;
+  }

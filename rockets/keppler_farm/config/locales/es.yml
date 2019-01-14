@@ -26,6 +26,9 @@ es:
         deleted: El perador %{operator} ha sido eliminado
         not_deleted: No se pudo eliminar operador %{operator}
         doesnt_exist: El operador %{operator} no existe
+      photo:
+        cannot_unselect: No puedes deseleccionar una portada
+        please_select_anyone_else: Por favor selecciona alguna otra foto
     actions:
       add_photo: Añadir Foto
       upload_photo: Cargar Foto

@@ -28,7 +28,12 @@
           .box-body.box-body-no-padding
             %table.table
               %tbody
-                - @user.as_json(except: %i[username deleted_at], methods: [:rol]).each do |attribute, value|
+                - @user.as_json(except: %i[username deleted_at]).each do |attribute, value|
                   %tr.list-row
                     %th.display-label= t("activerecord.attributes.#{attribute}")
                     %td.display-value.fs-body-1.tc-black-2= value
+                %tr.list-row
+                  %th.display-label= t("activerecord.attributes.roles")
+                  %td.display-value.fs-body-1.tc-black-2
+                    - @user.roles.each do |role|
+                      .label.bg-gray= role.name

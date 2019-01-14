@@ -46,9 +46,15 @@ module Admin
     end
 
     def create
+      role = params['role']['name']
+      @role = Role.new(name: role) unless role.blank?
       @user = User.new(user_params)
-      if @user.save
+      if role.blank?
         @user.add_role Role.find(user_params.fetch(:role_ids)).name
+      else
+        @user.add_role(@role.name)
+      end
+      if @user.save
         redirect(@user, params)
       else
         render 'new'
@@ -56,6 +62,8 @@ module Admin
     end
 
     def destroy
+      @assigments = Assignment.where(user_id: @user.id)
+      @assigments.destroy_all
       @user.destroy
       redirect_to admin_users_path, notice: actions_messages(@user)
     end

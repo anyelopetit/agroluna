@@ -228,3 +228,15 @@
   border-radius: 20px !important;
   transition: .2s;
 }
+
+.select2-container .select2-selection--single {
+  height: 34px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  top: 3px !important;
+}
+
+.select2-container--default .select2-selection--single {
+  border-radius: 20px !important;
+}

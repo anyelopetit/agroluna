@@ -20,6 +20,12 @@ es:
       admin/process: Procesos
       admin/farm: Finca
     messages:
+      operator:
+        assigned: El usuario %{operator} ha sido asignado como operador
+        not_assigned: El usuario %{operator} no pudo ser asignado como operador
+        deleted: El perador %{operator} ha sido eliminado
+        not_deleted: No se pudo eliminar operador %{operator}
+        doesnt_exist: El operador %{operator} no existe
     actions:
       add_photo: Añadir Foto
       upload_photo: Cargar Foto

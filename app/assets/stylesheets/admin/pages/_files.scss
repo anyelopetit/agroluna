@@ -67,8 +67,10 @@
       font-size: 1.5rem;
       left: 50%;
       max-width: 80%;
+      overflow: hidden;
       position: absolute;
       text-align: center;
+      text-overflow: ellipsis;
       top: 80%;
       transform: translate(-50%, -50%);
       width: 100%;
@@ -78,7 +80,6 @@
   button,
   a,
   [type=submit] {
-    background: $keppler-color;
     border: 0;
     border-radius: 20px;
     color: $white;
@@ -88,9 +89,17 @@
     padding: 10px 20px;
     transition: .3s;
 
-    &:hover {
-      filter: brightness(110%);
-      transition: .3s;
+    &:not(:disabled) {
+      background: $keppler-color;
+
+      &:hover {
+        filter: brightness(110%);
+        transition: .3s;
+      }
+    }
+
+    &:disabled {
+      background-color: #ffb7b2;
     }
   }
 }

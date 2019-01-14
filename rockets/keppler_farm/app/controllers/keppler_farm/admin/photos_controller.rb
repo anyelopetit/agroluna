@@ -14,7 +14,7 @@ module KepplerFarm
       # GET /farms
       def index
         respond_to_formats(@photos)
-        redirect_to controller: :farms, action: :show, id: @farm.id
+        # redirect_to controller: :farms, action: :show, id: @farm.id
       end
 
       # GET /farms/1

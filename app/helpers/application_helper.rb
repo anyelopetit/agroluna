@@ -26,19 +26,23 @@ module ApplicationHelper
   end
 
   def model_object
-    parent = controller.class.parent.to_s.underscore
-    return [:admin] if parent.eql?('admin')
-    parent_sym = parent.remove('keppler_').split('/').first.to_sym
-    nested_rocket unless model.reflect_on_all_associations(:belongs_to).count.zero?
-    [:admin, parent_sym]
+    path_array = request.env['PATH_INFO'].split('/')[1..-2]
+    final_array = []
+    i = 0
+    while i < path_array.size
+      if path_array[i + 1].to_i.zero?
+        final_array.push(path_array[i].to_sym)
+        i += 1
+      else
+        final_array.push(find_model(path_array).find(path_array[i + 1]))
+        i += 2
+      end
+    end
+    final_array
   end
 end
 
-def nested_rocket
-  # model.reflect_on_all_associations(:belongs_to).each do |assoc|
-  #   father = assoc.active_record.name.constantize
-  #   father_sym = "#{father}_id".underscore.to_sym
-  #   return [:admin, parent_sym, father.try(father_sym)]
-  # end
-  controller_path.remove('admin/')
+def find_model(path_array)
+  parent_module = controller.class.parent.to_s.underscore.remove('/admin')
+  "#{parent_module}/#{path_array[i]}".classify.constantize
 end

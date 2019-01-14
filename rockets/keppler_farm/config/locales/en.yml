@@ -21,6 +21,12 @@ en:
       admin/process: Process
       admin/farm: Farm
     messages:
+      operator:
+        assigned: User %{operator} has been assigned as operator
+        not_assigned: Cannot assign user %{operator} as operator
+        deleted: Operator %{operator} has been deleted
+        not_deleted: Cannot delete operator %{operator}
+        doesnt_exist: Operator %{operator} doesn't exist
     actions:
       add_photo: Add Photo
       upload_photo: Upload Photo

@@ -7,7 +7,7 @@
           = t('keppler.actions.back')
   .show-section
     .row
-      .col-lg-12
+      .col-lg-6
         .box.slice-box.p-15
           .box-header.with-border
             %h3.box-title= t('keppler.models.singularize.farm').humanize
@@ -36,6 +36,24 @@
                           .label.bg-gray= tag
                       - else 
                         = sanitize raw value
+      .col-lg-6#operators
+        .box.slice-box.p-15
+          .box-header.with-border
+            %h3.box-title= t('activerecord.attributes.operators').humanize
+          .box-body.no-padding  
+            = simple_form_for [:admin, :farm, @assignment], url: admin_farm_farm_assign_operator_path(@farm) do |f|
+              .col-sm-8
+                = f.input :user_id, collection: @users, label: false, placeholder: 'hola'
+                = f.input :keppler_farm_farm_id, value: @farm.id, as: :hidden
+              .col-sm-4
+                = f.submit :add, value: t('keppler.actions.add')
+            .operators-list
+              - @assignments.each do |a|
+                .operator-item
+                  .operator-avatar= image_tag a.user.avatar.url || '/assets/admin/avatar_keppler'
+                  .operator-name= a.user.name
+                  = link_to({ action: :delete_assignment, farm_id: @farm.id, user_id: a.user.id }, { method: :delete, class: 'delete-operator', data: { confirm: t('keppler.messages.data_confirm') } }) do
+                    %i.bx.bx-trash
 
 
   -# - if can?(model).create?
@@ -50,11 +68,13 @@
       = simple_form_for [:admin, :farm, @farm, @photo], controller: :photos, action: :create do |f|
         .file-uploader
           .file-container
-            = f.input :photo
+            = f.input :photo, input_html: { onchange: "validarInput()" }
             = f.input :farm_id, input_html: { value: @farm.id }, as: :hidden
             %i.file-icon.bx.bx-file-image
             %h5.file-text= t('keppler.actions.drop', model: t('keppler.models.singularize.photo'))
-          %button{ type: 'submit' }
+          %br
+          %span (.JPG, .JPEG, .PNG)
+          %button{ type: 'submit', id: "btn_Validar", disabled: true }
             %i.bx.bx-upload
             = t 'keppler.actions.upload_photo'
   -# .photo-toolbar
@@ -103,25 +123,35 @@
       imageAlt: image.split('.')[0]
     })
   }
-
-:scss
-  .photo-toolbar {
-    background: #fff;
-    border-radius: 20px;
-    width: auto;
-    display: inline-flex;
-    padding: 5px 10px;
-
-    .toolbar-item {
-      display: flex;
-      align-items: center;
-    }
+  function validarInput() {
+    var ar = $('#photo_photo').val().split('.')
+    document.getElementById('btn_Validar').disabled = !['jpg', 'jpeg', 'png'].includes(ar[ar.length-1])
   }
 
-  .item-toolbar {
-    display: flex;
-
-    .item {
-      margin: 0 5px;
+  function formatUser (user) {
+    if (!user.id) {
+      return user.text;
     }
+    var baseUrl = "/uploads/user/avatar/";
+    var $user = $(
+      '<span class="operator-option"><div style="background-image: url(/assets/admin/avatar_keppler)" class="img-user-list"></div> ' + user.text + '</span>'
+    );
+    return $user;
+  };
+  $(document).ready(function() {
+    $('select#assignment_user_id').select2({
+      placeholder: "Choose a person",
+      templateResult: formatUser,
+      templateSelection: formatUser
+    });
+  });
+
+:scss
+  .new_assignment {
+    display: flex;
+    padding: 5px 0;
+  }
+  
+  .assignment_user_id {
+    margin-bottom: 0;
   }

@@ -15,6 +15,9 @@ module KepplerFarm
 
     has_many :photos
 
+    has_many :users
+    has_many :assignments, through: :users
+
     def self.index_attributes
       %i[logo title photos]
     end

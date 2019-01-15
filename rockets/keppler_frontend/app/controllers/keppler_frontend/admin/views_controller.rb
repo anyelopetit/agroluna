@@ -14,8 +14,6 @@ module KepplerFrontend
       before_action :reload_view_callbacks, only: [:index]
       after_action :update_view_callback_yml, only: [:create, :update, :destroy, :destroy_multiple, :clone]
 
-      skip_before_action :verify_authenticity_token, only: :live_editor_save
-
       include KepplerFrontend::Concerns::Services
 
 

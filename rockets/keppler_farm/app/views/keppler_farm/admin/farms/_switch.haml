@@ -1,10 +1,10 @@
 = simple_form_for photo, url: admin_farm_farm_photo_toggle_path(farm, photo), method: :post do |f|
   %label.flex-center
     - if photo.cover?
-      %label.switch{ onclick: 'cannotUnselect(e)' }
+      %label.switch
         %input{name: "photo[cover]", type: "hidden", value: "false"}
         %input.active{id: "switch-#{photo.id}", :type => "checkbox", checked: "checked"}
-        %span.slider.round{onclick: "cannotUnselect(e)"}
+        %span.slider.round{onclick: "cannotUnselect()"}
       .switch-label= t('activerecord.attributes.cover')
 
     - else
@@ -20,9 +20,7 @@
     $("#edit_photo_"+id).submit()
   }
 
-  function cannotUnselect(e) {
-    console.log(e)
-    e.preventDefault()
+  function cannotUnselect() {
     swal(
       "#{t('keppler.messages.photo.cannot_unselect')}",
       "#{t('keppler.messages.photo.please_select_anyone_else')}",

@@ -52,8 +52,12 @@ module KepplerFrontend
     private
 
     def set_farms
-      @assignments = KepplerFarm::Assignment.where(user_id: current_user&.id)
-      @farms = KepplerFarm::Farm.where(id: @assignments&.map(&:keppler_farm_farm_id)) unless @assignments.count.zero?
+      if current_user.has_role?('keppler_admin')
+        @farms = KepplerFarm::Farm.all
+      else
+        @assignments = KepplerFarm::Assignment.where(user_id: current_user&.id)
+        @farms = KepplerFarm::Farm.where(id: @assignments&.map(&:keppler_farm_farm_id)) unless @assignments.count.zero?
+      end
     end
 
     def default_logo

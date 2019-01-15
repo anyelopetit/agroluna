@@ -30,7 +30,7 @@
                   .col-xs-12
                     .form-group
                       %label.control-label= t('activerecord.attributes.processes').humanize
-                      %select.form-control.select.optional{ name: 'farm[processes][]', id: 'farm_processes', multiple: true }
+                      %select.form-control.select.optional{ name: 'farm[processes][]', id: 'farm_processes', multiple: true, value: f.object.processes&.reverse&.join(", ") }
                         - KepplerFarm::Process.all.each do |process|
                           %option{ value: process.title }= process.title
                   .col-xs-12
@@ -38,5 +38,14 @@
                       = f.button :submit, t('keppler.actions.save'), name: '_save', class: 'btn-primary'
                       = f.button :submit, t('keppler.actions.save_and_add_another'), name: '_add_other'
 
-:coffee
+:javascript
   $('#farm_processes').select2()
+
+- @farm.processes.each do |p|
+  :javascript
+    $('ul.select2-selection__rendered').prepend(
+      `<li class="select2-selection__choice" title="lechera" data-select2-id="6">
+        <span class="select2-selection__choice__remove" role="presentation">×</span>
+        #{p}
+      </li>`
+    )

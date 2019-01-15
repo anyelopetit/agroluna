@@ -52,7 +52,7 @@ module KepplerFrontend
     private
 
     def set_farms
-      if current_user.has_role?('keppler_admin')
+      if current_user&.has_role?('keppler_admin')
         @farms = KepplerFarm::Farm.all
       else
         @assignments = KepplerFarm::Assignment.where(user_id: current_user&.id)

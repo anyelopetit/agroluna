@@ -3,38 +3,36 @@
   %head
     = render 'keppler_frontend/app/frontend/partials/head'
   %body
-  .login_box
-    .login_left
-      %img{ src: 'https://c1.staticflickr.com/5/4230/34343845694_e92f6e996f_b.jpg' }
-    .login_right
-      %img.login_logo{ src: @default_logo }
-      = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f|
-        %p.login-box-msg= t('keppler.login_message')
-        .login_card
-          .form-group.has-feedback
-            %label.label_custom.label_login= t('activerecord.attributes.email')
-            = f.email_field :email, :autofocus => true, class: "form-control validate"
-            %i.icon-envelope.input-icon
-          .form-group.has-feedback
-            %label.label_custom.label_login= t('activerecord.attributes.password')
-            = f.password_field :password, :autofocus => true, class: "form-control validate #{'invalid' if flash[:alert]}"
-            %i.icon-lock.input-icon
-          .has-feedback
-            .login-bottom
-              .pull-left
-                - if devise_mapping.recoverable?
-                  = link_to new_password_path(resource_name), class: "recoverable" do
-                    = t("devise.sessions.forgot_password")
-              .pull-right
-                = f.submit t("devise.sessions.log_in"), type: 'submit', class: 'btn btn_custom btn--medium btn--filled'
-                -# %button.btn.btn_custom.btn--medium.btn--filled{ type: 'submit' }= t("devise.sessions.log_in")
-          .form-group.has-feedback
-            %center.devise-errors.center-align
-              - flash.each do |name, msg|
-                = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
-        %span.powered_by
-          Powered by
-          %a{ href: 'https://slicegroup.co' } Slice Group
+    .login_container
+      .login_box
+        .login_left
+          %img{ src: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/5229c264816927.5adf092803115.jpg' }
+        .login_right
+          %img.login_logo{ src: @default_logo }
+          = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f|
+            .login_card
+              .form-group
+                %label.label_custom.label_login= t('activerecord.attributes.email')
+                = f.email_field :email, :autofocus => true, class: "form-control input_custom input_login validate"
+              .form-group
+                %label.label_custom.label_login= t('activerecord.attributes.password')
+                = f.password_field :password, :autofocus => true, class: "form-control input_custom input_login validate #{'invalid' if flash[:alert]}"
+              %div
+                .login-bottom
+                  .pull-left
+                    - if devise_mapping.recoverable?
+                      = link_to new_password_path(resource_name), class: "recoverable" do
+                        = t("devise.sessions.forgot_password")
+                  .pull-right
+                    = f.submit t("devise.sessions.log_in"), type: 'submit', class: 'btn btn_custom btn--medium btn--filled'
+                    -# %button.btn.btn_custom.btn--medium.btn--filled{ type: 'submit' }= t("devise.sessions.log_in")
+              .form-group
+                %center.devise-errors.center-align
+                  - flash.each do |name, msg|
+                    = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
+            %span.powered_by
+              Powered by
+              %a{ href: 'https://slicegroup.co' } Slice Group
     %script{ src: 'https://code.jquery.com/jquery-3.3.1.min.js' }
     %script{ src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' }
     %script{ src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' }
@@ -47,8 +45,4 @@
     display: flex;
     flex-flow: column;
     justify-content: center;
-  }
-
-  .login_card {
-    margin: 0 auto;
   }

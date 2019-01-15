@@ -1,11 +1,12 @@
 %nav.navbar.navbar-expand-lg.navbar_custom
-  %a#navbarDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+  %a#navbarDropdown.nav-link{ class: ('dropdown-toggle' if farms), "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
     = image_tag (farm&.logo&.url || @default_logo), style: 'height: 40px'
-  .farms-menu.dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}
-    - farms.each do |f|
-      %a.farm-item.dropdown-item{ href: profile_land_path(f) }
-        .farm-logo= image_tag f&.logo&.url || @default_logo
-        .farm-title= f.title
+  - if farms
+    .farms-menu.dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}
+      - farms.each do |f|
+        %a.farm-item.dropdown-item{ href: profile_land_path(f) }
+          .farm-logo= image_tag f&.logo&.url || @default_logo
+          .farm-title= f.title
   %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", type: "button"}
     %span.navbar-toggler-icon.icofont-navigation-menu
   #navbarSupportedContent.collapse.navbar-collapse
@@ -18,13 +19,15 @@
         = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: 'nav-link'
     %ul.navbar-nav.ml-auto
       %li.nav-item{ style: 'display: flex;align-items: center;' }
-        %a.float-right{ href: '/admin' }
+        -# %a.float-right{ href: '/admin' }
           %button.btn.btn_custom.btn--medium.btn--filled Ir a Keppler Admin
+        -# = current_user.roles.map(&:id)
       %li.nav-item.d-none.d-lg-block
         %a#profileDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+          %span= current_user&.name
           %img.avatar{ src: (current_user&.avatar&.url || 'https://www.w3schools.com/w3images/avatar6.png') }
         .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
-          = link_to 'Ir a Keppler Admin', main_app.dashboard_path, class: 'dropdown-item'
+          = link_to 'Ir a Keppler Admin', main_app.dashboard_path, class: 'dropdown-item' if current_user&.role_ids&[1,2]
           = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: 'dropdown-item'
 :scss
   .farm-logo img {

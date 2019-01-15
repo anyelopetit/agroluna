@@ -4,6 +4,7 @@ KepplerFrontend::Engine.routes.draw do
   get '/index', to: 'app/frontend#index', as: :index
   get '/login', to: 'app/frontend#login', as: :login
   get '/farm/:farm_id', to: 'app/frontend#profile_land', as: :profile_land
+  get '/module', to: 'app/frontend#module', as: :app_module #Temporal para frontend
 
   namespace :admin do
     scope :frontend, as: :frontend do

@@ -16,8 +16,10 @@ th {
 }
 
 thead {
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+
   th {
-    background-color: #ccc;
+    font-weight: $regular;
   }
 }
 
@@ -29,17 +31,19 @@ tbody {
   }
   td {
     position: relative;
-    &:hover {
-      &:before {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: -9999px;
-        bottom: -9999px;
-        background-color: rgba(255,255,255,0.2);
-        z-index: -1;
-      }
-    }
+    font-weight: $light;
+  }
+}
+
+.checkboxes {
+  width: 50px;
+}
+
+.actions {
+  width: 100px;
+
+  a {
+    color: #9c9c9c;
+    margin-right: 10px;
   }
 }

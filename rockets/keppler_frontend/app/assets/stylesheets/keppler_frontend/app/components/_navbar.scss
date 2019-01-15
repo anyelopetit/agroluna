@@ -1,6 +1,7 @@
 .navbar_custom {
   box-shadow: 0 1px 10px rgba(0,0,0,0.2);
   font-size: 1.5rem;
+  height: 50px;
 }
 
 .dropdown-menu {
@@ -18,7 +19,7 @@
   color: #6f6f6f;
 
   &:hover {
-    color: $secundary;
+    color: $primary;
   }
 }
 
@@ -43,7 +44,7 @@
 }
 
 .navbar-toggler-icon {
-  color: $secundary;
+  color: $primary;
   width: unset;
   height: unset;
 }

@@ -38,6 +38,9 @@ module KepplerFrontend
     end
     # end index
 
+    def module
+    end
+
     # begin login
     def login
     end

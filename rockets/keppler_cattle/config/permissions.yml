@@ -1,1 +1,7 @@
 modules:
+  cows:
+    name: Cow
+    model: KepplerCattleCow
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]

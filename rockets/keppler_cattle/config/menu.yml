@@ -6,6 +6,13 @@ menu:
     icon: rocket
     model: User
     submenu:
+      - cow:
+          name: cow
+          url_path: /admin/cattle/cows
+          icon: layers
+          current: ['/admin/cattle/cows']
+          model: KepplerCattle::Cow
+
       # - new:
       #     name: + Add new module
       #     url_path: /url_path

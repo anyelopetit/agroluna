@@ -1,10 +1,11 @@
 es:
-  keppler-farm:
+  keppler:
     sidebar-menu:
       keppler-farm: Fincas
       keppler-farm-submenu:
         process: Procesos
         farm: Fincas
+  keppler-farm:
     permissions:
     models:
       singularize:

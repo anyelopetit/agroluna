@@ -1,11 +1,12 @@
 en:
-  keppler-farm:
+  keppler:
     sidebar-menu:
       keppler-farm: Farms
       keppler-farm-submenu:
         photo: Photo
         process: Processes
         farm: Farms
+  keppler-farm:
     permissions:
     models:
       singularize:

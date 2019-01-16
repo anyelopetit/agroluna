@@ -1,13 +1,17 @@
 en:
   keppler:
     sidebar-menu:
-      keppler-cattle: Keppler cattle
-      keppler-cattle-submenu:
+      cattle: Cattle
+      cattle-submenu:
+        cow: Cow
     permissions:
     models:
       singularize:
+        cow: cow
       pluralize:
+        cows: cows
     modules:
+      admin/cow: Cow
     messages:
     actions:
   activerecord:

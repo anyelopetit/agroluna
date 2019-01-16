@@ -1,13 +1,17 @@
 es:
   keppler:
     sidebar-menu:
-      keppler-cattle: Keppler cattle
-      keppler-cattle-submenu:
+      cattle: Ganadería
+      cattle-submenu:
+        cow: Ganado
     permissions:
     models:
       singularize:
+        cow: ganado
       pluralize:
+        cows: ganado
     modules:
+      admin/cow: Ganado
     messages:
     actions:
   activerecord:

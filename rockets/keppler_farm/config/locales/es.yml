@@ -1,5 +1,5 @@
 es:
-  keppler:
+  keppler-farm:
     sidebar-menu:
       keppler-farm: Fincas
       keppler-farm-submenu:
@@ -36,6 +36,7 @@ es:
   activerecord:
     attributes:
       processes: procesos
+      photos: fotos
     errors:
       messages:
   errors:

@@ -8,7 +8,7 @@
             %span.cr
               %i.cr-icon.glyphicon.glyphicon-ok
   .toolbar-item
-    %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+    %a.tool-btn{ 'data-confirm': t('keppler-farm.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
       %i.icon-trash
 
 
@@ -22,10 +22,10 @@
           .pull-right
             .item-toolbar
               -# .item
-                = link_to edit_admin_farm_farm_photo_path(@farm, photo), class: 'new-menu', title: t('keppler.actions.edit') do
+                = link_to edit_admin_farm_farm_photo_path(@farm, photo), class: 'new-menu', title: t('keppler-farm.actions.edit') do
                   %i.icon-pencil
               .item
-                = link_to admin_farm_farm_photo_path(@farm, photo), class: 'new-menu', title: t('keppler.actions.delete'), method: :delete, data: { confirm: t("keppler.messages.data_confirm") } do
+                = link_to admin_farm_farm_photo_path(@farm, photo), class: 'new-menu', title: t('keppler-farm.actions.delete'), method: :delete, data: { confirm: t("keppler-farm.messages.data_confirm") } do
                   %i.icon-trash
               -# .pull-right{style: "margin: 2px 8px 0 0"}
                 - if can?(KepplerFarm::Photo).destroy_multiple?

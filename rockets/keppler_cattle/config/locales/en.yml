@@ -1,0 +1,18 @@
+en:
+  keppler:
+    sidebar-menu:
+      keppler-cattle: Keppler cattle
+      keppler-cattle-submenu:
+    permissions:
+    models:
+      singularize:
+      pluralize:
+    modules:
+    messages:
+    actions:
+  activerecord:
+    attributes:
+    errors:
+      messages:
+  errors:
+  helpers:

@@ -1,22 +1,22 @@
 .container
   .row
     .col-lg-2
-      = link_to admin_farm_processes_path, 'data-position': 'bottom', 'data-tooltip': t('keppler.actions.back') do
+      = link_to admin_farm_processes_path, 'data-position': 'bottom', 'data-tooltip': t('keppler-farm.actions.back') do
         .arrow-back.btn.btn-default
           %i.icon-arrow-left
-          = t('keppler.actions.back')
+          = t('keppler-farm.actions.back')
   .show-section
     .row
       .col-lg-12
         .box.slice-box.p-15
           .box-header.with-border
-            %h3.box-title= t('keppler.models.singularize.process').humanize
+            %h3.box-title= t('keppler-farm.models.singularize.process').humanize
             .box-tools.pull-right
               - if can?(model).update?
-                = link_to edit_admin_farm_process_path(@process), class: 'btn btn-box-tool', title: t('keppler.actions.edit') do
+                = link_to edit_admin_farm_process_path(@process), class: 'btn btn-box-tool', title: t('keppler-farm.actions.edit') do
                   %i.icon-pencil
               - if can?(model).destroy?
-                = link_to admin_farm_process_path(@process), class: 'btn btn-box-tool', title: t('keppler.actions.delete'), method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
+                = link_to admin_farm_process_path(@process), class: 'btn btn-box-tool', title: t('keppler-farm.actions.delete'), method: :delete, data: { confirm: t('keppler-farm.messages.data_confirm') } do
                   %i.icon-trash
 
           .box-body.no-padding

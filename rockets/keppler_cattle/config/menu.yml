@@ -1,0 +1,14 @@
+menu:
+  keppler_cattle:
+    name: Cattle
+    current: ['/']
+    url_path: /
+    icon: rocket
+    model: User
+    submenu:
+      # - new:
+      #     name: + Add new module
+      #     url_path: /url_path
+      #     current: ['/current_path']
+      #     enviroment: development
+      #     model: User

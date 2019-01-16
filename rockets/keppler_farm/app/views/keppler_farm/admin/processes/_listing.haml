@@ -34,24 +34,24 @@
       %ul.actions.dropdown-menu{ 'aria-labelledby': "menu-#{object.id}" }
         - if can?(model).index?
           %li
-            = link_to({action: :show, id: object}, {title: t('keppler.actions.show')}) do
+            = link_to({action: :show, id: object}, {title: t('keppler-farm.actions.show')}) do
               %i.icon-eye
-              = t('keppler.actions.show')
+              = t('keppler-farm.actions.show')
         - if can?(model).update?
           %li
-            = link_to({action: :edit, id: object}, {title: t('keppler.actions.edit')}) do
+            = link_to({action: :edit, id: object}, {title: t('keppler-farm.actions.edit')}) do
               %i.icon-pencil
-              = t('keppler.actions.edit')
+              = t('keppler-farm.actions.edit')
         - if can?(model).clone?
           %li
-            = link_to(admin_farm_process_clone_path(object), {title: t('keppler.actions.clone')}) do
+            = link_to(admin_farm_process_clone_path(object), {title: t('keppler-farm.actions.clone')}) do
               %i.icon-docs
-              = t('keppler.actions.clone')
+              = t('keppler-farm.actions.clone')
         - if can?(model).destroy?
           %li
-            = link_to({action: :destroy, id: object}, {title: t('keppler.actions.delete'), method: :delete, data: { confirm: t('keppler.messages.data_confirm') }}) do
+            = link_to({action: :destroy, id: object}, {title: t('keppler-farm.actions.delete'), method: :delete, data: { confirm: t('keppler-farm.messages.data_confirm') }}) do
               %i.icon-trash
-              = t('keppler.actions.delete')
+              = t('keppler-farm.actions.delete')
 
     %td{ style: 'width: 5%;'}
       %a.drop{ href: '#' }

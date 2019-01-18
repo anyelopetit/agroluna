@@ -13,4 +13,6 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require jquery.slick
+//= require keppler_frontend/app/slick.min
+// require keppler_frontend/app/main
 //= require_tree .

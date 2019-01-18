@@ -4,7 +4,7 @@
       %label.switch
         %input{name: "photo[cover]", type: "hidden", value: "false"}
         %input.active{id: "switch-#{photo.id}", :type => "checkbox", checked: "checked"}
-        %span.slider.round{onclick: "sendPermission('#{photo.id}')"}
+        %span.slider.round{onclick: "cannotUnselect()"}
       .switch-label= t('activerecord.attributes.cover')
 
     - else
@@ -18,6 +18,14 @@
 :javascript
   function sendPermission(id) {
     $("#edit_photo_"+id).submit()
+  }
+
+  function cannotUnselect() {
+    swal(
+      "#{t('keppler.messages.photo.cannot_unselect')}",
+      "#{t('keppler.messages.photo.please_select_anyone_else')}",
+      'error'
+    )
   }
 
 :scss

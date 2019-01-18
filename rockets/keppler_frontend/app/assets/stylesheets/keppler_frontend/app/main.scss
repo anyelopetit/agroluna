@@ -1,18 +1,17 @@
-@import 'variables';
-@import 'mixins';
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: #fff;
+}
 
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #6f6f6f;
+}
 
-@import 'components/body';
-
-
-@import 'components/navbar';
-@import 'components/buttons';
-@import 'components/form';
-@import 'components/table';
-
-@import 'components/profile-banner';
-@import 'components/multiple-carousel';
-@import 'components/login';
+.app_wrapper {
+  padding-top: 100px;
+  background-color: #fafafa;
+}
 
 .description_land {
   padding: 40px 30px;

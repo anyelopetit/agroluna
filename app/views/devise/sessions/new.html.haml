@@ -11,10 +11,10 @@
           %img.login_logo{ src: @default_logo }
           = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f|
             .login_card
-              .form-group
+              .form-group.mb-5
                 %label.label_custom.label_login= t('activerecord.attributes.email')
                 = f.email_field :email, :autofocus => true, class: "form-control input_custom input_login validate"
-              .form-group
+              .form-group.mb-5
                 %label.label_custom.label_login= t('activerecord.attributes.password')
                 = f.password_field :password, :autofocus => true, class: "form-control input_custom input_login validate #{'invalid' if flash[:alert]}"
               %div

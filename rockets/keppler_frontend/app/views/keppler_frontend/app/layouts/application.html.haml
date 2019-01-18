@@ -1,0 +1,13 @@
+!!!
+%html{ lang: 'en' }
+  %head
+    = render 'keppler_frontend/app/frontend/partials/head'
+  %body{"data-spy" => "scroll", "data-target" => "#scrollspy_cards", "data-offset" => "110"}
+    = render 'keppler_frontend/app/frontend/components/navbar', farm: @farm, farms: @farms
+    .app_wrapper
+      = yield
+    %script{ src: 'https://code.jquery.com/jquery-3.3.1.min.js' }
+    %script{ src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' }
+    %script{ src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' }
+    %script{ src: 'assets/js/slick.min.js' }
+    %script{ src: 'assets/js/main.js' }

@@ -1,0 +1,136 @@
+.container_custom
+  .row
+    .col-lg-2
+      .vertical_card
+        %nav#scrollspy_cards.navbar
+          %ul.nav
+            %li.nav-item
+              %a.nav-link{href: "#animal"} Datos del Animal
+            %li.nav-item
+              %a.nav-link{href: "#general"} Datos Generales
+            %li.nav-item
+              %a.nav-link{href: "#weight"} Peso
+            %li.nav-item
+              %a.nav-link{href: "#mother"} Madre
+            %li.nav-item
+              %a.nav-link{href: "#father"} Padre
+    .col-lg-10
+      .animal_data#animal
+        %dl
+          %dt
+            %label.label_custom--strong Número de Serie
+          %dd 621
+          %dt
+            %label.label_custom--strong Nombre
+          %dd Casera
+          %dt
+            %label.label_custom--strong Raza
+          %dd Mestizo Brahman 5/8
+        .edit
+          %a{ href: "/edit" }
+            %i.icofont-ui-edit
+    .col-lg-10.offset-lg-2
+      .card_show#general
+        %h1 Datos Generales
+        .row
+          .col-lg-6
+            %dl
+              %dt Fecha de Nacimiento
+              %dd 21/03/1993
+              %dt Edad (Año-Mes)
+              %dd 25-09
+              %dt Tipología
+              %dd Vaca Prod. Vacia
+              %dt Procedencia
+              %dd Agua Santa
+          .col-lg-6
+            %dl
+              %dt Color Pelaje
+              %dd Hosco Oscuro
+              %dt Color Morro
+              %dd Blanco
+              %dt Borla
+              %dd Negro
+              %dt Condición corporal
+              %dd Condición 1
+              %dt Lote estrátegico
+              %dd L1 VAC ORD
+      .card_show#weight
+        %h1 Pesos (Kgs)
+        .row
+          .col-lg-6
+            %dl
+              %dt Peso inicial
+              %dd 33
+              %dt Fecha
+              %dd 22/03/1993
+              %dt Precio inicial
+              %dd 283.500,00
+          .col-lg-6
+            %dl
+              %dt Pesos ajustados a los
+              %dd 205 días
+      .card_show#mother
+        %h1 Datos de la Madre
+        .row
+          .col-lg-6
+            %dl
+              %dt Serie Madre
+              %dd 0001
+              %dt Nombre de la Madre
+              %dd Vaquita
+          .col-lg-6
+            %dl
+              %dt Fecha de Nacimiento
+              %dd 11/08/2009
+              %dt Raza
+              %dd Pura
+          .col-lg-6
+            %dl
+              %dt Asociación 1
+              %dd Asociada
+              %dt Registro 1
+              %dd Registrado
+              %dt Tipo
+              %dd Tipo
+          .col-lg-6
+            %dl
+              %dt Asociación 2
+              %dd Asociada
+              %dt Registro 2
+              %dd Registrado
+              %dt Tipo
+              %dd Tipo
+      .card_show#father
+        %h1 Datos del Padre
+        .row
+          .col-lg-6
+            %dl
+              %dt Serie Padre
+              %dd 0001
+              %dt Nombre de la Padre
+              %dd Vaquita
+              %dt Pajuela
+              %dd Verdadero
+          .col-lg-6
+            %dl
+              %dt Fecha de Nacimiento
+              %dd 11/08/2009
+              %dt Raza
+              %dd Pura
+          .col-lg-6
+            %dl
+              %dt Asociación 1
+              %dd Asociada
+              %dt Registro 1
+              %dd Registrado
+              %dt Tipo
+              %dd Tipo
+          .col-lg-6
+            %dl
+              %dt Asociación 2
+              %dd Asociada
+              %dt Registro 2
+              %dd Registrado
+              %dt Tipo
+              %dd Tipo

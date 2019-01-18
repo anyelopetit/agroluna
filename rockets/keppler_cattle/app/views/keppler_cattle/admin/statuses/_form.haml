@@ -1,0 +1,72 @@
+= simple_form_for [:admin, :cattle, @cow, @status] do |f|
+  .container
+    .row
+      .col-lg-2
+        = link_to edit_admin_cattle_cow_path(@cow), 'data-position': 'bottom', 'data-tooltip': t('keppler.actions.back') do
+          .arrow-back.btn.btn-default
+            %i.fa.fa-angle-left
+            = t('keppler.actions.back')
+
+    .row
+      .col-lg-12
+        .box.slice-box
+          .box-header.with-border
+            %h3.box-title= t('keppler.models.pluralize.statuses').humanize
+            .box-tools.pull-right
+              %a.btn.btn-box-tool{'data-widget': 'collapse', type: 'button'}
+                %i.fa.fa-minus
+          .box-body
+            %table.table.table-bordered
+              %tbody
+                .form-padding
+                  = f.input :cow_id, include_blank: false, input_html: { value: @cow.id }, as: :hidden
+                  .col-sm-12.col-md-4.col-lg-4
+                    = f.input :weight, input_html: { min: 0 }, placeholder: '0.00 KG', label: t('activerecord.attributes.weight').humanize
+                  .col-sm-12.col-md-4.col-lg-4
+                    = f.input :years, input_html: { min: 0, value: @cow.years }, placeholder: '0', disabled: true, label: t('activerecord.attributes.years').humanize
+                  .col-sm-12.col-md-4.col-lg-4
+                    = f.input :months, input_html: { min: 0, value: @cow.months }, placeholder: '0', disabled: true, label: t('activerecord.attributes.months').humanize
+                  .col-sm-12.col-md-6
+                    = f.input :ubication, collection: @ubications, label: t('activerecord.attributes.ubication').humanize
+                  .col-sm-12.col-md-6
+                    = f.input :corporal_condition, collection: @corporal_conditions, include_blank: false, label: t('activerecord.attributes.corporal_condition').humanize
+                  - if @cow.gender?('male')
+                    .col-xs-6.col-sm-4.col-md-3
+                      = f.input :reproductive, as: :keppler_boolean, label: t('activerecord.attributes.reproductive').humanize
+                    .col-xs-6.col-sm-4.col-md-3
+                      = f.input :defiant, as: :keppler_boolean, label: t('activerecord.attributes.defiant').humanize
+                  - if @cow.gender?('female')
+                    .col-xs-6.col-sm-4.col-md-3
+                      = f.input :pregnant, as: :keppler_boolean, label: t('activerecord.attributes.pregnant').humanize
+                    .col-xs-6.col-sm-4.col-md-3
+                      = f.input :lactating, as: :keppler_boolean, label: t('activerecord.attributes.lactating').humanize
+                  .col-xs-6.col-sm-4.col-md-3
+                    = f.input :dead, as: :keppler_boolean, label: t('activerecord.attributes.dead').humanize
+                  .col-xs-6.col-sm-4.col-md-3
+                    = f.input :deathdate, as: :string, input_html: { class: 'datepicker', disabled: true }, label: t('activerecord.attributes.deathdate').humanize
+                  .col-sm-12.col-md-6.col-lg-6
+                    = f.input :strategic_lot_id, collection: @strategic_lots, input_html: { min: 0 }, label: t('activerecord.attributes.strategic_lot_id').humanize
+                  .col-sm-12.col-md-6.col-lg-6
+                    = f.input :typology, collection: @typologies, label: t('activerecord.attributes.typology').humanize
+                  .col-sm-12.col-md-6.col-lg-6
+                    = f.input :responsable_id, input_html: { value: current_user.id }, as: :hidden, label: t('activerecord.attributes.responsable_id').humanize
+                  .col-sm-12
+                    = f.input :comments, label: t('activerecord.attributes.comments').humanize#, as: :ckeditor, input_html: { ckeditor: { toolbar: 'mini' } }
+                  .col-sm-12
+                    .pull-right
+                      = f.button :submit, t('keppler.actions.save'), name: '_save', class: 'btn-primary'
+                      = f.button :submit, t('keppler.actions.save_and_add_another'), name: '_add_other'
+:javascript
+  $('#status_ubication').select2({
+    tags: true,
+    placeholder: "Selecciona o escribe una ubicación",
+  });
+
+  $('.status_dead').click(function() {
+    if ($(this).find('.inline-label').hasClass('active')) {
+      document.getElementById('status_deathdate').disabled = false
+    } else {
+      document.getElementById('status_deathdate').disabled = true
+      document.getElementById('status_deathdate').value = ""
+    }
+  })

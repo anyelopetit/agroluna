@@ -1,4 +1,11 @@
 modules:
+  statuses:
+    name: Status
+    model: KepplerCattleStatus
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
   cows:
     name: Cow
     model: KepplerCattleCow

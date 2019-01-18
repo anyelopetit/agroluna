@@ -7,16 +7,68 @@ en:
     permissions:
     models:
       singularize:
+        status: status
         cow: cow
       pluralize:
+        statuses: statuses
         cows: cows
     modules:
+      admin/status: Status
       admin/cow: Cow
     messages:
     actions:
+    # species:
+    bovine: Bovine
+    goat: Goat
+    # genders:
+    male: Male
+    female: Female
+    messages:
+      choose_species: Choose a species
+      choose_race: Choose a race
+      choose_gender: Choose a gender
+
   activerecord:
     attributes:
+      serie_number: serie number
+      short_name: short name
+      long_name: long name
+      species: species
+      gender: gender
+      birthdate: birthdate
+      race: race
+      coat_color: coat color
+      nose_color: nose color
+      tassel_color: tassel color
+      provenance: provenance
+      observations: observations
+      weight: weight
+      years: years
+      months: months
+      ubication: ubication
+      corporal_condition: corporal condition
+      reproductive: reproductive
+      defiant: defiant
+      pregnant: pregnant
+      lactating: lactating
+      dead: dead
+      deathdate: deathdate
+      typology: typology
+      strategic_lot_id: strategic lot
+      responsable_id: responsable
+      comments: comentarios
     errors:
       messages:
   errors:
   helpers:
+  keppler-cattle:
+    # species:
+    bovine: Bovine
+    goat: Goat
+    # genders:
+    male: Male
+    female: Female
+    messages:
+      choose_species: Choose a species
+      choose_race: Choose a race
+      choose_gender: Choose a gender

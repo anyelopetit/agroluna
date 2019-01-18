@@ -7,16 +7,68 @@ es:
     permissions:
     models:
       singularize:
+        status: estado
         cow: ganado
       pluralize:
+        statuses: estados
         cows: ganado
     modules:
+      admin/status: Estado
       admin/cow: Ganado
     messages:
     actions:
+    species:
+      bovine: Vacuno
+      goat: Caprino
+    genders:
+      male: Macho
+      female: Hembra
+    messages:
+      choose_species: Elige una especie
+      choose_race: Elige una raza
+      choose_gender: Elige un género
+
   activerecord:
     attributes:
+      serie_number: número de serie
+      short_name: nobre corto
+      long_name: nombre largo
+      species: especie
+      gender: género
+      birthdate: fecha de nacimiento
+      race: raza
+      coat_color: color de pelaje
+      nose_color: color de morro
+      tassel_color: color de borla
+      provenance: procedencia
+      observations: observaciones
+      weight: peso
+      years: años
+      months: meses
+      ubication: ubicación
+      corporal_condition: condición corporal
+      reproductive: reproductivo
+      defiant: recelador
+      pregnant: preñada
+      lactating: lactando
+      dead: muerto
+      deathdate: fecha de muerte
+      typology: tipología
+      strategic_lot_id: lote estratégico
+      responsable_id: responsable
+      comments: comments
     errors:
       messages:
   errors:
   helpers:
+  keppler-cattle:
+    # species:
+    bovine: Vacuno
+    goat: Caprino
+    # genders:
+    male: Macho
+    female: Hembra
+    messages:
+      choose_species: Elige una especie
+      choose_race: Elige una raza
+      choose_gender: Elige un género

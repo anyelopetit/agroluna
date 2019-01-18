@@ -7,6 +7,7 @@ module KepplerCattle
     class CowsController < ::Admin::AdminController
       layout 'keppler_cattle/admin/layouts/application'
       before_action :set_cow, only: %i[show edit update destroy]
+      before_action :cow_attributes, only: %i[new edit]
       before_action :index_variables
       include ObjectQuery
 
@@ -32,7 +33,8 @@ module KepplerCattle
         @cow = Cow.new(cow_params)
 
         if @cow.save
-          redirect(@cow, params)
+          # redirect(@cow, params)
+          redirect_to new_admin_cattle_cow_status_path(@cow)
         else
           render :new
         end
@@ -88,6 +90,12 @@ module KepplerCattle
       # Use callbacks to share common setup or constraints between actions.
       def set_cow
         @cow = Cow.find(params[:id])
+      end
+
+      def cow_attributes
+        @species = Cow.species
+        @genders = Cow.genders
+        @races   = Cow.races
       end
 
       # Only allow a trusted parameter "white list" through.

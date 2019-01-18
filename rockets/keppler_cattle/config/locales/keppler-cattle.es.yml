@@ -1,0 +1,12 @@
+es:
+  keppler_cattle:
+    # species:
+    bovine: Vacuno
+    goat: Caprino
+    # genders:
+    male: Macho
+    female: Hembra
+    messages:
+      choose_species: Elige una especie
+      choose_race: Elige una raza
+      choose_gender: Elige un género

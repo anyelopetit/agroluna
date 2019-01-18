@@ -7,7 +7,15 @@
           = t('keppler.actions.back')
   .show-section
     .row
-      .col-lg-12
+      .col-md-4
+        .box.slice-box.p-15
+          .box-header.with-border
+            %h3.box-title= t('activerecord.attributes.image').humanize
+          .box-body.no-padding
+            %center
+              = image_tag @cow.image&.url || '/assets/keppler_cattle/cow_shadow', style: 'max-width: 100%;'
+              %h5= "SIN FOTO" if @cow.image&.url.blank?
+      .col-md-8
         .box.slice-box.p-15
           .box-header.with-border
             %h3.box-title= t('keppler.models.singularize.cow').humanize
@@ -22,9 +30,9 @@
           .box-body.no-padding
             %table.table
               %tbody
-                - @cow.as_json(except: %w[position deleted_at]).each do |attribute, value|
+                - @cow.as_json(except: %w[image position deleted_at]).each do |attribute, value|
                   %tr.list-row
-                    %th.display-label= t("activerecord.attributes.#{attribute}")
+                    %th.display-label= t("activerecord.attributes.#{attribute}").humanize
                     %td.display-value.fs-body-1.tc-black-2
                       - if @attachments.dig('images', 'names').include?(attribute)
                         = image_tag value.url if value.url

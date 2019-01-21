@@ -1,50 +1,23 @@
-.vertical_card {
-  background-color: $white;
-  border-radius: 15px;
-  position: fixed;
-  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.08);
-
-  ul.nav {
-    flex-direction: column;
-  }
-
-  .nav-item {
-    position: relative;
-  }
-
-  .nav-link::before {
-    transition: height .4s;
-    height: 0%;
-    content: '';
-    position: absolute;
-    width: 2px;
-    background: $secundary;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  
-  .nav-link.active {
-    
-    &::before {
-      transition: height .4s;
-      height: 60%;
-    }
-  }
-
-}
-
 .card_show {
   background-color: $white;
   border-radius: 15px;
-  padding: 40px;
+  padding: 30px 20px;
   width: 100%;
   margin-bottom: 40px;
+  color: #6f6f6f;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.08);
 
   h1 {
     text-transform: uppercase;
     font-size: 25px;
+    color: $primary;
+    position: relative;
+    margin-bottom: 5px;
+  }
+
+  h2 {
+    text-transform: uppercase;
+    font-size: 20px;
     color: $primary;
     position: relative;
     width: 50%;
@@ -59,40 +32,83 @@
       background-color: $secundary;
     }
   }
+
+  .avatar_cow {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+
+  .card_cow {
+    display: flex;
+  }
+
+  .card_cow_content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-left: 10px;
+  }
 }
 
-.animal_data {
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  margin-bottom: 40px;
-  padding: 20px 40px;
+.card_status {
+  overflow-y: scroll;
+  max-height: 100vh;
   position: relative;
-  border-radius: 15px;
-  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.08);
 
   dt {
     float: left;
-    width: 150px;
+    width: 20px;
   }
 
-  dd {
-    font-weight: $regular;
+  .card_status--inner {
+    border: 1px dashed #d2d2d2;
+    margin-bottom: 15px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+}
+
+.modal_status {
+  color: #6f6f6f;
+  .modal-header {
+    border-bottom: 0;
+    position: relative;
   }
 
-  .edit {
+  .modal-content {
+    border: 0;
+  }
+
+  .close {
     position: absolute;
-    right: 40px;
-    top: 20px;
+    background: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    right: -3px;
+    top: -4px;
+    opacity: 1;
+    margin: 0;
+    padding: 0;
+    box-shadow: 0px 0px 1px;
+  }
+}
 
-    a {
-      transition: all ease-in-out .2s;
-      color: #6f6f6f;
+.toolbar {
+  background: white;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  position: absolute;
+  left: 0;
+  top: 25px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.08);
 
-      &:hover {
-        color: $secundary;
-        transition: all ease-in-out .2s;
-      }
-    }
+  a {
+    color: $primary;
+    margin: 0 7px;
   }
 }

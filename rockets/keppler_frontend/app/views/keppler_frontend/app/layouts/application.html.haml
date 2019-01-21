@@ -2,7 +2,7 @@
 %html{ lang: 'en' }
   %head
     = render 'keppler_frontend/app/frontend/partials/head'
-  %body{"data-spy" => "scroll", "data-target" => "#scrollspy_cards", "data-offset" => "110"}
+  %body
     = render 'keppler_frontend/app/frontend/components/navbar', farm: @farm, farms: @farms
     .app_wrapper
       = yield

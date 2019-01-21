@@ -1,8 +1,16 @@
 .container_custom
-  %a.float-right.mt-4.mb-4{ href: '' }
-    %button.btn.btn_custom.btn--filled.btn--medium
-      %i.icofont-plus
-      Agregar
+  .d-flex.justify-content-end.mb-5
+    .toolbar
+      %a{ href: '' }
+        %i.icofont-trash
+      %a{ href: '' }
+        %i.icofont-refresh
+      %a{ href: '' }
+        %i.icofont-download
+    %a.float-right.mt-4.mb-4{ href: '' }
+      %button.btn.btn_custom.btn--filled.btn--medium
+        %i.icofont-plus
+        Agregar
   %table
     %thead
       %tr
@@ -30,3 +38,5 @@
               %span.icofont-eye
             %a{ href: '/show' }
               %span.icofont-ui-edit
+            %a{ href: '' }
+              %span.icofont-trash

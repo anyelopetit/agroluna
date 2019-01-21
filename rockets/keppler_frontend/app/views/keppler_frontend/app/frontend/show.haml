@@ -1,38 +1,32 @@
 .container_custom
+  .d-flex.justify-content-end.mb-5
+    .toolbar
+      %a{ href: '' }
+        %i.icofont-trash
+      %a{ href: '' }
+        %i.icofont-refresh
+      %a{ href: '' }
+        %i.icofont-download
+    .actions
+      %a.float-right.mt-4.mb-4{ href: '' }
+        %button.btn.btn_custom.btn--filled.btn--medium
+          %i.icofont-plus
+          Nuevo Status
+      %a.float-right.mt-4.mb-4.ml-3{ href: '/edit' }
+        %button.btn.btn_custom.btn--filled.btn--medium
+          %i.icofont-ui-edit
+          Editar
+.container_custom
   .row
-    .col-lg-2
-      .vertical_card
-        %nav#scrollspy_cards.navbar
-          %ul.nav
-            %li.nav-item
-              %a.nav-link{href: "#animal"} Datos del Animal
-            %li.nav-item
-              %a.nav-link{href: "#general"} Datos Generales
-            %li.nav-item
-              %a.nav-link{href: "#weight"} Peso
-            %li.nav-item
-              %a.nav-link{href: "#mother"} Madre
-            %li.nav-item
-              %a.nav-link{href: "#father"} Padre
-    .col-lg-10
-      .animal_data#animal
-        %dl
-          %dt
-            %label.label_custom--strong Número de Serie
-          %dd 621
-          %dt
-            %label.label_custom--strong Nombre
-          %dd Casera
-          %dt
-            %label.label_custom--strong Raza
-          %dd Mestizo Brahman 5/8
-        .edit
-          %a{ href: "/edit" }
-            %i.icofont-ui-edit
-    .col-lg-10.offset-lg-2
-      .card_show#general
-        %h1 Datos Generales
-        .row
+    .col-lg-4
+      .card_show.p-5
+        .card_cow
+          %img.avatar_cow{ src: 'https://image.flaticon.com/icons/svg/523/523448.svg' }
+          .card_cow_content
+            %h1 Casera
+            %strong 621
+            %span Mestizo Brahman 5/8
+        .row.mt-5
           .col-lg-6
             %dl
               %dt Fecha de Nacimiento
@@ -55,23 +49,25 @@
               %dd Condición 1
               %dt Lote estrátegico
               %dd L1 VAC ORD
-      .card_show#weight
-        %h1 Pesos (Kgs)
-        .row
-          .col-lg-6
+    .col-lg-4
+      .card_show.card_status
+        .card_status--title
+          %h2 Status
+        - 8.times do
+          .card_status--inner{"data-toggle" => "modal", "data-target" => "#modalStatus"}
             %dl
-              %dt Peso inicial
-              %dd 33
-              %dt Fecha
-              %dd 22/03/1993
-              %dt Precio inicial
-              %dd 283.500,00
-          .col-lg-6
-            %dl
-              %dt Pesos ajustados a los
-              %dd 205 días
+              %dt
+                %i.icofont-ui-calendar
+              %dd 20/01/2018
+              %dt
+                %i.icofont-dumbbell
+              %dd 205kgs
+              %dt
+                %i.icofont-info
+              %dd Vaca preñada
+    .col-lg-4
       .card_show#mother
-        %h1 Datos de la Madre
+        %h2 Datos de la Madre
         .row
           .col-lg-6
             %dl
@@ -101,8 +97,8 @@
               %dd Registrado
               %dt Tipo
               %dd Tipo
-      .card_show#father
-        %h1 Datos del Padre
+      .card_show
+        %h2 Datos del Padre
         .row
           .col-lg-6
             %dl
@@ -134,3 +130,4 @@
               %dd Registrado
               %dt Tipo
               %dd Tipo
+= render 'keppler_frontend/app/frontend/partials/modal_status'

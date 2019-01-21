@@ -5,12 +5,13 @@
 
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background: #6f6f6f;
+  background: #d2d2d2;
 }
 
 .app_wrapper {
   padding-top: 100px;
-  background-color: #fafafa;
+  background-color: #f8f8f8;
+  min-height: 100vh;
 }
 
 .description_land {

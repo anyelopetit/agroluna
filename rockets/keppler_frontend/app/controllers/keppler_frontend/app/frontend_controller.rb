@@ -4,8 +4,8 @@ module KepplerFrontend
     # Begin callbacks area (don't delete)
     # End callbacks area (don't delete)
     include FrontsHelper
-    # layout 'layouts/keppler_frontend/app/layouts/application'
-    layout 'layouts/templates/application'
+    layout 'keppler_frontend/app/layouts/application'
+    # layout 'layouts/templates/application'
     before_action :set_farms
     before_action :default_logo
 
@@ -37,6 +37,12 @@ module KepplerFrontend
       end
     end
     # end index
+
+    def module
+    end
+
+    def show
+    end
 
     # begin login
     def login

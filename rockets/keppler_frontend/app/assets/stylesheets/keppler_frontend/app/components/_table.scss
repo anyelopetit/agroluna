@@ -4,6 +4,7 @@ table {
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
   border-radius: 4px;
+  background-color: white;
 }
 
 th,
@@ -16,8 +17,10 @@ th {
 }
 
 thead {
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+
   th {
-    background-color: #ccc;
+    font-weight: $regular;
   }
 }
 
@@ -29,17 +32,25 @@ tbody {
   }
   td {
     position: relative;
+    font-weight: $light;
+  }
+}
+
+.checkboxes {
+  width: 50px;
+}
+
+table .actions {
+  width: 150px;
+
+  a {
+    color: #9c9c9c;
+    margin-right: 10px;
+    transition: all ease-in-out .3s;
+
     &:hover {
-      &:before {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: -9999px;
-        bottom: -9999px;
-        background-color: rgba(255,255,255,0.2);
-        z-index: -1;
-      }
+      color: $primary;
+      transition: all ease-in-out .3s;
     }
   }
 }

@@ -1,0 +1,130 @@
+.container_custom
+  .row
+    .col-lg-4
+      .card_show.p-5
+        .card_cow
+          %img.avatar_cow{ src: 'https://image.flaticon.com/icons/svg/523/523448.svg' }
+          .card_cow_content
+            %h1 Casera
+            %strong 621
+            %span Mestizo Brahman 5/8
+        .row.mt-5
+          .col-lg-6
+            %dl
+              %dt Fecha de Nacimiento
+              %dd
+                %input.form-control.input_custom
+              %dt Edad (Año-Mes)
+              %dd
+                %input.form-control.input_custom
+              %dt Tipología
+              %dd
+                %input.form-control.input_custom
+              %dt Procedencia
+              %dd
+                %input.form-control.input_custom
+          .col-lg-6
+            %dl
+              %dt Color Pelaje
+              %dd
+                %input.form-control.input_custom
+              %dt Color Morro
+              %dd
+                %input.form-control.input_custom
+              %dt Borla
+              %dd
+                %input.form-control.input_custom
+              %dt Condición corporal
+              %dd
+                %input.form-control.input_custom
+              %dt Lote estrátegico
+              %dd
+                %input.form-control.input_custom
+    .col-lg-4
+      .card_show#mother
+        %h2 Datos de la Madre
+        .row
+          .col-lg-6
+            %dl
+              %dt Serie Madre
+              %dd
+                %input.form-control.input_custom
+              %dt Nombre de la Madre
+              %dd
+                %input.form-control.input_custom
+          .col-lg-6
+            %dl
+              %dt Fecha de Nacimiento
+              %dd
+                %input.form-control.input_custom
+              %dt Raza
+              %dd
+                %input.form-control.input_custom
+          .col-lg-6
+            %dl
+              %dt Asociación 1
+              %dd
+                %input.form-control.input_custom
+              %dt Registro 1
+              %dd
+                %input.form-control.input_custom
+              %dt Tipo
+              %dd
+                %input.form-control.input_custom
+          .col-lg-6
+            %dl
+              %dt Asociación 2
+              %dd
+                %input.form-control.input_custom
+              %dt Registro 2
+              %dd
+                %input.form-control.input_custom
+              %dt Tipo
+              %dd
+                %input.form-control.input_custom
+    .col-lg-4
+      .card_show
+        %h2 Datos del Padre
+        .row
+          .col-lg-6
+            %dl
+              %dt Serie Padre
+              %dd
+                %input.form-control.input_custom
+              %dt Nombre de la Padre
+              %dd
+                %input.form-control.input_custom
+              %dt Pajuela
+              %dd
+                %input.form-control.input_custom
+          .col-lg-6
+            %dl
+              %dt Fecha de Nacimiento
+              %dd
+                %input.form-control.input_custom
+              %dt Raza
+              %dd
+                %input.form-control.input_custom
+          .col-lg-6
+            %dl
+              %dt Asociación 1
+              %dd
+                %input.form-control.input_custom
+              %dt Registro 1
+              %dd
+                %input.form-control.input_custom
+              %dt Tipo
+              %dd
+                %input.form-control.input_custom
+          .col-lg-6
+            %dl
+              %dt Asociación 2
+              %dd
+                %input.form-control.input_custom
+              %dt Registro 2
+              %dd
+                %input.form-control.input_custom
+              %dt Tipo
+              %dd
+                %input.form-control.input_custom
+= render 'keppler_frontend/app/frontend/partials/modal_status'

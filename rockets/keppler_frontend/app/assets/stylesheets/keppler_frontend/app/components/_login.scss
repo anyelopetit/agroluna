@@ -4,10 +4,10 @@
 }
 
 .input_login {
-  border-radius: 0;
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
+  border-radius: 0 !important;
+  border-top: 0 !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
   box-shadow: none;
   font-size: 1.5rem !important;
 
@@ -15,14 +15,24 @@
     border-top: 0;
     border-left: 0;
     border-right: 0;
+    border-color: $primary !important;
   }
+}
+
+.login_container {
+  background-image: url('http://i64.tinypic.com/a0xs43.jpg');
+  width: 100%;
+  height: 100vh;
+  padding: 50px;
 }
 
 
 .login_box {
   display: flex;
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  background-color: white;
+  overflow: hidden;
 }
 
 .login_right, .login_left {
@@ -30,7 +40,9 @@
 }
 
 .login_left {
-  width: 40%;
+  width: 60%;
+  transform: skew(-10deg);
+  transform-origin: top left;
 
   img {
     height: 100%;
@@ -38,13 +50,13 @@
     object-fit: cover;
   }
 
-  &::before {
-    @include pseudo();
-    background-color: rgba($primary, .5);
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-  }
+  // &::before {
+  //   @include pseudo();
+  //   background-color: rgba($primary, .5);
+  //   width: 100%;
+  //   height: 100%;
+  //   z-index: 1;
+  // }
 
   @include respond-to(xs) {
     display: none;
@@ -52,7 +64,7 @@
 }
 
 .login_right {
-  width: 60%;
+  width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,7 +84,8 @@
 .login_card {
   border-radius: 15px;
   padding: 25px;
-  width: 60%;
+  width: 80%;
+  margin: 0 7%;
 
   @include respond-to(xs) {
     width: 100%;
@@ -83,7 +96,7 @@
   margin: 0 auto;
 
   a {
-    color: $secundary;
+    color: $primary;
     font-weight: 600;
   }
 }

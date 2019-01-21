@@ -1,0 +1,14 @@
+%ul#moduleTabs.nav.nav-tabs.mt-4{role: "tablist"}
+  %li.nav-item
+    %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#mfg", role: "tab"} Fichas de Ganado
+  %li.nav-item
+    %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#ale", role: "tab"} Admin. Lote Estratégico
+  %li.nav-item
+    %a#transfers-tab.nav-link{"aria-controls" => "transfers", "aria-selected" => "false", "data-toggle" => "tab", href: "#transfers", role: "tab"} Transferencias
+#moduleContent.tab-content
+  #mfg.tab-pane.fade.show.active{ "aria-labelledby" => "mfg-tab", role: "tabpanel" }
+    = render 'keppler_frontend/app/frontend/components/submodule_listing'
+  #ale.tab-pane.fade{ "aria-labelledby" => "ale-tab", role: "tabpanel" }
+    = render 'keppler_frontend/app/frontend/components/submodule_listing'
+  #transfers.tab-pane.fade{ "aria-labelledby" => "transfers-tab", role: "tabpanel" }
+    = render 'keppler_frontend/app/frontend/components/submodule_listing'

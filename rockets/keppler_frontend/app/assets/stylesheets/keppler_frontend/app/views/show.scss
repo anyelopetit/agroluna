@@ -1,0 +1,114 @@
+.card_show {
+  background-color: $white;
+  border-radius: 15px;
+  padding: 30px 20px;
+  width: 100%;
+  margin-bottom: 40px;
+  color: #6f6f6f;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.08);
+
+  h1 {
+    text-transform: uppercase;
+    font-size: 25px;
+    color: $primary;
+    position: relative;
+    margin-bottom: 5px;
+  }
+
+  h2 {
+    text-transform: uppercase;
+    font-size: 20px;
+    color: $primary;
+    position: relative;
+    width: 50%;
+    margin-bottom: 30px;
+
+    &::after {
+      @include pseudo();
+      bottom: -5px;
+      left: 0;
+      width: 15%;
+      height: 3px;
+      background-color: $secundary;
+    }
+  }
+
+  .avatar_cow {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+
+  .card_cow {
+    display: flex;
+  }
+
+  .card_cow_content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-left: 10px;
+  }
+}
+
+.card_status {
+  overflow-y: scroll;
+  max-height: 100vh;
+  position: relative;
+
+  dt {
+    float: left;
+    width: 20px;
+  }
+
+  .card_status--inner {
+    border: 1px dashed #d2d2d2;
+    margin-bottom: 15px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+}
+
+.modal_status {
+  color: #6f6f6f;
+  .modal-header {
+    border-bottom: 0;
+    position: relative;
+  }
+
+  .modal-content {
+    border: 0;
+  }
+
+  .close {
+    position: absolute;
+    background: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    right: -3px;
+    top: -4px;
+    opacity: 1;
+    margin: 0;
+    padding: 0;
+    box-shadow: 0px 0px 1px;
+  }
+}
+
+.toolbar {
+  background: white;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  position: absolute;
+  left: 0;
+  top: 25px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.08);
+
+  a {
+    color: $primary;
+    margin: 0 7px;
+  }
+}

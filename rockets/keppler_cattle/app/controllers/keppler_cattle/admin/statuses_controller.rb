@@ -18,7 +18,11 @@ module KepplerCattle
       end
 
       # GET /cattles/1
-      def show; end
+      def show
+        respond_to do |format|
+          format.json { render json: @status }
+        end
+      end
 
       # GET /cattles/new
       def new
@@ -27,6 +31,7 @@ module KepplerCattle
         @corporal_conditions = Status.corporal_conditions
         @strategic_lots = Status.strategic_lots
         @typologies = Status.typologies
+        @last_status = Status.last
       end
 
       # GET /cattles/1/edit
@@ -37,7 +42,7 @@ module KepplerCattle
         @status = Status.new(status_params)
 
         if @status.save
-          redirect(@status, params)
+          redirect_to admin_cattle_cow_path(@cow)
         else
           render :new
         end
@@ -102,7 +107,7 @@ module KepplerCattle
       # Only allow a trusted parameter "white list" through.
       def status_params
         params.require(:status).permit(
-          :cow_id, :weight, :years, :months, :ubication, :corporal_condition, :reproductive, :defiant, :pregnant, :lactating, :dead, :deathdate, :typology, :strategic_lot_id, :responsable_id, :comments
+          :cow_id, :weight, :years, :months, :ubication, :corporal_condition, :reproductive, :defiant, :pregnant, :lactating, :dead, :deathdate, :typology, :strategic_lot_id, :user_id, :comments
         )
       end
     end

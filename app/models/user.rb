@@ -17,6 +17,7 @@ class User < ApplicationRecord
 
   has_many :keppler_farm_farms, class_name: 'KepplerFarm::Farm'
   has_many :assignments, through: :keppler_farm_farms
+  has_many :statuses
 
   def assignments
     KepplerFarm::Assignment.where(user_id: id)

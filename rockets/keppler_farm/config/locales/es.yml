@@ -3,20 +3,24 @@ es:
     sidebar-menu:
       keppler-farm: Fincas
       keppler-farm-submenu:
+        strategic-lot: Strategic lot
         process: Procesos
         farm: Fincas
   keppler-farm:
     permissions:
     models:
       singularize:
+        strategic_lot: strategic lot
         photo: foto
         process: proceso
         farm: finca
       pluralize:
+        strategic_lots: strategic lots
         photos: fotos
         processes: procesos
         farms: fincas
     modules:
+      admin/strategic-lot: Strategic lot
       admin/photo: Fotos
       admin/process: Procesos
       admin/farm: Fincas

@@ -1,4 +1,11 @@
 modules:
+  strategic_lots:
+    name: StrategicLot
+    model: KepplerFarmStrategicLot
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
   photos:
     name: Photo
     model: KepplerFarmPhoto

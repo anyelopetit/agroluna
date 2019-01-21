@@ -176,6 +176,7 @@ es:
     actions:
       documentation: Documentación
       created: Creado
+      update: Actualizar
       updated: Actualizado
       add: Agregar
       new: Nuevo

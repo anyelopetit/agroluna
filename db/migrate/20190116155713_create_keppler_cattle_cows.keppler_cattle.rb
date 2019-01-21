@@ -17,6 +17,8 @@ class CreateKepplerCattleCows < ActiveRecord::Migration[5.2]
       t.text :observations
       t.integer :position
       t.datetime :deleted_at
+
+      t.timestamps
     end
   end
 end

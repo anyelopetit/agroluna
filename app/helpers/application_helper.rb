@@ -40,9 +40,16 @@ module ApplicationHelper
     end
     final_array
   end
+
+  def find_model(path_array, i)
+    parent_module = controller.class.parent.to_s.underscore.remove('/admin')
+    "#{parent_module}/#{path_array[i]}".classify.constantize
+  end
+
+  def object_name(object, attribute_name)
+    attribute = attribute_name.split('_id').first.to_sym
+    object.try(attribute).name
+  end
 end
 
-def find_model(path_array, i)
-  parent_module = controller.class.parent.to_s.underscore.remove('/admin')
-  "#{parent_module}/#{path_array[i]}".classify.constantize
-end
+

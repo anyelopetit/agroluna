@@ -18,7 +18,9 @@ module KepplerCattle
       end
 
       # GET /cattles/1
-      def show; end
+      def show
+        @statuses = @cow.statuses.order(created_at: :desc)
+      end
 
       # GET /cattles/new
       def new

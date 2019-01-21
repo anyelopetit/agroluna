@@ -13,8 +13,14 @@ module KepplerCattle
     acts_as_list
     acts_as_paranoid
 
+    belongs_to :user
+
     def self.index_attributes
       %i[ubication corporal_condition typology]
+    end
+
+    def relation_id
+      User.find(user_id).name
     end
 
     def self.corporal_conditions

@@ -58,7 +58,7 @@
                   .col-sm-12
                     .pull-right
                       = f.button :submit, t('keppler.actions.save'), name: '_save', class: 'btn-primary'
-                      = f.button :submit, t('keppler.actions.save_and_add_another'), name: '_add_other'
+                      -# = f.button :submit, t('keppler.actions.save_and_add_another'), name: '_add_other'
 :javascript
   window.I18n = #{current_translations.to_json.html_safe}
 

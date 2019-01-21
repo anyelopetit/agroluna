@@ -27,6 +27,8 @@ es:
       choose_species: Elige una especie
       choose_race: Elige una raza
       choose_gender: Elige un género
+      of_series: de serie
+      series: serie
 
   activerecord:
     attributes:
@@ -42,7 +44,7 @@ es:
       tassel_color: color de borla
       provenance: procedencia
       observations: observaciones
-      weight: peso
+      weight: peso (kg)
       years: años
       months: meses
       ubication: ubicación
@@ -55,7 +57,7 @@ es:
       deathdate: fecha de muerte
       typology: tipología
       strategic_lot_id: lote estratégico
-      responsable_id: responsable
+      user_id: responsable
       comments: comments
     errors:
       messages:

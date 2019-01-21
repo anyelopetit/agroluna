@@ -8,7 +8,7 @@
             = t('keppler.actions.back')
 
     .row
-      .col-lg-12
+      .col-lg-8
         .box.slice-box
           .box-header.with-border
             %h3.box-title= t('keppler.models.pluralize.statuses').humanize
@@ -21,41 +21,68 @@
                 .form-padding
                   = f.input :cow_id, include_blank: false, input_html: { value: @cow.id }, as: :hidden
                   .col-sm-12.col-md-4.col-lg-4
-                    = f.input :weight, input_html: { min: 0 }, placeholder: '0.00 KG', label: t('activerecord.attributes.weight').humanize
+                    = f.input :weight, input_html: { min: 0, value: @last_status.weight }, placeholder: '0.00 KG', label: t('activerecord.attributes.weight').humanize
                   .col-sm-12.col-md-4.col-lg-4
                     = f.input :years, input_html: { min: 0, value: @cow.years }, placeholder: '0', disabled: true, label: t('activerecord.attributes.years').humanize
+                    = f.input :years, input_html: { min: 0, value: @cow.years }, placeholder: '0', as: :hidden, label: t('activerecord.attributes.years').humanize
                   .col-sm-12.col-md-4.col-lg-4
                     = f.input :months, input_html: { min: 0, value: @cow.months }, placeholder: '0', disabled: true, label: t('activerecord.attributes.months').humanize
+                    = f.input :months, input_html: { min: 0, value: @cow.months }, placeholder: '0', as: :hidden, label: t('activerecord.attributes.months').humanize
                   .col-sm-12.col-md-6
-                    = f.input :ubication, collection: @ubications, label: t('activerecord.attributes.ubication').humanize
+                    = f.input :ubication, input_html: { value: @last_status.ubication }, collection: @ubications, label: t('activerecord.attributes.ubication').humanize
                   .col-sm-12.col-md-6
-                    = f.input :corporal_condition, collection: @corporal_conditions, include_blank: false, label: t('activerecord.attributes.corporal_condition').humanize
+                    = f.input :corporal_condition, input_html: { value: @last_status.corporal_condition }, collection: @corporal_conditions, include_blank: false, label: t('activerecord.attributes.corporal_condition').humanize
                   - if @cow.gender?('male')
-                    .col-xs-6.col-sm-4.col-md-3
-                      = f.input :reproductive, as: :keppler_boolean, label: t('activerecord.attributes.reproductive').humanize
-                    .col-xs-6.col-sm-4.col-md-3
+                    .col-xs-6.col-sm-6.col-md-3
+                      = f.input :reproductive, input_html: { value: @last_status.reproductive }, as: :keppler_boolean, label: t('activerecord.attributes.reproductive').humanize
+                    .col-xs-6.col-sm-6.col-md-3
                       = f.input :defiant, as: :keppler_boolean, label: t('activerecord.attributes.defiant').humanize
                   - if @cow.gender?('female')
-                    .col-xs-6.col-sm-4.col-md-3
+                    .col-xs-6.col-sm-6.col-md-3
                       = f.input :pregnant, as: :keppler_boolean, label: t('activerecord.attributes.pregnant').humanize
-                    .col-xs-6.col-sm-4.col-md-3
+                    .col-xs-6.col-sm-6.col-md-3
                       = f.input :lactating, as: :keppler_boolean, label: t('activerecord.attributes.lactating').humanize
-                  .col-xs-6.col-sm-4.col-md-3
+                  .col-xs-6.col-sm-6.col-md-3
                     = f.input :dead, as: :keppler_boolean, label: t('activerecord.attributes.dead').humanize
-                  .col-xs-6.col-sm-4.col-md-3
+                  .col-xs-6.col-sm-6.col-md-3
                     = f.input :deathdate, as: :string, input_html: { class: 'datepicker', disabled: true }, label: t('activerecord.attributes.deathdate').humanize
                   .col-sm-12.col-md-6.col-lg-6
                     = f.input :strategic_lot_id, collection: @strategic_lots, input_html: { min: 0 }, label: t('activerecord.attributes.strategic_lot_id').humanize
                   .col-sm-12.col-md-6.col-lg-6
-                    = f.input :typology, collection: @typologies, label: t('activerecord.attributes.typology').humanize
+                    = f.input :typology, include_blank: false, collection: @typologies, label: t('activerecord.attributes.typology').humanize
                   .col-sm-12.col-md-6.col-lg-6
-                    = f.input :responsable_id, input_html: { value: current_user.id }, as: :hidden, label: t('activerecord.attributes.responsable_id').humanize
+                    = f.input :user_id, input_html: { value: current_user.id }, as: :hidden, label: t('activerecord.attributes.user_id').humanize
                   .col-sm-12
                     = f.input :comments, label: t('activerecord.attributes.comments').humanize#, as: :ckeditor, input_html: { ckeditor: { toolbar: 'mini' } }
                   .col-sm-12
                     .pull-right
                       = f.button :submit, t('keppler.actions.save'), name: '_save', class: 'btn-primary'
-                      = f.button :submit, t('keppler.actions.save_and_add_another'), name: '_add_other'
+                      -# = f.button :submit, t('keppler.actions.save_and_add_another'), name: '_add_other'
+      .col-lg-4
+        .box.slice-box
+          .box-header.with-border
+            = !@cow.serie_number.blank? ? @cow.serie_number : t('keppler.models.singularize.cow').humanize
+          .box-body.no-padding
+            %table.table
+              %tbody
+                %tr.list-row
+                  %th.display-label= t("activerecord.attributes.image").humanize
+                  %td.display-value.fs-body-1.tc-black-2
+                    %center
+                      = image_tag @cow.image&.url || '/assets/keppler_cattle/cow_shadow', style: 'max-width: 100%;'
+                      %h5= "SIN FOTO" if @cow.image&.url.blank?
+                - @cow.as_json(except: %w[image position deleted_at]).each do |attribute, value|
+                  %tr.list-row
+                    %th.display-label= t("activerecord.attributes.#{attribute}").humanize
+                    %td.display-value.fs-body-1.tc-black-2
+                      - if @attachments.dig('images', 'names').include?(attribute)
+                        = image_tag value.url if value.url
+                      - elsif @attachments.dig('images', 'names').map(&:pluralize).include?(attribute)
+                        - value.each do |image|
+                          = image_tag image.url if image.url
+                      - else 
+                        = sanitize raw value
+
 :javascript
   $('#status_ubication').select2({
     tags: true,

@@ -4,28 +4,32 @@
     = render 'keppler_frontend/app/frontend/partials/head'
   %body
     .login_container
+      %img.bg-shape1{src:'/assets/keppler_frontend/app/shape1.svg'}
+      %img.bg-shape2{src:'/assets/keppler_frontend/app/shape2.svg'}
       .login_box
         .login_left
-          %img{ src: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/5229c264816927.5adf092803115.jpg' }
-        .login_right
-          %img.login_logo{ src: @default_logo }
+          %span.login_title Bienvenido a
+          %img.login_logo{ src: 'https://www.logolynx.com/images/logolynx/38/38823bcbd5b510b67596a10f4cbacb06.png' }
+          %span.recoverable Inicia sesión para comenzar
           = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f|
             .login_card
               .form-group.mb-5
-                %label.label_custom.label_login= t('activerecord.attributes.email')
+                %label.label_custom.label_login
+                  %i.icofont-ui-message
+                  = t('activerecord.attributes.email')
                 = f.email_field :email, :autofocus => true, class: "form-control input_custom input_login validate"
               .form-group.mb-5
-                %label.label_custom.label_login= t('activerecord.attributes.password')
+                %label.label_custom.label_login
+                  %i.icofont-ui-password
+                  = t('activerecord.attributes.password')
                 = f.password_field :password, :autofocus => true, class: "form-control input_custom input_login validate #{'invalid' if flash[:alert]}"
               %div
-                .login-bottom
-                  .pull-left
-                    - if devise_mapping.recoverable?
-                      = link_to new_password_path(resource_name), class: "recoverable" do
-                        = t("devise.sessions.forgot_password")
-                  .pull-right
-                    = f.submit t("devise.sessions.log_in"), type: 'submit', class: 'btn btn_custom btn--medium btn--filled'
-                    -# %button.btn.btn_custom.btn--medium.btn--filled{ type: 'submit' }= t("devise.sessions.log_in")
+                .login-bottom.d-flex.justify-content-center
+                  = f.submit t("devise.sessions.log_in"), type: 'submit', class: 'btn btn_custom btn--medium btn--filled w-100 btn-shadow btn-text-transform'
+                .d-flex.justify-content-center.mt-3
+                  - if devise_mapping.recoverable?
+                    = link_to new_password_path(resource_name), class: "recoverable" do
+                      = t("devise.sessions.forgot_password")
               .form-group
                 %center.devise-errors.center-align
                   - flash.each do |name, msg|
@@ -33,6 +37,8 @@
             %span.powered_by
               Powered by
               %a{ href: 'https://slicegroup.co' } Slice Group
+        .login_right
+          %img{ src: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/5229c264816927.5adf092803115.jpg' }
     %script{ src: 'https://code.jquery.com/jquery-3.3.1.min.js' }
     %script{ src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' }
     %script{ src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' }

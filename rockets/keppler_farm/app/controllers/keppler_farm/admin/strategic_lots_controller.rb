@@ -8,10 +8,12 @@ module KepplerFarm
       layout 'keppler_farm/admin/layouts/application'
       before_action :set_strategic_lot, only: %i[show edit update destroy]
       before_action :index_variables
+      before_action :set_farm
       include ObjectQuery
 
       # GET /farms
       def index
+        @cows = KepplerCattle::Cow.new
         respond_to_formats(@strategic_lots)
         redirect_to_index(@objects)
       end
@@ -22,6 +24,8 @@ module KepplerFarm
       # GET /farms/new
       def new
         @strategic_lot = StrategicLot.new
+        @functions = StrategicLot.functions
+        @farms = Farm.all
       end
 
       # GET /farms/1/edit
@@ -76,6 +80,10 @@ module KepplerFarm
       end
 
       private
+
+      def set_farm
+        @farm = Farm.find(params[:farm_id])
+      end
 
       def index_variables
         @q = StrategicLot.ransack(params[:q])

@@ -11,12 +11,14 @@ menu:
     icon: code
     current: ['admin/scripts']
     model: Script
+    environment: development
   seo:
     name: Seo
     current: ['admin/meta_tags']
     icon: chart
     model: Seo
     url_path: /admin/meta_tags
+    environment: development
     submenu:
       - metatag:
           name: metatags
@@ -27,13 +29,13 @@ menu:
           name: sitemap
           url_path: /admin/seo/sitemap
           current: ['admin/seo/sitemap']
-          enviroment: development
+          environment: development
           model: Seo
       - robots:
           name: robots
           url_path: /admin/seo/robots
           current: ['/admin/seo/robots']
-          enviroment: development
+          environment: development
           model: Seo
   user:
     name: users
@@ -56,5 +58,5 @@ menu:
     icon: rocket
     current: ['/admin/rockets']
     model: Rocket
-    enviroment: development
+    environment: development
     url_path: /admin/rockets

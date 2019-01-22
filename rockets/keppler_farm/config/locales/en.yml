@@ -3,8 +3,7 @@ en:
     sidebar-menu:
       keppler-farm: Farms
       keppler-farm-submenu:
-        strategic-lot: Strategic lot
-        photo: Photo
+        strategic-lot: Strategic lots
         process: Processes
         farm: Farms
   keppler-farm:
@@ -42,6 +41,7 @@ en:
   activerecord:
     attributes:
       processes: processes
+      function: function
     errors:
       messages:
   errors:

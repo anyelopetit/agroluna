@@ -20,6 +20,16 @@
     max-height: 100px;
     max-width: 100%;
   }
+  
+  .display-value.fs-body-1.tc-black-2 {
+    a {
+      color: $keppler-color;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .attr-name {

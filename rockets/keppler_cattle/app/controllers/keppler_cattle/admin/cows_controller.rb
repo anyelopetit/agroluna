@@ -34,7 +34,7 @@ module KepplerCattle
       def create
         @cow = Cow.new(cow_params)
 
-        if @cow.save
+        if @cow.save && @cow.statuses.blank?
           # redirect(@cow, params)
           redirect_to new_admin_cattle_cow_status_path(@cow)
         else
@@ -45,7 +45,11 @@ module KepplerCattle
       # PATCH/PUT /cattles/1
       def update
         if @cow.update(cow_params)
-          redirect(@cow, params)
+          if @cow.statuses.blank?
+            redirect_to new_admin_cattle_cow_status_path(@cow)
+          else 
+            redirect(@cow, params)
+          end
         else
           render :edit
         end
@@ -98,12 +102,28 @@ module KepplerCattle
         @species = Cow.species
         @genders = Cow.genders
         @races   = Cow.races
+        @posible_mothers = Cow.where(gender: 'female').map { |x| [x.serie_number, x.id] }
+        @posible_fathers = Cow.where(gender: 'male').map { |x| [x.serie_number, x.id] }
       end
 
       # Only allow a trusted parameter "white list" through.
       def cow_params
         params.require(:cow).permit(
-          :serie_number, :image, :short_name, :long_name, :species, :gender, :birthdate, :race, :coat_color, :nose_color, :tassel_color, :provenance, :observations
+          :serie_number,
+          :image,
+          :short_name,
+          :long_name,
+          :species,
+          :gender,
+          :birthdate,
+          :race,
+          :coat_color,
+          :nose_color,
+          :tassel_color,
+          :provenance, 
+          :observations,
+          :mother_id,
+          :father_id
         )
       end
     end

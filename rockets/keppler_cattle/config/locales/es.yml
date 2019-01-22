@@ -47,6 +47,7 @@ es:
       weight: peso (kg)
       years: años
       months: meses
+      days: días de nacido
       ubication: ubicación
       corporal_condition: condición corporal
       reproductive: reproductivo
@@ -58,19 +59,10 @@ es:
       typology: tipología
       strategic_lot_id: lote estratégico
       user_id: responsable
-      comments: comments
+      comments: comentarios
+      mother_id: madre
+      father_id: padre
     errors:
       messages:
   errors:
   helpers:
-  keppler-cattle:
-    # species:
-    bovine: Vacuno
-    goat: Caprino
-    # genders:
-    male: Macho
-    female: Hembra
-    messages:
-      choose_species: Elige una especie
-      choose_race: Elige una raza
-      choose_gender: Elige un género

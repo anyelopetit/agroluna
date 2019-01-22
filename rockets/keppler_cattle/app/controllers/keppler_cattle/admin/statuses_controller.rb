@@ -29,7 +29,7 @@ module KepplerCattle
         @status = Status.new
         @ubications = Status.ubications
         @corporal_conditions = Status.corporal_conditions
-        @strategic_lots = Status.strategic_lots
+        @strategic_lots = KepplerFarm::StrategicLot.all
         @typologies = Status.typologies
         @last_status = Status.last
       end

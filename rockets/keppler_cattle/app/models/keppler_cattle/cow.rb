@@ -15,7 +15,7 @@ module KepplerCattle
 
     has_many :statuses, dependent: :destroy
 
-    validates_presence_of :birthdate
+    validates_presence_of :birthdate, :serie_number
 
     def self.index_attributes
       %i[serie_number image short_name provenance]
@@ -48,7 +48,20 @@ module KepplerCattle
 
     def months
       now = Time.now.utc.to_date 
-      now.month > birthdate.month ? (now.month - birthdate.month) : (12 - (birthdate.month - now.month))
+      now.month >= birthdate.month ? (now.month - birthdate.month) : (12 - (birthdate.month - now.month))
+    end
+
+    def days
+      now = Time.now.utc.to_date 
+      days_count = 0
+      for y in birthdate.year+1..now.year
+        for m in birthdate.month+1..now.month
+          days_count += Time.days_in_month(m, y)
+        end
+      end
+      last_month_to_end = 
+        birthdate.month == now.month ? 0 : Time.days_in_month((now - 1.month).month, (now - 1.month).year) - birthdate.day
+      days_count += now.day + last_month_to_end
     end
   end
 end

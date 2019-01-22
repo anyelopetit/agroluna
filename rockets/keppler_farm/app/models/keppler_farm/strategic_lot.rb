@@ -15,5 +15,14 @@ module KepplerFarm
     def self.index_attributes
       %i[name function]
     end
+
+    def self.functions
+      ['breeding', 'reproduction', 'lactating']
+    end
+
+    def cows
+      status_ids = KepplerCattle::Status.where(strategic_lot_id: id).map(&:cow_id)
+      KepplerCattle::Cow.find(status_ids)
+    end
   end
 end

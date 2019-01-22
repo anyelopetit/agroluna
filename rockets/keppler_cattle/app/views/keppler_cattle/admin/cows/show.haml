@@ -46,7 +46,10 @@
                         = image_tag image.url if image.url
                     - elsif attribute.eql?('species') || attribute.eql?('gender')
                       %img.svg-icon{ src: "/assets/keppler_cattle/#{value}" }
-                      = t("keppler-cattle.#{value}")
+                      = t("keppler_cattle.#{value}")
+                    - elsif ['mother_id', 'father_id'].include?(attribute)
+                      = link_to admin_cattle_cow_path(value) do
+                        = cow_parent_id(value).serie_number
                     - else 
                       = sanitize raw value
     // Current Status
@@ -123,8 +126,8 @@
       return json[key] == true ? 'Sí' : 'No'
     } else if (key == 'weight') {
       return `${json[key]} KG`
-    } else if (moment(new Date(json[key]), "YYYY-MM-DDTHH:mm:ss", false).isValid()) {
-      return translateDate(json[key])
+    } else if (moment(json[key], "YYYY-MM-DDTHH:mm:ss", true).isValid() || moment(json[key], "YYYY-MM-DD", true).isValid()) {
+      return moment(json[key])
     } else {
       return json[key]
     }

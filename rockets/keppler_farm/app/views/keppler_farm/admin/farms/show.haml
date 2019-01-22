@@ -1,10 +1,10 @@
 .container
   .row
     .col-lg-2
-      = link_to admin_farm_farms_path, 'data-position': 'bottom', 'data-tooltip': t('keppler-farm.actions.back') do
+      = link_to admin_farm_farms_path, 'data-position': 'bottom', 'data-tooltip': t('keppler.actions.back') do
         .arrow-back.btn.btn-default
           %i.icon-arrow-left
-          = t('keppler-farm.actions.back')
+          = t('keppler.actions.back')
   .show-section
     .row
       .col-lg-6
@@ -13,16 +13,16 @@
             %h3.box-title= t('keppler-farm.models.singularize.farm').humanize
             .box-tools.pull-right
               - if can?(model).update?
-                = link_to edit_admin_farm_farm_path(@farm), class: 'btn btn-box-tool', title: t('keppler-farm.actions.edit') do
+                = link_to edit_admin_farm_farm_path(@farm), class: 'btn btn-box-tool', title: t('keppler.actions.edit') do
                   %i.icon-pencil
               - if can?(model).destroy?
-                = link_to admin_farm_farm_path(@farm), class: 'btn btn-box-tool', title: t('keppler-farm.actions.delete'), method: :delete, data: { confirm: t('keppler-farm.messages.data_confirm') } do
+                = link_to admin_farm_farm_path(@farm), class: 'btn btn-box-tool', title: t('keppler.actions.delete'), method: :delete, data: { confirm: t('keppler-farm.messages.data_confirm') } do
                   %i.icon-trash
 
           .box-body.no-padding
             %table.table
               %tbody
-                - @farm.as_json(except: %w[description position deleted_at]).each do |attribute, value|
+                - @farm.as_json(except: %w[id description position deleted_at]).each do |attribute, value|
                   %tr.list-row
                     %th.display-label= t("activerecord.attributes.#{attribute}".humanize)
                     %td.display-value.fs-body-1.tc-black-2
@@ -34,6 +34,8 @@
                       - elsif value.is_a?(Array)
                         - value.each do |tag|
                           .label.bg-gray= tag
+                      - elsif value.is_a?(Time)
+                        = l value, format: :long
                       - else 
                         = sanitize raw value
       .col-lg-6#operators
@@ -46,7 +48,7 @@
                 = f.input :user_id, collection: @users, label: false, placeholder: 'hola', input_html: { onchange: 'validateOperator()' }
                 = f.input :keppler_farm_farm_id, value: @farm.id, as: :hidden
               .col-sm-4
-                = f.submit :add, value: t('keppler-farm.actions.add'), id: 'add-operator', disabled: true
+                = f.submit :add, value: t('keppler.actions.add'), id: 'add-operator', disabled: true
             .operators-list
               - @assignments.each do |a|
                 .operator-item
@@ -66,10 +68,10 @@
     .add
       = link_to new_admin_farm_farm_photo_path(@farm), class: 'btn-add' do
         +
-        = t('keppler-farm.actions.add_photo')
+        = t('keppler.actions.add_photo')
   %center.box.slice-box#upload-photo
     .box-header.with-border
-      %h3.box-title= t('keppler-farm.actions.upload_photo')
+      %h3.box-title= t('keppler.actions.upload_photo')
     .box-body.box-body-no-padding
       = simple_form_for [:admin, :farm, @farm, @photo], controller: :photos, action: :create do |f|
         .file-uploader
@@ -77,12 +79,12 @@
             = f.input :photo, input_html: { onchange: "validateFileInput()" }
             = f.input :farm_id, input_html: { value: @farm.id }, as: :hidden
             %i.file-icon.bx.bx-file-image
-            %h5.file-text= t('keppler-farm.actions.drop', model: t('keppler-farm.models.singularize.photo'))
+            %h5.file-text= t('keppler.actions.drop', model: t('keppler-farm.models.singularize.photo'))
           %br
           %span (.JPG, .JPEG, .PNG)
           %button{ type: 'submit', id: "upload-file", disabled: true }
             %i.bx.bx-upload
-            = t 'keppler-farm.actions.upload_photo'
+            = t 'keppler.actions.upload_photo'
   -# .photo-toolbar
     - if can?(model).destroy_multiple?
       .toolbar-item
@@ -107,10 +109,10 @@
             .pull-right
               .item-toolbar
                 .item
-                  = link_to edit_admin_farm_farm_photo_path(@farm, photo), class: 'new-menu', title: t('keppler-farm.actions.edit') do
+                  = link_to edit_admin_farm_farm_photo_path(@farm, photo), class: 'new-menu', title: t('keppler.actions.edit') do
                     %i.icon-pencil
                 .item
-                  = link_to admin_farm_farm_photo_path(@farm, photo), class: 'new-menu', title: t('keppler-farm.actions.delete'), method: :delete, data: { confirm: t("keppler-farm.messages.data_confirm") } do
+                  = link_to admin_farm_farm_photo_path(@farm, photo), class: 'new-menu', title: t('keppler.actions.delete'), method: :delete, data: { confirm: t("keppler-farm.messages.data_confirm") } do
                     %i.icon-trash
                 -# .pull-right{style: "margin: 2px 8px 0 0"}
                   - if can?(KepplerFarm::Photo).destroy_multiple?

@@ -40,5 +40,9 @@ module KepplerCattle
       'TORO', 'TORO PADROTE', 'TORO RECELADOR', 'VACA VACÍA', 'VACA PROD.VACIA',
       'VACA VACÍA SIN CRÍA', 'VACA PREÑADA', 'VACA SECA/HORRA']
     end
+
+    def strategic_lot
+      KepplerFarm::StrategicLot.find(strategic_lot_id)
+    end
   end
 end

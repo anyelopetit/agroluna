@@ -32,6 +32,10 @@
               %tbody
                 .form-padding
                   .col-sm-6
+                    = f.input :mother_id, collection: @posible_mothers, label: t('activerecord.attributes.mother_id').humanize
+                  .col-sm-6
+                    = f.input :father_id, collection: @posible_fathers, label: t('activerecord.attributes.father_id').humanize
+                  .col-sm-6
                     = f.input :serie_number, as: :string, label: t('activerecord.attributes.serie_number').humanize
                   .col-sm-6
                     = f.input :short_name, as: :string, label: t('activerecord.attributes.short_name').humanize
@@ -70,8 +74,7 @@
     return xhr.status == "404" ? false : true;
   }
   
-
-  function cattleSelect (option) {
+  function imageSelect (option) {
     var optionTxt = option.text.toLowerCase()
     if (!option.id) return optionTxt;
     var baseUrl = '/assets/keppler_cattle/';
@@ -84,24 +87,47 @@
     );
     return $option;
   };
+  
+  function noImageSelect (option) {
+    var optionTxt = option.text.toLowerCase()
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="cattle-option">' +
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
 
   $(document).ready(function() {
-    $('select#cow_species').select2({
-      placeholder: "#{t('keppler-cattle.messages.choose_species')}",
-      templateResult: cattleSelect,
-      templateSelection: cattleSelect
+    $('#cow_species').select2({
+      placeholder: "#{t('keppler_cattle.messages.choose_species').humanize}",
+      templateResult: imageSelect,
+      templateSelection: imageSelect
     });
 
-    $('select#cow_race').select2({
-      placeholder: "#{t('keppler-cattle.messages.choose_race')}",
-      templateResult: cattleSelect,
-      templateSelection: cattleSelect
+    $('#cow_gender').select2({
+      placeholder: "#{t('keppler_cattle.messages.choose_gender').humanize}",
+      templateResult: imageSelect,
+      templateSelection: imageSelect
     });
 
-    $('select#cow_gender').select2({
-      placeholder: "#{t('keppler-cattle.messages.choose_gender')}",
-      templateResult: cattleSelect,
-      templateSelection: cattleSelect
+    $('#cow_race').select2({
+      placeholder: "#{t('keppler_cattle.messages.choose_race').humanize}",
+      templateResult: noImageSelect,
+      templateSelection: noImageSelect
+    });
+
+    $('#cow_mother_id').select2({
+      placeholder: "#{t('keppler_cattle.messages.choose_mother').humanize}",
+      templateResult: noImageSelect,
+      templateSelection: noImageSelect
+    });
+
+    $('#cow_father_id').select2({
+      placeholder: "#{t('keppler_cattle.messages.choose_father').humanize}",
+      templateResult: noImageSelect,
+      templateSelection: noImageSelect
     });
   });
 

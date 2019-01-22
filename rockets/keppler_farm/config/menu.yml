@@ -6,12 +6,12 @@ menu:
     icon: rocket
     model: User
     submenu:
-      - strategic_lot:
-          name: strategic lot
-          url_path: /admin/farm/strategic_lots
-          icon: layers
-          current: ['/admin/farm/strategic_lots']
-          model: KepplerFarm::StrategicLot
+    #   - strategic_lot:
+    #       name: strategic lot
+    #       url_path: /admin/farm/strategic_lots
+    #       icon: layers
+    #       current: ['/admin/farm/strategic_lots']
+    #       model: KepplerFarm::StrategicLot
 
     #   - photo:
     #       name: photo
@@ -38,5 +38,5 @@ menu:
       #     name: + Add new module
       #     url_path: /url_path
       #     current: ['/current_path']
-      #     enviroment: development
+      #     environment: development
       #     model: User

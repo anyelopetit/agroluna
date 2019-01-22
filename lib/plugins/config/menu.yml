@@ -10,5 +10,5 @@ menu:
       #     name: + Add new module
       #     url_path: /url_path
       #     current: ['/current_path']
-      #     enviroment: development
+      #     environment: development
       #     model: User

@@ -47,6 +47,7 @@ en:
       weight: weight
       years: years
       months: months
+      days: borned days
       ubication: ubication
       corporal_condition: corporal condition
       reproductive: reproductive
@@ -58,19 +59,10 @@ en:
       typology: typology
       strategic_lot_id: strategic lot
       user_id: responsable
-      comments: comentarios
+      comments: comments
+      mother_id: mother
+      father_id: father
     errors:
       messages:
   errors:
   helpers:
-  keppler-cattle:
-    # species:
-    bovine: Bovine
-    goat: Goat
-    # genders:
-    male: Male
-    female: Female
-    messages:
-      choose_species: Choose a species
-      choose_race: Choose a race
-      choose_gender: Choose a gender

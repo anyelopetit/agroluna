@@ -20,14 +20,17 @@
               %tbody
                 .form-padding
                   = f.input :cow_id, include_blank: false, input_html: { value: @cow.id }, as: :hidden
-                  .col-sm-12.col-md-4.col-lg-4
+                  .col-sm-12.col-md-3.col-lg-3
                     = f.input :weight, input_html: { min: 0, value: @last_status.weight }, placeholder: '0.00 KG', label: t('activerecord.attributes.weight').humanize
-                  .col-sm-12.col-md-4.col-lg-4
+                  .col-sm-12.col-md-3.col-lg-3
                     = f.input :years, input_html: { min: 0, value: @cow.years }, placeholder: '0', disabled: true, label: t('activerecord.attributes.years').humanize
                     = f.input :years, input_html: { min: 0, value: @cow.years }, placeholder: '0', as: :hidden, label: t('activerecord.attributes.years').humanize
-                  .col-sm-12.col-md-4.col-lg-4
+                  .col-sm-12.col-md-3.col-lg-3
                     = f.input :months, input_html: { min: 0, value: @cow.months }, placeholder: '0', disabled: true, label: t('activerecord.attributes.months').humanize
                     = f.input :months, input_html: { min: 0, value: @cow.months }, placeholder: '0', as: :hidden, label: t('activerecord.attributes.months').humanize
+                  .col-sm-12.col-md-3.col-lg-3
+                    = f.input :days, input_html: { min: 0, value: @cow.days }, placeholder: '0', disabled: true, label: t('activerecord.attributes.days').humanize
+                    = f.input :days, input_html: { min: 0, value: @cow.days }, placeholder: '0', as: :hidden, label: t('activerecord.attributes.days').humanize
                   .col-sm-12.col-md-6
                     = f.input :ubication, input_html: { value: @last_status.ubication }, collection: @ubications, label: t('activerecord.attributes.ubication').humanize
                   .col-sm-12.col-md-6
@@ -53,7 +56,7 @@
                   .col-sm-12.col-md-6.col-lg-6
                     = f.input :user_id, input_html: { value: current_user.id }, as: :hidden, label: t('activerecord.attributes.user_id').humanize
                   .col-sm-12
-                    = f.input :comments, label: t('activerecord.attributes.comments').humanize#, as: :ckeditor, input_html: { ckeditor: { toolbar: 'mini' } }
+                    = f.input :comments, label: t('activerecord.attributes.comments').humanize#
                   .col-sm-12
                     .pull-right
                       = f.button :submit, t('keppler.actions.save'), name: '_save', class: 'btn-primary'

@@ -1,11 +1,6 @@
+
 es:
-  keppler:
-    sidebar-menu:
-      keppler-farm: Fincas
-      keppler-farm-submenu:
-        strategic-lot: Lotes Estratégicos
-        process: Procesos
-        farm: Fincas
+  keppler-farm:
     permissions:
     models:
       singularize:
@@ -37,15 +32,3 @@ es:
       add_photo: Añadir Foto
       upload_photo: Cargar Foto
       drop: Arrastra un(a) %{model} o presiona aquí
-  activerecord:
-    attributes:
-      processes: procesos
-      photos: fotos
-      function: función
-      title: título
-      created_at: creado
-      updated_at: actualizado
-    errors:
-      messages:
-  errors:
-  helpers:

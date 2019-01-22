@@ -208,6 +208,7 @@ es:
       upload_records: Cargar registros
       drop_files: Arrastra un archivo o presiona aquí
       reload_page: Recargar página
+      go_to_app: Ir a la app
       download:
         csv: Descargar CSV
         xls: Descargar XLS

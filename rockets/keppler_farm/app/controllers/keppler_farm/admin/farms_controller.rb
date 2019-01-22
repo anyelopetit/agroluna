@@ -89,10 +89,10 @@ module KepplerFarm
         )
 
         if @assignment.exists?
-          flash[:error] = t('keppler-farm.messages.operator.not_assigned', operator: @assignment.user.name)
+          flash[:error] = t('keppler.messages.operator.not_assigned', operator: @assignment.user.name)
         else
           flash[:notice] = 
-            t('keppler-farm.messages.operator.assigned', operator: @assignment.user.name) if @assignment.save!
+            t('keppler.messages.operator.assigned', operator: @assignment.user.name) if @assignment.save!
         end
         redirect_to action: :show, id: params[:farm_id]
       end
@@ -106,12 +106,12 @@ module KepplerFarm
         if @assignment.try(:exists?)
           if @assignment.destroy!
             flash[:notice] = 
-              t('keppler-farm.messages.operator.deleted', operator: @assignment.user.name) if @assignment.destroy!
+              t('keppler.messages.operator.deleted', operator: @assignment.user.name) if @assignment.destroy!
           else
-            flash[:error] = t('keppler-farm.messages.operator.not_deleted', operator: a.user.name)
+            flash[:error] = t('keppler.messages.operator.not_deleted', operator: a.user.name)
           end
         else
-          flash[:error] = t('keppler-farm.messages.operator.doesnt_exist', operator: a.user.name)
+          flash[:error] = t('keppler.messages.operator.doesnt_exist', operator: a.user.name)
         end
         redirect_to action: :show, id: params[:farm_id]
       end

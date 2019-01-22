@@ -202,6 +202,7 @@ en:
       reload_page: Reload page
       download_records: Download records
       upload_records: Upload records
+      go_to_app: Go to App
       download:
         csv: Download CSV
         xls: Download XLS

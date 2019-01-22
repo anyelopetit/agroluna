@@ -1,0 +1,30 @@
+.nav-tabs {
+  padding: 0 5%;
+
+  .nav-item {
+    margin-right: 15px;
+  }
+
+  .nav-link {
+    border: 0;
+    text-align: left;
+    padding: 8px 16px 8px 0;
+    position: relative;
+    
+    &.active {
+      background-color: transparent;
+    }
+  
+    &.active::before {
+      @include pseudo();
+      background-color: $primary;
+      bottom: 0;
+      height: 3px;
+      width: 50%;
+    }
+  
+    &:hover {
+      border: 0;
+    }
+  }
+}

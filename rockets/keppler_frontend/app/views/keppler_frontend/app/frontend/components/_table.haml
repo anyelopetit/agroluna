@@ -1,16 +1,29 @@
-%table
-  %thead
-    %tr
-      %th Column 1
-      %th Column 2
-      %th Column 3
-      %th Column 4
-      %th Column 5
-  %tbody
-    - 5.times do
+.container_custom
+  %a.float-right.mt-4.mb-4{ href: '' }
+    %button.btn.btn_custom.btn--filled
+      %i.icofont-plus
+      Agregar
+  %table
+    %thead
       %tr
-        %td Cell 1
-        %td Cell 2
-        %td Cell 3
-        %td Cell 4
-        %td Cell 5
+        %th
+          %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
+          %label{for: "styled-checkbox-all"}
+        %th Column 2
+        %th Column 3
+        %th Column 4
+        %th Actions
+    %tbody
+      - 5.times do |x|
+        %tr
+          %td.checkboxes
+            %input.styled-checkbox{type: "checkbox", id: "styled-checkbox-#{x}"}
+            %label{for: "styled-checkbox-#{x}"}
+          %td Cell 2
+          %td Cell 3
+          %td Cell 4
+          %td.actions
+            %a{ href: '' }
+              %span.icofont-eye
+            %a{ href: '' }
+              %span.icofont-ui-edit

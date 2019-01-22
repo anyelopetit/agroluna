@@ -1,8 +1,7 @@
 .profile_banner {
   @include bg(cover, no-repeat, center);
   width: 100%;
-  height: 60vh;
-  margin-top: 30px;
+  height: 50vh;
   position: relative;
 
   &::after {
@@ -16,7 +15,8 @@
 .profile_box {
   position: absolute;
   left: 30px;
-  bottom: 50px;
+  bottom: 30px;
+  padding: 40px;
   z-index: 2;
 
   .profile_name, .profile_activity {
@@ -25,9 +25,11 @@
 
   .profile_name {
     @include font(50px, $bold);
+    font-family: $lato;
   }
 
   .profile_activity {
     @include font(25px, $regular);
+    font-family: $lato;
   }
 }

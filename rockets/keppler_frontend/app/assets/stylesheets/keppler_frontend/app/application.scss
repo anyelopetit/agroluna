@@ -4,10 +4,12 @@
 //  @import 'bootstrap';
  @import 'slick';
  @import 'slick-theme';
+ @import 'icofont';
  @import 'utils/mixins';
  @import 'base/*';
  @import 'partials/*';
  @import 'views/*';
+ @import 'main';
 
 
 @import 'components/body';
@@ -17,6 +19,7 @@
 @import 'components/buttons';
 @import 'components/form';
 @import 'components/table';
+@import 'components/tabs';
 
 @import 'components/profile-banner';
 @import 'components/multiple-carousel';

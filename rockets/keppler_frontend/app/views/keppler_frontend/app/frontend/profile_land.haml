@@ -1,19 +1,6 @@
-!!!
-:ruby
-%html{ lang: 'en' }
-  %head
-    = render 'keppler_frontend/app/frontend/partials/head'
-
-  %body
-    = render 'keppler_frontend/app/frontend/components/navbar', farm: @farm, farms: @farms
-    = render 'keppler_frontend/app/frontend/components/profile-banner', farm: @farm
-    .container_custom
-      .description_land
-        %h1 Descripción de la finca
-        %p= raw @farm&.description
-    = render 'keppler_frontend/app/frontend/components/multiple-carousel', farm: @farm
-    %script{ src: 'https://code.jquery.com/jquery-3.3.1.min.js' }
-    %script{ src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' }
-    %script{ src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' }
-    %script{ src: '/assets/keppler_frontend/app/slick.min.js' }
-    %script{ src: '/assets/keppler_frontend/app/main.js' }
+= render 'keppler_frontend/app/frontend/components/profile-banner', farm: @farm
+.container_custom
+  .description_land
+    %h1 Descripción de la finca
+    %p= raw @farm&.description
+= render 'keppler_frontend/app/frontend/components/multiple-carousel', farm: @farm

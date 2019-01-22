@@ -1,0 +1,155 @@
+= simple_form_for [:admin, :cattle, @cow] do |f|
+  .container
+    .row
+      .col-lg-2
+        = link_to admin_cattle_cows_path, 'data-position': 'bottom', 'data-tooltip': t('keppler.actions.back') do
+          .arrow-back.btn.btn-default
+            %i.fa.fa-angle-left
+            = t('keppler.actions.back')
+    .row
+      .col-sm-12.col-md-4
+        %center.box.slice-box#upload-photo
+          .box-header.with-border
+            %h3.box-title= t('keppler.actions.upload_photo')
+          .box-body.box-body-no-padding
+            .file-uploader
+              .file-container{ class: ('already-uploaded' unless @cow.image&.url.blank?), style: ("background-image: url(#{f.object&.image&.url})" unless @cow.image&.url.blank?) }
+                = f.input :image, input_html: { onchange: "validateFileInput()" }
+                %i.file-icon.bx.bx-file-image
+                %h5.file-text= t('keppler.actions.drop', model: t('keppler-farm.models.singularize.photo'))
+              %br
+              %span (.JPG, .JPEG, .PNG)
+
+      .col-sm-12.col-md-8
+        .box.slice-box
+          .box-header.with-border
+            %h3.box-title= t('keppler.models.pluralize.cows').humanize
+            .box-tools.pull-right
+              %a.btn.btn-box-tool{'data-widget': 'collapse', type: 'button'}
+                %i.fa.fa-minus
+          .box-body
+            %table.table.table-bordered
+              %tbody
+                .form-padding
+                  .col-sm-6
+                    = f.input :mother_id, collection: @posible_mothers, label: t('activerecord.attributes.mother_id').humanize
+                  .col-sm-6
+                    = f.input :father_id, collection: @posible_fathers, label: t('activerecord.attributes.father_id').humanize
+                  .col-sm-6
+                    = f.input :serie_number, as: :string, label: t('activerecord.attributes.serie_number').humanize
+                  .col-sm-6
+                    = f.input :short_name, as: :string, label: t('activerecord.attributes.short_name').humanize
+                  .col-sm-12
+                    = f.input :long_name, as: :string, label: t('activerecord.attributes.long_name').humanize
+                  .col-sm-6
+                    = f.input :species, collection: @species, include_blank: false, label: t('activerecord.attributes.species').humanize
+                  .col-sm-6
+                    = f.input :gender, collection: @genders, include_blank: false, label: t('activerecord.attributes.gender').humanize
+                  .col-sm-6
+                    = f.input :race, collection: @races, include_blank: false, label: t('activerecord.attributes.race').humanize
+                  .col-sm-6
+                    = f.input :birthdate, as: :string, input_html: { class: 'datepicker' }, label: t('activerecord.attributes.birthdate').humanize
+                  .col-sm-6
+                    = f.input :coat_color, as: :string, label: t('activerecord.attributes.coat_color').humanize
+                  .col-sm-6
+                    = f.input :nose_color, as: :string, label: t('activerecord.attributes.nose_color').humanize
+                  .col-sm-6
+                    = f.input :tassel_color, as: :string, label: t('activerecord.attributes.tassel_color').humanize
+                  .col-sm-6
+                    = f.input :provenance, as: :string, label: t('activerecord.attributes.provenance').humanize
+                  .col-sm-12
+                    = f.input :observations, label: t('activerecord.attributes.observations').humanize
+                  .col-sm-12
+                    .pull-right
+                      = f.button :submit, t('keppler.actions.save'), name: '_save', class: 'btn-primary'
+                      -# = f.button :submit, t('keppler.actions.save_and_add_another'), name: '_add_other'
+:javascript
+  window.I18n = #{current_translations.to_json.html_safe}
+
+  function doesFileExist(urlToFile) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('HEAD', urlToFile, false);
+    xhr.send();
+
+    return xhr.status == "404" ? false : true;
+  }
+  
+  function imageSelect (option) {
+    var optionTxt = option.text.toLowerCase()
+    if (!option.id) return optionTxt;
+    var baseUrl = '/assets/keppler_cattle/';
+    var url = baseUrl + (doesFileExist(baseUrl + optionTxt) ? optionTxt : '/ternera')
+    var $option = $(
+      '<span class="cattle-option">' +
+        `<div style="background-image: url(${url})" class="img-cattle-list"></div>` + 
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+  
+  function noImageSelect (option) {
+    var optionTxt = option.text.toLowerCase()
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="cattle-option">' +
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+
+  $(document).ready(function() {
+    $('#cow_species').select2({
+      placeholder: "#{t('keppler_cattle.messages.choose_species').humanize}",
+      templateResult: imageSelect,
+      templateSelection: imageSelect
+    });
+
+    $('#cow_gender').select2({
+      placeholder: "#{t('keppler_cattle.messages.choose_gender').humanize}",
+      templateResult: imageSelect,
+      templateSelection: imageSelect
+    });
+
+    $('#cow_race').select2({
+      placeholder: "#{t('keppler_cattle.messages.choose_race').humanize}",
+      templateResult: noImageSelect,
+      templateSelection: noImageSelect
+    });
+
+    $('#cow_mother_id').select2({
+      placeholder: "#{t('keppler_cattle.messages.choose_mother').humanize}",
+      templateResult: noImageSelect,
+      templateSelection: noImageSelect
+    });
+
+    $('#cow_father_id').select2({
+      placeholder: "#{t('keppler_cattle.messages.choose_father').humanize}",
+      templateResult: noImageSelect,
+      templateSelection: noImageSelect
+    });
+  });
+
+:scss
+
+
+  .cattle-list {
+    height: 187px;
+    overflow: scroll;
+  }
+
+  .cattle-option {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+
+    .img-cattle-list {
+      height: 20px;
+      margin: 0 5px;
+      width: 20px;
+      display: inline-flex;
+      background-size: cover;
+      background-position: top center;
+    }
+  }

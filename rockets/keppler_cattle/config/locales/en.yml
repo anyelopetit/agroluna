@@ -1,0 +1,68 @@
+en:
+  keppler:
+    sidebar-menu:
+      cattle: Cattle
+      cattle-submenu:
+        cow: Cow
+    permissions:
+    models:
+      singularize:
+        status: status
+        cow: cow
+      pluralize:
+        statuses: statuses
+        cows: cows
+    modules:
+      admin/status: Status
+      admin/cow: Cow
+    messages:
+    actions:
+    # species:
+    bovine: Bovine
+    goat: Goat
+    # genders:
+    male: Male
+    female: Female
+    messages:
+      choose_species: Choose a species
+      choose_race: Choose a race
+      choose_gender: Choose a gender
+      of_series: of series
+      series: series
+
+  activerecord:
+    attributes:
+      serie_number: serie number
+      short_name: short name
+      long_name: long name
+      species: species
+      gender: gender
+      birthdate: birthdate
+      race: race
+      coat_color: coat color
+      nose_color: nose color
+      tassel_color: tassel color
+      provenance: provenance
+      observations: observations
+      weight: weight
+      years: years
+      months: months
+      days: borned days
+      ubication: ubication
+      corporal_condition: corporal condition
+      reproductive: reproductive
+      defiant: defiant
+      pregnant: pregnant
+      lactating: lactating
+      dead: dead
+      deathdate: deathdate
+      typology: typology
+      strategic_lot_id: strategic lot
+      user_id: responsable
+      comments: comments
+      mother_id: mother
+      father_id: father
+    errors:
+      messages:
+  errors:
+  helpers:

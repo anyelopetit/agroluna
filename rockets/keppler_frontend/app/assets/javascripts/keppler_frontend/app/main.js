@@ -23,3 +23,7 @@ $('.multiple-items').slick({
     }
   ]
 });
+
+$('.single-item').slick({
+  infinite: false
+});

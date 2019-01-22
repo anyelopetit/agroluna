@@ -57,6 +57,19 @@
   pointer-events: none;
 }
 
+.ui-button.ui-state-disabled,
+.ui-button.ui-state-disabled:hover, 
+.ui-button.ui-state-disabled:active {
+}
+
+td.ui-datepicker-unselectable.ui-state-disabled span.ui-state-default {
+  background: #fafafa;
+  border: transparent;
+  color: #999;
+  font-weight: normal;
+  transition: .2s ease-in-out;
+}
+
 // Icons
 .ui-icon {
   background-repeat: no-repeat;

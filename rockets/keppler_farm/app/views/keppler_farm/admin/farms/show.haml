@@ -10,7 +10,7 @@
       .col-lg-6
         .box.slice-box.p-15
           .box-header.with-border
-            %h3.box-title= t('keppler.models.singularize.farm').humanize
+            %h3.box-title= t('keppler-farm.models.singularize.farm').humanize
             .box-tools.pull-right
               - if can?(model).update?
                 = link_to edit_admin_farm_farm_path(@farm), class: 'btn btn-box-tool', title: t('keppler.actions.edit') do
@@ -22,9 +22,9 @@
           .box-body.no-padding
             %table.table
               %tbody
-                - @farm.as_json(except: %w[description position deleted_at]).each do |attribute, value|
+                - @farm.as_json(except: %w[id description position deleted_at]).each do |attribute, value|
                   %tr.list-row
-                    %th.display-label= t("activerecord.attributes.#{attribute}".humanize)
+                    %th.display-label= t("activerecord.attributes.#{attribute}").humanize
                     %td.display-value.fs-body-1.tc-black-2
                       - if @attachments.dig('images', 'names').include?(attribute)
                         = image_tag value.url if value.url
@@ -34,6 +34,8 @@
                       - elsif value.is_a?(Array)
                         - value.each do |tag|
                           .label.bg-gray= tag
+                      - elsif value.is_a?(Time)
+                        = l value, format: :long
                       - else 
                         = sanitize raw value
       .col-lg-6#operators
@@ -77,7 +79,7 @@
             = f.input :photo, input_html: { onchange: "validateFileInput()" }
             = f.input :farm_id, input_html: { value: @farm.id }, as: :hidden
             %i.file-icon.bx.bx-file-image
-            %h5.file-text= t('keppler.actions.drop', model: t('keppler.models.singularize.photo'))
+            %h5.file-text= t('keppler.actions.drop', model: t('keppler-farm.models.singularize.photo'))
           %br
           %span (.JPG, .JPEG, .PNG)
           %button{ type: 'submit', id: "upload-file", disabled: true }
@@ -151,6 +153,7 @@
     );
     return $user;
   };
+
   $(document).ready(function() {
     $('select#assignment_user_id').select2({
       placeholder: "Choose a person",

@@ -19,7 +19,7 @@ module KepplerFarm
     has_many :assignments, through: :users
 
     def self.index_attributes
-      %i[logo title photos]
+      %i[logo title photos strategic_lots]
     end
   end
 end

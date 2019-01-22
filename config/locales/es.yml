@@ -176,6 +176,7 @@ es:
     actions:
       documentation: Documentación
       created: Creado
+      update: Actualizar
       updated: Actualizado
       add: Agregar
       new: Nuevo
@@ -207,6 +208,7 @@ es:
       upload_records: Cargar registros
       drop_files: Arrastra un archivo o presiona aquí
       reload_page: Recargar página
+      go_to_app: Ir a la app
       download:
         csv: Descargar CSV
         xls: Descargar XLS
@@ -285,6 +287,12 @@ es:
       port: Puerto
       domain_name: Dominio
       url: URL
+      processes: procesos
+      photos: fotos
+      function: función
+      title: título
+      created_at: creado
+      updated_at: actualizado
       meta_tags: 'Meta Tags'
       script: 'Script'
       campaign_name: Campaña

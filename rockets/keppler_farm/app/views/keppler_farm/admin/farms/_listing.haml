@@ -22,7 +22,11 @@
                 = image_tag image.photo.try(:url), style: 'margin: 0 2px' if image.photo.try(:url)
             %center.add-more-photos{ style: 'margin: 0 2px' }
               .bx.bx-plus-circle
-            
+      - elsif attribute.eql?(:strategic_lots)
+        %td
+          = link_to(admin_farm_farm_strategic_lots_path(object), { style: "display: flex;" }) do
+            .btn.btn-default
+              = t('activerecord.attributes.strategic_lots')
       - elsif object.try(attribute).is_a?(Integer)
         %td
           = link_to({ action: :show, id: object.id, search: @query }, { class: 'show-row' }) do

@@ -7,7 +7,10 @@
 .img-show {
   background-color: #fff;
   box-shadow: 2px 2px 5px 0 $transparent-black-2;
+  max-height: 50vh;
   max-width: 50%;
+  min-height: 30vh;
+  min-width: 300px;
   position: absolute;
 }
 
@@ -16,6 +19,16 @@
     cursor: zoom-in;
     max-height: 100px;
     max-width: 100%;
+  }
+  
+  .display-value.fs-body-1.tc-black-2 {
+    a {
+      color: $keppler-color;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
 

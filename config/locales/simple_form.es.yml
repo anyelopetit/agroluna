@@ -85,6 +85,7 @@ es:
         script: 'Script'
         campaign_name: Campaña
         script: Script
+        function: Función
       user:
         new:
           email: 'Correo para acceder.'

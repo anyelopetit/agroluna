@@ -1,0 +1,14 @@
+en:
+  keppler_cattle:
+    # species:
+    bovine: Bovine
+    goat: Goat
+    # genders:
+    male: Male
+    female: Female
+    messages:
+      choose_species: Choose a species
+      choose_race: Choose a race
+      choose_gender: Choose a gender
+      choose_mother: Choose a mother
+      choose_father: Choose a father

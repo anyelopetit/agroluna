@@ -3,20 +3,24 @@ en:
     sidebar-menu:
       keppler-farm: Farms
       keppler-farm-submenu:
-        photo: Photo
+        strategic-lot: Strategic lots
         process: Processes
         farm: Farms
+  keppler-farm:
     permissions:
     models:
       singularize:
+        strategic_lot: strategic lot
         photo: photo
         process: process
         farm: farm
       pluralize:
+        strategic_lots: strategic lots
         photos: photos
         processes: processes
         farms: farms
     modules:
+      admin/strategic-lot: Strategic lot
       admin/photo: Photo
       admin/process: Process
       admin/farm: Farm
@@ -37,6 +41,7 @@ en:
   activerecord:
     attributes:
       processes: processes
+      function: function
     errors:
       messages:
   errors:

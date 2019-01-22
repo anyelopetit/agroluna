@@ -1,11 +1,5 @@
 en:
-  keppler:
-    sidebar-menu:
-      keppler-farm: Farms
-      keppler-farm-submenu:
-        strategic-lot: Strategic lots
-        process: Processes
-        farm: Farms
+  keppler_farm:
     permissions:
     models:
       singularize:
@@ -37,11 +31,3 @@ en:
       add_photo: Add Photo
       upload_photo: Upload Photo
       drop: Drop a %{model} or press here
-  activerecord:
-    attributes:
-      processes: processes
-      function: function
-    errors:
-      messages:
-  errors:
-  helpers:

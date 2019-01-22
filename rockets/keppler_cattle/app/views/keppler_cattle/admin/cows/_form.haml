@@ -10,13 +10,13 @@
       .col-sm-12.col-md-4
         %center.box.slice-box#upload-photo
           .box-header.with-border
-            %h3.box-title= t('keppler-farm.actions.upload_photo')
+            %h3.box-title= t('keppler.actions.upload_photo')
           .box-body.box-body-no-padding
             .file-uploader
               .file-container{ class: ('already-uploaded' unless @cow.image&.url.blank?), style: ("background-image: url(#{f.object&.image&.url})" unless @cow.image&.url.blank?) }
                 = f.input :image, input_html: { onchange: "validateFileInput()" }
                 %i.file-icon.bx.bx-file-image
-                %h5.file-text= t('keppler-farm.actions.drop', model: t('keppler-farm.models.singularize.photo'))
+                %h5.file-text= t('keppler.actions.drop', model: t('keppler-farm.models.singularize.photo'))
               %br
               %span (.JPG, .JPEG, .PNG)
 

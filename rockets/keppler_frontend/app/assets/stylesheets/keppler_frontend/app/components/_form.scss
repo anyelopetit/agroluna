@@ -5,6 +5,7 @@
   border-right: 0 !important;
   box-shadow: none;
   font-size: 1.5rem !important;
+  margin-bottom: 30px;
 
   &:focus {
     border-top: 0;
@@ -205,5 +206,74 @@
       4px -6px 0 white,
       4px -8px 0 white;
     transform: rotate(45deg);
+  }
+}
+
+.switch-box {
+  margin-bottom: 0;
+}
+
+.switch {
+  display: inline-block;
+  height: 20px;
+  margin-bottom: 0;
+  position: relative;
+  width: 35px;
+
+  input {
+    display: none;
+  }
+
+  .slider {
+    background-color: $primary;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+
+    &::before {
+      background-color: white;
+      bottom: 4px;
+      content: '';
+      height: 12px;
+      left: 4px;
+      position: absolute;
+      transition: .4s;
+      width: 12px;
+    }
+
+    &.round {
+      border-radius: 34px;
+    }
+
+    &.round::before {
+      border-radius: 50%;
+    }
+  }
+
+  .active + .slider {
+    // background-color: $keppler-color;
+    // box-shadow: 0 0 1px $keppler-color;
+
+    &::before {
+      transform: translateX(16px);
+    }
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .no-visible {
+    display: none;
+  }
+
+  .row-selectable:hover {
+    background-color: white;
+    cursor: pointer;
+    transition: all ease .3s;
   }
 }

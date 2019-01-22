@@ -162,14 +162,23 @@
                       %label.select_label{for: "tipologia-#{x}"} tipologia #{x}
                 %label.select_expandLabel{for: "tipologia"}
         .col-lg-3
-          %label.switch-box{ style: 'padding-top: 5px; padding-right: 0px' }
-            %label.switch
-              %input
-              %input{ type: 'hidden' }
-              %input{ type: 'checkbox' }
-              %span.slider.round
+          %label.label_custom--strong Preñada
+          %label.keppler-switch
+            %input#status_pregnant{checked: "checked", name: "status[pregnant]", type: "checkbox", value: "false"}/
+            %span.slider.round
+            %label.inline-label
         .col-lg-3
+          %label.label_custom--strong Lactando
+          %label.keppler-switch
+            %input#status_pregnant{checked: "checked", name: "status[lactating]", type: "checkbox", value: "false"}/
+            %span.slider.round
+            %label.inline-label
         .col-lg-3
+          %label.label_custom--strong Muerto
+          %label.keppler-switch
+            %input#status_pregnant{checked: "checked", name: "status[dead]", type: "checkbox", value: "false"}/
+            %span.slider.round
+            %label.inline-label
         .col-lg-3
           .form-group
             %label.label_custom--strong Fecha de muerte
@@ -183,3 +192,15 @@
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-save
               Guardar
+:javascript
+  $('.keppler-switch').click(function(event) {
+    event.preventDefault()
+    var input = $(this).find('input')
+    var label = $(this).find('.inline-label')
+    input
+      .toggleClass('active')
+      .val(input.hasClass('active'))
+    label
+      .toggleClass('active')
+      //.text(label.hasClass('active'))
+  })

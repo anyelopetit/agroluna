@@ -7,6 +7,8 @@ class CreateKepplerFarmPhotos < ActiveRecord::Migration[5.2]
       t.integer :position
       t.integer :farm_id
       t.datetime :deleted_at
+
+      t.timestamps
     end
   end
 end

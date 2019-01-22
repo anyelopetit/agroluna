@@ -3,19 +3,24 @@ es:
     sidebar-menu:
       keppler-farm: Fincas
       keppler-farm-submenu:
+        strategic-lot: Lotes Estratégicos
         process: Procesos
         farm: Fincas
+  keppler-farm:
     permissions:
     models:
       singularize:
+        strategic_lot: lote estratégico
         photo: foto
         process: proceso
         farm: finca
       pluralize:
+        strategic_lots: lotes estratégicos
         photos: fotos
         processes: procesos
         farms: fincas
     modules:
+      admin/strategic-lot: Lote estratégico
       admin/photo: Fotos
       admin/process: Procesos
       admin/farm: Fincas
@@ -23,7 +28,7 @@ es:
       operator:
         assigned: El usuario %{operator} ha sido asignado como operador
         not_assigned: El usuario %{operator} no pudo ser asignado como operador
-        deleted: El perador %{operator} ha sido eliminado
+        deleted: El operador %{operator} ha sido eliminado
         not_deleted: No se pudo eliminar operador %{operator}
         doesnt_exist: El operador %{operator} no existe
       photo:
@@ -36,6 +41,11 @@ es:
   activerecord:
     attributes:
       processes: procesos
+      photos: fotos
+      function: función
+      title: título
+      created_at: creado
+      updated_at: actualizado
     errors:
       messages:
   errors:

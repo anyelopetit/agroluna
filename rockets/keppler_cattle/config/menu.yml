@@ -1,0 +1,14 @@
+menu:
+  keppler_cattle:
+    name: Cattle
+    current: ['/']
+    url_path: /
+    icon: rocket
+    model: User
+    submenu:
+      - cow:
+          name: cow
+          url_path: /admin/cattle/cows
+          icon: layers
+          current: ['/admin/cattle/cows']
+          model: KepplerCattle::Cow

@@ -4,7 +4,7 @@
       .listing.col-lg-12.col-xs-12
         %section.content-header.index-header
           %h1
-            = t("keppler.models.pluralize.<%= plural_table_name %>").humanize
+            = t("keppler-farm.models.pluralize.<%= plural_table_name %>").humanize
           = entries(@total, @objects)
         %section.content-actions
           .toolbar
@@ -23,7 +23,7 @@
                 = link_to '#', class: 'tool-btn', title: t('keppler.actions.upload_records'), id: 'upload' do
                   %i.icon-cloud-upload
             .toolbar-item
-              %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+              %a.tool-btn{ 'data-confirm': t('keppler-farm.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
                 %i.icon-trash
           - if can?(model).create?
             .add
@@ -41,7 +41,7 @@
                 - if @objects.size.zero?
                   %tr
                     %th.not-records.center
-                      %h6= t('keppler.messages.not_found_records', model: t('keppler.models.pluralize.<%= plural_table_name %>'))
+                      %h6= t('keppler-farm.messages.not_found_records', model: t('keppler-farm.models.pluralize.<%= plural_table_name %>'))
 
                 - else
                   %tr

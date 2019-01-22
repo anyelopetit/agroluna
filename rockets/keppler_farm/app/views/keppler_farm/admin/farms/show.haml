@@ -10,19 +10,19 @@
       .col-lg-6
         .box.slice-box.p-15
           .box-header.with-border
-            %h3.box-title= t('keppler.models.singularize.farm').humanize
+            %h3.box-title= t('keppler-farm.models.singularize.farm').humanize
             .box-tools.pull-right
               - if can?(model).update?
                 = link_to edit_admin_farm_farm_path(@farm), class: 'btn btn-box-tool', title: t('keppler.actions.edit') do
                   %i.icon-pencil
               - if can?(model).destroy?
-                = link_to admin_farm_farm_path(@farm), class: 'btn btn-box-tool', title: t('keppler.actions.delete'), method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
+                = link_to admin_farm_farm_path(@farm), class: 'btn btn-box-tool', title: t('keppler.actions.delete'), method: :delete, data: { confirm: t('keppler-farm.messages.data_confirm') } do
                   %i.icon-trash
 
           .box-body.no-padding
             %table.table
               %tbody
-                - @farm.as_json(except: %w[description position deleted_at]).each do |attribute, value|
+                - @farm.as_json(except: %w[id description position deleted_at]).each do |attribute, value|
                   %tr.list-row
                     %th.display-label= t("activerecord.attributes.#{attribute}".humanize)
                     %td.display-value.fs-body-1.tc-black-2
@@ -34,6 +34,8 @@
                       - elsif value.is_a?(Array)
                         - value.each do |tag|
                           .label.bg-gray= tag
+                      - elsif value.is_a?(Time)
+                        = l value, format: :long
                       - else 
                         = sanitize raw value
       .col-lg-6#operators
@@ -52,7 +54,7 @@
                 .operator-item
                   .operator-avatar= image_tag a.user.avatar.url || '/assets/admin/avatar_keppler'
                   .operator-name= a.user.name
-                  = link_to({ action: :delete_assignment, farm_id: @farm.id, user_id: a.user.id }, { method: :delete, class: 'delete-operator', data: { confirm: t('keppler.messages.data_confirm') } }) do
+                  = link_to({ action: :delete_assignment, farm_id: @farm.id, user_id: a.user.id }, { method: :delete, class: 'delete-operator', data: { confirm: t('keppler-farm.messages.data_confirm') } }) do
                     %i.bx.bx-trash
 
       .col-lg-12
@@ -77,7 +79,7 @@
             = f.input :photo, input_html: { onchange: "validateFileInput()" }
             = f.input :farm_id, input_html: { value: @farm.id }, as: :hidden
             %i.file-icon.bx.bx-file-image
-            %h5.file-text= t('keppler.actions.drop', model: t('keppler.models.singularize.photo'))
+            %h5.file-text= t('keppler.actions.drop', model: t('keppler-farm.models.singularize.photo'))
           %br
           %span (.JPG, .JPEG, .PNG)
           %button{ type: 'submit', id: "upload-file", disabled: true }
@@ -93,7 +95,7 @@
               %span.cr
                 %i.cr-icon.glyphicon.glyphicon-ok
     .toolbar-item
-      %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+      %a.tool-btn{ 'data-confirm': t('keppler-farm.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
         %i.icon-trash
 
 
@@ -110,7 +112,7 @@
                   = link_to edit_admin_farm_farm_photo_path(@farm, photo), class: 'new-menu', title: t('keppler.actions.edit') do
                     %i.icon-pencil
                 .item
-                  = link_to admin_farm_farm_photo_path(@farm, photo), class: 'new-menu', title: t('keppler.actions.delete'), method: :delete, data: { confirm: t("keppler.messages.data_confirm") } do
+                  = link_to admin_farm_farm_photo_path(@farm, photo), class: 'new-menu', title: t('keppler.actions.delete'), method: :delete, data: { confirm: t("keppler-farm.messages.data_confirm") } do
                     %i.icon-trash
                 -# .pull-right{style: "margin: 2px 8px 0 0"}
                   - if can?(KepplerFarm::Photo).destroy_multiple?
@@ -151,6 +153,7 @@
     );
     return $user;
   };
+
   $(document).ready(function() {
     $('select#assignment_user_id').select2({
       placeholder: "Choose a person",

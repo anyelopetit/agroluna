@@ -7,6 +7,7 @@ KepplerFrontend::Engine.routes.draw do
   get '/module', to: 'app/frontend#module', as: :app_module #Temporal para frontend
   get '/show', to: 'app/frontend#show', as: :app_module_show #Temporal para frontend
   get '/edit', to: 'app/frontend#edit', as: :app_module_edit #Temporal para frontend
+  get '/new', to: 'app/frontend#new', as: :app_module_new #Temporal para frontend
 
   namespace :admin do
     scope :frontend, as: :frontend do

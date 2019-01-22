@@ -1,0 +1,206 @@
+.container_carousel
+  .single-item
+    .card_new
+      %h1 Datos generales
+      %form
+        .row
+          .col-lg-6
+            .form-group
+              %label.label_custom--strong Número de serie
+              %input.form-control.input_custom
+          .col-lg-6
+            .form-group
+              %label.label_custom--strong Nombre corto
+              %input.form-control.input_custom
+          .col-lg-12
+            .form-group
+              %label.label_custom--strong Nombre largo
+              %input.form-control.input_custom
+          .col-lg-6
+            .form-group
+              %label.label_custom--strong Especie
+              %ul.select
+                %li
+                  %input#select-close.select_close{name: "select_custom", type: "radio", value: ""}/
+                  %span.select_label.select_label-placeholder Escoger la especie
+                %li.select_items
+                  %input.select_expand{id:"especie", name: "select_custom", type: "radio"}
+                  %label.select_closeLabel{for: "select-close"}
+                  %ul.select_options
+                    - 3.times do |x|
+                      %li.select_option
+                        %input.select_input{id:"especie-#{x}", name: "select_custom", type: "radio"}
+                        %label.select_label{for: "especie-#{x}"} especie #{x}
+                  %label.select_expandLabel{for: "especie"}
+            .form-group
+              %label.label_custom--strong Raza
+              %ul.select
+                %li
+                  %input#select-close.select_close{name: "select_custom", type: "radio", value: ""}/
+                  %span.select_label.select_label-placeholder Escoger raza
+                %li.select_items
+                  %input.select_expand{id:"raza", name: "select_custom", type: "radio"}
+                  %label.select_closeLabel{for: "select-close"}
+                  %ul.select_options
+                    - 3.times do |x|
+                      %li.select_option
+                        %input.select_input{id:"raza-#{x}", name: "select_custom", type: "radio"}
+                        %label.select_label{for: "raza-#{x}"} raza #{x}
+                  %label.select_expandLabel{for: "raza"}
+            .form-group
+              %label.label_custom--strong Color de pelaje
+              %input.form-control.input_custom
+            .form-group
+              %label.label_custom--strong Color de borla
+              %input.form-control.input_custom
+          .col-lg-6
+            .form-group
+              %label.label_custom--strong Género
+              %ul.select
+                %li
+                  %input#select-close.select_close{name: "select_custom", type: "radio", value: ""}/
+                  %span.select_label.select_label-placeholder Escoger género
+                %li.select_items
+                  %input.select_expand{id:"genero", name: "select_custom", type: "radio"}
+                  %label.select_closeLabel{for: "select-close"}
+                  %ul.select_options
+                    - 2.times do |x|
+                      %li.select_option
+                        %input.select_input{id:"genero-#{x}", name: "select_custom", type: "radio"}
+                        %label.select_label{for: "genero-#{x}"} genero #{x}
+                  %label.select_expandLabel{for: "genero"}
+            .form-group
+              %label.label_custom--strong Fecha de Nacimiento
+              %input.form-control.input_custom
+            .form-group
+              %label.label_custom--strong Color de morro
+              %input.form-control.input_custom
+            .form-group
+              %label.label_custom--strong Procedencia
+              %input.form-control.input_custom
+          .col-lg-12
+            .form-group
+              %label.label_custom--strong Observaciones
+              %textarea.form-control.input_custom
+    .card_new
+      %h1 Crear status inicial
+      .row
+        .col-lg-4
+          .form-group
+            %label.label_custom--strong Peso (kg)
+            %input.form-control.input_custom
+        .col-lg-4
+          .form-group
+            %label.label_custom--strong Edad (años)
+            %input.form-control.input_custom
+        .col-lg-4
+          .form-group
+            %label.label_custom--strong Edad (meses)
+            %input.form-control.input_custom
+        .col-lg-6
+          .form-group
+            %label.label_custom--strong Ubicación
+            %ul.select
+              %li
+                %input#select-close.select_close{name: "select_custom", type: "radio", value: ""}/
+                %span.select_label.select_label-placeholder Seleccione la ubicación
+              %li.select_items
+                %input.select_expand{id:"ubicacion", name: "select_custom", type: "radio"}
+                %label.select_closeLabel{for: "select-close"}
+                %ul.select_options
+                  - 2.times do |x|
+                    %li.select_option
+                      %input.select_input{id:"ubicacion-#{x}", name: "select_custom", type: "radio"}
+                      %label.select_label{for: "ubicacion-#{x}"} ubicacion #{x}
+                %label.select_expandLabel{for: "ubicacion"}
+        .col-lg-6
+          .form-group
+            %label.label_custom--strong Condición Corporal
+            %ul.select
+              %li
+                %input#select-close.select_close{name: "select_custom", type: "radio", value: ""}/
+                %span.select_label.select_label-placeholder Seleccione la condición
+              %li.select_items
+                %input.select_expand{id:"condicion", name: "select_custom", type: "radio"}
+                %label.select_closeLabel{for: "select-close"}
+                %ul.select_options
+                  - 2.times do |x|
+                    %li.select_option
+                      %input.select_input{id:"condicion-#{x}", name: "select_custom", type: "radio"}
+                      %label.select_label{for: "condicion-#{x}"} condicion #{x}
+                %label.select_expandLabel{for: "condicion"}
+        .col-lg-6
+          .form-group
+            %label.label_custom--strong Lote estratégico
+            %ul.select
+              %li
+                %input#select-close.select_close{name: "select_custom", type: "radio", value: ""}/
+                %span.select_label.select_label-placeholder Seleccione un lote estratégico
+              %li.select_items
+                %input.select_expand{id:"lote", name: "select_custom", type: "radio"}
+                %label.select_closeLabel{for: "select-close"}
+                %ul.select_options
+                  - 2.times do |x|
+                    %li.select_option
+                      %input.select_input{id:"lote-#{x}", name: "select_custom", type: "radio"}
+                      %label.select_label{for: "lote-#{x}"} lote #{x}
+                %label.select_expandLabel{for: "lote"}
+        .col-lg-6
+          .form-group
+            %label.label_custom--strong Tipología
+            %ul.select
+              %li
+                %input#select-close.select_close{name: "select_custom", type: "radio", value: ""}/
+                %span.select_label.select_label-placeholder Seleccione la tipología
+              %li.select_items
+                %input.select_expand{id:"tipologia", name: "select_custom", type: "radio"}
+                %label.select_closeLabel{for: "select-close"}
+                %ul.select_options
+                  - 2.times do |x|
+                    %li.select_option
+                      %input.select_input{id:"tipologia-#{x}", name: "select_custom", type: "radio"}
+                      %label.select_label{for: "tipologia-#{x}"} tipologia #{x}
+                %label.select_expandLabel{for: "tipologia"}
+        .col-lg-3
+          %label.label_custom--strong Preñada
+          %label.keppler-switch
+            %input#status_pregnant{checked: "checked", name: "status[pregnant]", type: "checkbox", value: "false"}/
+            %span.slider.round
+            %label.inline-label
+        .col-lg-3
+          %label.label_custom--strong Lactando
+          %label.keppler-switch
+            %input#status_pregnant{checked: "checked", name: "status[lactating]", type: "checkbox", value: "false"}/
+            %span.slider.round
+            %label.inline-label
+        .col-lg-3
+          %label.label_custom--strong Muerto
+          %label.keppler-switch
+            %input#status_pregnant{checked: "checked", name: "status[dead]", type: "checkbox", value: "false"}/
+            %span.slider.round
+            %label.inline-label
+        .col-lg-3
+          .form-group
+            %label.label_custom--strong Fecha de muerte
+            %input.form-control.input_custom
+        .col-lg-12
+          .form-group
+            %label.label_custom--strong Comentarios
+            %textarea.form-control.input_custom
+        .col-lg-12
+          %a.float-right.mt-4.mb-4{ href: '' }
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-save
+              Guardar
+:javascript
+  $('.keppler-switch').click(function(event) {
+    event.preventDefault()
+    var input = $(this).find('input')
+    var label = $(this).find('.inline-label')
+    input
+      .toggleClass('active')
+      .val(input.hasClass('active'))
+    label
+      .toggleClass('active')
+      //.text(label.hasClass('active'))
+  })

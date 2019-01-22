@@ -5,6 +5,7 @@
   border-right: 0 !important;
   box-shadow: none;
   font-size: 1.5rem !important;
+  margin-bottom: 30px;
 
   &:focus {
     border-top: 0;
@@ -205,5 +206,80 @@
       4px -6px 0 white,
       4px -8px 0 white;
     transform: rotate(45deg);
+  }
+}
+
+.keppler-switch {
+  display: block;
+  height: 24px;
+  margin-bottom: 0;
+  position: relative;
+  width: 40px;
+
+  input {
+    display: none;
+
+    &.active + .slider {
+      background-color: $primary;
+      box-shadow: 0 0 1px $primary;
+
+      // &::before {
+      //   transform: translateX(16px);
+      // }
+    }
+  }
+
+  .slider {
+    background-color: #6f6f6f;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+
+    &::before {
+      background-color: white;
+      bottom: 4px;
+      content: '';
+      height: 16px;
+      left: 4px;
+      position: absolute;
+      transition: .4s;
+      width: 16px;
+    }
+
+    &.round {
+      border-radius: 34px;
+    }
+
+    &.round::before {
+      border-radius: 50%;
+    }
+  }
+
+  .inline-label {
+    margin-left: 50px;
+    opacity: .5;
+    transition: opacity .3s;
+
+    &.active {
+      opacity: 1;
+      transition: opacity .3s;
+    }
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .active + .slider {
+    background-color: $primary;
+    box-shadow: 0 0 1px $primary;
+
+    &::before {
+      transform: translateX(16px);
+    }
   }
 }

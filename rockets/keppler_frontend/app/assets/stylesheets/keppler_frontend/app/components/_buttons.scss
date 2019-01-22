@@ -29,4 +29,20 @@
 .btn--filled {
   background-color: $primary;
   color: white;
+  transition: all ease-in-out .3s;
+
+  &:hover {
+    background-color: transparent;
+    color: $primary;
+    transition: all ease-in-out .3s;
+  }
+}
+
+.btn-shadow {
+  box-shadow: 0 6px 6px -3px rgba($primary, .2), 0 10px 14px 1px rgba($primary, .14), 0 4px 18px 3px rgba($primary, .12);
+}
+
+.btn-text-transform {
+  text-transform: uppercase;
+  font-weight: $medium;
 }

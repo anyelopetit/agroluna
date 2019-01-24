@@ -1,25 +1,26 @@
 %nav.navbar.navbar-expand-lg.navbar_custom
   %a#navbarDropdown.nav-link{ class: ('dropdown-toggle' if farms), "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
     = image_tag (farm&.logo&.url || @default_logo), style: 'height: 40px'
-  - unless farms.blank?
-    .farms-menu.dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}
-      - farms.each do |f|
-        %a.farm-item.dropdown-item{ href: profile_land_path(f) }
-          .farm-logo= image_tag f&.logo&.url || @default_logo
-          .farm-title= f.title
-  - else
+  - if farms.blank?
     .farms-menu.dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}
       .dropdown-item No tienes fincas asignadas
+  - else
+    .farms-menu.dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}
+      - farms.each do |f|
+        %a.farm-item.dropdown-item{ href: app_farm_path(f) }
+          .farm-logo= image_tag f&.logo&.url || @default_logo
+          .farm-title= f.title
   %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", type: "button"}
     %span.navbar-toggler-icon.icofont-navigation-menu
   #navbarSupportedContent.collapse.navbar-collapse
     %ul.navbar-nav.mr-auto
+      = @farm.inspect
       - if farm
         %li.nav-item
-          = link_to profile_land_path(farm), class: 'nav-link' do
+          = link_to app_farm_path(farm), class: 'nav-link' do
             = farm&.title
         %li.nav-item
-          = link_to app_module_path(farm), class: 'nav-link' do
+          = link_to app_listing_path(farm), class: 'nav-link' do
             Listado
       %li.nav-item.d-lg-none
         = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: 'nav-link'
@@ -34,9 +35,9 @@
           %span= current_user&.name
           %img.avatar{ src: (current_user&.avatar&.url || 'https://www.w3schools.com/w3images/avatar6.png') }
         .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
-          = link_to 'Ir a Keppler Admin', main_app.dashboard_path, class: 'dropdown-item' if current_user&.role_ids&[1,2]
+          = link_to 'Ir a Keppler Admin', main_app.dashboard_path, class: 'dropdown-item' if current_user&.role_ids&[1]
           = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: 'dropdown-item'
-      %li.dropdown.messages-menu.nav-item
+      -# %li.dropdown.messages-menu.nav-item
         %a.dropdown-toggle.language-option.nav-link.dropdown-toggle{ 'aria-expanded' => 'false', 'data-toggle' => 'dropdown', :href => '#' }
           = image_tag "admin/#{Appearance.first.language.eql?('es') ? 'es' : 'en'}.png", class: 'small-profile-img keppler-background'
         %ul.dropdown-menu

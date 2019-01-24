@@ -36,12 +36,12 @@ module KepplerFrontend
       @assign = KepplerFarm::Assignment.where(user_id: current_user.id).first
       @farm = KepplerFarm::Farm.find(@assign.keppler_farm_farm_id) if @assign
       if @farm
-        redirect_to profile_land_path(@farm)
+        redirect_to app_farm_path(@farm)
       end
     end
     # end index
 
-    def module
+    def listing
       cows_id = KepplerCattle::Cow.all.select { |x| x.statuses.last.farm_id.eql?(@farm.id) }.map(&:id)
       @cows = KepplerCattle::Cow.find(cows_id)
       @strategic_lots = KepplerFarm::StrategicLot.where(farm_id: @farm.id)
@@ -58,10 +58,10 @@ module KepplerFrontend
     end
     # end login
 
-    # begin profile_land
-    def profile_land
+    # begin farm
+    def farm
     end
-    # end profile_land 
+    # end farm 
 
     private
 

@@ -3,12 +3,12 @@ KepplerFrontend::Engine.routes.draw do
   root to: 'app/frontend#root'
   get '/index', to: 'app/frontend#index', as: :index
   get '/login', to: 'app/frontend#login', as: :login
-  get '/farm/:farm_id', to: 'app/frontend#profile_land', as: :profile_land
-  get '/farm/:farm_id/module', to: 'app/frontend#module', as: :app_module #Temporal para frontend
-  get '/farm/:farm_id/show/:cow_id', to: 'app/frontend#show_cattle', as: :app_module_show #Temporal para frontend
-  get '/farm/:farm_id/edit/:cow_id', to: 'app/frontend#edit_cattle', as: :app_module_edit #Temporal para frontend
-  delete '/farm/:farm_id/delete/:cow_id', to: 'app/frontend#delete_cattle', as: :app_module_delete #Temporal para frontend
-  get '/farm/:farm_id/new', to: 'app/frontend#new', as: :app_module_new #Temporal para frontend
+  get '/finca/:farm_id', to: 'app/frontend#farm', as: :app_farm
+  get '/finca/:farm_id/listado', to: 'app/frontend#listing', as: :app_listing #Temporal para frontend
+  get '/finca/:farm_id/ganado/:cow_id', to: 'app/frontend#show_cattle', as: :app_show_cattle #Temporal para frontend
+  get '/finca/:farm_id/editar/:cow_id', to: 'app/frontend#edit_cattle', as: :app_edit_cattle #Temporal para frontend
+  delete '/finca/:farm_id/eliminar/:cow_id', to: 'app/frontend#delete_cattle', as: :app_delete_cattle #Temporal para frontend
+  get '/finca/:farm_id/nuevo-ganado', to: 'app/frontend#new_cattle', as: :app_new_cattle #Temporal para frontend
 
   namespace :admin do
     scope :frontend, as: :frontend do

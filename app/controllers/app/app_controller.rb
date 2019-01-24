@@ -7,6 +7,7 @@ module App
     skip_before_action :verify_authenticity_token
     before_action :set_metas
     before_action :set_analytics
+    before_action :set_default_locale
 
     def set_metas
       @theme_color = nil
@@ -26,13 +27,17 @@ module App
 
     private
 
-    def default_url_options(options = {})
-      logger.debug "default_url_options is passed options: #{options.inspect}\n"
-      { locale: I18n.locale }
-    end
+    # def default_url_options(options = {})
+    #   logger.debug "default_url_options is passed options: #{options.inspect}\n"
+    #   { locale: I18n.locale }
+    # end
 
     def set_analytics
       @scripts = Script.select { |x| x.url == request.env['PATH_INFO'] }
+    end
+
+    def set_default_locale
+      I18n.default_locale = :es
     end
   end
 end

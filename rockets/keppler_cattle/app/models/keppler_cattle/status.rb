@@ -13,7 +13,10 @@ module KepplerCattle
     acts_as_list
     acts_as_paranoid
 
+    belongs_to :farm
     belongs_to :user
+
+    validates_presence_of :farm_id
 
     def self.index_attributes
       %i[ubication corporal_condition typology]
@@ -39,6 +42,14 @@ module KepplerCattle
       ['BECERRO', 'BECERRA', 'MAUTE', 'MAUTA', 'NOVILLA', 'NOVILLA PREÑADA', 'NOVILLO',
       'TORO', 'TORO PADROTE', 'TORO RECELADOR', 'VACA VACÍA', 'VACA PROD.VACIA',
       'VACA VACÍA SIN CRÍA', 'VACA PREÑADA', 'VACA SECA/HORRA']
+    end
+
+    def farm
+      KepplerFarm::Farm.find(farm_id)
+    end
+
+    def user
+      User.find(user_id)
     end
 
     def strategic_lot

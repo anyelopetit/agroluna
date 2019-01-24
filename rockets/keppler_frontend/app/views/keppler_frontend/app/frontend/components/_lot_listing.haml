@@ -1,0 +1,64 @@
+.container_custom
+  .d-flex.justify-content-end.mb-5
+    -# .toolbar
+      %a{ href: '' }
+        %i.icofont-trash
+      %a{ href: '' }
+        %i.icofont-refresh
+      %a{ href: '' }
+        %i.icofont-download
+    %a.float-right.mt-4.mb-4{ href: '/new' }
+      %button.btn.btn_custom.btn--filled.btn--medium
+        %i.icofont-plus
+        Agregar
+  %table
+    - if @strategic_lots.size.zero?
+      %thead
+        %tr
+          %th.not-records.center
+            %center No se encontraton lotes estratégicos
+    - else
+      %thead
+        %tr
+          -# %th
+            %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
+            %label{for: "styled-checkbox-all"}
+          %th Imagen
+          %th Número de serie
+          %th Nombre corto
+          %th Procedencia
+          %th Actions
+      %tbody
+        - @strategic_lots.each do |strategic_lot|
+          %tr
+            -# %td.checkboxes
+              %input.styled-checkbox{type: "checkbox", id: "styled-checkbox-#{x}"}
+              %label{for: "styled-checkbox-#{x}"}
+            %td
+              = strategic_lot.name
+            %td
+              = strategic_lot.function
+            %td.actions
+              = link_to app_module_show_path(@farm, strategic_lot) do
+                %span.icofont-eye
+              = link_to app_module_edit_path(@farm, strategic_lot) do
+                %span.icofont-ui-edit
+              = link_to app_module_delete_path(@farm, strategic_lot) do
+                %span.icofont-trash
+
+:scss
+  .center {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+  }
+
+  .not-records {
+    background-color: #fff;
+    border: 0;
+  }
+
+  table img {
+    max-height: 50px; 
+  }

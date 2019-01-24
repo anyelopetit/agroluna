@@ -51,10 +51,34 @@
               - if @cow.statuses.last.strategic_lot
                 %dt Lote estrátegico
                 %dd= @cow.statuses.last.strategic_lot
+    // Current Status
     .col-lg-4
       .card_show.card_status
         .card_status--title
-          %h2 Status
+          %h2 Estado actual
+        .box-body.no-padding
+          %table.table
+            %tbody
+              - @cow.statuses.last.as_json(except: %w[id cow_id position deleted_at]).each do |attribute, value|
+                - unless value.nil?
+                  %tr.list-row
+                    %th.display-label= t("activerecord.attributes.#{attribute}").humanize
+                    %td.display-value.fs-body-1.tc-black-2
+                      - if @attachments.dig('images', 'names').include?(attribute)
+                        = image_tag value.url if value.url
+                      - elsif @attachments.dig('images', 'names').map(&:pluralize).include?(attribute)
+                        - value.each do |image|
+                          = image_tag image.url if image.url
+                      - elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
+                        = value ? 'Sí' : 'No'
+                      - elsif attribute.include?('_id')
+                        = object_name(@cow.statuses.last, attribute) #|| model_name('keppler_cattle', attribute, value)
+                      - else 
+                        = sanitize raw value
+    .col-lg-4
+      .card_show.card_status
+        .card_status--title
+          %h2 Historial de estados
         - @statuses.each do |status|
           .card_status--inner{"data-toggle" => "modal", "data-target" => "#modalStatus"}
             %dl
@@ -67,7 +91,7 @@
               %dt
                 %i.icofont-info
               %dd #{status.typology}
-    .col-lg-4
+    -# .col-lg-4
       .card_show#mother
         %h2 Datos de la Madre
         .row

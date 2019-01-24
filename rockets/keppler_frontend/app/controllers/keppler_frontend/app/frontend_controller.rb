@@ -12,6 +12,7 @@ module KepplerFrontend
     before_action :set_farms
     before_action :default_logo
     before_action :index_variables
+    before_action :attachments
     include ObjectQuery
 
     def root
@@ -166,6 +167,12 @@ module KepplerFrontend
       redirect_to '/' unless user_signed_in?
     end
     # end callback user_authenticate
+
+    def attachments
+      @attachments = YAML.load_file(
+        "#{Rails.root}/config/attachments.yml"
+      )
+    end
 
     # Only allow a trusted parameter "white list" through.
     def cow_params

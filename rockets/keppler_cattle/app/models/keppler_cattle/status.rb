@@ -53,7 +53,7 @@ module KepplerCattle
     end
 
     def strategic_lot
-      KepplerFarm::StrategicLot.find(strategic_lot_id)
+      KepplerFarm::StrategicLot.find(strategic_lot_id) unless strategic_lot_id.nil?
     end
   end
 end

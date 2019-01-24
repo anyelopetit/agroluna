@@ -8,14 +8,15 @@
       %a{ href: '' }
         %i.icofont-download
     .actions
-      %a.float-right.mt-4.mb-4{ href: app_edit_cattle_path(@farm, @cow) }
-        %button.btn.btn_custom.btn--filled.btn--medium
-          %i.icofont-plus
-          Nuevo Status
-      %a.float-right.mt-4.mb-4.ml-3{ href: app_new_status_path(@farm, @cow) }
-        %button.btn.btn_custom.btn--filled.btn--medium
-          %i.icofont-ui-edit
-          Editar
+      .float-right
+        %a.mt-4.mb-4.ml-3{ href: app_edit_cattle_path(@farm, @cow) }
+          %button.btn.btn_custom.btn--filled.btn--medium
+            %i.icofont-ui-edit
+            Editar
+        %at.mt-4.mb-4{ href: app_new_status_path(@farm, @cow) }
+          %button.btn.btn_custom.btn--filled.btn--medium
+            %i.icofont-plus
+            Nuevo Status
 .container_custom
   .row
     .col-lg-4
@@ -34,7 +35,7 @@
               %dt Edad (Años-Meses)
               %dd #{@cow.years}-#{@cow.months}
               %dt Tipología
-              %dd= @cow.typology
+              %dd= @cow.statuses.last.typology
               %dt Procedencia
               %dd= @cow.provenance
           .col-lg-6
@@ -46,9 +47,10 @@
               %dt Borla
               %dd= @cow.tassel_color
               %dt Condición corporal
-              %dd= @cow.corporal_condition
-              %dt Lote estrátegico
-              %dd= @cow.strategic_lot
+              %dd= @cow.statuses.last.corporal_condition
+              - if @cow.statuses.last.strategic_lot
+                %dt Lote estrátegico
+                %dd= @cow.statuses.last.strategic_lot
     .col-lg-4
       .card_show.card_status
         .card_status--title

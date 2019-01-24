@@ -19,7 +19,7 @@
           = link_to app_farm_path(farm), class: 'nav-link' do
             = farm&.title
         %li.nav-item
-          = link_to app_listing_path(farm), class: 'nav-link' do
+          = link_to app_cattle_cows_path(farm), class: 'nav-link' do
             Listado
       %li.nav-item.d-lg-none
         = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: 'nav-link'

@@ -6,8 +6,8 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    before_action :set_farm, only: %i[new_cattle create_cattle show edit farm listing show_cattle]
-    before_action :set_cow, only: %i[new_status create_status show_cattle]
+    before_action :set_farm, only: %i[new_cattle create_cattle show edit farm listing show_cattle update_cattle]
+    before_action :set_cow, only: %i[new_status create_status show_cattle edit_cattle update_cattle]
     before_action :cow_attributes, only: %i[new_cattle edit_cattle create_cattle]
     before_action :set_farms
     before_action :default_logo
@@ -69,6 +69,18 @@ module KepplerFrontend
       end
     end
 
+    def update_cattle
+      if @cow.update(cow_params)
+        if @cow.statuses.blank?
+          redirect_to app_new_status_path(@farm, @cow)
+        else 
+          redirect_to app_cattle_cow_path(@farm, @cow)
+        end
+      else
+        render :edit
+    end
+    end
+
     def edit_cattle
     end
 
@@ -86,7 +98,7 @@ module KepplerFrontend
       @status = KepplerCattle::Status.new(status_params)
 
       if @status.save
-        redirect_to app_show_cattle_path(@cow)
+        redirect_to app_cattle_cow_path(@cow)
       else
         render :new
       end

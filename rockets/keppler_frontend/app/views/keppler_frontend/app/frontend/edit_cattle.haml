@@ -1,130 +1,125 @@
-.container_custom
-  .row
-    .col-lg-4
-      .card_show.p-5
-        .card_cow
-          %img.avatar_cow{ src: 'https://image.flaticon.com/icons/svg/523/523448.svg' }
-          .card_cow_content
-            %h1 Casera
-            %strong 621
-            %span Mestizo Brahman 5/8
-        .row.mt-5
-          .col-lg-6
-            %dl
-              %dt Fecha de Nacimiento
-              %dd
-                %input.form-control.input_custom
-              %dt Edad (Año-Mes)
-              %dd
-                %input.form-control.input_custom
-              %dt Tipología
-              %dd
-                %input.form-control.input_custom
-              %dt Procedencia
-              %dd
-                %input.form-control.input_custom
-          .col-lg-6
-            %dl
-              %dt Color Pelaje
-              %dd
-                %input.form-control.input_custom
-              %dt Color Morro
-              %dd
-                %input.form-control.input_custom
-              %dt Borla
-              %dd
-                %input.form-control.input_custom
-              %dt Condición corporal
-              %dd
-                %input.form-control.input_custom
-              %dt Lote estrátegico
-              %dd
-                %input.form-control.input_custom
-    .col-lg-4
-      .card_show#mother
-        %h2 Datos de la Madre
-        .row
-          .col-lg-6
-            %dl
-              %dt Serie Madre
-              %dd
-                %input.form-control.input_custom
-              %dt Nombre de la Madre
-              %dd
-                %input.form-control.input_custom
-          .col-lg-6
-            %dl
-              %dt Fecha de Nacimiento
-              %dd
-                %input.form-control.input_custom
-              %dt Raza
-              %dd
-                %input.form-control.input_custom
-          .col-lg-6
-            %dl
-              %dt Asociación 1
-              %dd
-                %input.form-control.input_custom
-              %dt Registro 1
-              %dd
-                %input.form-control.input_custom
-              %dt Tipo
-              %dd
-                %input.form-control.input_custom
-          .col-lg-6
-            %dl
-              %dt Asociación 2
-              %dd
-                %input.form-control.input_custom
-              %dt Registro 2
-              %dd
-                %input.form-control.input_custom
-              %dt Tipo
-              %dd
-                %input.form-control.input_custom
-    .col-lg-4
-      .card_show
-        %h2 Datos del Padre
-        .row
-          .col-lg-6
-            %dl
-              %dt Serie Padre
-              %dd
-                %input.form-control.input_custom
-              %dt Nombre de la Padre
-              %dd
-                %input.form-control.input_custom
-              %dt Pajuela
-              %dd
-                %input.form-control.input_custom
-          .col-lg-6
-            %dl
-              %dt Fecha de Nacimiento
-              %dd
-                %input.form-control.input_custom
-              %dt Raza
-              %dd
-                %input.form-control.input_custom
-          .col-lg-6
-            %dl
-              %dt Asociación 1
-              %dd
-                %input.form-control.input_custom
-              %dt Registro 1
-              %dd
-                %input.form-control.input_custom
-              %dt Tipo
-              %dd
-                %input.form-control.input_custom
-          .col-lg-6
-            %dl
-              %dt Asociación 2
-              %dd
-                %input.form-control.input_custom
-              %dt Registro 2
-              %dd
-                %input.form-control.input_custom
-              %dt Tipo
-              %dd
-                %input.form-control.input_custom
+.container_carousel
+  .single-item
+    .card_new
+      %h1 Datos generales
+      = render 'keppler_frontend/app/frontend/components/cattle_form', farm: @farm
+
 = render 'keppler_frontend/app/frontend/partials/modal_status'
+
+= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.css'
+= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.js'
+= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/i18n/datepicker.ca-ES.js'
+:javascript
+  $('.keppler-switch').click(function(event) {
+    event.preventDefault()
+    var input = $(this).find('input')
+    var label = $(this).find('.inline-label')
+    input
+      .toggleClass('active')
+      .val(input.hasClass('active'))
+    label
+      .toggleClass('active')
+      //.text(label.hasClass('active'))
+  })
+
+  window.I18n = #{current_translations.to_json.html_safe}
+
+  function doesFileExist(urlToFile) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('HEAD', urlToFile, false);
+    xhr.send();
+
+    return xhr.status == "404" ? false : true;
+  }
+  
+  function imageSelect (option) {
+    var optionTxt = option.text.toLowerCase()
+    if (!option.id) return optionTxt;
+    var baseUrl = '/assets/keppler_cattle/';
+    var url = baseUrl + (doesFileExist(baseUrl + optionTxt) ? optionTxt : '/ternera')
+    var $option = $(
+      '<span class="cattle-option">' +
+        `<div style="background-image: url(${url})" class="img-cattle-list"></div>` + 
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+  
+  function noImageSelect (option) {
+    var optionTxt = option.text.toLowerCase()
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="cattle-option">' +
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+
+  $(document).ready(function() {
+    $('#cow_species').select2({
+      placeholder: "#{t('keppler_cattle.messages.choose_species').humanize}",
+      templateResult: imageSelect,
+      templateSelection: imageSelect
+    });
+
+    $('#cow_gender').select2({
+      placeholder: "#{t('keppler_cattle.messages.choose_gender').humanize}",
+      templateResult: imageSelect,
+      templateSelection: imageSelect
+    });
+
+    $('#cow_race').select2({
+      placeholder: "#{t('keppler_cattle.messages.choose_race').humanize}",
+      templateResult: noImageSelect,
+      templateSelection: noImageSelect
+    });
+
+    $('#cow_mother_id').select2({
+      placeholder: "#{t('keppler_cattle.messages.choose_mother').humanize}",
+      templateResult: noImageSelect,
+      templateSelection: noImageSelect
+    });
+
+    $('#cow_father_id').select2({
+      placeholder: "#{t('keppler_cattle.messages.choose_father').humanize}",
+      templateResult: noImageSelect,
+      templateSelection: noImageSelect
+    });
+  });
+
+  $('.datepicker').datepicker({
+    dateFormat: 'yy-mm-dd', // formato obligatorio para Keppler
+    showOtherMonths: true,
+    selectOtherMonths: true,
+    changeMonth: true,
+    changeYear: true,
+    maxDate: 0,
+    setDate: 0
+
+    // Ver documentación en https://jqueryui.com/datepicker
+  })
+
+:scss
+
+
+  .cattle-list {
+    height: 187px;
+    overflow: scroll;
+  }
+
+  .cattle-option {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+
+    .img-cattle-list {
+      height: 20px;
+      margin: 0 5px;
+      width: 20px;
+      display: inline-flex;
+      background-size: cover;
+      background-position: top center;
+    }
+  }

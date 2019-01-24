@@ -16,12 +16,12 @@
               .form-group.mb-5
                 %label.label_custom.label_login
                   %i.icofont-ui-message
-                  = Correo
+                  Correo
                 = f.email_field :email, :autofocus => true, class: "form-control input_custom input_login validate"
               .form-group.mb-5
                 %label.label_custom.label_login
                   %i.icofont-ui-password
-                  = Contraseña
+                  Contraseña
                 = f.password_field :password, :autofocus => true, class: "form-control input_custom input_login validate #{'invalid' if flash[:alert]}"
               %div
                 .login-bottom.d-flex.justify-content-center

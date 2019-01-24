@@ -6,8 +6,9 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    before_action :set_farm, only: %i[show edit farm listing]
-    before_action :cow_attributes, only: %i[new_cattle edit_cattle]
+    before_action :set_farm, only: %i[new_cattle create_cattle show edit farm listing show_cattle]
+    before_action :set_cow, only: %i[new_status create_status show_cattle]
+    before_action :cow_attributes, only: %i[new_cattle edit_cattle create_cattle]
     before_action :set_farms
     before_action :default_logo
     before_action :index_variables
@@ -43,12 +44,13 @@ module KepplerFrontend
     # end index
 
     def listing
-      cows_id = KepplerCattle::Cow.all.select { |x| x.statuses.last.farm_id.eql?(@farm.id) }.map(&:id)
-      @cows = KepplerCattle::Cow.find(cows_id)
+      cows_id = KepplerCattle::Cow.all.select { |x| x.statuses.last&.farm_id&.eql?(@farm.id) }.map(&:id)
+      @cows = KepplerCattle::Cow.find(cows_id) if cows_id
       @strategic_lots = KepplerFarm::StrategicLot.where(farm_id: @farm.id)
     end
 
     def show_cattle
+      @statuses = @cow.statuses.order(id: :desc)
     end
 
     def new_cattle
@@ -56,17 +58,38 @@ module KepplerFrontend
     end
 
     def create_cattle
-      @cow = Cow.new(cow_params)
+      @cow = KepplerCattle::Cow.new(cow_params)
 
       if @cow.save && @cow.statuses.blank?
         # redirect(@cow, params)
-        redirect_to new_admin_cattle_cow_status_path(@cow)
+        redirect_to app_new_status_path(@farm, @cow)
       else
-        render :new
+        flash[:notice] = 'Revisa los datos del formulario'
+        render :new_cattle
       end
     end
 
     def edit_cattle
+    end
+
+    def new_status
+      @status = KepplerCattle::Status.new
+      @ubications = KepplerCattle::Status.ubications
+      @corporal_conditions = KepplerCattle::Status.corporal_conditions
+      @strategic_lots = KepplerFarm::StrategicLot.all
+      @typologies = KepplerCattle::Status.typologies
+      @last_status = KepplerCattle::Status.last
+      @farms = KepplerFarm::Farm.order(title: :asc)
+    end
+
+    def create_status
+      @status = KepplerCattle::Status.new(status_params)
+
+      if @status.save
+        redirect_to app_show_cattle_path(@cow)
+      else
+        render :new
+      end
     end
 
     # begin login
@@ -81,12 +104,16 @@ module KepplerFrontend
 
     private
 
+    def set_cow
+      @cow = KepplerCattle::Cow.find(params[:cow_id])
+    end
+
     def cow_attributes
-      @species = Cow.species
-      @genders = Cow.genders
-      @races   = Cow.races
-      @posible_mothers = Cow.where(gender: 'female').map { |x| [x.serie_number, x.id] }
-      @posible_fathers = Cow.where(gender: 'male').map { |x| [x.serie_number, x.id] }
+      @species = KepplerCattle::Cow.species
+      @genders = KepplerCattle::Cow.genders
+      @races   = KepplerCattle::Cow.races
+      @posible_mothers = KepplerCattle::Cow.where(gender: 'female').map { |x| [x.serie_number, x.id] }
+      @posible_fathers = KepplerCattle::Cow.where(gender: 'male').map { |x| [x.serie_number, x.id] }
     end
 
     def index_variables
@@ -95,11 +122,6 @@ module KepplerFrontend
       @objects = @cows.page(@current_page).order(position: :desc)
       @total = @cows.size
       @attributes = KepplerCattle::Cow.index_attributes
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cow
-      @cow = KepplerCattle::Cow.find(params[:id])
     end
 
     def cow_attributes
@@ -132,5 +154,52 @@ module KepplerFrontend
       redirect_to '/' unless user_signed_in?
     end
     # end callback user_authenticate
+
+    # Only allow a trusted parameter "white list" through.
+    def cow_params
+      params.require(:cow).permit(
+        :serie_number,
+        :image,
+        :short_name,
+        :long_name,
+        :species,
+        :gender,
+        :birthdate,
+        :race,
+        :coat_color,
+        :nose_color,
+        :tassel_color,
+        :provenance, 
+        :observations,
+        :mother_id,
+        :father_id
+      )
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def status_params
+      params.require(:status).permit(
+        :cow_id,
+        :farm_id,
+        :weight,
+        :gained_weight,
+        :years,
+        :months,
+        :days,
+        :ubication,
+        :corporal_condition,
+        :reproductive,
+        :defiant,
+        :pregnant,
+        :lactating,
+        :breeding,
+        :dead,
+        :deathdate,
+        :typology,
+        :strategic_lot_id,
+        :user_id,
+        :comments
+      )
+    end
   end
 end

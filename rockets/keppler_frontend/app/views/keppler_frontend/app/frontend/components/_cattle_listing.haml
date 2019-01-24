@@ -35,7 +35,7 @@
               %input.styled-checkbox{type: "checkbox", id: "styled-checkbox-#{x}"}
               %label{for: "styled-checkbox-#{x}"}
             %td
-              = image_tag cow.image.url
+              = image_tag cow.image.url if cow.image.url
             %td
               = cow.serie_number
             %td

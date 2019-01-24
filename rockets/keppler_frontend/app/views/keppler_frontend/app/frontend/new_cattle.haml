@@ -278,6 +278,9 @@
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-save
               Guardar
+= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.css'
+= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.js'
+= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/i18n/datepicker.ca-ES.js'
 :javascript
   $('.keppler-switch').click(function(event) {
     event.preventDefault()

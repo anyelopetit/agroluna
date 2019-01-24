@@ -17,13 +17,7 @@ module KepplerFrontend
 
     def root
       if current_user
-        case current_user.role_ids[0]
-        when 1
-          # redirect_to main_app.dashboard_path
-          redirect_to index_path
-        when 2
-          redirect_to index_path
-        end
+        redirect_to index_path
       else
         redirect_to main_app.new_user_session_path, locale: :es
       end
@@ -36,10 +30,17 @@ module KepplerFrontend
 
     # begin index
     def index
-      @assign = KepplerFarm::Assignment.where(user_id: current_user.id).first
-      @farm = KepplerFarm::Farm.find(@assign.keppler_farm_farm_id) if @assign
-      if @farm
-        redirect_to app_farm_path(@farm)
+      case current_user.role_ids[0]
+      when 1
+        if KepplerFarm::Farm.all.count > 0
+          redirect_to app_farm_path(KepplerFarm::Farm.last)
+        end
+      else
+        @assign = KepplerFarm::Assignment.where(user_id: current_user.id).first
+        @farm = KepplerFarm::Farm.find(@assign.keppler_farm_farm_id) if @assign
+        if @farm
+          redirect_to app_farm_path(@farm)
+        end
       end
     end
     # end index

@@ -9,6 +9,7 @@ module Devise
     prepend_before_action only: [:create, :destroy] do
       request.env['devise.skip_timeout'] = true
     end
+    skip_before_action :verify_authenticity_token
 
     # GET /resource/sign_in
     def new

@@ -38,6 +38,8 @@ KepplerFarm::Engine.routes.draw do
           post '/upload', action: 'upload', as: :upload
           get '/reload', action: :reload, on: :collection
           delete '/destroy_multiple', action: :destroy_multiple, on: :collection
+          post '/assign_cattle', action: :assign_cattle
+          delete '/delete_assignment/:cow_id/', action: :delete_assignment
         end
 
       end

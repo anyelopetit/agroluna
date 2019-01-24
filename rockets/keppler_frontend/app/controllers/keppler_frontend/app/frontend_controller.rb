@@ -6,8 +6,11 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
+    before_action :set_farm, only: %i[show edit profile_land module]
     before_action :set_farms
     before_action :default_logo
+    before_action :index_variables
+    include ObjectQuery
 
     def root
       if current_user
@@ -39,9 +42,15 @@ module KepplerFrontend
     # end index
 
     def module
+      cows_id = KepplerCattle::Cow.all.select { |x| x.statuses.last.farm_id.eql?(@farm.id) }.map(&:id)
+      @cows = KepplerCattle::Cow.find(cows_id)
+      @strategic_lots = KepplerFarm::StrategicLot.where(farm_id: @farm.id)
     end
 
-    def show
+    def show_cattle
+    end
+
+    def edit_cattle
     end
 
     # begin login
@@ -51,11 +60,35 @@ module KepplerFrontend
 
     # begin profile_land
     def profile_land
-      @farm = KepplerFarm::Farm.find(params[:farm_id])
     end
     # end profile_land 
 
     private
+
+    def index_variables
+      @q = KepplerCattle::Cow.ransack(params[:q])
+      @cows = @q.result(distinct: true)
+      @objects = @cows.page(@current_page).order(position: :desc)
+      @total = @cows.size
+      @attributes = KepplerCattle::Cow.index_attributes
+    end
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_cow
+      @cow = KepplerCattle::Cow.find(params[:id])
+    end
+
+    def cow_attributes
+      @species = KepplerCattle::Cow.species
+      @genders = KepplerCattle::Cow.genders
+      @races   = KepplerCattle::Cow.races
+      @posible_mothers = KepplerCattle::Cow.where(gender: 'female').map { |x| [x.serie_number, x.id] }
+      @posible_fathers = KepplerCattle::Cow.where(gender: 'male').map { |x| [x.serie_number, x.id] }
+    end
+
+    def set_farm
+      @farm = KepplerFarm::Farm.find(params[:farm_id])
+    end
 
     def set_farms
       if current_user&.has_role?('keppler_admin')

@@ -47,7 +47,7 @@
                     - elsif attribute.eql?('species') || attribute.eql?('gender')
                       %img.svg-icon{ src: "/assets/keppler_cattle/#{value}" }
                       = t("keppler_cattle.#{value}")
-                    - elsif ['mother_id', 'father_id'].include?(attribute)
+                    - elsif ['mother_id', 'father_id'].include?(attribute) && value
                       = link_to admin_cattle_cow_path(value) do
                         = cow_parent_id(value).serie_number
                     - else 
@@ -72,6 +72,8 @@
                           = image_tag image.url if image.url
                       - elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
                         = value ? 'Sí' : 'No'
+                      - elsif attribute.include?('_id')
+                        = object_name(@cow.statuses.last, attribute) #|| model_name('keppler_cattle', attribute, value)
                       - else 
                         = sanitize raw value
     // Statuses

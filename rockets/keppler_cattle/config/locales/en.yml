@@ -44,7 +44,8 @@ en:
       tassel_color: tassel color
       provenance: provenance
       observations: observations
-      weight: weight
+      weight: weight (kg)
+      gained_weight: gained weight (kg)
       years: years
       months: months
       days: borned days
@@ -54,6 +55,7 @@ en:
       defiant: defiant
       pregnant: pregnant
       lactating: lactating
+      breeding: breeding
       dead: dead
       deathdate: deathdate
       typology: typology
@@ -62,6 +64,8 @@ en:
       comments: comments
       mother_id: mother
       father_id: father
+      farm_id: farm
+      farms: farms
     errors:
       messages:
   errors:

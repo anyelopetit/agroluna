@@ -20,20 +20,25 @@
               %tbody
                 .form-padding
                   = f.input :cow_id, include_blank: false, input_html: { value: @cow.id }, as: :hidden
-                  .col-sm-12.col-md-3.col-lg-3
+                  .col-sm-12.col-md-3.col-lg-6
                     = f.input :weight, input_html: { min: 0, value: (@last_status.weight if @last_status) }, placeholder: '0.00 KG', label: t('activerecord.attributes.weight').humanize
-                  .col-sm-12.col-md-3.col-lg-3
+                  .col-sm-12.col-md-3.col-lg-6
+                    = f.input :gained_weight, input_html: { min: 0, value: (@last_status.weight if @last_status) }, disabled: true, placeholder: '0.00 KG', label: t('activerecord.attributes.gained_weight').humanize
+                    = f.input :gained_weight, input_html: { min: 0, value: (@last_status.weight if @last_status) }, as: :hidden, placeholder: '0.00 KG', label: t('activerecord.attributes.gained_weight').humanize
+                  .col-sm-12.col-md-3.col-lg-4
                     = f.input :years, input_html: { min: 0, value: @cow.years }, placeholder: '0', disabled: true, label: t('activerecord.attributes.years').humanize
                     = f.input :years, input_html: { min: 0, value: @cow.years }, placeholder: '0', as: :hidden, label: t('activerecord.attributes.years').humanize
-                  .col-sm-12.col-md-3.col-lg-3
+                  .col-sm-12.col-md-3.col-lg-4
                     = f.input :months, input_html: { min: 0, value: @cow.months }, placeholder: '0', disabled: true, label: t('activerecord.attributes.months').humanize
                     = f.input :months, input_html: { min: 0, value: @cow.months }, placeholder: '0', as: :hidden, label: t('activerecord.attributes.months').humanize
-                  .col-sm-12.col-md-3.col-lg-3
+                  .col-sm-12.col-md-3.col-lg-4
                     = f.input :days, input_html: { min: 0, value: @cow.days }, placeholder: '0', disabled: true, label: t('activerecord.attributes.days').humanize
                     = f.input :days, input_html: { min: 0, value: @cow.days }, placeholder: '0', as: :hidden, label: t('activerecord.attributes.days').humanize
-                  .col-sm-12.col-md-6
+                  .col-sm-12.col-md-4
+                    = f.input :farm_id, input_html: { value: (@last_status.farm_id if @last_status) }, collection: @farms, include_blank: false, label: t('activerecord.attributes.farms').humanize
+                  .col-sm-12.col-md-4
                     = f.input :ubication, input_html: { value: (@last_status.ubication if @last_status) }, collection: @ubications, label: t('activerecord.attributes.ubication').humanize
-                  .col-sm-12.col-md-6
+                  .col-sm-12.col-md-4
                     = f.input :corporal_condition, input_html: { value: (@last_status.corporal_condition if @last_status) }, collection: @corporal_conditions, include_blank: false, label: t('activerecord.attributes.corporal_condition').humanize
                   - if @cow.gender?('male')
                     .col-xs-6.col-sm-6.col-md-3
@@ -41,13 +46,15 @@
                     .col-xs-6.col-sm-6.col-md-3
                       = f.input :defiant, as: :keppler_boolean, label: t('activerecord.attributes.defiant').humanize
                   - if @cow.gender?('female')
-                    .col-xs-6.col-sm-6.col-md-3
+                    .col-xs-6.col-sm-6.col-md-2
                       = f.input :pregnant, as: :keppler_boolean, label: t('activerecord.attributes.pregnant').humanize
-                    .col-xs-6.col-sm-6.col-md-3
+                    .col-xs-6.col-sm-6.col-md-2
                       = f.input :lactating, as: :keppler_boolean, label: t('activerecord.attributes.lactating').humanize
-                  .col-xs-6.col-sm-6.col-md-3
+                    .col-xs-6.col-sm-6.col-md-2
+                      = f.input :breeding, as: :keppler_boolean, label: t('activerecord.attributes.breeding').humanize
+                  .col-xs-6.col-sm-6.col-md-2
                     = f.input :dead, as: :keppler_boolean, label: t('activerecord.attributes.dead').humanize
-                  .col-xs-6.col-sm-6.col-md-3
+                  .col-xs-6.col-sm-6.col-md-4
                     = f.input :deathdate, as: :string, input_html: { class: 'datepicker', disabled: true }, label: t('activerecord.attributes.deathdate').humanize
                   .col-sm-12.col-md-6.col-lg-6
                     = f.input :strategic_lot_id, collection: @strategic_lots, input_html: { min: 0 }, label: t('activerecord.attributes.strategic_lot_id').humanize
@@ -90,6 +97,14 @@
   $('#status_ubication').select2({
     tags: true,
     placeholder: "Selecciona o escribe una ubicación",
+  });
+
+  $('#status_farm_id').select2({
+    placeholder: "Selecciona una finca",
+  });
+
+  $('#status_strategic_lot_id').select2({
+    placeholder: "Selecciona un lote estratégico",
   });
 
   $('.status_dead').click(function() {

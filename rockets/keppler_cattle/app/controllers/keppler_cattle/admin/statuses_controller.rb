@@ -32,6 +32,7 @@ module KepplerCattle
         @strategic_lots = KepplerFarm::StrategicLot.all
         @typologies = Status.typologies
         @last_status = Status.last
+        @farms = KepplerFarm::Farm.order(title: :asc)
       end
 
       # GET /cattles/1/edit
@@ -107,7 +108,26 @@ module KepplerCattle
       # Only allow a trusted parameter "white list" through.
       def status_params
         params.require(:status).permit(
-          :cow_id, :weight, :years, :months, :ubication, :corporal_condition, :reproductive, :defiant, :pregnant, :lactating, :dead, :deathdate, :typology, :strategic_lot_id, :user_id, :comments
+          :cow_id,
+          :farm_id,
+          :weight,
+          :gained_weight,
+          :years,
+          :months,
+          :days,
+          :ubication,
+          :corporal_condition,
+          :reproductive,
+          :defiant,
+          :pregnant,
+          :lactating,
+          :breeding,
+          :dead,
+          :deathdate,
+          :typology,
+          :strategic_lot_id,
+          :user_id,
+          :comments
         )
       end
     end

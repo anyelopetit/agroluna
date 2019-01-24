@@ -9,6 +9,7 @@ KepplerFrontend::Engine.routes.draw do
   get '/finca/:farm_id/editar/:cow_id', to: 'app/frontend#edit_cattle', as: :app_edit_cattle #Temporal para frontend
   delete '/finca/:farm_id/eliminar/:cow_id', to: 'app/frontend#delete_cattle', as: :app_delete_cattle #Temporal para frontend
   get '/finca/:farm_id/nuevo-ganado', to: 'app/frontend#new_cattle', as: :app_new_cattle #Temporal para frontend
+  post '/finca/:farm_id/crear-ganado', to: 'app/frontend#create_cattle', as: :app_create_cattle #Temporal para frontend
 
   namespace :admin do
     scope :frontend, as: :frontend do

@@ -23,8 +23,10 @@
           -# %th
             %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
             %label{for: "styled-checkbox-all"}
-          %th Nombre
-          %th Función
+          %th Imagen
+          %th Número de serie
+          %th Nombre corto
+          %th Procedencia
           %th Actions
       %tbody
         - @cows.each do |cow|
@@ -41,11 +43,11 @@
             %td
               = cow.provenance
             %td.actions
-              = link_to app_module_show_path(@farm, cow) do
+              = link_to app_show_cattle_path(@farm, cow) do
                 %span.icofont-eye
-              = link_to app_module_edit_path(@farm, cow) do
+              = link_to app_edit_cattle_path(@farm, cow) do
                 %span.icofont-ui-edit
-              = link_to app_module_delete_path(@farm, cow) do
+              = link_to app_delete_cattle_path(@farm, cow) do
                 %span.icofont-trash
 
 :scss

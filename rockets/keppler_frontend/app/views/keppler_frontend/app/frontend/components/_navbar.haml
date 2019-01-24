@@ -14,7 +14,6 @@
     %span.navbar-toggler-icon.icofont-navigation-menu
   #navbarSupportedContent.collapse.navbar-collapse
     %ul.navbar-nav.mr-auto
-      = @farm.inspect
       - if farm
         %li.nav-item
           = link_to app_farm_path(farm), class: 'nav-link' do
@@ -35,7 +34,7 @@
           %span= current_user&.name
           %img.avatar{ src: (current_user&.avatar&.url || 'https://www.w3schools.com/w3images/avatar6.png') }
         .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
-          = link_to 'Ir a Keppler Admin', main_app.dashboard_path, class: 'dropdown-item' if current_user&.role_ids&[1]
+          = link_to 'Ir a Keppler Admin', main_app.dashboard_path, class: 'dropdown-item' if current_user&.role_ids.include?(1)
           = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: 'dropdown-item'
       -# %li.dropdown.messages-menu.nav-item
         %a.dropdown-toggle.language-option.nav-link.dropdown-toggle{ 'aria-expanded' => 'false', 'data-toggle' => 'dropdown', :href => '#' }

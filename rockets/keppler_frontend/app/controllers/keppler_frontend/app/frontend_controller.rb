@@ -6,7 +6,8 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    before_action :set_farm, only: %i[show edit profile_land module]
+    before_action :set_farm, only: %i[show edit farm listing]
+    before_action :cow_attributes, only: %i[new_cattle edit_cattle]
     before_action :set_farms
     before_action :default_logo
     before_action :index_variables
@@ -50,6 +51,21 @@ module KepplerFrontend
     def show_cattle
     end
 
+    def new_cattle
+      @cow = KepplerCattle::Cow.new
+    end
+
+    def create_cattle
+      @cow = Cow.new(cow_params)
+
+      if @cow.save && @cow.statuses.blank?
+        # redirect(@cow, params)
+        redirect_to new_admin_cattle_cow_status_path(@cow)
+      else
+        render :new
+      end
+    end
+
     def edit_cattle
     end
 
@@ -64,6 +80,14 @@ module KepplerFrontend
     # end farm 
 
     private
+
+    def cow_attributes
+      @species = Cow.species
+      @genders = Cow.genders
+      @races   = Cow.races
+      @posible_mothers = Cow.where(gender: 'female').map { |x| [x.serie_number, x.id] }
+      @posible_fathers = Cow.where(gender: 'male').map { |x| [x.serie_number, x.id] }
+    end
 
     def index_variables
       @q = KepplerCattle::Cow.ransack(params[:q])

@@ -1,6 +1,14 @@
 = render 'keppler_frontend/app/frontend/components/profile-banner', farm: @farm
+%img.bg-shape2{src:'/assets/keppler_frontend/app/shape2.svg'}
 .container_custom
-  .description_land
-    %h1 Descripción de la finca
-    %p= raw @farm&.description
-= render 'keppler_frontend/app/frontend/components/multiple-carousel', farm: @farm
+  .row
+    .col-lg-4
+      .description_land
+        %h1 Descripción de la finca
+        %p= raw @farm&.description
+    .col-lg-8
+      .photos_land
+        .multiple-items
+          - @farm&.photos.each do |photo|
+            .carousel_img
+              = image_tag (photo&.photo&.url || 'https://images.unsplash.com/photo-1547046219-d3ce5318c5c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80')

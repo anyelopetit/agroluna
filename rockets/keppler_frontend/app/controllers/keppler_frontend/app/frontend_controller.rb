@@ -6,7 +6,7 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    before_action :set_farm, only: %i[new_cattle create_cattle show edit farm listing show_cattle update_cattle]
+    before_action :set_farm, only: %i[new_cattle create_cattle show_cattle edit_cattle farm listing show_cattle update_cattle]
     before_action :set_cow, only: %i[new_status create_status show_cattle edit_cattle update_cattle]
     before_action :cow_attributes, only: %i[new_cattle edit_cattle create_cattle]
     before_action :set_farms
@@ -22,11 +22,6 @@ module KepplerFrontend
         redirect_to main_app.new_user_session_path, locale: :es
       end
     end
-
-    # begin keppler
-    def keppler
-    end
-    # end keppler
 
     # begin index
     def index
@@ -46,7 +41,10 @@ module KepplerFrontend
     # end index
 
     def listing
-      cows_id = KepplerCattle::Cow.all.select { |x| x.statuses.last&.farm_id&.eql?(@farm.id) }.map(&:id)
+      @search = KepplerCattle::Cow.search(params[:q])
+      @search_cows = @search.result(distinct: true)
+      @objects = @search_cows.page(@current_page).order(position: :desc)
+      cows_id = @objects.select { |x| x.statuses.last&.farm_id&.eql?(@farm.id) }.map(&:id)
       @cows = KepplerCattle::Cow.find(cows_id) if cows_id
       @strategic_lots = KepplerFarm::StrategicLot.where(farm_id: @farm.id)
     end
@@ -76,11 +74,11 @@ module KepplerFrontend
         if @cow.statuses.blank?
           redirect_to app_new_status_path(@farm, @cow)
         else 
-          redirect_to app_cattle_cow_path(@farm, @cow)
+          redirect_to app_cattle_farm_cow_path(@farm, @cow)
         end
       else
         render :edit
-    end
+      end
     end
 
     def edit_cattle
@@ -100,7 +98,7 @@ module KepplerFrontend
       @status = KepplerCattle::Status.new(status_params)
 
       if @status.save
-        redirect_to app_cattle_cow_path(@cow)
+        redirect_to app_cattle_farm_cow_path(@cow)
       else
         render :new
       end

@@ -14,5 +14,7 @@
 //= require jquery_ujs
 //= require jquery.slick
 //= require keppler_frontend/app/slick.min
-// require keppler_frontend/app/main
+//= require keppler_frontend/app/main
+//= require keppler_frontend/app/file_uploader
+//= stub keppler_frontend/app/grapes/grapes-editor
 //= require_tree .

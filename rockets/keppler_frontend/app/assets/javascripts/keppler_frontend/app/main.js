@@ -1,6 +1,6 @@
 $('.multiple-items').slick({
   infinite: true,
-  slidesToShow: 4,
+  slidesToShow: 1,
   slidesToScroll: 1,
   nextArrow: '<button class="slick-next slick-arrow icofont-double-right"></button>',
   prevArrow: '<button class="slick-prev slick-arrow icofont-double-left"></button>',

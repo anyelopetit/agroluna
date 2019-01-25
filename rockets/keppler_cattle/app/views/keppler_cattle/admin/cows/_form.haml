@@ -17,7 +17,7 @@
               .file-container{ class: ('already-uploaded' unless @cow.image&.url.blank?), style: ("background-image: url(#{f.object&.image&.url})" unless @cow.image&.url.blank?) }
                 = f.input :image, input_html: { onchange: "validateFileInput()" }
                 %i.file-icon.bx.bx-file-image
-                %h5.file-text= t('keppler.actions.drop', model: t('keppler-farm.models.singularize.photo'))
+                %h5.file-text= t('keppler.actions.drop', model: t('keppler_farm.models.singularize.photo'))
               %br
               %span (.JPG, .JPEG, .PNG)
 

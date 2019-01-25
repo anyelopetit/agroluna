@@ -10,7 +10,7 @@
       .col-lg-6
         .box.slice-box.p-15
           .box-header.with-border
-            %h3.box-title= t('keppler-farm.models.singularize.farm').humanize
+            %h3.box-title= t('keppler_farm.models.singularize.farm').humanize
             .box-tools.pull-right
               - if can?(model).update?
                 = link_to edit_admin_farm_farm_path(@farm), class: 'btn btn-box-tool', title: t('keppler.actions.edit') do
@@ -79,7 +79,7 @@
             = f.input :photo, input_html: { onchange: "validateFileInput()" }
             = f.input :farm_id, input_html: { value: @farm.id }, as: :hidden
             %i.file-icon.bx.bx-file-image
-            %h5.file-text= t('keppler.actions.drop', model: t('keppler-farm.models.singularize.photo'))
+            %h5.file-text= t('keppler.actions.drop', model: t('keppler_farm.models.singularize.photo'))
           %br
           %span (.JPG, .JPEG, .PNG)
           %button{ type: 'submit', id: "upload-file", disabled: true }

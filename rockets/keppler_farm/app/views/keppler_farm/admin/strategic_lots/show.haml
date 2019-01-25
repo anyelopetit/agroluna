@@ -10,7 +10,7 @@
       .col-lg-12
         .box.slice-box.p-15
           .box-header.with-border
-            %h3.box-title= t('keppler-farm.models.singularize.strategic_lot').humanize
+            %h3.box-title= t('keppler_farm.models.singularize.strategic_lot').humanize
             .box-tools.pull-right
               - if can?(model).update?
                 = link_to edit_admin_farm_farm_strategic_lot_path(@farm, @strategic_lot), class: 'btn btn-box-tool', title: t('keppler.actions.edit') do

@@ -7,7 +7,7 @@
             = link_to admin_farm_farm_path(@farm) do
               = @farm.title
             >
-            = t("keppler-farm.models.pluralize.strategic_lots").humanize
+            = t("keppler_farm.models.pluralize.strategic_lots").humanize
           = entries(@total, @objects)
         %section.content-actions
           .toolbar
@@ -53,7 +53,7 @@
                 %thead
                   %tr
                     %th.not-records.center
-                      %h6= t('keppler.messages.not_found_records', model: t('keppler-farm.models.pluralize.strategic_lots'))
+                      %h6= t('keppler.messages.not_found_records', model: t('keppler_farm.models.pluralize.strategic_lots'))
         - else
           = render 'admin/layouts/listing_preloader'
           .objects-container

@@ -1,7 +1,7 @@
 %aside.control-sidebar.control-sidebar-light
   .tab-content
     %p.control-sidebar-heading
-      = @activities.empty? ? t('keppler.messages.no_events') : t("keppler-farm.titles.history")
+      = @activities.empty? ? t('keppler.messages.no_events') : t("keppler_farm.titles.history")
     %ul.timeline
       - @activities.each do |activity|
         - if activity.trackable_type.eql? "Session"

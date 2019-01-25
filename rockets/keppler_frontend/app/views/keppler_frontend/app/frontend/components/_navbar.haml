@@ -1,6 +1,7 @@
 %nav.navbar.navbar-expand-lg.navbar_custom
   %a#navbarDropdown.nav-link{ class: ('dropdown-toggle' if farms), "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
     = image_tag (farm&.logo&.url || @default_logo), style: 'height: 40px'
+  = action_name
   - if farms.blank?
     .farms-menu.dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}
       .dropdown-item No tienes fincas asignadas

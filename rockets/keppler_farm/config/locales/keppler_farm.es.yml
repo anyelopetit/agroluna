@@ -1,6 +1,6 @@
 
 es:
-  keppler-farm:
+  keppler_farm:
     permissions:
     models:
       singularize:

@@ -84,6 +84,9 @@ module KepplerFrontend
     def edit_cattle
     end
 
+    def statuses
+    end
+
     def new_status
       @status = KepplerCattle::Status.new
       @ubications = KepplerCattle::Status.ubications

@@ -6,7 +6,7 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    before_action :set_farm
+    before_action :set_farm, except: %i[root index]
     before_action :set_cow, only: %i[new_status create_status show_cattle edit_cattle update_cattle]
     before_action :cow_attributes, only: %i[new_cattle edit_cattle create_cattle]
     before_action :set_farms

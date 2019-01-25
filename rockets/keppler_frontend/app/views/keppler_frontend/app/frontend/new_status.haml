@@ -4,9 +4,10 @@
   .single-item
     .card_new
       %h1 Crear status inicial
-      -# = @farm.inspect
-      -# = params
-      = simple_form_for [:admin, :cattle, @cow, @status], url: app_create_status_path(@cow, @farm) do |f|
+      = @farm.id
+      = @cow.id
+      = params
+      = simple_form_for [:app, :cattle, @farm, @cow, @status] do |f|
         .form-padding
           .row
             = f.input :cow_id, include_blank: false, input_html: { value: @cow.id }, as: :hidden

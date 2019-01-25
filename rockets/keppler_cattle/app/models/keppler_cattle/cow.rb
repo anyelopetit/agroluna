@@ -30,7 +30,7 @@ module KepplerCattle
     end
 
     def self.races
-      ['race1', 'race2', 'race3']
+      ['raza 1', 'raza 2', 'raza 3']
     end
 
     def self.provenance

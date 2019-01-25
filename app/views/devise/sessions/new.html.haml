@@ -16,26 +16,26 @@
               .form-group.mb-5
                 %label.label_custom.label_login
                   %i.icofont-ui-message
-                  = t('activerecord.attributes.email')
+                  Correo
                 = f.email_field :email, :autofocus => true, class: "form-control input_custom input_login validate"
               .form-group.mb-5
                 %label.label_custom.label_login
                   %i.icofont-ui-password
-                  = t('activerecord.attributes.password')
+                  Contraseña
                 = f.password_field :password, :autofocus => true, class: "form-control input_custom input_login validate #{'invalid' if flash[:alert]}"
               %div
                 .login-bottom.d-flex.justify-content-center
-                  = f.submit t("devise.sessions.log_in"), type: 'submit', class: 'btn btn_custom btn--medium btn--filled w-100 btn-shadow btn-text-transform'
-                .d-flex.justify-content-center.mt-3
+                  = f.submit :Entrar, type: 'submit', class: 'btn btn_custom btn--medium btn--filled w-100 btn-shadow btn-text-transform'
+                -# .d-flex.justify-content-center.mt-3
                   - if devise_mapping.recoverable?
                     = link_to new_password_path(resource_name), class: "recoverable" do
-                      = t("devise.sessions.forgot_password")
+                      = ¿Olvidaste tu contraseña?
               .form-group
                 %center.devise-errors.center-align
                   - flash.each do |name, msg|
                     = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
             %span.powered_by
-              Powered by
+              Desarrollado por
               %a{ href: 'https://slicegroup.co' } Slice Group
         .login_right
           %img{ src: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/5229c264816927.5adf092803115.jpg' }

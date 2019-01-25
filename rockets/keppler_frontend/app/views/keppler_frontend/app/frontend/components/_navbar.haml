@@ -1,22 +1,29 @@
 %nav.navbar.navbar-expand-lg.navbar_custom
   %a#navbarDropdown.nav-link{ class: ('dropdown-toggle' if farms), "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
     = image_tag (farm&.logo&.url || @default_logo), style: 'height: 40px'
-  - if farms
+  - if farms.blank?
+    .farms-menu.dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}
+      .dropdown-item No tienes fincas asignadas
+  - else
     .farms-menu.dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}
       - farms.each do |f|
-        %a.farm-item.dropdown-item{ href: profile_land_path(f) }
+        %a.farm-item.dropdown-item{ href: app_farm_path(f) }
           .farm-logo= image_tag f&.logo&.url || @default_logo
           .farm-title= f.title
   %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", type: "button"}
     %span.navbar-toggler-icon.icofont-navigation-menu
   #navbarSupportedContent.collapse.navbar-collapse
     %ul.navbar-nav.mr-auto
-      %li.nav-item
-        %a.nav-link{href: "#"} Módulo 1
-      %li.nav-item
-        %a.nav-link{href: "#"} Módulo 2
+      - if farm
+        %li.nav-item
+          = link_to app_farm_path(farm), class: 'nav-link' do
+            = farm&.title
+        %li.nav-item
+          = link_to app_cattle_cows_path(farm), class: 'nav-link' do
+            Listado
       %li.nav-item.d-lg-none
         = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: 'nav-link'
+    -# %ul.navbar-nav.mr-auto.language-select
     %ul.navbar-nav.ml-auto
       %li.nav-item{ style: 'display: flex;align-items: center;' }
         -# %a.float-right{ href: '/admin' }
@@ -27,8 +34,23 @@
           %span= current_user&.name
           %img.avatar{ src: (current_user&.avatar&.url || 'https://www.w3schools.com/w3images/avatar6.png') }
         .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
-          = link_to 'Ir a Keppler Admin', main_app.dashboard_path, class: 'dropdown-item' if current_user&.role_ids&[1,2]
+          = link_to 'Ir a Keppler Admin', main_app.dashboard_path, class: 'dropdown-item' if current_user&.role_ids.include?(1)
           = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: 'dropdown-item'
+      -# %li.dropdown.messages-menu.nav-item
+        %a.dropdown-toggle.language-option.nav-link.dropdown-toggle{ 'aria-expanded' => 'false', 'data-toggle' => 'dropdown', :href => '#' }
+          = image_tag "admin/#{Appearance.first.language.eql?('es') ? 'es' : 'en'}.png", class: 'small-profile-img keppler-background'
+        %ul.dropdown-menu
+          %li.header= t('keppler.language.select_lang')
+          %li
+            = link_to '/admin/settings/lang/en', method: :post do
+              .pull-left
+                = image_tag 'admin/en.png', class: 'small-flat small-profile-img keppler-background'
+              %p.small-flat= t('keppler.language.en')
+          %li
+            = link_to '/admin/settings/lang/es', method: :post do
+              .pull-left
+                = image_tag 'admin/es.png', class: 'small-flat small-profile-img keppler-background'
+              %p.small-flat= t('keppler.language.es')
 :scss
   .farm-logo img {
     width: 20px;
@@ -37,4 +59,53 @@
 
   .farm-item {
     display: flex;
+  }
+
+  .small-profile-img {
+    background-color: #f44336;
+    float: left;
+    height: 30px;
+    margin-right: 10px;
+    margin-top: -2px;
+    object-fit: cover;
+    width: 30px;
+  }
+
+  .small-profile-img, .nav-profile-img,
+  .side-img-profile, .bg-profile {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+  }
+  
+  .navbar-nav > .messages-menu > .dropdown-menu {
+    width: 250px;
+  }
+
+  .navbar-nav > .messages-menu > .dropdown-menu > li.header {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: #ffffff;
+    padding: 7px 10px;
+    border-bottom: 1px solid #f4f4f4;
+    color: #444444;
+    font-size: 14px;
+  }
+
+  .dropdown-menu > li > a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.428571429;
+    color: #333333;
+    white-space: nowrap;
+  }
+
+  .dropdown {
+    display: flex;
+    align-items: center;
   }

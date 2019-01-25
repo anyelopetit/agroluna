@@ -13,7 +13,9 @@ module KepplerFarm
 
       # GET /farms
       def index
-        @cows = KepplerCattle::Cow.new
+        @assign = KepplerCattle::Assignment.new
+        statuses_ids = KepplerCattle::Status.where(farm_id: @farm.id).map(&:cow_id)
+        @cows = KepplerCattle::Cow.find(statuses_ids)
         respond_to_formats(@strategic_lots)
         redirect_to_index(@objects)
       end
@@ -77,6 +79,25 @@ module KepplerFarm
 
       def sort
         StrategicLot.sorter(params[:row])
+      end
+      
+      def delete_assignment
+        @assignment = KepplerCattle::Assignment.find_by(
+          strategic_lot_id: params[:strategic_lot_id],
+          cow_id: params[:cow_id]
+        )
+
+        if @assignment.try(:exists?)
+          if @assignment.destroy!
+            flash[:notice] = 
+              t('keppler.messages.cattle.deleted', cattle: @assignment.cow.serial_number) if @assignment.destroy!
+          else
+            flash[:error] = t('keppler.messages.cattle.not_deleted', cattle: @assignment.cow.serial_number)
+          end
+        else
+          flash[:error] = t('keppler.messages.cattle.doesnt_exist', cattle: @assignment.cow.serial_number)
+        end
+        redirect_to action: :index, id: params[:farm_id]
       end
 
       private

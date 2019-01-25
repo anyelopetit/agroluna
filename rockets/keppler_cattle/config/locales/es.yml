@@ -11,7 +11,7 @@ es:
         cow: ganado
       pluralize:
         statuses: estados
-        cows: ganado
+        cows: ganados
     modules:
       admin/status: Estado
       admin/cow: Ganado
@@ -45,6 +45,7 @@ es:
       provenance: procedencia
       observations: observaciones
       weight: peso (kg)
+      gained_weight: peso ganado (kg)
       years: años
       months: meses
       days: días de nacido
@@ -54,6 +55,7 @@ es:
       defiant: recelador
       pregnant: preñada
       lactating: lactando
+      breeding: criando
       dead: muerto
       deathdate: fecha de muerte
       typology: tipología
@@ -62,6 +64,8 @@ es:
       comments: comentarios
       mother_id: madre
       father_id: padre
+      farm_id: finca
+      farms: fincas
     errors:
       messages:
   errors:

@@ -1,6 +1,6 @@
 .container_custom
   .d-flex.justify-content-end.mb-5
-    .toolbar
+    -# .toolbar
       %a{ href: '' }
         %i.icofont-trash
       %a{ href: '' }
@@ -8,14 +8,15 @@
       %a{ href: '' }
         %i.icofont-download
     .actions
-      %a.float-right.mt-4.mb-4{ href: '' }
-        %button.btn.btn_custom.btn--filled.btn--medium
-          %i.icofont-plus
-          Nuevo Status
-      %a.float-right.mt-4.mb-4.ml-3{ href: '/edit' }
-        %button.btn.btn_custom.btn--filled.btn--medium
-          %i.icofont-ui-edit
-          Editar
+      .float-right
+        %a.mt-4.mb-4.ml-3{ href: app_edit_cattle_path(@farm, @cow) }
+          %button.btn.btn_custom.btn--filled.btn--medium
+            %i.icofont-ui-edit
+            Editar
+        %at.mt-4.mb-4{ href: app_new_status_path(@farm, @cow) }
+          %button.btn.btn_custom.btn--filled.btn--medium
+            %i.icofont-plus
+            Nuevo Status
 .container_custom
   .row
     .col-lg-4
@@ -23,49 +24,74 @@
         .card_cow
           %img.avatar_cow{ src: 'https://image.flaticon.com/icons/svg/523/523448.svg' }
           .card_cow_content
-            %h1 Casera
-            %strong 621
-            %span Mestizo Brahman 5/8
+            %h1= @cow.short_name
+            %strong= @cow.serie_number
+            %span= @cow.race
         .row.mt-5
           .col-lg-6
             %dl
               %dt Fecha de Nacimiento
-              %dd 21/03/1993
-              %dt Edad (Año-Mes)
-              %dd 25-09
+              %dd= @cow.birthdate
+              %dt Edad (Años-Meses)
+              %dd #{@cow.years}-#{@cow.months}
               %dt Tipología
-              %dd Vaca Prod. Vacia
+              %dd= @cow.statuses.last.typology
               %dt Procedencia
-              %dd Agua Santa
+              %dd= @cow.provenance
           .col-lg-6
             %dl
               %dt Color Pelaje
-              %dd Hosco Oscuro
+              %dd= @cow.coat_color
               %dt Color Morro
-              %dd Blanco
+              %dd= @cow.nose_color
               %dt Borla
-              %dd Negro
+              %dd= @cow.tassel_color
               %dt Condición corporal
-              %dd Condición 1
-              %dt Lote estrátegico
-              %dd L1 VAC ORD
+              %dd= @cow.statuses.last.corporal_condition
+              - if @cow.statuses.last.strategic_lot
+                %dt Lote estrátegico
+                %dd= @cow.statuses.last.strategic_lot
+    // Current Status
     .col-lg-4
       .card_show.card_status
         .card_status--title
-          %h2 Status
-        - 8.times do
+          %h2 Estado actual
+        .box-body.no-padding
+          %table.table
+            %tbody
+              - @cow.statuses.last.as_json(except: %w[id cow_id position deleted_at]).each do |attribute, value|
+                - unless value.nil?
+                  %tr.list-row
+                    %th.display-label= t("activerecord.attributes.#{attribute}").humanize
+                    %td.display-value.fs-body-1.tc-black-2
+                      - if @attachments.dig('images', 'names').include?(attribute)
+                        = image_tag value.url if value.url
+                      - elsif @attachments.dig('images', 'names').map(&:pluralize).include?(attribute)
+                        - value.each do |image|
+                          = image_tag image.url if image.url
+                      - elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
+                        = value ? 'Sí' : 'No'
+                      - elsif attribute.include?('_id')
+                        = object_name(@cow.statuses.last, attribute) #|| model_name('keppler_cattle', attribute, value)
+                      - else 
+                        = sanitize raw value
+    .col-lg-4
+      .card_show.card_status
+        .card_status--title
+          %h2 Historial de estados
+        - @statuses.each do |status|
           .card_status--inner{"data-toggle" => "modal", "data-target" => "#modalStatus"}
             %dl
               %dt
                 %i.icofont-ui-calendar
-              %dd 20/01/2018
+              %dd= status.created_at
               %dt
                 %i.icofont-dumbbell
-              %dd 205kgs
+              %dd #{status.weight} (kg)
               %dt
                 %i.icofont-info
-              %dd Vaca preñada
-    .col-lg-4
+              %dd #{status.typology}
+    -# .col-lg-4
       .card_show#mother
         %h2 Datos de la Madre
         .row

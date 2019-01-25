@@ -42,13 +42,19 @@ module ApplicationHelper
   end
 
   def find_model(path_array, i)
-    parent_module = controller.class.parent.to_s.underscore.remove('/admin')
+    parent_module = controller.class.parent.to_s.underscore.remove('/admin').remove('admin')
     "#{parent_module}/#{path_array[i]}".classify.constantize
   end
 
-  def object_name(object, attribute_name)
-    attribute = attribute_name.split('_id').first.to_sym
-    object.try(attribute).name
+  def object_name(object, at_name)
+    at = at_name.split('_id').first.to_sym
+    object&.try(at).try(:name) || object&.try(at).try(:title)
+  end
+
+  def model_name(rocket, att, id)
+    a = att.split('_id').first
+    o = "#{rocket}/#{a}".classify.constantize&.find(id)
+    o&.name || o&.title
   end
 end
 

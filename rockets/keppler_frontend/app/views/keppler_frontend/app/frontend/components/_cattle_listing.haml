@@ -1,0 +1,68 @@
+.container_custom
+  .d-flex.justify-content-end.mb-5
+    -# .toolbar
+      %a{ href: '' }
+        %i.icofont-trash
+      %a{ href: '' }
+        %i.icofont-refresh
+      %a{ href: '' }
+        %i.icofont-download
+    %a.float-right.mt-4.mb-4{ href: app_new_cattle_path(@farm) }
+      %button.btn.btn_custom.btn--filled.btn--medium
+        %i.icofont-plus
+        Agregar
+  %table
+    - if @cows.size.zero?
+      %thead
+        %tr
+          %th.not-records.center
+            %center No se encontraron ganados
+    - else
+      %thead
+        %tr
+          -# %th
+            %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
+            %label{for: "styled-checkbox-all"}
+          %th Imagen
+          %th Número de serie
+          %th Nombre corto
+          %th Procedencia
+          %th Actions
+      %tbody
+        - @cows.each do |cow|
+          %tr
+            -# %td.checkboxes
+              %input.styled-checkbox{type: "checkbox", id: "styled-checkbox-#{x}"}
+              %label{for: "styled-checkbox-#{x}"}
+            %td
+              = image_tag cow.image.url if cow.image.url
+            %td
+              = cow.serie_number
+            %td
+              = cow.short_name
+            %td
+              = cow.provenance
+            %td.actions
+              = link_to app_cattle_cow_path(@farm, cow) do
+                %span.icofont-eye
+              = link_to app_edit_cattle_path(@farm, cow) do
+                %span.icofont-ui-edit
+              = link_to app_delete_cattle_path(@farm, cow) do
+                %span.icofont-trash
+
+:scss
+  .center {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+  }
+
+  .not-records {
+    background-color: #fff;
+    border: 0;
+  }
+
+  table img {
+    max-height: 50px; 
+  }

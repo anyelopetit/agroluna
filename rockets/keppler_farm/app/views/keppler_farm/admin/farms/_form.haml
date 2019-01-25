@@ -41,7 +41,7 @@
 :javascript
   $('#farm_processes').select2()
 
-- unless @farm.id.nil?
+- unless @farm.processes.blank?
   - @farm.processes.each do |p|
     :javascript
       $('ul.select2-selection__rendered').prepend(

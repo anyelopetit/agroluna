@@ -104,10 +104,63 @@
     // Current Status
     .col-md-6
       .card_show.card_status
+        .card_status--bar
+          - if @cow.gender?('male')
+            %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Recelador</h4>' }
+              %i.icofont-bull{ class: ('active' if @cow.status.defiant) }
+            %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Reproductor</h4>' }
+              %i.icofont-dna{ class: ('active' if @cow.status.reproductive) }
+          - else
+            %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Preñada</h4>' }
+              %i.icofont-baby{ class: ('active' if @cow.status.pregnant) }
+            %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Lactando</h4>' }
+              %i.icofont-baby-milk-bottle{ class: ('active' if @cow.status.lactating)  }
+            %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Criando</h4>' }
+              %i.icofont-holding-hands{ class: ('active' if @cow.status.breeding) }
+          %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Dado de baja</h4>' }
+            %i.icofont-danger-zone{ class: ('active' if @cow.status.dead) }
         .card_status--title
-          %h2 Estado actual
+          %h2
+            Estado actual
+            %small (#{@cow.status.created_at.to_formatted_s(:day)})
         .box-body.no-padding
-          %table.table
+          .row
+            .col-lg-6
+              %dl
+                %dt
+                  %i.icofont-dumbbell
+                  Peso
+                %dd= @cow.status.weight
+                %dt
+                  %i.icofont-baby-cloth
+                  Edad (años - meses)
+                %dd
+                  = @cow.status.years
+                  = "-"
+                  = @cow.status.months
+                %dt
+                  %i.icofont-infant-nipple
+                  Días de nacido
+                %dd= @cow.status.days
+            .col-lg-6
+              %dl
+                %dt
+                  %i.icofont-cow
+                  Tipología
+                %dd= @cow.status.typology
+                %dt
+                  %i.icofont-muscle
+                  Condición corporal
+                %dd= @cow.status.corporal_condition
+                %dt
+                  %i.icofont-home
+                  Finca
+                %dd
+                  = @cow.status.farm_name
+                - unless @cow.status.strategic_lot.blank?
+                  %dt Lote estratégico
+                  %dd= @cow.status.strategic_lot
+          -# %table.table
             %tbody
               - if @cow.status
                 - @cow.status&.as_json(except: %w[id cow_id position deleted_at]).each do |attribute, value|
@@ -128,14 +181,14 @@
                           = sanitize raw value
     
     .col-lg-4
-      .card_show.card_status#status-history
+      .card_show.card_status.card_history#status-history
         .float-right
           %a#close-status-history{ href: '#' }
             %i.icofont-ui-close
         .card_status--title
           %h2 Historial de estados
         - @statuses.each do |status|
-          .card_status--inner{"data-toggle" => "modal", "data-target" => "#modalStatus"}
+          .card_status--inner{"data-toggle" => "modal", "data-target" => "#modalStatus-#{status.id}"}
             %dl
               %dt
                 %i.icofont-ui-calendar
@@ -146,17 +199,8 @@
               %dt
                 %i.icofont-info
               %dd #{status&.typology}
-            %dl
-              %dt
-                %i.icofont-ui-calendar
-              %dd= status&.created_at.to_formatted_s(:day)
-              %dt
-                %i.icofont-dumbbell
-              %dd #{status&.weight} (KG)
-              %dt
-                %i.icofont-info
-              %dd #{status&.typology}
-          -# = render 'keppler_frontend/app/frontend/partials/modal_status', status: status
+- @statuses.each do |status|
+  = render 'keppler_frontend/app/frontend/partials/modal_status', cow: @cow, status: status
 
 :scss
   #status-history {
@@ -198,4 +242,8 @@
     $('#status-history').css({
       right: '-300px'
     })
+  })
+
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
   })

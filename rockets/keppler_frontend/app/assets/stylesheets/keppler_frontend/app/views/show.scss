@@ -57,8 +57,7 @@
   position: relative;
 
   dt {
-    float: left;
-    width: 20px;
+    margin-top: 20px;
   }
 
   .card_status--inner {
@@ -67,10 +66,32 @@
     padding: 5px 10px;
     cursor: pointer;
   }
+
+  &--bar {
+    float: right;
+    font-size: 25px;
+
+    i {
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      color: #ccc;
+      padding: 5px;
+
+      &.active {
+        border: 1px solid $primary;
+        color: $primary;
+      }
+    }
+  }
 }
 
-dt {
-  margin-top: 20px;
+
+.card_history {
+  dt {
+    float: left;
+    margin-top: 0;
+    width: 20px;
+  }
 }
 
 .modal_status {

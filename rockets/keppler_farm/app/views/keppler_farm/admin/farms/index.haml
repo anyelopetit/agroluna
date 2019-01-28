@@ -4,7 +4,7 @@
       .listing.col-lg-12.col-xs-12
         %section.content-header.index-header
           %h1
-            = t("keppler-farm.models.pluralize.farms").humanize
+            = t("keppler_farm.models.pluralize.farms").humanize
           = entries(@total, @objects)
         %section.content-actions
           .toolbar
@@ -41,7 +41,7 @@
                 - if @objects.size.zero?
                   %tr
                     %th.not-records.center
-                      %h6= t('keppler.messages.not_found_records', model: t('keppler-farm.models.pluralize.farms'))
+                      %h6= t('keppler.messages.not_found_records', model: t('keppler_farm.models.pluralize.farms'))
 
                 - else
                   %tr

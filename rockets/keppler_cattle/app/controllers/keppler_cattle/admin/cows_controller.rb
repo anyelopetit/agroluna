@@ -7,7 +7,7 @@ module KepplerCattle
     class CowsController < ::Admin::AdminController
       layout 'keppler_cattle/admin/layouts/application'
       before_action :set_cow, only: %i[show edit update destroy]
-      # before_action :cow_attributes, only: %i[new edit]
+      before_action :cow_attributes, only: %i[new edit]
       before_action :index_variables
       include ObjectQuery
 

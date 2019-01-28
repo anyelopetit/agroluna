@@ -1,14 +1,16 @@
 %ul#moduleTabs.nav.nav-tabs.mt-4{role: "tablist"}
   %li.nav-item
-    %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#mfg", role: "tab"} Fichas de Ganado
+    %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#mfg", role: "tab"}
+      Activos
   %li.nav-item
-    %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#ale", role: "tab"} Admin. Lote Estratégico
+    %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#ale", role: "tab"}
+      Dados de baja
   -# %li.nav-item
     %a#transfers-tab.nav-link{"aria-controls" => "transfers", "aria-selected" => "false", "data-toggle" => "tab", href: "#transfers", role: "tab"} Transferencias
 #moduleContent.tab-content
   #mfg.tab-pane.fade.show.active{ "aria-labelledby" => "mfg-tab", role: "tabpanel" }
-    = render 'keppler_frontend/app/frontend/components/cattle_listing'
+    = render 'keppler_frontend/app/frontend/components/cattle_listing', farm: @farm, cows: @active_cows, search: @q
   #ale.tab-pane.fade{ "aria-labelledby" => "ale-tab", role: "tabpanel" }
-    = render 'keppler_frontend/app/frontend/components/lot_listing'
+    = render 'keppler_frontend/app/frontend/components/cattle_listing', farm: @farm, cows: @inactive_cows, search: @q
   -# #transfers.tab-pane.fade{ "aria-labelledby" => "transfers-tab", role: "tabpanel" }
     = render 'keppler_frontend/app/frontend/components/submodule_listing'

@@ -10,7 +10,7 @@
       .col-lg-12
         .box.slice-box.p-15
           .box-header.with-border
-            %h3.box-title= t('keppler-farm.models.singularize.process').humanize
+            %h3.box-title= t('keppler_farm.models.singularize.process').humanize
             .box-tools.pull-right
               - if can?(model).update?
                 = link_to edit_admin_farm_process_path(@process), class: 'btn btn-box-tool', title: t('keppler.actions.edit') do

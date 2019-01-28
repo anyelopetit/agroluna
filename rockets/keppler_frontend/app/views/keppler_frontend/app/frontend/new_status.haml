@@ -4,7 +4,7 @@
   .single-item
     .card_new
       %h1 Crear status inicial
-      = simple_form_for [:admin, :cattle, @cow, @status], url: app_create_status_path do |f|
+      = simple_form_for [:app, :cattle, @farm, @cow, @status] do |f|
         .form-padding
           .row
             = f.input :cow_id, include_blank: false, input_html: { value: @cow.id }, as: :hidden
@@ -183,19 +183,6 @@
       //.text(label.hasClass('active'))
   })
 
-  $('#status_ubication').select2({
-    tags: true,
-    placeholder: "Selecciona o escribe una ubicación",
-  });
-
-  $('#status_farm_id').select2({
-    placeholder: "Selecciona una finca",
-  });
-
-  $('#status_strategic_lot_id').select2({
-    placeholder: "Selecciona un lote estratégico",
-  });
-
   $('.status_dead').click(function() {
     if ($(this).find('.inline-label').hasClass('active')) {
       document.getElementById('status_deathdate').disabled = false
@@ -205,3 +192,13 @@
     }
   })
   
+
+  $('.datepicker').datepicker({
+    dateFormat: 'yy-mm-dd',
+    showOtherMonths: true,
+    selectOtherMonths: true,
+    changeMonth: true,
+    changeYear: true,
+    maxDate: 0,
+    setDate: 0
+  })

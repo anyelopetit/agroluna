@@ -60,7 +60,7 @@
         .box-body.no-padding
           %table.table
             %tbody
-              - @cow.statuses.last.as_json(except: %w[id cow_id position deleted_at]).each do |attribute, value|
+              - @cow.status&.as_json(except: %w[id cow_id position deleted_at]).each do |attribute, value|
                 - unless value.nil?
                   %tr.list-row
                     %th.display-label= t("activerecord.attributes.#{attribute}").humanize
@@ -73,7 +73,7 @@
                       - elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
                         = value ? 'Sí' : 'No'
                       - elsif attribute.include?('_id')
-                        = object_name(@cow.statuses.last, attribute) #|| model_name('keppler_cattle', attribute, value)
+                        = object_name(@cow.status attribute) #|| model_name('keppler_cattle', attribute, value)
                       - else 
                         = sanitize raw value
     // Statuses

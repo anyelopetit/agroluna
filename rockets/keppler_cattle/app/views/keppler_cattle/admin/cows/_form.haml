@@ -17,7 +17,7 @@
               .file-container{ class: ('already-uploaded' unless @cow.image&.url.blank?), style: ("background-image: url(#{f.object&.image&.url})" unless @cow.image&.url.blank?) }
                 = f.input :image, input_html: { onchange: "validateFileInput()" }
                 %i.file-icon.bx.bx-file-image
-                %h5.file-text= t('keppler.actions.drop', model: t('keppler-farm.models.singularize.photo'))
+                %h5.file-text= t('keppler.actions.drop', model: t('keppler_farm.models.singularize.photo'))
               %br
               %span (.JPG, .JPEG, .PNG)
 
@@ -32,10 +32,6 @@
             %table.table.table-bordered
               %tbody
                 .form-padding
-                  .col-sm-6
-                    = f.input :mother_id, collection: @posible_mothers, label: t('activerecord.attributes.mother_id').humanize
-                  .col-sm-6
-                    = f.input :father_id, collection: @posible_fathers, label: t('activerecord.attributes.father_id').humanize
                   .col-sm-6
                     = f.input :serie_number, as: :string, label: t('activerecord.attributes.serie_number').humanize
                   .col-sm-6
@@ -60,6 +56,10 @@
                     = f.input :provenance, as: :string, label: t('activerecord.attributes.provenance').humanize
                   .col-sm-12
                     = f.input :observations, label: t('activerecord.attributes.observations').humanize
+                  -# .col-sm-6
+                  -#   = f.input :mother_id, collection: @posible_mothers, label: t('activerecord.attributes.mother_id').humanize
+                  -# .col-sm-6
+                    = f.input :father_id, collection: @posible_fathers, label: t('activerecord.attributes.father_id').humanize
                   .col-sm-12
                     .pull-right
                       = f.button :submit, t('keppler.actions.save'), name: '_save', class: 'btn-primary'
@@ -115,18 +115,6 @@
 
     $('#cow_race').select2({
       placeholder: "#{t('keppler_cattle.messages.choose_race').humanize}",
-      templateResult: noImageSelect,
-      templateSelection: noImageSelect
-    });
-
-    $('#cow_mother_id').select2({
-      placeholder: "#{t('keppler_cattle.messages.choose_mother').humanize}",
-      templateResult: noImageSelect,
-      templateSelection: noImageSelect
-    });
-
-    $('#cow_father_id').select2({
-      placeholder: "#{t('keppler_cattle.messages.choose_father').humanize}",
       templateResult: noImageSelect,
       templateSelection: noImageSelect
     });

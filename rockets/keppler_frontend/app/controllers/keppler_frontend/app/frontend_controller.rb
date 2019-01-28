@@ -6,7 +6,7 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    before_action :set_farm, only: %i[new_cattle create_cattle show_cattle edit_cattle farm listing show_cattle update_cattle]
+    before_action :set_farm, except: %i[root index]
     before_action :set_cow, only: %i[new_status create_status show_cattle edit_cattle update_cattle]
     before_action :cow_attributes, only: %i[new_cattle edit_cattle create_cattle]
     before_action :set_farms
@@ -41,12 +41,8 @@ module KepplerFrontend
     # end index
 
     def listing
-      @search = KepplerCattle::Cow.search(params[:q])
-      @search_cows = @search.result(distinct: true)
-      @objects = @search_cows.page(@current_page).order(position: :desc)
-      cows_id = @objects.select { |x| x.statuses.last&.farm_id&.eql?(@farm.id) }.map(&:id)
-      @cows = KepplerCattle::Cow.find(cows_id) if cows_id
       @strategic_lots = KepplerFarm::StrategicLot.where(farm_id: @farm.id)
+      @typologies = KepplerCattle::Status.typologies
     end
 
     def show_cattle
@@ -84,6 +80,9 @@ module KepplerFrontend
     def edit_cattle
     end
 
+    def statuses
+    end
+
     def new_status
       @status = KepplerCattle::Status.new
       @ubications = KepplerCattle::Status.ubications
@@ -98,7 +97,7 @@ module KepplerFrontend
       @status = KepplerCattle::Status.new(status_params)
 
       if @status.save
-        redirect_to app_cattle_farm_cow_path(@cow)
+        redirect_to app_cattle_farm_cow_path(@farm, @cow)
       else
         render :new
       end
@@ -131,7 +130,8 @@ module KepplerFrontend
     def index_variables
       @q = KepplerCattle::Cow.ransack(params[:q])
       @cows = @q.result(distinct: true)
-      @objects = @cows.page(@current_page).order(position: :desc)
+      @active_cows = @cows.page(@current_page).order(position: :desc).actives
+      @inactive_cows = @cows.page(@current_page).order(position: :desc).inactives
       @total = @cows.size
       @attributes = KepplerCattle::Cow.index_attributes
     end

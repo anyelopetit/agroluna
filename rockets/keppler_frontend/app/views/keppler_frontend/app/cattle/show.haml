@@ -1,6 +1,6 @@
 .container_custom
   .float-left
-    %a.mt-4.mb-4.ml-3{ href: app_cattle_farm_cows_path(@farm) }
+    %a.mt-4.mb-4.ml-3{ href: app_farm_cows_path(@farm) }
       %button.btn.btn_custom.btn--medium
         %i.icofont-circled-left
         Listado
@@ -14,11 +14,11 @@
         %i.icofont-download
     .actions
       .float-right
-        %a.mt-4.mb-4.ml-3{ href: app_edit_cattle_path(@farm, @cow) }
+        %a.mt-4.mb-4.ml-3{ href: app_farm_cow_edit_path(@farm, @cow) }
           %button.btn.btn_custom.btn--filled.btn--medium
             %i.icofont-ui-edit
             Editar
-        %a.mt-4.mb-4{ href: app_new_status_path(@farm, @cow) }
+        %a.mt-4.mb-4{ href: app_farm_cow_status_new_path(@farm, @cow) }
           %button.btn.btn_custom.btn--filled.btn--medium
             %i.icofont-plus
             Nuevo Status
@@ -78,12 +78,13 @@
           .card_show.p-5
             .parent_card
               - if @cow.mother
-                = link_to app_cattle_farm_cow_path(@farm, @cow) do
+                = link_to app_farm_cow_path(@farm, @cow) do
                   %h3 Madre
                   - if @cow.mother&.image&.url 
                     = image_tag @cow.mother&.image&.url
                   - else
                     = image_tag '/assets/keppler_cattle/cow_shadow'
+                    %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
                   = @cow.father&.serie_number
               - else
                 %h3 SIN MADRE
@@ -91,12 +92,13 @@
           .card_show.p-5
             .parent_card
               - if @cow.father
-                = link_to app_cattle_farm_cow_path(@farm, @cow) do
+                = link_to app_farm_cow_path(@farm, @cow) do
                   %h3 Padre
                   - if @cow.father&.image&.url 
                     = image_tag @cow.father&.image&.url
                   - else
                     = image_tag '/assets/keppler_cattle/bull_shadow'
+                    %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
                   = @cow.father&.serie_number
               - else
                 %h3 SIN PADRE
@@ -130,7 +132,9 @@
                 %dt
                   %i.icofont-dumbbell
                   Peso
-                %dd= @cow.status.weight
+                %dd
+                  = @cow.status.weight
+                  KG
                 %dt
                   %i.icofont-baby-cloth
                   Edad (años - meses)
@@ -200,7 +204,7 @@
                 %i.icofont-info
               %dd #{status&.typology}
 - @statuses.each do |status|
-  = render 'keppler_frontend/app/frontend/partials/modal_status', cow: @cow, status: status
+  = render 'keppler_frontend/app/cattle/partials/modal_status', cow: @cow, status: status
 
 :scss
   #status-history {

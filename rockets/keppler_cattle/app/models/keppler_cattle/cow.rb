@@ -13,12 +13,17 @@ module KepplerCattle
     acts_as_list
     acts_as_paranoid
 
+    belongs_to :farm
     has_many :statuses, dependent: :destroy
 
     validates_presence_of :birthdate, :serie_number
 
     def self.index_attributes
       %i[serie_number image short_name provenance]
+    end
+
+    def farm
+      KepplerFarm::Farm.find(farm_id) if farm_id
     end
 
     def self.species

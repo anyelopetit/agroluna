@@ -41,10 +41,12 @@ module KepplerCattle
       # POST /cattles
       def create
         @status = Status.new(status_params)
+        @last_status = Status.last
 
         if @status.save
           redirect_to admin_cattle_cow_path(@cow)
         else
+          flash[:error] = 'Revisa los campos'
           render :new
         end
       end

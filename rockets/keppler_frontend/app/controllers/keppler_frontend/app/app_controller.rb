@@ -64,5 +64,18 @@ module KepplerFrontend
     def url_front
       "#{Rails.root}/rockets/keppler_frontend"
     end
+
+    def redefine_ids(rocket, ids)
+      ids.delete('[]').split(',').select do |id|
+        id if frontend_model(rocket).exists? id
+      end
+    end
+
+    # Classify a model from a controller
+    def frontend_model(rocket)
+      klass = controller_path
+        .remove('app/').remove('admin/').remove('keppler_frontend/')
+      "keppler_#{rocket}/#{klass}".classify.constantize
+    end
   end
 end

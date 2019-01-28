@@ -12,7 +12,7 @@ class KepplerBooleanInput < SimpleForm::Inputs::Base
   def label_switch
     template.content_tag(
       :label,
-      '', # try_boolean.to_s,
+      '', #try_boolean.to_s,
       class: "inline-label #{'active' if try_boolean}"
     )
   end

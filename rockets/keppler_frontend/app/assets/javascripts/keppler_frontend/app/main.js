@@ -24,6 +24,6 @@ $('.multiple-items').slick({
   ]
 });
 
-$('.single-item').slick({
-  infinite: false
-});
+// $('.single-item').slick({
+//   infinite: false
+// });

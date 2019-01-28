@@ -69,6 +69,10 @@ module KepplerCattle
       KepplerFarm::Farm.find(farm_id)
     end
 
+    def farm_name
+      KepplerFarm::Farm.find(farm_id).title
+    end
+
     def user
       User.find(user_id)
     end

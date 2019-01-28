@@ -9,8 +9,8 @@
     %a#transfers-tab.nav-link{"aria-controls" => "transfers", "aria-selected" => "false", "data-toggle" => "tab", href: "#transfers", role: "tab"} Transferencias
 #moduleContent.tab-content
   #mfg.tab-pane.fade.show.active{ "aria-labelledby" => "mfg-tab", role: "tabpanel" }
-    = render 'keppler_frontend/app/frontend/components/cattle_listing', farm: @farm, cows: @active_cows, search: @q
+    = render 'keppler_frontend/app/frontend/components/cattle/listing', farm: @farm, cows: @active_cows, search: @q
   #ale.tab-pane.fade{ "aria-labelledby" => "ale-tab", role: "tabpanel" }
-    = render 'keppler_frontend/app/frontend/components/cattle_listing', farm: @farm, cows: @inactive_cows, search: @q
+    = render 'keppler_frontend/app/frontend/components/cattle/listing', farm: @farm, cows: @inactive_cows, search: @q
   -# #transfers.tab-pane.fade{ "aria-labelledby" => "transfers-tab", role: "tabpanel" }
     = render 'keppler_frontend/app/frontend/components/submodule_listing'

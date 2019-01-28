@@ -15,7 +15,7 @@ module KepplerCattle
 
     has_many :statuses, dependent: :destroy
 
-    # validates_presence_of :birthdate, :serie_number
+    validates_presence_of :birthdate, :serie_number
 
     def self.index_attributes
       %i[serie_number image short_name provenance]
@@ -30,15 +30,64 @@ module KepplerCattle
     end
 
     def self.races
-      ['raza 1', 'raza 2', 'raza 3']
+      ['Mestizo Carora',
+      'Mestizo Holstein',
+      'Pardo Suizo Puro',
+      'Mestizo Brahman',
+      'Brahman.',
+      'No Registrado',
+      'Senepol.',
+      'Mestizo Senepol',
+      'Mestizo Carora Holstein',
+      'Campolargo',
+      'Campolargo2',
+      'Brahaman',
+      'Mestizo Brahman 5/8']
     end
 
     def self.provenance
       ['provenance1', 'provenance2', 'provenance3']
     end
 
+    def self.colors
+      ['Cenizo',
+      'Pardo',
+      'Encerado',
+      'No Registrado',
+      'Rojo',
+      'Amarillo',
+      'Pinto',
+      'Blanco',
+      'Negro',
+      'Colorado']
+    end
+
+    def status
+      statuses.last
+    end
+
+    def weight
+      status.weight
+    end
+
     def gender?(g)
       gender.eql?(g)
+    end
+
+    def mother
+      KepplerCattle::Cow.find(mother_id) if mother_id
+    end
+
+    def father
+      KepplerCattle::Cow.find(father_id) if father_id
+    end
+
+    def self.actives
+      select { |x| !x.status.dead unless x.status.blank? }
+    end
+
+    def self.inactives
+      select { |x| x.status.dead unless x.status.blank? }
     end
 
     def years 

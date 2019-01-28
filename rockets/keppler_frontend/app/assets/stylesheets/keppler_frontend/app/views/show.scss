@@ -36,9 +36,8 @@
 
 .avatar_cow {
   vertical-align: middle;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  max-width: 100px;
+  max-height: 100px;
 }
 
 .card_cow {
@@ -68,6 +67,10 @@
     padding: 5px 10px;
     cursor: pointer;
   }
+}
+
+dt {
+  margin-top: 20px;
 }
 
 .modal_status {

@@ -1,18 +1,6 @@
 .container_custom
   .float-left
-    = search_form_for [:app, :cattle, @farm, @search], class: 'flex-search' do |f|
-      .select#select-search
-        %select{ name: 'search[field]'}
-          %option{ value: 'serie_number' } Número de serie
-          %option{ value: 'short_name' } Nombre corto
-          %option{ value: 'provenance' } Procedencia
-      .search-field#serie_number
-        = f.search_field :serie_number_cont_any, placeholder: 'Número de serie', class: 'form-control search-bar'
-      .search-field#short_name
-        = f.search_field :short_name_cont_any, placeholder: 'Nombre corto', class: 'form-control search-bar'
-      .search-field#provenance
-        = f.search_field :provenance_cont_any, placeholder: 'Procedencia', class: 'form-control search-bar'
-      = f.submit "Buscar"
+    = render 'keppler_frontend/app/frontend/components/cattle_search', farm: farm, search: search
   .d-flex.justify-content-end.mb-5
     -# .toolbar
       %a{ href: '' }
@@ -21,14 +9,14 @@
         %i.icofont-refresh
       %a{ href: '' }
         %i.icofont-download
-    %a.float-right.mt-4.mb-4{ href: app_new_cattle_path(@farm) }
+    %a.float-right.mt-4.mb-4{ href: app_new_cattle_path(farm) }
       %button.btn.btn_custom.btn--filled.btn--medium
         %i.icofont-plus
         Agregar
-  - if @cows.blank?
-    = link_to 'Mostrar todos', app_cattle_farm_cows_path(@farm)
+  - if cows.blank?
+    = link_to 'Mostrar todos', app_cattle_farm_cows_path(farm)
   %table
-    - if @cows.size.zero?
+    - if cows.size.zero?
       %thead
         %tr
           %th.not-records.center
@@ -41,12 +29,13 @@
             %label{for: "styled-checkbox-all"}
           %th Imagen
           %th Número de serie
-          %th Nombre corto
-          %th Procedencia
-          %th Actions
+          %th Peso
+          %th Tipología
+          %th Último estado
+          %th Controles
       %tbody
-        - @cows.each do |cow|
-          %tr
+        - cows.each do |cow|
+          %tr{ style: "border-bottom: 1px #eee solid;" }
             -# %td.checkboxes
               %input.styled-checkbox{type: "checkbox", id: "styled-checkbox-#{x}"}
               %label{for: "styled-checkbox-#{x}"}
@@ -55,22 +44,19 @@
             %td
               = cow.serie_number
             %td
-              = cow.short_name
+              = cow.status.weight unless cow.status.blank?
+              KG
             %td
-              = cow.provenance
+              = cow.status.typology unless cow.status.blank?
+            %td
+              = cow.status.created_at.strftime("%d-%m-%Y") unless cow.status.blank?
             %td.actions
-              = link_to app_cattle_farm_cow_path(@farm, cow), class: 'floating-btn' do
+              = link_to app_cattle_farm_cow_path(farm, cow), class: 'floating-btn' do
                 %span.icofont-eye
-              = link_to app_edit_cattle_path(@farm, cow), class: 'floating-btn' do
+              = link_to app_edit_cattle_path(farm, cow), class: 'floating-btn' do
                 %span.icofont-ui-edit
-              = link_to app_delete_cattle_path(@farm, cow), class: 'floating-btn' do
+              = link_to app_delete_cattle_path(farm, cow), class: 'floating-btn' do
                 %span.icofont-trash
-:javascript
-  $('#select-search').change(function() {
-    $('.search-field').hide()
-    var $id = $(this).find('option:selected').val()
-    $("#" + $id).show()
-  })
 
 :scss
   .center {
@@ -106,18 +92,3 @@
       transition: .3s;
     }
   }
-
-  .flex-search {
-    display: flex;
-    padding: 20px 0;
-  }
-
-  #short_name {
-    display: none;
-  }
-
-  #provenance {
-    display: none;
-  }
-
-  

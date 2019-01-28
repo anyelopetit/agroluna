@@ -5,40 +5,80 @@
         %center.file-uploader
           .file-container{ class: ('already-uploaded' unless @cow.image&.url.blank?), style: ("background-image: url(#{f.object&.image&.url})" unless @cow.image&.url.blank?) }
             = f.input :image, label: 'Imagen'
-            %i.icofont-image{ style: 'font-size: 50px'}
+            %i.file-icon.icofont-image{ style: 'font-size: 50px'}
             %h5.file-text Arrastra una imagen o haz click aquí
           %br
           %span (.JPG, .JPEG, .PNG)
       .col-sm-6
-        = f.input :mother_id, collection: @posible_mothers, label: 'Madre', label_html: { class: 'label_custom--strong' }, input_html: { class: ' form-control input_custom' }
+        = f.input :serie_number, as: :string, label: 'Número de serie', required: true, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-6
-        = f.input :father_id, collection: @posible_fathers, label: 'Padre', label_html: { class: 'label_custom--strong' }, input_html: { class: ' form-control input_custom' }
-      .col-sm-6
-        = f.input :serie_number, as: :string, label: 'Número de serie', required: true, label_html: { class: 'label_custom--strong' }, input_html: { class: ' form-control input_custom' }
-      .col-sm-6
-        = f.input :short_name, as: :string, label: 'Nombre corto', label_html: { class: 'label_custom--strong' }, input_html: { class: ' form-control input_custom' }
+        = f.input :short_name, as: :string, label: 'Nombre corto', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-12
-        = f.input :long_name, as: :string, label: 'Nombre largo', label_html: { class: 'label_custom--strong' }, input_html: { class: ' form-control input_custom' }
+        = f.input :long_name, as: :string, label: 'Nombre largo', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-6
-        = f.input :species, collection: @species, include_blank: false, label: 'Especie', label_html: { class: 'label_custom--strong' }, input_html: { class: ' form-control input_custom' }
+        = f.input :species, collection: @species, include_blank: false, label: 'Especie', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-6
-        = f.input :gender, collection: @genders, include_blank: false, label: 'Género', label_html: { class: 'label_custom--strong' }, input_html: { class: ' form-control input_custom' }
+        = f.input :gender, collection: @genders, include_blank: false, label: 'Género', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-6
-        = f.input :race, collection: @races, include_blank: false, label: 'Raza', label_html: { class: 'label_custom--strong' }, input_html: { class: ' form-control input_custom' }
+        = f.input :race, collection: @races, include_blank: false, label: 'Raza', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-6
-        = f.input :birthdate, as: :string, label: 'Fecha de nacimiento', label_html: { class: 'label_custom--strong' }, input_html: { class: ' form-control input_custom datepicker' }
+        = f.input :birthdate, as: :string, label: 'Fecha de nacimiento', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom datepicker' }
       .col-sm-6
-        = f.input :coat_color, as: :string, label: 'Color de pelaje', label_html: { class: 'label_custom--strong' }, input_html: { class: ' form-control input_custom' }
+        = f.input :coat_color, as: :string, label: 'Color de pelaje', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-6
-        = f.input :nose_color, as: :string, label: 'Color de morro', label_html: { class: 'label_custom--strong' }, input_html: { class: ' form-control input_custom' }
+        = f.input :nose_color, as: :string, label: 'Color de morro', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-6
-        = f.input :tassel_color, as: :string, label: 'Color de borla', label_html: { class: 'label_custom--strong' }, input_html: { class: ' form-control input_custom' }
+        = f.input :tassel_color, as: :string, label: 'Color de borla', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-6
-        = f.input :provenance, as: :string, label: 'Procedencia', label_html: { class: 'label_custom--strong' }, input_html: { class: ' form-control input_custom' }
+        = f.input :provenance, as: :string, label: 'Procedencia', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-6
+        = f.input :mother_id, collection: @posible_mothers, label: 'Madre', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-6
+        = f.input :father_id, collection: @posible_fathers, label: 'Padre', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-12
-        = f.input :observations, label: 'Observaciones', label_html: { class: 'label_custom--strong' }, input_html: { class: ' form-control input_custom' }
+        = f.input :observations, label: 'Observaciones', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-12
         .float-right
           %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
             %i.icofont-save
             Guardar
+
+:javascript
+  $(document).ready(function() {
+    $('#cow_species').select2();
+  });
+
+  $('.datepicker').datepicker({
+    dateFormat: 'yy-mm-dd', // formato obligatorio para Keppler
+    showOtherMonths: true,
+    selectOtherMonths: true,
+    changeMonth: true,
+    changeYear: true,
+    maxDate: 0,
+    setDate: 0
+
+    // Ver documentación en https://jqueryui.com/datepicker
+  })
+
+:scss
+
+
+  .cattle-list {
+    height: 187px;
+    overflow: scroll;
+  }
+
+  .cattle-option {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+
+    .img-cattle-list {
+      height: 20px;
+      margin: 0 5px;
+      width: 20px;
+      display: inline-flex;
+      background-size: cover;
+      background-position: top center;
+    }
+  }

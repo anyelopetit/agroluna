@@ -12,7 +12,7 @@ KepplerFrontend::Engine.routes.draw do
   post '/finca/:farm_id/listado', to: 'app/frontend#create_cattle', as: :app_create_cattle
   patch '/finca/:farm_id/ganado/:cow_id', to: 'app/frontend#update_cattle', as: :app_update_cattle
   get '/finca/:farm_id/ganado/:cow_id/nuevo-estado', to: 'app/frontend#new_status', as: :app_new_status
-  post '/finca/:farm_id/ganado/:cow_id/crear-status', to: 'app/frontend#create_status', as: :app_create_status
+  post '/finca/:farm_id/ganado/:cow_id/crear-status', to: 'app/frontend#create_status', as: :app_cattle_farm_cow_statuses
 
   namespace :admin do
     scope :frontend, as: :frontend do

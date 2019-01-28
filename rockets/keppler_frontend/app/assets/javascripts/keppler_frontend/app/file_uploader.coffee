@@ -65,8 +65,8 @@ file_uploader = ->
               <div id='file-item-background-#{items}' class='file-item-background'></div>
             "
             fileItem.append "
-              <i id='file-icon-delete-#{items}'
-              class='file-icon-delete icon-close item-opacity'></i>
+              <i id='file-icofont-delete-#{items}'
+              class='file-icofont-delete icofont-close item-opacity'></i>
             "
             fileBackground = $ "#file-item-background-#{items}"
             if file.type.includes? 'image'
@@ -74,25 +74,25 @@ file_uploader = ->
                 'background-image': "url(#{e.target.result})"
               }
             # else if f.name.includes('.rocket') # Only for rockets
-            #   fileBackground.addClass 'icon-rocket'
+            #   fileBackground.addClass 'icofont-rocket'
             else if file.type.includes? 'audio'
-              fileBackground.append "<i class='icon-music-tone-alt'></i>"
+              fileBackground.append "<i class='icofont-music-tone-alt'></i>"
             else if file.type.includes? 'video'
-              fileBackground.append "<i class='icon-film'></i>"
+              fileBackground.append "<i class='icofont-film'></i>"
             else if file.type.includes? 'application'
-              fileBackground.append "<i class='icon-notebook'></i>"
+              fileBackground.append "<i class='icofont-notebook'></i>"
             else if file.type.includes? 'text'
-              fileBackground.append "<i class='icon-doc'></i>"
+              fileBackground.append "<i class='icofont-doc'></i>"
             else if file.type.includes? 'font'
-              fileBackground.append "<i class='icon-emotsmile'></i>"
+              fileBackground.append "<i class='icofont-emotsmile'></i>"
             else
-              fileBackground.append "<i class='icon-question'></i>"
+              fileBackground.append "<i class='icofont-question'></i>"
 
-        $('.file-icon-delete').click ->
+        $('.file-icofont-delete').click ->
           # console.log this
           id = this.id.split('-')[3]
           # # Remove file icon tooltip
-          # $ "##{$('#file-icon-delete-' + id).attr('aria-describedby')}"
+          # $ "##{$('#file-icofont-delete-' + id).attr('aria-describedby')}"
           #   .remove()
           # Remove file tooltip
           $ "##{$('#file-item-' + id).attr('aria-describedby')}"
@@ -119,21 +119,21 @@ file_uploader = ->
     # File Icon
     $fileIcon.removeClass().addClass 'file-icon'
     if rocketType # Only for rockets
-      $fileIcon.addClass 'icon-rocket'
+      $fileIcon.addClass 'icofont-rocket'
     else if f.type.includes? 'image'
-      $fileIcon.addClass 'icon-picture'
+      $fileIcon.addClass 'icofont-image'
     else if f.type.includes? 'audio'
-      $fileIcon.addClass 'icon-music-tone-alt'
+      $fileIcon.addClass 'icofont-audio'
     else if f.type.includes? 'video'
-      $fileIcon.addClass 'icon-film'
+      $fileIcon.addClass 'icofont-ui-video'
     else if f.type.includes? 'application'
-      $fileIcon.addClass 'icon-notebook'
+      $fileIcon.addClass 'icofont-ui-note'
     else if f.type.includes? 'text'
-      $fileIcon.addClass 'icon-doc'
+      $fileIcon.addClass 'icofont-font'
     else if f.type.includes? 'font'
-      $fileIcon.addClass 'icon-emotsmile'
+      $fileIcon.addClass 'icofont-simple-smile'
     else
-      $fileIcon.addClass 'icon-question'
+      $fileIcon.addClass 'icofont-question'
 
     reader.onload = (e) ->
       if f.type.includes 'image'

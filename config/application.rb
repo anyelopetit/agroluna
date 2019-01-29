@@ -42,5 +42,8 @@ module InyxmaterRails
     # config exeption routes
     config.exceptions_app = routes
 
+
+    config.assets.initialize_on_precompile = false
+
   end
 end

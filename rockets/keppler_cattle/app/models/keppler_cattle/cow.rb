@@ -95,11 +95,11 @@ module KepplerCattle
     end
 
     def self.actives(farm)
-      order(position: :desc).select { |x| x.status.farm_id.eql?(farm.id) unless x.status.blank? }
+      order(position: :desc).select { |x| x.status.farm_id.eql?(farm.id) unless x.status.blank? } if farm
     end
 
     def self.inactives(farm)
-      order(position: :desc).select { |x| x.status.farm_id.eql?(farm.id)  unless x.status.blank? }
+      order(position: :desc).select { |x| x.status.farm_id.eql?(farm.id)  unless x.status.blank? } if farm
     end
 
     def years 

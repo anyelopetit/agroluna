@@ -1,11 +1,11 @@
 = simple_form_for [:app, @farm, @transference] do |f|
   .form-padding
     .row
-      .col-sm-12.col-md-4
+      .col-sm-12.col-md-6
         = f.input :cow_id, collection: @cows, label: 'Ganado', include_blank: 'Selecciona una serie', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom select2' }
-      .col-sm-12.col-md-4
-        = f.input :from_farm_id, collection: @farms, label: 'Desde Finca', include_blank: 'Selecciona una finca', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom select2' }
-      .col-sm-12.col-md-4
+      -# .col-sm-12.col-md-6
+      = f.input :from_farm_id, input_html: { value: @farm.id, class: 'form-control input_custom' }, as: :hidden # collection: @farms, label: 'Desde Finca', include_blank: 'Selecciona una finca', label_html: { class: 'label_custom--strong' }
+      .col-sm-12.col-md-6
         = f.input :to_farm_id, collection: @farms, label: 'Hacia Finca', include_blank: 'Selecciona una finca', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom select2' }
       .col-sm-12
         .float-right

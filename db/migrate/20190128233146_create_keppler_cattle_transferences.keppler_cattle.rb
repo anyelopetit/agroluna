@@ -7,6 +7,8 @@ class CreateKepplerCattleTransferences < ActiveRecord::Migration[5.2]
       t.integer :to_farm_id
       t.integer :position
       t.datetime :deleted_at
+
+      t.timestamps null: false
     end
   end
 end

@@ -26,8 +26,11 @@ module KepplerFarm
     end
 
     def cows
-      cows_ids = KepplerCattle::Status.where(farm_id: id).map(&:cow_id).uniq
-      KepplerCattle::Cow.find(cows_ids)
+      KepplerCattle::Cow.all.select { |c| c.status.farm_id.eql?(id) if c.status.farm_id }
+    end
+
+    def transferences
+      KepplerCattle::Transference.all.select { |t| t.from_farm_id&.eql?(id) || t.to_farm_id&.eql?(id) }
     end
   end
 end

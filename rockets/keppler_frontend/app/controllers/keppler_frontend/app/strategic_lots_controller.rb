@@ -65,11 +65,11 @@ module KepplerFrontend
         cow_id: params[:assignment][:cow_id]
       )
 
-      if @assignment.exists?
-        flash[:error] = "Error: La serie #{@assignment.cow.serie_number} no fue asignada"
-      else
+      if @assignment.validate_cow
         @assignment.save!
         flash[:notice] = "La serie #{@assignment.cow.serie_number} fue asignada satisfactoriamente"
+      else
+        flash[:error] = "Error: La serie #{@assignment.cow.serie_number} no fue asignada"
       end
       redirect_to app_farm_strategic_lots_path(@farm)
     end

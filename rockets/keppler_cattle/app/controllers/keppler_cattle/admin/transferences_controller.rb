@@ -93,7 +93,7 @@ module KepplerCattle
       # Only allow a trusted parameter "white list" through.
       def transference_params
         params.require(:transference).permit(
-          :from_farm_id, :to_farm_id
+          :cow_id, :from_farm_id, :to_farm_id
         )
       end
     end

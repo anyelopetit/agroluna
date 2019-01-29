@@ -38,24 +38,3 @@
           - %w[1 2 5 10 15 20].each do |age|
             %option{ value: age } #{age} años
     = f.submit "Buscar"
-
-:scss
-
-  .flex-search {
-    display: flex;
-  }
-
-  #serie_number {
-    display: block;
-  }
-
-  .select-field {
-    display: none;
-  }
-
-:javascript
-  $('#select-search').change(function() {
-    $('.select-field').hide()
-    var $id = $(this).find('option:selected').val()
-    $("#" + $id).show()
-  })

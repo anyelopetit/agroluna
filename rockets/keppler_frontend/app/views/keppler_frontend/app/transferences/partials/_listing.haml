@@ -13,82 +13,40 @@
       %button.btn.btn_custom.btn--filled.btn--medium
         %i.icofont-plus
         Agregar
-  - if transferences.blank? && KepplerCattle::Transference.count > 0
+  - if transferences.blank? && @farm.transferences.count > 0
     = link_to 'Mostrar todos', app_farm_transferences_path(farm)
   %table
     - if transferences.size.zero?
       %thead
         %tr
           %th.not-records.center
-            %center No se encontraron ganados
+            %center No se han encontrado transferencias
     - else
       %thead
         %tr
           -# %th
             %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
             %label{for: "styled-checkbox-all"}
-          %th Imagen
-          %th Número de serie
-          %th Peso
-          %th Tipología
-          %th Último estado
-          %th Controles
+          %th Serie
+          %th Desde Finca
+          %th Hasta Finca
+          %th Fecha
+          -# %th Controles
       %tbody
-        - transferences.each do |cow|
+        - transferences.each do |transference|
           %tr{ style: "border-bottom: 1px #eee solid;" }
-            -# %td.checkboxes
-              %input.styled-checkbox{type: "checkbox", id: "styled-checkbox-#{x}"}
-              %label{for: "styled-checkbox-#{x}"}
             %td
-              = image_tag cow.image.url if cow.image.url
+              = transference&.cow&.serie_number
             %td
-              = cow.serie_number
+              = transference&.from_farm&.title
             %td
-              = cow.status.weight unless cow.status.blank?
-              KG
+              = transference&.to_farm&.title
             %td
-              = cow.status.typology unless cow.status.blank?
-            %td
-              = cow.status.created_at.strftime("%d-%m-%Y") unless cow.status.blank?
-            %td.actions
-              = link_to app_farm_cow_path(farm, cow), class: 'floating-btn' do
+              = transference&.created_at.strftime("%d-%m-%Y")
+            -# %td.actions
+              = link_to app_farm_transference_path(farm, transference), class: 'floating-btn' do
                 %span.icofont-eye
-              = link_to app_farm_cow_edit_path(farm, cow), class: 'floating-btn' do
+              = link_to app_farm_transference_edit_path(farm, transference), class: 'floating-btn' do
                 %span.icofont-ui-edit
-              = link_to app_farm_cow_destroy_path(farm, cow), class: 'floating-btn' do
+              = link_to app_farm_transference_destroy_path(farm, transference), class: 'floating-btn' do
                 %span.icofont-trash
-
-:scss
-  .center {
-    align-items: center;
-    display: flex;
-    height: 100%;
-    justify-content: center;
-  }
-
-  .not-records {
-    background-color: #fff;
-    border: 0;
-  }
-
-  table img {
-    max-height: 50px; 
-  }
-
-  .floating-btn {
-    border-radius: 20px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-    margin-left: auto;
-    height: 40px;
-    width: 40px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    transition: .3s;
-
-    &:hover {
-      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
-      color: #008500;
-      transition: .3s;
-    }
-  }

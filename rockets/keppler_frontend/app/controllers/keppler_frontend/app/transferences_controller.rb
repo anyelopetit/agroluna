@@ -30,7 +30,8 @@ module KepplerFrontend
 
       unless @transference.from_farm_id == @transference.to_farm_id
         if @transference.save!
-          redirect(@transference, params)
+          @transference.cow.status.update(farm_id: @transference.to_farm_id)
+          redirect_to app_farm_transferences_path(@farm)
         else
           flash[:error] = 'Revisa los datos del formulario'
           render :new
@@ -71,7 +72,15 @@ module KepplerFrontend
     def index_variables
       @q = KepplerCattle::Transference.ransack(params[:q])
       transferences = @q.result(distinct: true)
-      @transferences = transferences.page(@current_page).order(position: :desc)
+      @transferences = transferences.page(@current_page).include_this_farm(@farm)
+      if params[:search]
+        if params[:search][:from].to_i > 0
+          @transferences = @transferences.where_from(params[:search][:from].to_i)
+        end
+        if params[:search][:to].to_i > 0
+          @transferences = @transferences.where_to(params[:search][:to].to_i)
+        end
+      end
       @total = @transferences.size
       @attributes = KepplerCattle::Transference.index_attributes
     end
@@ -104,6 +113,7 @@ module KepplerFrontend
     # Only allow a trusted parameter "white list" through.
     def transference_params
       params.require(:transference).permit(
+        :cow_id,
         :from_farm_id,
         :to_farm_id
       )

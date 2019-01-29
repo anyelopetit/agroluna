@@ -80,5 +80,9 @@ module KepplerCattle
     def strategic_lot
       KepplerFarm::StrategicLot.find(strategic_lot_id) unless strategic_lot_id.nil?
     end
+
+    def find_lot
+      KepplerFarm::StrategicLot.find(cow&.status&.strategic_lot_id) if cow&.status&.strategic_lot_id
+    end
   end
 end

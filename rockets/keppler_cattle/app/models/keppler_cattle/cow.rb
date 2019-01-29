@@ -78,6 +78,14 @@ module KepplerCattle
       gender.eql?(g)
     end
 
+    def self.posible_mothers(farm)
+     farm.cows.select { |x| x.gender?('female') }.map { |x| [x.serie_number, x.id] }
+    end
+
+    def self.posible_fathers(farm)
+     farm.cows.select { |x| x.gender?('male') }.map { |x| [x.serie_number, x.id] }
+    end
+
     def mother
       KepplerCattle::Cow.find(mother_id) if mother_id
     end
@@ -86,12 +94,12 @@ module KepplerCattle
       KepplerCattle::Cow.find(father_id) if father_id
     end
 
-    def self.actives
-      select { |x| !x.status.dead unless x.status.blank? }
+    def self.actives(farm)
+      order(position: :desc).select { |x| x.status.farm_id.eql?(farm.id) unless x.status.blank? }
     end
 
-    def self.inactives
-      select { |x| x.status.dead unless x.status.blank? }
+    def self.inactives(farm)
+      order(position: :desc).select { |x| x.status.farm_id.eql?(farm.id)  unless x.status.blank? }
     end
 
     def years 

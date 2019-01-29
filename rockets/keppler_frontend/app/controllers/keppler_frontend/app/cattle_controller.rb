@@ -30,7 +30,7 @@ module KepplerFrontend
     def create
       @cow = KepplerCattle::Cow.new(cow_params)
 
-      if @cow.save! && @cow.statuses.blank?
+      if @cow.save && @cow.statuses.blank?
         # redirect(@cow, params)
         redirect_to app_farm_cow_status_new_path(@farm, @cow)
       else
@@ -74,8 +74,8 @@ module KepplerFrontend
     def index_variables
       @q = KepplerCattle::Cow.ransack(params[:q])
       @cows = @q.result(distinct: true)
-      @active_cows = @cows.page(@current_page).order(position: :desc).actives
-      @inactive_cows = @cows.page(@current_page).order(position: :desc).inactives
+      @active_cows = @cows.page(@current_page).actives(@farm)
+      @inactive_cows = @cows.page(@current_page).inactives(@farm)
       @total = @cows.size
       @attributes = KepplerCattle::Cow.index_attributes
     end
@@ -84,8 +84,8 @@ module KepplerFrontend
       @species = KepplerCattle::Cow.species
       @genders = KepplerCattle::Cow.genders
       @races   = KepplerCattle::Cow.races
-      @posible_mothers = KepplerCattle::Cow.where(gender: 'female').map { |x| [x.serie_number, x.id] }
-      @posible_fathers = KepplerCattle::Cow.where(gender: 'male').map { |x| [x.serie_number, x.id] }
+      @posible_mothers = KepplerCattle::Cow.posible_mothers(@farm)
+      @posible_fathers = KepplerCattle::Cow.posible_fathers(@farm)
     end
 
     def set_farm

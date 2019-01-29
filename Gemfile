@@ -16,6 +16,7 @@ gem 'vuejs-rails', '2.5.13' # VueJS library
 # gem 'sweet-alert2-rails'
 # gem 'sweetalert2'
 gem 'select2-rails'
+gem 'activerecord_any_of'
 
 # Server
 gem 'puma', '~> 3.11', '>= 3.11.3'

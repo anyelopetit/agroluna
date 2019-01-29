@@ -130,8 +130,8 @@ module KepplerFrontend
     def index_variables
       @q = KepplerCattle::Cow.ransack(params[:q])
       @cows = @q.result(distinct: true)
-      @active_cows = @cows.page(@current_page).order(position: :desc).actives
-      @inactive_cows = @cows.page(@current_page).order(position: :desc).inactives
+      @active_cows = @cows.page(@current_page).order(position: :desc).actives(@farm)
+      @inactive_cows = @cows.page(@current_page).order(position: :desc).inactives(@farm)
       @total = @cows.size
       @attributes = KepplerCattle::Cow.index_attributes
     end

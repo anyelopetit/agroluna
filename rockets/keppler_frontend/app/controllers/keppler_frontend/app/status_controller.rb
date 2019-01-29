@@ -17,10 +17,11 @@ module KepplerFrontend
     end
 
     def new
-      @status = KepplerCattle::Status.new
+      @status = KepplerCattle::Status.new(farm_id: @farm.id, cow_id: @cow.id)
       @ubications = KepplerCattle::Status.ubications
       @corporal_conditions = KepplerCattle::Status.corporal_conditions
       @strategic_lots = KepplerFarm::StrategicLot.all
+      @strategic_lot = @status.find_lot
       @typologies = KepplerCattle::Status.try("#{@cow.gender}_typologies".to_sym)
       @last_status = KepplerCattle::Status.last
       @farms = KepplerFarm::Farm.order(title: :asc)
@@ -29,7 +30,7 @@ module KepplerFrontend
     def create
       @status = KepplerCattle::Status.new(status_params)
 
-      if @status.save
+      if @status.save!
         redirect_to app_farm_cow_path(@farm, @cow)
       else
         render :new
@@ -45,8 +46,8 @@ module KepplerFrontend
     def index_variables
       @q = KepplerCattle::Cow.ransack(params[:q])
       @cows = @q.result(distinct: true)
-      @active_cows = @cows.page(@current_page).order(position: :desc).actives
-      @inactive_cows = @cows.page(@current_page).order(position: :desc).inactives
+      @active_cows = @cows.page(@current_page).order(position: :desc).actives(@farm)
+      @inactive_cows = @cows.page(@current_page).order(position: :desc).inactives(@farm)
       @total = @cows.size
       @attributes = KepplerCattle::Cow.index_attributes
     end

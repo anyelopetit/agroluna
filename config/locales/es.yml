@@ -303,7 +303,10 @@ es:
       ga_tracking: Identificador de segumiento
       ga_status: Habilitar Google Analytics
     errors:
+      format: "%{attribute} %{message}"
       messages:
+        accepted: Debe ser aceptado
+        blank: No debe estar en blanco
         record_invalid: "Validación fallida: %{errors}"
         restrict_destroy: "No se puede borrar el registro"
         restrict_dependent_destroy:
@@ -410,6 +413,8 @@ es:
   errors:
     format: ! '%{attribute} %{message}'
     messages:
+      accepted: Debe ser aceptado
+      blank: No puede estar en blanco
       max_size_error: "Archivo demasiado pesado"
       tipo_transaccion: no puede realizarse, el artículo no posee existencia
       lista_de_articulos: no puede estar vacía

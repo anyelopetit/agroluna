@@ -102,8 +102,8 @@ module KepplerCattle
         @species = Cow.species
         @genders = Cow.genders
         @races   = Cow.races
-        @posible_mothers = Cow.where(gender: 'female').map { |x| [x.serie_number, x.id] }
-        @posible_fathers = Cow.where(gender: 'male').map { |x| [x.serie_number, x.id] }
+        @posible_mothers = Cow.posible_mothers
+        @posible_fathers = Cow.posible_fathers
       end
 
       # Only allow a trusted parameter "white list" through.

@@ -27,7 +27,7 @@ KepplerFrontend::Engine.routes.draw do
   get '/finca/:farm_id/nuevo-ganado', to: 'app/cattle#new', as: :app_farm_cow_new
   post '/finca/:farm_id/ganado', to: 'app/cattle#create', as: :app_farm_cow_create
   patch '/finca/:farm_id/ganado/:cow_id', to: 'app/cattle#update', as: :app_farm_cow_update
-  delete '/finca/:farm_id/eliminar/:cow_id', to: 'app/cattle#destroy', as: :app_farm_cow_destroy
+  delete '/finca/:farm_id/ganado/:cow_id/eliminar', to: 'app/cattle#destroy', as: :app_farm_cow_destroy
 
   # Farm Cattle Status
   get '/finca/:farm_id/ganado/:cow_id/nuevo-estado', to: 'app/status#new', as: :app_farm_cow_status_new

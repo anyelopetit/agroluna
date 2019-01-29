@@ -71,37 +71,7 @@
               %dd= @cow.nose_color
               - if @cow.status&.strategic_lot
                 %dt Lote estrátegico
-                %dd= @cow.status&.strategic_lot unless @cow.status&.blank?
-      
-      .row
-        .col-md-6
-          .card_show.p-5
-            .parent_card
-              - if @cow.mother
-                = link_to app_farm_cow_path(@farm, @cow) do
-                  %h3 Madre
-                  - if @cow.mother&.image&.url 
-                    = image_tag @cow.mother&.image&.url
-                  - else
-                    = image_tag '/assets/keppler_cattle/cow_shadow'
-                    %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
-                  = @cow.father&.serie_number
-              - else
-                %h3 SIN MADRE
-        .col-md-6
-          .card_show.p-5
-            .parent_card
-              - if @cow.father
-                = link_to app_farm_cow_path(@farm, @cow) do
-                  %h3 Padre
-                  - if @cow.father&.image&.url 
-                    = image_tag @cow.father&.image&.url
-                  - else
-                    = image_tag '/assets/keppler_cattle/bull_shadow'
-                    %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
-                  = @cow.father&.serie_number
-              - else
-                %h3 SIN PADRE
+                %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
             
     // Current Status
     .col-md-6
@@ -143,16 +113,6 @@
                   = "-"
                   = @cow.status.months
                 %dt
-                  %i.icofont-infant-nipple
-                  Días de nacido
-                %dd= @cow.status.days
-            .col-lg-6
-              %dl
-                %dt
-                  %i.icofont-cow
-                  Tipología
-                %dd= @cow.status.typology
-                %dt
                   %i.icofont-muscle
                   Condición corporal
                 %dd= @cow.status.corporal_condition
@@ -161,9 +121,57 @@
                   Finca
                 %dd
                   = @cow.status.farm_name
+            .col-lg-6
+              %dl
+                %dt
+                  %i.icofont-dumbbell
+                  Peso Ganado
+                %dd
+                  = @cow.status.gained_weight
+                  KG
+                %dt
+                  %i.icofont-infant-nipple
+                  Días de nacido
+                %dd= @cow.status.days
+                %dt
+                  %i.icofont-cow
+                  Tipología
+                %dd= @cow.status.typology
                 - unless @cow.status.strategic_lot.blank?
-                  %dt Lote estratégico
-                  %dd= @cow.status.strategic_lot
+                  %dt
+                  %i.icofont-users
+                  Lote estratégico
+                %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
+      
+      .row
+        .col-md-6
+          .card_show.p-5
+            .parent_card
+              - if @cow.mother
+                = link_to app_farm_cow_path(@farm, @cow) do
+                  %h3 Madre
+                  - if @cow.mother&.image&.url 
+                    = image_tag @cow.mother&.image&.url
+                  - else
+                    = image_tag '/assets/keppler_cattle/cow_shadow'
+                    %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+                  = @cow.father&.serie_number
+              - else
+                %h3 SIN MADRE
+        .col-md-6
+          .card_show.p-5
+            .parent_card
+              - if @cow.father
+                = link_to app_farm_cow_path(@farm, @cow) do
+                  %h3 Padre
+                  - if @cow.father&.image&.url 
+                    = image_tag @cow.father&.image&.url
+                  - else
+                    = image_tag '/assets/keppler_cattle/bull_shadow'
+                    %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+                  = @cow.father&.serie_number
+              - else
+                %h3 SIN PADRE
           -# %table.table
             %tbody
               - if @cow.status

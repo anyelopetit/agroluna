@@ -382,7 +382,7 @@ en:
     format: "%{attribute} %{message}"
     messages:
       accepted: must be accepted
-      blank: can't be blank
+      blank: No puede estar en blanco #can't be blank
       present: must be blank
       confirmation: doesn't match %{attribute}
       empty: can't be empty

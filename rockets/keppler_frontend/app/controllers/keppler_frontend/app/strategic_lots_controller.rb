@@ -18,7 +18,7 @@ module KepplerFrontend
       @strategic_lots = @farm.strategic_lots
       @assign = KepplerCattle::Assignment.new
       @cows = @farm.cows.map { |c| [c.serie_number, c.id] }
-      respond_to_formats(KepplerFarm::StrategicLot.all)
+      respond_to_formats(@farm.strategic_lots)
     end
 
     def show; end
@@ -51,7 +51,7 @@ module KepplerFrontend
     # DELETE /farms/1
     def destroy
       @strategic_lot.destroy
-      redirect_to app_farm_strategic_lots_path(@farm)
+      redirect_to action: :index, farm_id: @farm.id
     end
 
     def destroy_multiple

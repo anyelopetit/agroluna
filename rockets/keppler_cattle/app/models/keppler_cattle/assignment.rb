@@ -12,7 +12,7 @@ module KepplerCattle
       #is_same_lot = KepplerCattle::Cow.find(cow_id).status.strategic_lot_id.eql?(strategic_lot_id)
       uniq_cow_in_lots = KepplerFarm::StrategicLot.select { |x| x.cows.find(cow_id) }.count == 1
       
-      none_assign && uniq_cow_in_lots
+      none_assign #&& uniq_cow_in_lots
     end
   end
 end

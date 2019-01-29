@@ -6,7 +6,7 @@
           %label{ for: "checkbox-#{function.id}" }
             %input{ type: 'checkbox', id: "checkbox-#{function.id}", 'checklist-model' => 'check', 'checklist-value' => "#{function.id}", '@click' => "listDelete(#{function.id})"}
             %span.cr
-              %i.cr-icon.glyphicon.glyphicon-ok
+              %i.cr-icon.icofont-check
     %td.hidden-xs
       = link_to admin_frontend_function_path(function), class: 'new-menu', title: t('keppler.actions.show') do
         %span

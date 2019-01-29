@@ -6,7 +6,7 @@
           %label{ for: "checkbox-#{parameter.id}" }
             %input{ type: 'checkbox', id: "checkbox-#{parameter.id}", 'checklist-model' => 'check', 'checklist-value' => "#{parameter.id}", '@click' => "listDelete(#{parameter.id})"}
             %span.cr
-              %i.cr-icon.glyphicon.glyphicon-ok
+              %i.cr-icon.icofont-check
     %td.hidden-xs
       = link_to admin_frontend_parameter_path(parameter, search: @query), remote: true, class: 'show-row' do
         %span

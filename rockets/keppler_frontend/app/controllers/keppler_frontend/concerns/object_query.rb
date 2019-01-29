@@ -70,10 +70,10 @@ module ObjectQuery
   protected
 
   def json_objects(objects)
-    if request.url.include?('page')
-      objects.page(@current_page).order(position: :desc)
-    else
-      objects.model.all
-    end
+    # if request.url.include?('page')
+    objects.page(@current_page).order(position: :desc)
+    # else
+    #   objects.model.all
+    # end
   end
 end

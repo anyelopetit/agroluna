@@ -6,7 +6,7 @@
           %label{ for: "checkbox-#{object.id}" }
             %input{ type: 'checkbox', id: "checkbox-#{object.id}", 'checklist-model' => 'check', 'checklist-value' => "#{object.id}", '@click' => "listDelete(#{object.id})"}
             %span.cr
-              %i.cr-icon.glyphicon.glyphicon-ok
+              %i.cr-icon.icofont-check
     - attributes.each do |attribute|
       - if @attachments.dig('images', 'names').include?(attribute.to_s)
         %td

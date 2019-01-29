@@ -82,8 +82,8 @@ var app = new Vue({
         if (that.deleteList.length < that.items.length){
           that.items.map(function(item, idx){
             if (!that.deleteList.includes(item.id)) document.getElementById(`checkbox-${item.id}`).click();
-              //console.log(that.deleteList.length + ' - ' + that.items.length);
-              //console.log(`Este fue agregado ${item.id}`);
+              // console.log(that.deleteList.length + ' - ' + that.items.length);
+            // console.log(`Este fue agregado ${item.id}`);
           });
         }else{
           that.items.map(function(item, idx){

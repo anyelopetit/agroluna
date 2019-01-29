@@ -32,5 +32,9 @@ module KepplerFarm
     def transferences
       KepplerCattle::Transference.all.select { |t| t.from_farm_id&.eql?(id) || t.to_farm_id&.eql?(id) }
     end
+
+    def strategic_lots
+      KepplerFarm::StrategicLot.where(farm_id: id)
+    end
   end
 end

@@ -6,6 +6,10 @@
     document.getElementById('add-cows').disabled = ($('#assignment_cow_id').val() == "")
   }
 
+  $('#assignment_cow_id').select2({
+    placeholder: 'Seleccionar ganado'
+  })
+
 :scss
   #cows [type=submit]:disabled {
     background-color: #008500;
@@ -69,5 +73,25 @@
       box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
       color: #f44336;
       transition: .3s;
+    }
+  }
+
+  .new_assignment {
+    .select2-container--default {
+      width: 100% !important;
+    }
+
+    .inputs {
+      width: 60%;
+    }
+
+    .button {
+      margin-left: auto;
+    }
+  }
+
+  .card_lot {
+    a i {
+      color: #008500;
     }
   }

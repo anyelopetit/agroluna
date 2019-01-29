@@ -24,7 +24,7 @@
                   %label{ for: 'checkbox-all' }
                     %input{ type: 'checkbox', id: 'checkbox-all', ':disabled' => 'checkItems ? disabled : ""', '@click' => 'selectAll()' }
                     %span.cr
-                      %i.cr-icon.glyphicon.glyphicon-ok
+                      %i.cr-icon.icofont-check
             .toolbar-item
               %a.tool-btn{"data-confirm" => "¿Estás seguro?", "data-method" => "delete", "v-bind:href" => "link", :rel => "nofollow", ":class" => "{disabled: !checks}" }
                 %i.icon-trash

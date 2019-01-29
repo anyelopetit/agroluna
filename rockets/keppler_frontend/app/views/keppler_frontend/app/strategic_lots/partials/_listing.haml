@@ -17,7 +17,7 @@
               %label{ for: 'checkbox-all' }
                 %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()' }
                 %span.cr
-                  %i.cr-icon.glyphicon.glyphicon-ok
+                  %i.cr-icon.icofont-check
       
       .toolbar-item
         -# = link_to reload_admin_farm_farm_strategic_lots_path(@farm), class: 'tool-btn', remote: true, title: t('keppler.actions.reload_page') do
@@ -52,28 +52,32 @@
         .col-md-4
           .card_lot
             .box-header.with-border
-              .float-left{ style: 'display: flex' }
-                - if can?(KepplerFarm::StrategicLot).destroy_multiple?
-                  .checkbox{ style: 'margin: 3px' }
-                    %label{ for: "checkbox-#{strategic_lot.id}" }
-                      %input{ type:"checkbox", id: "checkbox-#{strategic_lot.id}", 'checklist-model' => 'check', 'checklist-value' => "#{strategic_lot.id}", '@click' => "listDelete(#{strategic_lot.id})"}
-                      %span.cr
-                        %i.cr-icon.glyphicon.glyphicon-ok
-                %span= strategic_lot.name
-              .float-right
-                .item-toolbar
-                  .item
-                    = link_to app_farm_strategic_lot_edit_path(@farm, strategic_lot), class: 'new-menu', title: t('keppler.actions.edit') do
-                      %i.icofont-pencil-alt-5
-                  .item
-                    = link_to app_farm_strategic_lot_destroy_path(@farm, strategic_lot), class: 'new-menu', title: t('keppler.actions.delete'), method: :delete, data: { confirm: t("keppler.messages.data_confirm") } do
-                      %i.icofont-trash
+              .row
+                .float-left{ style: 'display: flex' }
+                  - if can?(KepplerFarm::StrategicLot).destroy_multiple?
+                    .checkbox{ style: 'margin: 3px' }
+                      %label{ for: "checkbox-#{strategic_lot.id}" }
+                        %input{ type:"checkbox", id: "checkbox-#{strategic_lot.id}", 'checklist-model' => 'check', 'checklist-value' => "#{strategic_lot.id}", '@click' => "listDelete(#{strategic_lot.id})"}
+                        %span.cr
+                          %i.cr-icon.icofont-check
+                %h1
+                  %small= strategic_lot&.name
+                .float-right{ style: 'margin-left: auto;' }
+                  .item-toolbar
+                    .item
+                      .badge.badge-secondary= strategic_lot&.function
+                    .item
+                      = link_to app_farm_strategic_lot_edit_path(@farm, strategic_lot), class: 'new-menu', title: 'Editar' do
+                        %i.icofont-pencil-alt-5
+                    .item
+                      = link_to app_farm_strategic_lot_destroy_path(@farm, strategic_lot), class: 'new-menu', title: 'Eliminar', method: :delete, data: { confirm: '¿Estás seguro?' } do
+                        %i.icofont-trash
             .box-body#cows
               = simple_form_for [:app, @farm, @assign], url: app_farm_strategic_lot_assign_cattle_path(@farm, strategic_lot) do |f|
-                .col-sm-6
+                .inputs
                   = f.input :cow_id, collection: @cows, label: false, input_html: { onchange: 'validateCow()' }
                   = f.input :strategic_lot_id, value: strategic_lot.id, as: :hidden
-                .col-sm-6
+                .button
                   = f.submit :add, value: 'Agregar', id: 'add-cows', disabled: true
             .box-body
               .cows-list

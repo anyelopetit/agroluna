@@ -12,6 +12,8 @@
     = javascript_include_tag '/assets/keppler_frontend/app/slick.min'
     = javascript_include_tag '/assets/keppler_frontend/app/main'
     
+    - if action_name.eql?('index')
+      %script{ src: '/assets/keppler_frontend/vue/index.js' }
     - flash.each do |name, msg|
       - if msg.is_a?(String)
         :javascript

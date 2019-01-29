@@ -58,9 +58,9 @@ module KepplerFrontend
 
       if @cow.save && @cow.statuses.blank?
         # redirect(@cow, params)
-        redirect_to app_new_status_path(@farm, @cow)
+        redirect_to app_farm_cow_status_new_path(@farm, @cow)
       else
-        flash[:notice] = 'Revisa los datos del formulario'
+        flash[:error] = 'Revisa los datos del formulario'
         render :new_cattle
       end
     end
@@ -68,9 +68,9 @@ module KepplerFrontend
     def update_cattle
       if @cow.update(cow_params)
         if @cow.statuses.blank?
-          redirect_to app_new_status_path(@farm, @cow)
+          redirect_to app_farm_cow_status_new_path(@farm, @cow)
         else 
-          redirect_to app_cattle_farm_cow_path(@farm, @cow)
+          redirect_to app_farm_cow_path(@farm, @cow)
         end
       else
         render :edit
@@ -97,7 +97,7 @@ module KepplerFrontend
       @status = KepplerCattle::Status.new(status_params)
 
       if @status.save
-        redirect_to app_cattle_farm_cow_path(@farm, @cow)
+        redirect_to app_farm_cow_path(@farm, @cow)
       else
         render :new
       end
@@ -134,14 +134,6 @@ module KepplerFrontend
       @inactive_cows = @cows.page(@current_page).order(position: :desc).inactives
       @total = @cows.size
       @attributes = KepplerCattle::Cow.index_attributes
-    end
-
-    def cow_attributes
-      @species = KepplerCattle::Cow.species
-      @genders = KepplerCattle::Cow.genders
-      @races   = KepplerCattle::Cow.races
-      @posible_mothers = KepplerCattle::Cow.where(gender: 'female').map { |x| [x.serie_number, x.id] }
-      @posible_fathers = KepplerCattle::Cow.where(gender: 'male').map { |x| [x.serie_number, x.id] }
     end
 
     def set_farm

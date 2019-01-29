@@ -1,6 +1,6 @@
 .container_custom
   .float-left
-    = render 'keppler_frontend/app/frontend/components/cattle/search', farm: farm, search: search
+    = render 'keppler_frontend/app/transferences/partials/search', farm: farm, search: search
   .d-flex.justify-content-end.mb-5
     -# .toolbar
       %a{ href: '' }
@@ -9,14 +9,14 @@
         %i.icofont-refresh
       %a{ href: '' }
         %i.icofont-download
-    %a.float-right.mt-4.mb-4{ href: app_new_cattle_path(farm) }
+    %a.float-right.mt-4.mb-4{ href: app_farm_transference_new_path(farm) }
       %button.btn.btn_custom.btn--filled.btn--medium
         %i.icofont-plus
         Agregar
-  - if cows.blank?
-    = link_to 'Mostrar todos', app_cattle_farm_cows_path(farm)
+  - if transferences.blank? && KepplerCattle::Transference.count > 0
+    = link_to 'Mostrar todos', app_farm_transferences_path(farm)
   %table
-    - if cows.size.zero?
+    - if transferences.size.zero?
       %thead
         %tr
           %th.not-records.center
@@ -34,7 +34,7 @@
           %th Último estado
           %th Controles
       %tbody
-        - cows.each do |cow|
+        - transferences.each do |cow|
           %tr{ style: "border-bottom: 1px #eee solid;" }
             -# %td.checkboxes
               %input.styled-checkbox{type: "checkbox", id: "styled-checkbox-#{x}"}
@@ -51,11 +51,11 @@
             %td
               = cow.status.created_at.strftime("%d-%m-%Y") unless cow.status.blank?
             %td.actions
-              = link_to app_cattle_farm_cow_path(farm, cow), class: 'floating-btn' do
+              = link_to app_farm_cow_path(farm, cow), class: 'floating-btn' do
                 %span.icofont-eye
-              = link_to app_edit_cattle_path(farm, cow), class: 'floating-btn' do
+              = link_to app_farm_cow_edit_path(farm, cow), class: 'floating-btn' do
                 %span.icofont-ui-edit
-              = link_to app_delete_cattle_path(farm, cow), class: 'floating-btn' do
+              = link_to app_farm_cow_destroy_path(farm, cow), class: 'floating-btn' do
                 %span.icofont-trash
 
 :scss

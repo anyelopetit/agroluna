@@ -18,8 +18,16 @@ module KepplerFarm
     has_many :users
     has_many :assignments, through: :users
 
+    has_many :strategic_lots
+    has_many :cows
+
     def self.index_attributes
       %i[logo title photos strategic_lots]
+    end
+
+    def cows
+      cows_ids = KepplerCattle::Status.where(farm_id: id).map(&:cow_id).uniq
+      KepplerCattle::Cow.find(cows_ids)
     end
   end
 end

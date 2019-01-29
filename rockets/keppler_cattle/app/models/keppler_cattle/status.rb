@@ -74,7 +74,7 @@ module KepplerCattle
     end
 
     def user
-      User.find(user_id)
+      User.find(user_id) if user_id
     end
 
     def strategic_lot

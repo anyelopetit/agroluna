@@ -1,0 +1,128 @@
+
+%script{src: "/assets/keppler_frontend/app/jquery.min.js"}
+.container_carousel
+  .single-item
+    .card_new
+      %h1 Crear status inicial
+      = simple_form_for [:app, @farm, @cow, @status] do |f|
+        .form-padding
+          .row
+            = f.input :cow_id, include_blank: false, input_html: { value: @cow.id }, as: :hidden
+            .col-sm-12.col-md-6
+              = f.input :weight, input_html: { min: 0, value: (@last_status.weight if @last_status) }, placeholder: '0.00 KG', label: 'Peso (KG)'
+            .col-sm-12.col-md-6
+              = f.input :gained_weight, input_html: { min: 0, value: (@last_status.weight if @last_status) }, disabled: true, placeholder: '0.00 KG', label: 'Peso ganado (KG)'
+              = f.input :gained_weight, input_html: { min: 0, value: (@last_status.weight if @last_status) }, as: :hidden
+            .col-sm-12.col-md-4
+              = f.input :years, input_html: { min: 0, value: @cow.years }, placeholder: '0', disabled: true, label: 'Años'
+              = f.input :years, input_html: { min: 0, value: @cow.years }, placeholder: '0', as: :hidden
+            .col-sm-12.col-md-4
+              = f.input :months, input_html: { min: 0, value: @cow.months }, placeholder: '0', disabled: true, label: 'Meses'
+              = f.input :months, input_html: { min: 0, value: @cow.months }, placeholder: '0', as: :hidden
+            .col-sm-12.col-md-4
+              = f.input :days, input_html: { min: 0, value: @cow.days }, placeholder: '0', disabled: true, label: 'Días de nacido'
+              = f.input :days, input_html: { min: 0, value: @cow.days }, placeholder: '0', as: :hidden
+            .col-sm-12.col-md-6
+              = f.input :farm_id, collection: @farms, selected: (@last_status.farm_id if @last_status), include_blank: false, label: 'Finca'
+            .col-sm-12.col-md-6
+              = f.input :strategic_lot_id, collection: @strategic_lots, input_html: { min: 0, value: (@last_status.strategic_lot_id if @last_status) }, label: 'Lote estratégico'
+            -# .col-sm-12.col-md-4
+              = f.input :ubication, collection: @ubications, selected: (@last_status.ubication if @last_status), label: 'Ubicación'
+            - if @cow.gender?('male')
+              - [[:reproductive, 'Reproductor'], [:defiant, 'Recelador']].each do |attribute|
+                .col-xs-6.col-sm-6.col-md-3
+                  .keppler-custom-field.form-group.keppler_boolean.optional{ class: "status-#{attribute.first.to_s}"}
+                    %label.control-label.keppler_boolean.optional{for: "status_#{attribute.first.to_s}"}= attribute.last.humanize
+                    %label.keppler-switch
+                      %input{ class: ('active' if @last_status.try(attribute.first)), id: "status_#{attribute.first.to_s}", checked: '', name: "status[#{attribute.first}]", tabindex: "0", type: "checkbox", value: (@last_status.try(attribute.first) ? 'true' : 'false')}
+                      %span.slider.round
+              -# .col-xs-6.col-sm-6.col-md-3
+              -#   = f.input :reproductive, input_html: { value: (@last_status.reproductive if @last_status) }, as: :keppler_boolean, label: 'Reproductivo'
+              -# .col-xs-6.col-sm-6.col-md-3
+              -#   = f.input :defiant, as: :keppler_boolean, label: 'Recelador', input_html: { value: (@last_status.defiant if @last_status) }, value: (@last_status.defiant if @last_status)
+            - if @cow.gender?('female')
+              - [[:pregnant, 'Preñada'], [:lactating, 'Lactando'], [:breeding, 'Criando']].each do |attribute|
+                .col-xs-6.col-sm-6.col-md-2
+                  .keppler-custom-field.form-group.keppler_boolean.optional{ class: "status-#{attribute.first.to_s}"}
+                    %label.control-label.keppler_boolean.optional{for: "status_#{attribute.first.to_s}"}= attribute.last.humanize
+                    %label.keppler-switch
+                      %input{ class: ('active' if @last_status.try(attribute.first)), id: "status_#{attribute.first.to_s}", checked: '', name: "status[#{attribute.first}]", tabindex: "0", type: "checkbox", value: (@last_status.try(attribute.first) ? 'true' : 'false')}
+                      %span.slider.round
+              -# .col-xs-6.col-sm-6.col-md-2
+              -#   = f.input :pregnant, as: :keppler_boolean, label: 'Preñada', input_html: { value: (@last_status.pregnant if @last_status) }
+              -# .col-xs-6.col-sm-6.col-md-2
+              -#   = f.input :lactating, as: :keppler_boolean, label: 'Lactando', input_html: { value: (@last_status.lactating if @last_status) }
+              -# .col-xs-6.col-sm-6.col-md-2
+              -#   = f.input :breeding, as: :keppler_boolean, label: 'Criando', input_html: { value: (@last_status.breeding if @last_status) }
+            .col-xs-6.col-sm-6.col-md-2
+              = f.input :dead, as: :keppler_boolean, label: 'Muerto', input_html: { value: (@last_status.dead if @last_status) }
+            .col-xs-6.col-sm-6.col-md-4
+              = f.input :deathdate, as: :string, input_html: { class: 'datepicker', disabled: true }, label: 'Fecha de muerte'
+            .col-sm-12.col-md-6
+              = f.input :corporal_condition, collection: @corporal_conditions, selected: (@last_status.corporal_condition if @last_status), include_blank: false, label: 'Condición corporal'
+            .col-sm-12.col-md-6
+              = f.input :typology, collection: @typologies, include_blank: false, label: 'Tipología', selected: (@last_status.typology if @last_status)
+            .col-sm-12.col-md-6
+              = f.input :user_id, input_html: { value: (current_user.id if current_user) }, as: :hidden
+            .col-sm-12
+              = f.input :comments, label: 'Observaciones'
+            .col-sm-12
+              .float-right
+                %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                  %i.icofont-save
+                  Guardar
+
+// Plugins
+%link{href: "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css", rel: "stylesheet"}/
+%script{src: "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"}
+
+:javascript
+  $('.keppler-switch').click(function(event) {
+    event.preventDefault()
+    var input = $(this).find('input')
+    var label = $(this).find('.inline-label')
+    input
+      .toggleClass('active')
+      .val(input.hasClass('active'))
+    label
+      .toggleClass('active')
+      //.text(label.hasClass('active'))
+  })
+
+  $('.status_dead').click(function() {
+    if ($(this).find('.inline-label').hasClass('active')) {
+      document.getElementById('status_deathdate').disabled = false
+    } else {
+      document.getElementById('status_deathdate').disabled = true
+      document.getElementById('status_deathdate').value = ""
+    }
+  })
+  
+  function noImageSelect (option) {
+    var optionTxt = option.text
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="cattle-option">' +
+        optionTxt +
+      '</span>'
+    );
+    return $option;
+  };
+
+  $('#status_farm_id').select2({
+    placeholder: "Elige una finca",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });
+
+  $('#status_strategic_lot_id').select2({
+    placeholder: "Elige un lote estratégico",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });
+
+  $('#status_typology').select2({
+    placeholder: "Elige una tipología",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });

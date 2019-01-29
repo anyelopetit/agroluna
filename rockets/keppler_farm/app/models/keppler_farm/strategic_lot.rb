@@ -12,6 +12,8 @@ module KepplerFarm
     acts_as_list
     acts_as_paranoid
 
+    belongs_to :farm
+
     def self.index_attributes
       %i[name function]
     end
@@ -20,9 +22,9 @@ module KepplerFarm
       ['breeding', 'reproduction', 'lactating']
     end
 
-    # def cows
-    #   status_ids = KepplerCattle::Status.where(strategic_lot_id: id).map(&:cow_id)
-    #   KepplerCattle::Cow.find(status_ids)
-    # end
+    def cows
+      assignments = KepplerCattle::Assignment.where(strategic_lot_id: id).map(&:cow_id).uniq
+      KepplerCattle::Cow.find(assignments)
+    end
   end
 end

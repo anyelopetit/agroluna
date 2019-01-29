@@ -21,6 +21,10 @@ module KepplerCattle
       %i[serie_number image short_name provenance]
     end
 
+    def farm
+      KepplerFarm::Farm.find(status.farm_id) if status
+    end
+
     def self.species
       ['bovine', 'goat']
     end
@@ -34,9 +38,9 @@ module KepplerCattle
       'Mestizo Holstein',
       'Pardo Suizo Puro',
       'Mestizo Brahman',
-      'Brahman.',
+      'Brahman',
       'No Registrado',
-      'Senepol.',
+      'Senepol',
       'Mestizo Senepol',
       'Mestizo Carora Holstein',
       'Campolargo',

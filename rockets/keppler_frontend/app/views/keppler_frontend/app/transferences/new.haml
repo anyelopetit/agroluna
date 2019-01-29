@@ -1,0 +1,10 @@
+.container_carousel
+  .single-item
+    %a.mt-4.mb-4.ml-3{ href: app_farm_cows_path(@farm) }
+      %button.btn.btn_custom.btn--medium
+        %i.icofont-circled-left
+        Listado
+    .card_new
+      .float-left
+      %h1 Datos generales
+      = render 'keppler_frontend/app/transferences/partials/form', farm: @farm

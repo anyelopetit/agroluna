@@ -7,12 +7,15 @@ es:
     permissions:
     models:
       singularize:
+        transference: transference
         status: estado
         cow: ganado
       pluralize:
+        transferences: transferences
         statuses: estados
         cows: ganados
     modules:
+      admin/transference: Transference
       admin/status: Estado
       admin/cow: Ganado
     messages:

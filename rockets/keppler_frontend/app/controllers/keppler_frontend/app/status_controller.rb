@@ -21,7 +21,7 @@ module KepplerFrontend
       @ubications = KepplerCattle::Status.ubications
       @corporal_conditions = KepplerCattle::Status.corporal_conditions
       @strategic_lots = KepplerFarm::StrategicLot.all
-      @typologies = KepplerCattle::Status.typologies
+      @typologies = KepplerCattle::Status.try("#{@cow.gender}_typologies".to_sym)
       @last_status = KepplerCattle::Status.last
       @farms = KepplerFarm::Farm.order(title: :asc)
     end

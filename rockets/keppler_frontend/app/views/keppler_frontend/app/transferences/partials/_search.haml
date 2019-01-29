@@ -1,0 +1,32 @@
+= search_form_for [:app, @farm, search] do |f|
+  .flex-search
+    %select#from-farm{ name: 'search[from]' }
+      %option Desde
+      - @search_farms.each do |farm|
+        %option{ value: farm.last } #{farm.first}
+    %select#to-farm{ name: 'search[to]' }
+      %option Hacia
+      - @search_farms.each do |farm|
+        %option{ value: farm.last } #{farm.first}
+    = f.submit "Buscar"
+
+:scss
+
+  .flex-search {
+    display: flex;
+  }
+
+  .select-field:nth-child(1) {
+    display: block;
+  }
+
+  .select-field {
+    display: none;
+  }
+
+:javascript
+  $('#select-search').change(function() {
+    $('.select-field').hide()
+    var $id = $(this).find('option:selected').val()
+    $("#" + $id).show()
+  })

@@ -24,6 +24,9 @@
         %li.nav-item
           = link_to app_farm_strategic_lots_path(farm), class: "nav-link #{('active' if controller_name.eql?('strategic_lots'))}" do
             Lotes estratégicos
+        %li.nav-item
+          = link_to app_farm_transferences_path(farm), class: "nav-link #{('active' if controller_name.eql?('transferences'))}" do
+            Transferencias
       %li.nav-item.d-lg-none
         = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: "nav-link"
     -# %ul.navbar-nav.mr-auto.language-select

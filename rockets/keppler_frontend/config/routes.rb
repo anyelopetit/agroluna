@@ -33,6 +33,15 @@ KepplerFrontend::Engine.routes.draw do
   get '/finca/:farm_id/ganado/:cow_id/nuevo-estado', to: 'app/status#new', as: :app_farm_cow_status_new
   post '/finca/:farm_id/ganado/:cow_id/crear-status', to: 'app/status#create', as: :app_farm_cow_statuses
 
+  # Farm Transferences
+  get '/finca/:farm_id/transferencias', to: 'app/transferences#index', as: :app_farm_transferences
+  get '/finca/:farm_id/transferencias/:transference_id', to: 'app/transferences#show', as: :app_farm_transference
+  get '/finca/:farm_id/editar-transferencias/:transference_id', to: 'app/transferences#edit', as: :app_farm_transference_edit
+  get '/finca/:farm_id/nueva-transferencia', to: 'app/transferences#new', as: :app_farm_transference_new
+  post '/finca/:farm_id/transferencias', to: 'app/transferences#create', as: :app_farm_transference_create
+  patch '/finca/:farm_id/transferencias/:transference_id', to: 'app/transferences#update', as: :app_farm_transference_update
+  delete '/finca/:farm_id/transferencias/:transference_id/eliminar', to: 'app/transferences#destroy', as: :app_farm_transference_destroy
+
   namespace :admin do
     scope :frontend, as: :frontend do
       resources :parameters do

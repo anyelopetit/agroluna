@@ -60,7 +60,7 @@ module KepplerFrontend
         # redirect(@cow, params)
         redirect_to app_farm_cow_status_new_path(@farm, @cow)
       else
-        flash[:notice] = 'Revisa los datos del formulario'
+        flash[:error] = 'Revisa los datos del formulario'
         render :new_cattle
       end
     end

@@ -44,8 +44,70 @@
             Guardar
 
 :javascript
-  $(document).ready(function() {
-    $('#cow_species').select2();
+
+  window.I18n = #{es_translations.to_json.html_safe}
+
+  function doesFileExist(urlToFile) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('HEAD', urlToFile, false);
+    xhr.send();
+
+    return xhr.status == "404" ? false : true;
+  }
+  
+  function imageSelect (option) {
+    var optionTxt = option.text.toLowerCase()
+    if (!option.id) return optionTxt;
+    var baseUrl = '/assets/keppler_cattle/';
+    var url = baseUrl + (doesFileExist(baseUrl + optionTxt) ? optionTxt : '/ternera')
+    var $option = $(
+      '<span class="cattle-option">' +
+        `<div style="background-image: url(${url})" class="img-cattle-list"></div>` + 
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+  
+  function noImageSelect (option) {
+    var optionTxt = option.text
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="cattle-option">' +
+        optionTxt +
+      '</span>'
+    );
+    return $option;
+  };
+
+  $('#cow_species').select2({
+    placeholder: "Elige una especie",
+    templateResult: imageSelect,
+    templateSelection: imageSelect
+  });
+
+  $('#cow_gender').select2({
+    placeholder: "Elige un género}",
+    templateResult: imageSelect,
+    templateSelection: imageSelect
+  });
+
+  $('#cow_race').select2({
+    placeholder: "Elige una raza",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });
+
+  $('#cow_mother_id').select2({
+    placeholder: "Elige una madre",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });
+
+  $('#cow_father_id').select2({
+    placeholder: "Elige un padre",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
   });
 
   $('.datepicker').datepicker({

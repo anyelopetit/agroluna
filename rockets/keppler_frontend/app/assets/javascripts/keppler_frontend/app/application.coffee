@@ -10,6 +10,7 @@
 #= require keppler_frontend/app/file_uploader
 #= require keppler_frontend/app/sweetalert3/sweetalert2.all.min
 #= require keppler_frontend/app/sweetalert3/delete-confirm
+#= require keppler_frontend/app/select2/select2.full.min
 #= require keppler_frontend/app/notification
 #= require keppler_frontend/app/main
 # require_tree .

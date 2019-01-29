@@ -1,0 +1,23 @@
+.container_carousel
+  .single-item
+    .card_new
+      %h1 Datos generales
+      = render 'keppler_frontend/app/transferences/partials/form', farm: @farm
+
+= render 'keppler_frontend/app/frontend/partials/modal_status'
+
+= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.css'
+= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.js'
+= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/i18n/datepicker.ca-ES.js'
+:javascript
+  $('.keppler-switch').click(function(event) {
+    event.preventDefault()
+    var input = $(this).find('input')
+    var label = $(this).find('.inline-label')
+    input
+      .toggleClass('active')
+      .val(input.hasClass('active'))
+    label
+      .toggleClass('active')
+      //.text(label.hasClass('active'))
+  })

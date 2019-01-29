@@ -22,11 +22,11 @@
             .col-sm-12.col-md-4
               = f.input :days, input_html: { min: 0, value: @cow.days }, placeholder: '0', disabled: true, label: 'Días de nacido'
               = f.input :days, input_html: { min: 0, value: @cow.days }, placeholder: '0', as: :hidden
-            .col-sm-12.col-md-4
+            .col-sm-12.col-md-6
               = f.input :farm_id, collection: @farms, selected: (@last_status.farm_id if @last_status), include_blank: false, label: 'Finca'
-            .col-sm-12.col-md-4
+            .col-sm-12.col-md-6
               = f.input :strategic_lot_id, collection: @strategic_lots, input_html: { min: 0, value: (@last_status.strategic_lot_id if @last_status) }, label: 'Lote estratégico'
-            .col-sm-12.col-md-4
+            -# .col-sm-12.col-md-4
               = f.input :ubication, collection: @ubications, selected: (@last_status.ubication if @last_status), label: 'Ubicación'
             - if @cow.gender?('male')
               - [[:reproductive, 'Reproductor'], [:defiant, 'Recelador']].each do |attribute|
@@ -65,124 +65,16 @@
             .col-sm-12.col-md-6
               = f.input :user_id, input_html: { value: (current_user.id if current_user) }, as: :hidden
             .col-sm-12
-              = f.input :comments, label: t('activerecord.attributes.comments').humanize
+              = f.input :comments, label: 'Observaciones'
             .col-sm-12
               .float-right
                 %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
                   %i.icofont-save
                   Guardar
-      -# .row
-        .col-lg-4
-          .form-group
-            %label.label_custom--strong Peso (kg)
-            %input.form-control.input_custom
-        .col-lg-4
-          .form-group
-            %label.label_custom--strong Edad (años)
-            %input.form-control.input_custom
-        .col-lg-4
-          .form-group
-            %label.label_custom--strong Edad (meses)
-            %input.form-control.input_custom
-        .col-lg-6
-          .form-group
-            %label.label_custom--strong Ubicación
-            %ul.select
-              %li
-                %input#select-close.select_close{name: "select_custom", type: "radio", value: ""}/
-                %span.select_label.select_label-placeholder Seleccione la ubicación
-              %li.select_items
-                %input.select_expand{id:"ubicacion", name: "select_custom", type: "radio"}
-                %label.select_closeLabel{for: "select-close"}
-                %ul.select_options
-                  - 2.times do |x|
-                    %li.select_option
-                      %input.select_input{id:"ubicacion-#{x}", name: "select_custom", type: "radio"}
-                      %label.select_label{for: "ubicacion-#{x}"} ubicacion #{x}
-                %label.select_expandLabel{for: "ubicacion"}
-        .col-lg-6
-          .form-group
-            %label.label_custom--strong Condición Corporal
-            %ul.select
-              %li
-                %input#select-close.select_close{name: "select_custom", type: "radio", value: ""}/
-                %span.select_label.select_label-placeholder Seleccione la condición
-              %li.select_items
-                %input.select_expand{id:"condicion", name: "select_custom", type: "radio"}
-                %label.select_closeLabel{for: "select-close"}
-                %ul.select_options
-                  - 2.times do |x|
-                    %li.select_option
-                      %input.select_input{id:"condicion-#{x}", name: "select_custom", type: "radio"}
-                      %label.select_label{for: "condicion-#{x}"} condicion #{x}
-                %label.select_expandLabel{for: "condicion"}
-        .col-lg-6
-          .form-group
-            %label.label_custom--strong Lote estratégico
-            %ul.select
-              %li
-                %input#select-close.select_close{name: "select_custom", type: "radio", value: ""}/
-                %span.select_label.select_label-placeholder Seleccione un lote estratégico
-              %li.select_items
-                %input.select_expand{id:"lote", name: "select_custom", type: "radio"}
-                %label.select_closeLabel{for: "select-close"}
-                %ul.select_options
-                  - 2.times do |x|
-                    %li.select_option
-                      %input.select_input{id:"lote-#{x}", name: "select_custom", type: "radio"}
-                      %label.select_label{for: "lote-#{x}"} lote #{x}
-                %label.select_expandLabel{for: "lote"}
-        .col-lg-6
-          .form-group
-            %label.label_custom--strong Tipología
-            %ul.select
-              %li
-                %input#select-close.select_close{name: "select_custom", type: "radio", value: ""}/
-                %span.select_label.select_label-placeholder Seleccione la tipología
-              %li.select_items
-                %input.select_expand{id:"tipologia", name: "select_custom", type: "radio"}
-                %label.select_closeLabel{for: "select-close"}
-                %ul.select_options
-                  - 2.times do |x|
-                    %li.select_option
-                      %input.select_input{id:"tipologia-#{x}", name: "select_custom", type: "radio"}
-                      %label.select_label{for: "tipologia-#{x}"} tipologia #{x}
-                %label.select_expandLabel{for: "tipologia"}
-        .col-lg-3
-          %label.label_custom--strong Preñada
-          %label.keppler-switch
-            %input#status_pregnant{checked: "checked", name: "status[pregnant]", type: "checkbox", value: "false"}/
-            %span.slider.round
-            %label.inline-label
-        .col-lg-3
-          %label.label_custom--strong Lactando
-          %label.keppler-switch
-            %input#status_pregnant{checked: "checked", name: "status[lactating]", type: "checkbox", value: "false"}/
-            %span.slider.round
-            %label.inline-label
-        .col-lg-3
-          %label.label_custom--strong Muerto
-          %label.keppler-switch
-            %input#status_pregnant{checked: "checked", name: "status[dead]", type: "checkbox", value: "false"}/
-            %span.slider.round
-            %label.inline-label
-        .col-lg-3
-          .form-group
-            %label.label_custom--strong Fecha de muerte
-            %input.form-control.input_custom
-        .col-lg-12
-          .form-group
-            %label.label_custom--strong Comentarios
-            %textarea.form-control.input_custom
-        .col-lg-12
-          %a.float-right.mt-4.mb-4{ href: '' }
-            %button.btn.btn_custom.btn--filled.btn--medium
-              %i.icofont-save
-              Guardar
 
 // Plugins
--# %link{href: "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css", rel: "stylesheet"}/
--# %script{src: "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"}
+%link{href: "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css", rel: "stylesheet"}/
+%script{src: "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"}
 
 :javascript
   $('.keppler-switch').click(function(event) {
@@ -206,13 +98,31 @@
     }
   })
   
+  function noImageSelect (option) {
+    var optionTxt = option.text
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="cattle-option">' +
+        optionTxt +
+      '</span>'
+    );
+    return $option;
+  };
 
-  $('.datepicker').datepicker({
-    dateFormat: 'yy-mm-dd',
-    showOtherMonths: true,
-    selectOtherMonths: true,
-    changeMonth: true,
-    changeYear: true,
-    maxDate: 0,
-    setDate: 0
-  })
+  $('#status_farm_id').select2({
+    placeholder: "Elige una finca",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });
+
+  $('#status_strategic_lot_id').select2({
+    placeholder: "Elige un lote estratégico",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });
+
+  $('#status_typology').select2({
+    placeholder: "Elige una tipología",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });

@@ -33,7 +33,7 @@ module KepplerFrontend
       if @strategic_lot.save
         redirect_to app_farm_strategic_lots_path(@farm)
       else
-        flash[:notice] = 'Revisa los datos del formulario'
+        flash[:error] = 'Revisa los datos del formulario'
         render :new
       end
     end

@@ -6,6 +6,13 @@ menu:
     icon: rocket
     model: User
     submenu:
+      - transference:
+          name: transference
+          url_path: /admin/cattle/transferences
+          icon: layers
+          current: ['/admin/cattle/transferences']
+          model: KepplerCattle::Transference
+
       - cow:
           name: cow
           url_path: /admin/cattle/cows

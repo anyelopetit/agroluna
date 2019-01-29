@@ -13,7 +13,6 @@ module KepplerCattle
     acts_as_list
     acts_as_paranoid
 
-    belongs_to :farm
     has_many :statuses, dependent: :destroy
 
     validates_presence_of :birthdate, :serie_number
@@ -23,7 +22,7 @@ module KepplerCattle
     end
 
     def farm
-      KepplerFarm::Farm.find(farm_id) if farm_id
+      KepplerFarm::Farm.find(status.farm_id) if status
     end
 
     def self.species
@@ -39,9 +38,9 @@ module KepplerCattle
       'Mestizo Holstein',
       'Pardo Suizo Puro',
       'Mestizo Brahman',
-      'Brahman.',
+      'Brahman',
       'No Registrado',
-      'Senepol.',
+      'Senepol',
       'Mestizo Senepol',
       'Mestizo Carora Holstein',
       'Campolargo',

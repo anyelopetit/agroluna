@@ -30,11 +30,11 @@ module KepplerFrontend
     def create
       @cow = KepplerCattle::Cow.new(cow_params)
 
-      if @cow.save && @cow.statuses.blank?
+      if @cow.save! && @cow.statuses.blank?
         # redirect(@cow, params)
         redirect_to app_farm_cow_status_new_path(@farm, @cow)
       else
-        flash[:notice] = 'Revisa los datos del formulario'
+        flash[:error] = 'Revisa los datos del formulario'
         render :new
       end
     end

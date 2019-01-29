@@ -10,6 +10,11 @@ module KepplerCattle
       @translations[I18n.locale].with_indifferent_access 
     end
 
+    def es_translations 
+      @translations ||= I18n.backend.send(:translations) 
+      @translations[:es].with_indifferent_access 
+    end
+
     def cow_parent_id(value)
       parent_model = KepplerCattle::Cow.find(value)
     end

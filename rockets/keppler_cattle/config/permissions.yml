@@ -1,4 +1,11 @@
 modules:
+  transferences:
+    name: Transference
+    model: KepplerCattleTransference
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
   statuses:
     name: Status
     model: KepplerCattleStatus

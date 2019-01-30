@@ -7,26 +7,18 @@
             %input{ type: 'checkbox', id: "checkbox-#{object.id}", 'checklist-model' => 'check', 'checklist-value' => "#{object.id}", '@click' => "listDelete(#{object.id})"}
             %span.cr
               %i.cr-icon.glyphicon.glyphicon-ok
-    - attributes.each do |attribute|
-      - if @attachments.dig('images', 'names').include?(attribute.to_s)
-        %td
-          = link_to({ action: :show, id: object.id, search: @query }, { class: 'show-row' }) do
-            %span
-              = image_tag object.try(attribute).url if object.try(attribute).url
-      - elsif @attachments.dig('images', 'names').map(&:pluralize).include?(attribute.to_s)
-        %td
-          = link_to({ action: :show, id: object.id, search: @query }, { class: 'show-row' }) do
-            %span
-              - object.try(attribute).each do |image|
-                = image_tag image.try(:url)
-      - elsif object.try(attribute).is_a?(Integer)
-        %td
-          = link_to({ action: :show, id: object.id, search: @query }, { class: 'show-row' }) do
-            %span= object.try(attribute)
-      - else
-        %td
-          = link_to({ action: :show, id: object.id, search: @query }, { class: 'show-row' }) do
-            %span= object.try(attribute).try(:truncate_words, 4)
+    %td
+      = link_to({ action: :show, id: object.id, search: @query }, { class: 'show-row' }) do
+        %span= object&.cow&.serie_number
+    %td
+      = link_to({ action: :show, id: object&.id, search: @query }, { class: 'show-row' }) do
+        %span= object&.from_farm&.title
+    %td
+      = link_to({ action: :show, id: object&.id, search: @query }, { class: 'show-row' }) do
+        %span= object&.to_farm&.title
+    %td
+      = link_to({ action: :show, id: object&.id, search: @query }, { class: 'show-row' }) do
+        %span= object&.created_at&.to_formatted_s(:day)
 
     %td.dropdown{ style: 'width: 15px;padding-right:15px;' }
       %a.action-btn.pull-right{:id => "menu-#{object.id}", 'aria-expanded': 'false', 'aria-haspopup': 'true', 'data-toggle': 'dropdown' }

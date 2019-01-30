@@ -119,6 +119,19 @@
       templateSelection: noImageSelect
     });
   });
+= javascript_include_tag '/assets/plugins/jquery-ui/jquery-ui.min'
+:javascript
+  $(document).ready(function() {
+    $('.datepicker').datepicker({
+      dateFormat: 'yy-mm-dd',
+      showOtherMonths: true,
+      selectOtherMonths: true,
+      changeMonth: true,
+      changeYear: true,
+      maxDate: 0,
+      setDate: 0
+    })
+  })
 :scss
 
 

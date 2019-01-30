@@ -291,6 +291,9 @@ es:
       photos: fotos
       function: función
       title: título
+      cow_id: Serie
+      from_farm_id: Desde finca
+      to_farm_id: Hasta finca
       created_at: creado
       updated_at: actualizado
       meta_tags: 'Meta Tags'

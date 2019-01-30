@@ -53,10 +53,19 @@
                               %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()' }
                               %span.cr
                                 %i.cr-icon.glyphicon.glyphicon-ok
-                    - @attributes.each do |attribute|
-                      %th
-                        = sort_link(@q, attribute) do
-                          = t("activerecord.attributes.#{attribute.to_s}")
+                    %th
+                    %th
+                      = sort_link(@q, 'cow_id') do
+                        = t("activerecord.attributes.cow_id")
+                    %th
+                      = sort_link(@q, 'from_farm_id') do
+                        = t("activerecord.attributes.from_farm_id")
+                    %th
+                      = sort_link(@q, 'to_farm_id') do
+                        = t("activerecord.attributes.to_farm_id")
+                    %th
+                      = sort_link(@q, 'created_at') do
+                        = t("activerecord.attributes.created_at")
                     %th
                     %th
               %tbody.objects-container

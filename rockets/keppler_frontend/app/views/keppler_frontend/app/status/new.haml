@@ -2,6 +2,11 @@
 %script{src: "/assets/keppler_frontend/app/jquery.min.js"}
 .container_carousel
   .single-item
+    - unless @cow.status.blank?
+      = link_to :back, class: 'mt-4 mb-4 ml-3' do
+        %button.btn.btn_custom.btn--medium
+          %i.icofont-circled-left
+          Listado
     .card_new
       %h1 Crear status inicial
       = simple_form_for [:app, @farm, @cow, @status] do |f|

@@ -128,12 +128,27 @@ module KepplerCattle
     end
 
     def left_days
-      days_list = [206, 210, 365, 540, 730]
+      days_list = [210, 365, 540, 730]
       left = 999
       days_list.each do |d|
-        left = (days - d) if (d - days < left && d - days > 0)
+        if (d - days < left && d - days > 0)
+          left = (days - d) 
+        end
       end
       left
+    end
+
+    def next_day
+      days_list = [210, 365, 540, 730]
+      left = 999
+      next_d = 0
+      days_list.each do |d|
+        if (d - days < left && d - days > 0)
+          left = (days - d) 
+          next_d = d
+        end
+      end
+      next_d
     end
   end
 end

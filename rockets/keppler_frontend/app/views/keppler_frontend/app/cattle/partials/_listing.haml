@@ -61,7 +61,7 @@
               = cow.status.days unless cow.status.blank?
               - if cow.left_days
                 .left-days{ class: ('days-alert' if (cow.left_days >= -10)) }
-                  = "(#{cow.left_days})"
+                  = "(#{cow.left_days} para #{cow.next_day})"
             %td
               = cow.status.typology unless cow.status.blank?
             %td.status

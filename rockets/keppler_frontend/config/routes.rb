@@ -16,7 +16,7 @@ KepplerFrontend::Engine.routes.draw do
   post '/finca/:farm_id/lotes-estrategicos', to: 'app/strategic_lots#create', as: :app_farm_strategic_lot_create
   post '/finca/:farm_id/lote-estrategico/:strategic_lot_id/asignar-ganado', to: 'app/strategic_lots#assign_cattle', as: :app_farm_strategic_lot_assign_cattle
   patch '/finca/:farm_id/lote-estrategico/:strategic_lot_id', to: 'app/strategic_lots#update', as: :app_farm_strategic_lot_update
-  delete '/finca/:farm_id/lote-estrategico/:strategic_lot_id', to: 'app/strategic_lots#destroy', as: :app_farm_strategic_lot_destroy
+  get '/finca/:farm_id/lote-estrategico/:strategic_lot_id/eliminar', to: 'app/strategic_lots#destroy', as: :app_farm_strategic_lot_destroy
   delete '/finca/:farm_id/lote-estrategico/:strategic_lot_id/eliminar-ganado', to: 'app/strategic_lots#delete_assignment', as: :app_farm_strategic_lot_delete_assignment
   delete '/finca/:farm_id/lotes-estrategicos/destroy_multiple', to: 'app/strategic_lots#destroy_multiple', as: :app_farm_strategic_lot_destroy_multiple
 

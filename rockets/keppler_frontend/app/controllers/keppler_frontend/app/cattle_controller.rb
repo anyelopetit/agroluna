@@ -84,8 +84,8 @@ module KepplerFrontend
       @species = KepplerCattle::Cow.species
       @genders = KepplerCattle::Cow.genders
       @races   = KepplerCattle::Cow.races
-      @posible_mothers = KepplerCattle::Cow.posible_mothers(@farm)
-      @posible_fathers = KepplerCattle::Cow.posible_fathers(@farm)
+      @posible_mothers = KepplerCattle::Cow.posible_mothers
+      @posible_fathers = KepplerCattle::Cow.posible_fathers
     end
 
     def set_farm

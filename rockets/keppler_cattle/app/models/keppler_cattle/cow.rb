@@ -78,12 +78,14 @@ module KepplerCattle
       gender.eql?(g)
     end
 
-    def self.posible_mothers(farm)
-     farm.cows.select { |x| x.gender?('female') }.map { |x| [x.serie_number, x.id] }
+    def self.posible_mothers
+      select { |x| x.gender?('female') }
+      .map { |x| [x.serie_number, x.id] }
     end
 
-    def self.posible_fathers(farm)
-     farm.cows.select { |x| x.gender?('male') }.map { |x| [x.serie_number, x.id] }
+    def self.posible_fathers
+      select { |x| x.gender?('male') }
+      .map { |x| [x.serie_number, x.id] }
     end
 
     def mother

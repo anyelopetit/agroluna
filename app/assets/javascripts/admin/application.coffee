@@ -1,6 +1,6 @@
 #= require bounce.min
 #= require jquery
-# require jquery-ui/widgets/datepicker
+#= require jquery-ui/widgets/datepicker
 #= require jquery-ui/widgets/sortable
 #= require jquery_ujs
 #= require turbolinks
@@ -19,7 +19,7 @@
 #= require_tree ./codemirror/mode
 #= require_tree ./codemirror/keymap
 #= require_tree ./codemirror/addon
-# require keppler_languages/application
-# require keppler_frontend/admin/application
-# require keppler_capsules/admin/application
+#= require keppler_languages/application
+#= require keppler_frontend/admin/application
+#= require keppler_capsules/admin/application
 #= require_tree .

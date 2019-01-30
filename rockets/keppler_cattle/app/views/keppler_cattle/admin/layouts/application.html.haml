@@ -22,3 +22,18 @@
       %script{ src: '/assets/vue_admin/index.js' }
     = keppler_boolean_script
 = render 'admin/layouts/git_info', git: @git
+
+
+= javascript_include_tag '/assets/plugins/jquery-ui/jquery-ui.min'
+:javascript
+  $(document).ready(function() {
+    $('.datepicker').datepicker({
+      dateFormat: 'yy-mm-dd',
+      showOtherMonths: true,
+      selectOtherMonths: true,
+      changeMonth: true,
+      changeYear: true,
+      maxDate: 0,
+      setDate: 0
+    })
+  })

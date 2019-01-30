@@ -1,13 +1,53 @@
-#index-container
-  = render 'keppler_frontend/app/strategic_lots/partials/listing', farm: @farm, strategic_lots: @strategic_lots, search: @q
+= render 'keppler_frontend/app/strategic_lots/partials/listing', farm: @farm, strategic_lots: @strategic_lots, search: @q
 :javascript
   function validateCow() {
     var ar = $('#assignment_cow_id')
     document.getElementById('add-cows').disabled = ($('#assignment_cow_id').val() == "")
   }
 
-  $('#assignment_cow_id').select2({
+  $('.assignment_cow_id').select2({
     placeholder: 'Seleccionar ganado'
+  })
+
+  var $ids = #{@strategic_lots.map(&:id)}
+  var $final_array = []
+  var href = $('.destroy_multiple').attr('href')
+
+  function ids_loop() {
+    $ids.forEach(function (id) {
+      $('[checklist-model="check"]:checked').each(function( index ) {
+        if ($(this).prop('id').includes(id)) {
+          if ( !$final_array.includes(id) ) {
+            $final_array.push(id)
+          }
+        }
+      });
+      $('[checklist-model="check"]:not(:checked)').each(function( index ) {
+        if ($(this).prop('id').includes(id)) {
+          if ($final_array.includes(id)) {
+            $final_array.splice($final_array.indexOf(id), 1);
+          }
+        }
+      });
+    });
+    $('.destroy_multiple').attr('href', (`${href}&multiple_ids=[${$final_array}]`))
+  }
+
+  $('#checkbox-all').click(function() {
+    $('[checklist-model="check"]').prop( "checked", $(this).prop( "checked" ) )
+    ids_loop()
+  })
+
+  $('[checklist-model="check"]').click(function() {
+    ids_loop()
+    $('#checkbox-all').prop(
+      'checked',
+      JSON.stringify($ids) === JSON.stringify($final_array)
+    )
+  })
+
+  $('.destroy_multiple').click(function(e) {
+    e.preventDefault()
   })
 
 :scss
@@ -62,15 +102,19 @@
     width: 30px;
   }
 
-  .delete-cow {
-    border-radius: 20px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  .cow-options {
+    display: flex;
     margin-left: auto;
-    padding: 8px 10px;
+  }
+
+  .cow-option {
+    border-radius: 20px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    padding: 10px;
     transition: .3s;
 
     &:hover {
-      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
       color: #f44336;
       transition: .3s;
     }

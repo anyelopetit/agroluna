@@ -4,18 +4,19 @@ es:
       cattle: Ganadería
       cattle-submenu:
         cow: Ganado
+        transference: Transferencias
     permissions:
     models:
       singularize:
-        transference: transference
+        transference: transferencia
         status: estado
         cow: ganado
       pluralize:
-        transferences: transferences
+        transferences: transferencias
         statuses: estados
         cows: ganados
     modules:
-      admin/transference: Transference
+      admin/transference: Transferencia
       admin/status: Estado
       admin/cow: Ganado
     messages:

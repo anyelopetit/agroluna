@@ -15,7 +15,7 @@
           .item-check
             .checkbox
               %label{ for: 'checkbox-all' }
-                %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()' }
+                %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
                 %span.cr
                   %i.cr-icon.icofont-check
       
@@ -34,7 +34,8 @@
           = link_to '#', class: 'tool-btn', title: t('keppler.actions.upload_records'), id: 'upload' do
             %i.icon-cloud-upload
       .toolbar-item
-        %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+        -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+        = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
           %i.icofont-trash
     %a.float-right.mt-4.mb-4{ href: app_farm_strategic_lot_new_path(farm) }
       %button.btn.btn_custom.btn--filled.btn--medium
@@ -67,15 +68,15 @@
                     .item
                       .badge.badge-secondary= strategic_lot&.function
                     .item
-                      = link_to app_farm_strategic_lot_edit_path(@farm, strategic_lot), class: 'new-menu', title: 'Editar' do
+                      = link_to({action: :edit, farm_id: @farm.id, strategic_lot_id: strategic_lot.id}, {title: 'Editar'}) do
                         %i.icofont-pencil-alt-5
                     .item
-                      = link_to app_farm_strategic_lot_destroy_path(@farm, strategic_lot), class: 'new-menu', title: 'Eliminar', method: :delete, data: { confirm: '¿Estás seguro?' } do
+                      = link_to({action: :destroy, strategic_lot_id: strategic_lot.id}, {title: 'Eliminar', method: :delete, data: { confirm: '¿Estás seguro?' }}) do
                         %i.icofont-trash
             .box-body#cows
               = simple_form_for [:app, @farm, @assign], url: app_farm_strategic_lot_assign_cattle_path(@farm, strategic_lot) do |f|
                 .inputs
-                  = f.input :cow_id, collection: @cows, label: false, input_html: { onchange: 'validateCow()' }
+                  = f.input :cow_id, collection: @cows, label: false, input_html: { class: 'assignment_cow_id', onchange: 'validateCow()' }
                   = f.input :strategic_lot_id, value: strategic_lot.id, as: :hidden
                 .button
                   = f.submit :add, value: 'Agregar', id: 'add-cows', disabled: true
@@ -88,5 +89,8 @@
                     .cow-item
                       .cow-avatar= image_tag "/assets/keppler_cattle/#{cow.species}"
                       .cow-name= cow.serie_number
-                      = link_to({ action: :delete_assignment, strategic_lot_id: strategic_lot.id, cow_id: cow.id }, { method: :delete, class: 'delete-cow', data: { confirm: t('keppler.messages.data_confirm') } }) do
-                        %i.icofont-trash
+                      .cow-options
+                        = link_to({ controller: :cattle, action: :show, cow_id: cow.id }, { class: 'cow-option' }) do
+                          %i.icofont-eye
+                        = link_to({ action: :delete_assignment, strategic_lot_id: strategic_lot.id, cow_id: cow.id }, { method: :delete, class: 'cow-option', data: { confirm: t('keppler.messages.data_confirm') } }) do
+                          %i.icofont-trash

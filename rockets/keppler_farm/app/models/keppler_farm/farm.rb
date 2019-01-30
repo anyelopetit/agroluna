@@ -26,11 +26,11 @@ module KepplerFarm
     end
 
     def cows
-      KepplerCattle::Cow.all.select { |c| c.status.farm_id.eql?(id) if c.status.farm_id }
+      KepplerCattle::Cow.all.select { |c| c&.status&.farm_id&.eql?(id) if c&.status&.farm_id }
     end
 
     def transferences
-      KepplerCattle::Transference.all.select { |t| t.from_farm_id&.eql?(id) || t.to_farm_id&.eql?(id) }
+      KepplerCattle::Transference.all.select { |t| t&.from_farm_id&.eql?(id) || t&.to_farm_id&.eql?(id) }
     end
 
     def strategic_lots

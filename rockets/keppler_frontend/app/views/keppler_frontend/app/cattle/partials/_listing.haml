@@ -15,7 +15,7 @@
         Agregar
   - if cows.blank? && @farm.cows.count > 0
     = link_to 'Mostrar todos', app_farm_cows_path(farm)
-  %table
+  %table.cow-table
     - if cows.size.zero?
       %thead
         %tr
@@ -30,8 +30,9 @@
           %th Imagen
           %th Número de serie
           %th Peso
+          %th Días de nacido
           %th Tipología
-          %th Último estado
+          %th Status
           %th Controles
       %tbody
         - cows.each do |cow|
@@ -47,9 +48,27 @@
               = cow.status.weight unless cow.status.blank?
               KG
             %td
-              = cow.status.typology unless cow.status.blank?
+              = cow.status.days unless cow.status.blank?
+              
             %td
+              = cow.status.typology unless cow.status.blank?
+            %td.status
               = cow.status.created_at.strftime("%d-%m-%Y") unless cow.status.blank?
+              .card_status--bar
+                - if cow.gender?('male')
+                  %a.status-tooltip{ title: 'Recelador' }
+                    %i.icofont-bull{ class: ('active' if cow.status.defiant) }
+                  %a.status-tooltip{ title: 'Reproductor' }
+                    %i.icofont-dna{ class: ('active' if cow.status.reproductive) }
+                - else
+                  %a.status-tooltip{ title: 'Preñada' }
+                    %i.icofont-baby{ class: ('active' if cow.status.pregnant) }
+                  %a.status-tooltip{ title: 'Lactando' }
+                    %i.icofont-baby-milk-bottle{ class: ('active' if cow.status.lactating)  }
+                  %a.status-tooltip{ title: 'Criando' }
+                    %i.icofont-holding-hands{ class: ('active' if cow.status.breeding) }
+                %a.status-tooltip{ title: 'Dado de baja' }
+                  %i.icofont-danger-zone{ class: ('active' if cow.status.dead) }
             %td.actions
               = link_to app_farm_cow_path(farm, cow), class: 'floating-btn' do
                 %span.icofont-eye

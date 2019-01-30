@@ -86,6 +86,7 @@ module KepplerFrontend
       @races   = KepplerCattle::Cow.races
       @posible_mothers = KepplerCattle::Cow.posible_mothers
       @posible_fathers = KepplerCattle::Cow.posible_fathers
+      @colors = KepplerCattle::Cow.colors
     end
 
     def set_farm

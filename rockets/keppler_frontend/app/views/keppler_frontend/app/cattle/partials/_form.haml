@@ -24,11 +24,11 @@
       .col-sm-6
         = f.input :birthdate, as: :string, label: 'Fecha de nacimiento', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom datepicker' }
       .col-sm-6
-        = f.input :coat_color, as: :string, label: 'Color de pelaje', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+        = f.input :coat_color, collection: @colors, label: 'Color de pelaje', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom color' }
       .col-sm-6
-        = f.input :nose_color, as: :string, label: 'Color de morro', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+        = f.input :nose_color, collection: @colors, label: 'Color de morro', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom color' }
       .col-sm-6
-        = f.input :tassel_color, as: :string, label: 'Color de borla', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+        = f.input :tassel_color, collection: @colors, label: 'Color de borla', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom color' }
       .col-sm-6
         = f.input :provenance, as: :string, label: 'Procedencia', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-6
@@ -69,6 +69,30 @@
     return $option;
   };
   
+  function motherSelect (option) {
+    var optionTxt = option.text
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="cattle-option">' +
+        `<div style="background-image: url(/assets/keppler_cattle/female)" class="img-cattle-list"></div>` + 
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+  
+  function fatherSelect (option) {
+    var optionTxt = option.text
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="cattle-option">' +
+        `<div style="background-image: url(/assets/keppler_cattle/male)" class="img-cattle-list"></div>` + 
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+  
   function noImageSelect (option) {
     var optionTxt = option.text
     if (!option.id) return optionTxt;
@@ -100,12 +124,18 @@
 
   $('#cow_mother_id').select2({
     placeholder: "Elige una madre",
-    templateResult: noImageSelect,
-    templateSelection: noImageSelect
+    templateResult: motherSelect,
+    templateSelection: motherSelect
   });
 
   $('#cow_father_id').select2({
     placeholder: "Elige un padre",
+    templateResult: fatherSelect,
+    templateSelection: fatherSelect
+  });
+
+  $('.color').select2({
+    placeholder: "Elige un color",
     templateResult: noImageSelect,
     templateSelection: noImageSelect
   });
@@ -117,7 +147,8 @@
     changeMonth: true,
     changeYear: true,
     maxDate: 0,
-    setDate: 0
+    setDate: 0,
+    yearRange: "c-40:c"
 
     // Ver documentación en https://jqueryui.com/datepicker
   })

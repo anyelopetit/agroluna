@@ -19,12 +19,19 @@
           = link_to app_farm_path(farm), class: "nav-link #{('active' if controller_name.eql?('frontend'))}" do
             = farm&.title
         %li.nav-item
-          = link_to app_farm_cows_path(farm), class: "nav-link #{('active' if controller_name.eql?('cattle'))}" do
+          %a#navbarFarm.nav-link{ class: "#{'active' if %w[cattle strategic_lots transferences].include?(controller_name)} dropdown-toggle", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
             Ganadería
-        %li.nav-item
+          .dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarFarm"}
+            = link_to app_farm_cows_path(farm), class: "dropdown-item nav-link #{('active' if controller_name.eql?('cattle'))}" do
+              Ganadería
+            = link_to app_farm_strategic_lots_path(farm), class: "dropdown-item nav-link #{('active' if controller_name.eql?('strategic_lots'))}" do
+              Lotes estratégicos
+            = link_to app_farm_transferences_path(farm), class: "dropdown-item nav-link #{('active' if controller_name.eql?('transferences'))}" do
+              Transferencias
+        -# %li.nav-item
           = link_to app_farm_strategic_lots_path(farm), class: "nav-link #{('active' if controller_name.eql?('strategic_lots'))}" do
             Lotes estratégicos
-        %li.nav-item
+        -# %li.nav-item
           = link_to app_farm_transferences_path(farm), class: "nav-link #{('active' if controller_name.eql?('transferences'))}" do
             Transferencias
       %li.nav-item.d-lg-none

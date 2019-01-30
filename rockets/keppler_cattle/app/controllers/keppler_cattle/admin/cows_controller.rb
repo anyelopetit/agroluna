@@ -104,6 +104,7 @@ module KepplerCattle
         @races   = Cow.races
         @posible_mothers = Cow.posible_mothers
         @posible_fathers = Cow.posible_fathers
+        @colors = Cow.colors
       end
 
       # Only allow a trusted parameter "white list" through.

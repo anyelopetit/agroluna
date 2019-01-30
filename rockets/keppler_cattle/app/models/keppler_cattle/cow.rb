@@ -80,12 +80,12 @@ module KepplerCattle
 
     def self.posible_mothers
       select { |x| x.gender?('female') }
-      .map { |x| [x.serie_number, x.id] }
+      .map { |x| [x.serie_number + (" (#{x&.short_name})" unless x&.short_name.blank?).to_s, x.id] }
     end
 
     def self.posible_fathers
       select { |x| x.gender?('male') }
-      .map { |x| [x.serie_number, x.id] }
+      .map { |x| [x.serie_number + (" (#{x&.short_name})" unless x&.short_name.blank?).to_s, x.id] }
     end
 
     def mother
@@ -125,6 +125,15 @@ module KepplerCattle
       last_month_to_end = 
         birthdate.month == now.month ? 0 : Time.days_in_month((now - 1.month).month, (now - 1.month).year) - birthdate.day
       days_count += now.day + last_month_to_end
+    end
+
+    def left_days
+      days_list = [206, 210, 365, 540, 730]
+      max_days = 999
+      days_list.each do |d|
+        left_days = (d - days < 999 && d - days > 0)
+      end
+      left_days
     end
   end
 end

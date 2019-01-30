@@ -27,7 +27,7 @@ module ObjectQuery
   # each of the selected objects
   def can_multiple_destroy
     redefine_ids(params[:multiple_ids]).each do |id|
-      authorize model.find(id)
+      authorize model.find_by(id: id)
     end
   end
 

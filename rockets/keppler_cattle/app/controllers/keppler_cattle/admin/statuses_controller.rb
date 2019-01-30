@@ -91,7 +91,7 @@ module KepplerCattle
       private
 
       def set_cow
-        @cow = Cow.find(params[:cow_id])
+        @cow = Cow.find_by(id: params[:cow_id])
       end
 
       def index_variables
@@ -104,7 +104,7 @@ module KepplerCattle
 
       # Use callbacks to share common setup or constraints between actions.
       def set_status
-        @status = Status.find(params[:id])
+        @status = Status.find_by(id: params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.

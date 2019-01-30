@@ -171,7 +171,7 @@ module Rails
 
       # string of private method to add within the son_module controller
       def str_ctrl_method(father, son)
-        "\n\n    def set_#{father}\n      @#{father}_#{son} = #{father.camelcase}.find(params[:#{father.underscore}_id])\n    end\n"
+        "\n\n    def set_#{father}\n      @#{father}_#{son} = #{father.camelcase}.find_by(id: params[:#{father.underscore}_id])\n    end\n"
       end
 
       # String of the callback to add within the son_module controller

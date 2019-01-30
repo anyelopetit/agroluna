@@ -95,7 +95,7 @@ module KepplerCattle
 
       # Use callbacks to share common setup or constraints between actions.
       def set_cow
-        @cow = Cow.find(params[:id])
+        @cow = Cow.find_by(id: params[:id])
       end
 
       def cow_attributes

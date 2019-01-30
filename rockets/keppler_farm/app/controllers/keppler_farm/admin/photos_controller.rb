@@ -79,7 +79,7 @@ module KepplerFarm
 
       def toggle
         Photo.all.each { |x| x.update(cover: nil) }
-        @photo = Photo.find(params[:photo_id])
+        @photo = Photo.find_by(id: params[:photo_id])
         @photo.update(cover: true)
         redirect_to controller: :farms, action: :show, id: @farm.id
       end
@@ -87,7 +87,7 @@ module KepplerFarm
       private
 
       def set_farm
-        @farm = KepplerFarm::Farm.find(params[:farm_id])
+        @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
       end
 
       def index_variables
@@ -100,7 +100,7 @@ module KepplerFarm
 
       # Use callbacks to share common setup or constraints between actions.
       def set_photo
-        @photo = Photo.find(params[:id])
+        @photo = Photo.find_by(id: params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.

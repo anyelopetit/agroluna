@@ -363,7 +363,7 @@
     var marks = cm.state.sublimeBookmarks;
     if (marks) while (marks.length) {
       var current = marks.shift();
-      var found = current.find();
+      var found = current.find_by(id: );
       if (found) {
         marks.push(current);
         return cm.setSelection(found.from, found.to);
@@ -375,7 +375,7 @@
     var marks = cm.state.sublimeBookmarks;
     if (marks) while (marks.length) {
       marks.unshift(marks.pop());
-      var found = marks[marks.length - 1].find();
+      var found = marks[marks.length - 1].find_by(id: );
       if (!found)
         marks.pop();
       else
@@ -412,7 +412,7 @@
   cmds.selectBookmarks = function(cm) {
     var marks = cm.state.sublimeBookmarks, ranges = [];
     if (marks) for (var i = 0; i < marks.length; i++) {
-      var found = marks[i].find();
+      var found = marks[i].find_by(id: );
       if (!found)
         marks.splice(i--, 0);
       else
@@ -490,11 +490,11 @@
     cm.state.sublimeMark = cm.setBookmark(cm.getCursor());
   };
   cmds.selectToSublimeMark = function(cm) {
-    var found = cm.state.sublimeMark && cm.state.sublimeMark.find();
+    var found = cm.state.sublimeMark && cm.state.sublimeMark.find_by(id: );
     if (found) cm.setSelection(cm.getCursor(), found);
   };
   cmds.deleteToSublimeMark = function(cm) {
-    var found = cm.state.sublimeMark && cm.state.sublimeMark.find();
+    var found = cm.state.sublimeMark && cm.state.sublimeMark.find_by(id: );
     if (found) {
       var from = cm.getCursor(), to = found;
       if (CodeMirror.cmpPos(from, to) > 0) { var tmp = to; to = from; from = tmp; }
@@ -503,7 +503,7 @@
     }
   };
   cmds.swapWithSublimeMark = function(cm) {
-    var found = cm.state.sublimeMark && cm.state.sublimeMark.find();
+    var found = cm.state.sublimeMark && cm.state.sublimeMark.find_by(id: );
     if (found) {
       cm.state.sublimeMark.clear();
       cm.state.sublimeMark = cm.setBookmark(cm.getCursor());

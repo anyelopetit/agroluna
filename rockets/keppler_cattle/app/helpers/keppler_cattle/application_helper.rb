@@ -16,7 +16,7 @@ module KepplerCattle
     end
 
     def cow_parent_id(value)
-      parent_model = KepplerCattle::Cow.find(value)
+      parent_model = KepplerCattle::Cow.find_by(id: value)
     end
   end
 end

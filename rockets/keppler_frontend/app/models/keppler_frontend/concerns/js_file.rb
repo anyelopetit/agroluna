@@ -24,7 +24,7 @@ module KepplerFrontend
       end
 
       def update_js(css)
-        obj = View.find(id)
+        obj = View.find_by(id: id)
         old_name = "#{url_front}/app/assets/javascripts/keppler_frontend/app/views/#{obj.name}.js"
         new_name = "#{url_front}/app/assets/javascripts/keppler_frontend/app/views/#{css[:name]}.js"
         File.rename(old_name, new_name)

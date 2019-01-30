@@ -1,14 +1,19 @@
 .container_custom
-  .float-left
-    = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
-  .d-flex.justify-content-end.mb-5
-    -# .toolbar
-      %a{ href: '' }
-        %i.icofont-trash
-      %a{ href: '' }
-        %i.icofont-refresh
-      %a{ href: '' }
-        %i.icofont-download
+  = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
+  .d-flex.justify-content-end
+    .toolbar
+      - if can?(KepplerCattle::Cow).destroy_multiple?
+        .toolbar-item
+          .item-check
+            .checkbox
+              %label{ for: 'checkbox-all' }
+                %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+                %span.cr
+                  %i.cr-icon.icofont-check
+      .toolbar-item
+        -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+        = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
+          %i.icofont-trash
     %a.float-right.mt-4.mb-4{ href: app_farm_cow_new_path(farm) }
       %button.btn.btn_custom.btn--filled.btn--medium
         %i.icofont-plus
@@ -27,6 +32,7 @@
           -# %th
             %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
             %label{for: "styled-checkbox-all"}
+          %th
           %th Imagen
           %th Número de serie
           %th Peso
@@ -37,9 +43,13 @@
       %tbody
         - cows.each do |cow|
           %tr{ style: "border-bottom: 1px #eee solid;" }
-            -# %td.checkboxes
-              %input.styled-checkbox{type: "checkbox", id: "styled-checkbox-#{x}"}
-              %label{for: "styled-checkbox-#{x}"}
+            - if can?(KepplerCattle::Cow).destroy_multiple?
+              %td
+                .checkbox{ style: 'margin: 3px' }
+                  %label{ for: "checkbox-#{cow.id}" }
+                    %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
+                    %span.cr
+                      %i.cr-icon.icofont-check
             %td
               = image_tag cow.image.url if cow.image.url
             %td
@@ -49,7 +59,9 @@
               KG
             %td
               = cow.status.days unless cow.status.blank?
-              = "(-#{cow.left_days})" if cow.left_days
+              - if cow.left_days
+                .left-days{ class: ('days-alert' if (cow.left_days >= -10)) }
+                  = "(#{cow.left_days})"
             %td
               = cow.status.typology unless cow.status.blank?
             %td.status
@@ -67,12 +79,12 @@
                     %i.icofont-baby-milk-bottle{ class: ('active' if cow.status.lactating)  }
                   %a.status-tooltip{ title: 'Criando' }
                     %i.icofont-holding-hands{ class: ('active' if cow.status.breeding) }
-                %a.status-tooltip{ title: 'Dado de baja' }
+                -# %a.status-tooltip{ title: 'Dado de baja' }
                   %i.icofont-danger-zone{ class: ('active' if cow.status.dead) }
             %td.actions
               = link_to app_farm_cow_path(farm, cow), class: 'floating-btn' do
                 %span.icofont-eye
-              = link_to app_farm_cow_edit_path(farm, cow), class: 'floating-btn' do
-                %span.icofont-ui-edit
-              = link_to app_farm_cow_destroy_path(farm, cow), method: :delete, data: { confirm: t('keppler.messages.data_confirm') }, class: 'floating-btn' do
+              = link_to app_farm_cow_status_new_path(farm, cow), class: 'floating-btn' do
+                %span.icofont-ui-add
+              -# = link_to app_farm_cow_destroy_path(farm, cow), method: :delete, data: { confirm: t('keppler.messages.data_confirm') }, class: 'floating-btn' do
                 %span.icofont-trash

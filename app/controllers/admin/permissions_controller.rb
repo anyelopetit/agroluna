@@ -49,7 +49,7 @@ module Admin
     end
 
     def set_role
-      @role = Role.find(params[:role_id])
+      @role = Role.find_by(id: params[:role_id])
     end
   end
 end

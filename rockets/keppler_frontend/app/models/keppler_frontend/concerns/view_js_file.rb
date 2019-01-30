@@ -25,7 +25,7 @@ module KepplerFrontend
       end
 
       def update_view_js(view_js)
-        obj = View.find(id)
+        obj = View.find_by(id: id)
         old_name = "#{url_front}/app/views/keppler_frontend/app/frontend/#{obj.name}.js.erb"
         new_name = "#{url_front}/app/views/keppler_frontend/app/frontend/#{html[:name]}.js.erb"
         File.rename(old_name, new_name)

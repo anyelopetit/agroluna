@@ -23,7 +23,7 @@ module KepplerCattle
     end
 
     def relation_id
-      User.find(user_id).name
+      User.find_by(id: user_id).name
     end
 
     def self.corporal_conditions
@@ -66,23 +66,23 @@ module KepplerCattle
     end
 
     def farm
-      KepplerFarm::Farm.find(farm_id)
+      KepplerFarm::Farm.find_by(id: farm_id)
     end
 
     def farm_name
-      KepplerFarm::Farm.find(farm_id).title
+      KepplerFarm::Farm.find_by(id: farm_id).title
     end
 
     def user
-      User.find(user_id) if user_id
+      User.find_by(id: user_id) if user_id
     end
 
     def strategic_lot
-      KepplerFarm::StrategicLot.find(strategic_lot_id) unless strategic_lot_id.nil?
+      KepplerFarm::StrategicLot.find_by(id: strategic_lot_id) unless strategic_lot_id.nil?
     end
 
     def find_lot
-      KepplerFarm::StrategicLot.find(cow&.status&.strategic_lot_id) if cow&.status&.strategic_lot_id
+      KepplerFarm::StrategicLot.find_by(id: cow&.status&.strategic_lot_id) if cow&.status&.strategic_lot_id
     end
   end
 end

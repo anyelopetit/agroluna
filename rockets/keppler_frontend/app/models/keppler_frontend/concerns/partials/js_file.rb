@@ -25,7 +25,7 @@ module KepplerFrontend
         end
 
         def update_js(js)
-          obj = Partial.find(id)
+          obj = Partial.find_by(id: id)
           old_name = "#{url_front}/app/assets/javascripts/keppler_frontend/app/partials/#{obj.name}.js"
           new_name = "#{url_front}/app/assets/javascripts/keppler_frontend/app/partials/#{js[:name]}.js"
           File.rename(old_name, new_name)

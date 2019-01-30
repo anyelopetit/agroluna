@@ -12,6 +12,8 @@ module KepplerFarm
     acts_as_list
     acts_as_paranoid
 
+    has_many :assignments, class_name: 'KepplerCattle::Assignment', dependent: :destroy
+
     belongs_to :farm
 
     def self.index_attributes
@@ -24,7 +26,7 @@ module KepplerFarm
 
     def cows
       assignments = KepplerCattle::Assignment.where(strategic_lot_id: id).map(&:cow_id).uniq
-      KepplerCattle::Cow.find(assignments)
+      KepplerCattle::Cow.find_by(id: assignments)
     end
   end
 end

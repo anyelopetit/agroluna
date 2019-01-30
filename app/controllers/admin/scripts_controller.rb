@@ -85,7 +85,7 @@ module Admin
 
     # Use callbacks to share common setup or constraints between actions.
     def set_script
-      @script = Script.find(params[:id])
+      @script = Script.find_by(id: params[:id])
     end
 
     def authorization

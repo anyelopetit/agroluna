@@ -92,8 +92,8 @@ module KepplerFrontend
       end
 
       def destroy_callback
-        @view = View.find(params[:view_id])
-        @callback = ViewCallback.find(params[:view_callback_id])
+        @view = View.find_by(id: params[:view_id])
+        @callback = ViewCallback.find_by(id: params[:view_callback_id])
         @callback.destroy
       end
 
@@ -122,7 +122,7 @@ module KepplerFrontend
       end
 
       def editor
-        @view = View.find(params[:view_id])
+        @view = View.find_by(id: params[:view_id])
         @files_list = resources.list
         @files_views = resources.custom_list('views')
         @partials = Partial.all
@@ -131,7 +131,7 @@ module KepplerFrontend
       end
 
       def editor_save
-        @view = View.find(params[:view_id])
+        @view = View.find_by(id: params[:view_id])
         @view.code_save(params[:html], 'html') if params[:html]
         @view.code_save(params[:scss], 'scss') if params[:scss]
         @view.code_save(params[:js], 'js') if params[:js]
@@ -223,7 +223,7 @@ module KepplerFrontend
 
       def redefine_ids(ids)
         ids.delete('[]').split(',').select do |id|
-          View.find(id).uninstall if model.exists? id
+          View.find_by(id: id).uninstall if model.exists? id
           id if model.exists? id
         end
       end

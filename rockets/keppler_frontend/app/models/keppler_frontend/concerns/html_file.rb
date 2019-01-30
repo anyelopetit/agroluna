@@ -36,7 +36,7 @@ module KepplerFrontend
       end
 
       def update_html(html)
-        obj = View.find(id)
+        obj = View.find_by(id: id)
         old_name = "#{url_front}/app/views/keppler_frontend/app/frontend/#{obj.name}.html.erb"
         new_name = "#{url_front}/app/views/keppler_frontend/app/frontend/#{html[:name]}.html.erb"
         File.rename(old_name, new_name)

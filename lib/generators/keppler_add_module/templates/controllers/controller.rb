@@ -87,7 +87,7 @@ module <%= ROCKET_CLASS_NAME %>
 
       # Use callbacks to share common setup or constraints between actions.
       def set_<%= MODULE_NAME.singularize %>
-        @<%= MODULE_NAME.singularize %> = <%= MODULE_CLASS_NAME %>.find(params[:id])
+        @<%= MODULE_NAME.singularize %> = <%= MODULE_CLASS_NAME %>.find_by(id: params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.

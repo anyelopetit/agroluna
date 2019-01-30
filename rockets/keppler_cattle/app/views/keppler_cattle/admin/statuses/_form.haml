@@ -122,7 +122,7 @@
   });
 
   $('.status_dead').click(function() {
-    if ($(this).find('.inline-label').hasClass('active')) {
+    if ($(this).find_by(id: '.inline-label').hasClass('active')) {
       document.getElementById('status_deathdate').disabled = false
     } else {
       document.getElementById('status_deathdate').disabled = true

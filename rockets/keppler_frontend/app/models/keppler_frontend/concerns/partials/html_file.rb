@@ -59,7 +59,7 @@ module KepplerFrontend
           # file.close
           true
 
-          obj = Partial.find(id)
+          obj = Partial.find_by(id: id)
           old_name = "#{url_front}/app/views/keppler_frontend/app/partials/#{obj.underscore_name}.html.erb"
           new_name = "#{url_front}/app/views/keppler_frontend/app/partials/#{'_' + html[:name]}.html.erb"
           File.rename(old_name, new_name)

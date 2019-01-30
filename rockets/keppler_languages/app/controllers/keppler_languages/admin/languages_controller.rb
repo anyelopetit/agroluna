@@ -73,8 +73,8 @@ module KepplerLanguages
       end
 
       def destroy_field
-        language = Language.find(params[:language_id])
-        field = Field.find(params[:field_id])
+        language = Language.find_by(id: params[:language_id])
+        field = Field.find_by(id: params[:field_id])
         field.destroy
 
         update_yml(language.id)
@@ -140,7 +140,7 @@ module KepplerLanguages
 
       def toggle
         languages = Language.all
-        language = Language.find(params[:language_id])
+        language = Language.find_by(id: params[:language_id])
         languages.update_all(active: false)
         language.update(active: params[:language][:active])
 
@@ -180,7 +180,7 @@ module KepplerLanguages
 
       # Use callbacks to share common setup or constraints between actions.
       def set_language
-        @language = Language.find(params[:id])
+        @language = Language.find_by(id: params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.

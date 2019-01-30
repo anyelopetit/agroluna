@@ -87,7 +87,7 @@ module KepplerCattle
 
       # Use callbacks to share common setup or constraints between actions.
       def set_transference
-        @transference = Transference.find(params[:id])
+        @transference = Transference.find_by(id: params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.

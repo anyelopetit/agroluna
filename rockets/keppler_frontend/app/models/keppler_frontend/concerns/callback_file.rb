@@ -40,7 +40,7 @@ module KepplerFrontend
       end
 
       def update_callback(callback)
-        obj = CallbackFunction.find(id)
+        obj = CallbackFunction.find_by(id: id)
         file = "#{url_front}/app/controllers/keppler_frontend/app/frontend_controller.rb"
         index_html = File.readlines(file)
         begin_idx = 0

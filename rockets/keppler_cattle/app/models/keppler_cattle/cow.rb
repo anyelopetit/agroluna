@@ -22,7 +22,7 @@ module KepplerCattle
     end
 
     def farm
-      KepplerFarm::Farm.find(status.farm_id) if status
+      KepplerFarm::Farm.find_by(id: status.farm_id) if status
     end
 
     def self.species
@@ -89,11 +89,11 @@ module KepplerCattle
     end
 
     def mother
-      KepplerCattle::Cow.find(mother_id) if mother_id
+      KepplerCattle::Cow.find_by(id: mother_id) if mother_id
     end
 
     def father
-      KepplerCattle::Cow.find(father_id) if father_id
+      KepplerCattle::Cow.find_by(id: father_id) if father_id
     end
 
     def self.actives(farm)
@@ -131,7 +131,7 @@ module KepplerCattle
       days_list = [206, 210, 365, 540, 730]
       left = 999
       days_list.each do |d|
-        left = (d - days) if (d - days < left && d - days > 0)
+        left = (days - d) if (d - days < left && d - days > 0)
       end
       left
     end

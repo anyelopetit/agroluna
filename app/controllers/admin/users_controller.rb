@@ -50,7 +50,7 @@ module Admin
       @role = Role.new(name: role) unless role.blank?
       @user = User.new(user_params)
       if role.blank?
-        @user.add_role Role.find(user_params.fetch(:role_ids)).name
+        @user.add_role Role.find_by(id: user_params.fetch(:role_ids)).name
       else
         @user.add_role(@role.name)
       end
@@ -84,7 +84,7 @@ module Admin
       if params[:id].eql?('clients') || params[:id].eql?('admins')
         redirect_to action: :index, role: params[:id]
       else
-        @user = User.find(params[:id])
+        @user = User.find_by(id: params[:id])
       end
     end
 

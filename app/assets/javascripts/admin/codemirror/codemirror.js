@@ -681,7 +681,7 @@ function removeReadOnlyRanges(doc, from, to) {
   if (!markers) { return null }
   var parts = [{from: from, to: to}]
   for (var i = 0; i < markers.length; ++i) {
-    var mk = markers[i], m = mk.find(0)
+    var mk = markers[i], m = mk.find_by(id: 0)
     for (var j = 0; j < parts.length; ++j) {
       var p = parts[j]
       if (cmp(p.to, m.from) < 0 || cmp(p.from, m.to) > 0) { continue }
@@ -723,7 +723,7 @@ function extraRight(marker) { return marker.inclusiveRight ? 1 : 0 }
 function compareCollapsedMarkers(a, b) {
   var lenDiff = a.lines.length - b.lines.length
   if (lenDiff != 0) { return lenDiff }
-  var aPos = a.find(), bPos = b.find()
+  var aPos = a.find_by(id: ), bPos = b.find_by(id: )
   var fromCmp = cmp(aPos.from, bPos.from) || extraLeft(a) - extraLeft(b)
   if (fromCmp) { return -fromCmp }
   var toCmp = cmp(aPos.to, bPos.to) || extraRight(a) - extraRight(b)
@@ -765,7 +765,7 @@ function conflictingCollapsedRange(doc, lineNo, from, to, marker) {
   if (sps) { for (var i = 0; i < sps.length; ++i) {
     var sp = sps[i]
     if (!sp.marker.collapsed) { continue }
-    var found = sp.marker.find(0)
+    var found = sp.marker.find_by(id: 0)
     var fromCmp = cmp(found.from, from) || extraLeft(sp.marker) - extraLeft(marker)
     var toCmp = cmp(found.to, to) || extraRight(sp.marker) - extraRight(marker)
     if (fromCmp >= 0 && toCmp <= 0 || fromCmp <= 0 && toCmp >= 0) { continue }
@@ -782,14 +782,14 @@ function conflictingCollapsedRange(doc, lineNo, from, to, marker) {
 function visualLine(line) {
   var merged
   while (merged = collapsedSpanAtStart(line))
-    { line = merged.find(-1, true).line }
+    { line = merged.find_by(id: -1, true).line }
   return line
 }
 
 function visualLineEnd(line) {
   var merged
   while (merged = collapsedSpanAtEnd(line))
-    { line = merged.find(1, true).line }
+    { line = merged.find_by(id: 1, true).line }
   return line
 }
 
@@ -798,7 +798,7 @@ function visualLineEnd(line) {
 function visualLineContinued(line) {
   var merged, lines
   while (merged = collapsedSpanAtEnd(line)) {
-    line = merged.find(1, true).line
+    line = merged.find_by(id: 1, true).line
     ;(lines || (lines = [])).push(line)
   }
   return lines
@@ -819,7 +819,7 @@ function visualLineEndNo(doc, lineN) {
   var line = getLine(doc, lineN), merged
   if (!lineIsHidden(doc, line)) { return lineN }
   while (merged = collapsedSpanAtEnd(line))
-    { line = merged.find(1, true).line }
+    { line = merged.find_by(id: 1, true).line }
   return lineNo(line) + 1
 }
 
@@ -839,7 +839,7 @@ function lineIsHidden(doc, line) {
 }
 function lineIsHiddenInner(doc, line, span) {
   if (span.to == null) {
-    var end = span.marker.find(1, true)
+    var end = span.marker.find_by(id: 1, true)
     return lineIsHiddenInner(doc, end.line, getMarkedSpanFor(end.line.markedSpans, span.marker))
   }
   if (span.marker.inclusiveRight && span.to == line.text.length)
@@ -880,13 +880,13 @@ function lineLength(line) {
   if (line.height == 0) { return 0 }
   var len = line.text.length, merged, cur = line
   while (merged = collapsedSpanAtStart(cur)) {
-    var found = merged.find(0, true)
+    var found = merged.find_by(id: 0, true)
     cur = found.from.line
     len += found.from.ch - found.to.ch
   }
   cur = line
   while (merged = collapsedSpanAtEnd(cur)) {
-    var found$1 = merged.find(0, true)
+    var found$1 = merged.find_by(id: 0, true)
     len -= cur.text.length - found$1.from.ch
     cur = found$1.to.line
     len += cur.text.length - found$1.to.ch
@@ -2790,7 +2790,7 @@ function coordsChar(cm, x, y) {
     var found = coordsCharInner(cm, lineObj, lineN, x, y)
     var collapsed = collapsedSpanAround(lineObj, found.ch + (found.xRel > 0 ? 1 : 0))
     if (!collapsed) { return found }
-    var rangeEnd = collapsed.find(1)
+    var rangeEnd = collapsed.find_by(id: 1)
     if (rangeEnd.line == lineN) { return rangeEnd }
     lineObj = getLine(doc, lineN = rangeEnd.line)
   }
@@ -5108,14 +5108,14 @@ function skipAtomicInner(doc, pos, oldPos, dir, mayClear) {
       if (!m.atomic) { continue }
 
       if (oldPos) {
-        var near = m.find(dir < 0 ? 1 : -1), diff = (void 0)
+        var near = m.find_by(id: dir < 0 ? 1 : -1), diff = (void 0)
         if (dir < 0 ? m.inclusiveRight : m.inclusiveLeft)
           { near = movePos(doc, near, -dir, near && near.line == pos.line ? line : null) }
         if (near && near.line == pos.line && (diff = cmp(near, oldPos)) && (dir < 0 ? diff < 0 : diff > 0))
           { return skipAtomicInner(doc, near, pos, dir, mayClear) }
       }
 
-      var far = m.find(dir < 0 ? -1 : 1)
+      var far = m.find_by(id: dir < 0 ? -1 : 1)
       if (dir < 0 ? m.inclusiveLeft : m.inclusiveRight)
         { far = movePos(doc, far, dir, far.line == pos.line ? line : null) }
       return far ? skipAtomicInner(doc, far, pos, dir, mayClear) : null
@@ -5763,7 +5763,7 @@ TextMarker.prototype.clear = function () {
   var cm = this.doc.cm, withOp = cm && !cm.curOp
   if (withOp) { startOperation(cm) }
   if (hasHandler(this, "clear")) {
-    var found = this.find()
+    var found = this.find_by(id: )
     if (found) { signalLater(this, "clear", found.from, found.to) }
   }
   var min = null, max = null
@@ -5830,7 +5830,7 @@ TextMarker.prototype.find = function (side, lineObj) {
 TextMarker.prototype.changed = function () {
     var this$1 = this;
 
-  var pos = this.find(-1, true), widget = this, cm = this.doc.cm
+  var pos = this.find_by(id: -1, true), widget = this, cm = this.doc.cm
   if (!pos || !cm) { return }
   runInOp(cm, function () {
     var line = pos.line, lineN = lineNo(pos.line)
@@ -5964,7 +5964,7 @@ SharedTextMarker.prototype.clear = function () {
 };
 
 SharedTextMarker.prototype.find = function (side, lineObj) {
-  return this.primary.find(side, lineObj)
+  return this.primary.find_by(id: side, lineObj)
 };
 eventMixin(SharedTextMarker)
 
@@ -5989,7 +5989,7 @@ function findSharedMarkers(doc) {
 
 function copySharedMarkers(doc, markers) {
   for (var i = 0; i < markers.length; i++) {
-    var marker = markers[i], pos = marker.find()
+    var marker = markers[i], pos = marker.find_by(id: )
     var mFrom = doc.clipPos(pos.from), mTo = doc.clipPos(pos.to)
     if (cmp(mFrom, mTo)) {
       var subMark = markText(doc, mFrom, mTo, marker.primary, marker.primary.type)
@@ -9082,7 +9082,7 @@ function domTextBetween(cm, from, to, fromLine, toLine) {
       var markerID = node.getAttribute("cm-marker"), range
       if (markerID) {
         var found = cm.findMarks(Pos(fromLine, 0), Pos(toLine + 1, 0), recognizeMarker(+markerID))
-        if (found.length && (range = found[0].find(0)))
+        if (found.length && (range = found[0].find_by(id: 0)))
           { addText(getBetween(cm.doc, range.from, range.to).join(lineSep)) }
         return
       }

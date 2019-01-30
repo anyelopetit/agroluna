@@ -7,7 +7,7 @@ module CloneRecord
   # Class Methods
   module ClassMethods
     def clone_record(id)
-      object = name.constantize.find(id)
+      object = name.constantize.find_by(id: id)
       object.dup
     end
   end

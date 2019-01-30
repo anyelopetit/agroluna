@@ -89,7 +89,7 @@
               %i.icofont-baby-milk-bottle{ class: ('active' if @cow.status.lactating)  }
             %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Criando</h4>' }
               %i.icofont-holding-hands{ class: ('active' if @cow.status.breeding) }
-          %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Dado de baja</h4>' }
+          -# %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Dado de baja</h4>' }
             %i.icofont-danger-zone{ class: ('active' if @cow.status.dead) }
         .card_status--title
           %h2

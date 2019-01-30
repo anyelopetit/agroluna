@@ -131,7 +131,7 @@ module KepplerFrontend
 
       # Use callbacks to share common setup or constraints between actions.
       def set_parameter
-        @parameter = Parameter.find(params[:id])
+        @parameter = Parameter.find_by(id: params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.

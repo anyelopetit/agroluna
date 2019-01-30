@@ -49,7 +49,7 @@
               KG
             %td
               = cow.status.days unless cow.status.blank?
-              
+              = "(-#{cow.left_days})" if cow.left_days
             %td
               = cow.status.typology unless cow.status.blank?
             %td.status

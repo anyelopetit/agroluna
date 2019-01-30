@@ -29,7 +29,7 @@
 .container_custom
   .row
     .col-md-6
-      .card_show.p-5
+      .card_show.cow_info.p-5
         .float-right
           = image_tag "/assets/keppler_cattle/#{@cow.species}", class: 'svg-icon-md' unless @cow.species.blank?
           = image_tag "/assets/keppler_cattle/#{@cow.gender}", class: 'svg-icon-md' unless @cow.gender.blank?
@@ -55,8 +55,6 @@
               %dd= @cow.status&.corporal_condition unless @cow.status&.blank?
               %dt Color Pelaje
               %dd= @cow.coat_color
-              %dt Borla
-              %dd= @cow.tassel_color
           .col-lg-6
             %dl
               -# %dt Edad (Años-Meses)
@@ -69,6 +67,8 @@
               %dd= @cow.provenance
               %dt Color Morro
               %dd= @cow.nose_color
+              %dt Color de Borla
+              %dd= @cow.tassel_color
               - if @cow.status&.strategic_lot
                 %dt Lote estrátegico
                 %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
@@ -148,25 +148,25 @@
           .card_show.p-5
             .parent_card
               - if @cow.mother
-                = link_to app_farm_cow_path(@farm, @cow) do
+                = link_to app_farm_cow_path(@farm, @cow.mother) do
                   %h3 Madre
-                  - if @cow.mother&.image&.url 
+                  -# - if @cow.mother&.image&.url 
                     = image_tag @cow.mother&.image&.url
-                  - else
+                  -# - else
                     = image_tag '/assets/keppler_cattle/cow_shadow'
                     %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
-                  = @cow.father&.serie_number
+                  = @cow.mother&.serie_number
               - else
                 %h3 SIN MADRE
         .col-md-6
           .card_show.p-5
             .parent_card
               - if @cow.father
-                = link_to app_farm_cow_path(@farm, @cow) do
+                = link_to app_farm_cow_path(@farm, @cow.father) do
                   %h3 Padre
-                  - if @cow.father&.image&.url 
+                  -# - if @cow.father&.image&.url 
                     = image_tag @cow.father&.image&.url
-                  - else
+                  -# - else
                     = image_tag '/assets/keppler_cattle/bull_shadow'
                     %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
                   = @cow.father&.serie_number
@@ -242,6 +242,12 @@
 
   .svg-icon-md {
     height: 30px;
+  }
+
+  .cow_info {
+    dt {
+      margin-top: 15px;
+    }
   }
 
 :javascript

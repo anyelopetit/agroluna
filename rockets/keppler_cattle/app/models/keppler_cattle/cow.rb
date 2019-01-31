@@ -16,13 +16,14 @@ module KepplerCattle
     has_many :statuses, dependent: :destroy
 
     validates_presence_of :birthdate, :serie_number
+    validates_uniqueness_of :serie_number
 
     def self.index_attributes
       %i[serie_number image short_name provenance]
     end
 
     def farm
-      KepplerFarm::Farm.find(status.farm_id) if status
+      KepplerFarm::Farm.find_by(id: status.farm_id) if status
     end
 
     def self.species
@@ -89,11 +90,11 @@ module KepplerCattle
     end
 
     def mother
-      KepplerCattle::Cow.find(mother_id) if mother_id
+      KepplerCattle::Cow.find_by(id: mother_id) if mother_id
     end
 
     def father
-      KepplerCattle::Cow.find(father_id) if father_id
+      KepplerCattle::Cow.find_by(id: father_id) if father_id
     end
 
     def self.actives(farm)
@@ -117,23 +118,27 @@ module KepplerCattle
     def days
       now = Time.now.utc.to_date 
       days_count = 0
-      for y in birthdate.year+1..now.year
-        for m in birthdate.month+1..now.month
+      for y in 2018..2019
+        for m in 01..07
           days_count += Time.days_in_month(m, y)
         end
       end
-      last_month_to_end = 
-        birthdate.month == now.month ? 0 : Time.days_in_month((now - 1.month).month, (now - 1.month).year) - birthdate.day
-      days_count += now.day + last_month_to_end
+      #last_month_to_end = 
+      #  birthdate.month == now.month ? 0 : Time.days_in_month((now - 1.month).month, (now - 1.month).year) - birthdate.day
+      days_count #+= now.day + last_month_to_end
     end
 
-    def left_days
-      days_list = [206, 210, 365, 540, 730]
+    def next_day
+      days_list = [210, 365, 540, 730]
+      next_d = 0
       left = 999
       days_list.each do |d|
-        left = (d - days) if (d - days < left && d - days > 0)
+        if (d - days < left && d - days > 0)
+          left = (d - days)
+          next_d = d
+        end
       end
-      left
+      next_d
     end
   end
 end

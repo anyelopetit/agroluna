@@ -6,6 +6,10 @@
         -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
         = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
           %i.icofont-trash
+    = link_to({action: :index, format: :pdf}, {class: 'float-right mt-4 mb-4', target: '_blank'}) do
+      %button.btn.btn_custom.btn--filled.btn--medium
+        %i.icofont-clip-board
+        Reporte
     %a.float-right.mt-4.mb-4{ href: app_farm_cow_new_path(farm) }
       %button.btn.btn_custom.btn--filled.btn--medium
         %i.icofont-plus
@@ -63,18 +67,18 @@
             %td
               = image_tag cow.image.url if cow.image.url
             %td
-              = cow.serie_number
+              = cow&.serie_number
             %td
-              = cow.status.weight unless cow.status.blank?
+              = cow&.status&.weight
               KG
             %td
-              = cow.status.days unless cow.status.blank?
+              = cow&.status&.days
               \/
-              = cow.next_day
+              = cow&.next_day
             %td
-              = cow.status.typology unless cow.status.blank?
+              = cow&.status&.typology&.name
             %td.status
-              = cow.status.created_at.strftime("%d-%m-%Y") unless cow.status.blank?
+              = cow&.status&.created_at&.strftime("%d-%m-%Y")
               .card_status--bar
                 - if cow.gender?('male')
                   %a.status-tooltip{ title: 'Recelador' }

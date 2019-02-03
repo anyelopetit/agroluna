@@ -263,6 +263,7 @@ en:
       date_end: 'Date End'
       begin: Begin
       end: End
+      abbreviation: Abbreviation
       operators: Operators
       check_in: 'Check In'
       check_out: 'Check Out'

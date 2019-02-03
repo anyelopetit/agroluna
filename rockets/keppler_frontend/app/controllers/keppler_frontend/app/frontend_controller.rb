@@ -42,7 +42,7 @@ module KepplerFrontend
 
     def listing
       @strategic_lots = KepplerFarm::StrategicLot.where(farm_id: @farm.id)
-      @typologies = KepplerCattle::Status.typologies
+      @typologies = KepplerCattle::Typology.all
     end
 
     def show_cattle
@@ -88,7 +88,7 @@ module KepplerFrontend
       @ubications = KepplerCattle::Status.ubications
       @corporal_conditions = KepplerCattle::Status.corporal_conditions
       @strategic_lots = KepplerFarm::StrategicLot.all
-      @typologies = KepplerCattle::Status.typologies
+      @typologies = KepplerCattle::Typology.all
       @last_status = KepplerCattle::Status.last
       @farms = KepplerFarm::Farm.order(title: :asc)
     end

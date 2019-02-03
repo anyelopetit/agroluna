@@ -302,6 +302,7 @@ es:
       script: Script
       mailer_from: 'Enviar desde'
       mailer_to: 'Hacia'
+      abbreviation: Abreviación
       ga_account_id: Identificador de la cuenta
       ga_tracking: Identificador de segumiento
       ga_status: Habilitar Google Analytics

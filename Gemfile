@@ -17,6 +17,8 @@ gem 'vuejs-rails', '2.5.13' # VueJS library
 # gem 'sweetalert2'
 gem 'select2-rails'
 # gem 'activerecord_any_of'
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
 
 # Server
 gem 'puma', '~> 3.11', '>= 3.11.3'

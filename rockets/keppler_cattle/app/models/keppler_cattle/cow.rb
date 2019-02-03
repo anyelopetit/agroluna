@@ -23,35 +23,15 @@ module KepplerCattle
     end
 
     def farm
-      KepplerFarm::Farm.find_by(id: status.farm_id) if status
+      KepplerFarm::Farm.find_by(id: status.farm_id)
     end
 
-    def self.species
-      ['bovine', 'goat']
+    def species
+      KepplerCattle::Species.find_by(id: species_id)
     end
 
     def self.genders
       ['female', 'male']
-    end
-
-    def self.races
-      ['Mestizo Carora',
-      'Mestizo Holstein',
-      'Pardo Suizo Puro',
-      'Mestizo Brahman',
-      'Brahman',
-      'No Registrado',
-      'Senepol',
-      'Mestizo Senepol',
-      'Mestizo Carora Holstein',
-      'Campolargo',
-      'Campolargo2',
-      'Brahaman',
-      'Mestizo Brahman 5/8']
-    end
-
-    def self.provenance
-      ['provenance1', 'provenance2', 'provenance3']
     end
 
     def self.colors
@@ -65,6 +45,15 @@ module KepplerCattle
       'Blanco',
       'Negro',
       'Colorado']
+    end
+
+    def possible_typologies
+      KepplerCattle::Typology
+        .where(gender: gender)
+        .or(
+          KepplerCattle::Typology
+          .where(species_id: species_id)
+        )
     end
 
     def status
@@ -97,6 +86,10 @@ module KepplerCattle
       KepplerCattle::Cow.find_by(id: father_id) if father_id
     end
 
+    def strategic_lot
+      KepplerFarm::StrategicLot.find_by(id: status.strategic_lot_id)
+    end
+
     def self.actives(farm)
       order(position: :desc).select { |x| x.status.farm_id.eql?(farm.id) unless x.status.blank? } if farm
     end
@@ -118,27 +111,26 @@ module KepplerCattle
     def days
       now = Time.now.utc.to_date 
       days_count = 0
-      for y in 2018..2019
-        for m in 01..07
+      # Suma de los años completos que han pasado x 365
+      for y in birthdate.year+1..now.year-1
+        for m in 01..12
           days_count += Time.days_in_month(m, y)
         end
       end
-      #last_month_to_end = 
-      #  birthdate.month == now.month ? 0 : Time.days_in_month((now - 1.month).month, (now - 1.month).year) - birthdate.day
-      days_count #+= now.day + last_month_to_end
-    end
-
-    def next_day
-      days_list = [210, 365, 540, 730]
-      next_d = 0
-      left = 999
-      days_list.each do |d|
-        if (d - days < left && d - days > 0)
-          left = (d - days)
-          next_d = d
-        end
+      # Suma desde el mes que naciste hasta finalizar ese año
+      for m in birthdate.month..12
+        days_count += Time.days_in_month(m, birthdate.year)
       end
-      next_d
+      # Suma desde el primero de enero hasta un mes antes de ahora
+      for m in 1..now.month-1
+        days_count += Time.days_in_month(m, now.year)
+      end
+      # Suma o resta de los días del mes actual con tu día de nacimiento
+      if birthdate.day > now.day
+        days_count -= (birthdate.day - now.day)
+      else
+        days_count += (now.day - birthdate.day)
+      end
     end
   end
 end

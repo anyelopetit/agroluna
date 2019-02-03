@@ -88,6 +88,13 @@ es:
         function: Función
         title: Título
         processes: Procesos
+        abbreviation: Abreviación
+        gender: Género
+        min_age: Edad mínima (días)
+        min_weight: Peso mínimo (KG)
+        min_days: Mínimo de días
+        specific_day: Día exacto
+        max_days: Máximo de días
       user:
         new:
           email: 'Correo para acceder.'

@@ -24,6 +24,6 @@
               %tbody
                 - @role.as_json(only: %w[name]).each do |attribute, value|
                   %tr.list-row
-                    %th.display-label= t("activerecord.attributes.#{attribute}")
+                    %th.display-label= t("activerecord.attributes.#{attribute}").humanize
                     %td.display-value.fs-body-1.tc-black-2
                       = value

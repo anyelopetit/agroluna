@@ -30,7 +30,7 @@
               %tbody
                 - @user.as_json(except: %i[username deleted_at]).each do |attribute, value|
                   %tr.list-row
-                    %th.display-label= t("activerecord.attributes.#{attribute}")
+                    %th.display-label= t("activerecord.attributes.#{attribute}").humanize
                     %td.display-value.fs-body-1.tc-black-2= value
                 %tr.list-row
                   %th.display-label= t("activerecord.attributes.roles")

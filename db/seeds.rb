@@ -10,8 +10,10 @@
 # user = CreateAdminService.new.call
 # puts 'CREATED ADMIN USER: ' << user.email
 
-Role.create name: 'keppler_admin'
-puts 'Role Keppler Admin has been created'
+%i[keppler_admin admin operador veterinario].each do |role|
+  Role.create name: 'keppler_admin'
+  puts "Role #{role} has been created"
+end
 
 
 User.create(
@@ -152,3 +154,81 @@ if defined?(KepplerFrontend) && KepplerFrontend.is_a?(Module)
   end
   puts 'Frontend functions has been created'
 end
+
+# App
+
+# Especies
+%i[Vacuno Caprino Equino].each do |species|
+  KepplerCattle::Species.create(
+    name: species,
+    abbreviation: Faker::Compass.abbreviation
+  )
+end
+
+puts 'Especies creadas'
+
+# Razas
+30.times do |race|
+  KepplerCattle::Race.create(
+    name: Faker::Pokemon.name,
+    abbreviation: Faker::Compass.abbreviation,
+    description: Faker::Lorem.paragraph
+  )
+end
+
+puts 'Razas creadas'
+
+# Fincas
+['Agropecuaria La Luna', 'Finca Agrocabrita'].each do |farm|
+  KepplerFarm::Farm.create(
+    title: farm,
+    description: Faker::Lorem.paragraph
+  )
+end
+
+puts 'Fincas creadas'
+
+# Lotes
+6.times do |i|
+  KepplerFarm::StrategicLot.create(
+    name: Faker::Lorem.sentence(3, true, 3),
+    function: Faker::Lorem.word,
+    description: Faker::Lorem.paragraph,
+    farm_id: Faker::Number.between(1, 2)
+  )
+end
+
+puts 'Lotes estratégicos creados'
+
+# Series
+50.times do |i|
+  cow = KepplerCattle::Cow.create(
+    serie_number: Faker::Number.between(111111, 999999),
+    short_name: Faker::Name.first_name,
+    species_id: Faker::Number.between(1, 2),
+    gender: ['male', 'female'].sample,
+    birthdate: Faker::Date.between_except(1.year.ago, 1.year.from_now, Date.today),
+    coat_color: Faker::Color.color_name,
+    nose_color: Faker::Color.color_name,
+    tassel_color: Faker::Color.color_name,
+    provenance: Faker::LordOfTheRings.location,
+    observations: Faker::Lorem.paragraph
+  )
+
+  # Estatus
+  KepplerCattle::Status.create(
+    cow_id: i,
+    weight: Faker::Number.decimal(2),
+    years: cow.years,
+    months: cow.months,
+    days: cow.days,
+    corporal_condition: "CONDICION CORPORAL #{(0..5).to_a.sample}",
+    typology_id: cow.species.id,
+    strategic_lot_id: (1..5).to_a.sample,
+    user_id: 1,
+    comments: Faker::Lorem.paragraph,
+    farm_id: [1,2].sample
+  )
+end
+
+puts 'Series creadas'

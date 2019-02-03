@@ -6,6 +6,34 @@ menu:
     icon: rocket
     model: User
     submenu:
+      - species:
+          name: species
+          url_path: /admin/cattle/species
+          icon: layers
+          current: ['/admin/cattle/species']
+          model: KepplerCattle::Species
+
+    #   - weighing_day:
+    #       name: weighing days
+    #       url_path: /admin/cattle/weighing_days
+    #       icon: layers
+    #       current: ['/admin/cattle/weighing_days']
+    #       model: KepplerCattle::WeighingDay
+
+    #   - typology:
+    #       name: typology
+    #       url_path: /admin/cattle/typologies
+    #       icon: layers
+    #       current: ['/admin/cattle/typologies']
+    #       model: KepplerCattle::Typology
+
+    #   - race:
+    #       name: races
+    #       url_path: /admin/cattle/races
+    #       icon: layers
+    #       current: ['/admin/cattle/races']
+    #       model: KepplerCattle::Race
+
       - transference:
           name: transference
           url_path: /admin/cattle/transferences

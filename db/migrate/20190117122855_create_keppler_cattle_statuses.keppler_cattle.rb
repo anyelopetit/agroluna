@@ -14,12 +14,13 @@ class CreateKepplerCattleStatuses < ActiveRecord::Migration[5.2]
       t.boolean :lactating
       t.boolean :dead
       t.date :deathdate
-      t.string :typology
       t.integer :strategic_lot_id
       t.integer :user_id
       t.text :comments
       t.integer :position
       t.datetime :deleted_at
+
+      t.integer :typology_id
 
       t.timestamps
     end

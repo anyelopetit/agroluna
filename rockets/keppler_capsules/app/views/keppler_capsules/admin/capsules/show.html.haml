@@ -25,7 +25,7 @@
                 - @capsule.as_json(only: ["name", "position", "deleted_at"]).each do |attribute, value|
                   - unless attribute.eql?('position') || attribute.eql?('deleted_at')
                     %tr.list-row
-                      %th.display-label= t("activerecord.attributes.#{attribute}")
+                      %th.display-label= t("activerecord.attributes.#{attribute}").humanize
                       %td.display-value.fs-body-1.tc-black-2
                         - if @attachments.include?(attribute)
                           = image_tag value.url unless value.url.blank?

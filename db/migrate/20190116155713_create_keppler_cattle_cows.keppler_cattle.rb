@@ -6,7 +6,6 @@ class CreateKepplerCattleCows < ActiveRecord::Migration[5.2]
       t.string :image
       t.string :short_name
       t.string :long_name
-      t.string :species
       t.string :gender
       t.date :birthdate
       t.string :race
@@ -17,6 +16,8 @@ class CreateKepplerCattleCows < ActiveRecord::Migration[5.2]
       t.text :observations
       t.integer :position
       t.datetime :deleted_at
+
+      t.integer :species_id, foreign_key: true
 
       t.timestamps
     end

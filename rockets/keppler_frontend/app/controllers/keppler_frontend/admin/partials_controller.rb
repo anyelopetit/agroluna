@@ -48,7 +48,7 @@ module KepplerFrontend
       def editor; end
 
       def editor_save
-        @partial = Partial.find(params[:partial_id])
+        @partial = Partial.find_by(id: params[:partial_id])
         @partial.code_save(params[:html], 'html') if params[:html]
         @partial.code_save(params[:scss], 'scss') if params[:scss]
         @partial.code_save(params[:js], 'js') if params[:js]
@@ -153,7 +153,7 @@ module KepplerFrontend
 
       # Use callbacks to share common setup or constraints between actions.
       def set_partial
-        @partial = Partial.find(params[:id])
+        @partial = Partial.find_by(id: params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.

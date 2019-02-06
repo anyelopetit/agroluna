@@ -34,7 +34,7 @@ module ApplicationHelper
         final_array.push(path_array[i].to_sym)
         i += 1
       else
-        final_array.push(find_model(path_array, i).find(path_array[i + 1]))
+        final_array.push(find_model(path_array, i).find_by(id: path_array[i + 1]))
         i += 2
       end
     end
@@ -54,7 +54,7 @@ module ApplicationHelper
 
   def model_name(rocket, att, id)
     a = att.split('_id').first
-    o = "#{rocket}/#{a}".classify.constantize&.find(id)
+    o = "#{rocket}/#{a}".classify.constantize&.find_by(id: id)
     o&.name || o&.title
   end
 end

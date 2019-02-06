@@ -102,7 +102,7 @@ module Admin
 
     # Use callbacks to share common setup or constraints between actions.
     def set_meta_tag
-      @meta_tag = MetaTag.find(params[:id])
+      @meta_tag = MetaTag.find_by(id: params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

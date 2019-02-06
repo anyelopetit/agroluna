@@ -10,7 +10,7 @@ module KepplerLanguages
       private
 
       def update_yml(id)
-        fields = KepplerLanguages::Language.find(id)
+        fields = KepplerLanguages::Language.find_by(id: id)
         file = "#{url}/config/locales/kl.#{fields.name}.yml"
         yml = YAML.load_file(file)
 

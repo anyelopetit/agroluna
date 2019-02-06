@@ -230,8 +230,8 @@
   }
 
   SearchCursor.prototype = {
-    findNext: function() {return this.find(false)},
-    findPrevious: function() {return this.find(true)},
+    findNext: function() {return this.find_by(id: false)},
+    findPrevious: function() {return this.find_by(id: true)},
 
     find: function(reverse) {
       var result = this.matches(reverse, this.doc.clipPos(reverse ? this.pos.from : this.pos.to))

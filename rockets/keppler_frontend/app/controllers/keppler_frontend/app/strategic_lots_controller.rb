@@ -98,7 +98,7 @@ module KepplerFrontend
     private
 
     def set_strategic_lot
-      @strategic_lot = KepplerFarm::StrategicLot.find(params[:strategic_lot_id])
+      @strategic_lot = KepplerFarm::StrategicLot.find_by(id: params[:strategic_lot_id])
     end
 
     def index_variables
@@ -110,7 +110,7 @@ module KepplerFrontend
     end
 
     def set_farm
-      @farm = KepplerFarm::Farm.find(params[:farm_id])
+      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
     end
 
     def set_farms

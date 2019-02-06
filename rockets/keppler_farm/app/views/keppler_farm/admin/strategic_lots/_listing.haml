@@ -14,6 +14,9 @@
           .pull-right
             .item-toolbar
               .item
+                .label.badge.bg-gray
+                  = strategic_lot&.function
+              .item
                 = link_to edit_admin_farm_farm_strategic_lot_path(@farm, strategic_lot), class: 'new-menu', title: t('keppler.actions.edit') do
                   %i.icon-pencil
               .item

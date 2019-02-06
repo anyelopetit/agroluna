@@ -49,26 +49,39 @@
               %dd= @cow.serie_number
               %dt Nombre corto
               %dd= @cow.short_name
+<<<<<<< HEAD
               %dt Raza
               %dd= @cow.race.name
+=======
+>>>>>>> staging
               %dt Condición corporal
               %dd= @cow.status&.corporal_condition unless @cow.status&.blank?
               %dt Color Pelaje
               %dd= @cow.coat_color
+              %dt Color de Borla
+              %dd= @cow.tassel_color
           .col-lg-6
             %dl
               -# %dt Edad (Años-Meses)
               -# %dd #{@cow.years}-#{@cow.months}
               %dt Fecha de Nacimiento
               %dd= @cow.birthdate
-              %dt Nombre largo
-              %dd= @cow.long_name
+              %dt Raza
+              %dd= @cow.race
+              -# %dt Nombre largo
+              -# %dd= @cow.long_name
               %dt Procedencia
               %dd= @cow.provenance
               %dt Color Morro
               %dd= @cow.nose_color
+<<<<<<< HEAD
               %dt Color de Borla
               %dd= @cow.tassel_color
+=======
+              - if @cow.status&.strategic_lot
+                %dt Lote estrátegico
+                %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
+>>>>>>> staging
             
     // Current Status
     .col-md-6
@@ -86,7 +99,7 @@
               %i.icofont-baby-milk-bottle{ class: ('active' if @cow.status.lactating)  }
             %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Criando</h4>' }
               %i.icofont-holding-hands{ class: ('active' if @cow.status.breeding) }
-          %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Dado de baja</h4>' }
+          -# %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Dado de baja</h4>' }
             %i.icofont-danger-zone{ class: ('active' if @cow.status.dead) }
         .card_status--title
           %h2
@@ -243,7 +256,7 @@
 
   .cow_info {
     dt {
-      margin-top: 15px;
+      margin-top: 20px;
     }
   }
 

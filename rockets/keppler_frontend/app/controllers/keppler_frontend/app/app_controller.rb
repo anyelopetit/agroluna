@@ -12,8 +12,8 @@ module KepplerFrontend
     def set_metas
       @theme_color = nil
       # Descomentar el modelo que exista depende del proyecto
-      # @post = KepplerBlog::Post.find(params[:id])
-      # @product = Product.find(params[:id])
+      # @post = KepplerBlog::Post.find_by(id: params[:id])
+      # @product = Product.find_by(id: params[:id])
       # @setting = Setting.includes(:social_account).first
       @meta = MetaTag.get_by_url(request.url)
       @social = @setting.social_account
@@ -29,7 +29,7 @@ module KepplerFrontend
 
     def live_editor_info      
       if params[:editor] && controller_name.eql?('frontend') && !action_name.eql?('keppler')
-        view = View.find(params[:view])
+        view = View.find_by(id: params[:view])
         gon.editor = view.live_editor_render
       end
     end

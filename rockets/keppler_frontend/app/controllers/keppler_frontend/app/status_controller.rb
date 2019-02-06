@@ -39,7 +39,7 @@ module KepplerFrontend
     private
 
     def set_cow
-      @cow = KepplerCattle::Cow.find(params[:cow_id])
+      @cow = KepplerCattle::Cow.find_by(id: params[:cow_id])
     end
 
     def index_variables
@@ -52,7 +52,7 @@ module KepplerFrontend
     end
 
     def set_farm
-      @farm = KepplerFarm::Farm.find(params[:farm_id])
+      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
     end
 
     def set_farms

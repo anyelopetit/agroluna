@@ -36,7 +36,7 @@
                     = f.input :serie_number, as: :string, label: t('activerecord.attributes.serie_number').humanize
                   .col-sm-6
                     = f.input :short_name, as: :string, label: t('activerecord.attributes.short_name').humanize
-                  .col-sm-12
+                  -# .col-sm-12
                     = f.input :long_name, as: :string, label: t('activerecord.attributes.long_name').humanize
                   .col-sm-6
                     = f.input :species, collection: @species, include_blank: false, label: t('activerecord.attributes.species').humanize

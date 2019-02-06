@@ -56,6 +56,6 @@
 :javascript
   $('#select-search').change(function() {
     $('.select-field').hide()
-    var $id = $(this).find('option:selected').val()
+    var $id = $(this).find_by(id: 'option:selected').val()
     $("#" + $id).show()
   })

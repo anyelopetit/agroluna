@@ -66,7 +66,7 @@ module KepplerFrontend
     private
 
     def set_transference
-      @transference = KepplerCattle::Transference.find(params[:transference_id])
+      @transference = KepplerCattle::Transference.find_by(id: params[:transference_id])
     end
 
     def index_variables
@@ -86,7 +86,7 @@ module KepplerFrontend
     end
 
     def set_farm
-      @farm = KepplerFarm::Farm.find(params[:farm_id])
+      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
     end
 
     def set_farms

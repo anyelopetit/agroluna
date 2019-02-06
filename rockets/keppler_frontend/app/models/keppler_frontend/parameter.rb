@@ -29,7 +29,7 @@ module KepplerFrontend
 
     def self.sorter(params)
       params.each_with_index do |id, idx|
-        self.find(id).update(position: idx.to_i+1)
+        self.find_by(id: id).update(position: idx.to_i+1)
       end
     end
 

@@ -136,5 +136,18 @@ module KepplerCattle
         days_count += (now.day - birthdate.day)
       end
     end
+
+    def next_day
+      days_list = [210, 365, 540, 730]
+      left = 999
+      next_d = 0
+      days_list.each do |d|
+        if (d - days < left && d - days > 0)
+          left = (days - d) 
+          next_d = d
+        end
+      end
+      next_d
+    end
   end
 end

@@ -15,7 +15,7 @@ module KepplerFarm
       def index
         @assign = KepplerCattle::Assignment.new
         statuses_ids = KepplerCattle::Status.where(farm_id: @farm.id).map(&:cow_id).uniq
-        @cows = KepplerCattle::Cow.find(statuses_ids).map { |c| [c.serie_number, c.id] }
+        @cows = KepplerCattle::Cow.find_by(id: statuses_ids).map { |c| [c.serie_number, c.id] }
         respond_to_formats(@strategic_lots)
         redirect_to_index(@objects)
       end
@@ -62,6 +62,7 @@ module KepplerFarm
       # DELETE /farms/1
       def destroy
         @strategic_lot.destroy
+        KepplerCattle::Cow.
         redirect_to_index(@objects)
       end
 
@@ -103,7 +104,7 @@ module KepplerFarm
       private
 
       def set_farm
-        @farm = Farm.find(params[:farm_id])
+        @farm = Farm.find_by(id: params[:farm_id])
       end
 
       def index_variables
@@ -116,7 +117,7 @@ module KepplerFarm
 
       # Use callbacks to share common setup or constraints between actions.
       def set_strategic_lot
-        @strategic_lot = StrategicLot.find(params[:id])
+        @strategic_lot = StrategicLot.find_by(id: params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.

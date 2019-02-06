@@ -32,7 +32,7 @@ module KepplerFrontend
         end
       else
         @assign = KepplerFarm::Assignment.where(user_id: current_user.id).first
-        @farm = KepplerFarm::Farm.find(@assign.keppler_farm_farm_id) if @assign
+        @farm = KepplerFarm::Farm.find_by(id: @assign.keppler_farm_farm_id) if @assign
         if @farm
           redirect_to app_farm_path(@farm)
         end
@@ -116,7 +116,7 @@ module KepplerFrontend
     private
 
     def set_cow
-      @cow = KepplerCattle::Cow.find(params[:cow_id])
+      @cow = KepplerCattle::Cow.find_by(id: params[:cow_id])
     end
 
     def cow_attributes
@@ -137,7 +137,7 @@ module KepplerFrontend
     end
 
     def set_farm
-      @farm = KepplerFarm::Farm.find(params[:farm_id])
+      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
     end
 
     def set_farms

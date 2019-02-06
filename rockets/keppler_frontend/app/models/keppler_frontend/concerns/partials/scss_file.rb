@@ -60,7 +60,7 @@ module KepplerFrontend
           index_html = index_html.join('')
           File.write(file, index_html)
 
-          obj = Partial.find(id)
+          obj = Partial.find_by(id: id)
           old_name = "#{url_front}/app/assets/stylesheets/keppler_frontend/app/partials/#{obj.underscore_name}.scss"
           new_name = "#{url_front}/app/assets/stylesheets/keppler_frontend/app/partials/#{'_' + css[:name]}.scss"
           File.rename(old_name, new_name)

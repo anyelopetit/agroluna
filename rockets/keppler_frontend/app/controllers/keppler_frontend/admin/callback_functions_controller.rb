@@ -122,12 +122,12 @@ module KepplerFrontend
       end
 
       def editor
-        @callback_function = CallbackFunction.find(params[:callback_function_id])
+        @callback_function = CallbackFunction.find_by(id: params[:callback_function_id])
         @views = View.all
       end
 
       def editor_save
-        @callback_function = CallbackFunction.find(params[:callback_function_id])
+        @callback_function = CallbackFunction.find_by(id: params[:callback_function_id])
         @callback_function.code_save(params[:ruby], 'callback') if params[:ruby]
         render json: {result: true}
       end
@@ -168,7 +168,7 @@ module KepplerFrontend
 
       # Use callbacks to share common setup or constraints between actions.
       def set_callback_function
-        @callback_function = CallbackFunction.find(params[:id])
+        @callback_function = CallbackFunction.find_by(id: params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.

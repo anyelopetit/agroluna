@@ -22,7 +22,7 @@ module KepplerLanguages
 
       def update_yml(yml)
         file = "#{url}/config/locales/kl.#{name}.yml"
-        obj = Language.find(id)
+        obj = Language.find_by(id: id)
         old_name = "#{url}/config/locales/kl.#{obj.name}.yml"
         new_name = "#{url}/config/locales/kl.#{yml[:name]}.yml"
 

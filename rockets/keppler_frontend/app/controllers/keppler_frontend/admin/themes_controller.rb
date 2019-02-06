@@ -144,18 +144,18 @@ module KepplerFrontend
       end
 
       def show_covers
-        @theme = Theme.find(params[:theme_id])
+        @theme = Theme.find_by(id: params[:theme_id])
       end
 
       def editor
-        @theme = Theme.find(params[:theme_id])
+        @theme = Theme.find_by(id: params[:theme_id])
         filesystem = FileUploadSystem.new
         @files_list = filesystem.files_list + filesystem.files_list_custom("bootstrap")
         @partials = Partial.all
       end
 
       def editor_save
-        @theme = Theme.find(params[:theme_id])
+        @theme = Theme.find_by(id: params[:theme_id])
         @theme.save_head(params[:head]) if params[:head]
         @theme.save_header(params[:header]) if params[:header]
         @theme.save_footer(params[:footer]) if params[:footer]

@@ -133,14 +133,14 @@ module KepplerFrontend
       end
 
       def editor_save
-        @function = Function.find(params[:function_id])
+        @function = Function.find_by(id: params[:function_id])
         @function.save_function(params[:ruby]) if params[:ruby]
         render json: {result: true}
       end
 
       def destroy_param
-        function = Function.find(params[:function_id])
-        param = Parameter.find(params[:param_id])
+        function = Function.find_by(id: params[:function_id])
+        param = Parameter.find_by(id: params[:param_id])
         param.destroy
 
         function.update_function(function.name, function)
@@ -164,7 +164,7 @@ module KepplerFrontend
 
       # Use callbacks to share common setup or constraints between actions.
       def set_function
-        @function = Function.find(params[:id])
+        @function = Function.find_by(id: params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.

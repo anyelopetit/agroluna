@@ -49,13 +49,11 @@
               %dd= @cow.serie_number
               %dt Nombre corto
               %dd= @cow.short_name
-              %dt Raza
-              %dd= @cow.race
               %dt Condición corporal
               %dd= @cow.status&.corporal_condition unless @cow.status&.blank?
               %dt Color Pelaje
               %dd= @cow.coat_color
-              %dt Borla
+              %dt Color de Borla
               %dd= @cow.tassel_color
           .col-lg-6
             %dl
@@ -63,8 +61,10 @@
               -# %dd #{@cow.years}-#{@cow.months}
               %dt Fecha de Nacimiento
               %dd= @cow.birthdate
-              %dt Nombre largo
-              %dd= @cow.long_name
+              %dt Raza
+              %dd= @cow.race
+              -# %dt Nombre largo
+              -# %dd= @cow.long_name
               %dt Procedencia
               %dd= @cow.provenance
               %dt Color Morro

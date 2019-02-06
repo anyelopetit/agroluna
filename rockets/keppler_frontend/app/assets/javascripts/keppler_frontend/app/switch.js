@@ -1,6 +1,6 @@
 $('.keppler-switch').click(function(event) {
   event.preventDefault()
-  $(this).find('input')
+  $(this).find_by(id: 'input')
     .toggleClass('active')
-    .attr('checked', $(this).find('input').hasClass('active'))
+    .attr('checked', $(this).find_by(id: 'input').hasClass('active'))
 })

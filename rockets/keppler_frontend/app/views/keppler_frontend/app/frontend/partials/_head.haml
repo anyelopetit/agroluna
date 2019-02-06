@@ -8,21 +8,23 @@
 %link{ rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' }
 
 
-// Plugins
+// Plugins CSS
 = stylesheet_link_tag '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css'
 
 = stylesheet_link_tag '/assets/plugins/jquery-ui/jquery-ui.min'
 = stylesheet_link_tag '/assets/plugins/jquery-ui/jquery-ui.structure.min'
 = stylesheet_link_tag '/assets/plugins/jquery-ui/jquery-ui.theme.min'
 
+// Stylesheets
+= stylesheet_link_tag '/assets/keppler_frontend/app/application', media: 'all'#, 'data-turbolinks-track': 'reload' , async: true
+
+// Plugins JS
 = javascript_include_tag '//code.jquery.com/jquery-1.11.3.min.js'
 = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.js'
 = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/i18n/datepicker.ca-ES.js'
+= javascript_include_tag '/assets/plugins/jquery-ui/jquery-ui.min.js'
+= javascript_include_tag '/assets/plugins/jquery-ui/es.js'
 = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js'
-
-
-// Stylesheets
-= stylesheet_link_tag '/assets/keppler_frontend/app/application', media: 'all'#, 'data-turbolinks-track': 'reload' , async: true
 
 // Fonts
 = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Patua+One', async: true

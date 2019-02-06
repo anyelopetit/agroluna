@@ -24,7 +24,7 @@
               %tbody
                 - @status.as_json(except: %w[position deleted_at]).each do |attribute, value|
                   %tr.list-row
-                    %th.display-label= t("activerecord.attributes.#{attribute}")
+                    %th.display-label= t("activerecord.attributes.#{attribute}").humanize
                     %td.display-value.fs-body-1.tc-black-2
                       - if @attachments.dig('images', 'names').include?(attribute)
                         = image_tag value.url if value.url

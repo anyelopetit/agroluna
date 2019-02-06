@@ -70,3 +70,10 @@
   right: -50px;
   transform: rotate(90deg);
 }
+
+.dropdown-item.active,
+.dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #00850033;
+}

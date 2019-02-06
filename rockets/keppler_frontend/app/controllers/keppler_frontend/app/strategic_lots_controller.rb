@@ -21,7 +21,9 @@ module KepplerFrontend
       respond_to_formats(@farm.strategic_lots)
     end
 
-    def show; end
+    def show
+      respond_to_formats(@strategic_lot)
+    end
 
     def new
       @strategic_lot = KepplerFarm::StrategicLot.new

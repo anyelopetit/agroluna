@@ -30,39 +30,39 @@ module KepplerCattle
       ['CONDICIÓN CORPORAL 1', 'CONDICIÓN CORPORAL 2', 'CONDICIÓN CORPORAL 3']
     end
 
-    def self.ubications
-      ['UBICACIÓN 1', 'UBICACIÓN 2', 'UBICACIÓN 3']
-    end
-
     def self.strategic_lots
       KepplerFarm::StrategicLot.where(farm_id: status.farm_id)
     end
 
-    def self.male_typologies
-      ['BECERRO', 'BECERRO SUTE', 'MAUTE', 'NOVILLO', 'TORO', 'TORO PADROTE']
-    end
+    # def self.male_typologies
+    #   ['BECERRO', 'BECERRO SUTE', 'MAUTE', 'NOVILLO', 'TORO', 'TORO PADROTE']
+    # end
 
-    def self.female_typologies
-      ['BECERRA', 'BECERRA SUTE', 'MAUTA', 'NOVILLA', 'NOVILLA PREÑADA', 'VACA VACÍA',
-      'VACA PROD.VACIA', 'VACA VACÍA SIN CRÍA', 'VACA PREÑADA', 'VACA SECA/HORRA']
-    end
+    # def self.female_typologies
+    #   ['BECERRA', 'BECERRA SUTE', 'MAUTA', 'NOVILLA', 'NOVILLA PREÑADA', 'VACA VACÍA',
+    #   'VACA PROD.VACIA', 'VACA VACÍA SIN CRÍA', 'VACA PREÑADA', 'VACA SECA/HORRA']
+    # end
 
-    def self.typologies
-      ['BECERRO',
-      'BECERRA',
-      'MAUTE',
-      'MAUTA',
-      'NOVILLA',
-      'NOVILLA PREÑADA',
-      'NOVILLO',
-      'TORO',
-      'TORO PADROTE',
-      'TORO RECELADOR',
-      'VACA VACÍA',
-      'VACA PROD.VACIA',
-      'VACA VACÍA SIN CRÍA',
-      'VACA PREÑADA',
-      'VACA SECA/HORRA']
+    # def self.typologies
+    #   ['BECERRO',
+    #   'BECERRA',
+    #   'MAUTE',
+    #   'MAUTA',
+    #   'NOVILLA',
+    #   'NOVILLA PREÑADA',
+    #   'NOVILLO',
+    #   'TORO',
+    #   'TORO PADROTE',
+    #   'TORO RECELADOR',
+    #   'VACA VACÍA',
+    #   'VACA PROD.VACIA',
+    #   'VACA VACÍA SIN CRÍA',
+    #   'VACA PREÑADA',
+    #   'VACA SECA/HORRA']
+    # end
+
+    def typology
+      KepplerCattle::Typology.find_by(id: typology_id)
     end
 
     def farm

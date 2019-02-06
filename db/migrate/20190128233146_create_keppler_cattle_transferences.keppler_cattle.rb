@@ -2,9 +2,10 @@
 class CreateKepplerCattleTransferences < ActiveRecord::Migration[5.2]
   def change
     create_table :keppler_cattle_transferences do |t|
-      t.integer :cow_id
+      t.jsonb :cattle
       t.integer :from_farm_id
       t.integer :to_farm_id
+      t.string :string
       t.integer :position
       t.datetime :deleted_at
 

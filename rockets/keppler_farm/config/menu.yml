@@ -19,7 +19,6 @@ menu:
     #       icon: layers
     #       current: ['/admin/farm/photos']
     #       model: KepplerFarm::Photo
-
       - process:
           name: process
           url_path: /admin/farm/processes

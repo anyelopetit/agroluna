@@ -15,7 +15,6 @@ module KepplerFrontend
     include ObjectQuery
 
     def index
-      @typologies = KepplerCattle::Status.typologies
       respond_to_formats(KepplerCattle::Cow.all)
     end
 
@@ -78,12 +77,13 @@ module KepplerFrontend
       @inactive_cows = @cows.page(@current_page).inactives(@farm)
       @total = @cows.size
       @attributes = KepplerCattle::Cow.index_attributes
+      @typologies = KepplerCattle::Typology.all
     end
 
     def cow_attributes
-      @species = KepplerCattle::Cow.species
+      @species = KepplerCattle::Species.all
       @genders = KepplerCattle::Cow.genders
-      @races   = KepplerCattle::Cow.races
+      @races   = KepplerCattle::Race.all
       @posible_mothers = KepplerCattle::Cow.posible_mothers
       @posible_fathers = KepplerCattle::Cow.posible_fathers
       @colors = KepplerCattle::Cow.colors
@@ -121,7 +121,7 @@ module KepplerFrontend
         :image,
         :short_name,
         :long_name,
-        :species,
+        :species_id,
         :gender,
         :birthdate,
         :race,

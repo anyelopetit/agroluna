@@ -19,7 +19,7 @@ module KepplerCattle
 
       # GET /cattles/1
       def show
-        @statuses = @cow.statuses.order(created_at: :desc)
+        @statuses = @cow.statuses.order(:serie_number)
       end
 
       # GET /cattles/new
@@ -88,7 +88,7 @@ module KepplerCattle
       def index_variables
         @q = Cow.ransack(params[:q])
         @cows = @q.result(distinct: true)
-        @objects = @cows.page(@current_page).order(position: :desc)
+        @objects = @cows.page(@current_page).order(:serie_number)
         @total = @cows.size
         @attributes = Cow.index_attributes
       end

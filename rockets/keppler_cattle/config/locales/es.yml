@@ -5,17 +5,32 @@ es:
       cattle-submenu:
         cow: Ganado
         transference: Transferencias
+        species: Especies
     permissions:
     models:
       singularize:
+        species: species
+        weighing_day: día de pesaje
+        typology: tipología
+        race: raza
+        species: especie
         transference: transferencia
         status: estado
         cow: ganado
       pluralize:
+        weighing_days: días de pesaje
+        typologies: tipologías
+        races: razas
+        species: especies
         transferences: transferencias
         statuses: estados
         cows: ganados
     modules:
+      admin/species: Species
+      admin/weighing-days: días de pesaje
+      admin/typology: Tipología
+      admin/races: Races
+      admin/species: Especies
       admin/transference: Transferencia
       admin/status: Estado
       admin/cow: Ganado
@@ -70,6 +85,16 @@ es:
       father_id: padre
       farm_id: finca
       farms: fincas
+      races: razas
+      typologies: tipologías
+      weighing_days: pesajes
+      counter: contador
+      min_age: edad mínima (días)
+      min_weight: peso mínimo (kg)
+      species_id: especie
+      min_days: Mínimo de días
+      specific_day: Día exacto
+      max_days: Máximo de días
     errors:
       messages:
   errors:

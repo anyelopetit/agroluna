@@ -263,6 +263,7 @@ en:
       date_end: 'Date End'
       begin: Begin
       end: End
+      abbreviation: Abbreviation
       operators: Operators
       check_in: 'Check In'
       check_out: 'Check Out'
@@ -400,7 +401,7 @@ en:
       not_an_integer: must be an integer
       odd: must be odd
       required: must exist
-      taken: has already been taken
+      taken: Ya ha sido asignado a otra serie
       too_long:
         one: is too long (maximum is 1 character)
         other: is too long (maximum is %{count} characters)

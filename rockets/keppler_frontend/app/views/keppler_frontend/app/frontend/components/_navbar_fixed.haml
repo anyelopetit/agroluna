@@ -100,7 +100,7 @@
   }
   .home_custom {
     &.fixed-nav {
-      height: 100px;
+      height: 60px;
     }
   }
   .navbar-js {
@@ -173,16 +173,7 @@
     align-items: center;
   }
 :javascript
-  $(window).scroll(function () {
-    if ($(document).scrollTop() > 15 && ($(window).width() >= 768)) {
-      $('.navbar_img_custom').addClass('fixed');
-      $('.home_custom').addClass('fixed-nav');
-      $('.navbar_custom').addClass('size_fixed');
-
-    }
-    else {
-      $('.navbar_img_custom').removeClass('fixed');
-      $('.home_custom').removeClass('fixed-nav');
-      $('.navbar_custom').removeClass('size_fixed');
-    }
-  });
+  $('.navbar_img_custom').addClass('fixed');
+  $('.home_custom').addClass('fixed-nav');
+  $('.navbar_custom').addClass('size_fixed');
+ 

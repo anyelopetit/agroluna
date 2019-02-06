@@ -1,5 +1,5 @@
 .container_custom
-  = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
+  -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
   .d-flex.justify-content-end
     .toolbar
       - if can?(KepplerCattle::Cow).destroy_multiple?
@@ -59,13 +59,13 @@
               KG
             %td
               = cow.status.days unless cow.status.blank?
-              - if cow.left_days
-                .left-days{ class: ('days-alert' if (cow.left_days >= -10)) }
-                  = "(#{cow.left_days} para #{cow.next_day})"
+              -# - if cow.left_days
+              -#   .left-days{ class: ('days-alert' if (cow.left_days >= -10)) }
+              -#     = "(#{cow.left_days} para #{cow.next_day})"
             %td
               = cow.status.typology unless cow.status.blank?
             %td.status
-              = cow.status.created_at.strftime("%d-%m-%Y") unless cow.status.blank?
+              -# = cow.status.created_at.strftime("%d-%m-%Y") unless cow.status.blank?
               .card_status--bar
                 - if cow.gender?('male')
                   %a.status-tooltip{ title: 'Recelador' }

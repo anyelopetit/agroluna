@@ -1,9 +1,10 @@
+
 table {
   width: 100%;
   border-collapse: collapse;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
-  border-radius: 4px;
+  border-radius: 0px;
   background-color: white;
 }
 
@@ -15,16 +16,23 @@ td {
 
 thead {
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  background-color: #d9e2e7;
 
   th {
     font-weight: $regular;
+    color: #4d5663;
+    text-transform: uppercase;
   }
 }
 
 tbody {
   tr {
+    border-bottom: 1px #eee solid;
+    transition: .5s ease-in-out;
     &:hover {
-      background-color: rgba(255,255,255,0.3);
+      // background-color: rgba(255,255,255,0.3);
+      box-shadow: 0 0 30px #d9e2e7;
+      transition: .5s ease-in-out;
     }
   }
   td {
@@ -51,3 +59,57 @@ table .actions {
     }
   }
 }
+
+// table {
+//   width: 100%;
+//   border-collapse: collapse;
+//   overflow: hidden;
+//   box-shadow: 0 0 20px rgba(0,0,0,0.1);
+//   border-radius: 4px;
+//   background-color: white;
+// }
+
+// th,
+// td {
+//   padding: 15px;
+//   text-align: center;
+// }
+
+// thead {
+//   box-shadow: 0 0 5px rgba(0,0,0,0.1);
+
+//   th {
+//     font-weight: $regular;
+//   }
+// }
+
+// tbody {
+//   tr {
+//     &:hover {
+//       background-color: rgba(255,255,255,0.3);
+//     }
+//   }
+//   td {
+//     position: relative;
+//     font-weight: $light;
+//   }
+// }
+
+// .checkboxes {
+//   width: 50px;
+// }
+
+// table .actions {
+//   width: 180px;
+
+//   a {
+//     color: #9c9c9c;
+//     margin-right: 10px;
+//     transition: all ease-in-out .3s;
+
+//     &:hover {
+//       color: $primary;
+//       transition: all ease-in-out .3s;
+//     }
+//   }
+// }

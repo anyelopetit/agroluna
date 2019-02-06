@@ -248,5 +248,23 @@
 }
 
 .select2-container--default .select2-selection--single {
+  border: 1px solid #d2d6de !important;
+  background-color: #fff !important;
+  border-radius: 20px !important;
+}
+
+.select2-container--default .select2-selection--single, .select2-selection .select2-selection--single {
+  border: 1px solid #d2d6de !important;
+}
+
+.select2-selection.select2-selection--single {
+  border: 1px solid #d2d6de !important;
+  background-color: #fff !important;
+  border-radius: 20px !important;
+}
+
+.select2-container .select2-selection--single {
+  border: 1px solid #d2d6de !important;
+  background-color: #fff !important;
   border-radius: 20px !important;
 }

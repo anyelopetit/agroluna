@@ -39,10 +39,10 @@ module KepplerCattle
     end
 
     def self.colors
-      ['Cenizo',
+      ['No Registrado',
+      'Cenizo',
       'Pardo',
       'Encerado',
-      'No Registrado',
       'Rojo',
       'Amarillo',
       'Pinto',

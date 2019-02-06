@@ -48,7 +48,7 @@ module ApplicationHelper
   end
 
   def object_name(object, at_name)
-    at = at_name.split('_id').first.to_sym
+    at = at_name.to_s.remove('_id').to_sym
     object&.try(at).try(:name) || object&.try(at).try(:title)
   end
 

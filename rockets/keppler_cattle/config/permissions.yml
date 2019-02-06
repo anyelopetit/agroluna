@@ -1,4 +1,11 @@
 modules:
+  inseminations:
+    name: Insemination
+    model: KepplerCattleInsemination
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
   species:
     name: Species
     model: KepplerCattleSpecies

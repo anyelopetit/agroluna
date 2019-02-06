@@ -6,25 +6,6 @@ menu:
     icon: rocket
     model: User
     submenu:
-    #   - strategic_lot:
-    #       name: strategic lot
-    #       url_path: /admin/farm/strategic_lots
-    #       icon: layers
-    #       current: ['/admin/farm/strategic_lots']
-    #       model: KepplerFarm::StrategicLot
-
-    #   - photo:
-    #       name: photo
-    #       url_path: /admin/farm/photos
-    #       icon: layers
-    #       current: ['/admin/farm/photos']
-    #       model: KepplerFarm::Photo
-      - process:
-          name: process
-          url_path: /admin/farm/processes
-          icon: layers
-          current: ['/admin/farm/processes']
-          model: KepplerFarm::Process
 
       - farm:
           name: farm
@@ -32,10 +13,9 @@ menu:
           icon: layers
           current: ['/admin/farm/farms']
           model: KepplerFarm::Farm
-
-      # - new:
-      #     name: + Add new module
-      #     url_path: /url_path
-      #     current: ['/current_path']
-      #     environment: development
-      #     model: User
+      - process:
+          name: process
+          url_path: /admin/farm/processes
+          icon: layers
+          current: ['/admin/farm/processes']
+          model: KepplerFarm::Process

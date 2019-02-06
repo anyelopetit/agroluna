@@ -6,9 +6,11 @@ en:
         cow: Cow
         transference: Transference
         status: Status
+        insemination: Inseminations
     permissions:
     models:
       singularize:
+        insemination: insemination
         species: species
         weighing_day: weighing day
         typology: typology
@@ -17,6 +19,7 @@ en:
         status: status
         cow: cow
       pluralize:
+        inseminations: inseminations
         weighing_days: weighing days
         typologies: typologies
         races: races
@@ -24,6 +27,7 @@ en:
         statuses: statuses
         cows: cows
     modules:
+      admin/insemination: Insemination
       admin/species: Species
       admin/weighing-days: Weighing days
       admin/typology: Typology

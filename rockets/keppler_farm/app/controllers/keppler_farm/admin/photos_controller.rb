@@ -30,14 +30,15 @@ module KepplerFarm
 
       # POST /farms
       def create
-        @photo = Photo.new(photo_params)
-        @photo.update(cover: true) if Photo.none_cover?
-
-        if @photo.save!
-          redirect_to controller: :farms, action: :show, id: @farm.id
-        else
-          redirect_to controller: :farms, action: :show, id: @farm.id
+        params[:photo][:photo].each do |photo|
+          @photo = Photo.new(
+            photo: photo,
+            farm_id: @farm.id
+          )
+          @photo.update(cover: true) if @farm.none_cover?
+          @photo.save!
         end
+        redirect_to controller: :farms, action: :show, id: @farm.id
       end
 
       # PATCH/PUT /farms/1

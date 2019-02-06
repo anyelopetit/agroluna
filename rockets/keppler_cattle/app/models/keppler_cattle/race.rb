@@ -17,5 +17,9 @@ module KepplerCattle
     def self.index_attributes
       %i[name abbreviation]
     end
+
+    def species
+      KepplerCattle::Species.find_by(id: species_id)
+    end
   end
 end

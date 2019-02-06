@@ -17,5 +17,9 @@ module KepplerCattle
     def self.index_attributes
       %i[name abbreviation]
     end
+
+    def races
+      KepplerCattle::Race.where(species_id: id)
+    end
   end
 end

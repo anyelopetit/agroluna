@@ -26,8 +26,12 @@ module KepplerCattle
       KepplerFarm::Farm.find_by(id: status.farm_id)
     end
 
+    def race
+      KepplerCattle::Race.find_by(id: race_id)
+    end
+
     def species
-      KepplerCattle::Species.find_by(id: species_id)
+      race.species
     end
 
     def self.genders
@@ -100,7 +104,7 @@ module KepplerCattle
 
     def years 
       now = Time.now.utc.to_date 
-      now.year - birthdate.year - (birthdate.to_date.change(:year => now.year) > now ? 1 : 0) 
+      now.year - birthdate.year - (birthdate.to_date.change(:year => now.year) > now.year ? 1 : 0) 
     end 
 
     def months

@@ -4,15 +4,16 @@
     %meta{ charset: 'UTF-8' }
     %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
     %meta{ name: 'theme-color', content: '#fff' }
+    %title #{@strategic_lot.name}
   %body
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
-      %h2.report-title Catálogo de Ganado por Orden de Serie
+      %h2.report-title Lote estratégico #{@strategic_lot.name} (#{@strategic_lot.function})
     .header-right
       %p= Time.now.strftime('%d-%m-%Y')
       %p Pág. 1
     %table.cow-table
-      - if @active_cows.size.zero?
+      - if @strategic_lots.size.zero?
         %thead
           %tr
             %th.not-records.center
@@ -32,9 +33,8 @@
             %th Fecha
             %th KGS
             %th Pelaje
-            %th Lote
         %tbody
-          - @active_cows.each do |cow|
+          - @strategic_lot.cows.each do |cow|
             %tr
               %td= cow&.serie_number
               %td= cow&.race
@@ -48,7 +48,6 @@
               %td= cow&.status&.created_at&.strftime('%d-%m-%Y')
               %td= cow&.status&.weight
               %td= cow&.coat_color
-              %td= cow&.strategic_lot&.name
 :scss
   body {
     font-size: 10px;

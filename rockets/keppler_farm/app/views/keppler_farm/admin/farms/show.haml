@@ -71,17 +71,17 @@
         = t('keppler.actions.add_photo')
   %center.box.slice-box#upload-photo
     .box-header.with-border
-      %h3.box-title= t('keppler.actions.upload_photo')
+      %h3.box-title Cargar foto
     .box-body.box-body-no-padding
       = simple_form_for [:admin, :farm, @farm, @photo], controller: :photos, action: :create do |f|
-        .file-uploader
+        %center.file-uploader
           .file-container
-            = f.input :photo, input_html: { onchange: "validateFileInput()" }
+            = f.input :photo, input_html: { onchange: "validateFileInput()", multiple: true, type: 'file' }, label: false
             = f.input :farm_id, input_html: { value: @farm.id }, as: :hidden
             %i.file-icon.bx.bx-file-image
-            %h5.file-text= t('keppler.actions.drop', model: t('keppler_farm.models.singularize.photo'))
+            %h5.file-text Arrastra una imagen o haz click aquí
           %br
-          %span (.JPG, .JPEG, .PNG)
+          %p{ style: 'width: 100%' } (.JPG, .JPEG, .PNG)
           %button{ type: 'submit', id: "upload-file", disabled: true }
             %i.bx.bx-upload
             = t 'keppler.actions.upload_photo'

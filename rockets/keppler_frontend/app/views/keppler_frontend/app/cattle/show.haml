@@ -41,7 +41,7 @@
               %small= "(#{@cow.short_name})" unless @cow.short_name.blank?
             %strong
               = @cow.status&.typology.name unless @cow.status&.blank?
-            %span= @cow.race
+            %span= @cow.race&.name
         .row.mt-5
           .col-lg-6
             %dl
@@ -50,7 +50,7 @@
               %dt Nombre corto
               %dd= @cow.short_name
               %dt Raza
-              %dd= @cow.race
+              %dd= @cow.race.name
               %dt Condición corporal
               %dd= @cow.status&.corporal_condition unless @cow.status&.blank?
               %dt Color Pelaje

@@ -41,13 +41,14 @@ module ApplicationHelper
     final_array
   end
 
-  def find_model(path_array, i)
-    parent_module = controller.class.parent.to_s.underscore.remove('/admin').remove('admin')
-    "#{parent_module}/#{path_array[i]}".classify.constantize
+  def find_model(path_array, index)
+    parent_module =
+      controller.class.parent.to_s.underscore.remove('/admin').remove('admin')
+    "#{parent_module}/#{path_array[index]}".classify.constantize
   end
 
   def object_name(object, at_name)
-    at = at_name.split('_id').first.to_sym
+    at = at_name.to_s.remove('_id').to_sym
     object&.try(at).try(:name) || object&.try(at).try(:title)
   end
 

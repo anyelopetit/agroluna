@@ -346,6 +346,57 @@
             %h2 Historial de estados
           - @statuses.each do |status|
             .card_status--inner{"data-toggle" => "modal", "data-target" => "#modalStatus-#{status.id}"}
+              %dt Condición corporal
+              %dd= @cow.status&.corporal_condition unless @cow.status&.blank?
+              %dt Color Pelaje
+              %dd= @cow.coat_color
+              %dt Color de Borla
+              %dd= @cow.tassel_color
+          .col-lg-6
+            %dl
+              -# %dt Edad (Años-Meses)
+              -# %dd #{@cow.years}-#{@cow.months}
+              %dt Fecha de Nacimiento
+              %dd= @cow.birthdate
+              %dt Raza
+              %dd= @cow.race
+              -# %dt Nombre largo
+              -# %dd= @cow.long_name
+              %dt Procedencia
+              %dd= @cow.provenance
+              %dt Color Morro
+              %dd= @cow.nose_color
+              %dt Color de Borla
+              %dd= @cow.tassel_color
+              - if @cow.status&.strategic_lot
+                %dt Lote estrátegico
+                %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
+            
+    // Current Status
+    .col-md-6
+      .card_show.card_status
+        .card_status--bar
+          - if @cow.gender?('male')
+            %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Recelador</h4>' }
+              %i.icofont-bull{ class: ('active' if @cow.status.defiant) }
+            %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Reproductor</h4>' }
+              %i.icofont-dna{ class: ('active' if @cow.status.reproductive) }
+          - else
+            %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Preñada</h4>' }
+              %i.icofont-baby{ class: ('active' if @cow.status.pregnant) }
+            %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Lactando</h4>' }
+              %i.icofont-baby-milk-bottle{ class: ('active' if @cow.status.lactating)  }
+            %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Criando</h4>' }
+              %i.icofont-holding-hands{ class: ('active' if @cow.status.breeding) }
+          -# %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Dado de baja</h4>' }
+            %i.icofont-danger-zone{ class: ('active' if @cow.status.dead) }
+        .card_status--title
+          %h2
+            Estado actual
+            %small (#{@cow.status.created_at.to_formatted_s(:day)})
+        .box-body.no-padding
+          .row
+            .col-lg-6
               %dl
                 %dt
                   %i.icofont-ui-calendar

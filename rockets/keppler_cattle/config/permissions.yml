@@ -1,4 +1,39 @@
 modules:
+  inseminations:
+    name: Insemination
+    model: KepplerCattleInsemination
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
+  species:
+    name: Species
+    model: KepplerCattleSpecies
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
+  weighing_days:
+    name: WeighingDay
+    model: KepplerCattleWeighingDay
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
+  typologies:
+    name: Typology
+    model: KepplerCattleTypology
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
+  races:
+    name: Race
+    model: KepplerCattleRace
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
   transferences:
     name: Transference
     model: KepplerCattleTransference

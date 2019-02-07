@@ -25,6 +25,14 @@ module KepplerFarm
       %i[logo title photos strategic_lots]
     end
 
+    def photos
+      KepplerFarm::Photo.where(farm_id: id)
+    end
+
+    def none_cover?
+      photos.where(cover: true).count.zero?
+    end
+
     def cows
       KepplerCattle::Cow.all.select { |c| c&.status&.farm_id&.eql?(id) if c&.status&.farm_id }
     end

@@ -18,11 +18,10 @@ module KepplerFrontend
 
     def new
       @status = KepplerCattle::Status.new(farm_id: @farm.id, cow_id: @cow.id)
-      @ubications = KepplerCattle::Status.ubications
       @corporal_conditions = KepplerCattle::Status.corporal_conditions
       @strategic_lots = KepplerFarm::StrategicLot.all
       @strategic_lot = @status.find_lot
-      @typologies = KepplerCattle::Status.try("#{@cow.gender}_typologies".to_sym)
+      @typologies = @cow.possible_typologies
       @last_status = KepplerCattle::Status.last
       @farms = KepplerFarm::Farm.order(title: :asc)
     end

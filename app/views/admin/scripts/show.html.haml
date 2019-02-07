@@ -24,5 +24,5 @@
               %tbody
                 - @script.as_json(only: %w[id name script url created_at]).each do |attribute, value|
                   %tr.list-row
-                    %th.display-label= t("activerecord.attributes.#{attribute}")
+                    %th.display-label= t("activerecord.attributes.#{attribute}").humanize
                     %td.display-value.fs-body-1.tc-black-2= value.to_s.humanize

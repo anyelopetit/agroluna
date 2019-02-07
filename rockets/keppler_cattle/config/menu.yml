@@ -6,6 +6,13 @@ menu:
     icon: rocket
     model: User
     submenu:
+      - cow:
+          name: cow
+          url_path: /admin/cattle/cows
+          icon: layers
+          current: ['/admin/cattle/cows']
+          model: KepplerCattle::Cow
+
       - transference:
           name: transference
           url_path: /admin/cattle/transferences
@@ -13,9 +20,17 @@ menu:
           current: ['/admin/cattle/transferences']
           model: KepplerCattle::Transference
 
-      - cow:
-          name: cow
-          url_path: /admin/cattle/cows
+      - species:
+          name: species
+          url_path: /admin/cattle/species
           icon: layers
-          current: ['/admin/cattle/cows']
-          model: KepplerCattle::Cow
+          current: ['/admin/cattle/species']
+          model: KepplerCattle::Species
+
+      - insemination:
+          name: insemination
+          url_path: /admin/cattle/inseminations
+          icon: layers
+          current: ['/admin/cattle/inseminations']
+          model: KepplerCattle::Insemination
+      

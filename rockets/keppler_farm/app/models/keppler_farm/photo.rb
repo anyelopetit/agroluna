@@ -15,8 +15,8 @@ module KepplerFarm
 
     belongs_to :farm
 
-    def self.none_cover?
-      self.where(cover: true).count.zero?
+    def farm
+      KepplerFarm::Farm.find_by(id: farm_id)
     end
 
     def self.index_attributes

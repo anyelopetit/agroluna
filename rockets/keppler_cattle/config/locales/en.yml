@@ -4,17 +4,34 @@ en:
       cattle: Cattle
       cattle-submenu:
         cow: Cow
+        transference: Transference
+        status: Status
+        insemination: Inseminations
     permissions:
     models:
       singularize:
+        insemination: insemination
+        species: species
+        weighing_day: weighing day
+        typology: typology
+        race: race
         transference: transference
         status: status
         cow: cow
       pluralize:
+        inseminations: inseminations
+        weighing_days: weighing days
+        typologies: typologies
+        races: races
         transferences: transferences
         statuses: statuses
         cows: cows
     modules:
+      admin/insemination: Insemination
+      admin/species: Species
+      admin/weighing-days: Weighing days
+      admin/typology: Typology
+      admin/races: Races
       admin/transference: Transference
       admin/status: Status
       admin/cow: Cow
@@ -69,6 +86,7 @@ en:
       father_id: father
       farm_id: farm
       farms: farms
+      races: races
     errors:
       messages:
   errors:

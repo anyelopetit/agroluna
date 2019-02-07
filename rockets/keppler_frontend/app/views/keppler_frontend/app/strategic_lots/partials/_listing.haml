@@ -91,7 +91,7 @@
                 - else
                   - strategic_lot.cows.each do |cow|
                     .cow-item
-                      .cow-avatar= image_tag "/assets/keppler_cattle/#{cow.species}"
+                      -# .cow-avatar= image_tag "/assets/keppler_cattle/#{cow.species}"
                       .cow-name= cow.serie_number
                       .cow-options
                         = link_to({ controller: :cattle, action: :show, cow_id: cow.id }, { class: 'cow-option' }) do

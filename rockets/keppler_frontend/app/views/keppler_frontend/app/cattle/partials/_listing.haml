@@ -1,30 +1,15 @@
 .container_custom
   = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
   .d-flex.justify-content-end
-<<<<<<< HEAD
     -# .toolbar
-=======
-    .toolbar
-      - if can?(KepplerCattle::Cow).destroy_multiple?
-        .toolbar-item
-          .item-check
-            .checkbox
-              %label{ for: 'checkbox-all' }
-                %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
-                %span.cr
-                  %i.cr-icon.icofont-check
->>>>>>> staging
       .toolbar-item
         -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
         = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
           %i.icofont-trash
-<<<<<<< HEAD
     = link_to({action: :index, format: :pdf}, {class: 'float-right mt-4 mb-4', target: '_blank'}) do
       %button.btn.btn_custom.btn--filled.btn--medium
         %i.icofont-clip-board
         Reporte
-=======
->>>>>>> staging
     %a.float-right.mt-4.mb-4{ href: app_farm_cow_new_path(farm) }
       %button.btn.btn_custom.btn--filled.btn--medium
         %i.icofont-plus
@@ -44,7 +29,6 @@
             %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
             %label{for: "styled-checkbox-all"}
           %th
-<<<<<<< HEAD
             - if can?(KepplerCattle::Cow).destroy_multiple?
               .toolbar-item
                 .item-check
@@ -53,8 +37,6 @@
                       %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
                       %span.cr
                         %i.cr-icon.icofont-check
-=======
->>>>>>> staging
           %th Imagen
           %th
             = sort_link(@q, 'serie_number') do 
@@ -90,16 +72,9 @@
               = cow&.status&.weight
               KG
             %td
-<<<<<<< HEAD
               = cow&.status&.days
               -# \/
               -# = cow&.next_day
-=======
-              = cow.status.days unless cow.status.blank?
-              - if cow.left_days
-                .left-days{ class: ('days-alert' if (cow.left_days >= -10)) }
-                  = "(#{cow.left_days} para #{cow.next_day})"
->>>>>>> staging
             %td
               = cow&.status&.typology&.name
             %td.status

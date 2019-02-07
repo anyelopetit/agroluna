@@ -37,7 +37,7 @@
           - @strategic_lot.cows.each do |cow|
             %tr
               %td= cow&.serie_number
-              %td= cow&.race
+              %td= cow&.race&.name
               %td
                 = cow&.status&.years
                 \-

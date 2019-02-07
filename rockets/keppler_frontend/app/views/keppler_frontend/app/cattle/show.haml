@@ -49,11 +49,6 @@
               %dd= @cow.serie_number
               %dt Nombre corto
               %dd= @cow.short_name
-<<<<<<< HEAD
-              %dt Raza
-              %dd= @cow.race.name
-=======
->>>>>>> staging
               %dt Condición corporal
               %dd= @cow.status&.corporal_condition unless @cow.status&.blank?
               %dt Color Pelaje
@@ -67,21 +62,15 @@
               %dt Fecha de Nacimiento
               %dd= @cow.birthdate
               %dt Raza
-              %dd= @cow.race
+              %dd= @cow.race.name
               -# %dt Nombre largo
               -# %dd= @cow.long_name
               %dt Procedencia
               %dd= @cow.provenance
               %dt Color Morro
               %dd= @cow.nose_color
-<<<<<<< HEAD
               %dt Color de Borla
               %dd= @cow.tassel_color
-=======
-              - if @cow.status&.strategic_lot
-                %dt Lote estrátegico
-                %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
->>>>>>> staging
             
     // Current Status
     .col-md-6

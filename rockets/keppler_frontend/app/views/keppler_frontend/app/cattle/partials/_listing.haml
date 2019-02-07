@@ -1,5 +1,5 @@
 .container_custom
-  = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
+  -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
   .d-flex.justify-content-end
     -# .toolbar
       .toolbar-item
@@ -72,13 +72,11 @@
               = cow&.status&.weight
               KG
             %td
-              = cow&.status&.days
-              -# \/
-              -# = cow&.next_day
+              = cow.status.days unless cow.status.blank?
             %td
               = cow&.status&.typology&.name
             %td.status
-              = cow&.status&.created_at&.strftime("%d-%m-%Y")
+              =# cow&.status&.created_at&.strftime("%d-%m-%Y")
               .card_status--bar
                 - if cow.gender?('male')
                   %a.status-tooltip{ title: 'Recelador' }
@@ -99,5 +97,3 @@
                 %span.icofont-eye
               = link_to app_farm_cow_status_new_path(farm, cow), class: 'floating-btn' do
                 %span.icofont-ui-add
-              -# = link_to app_farm_cow_destroy_path(farm, cow), method: :delete, data: { confirm: t('keppler.messages.data_confirm') }, class: 'floating-btn' do
-                %span.icofont-trash

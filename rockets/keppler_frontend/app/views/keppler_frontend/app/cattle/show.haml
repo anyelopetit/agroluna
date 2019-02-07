@@ -1,59 +1,351 @@
-.container_custom
-  .float-left
-    %a.mt-4.mb-4.ml-3{ href: app_farm_cows_path(@farm) }
-      %button.btn.btn_custom.btn--medium
-        %i.icofont-circled-left
-        Listado
-  .d-flex.justify-content-end.mb-5
-    -# .toolbar
-      %a{ href: '' }
-        %i.icofont-trash
-      %a{ href: '' }
-        %i.icofont-refresh
-      %a{ href: '' }
-        %i.icofont-download
-    .actions
-      .float-right
-        %a.mt-4.mb-4.ml-3{ href: app_farm_cow_edit_path(@farm, @cow) }
-          %button.btn.btn_custom.btn--filled.btn--medium
-            %i.icofont-ui-edit
-            Editar
-        %a.mt-4.mb-4{ href: app_farm_cow_status_new_path(@farm, @cow) }
-          %button.btn.btn_custom.btn--filled.btn--medium
-            %i.icofont-plus
-            Actualizar
-        %a.mt-4.mb-4#open-status-history
-          %button.btn.btn_custom.btn--filled.btn--medium
-            %i.icofont-ui-clock
-            Historial
-.container_custom
-  .row
-    .col-md-6
-      .card_show.cow_info.p-5
+= render 'keppler_frontend/app/frontend/components/navbar_fixed', farm: @farm, farms: @farms
+.app_wrapper
+  .container_custom
+    .float-left
+      %a.mt-4.mb-4.ml-3{ href: app_farm_cows_path(@farm) }
+        %button.btn.btn_custom.btn--medium
+          %i.icofont-circled-left
+          Listado
+    .d-flex.justify-content-end.mb-5
+      -# .toolbar
+        %a{ href: '' }
+          %i.icofont-trash
+        %a{ href: '' }
+          %i.icofont-refresh
+        %a{ href: '' }
+          %i.icofont-download
+      .actions
         .float-right
-          -# = image_tag "/assets/keppler_cattle/#{@cow.species}", class: 'svg-icon-md' unless @cow.species.blank?
-          = image_tag "/assets/keppler_cattle/#{@cow.gender}", class: 'svg-icon-md' unless @cow.gender.blank?
-        .card_cow
-          = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
-          .card_cow_content
-            %h1
-              = @cow.serie_number
-              %small= "(#{@cow.short_name})" unless @cow.short_name.blank?
-            %strong
-              = @cow.status&.typology.name unless @cow.status&.blank?
-            %span= @cow.race&.name
-        .row.mt-5
-          .col-lg-6
-            %dl
-              %dt Número de serie
-              %dd= @cow.serie_number
-              %dt Nombre corto
-              %dd= @cow.short_name
-<<<<<<< HEAD
-              %dt Raza
-              %dd= @cow.race.name
-=======
->>>>>>> staging
+          %a.mt-4.mb-4.ml-3{ href: app_farm_cow_edit_path(@farm, @cow) }
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-ui-edit
+              Editar
+          %a.mt-4.mb-4{ href: app_farm_cow_status_new_path(@farm, @cow) }
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-plus
+              Actualizar
+          %a.mt-4.mb-4#open-status-history
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-clock-time
+              Historial
+  .container_custom
+    .row
+      .col-md-12
+        .card_show.cow_info.p-5
+          .float-right
+            = image_tag "/assets/keppler_cattle/#{@cow.species}", class: 'svg-icon-md' unless @cow.species.blank?
+            = image_tag "/assets/keppler_cattle/#{@cow.gender}", class: 'svg-icon-md' unless @cow.gender.blank?
+          .row.mt-5
+            .col-lg-3{ :style =>"display: flex; justify-content: center;"}
+              .card_cow
+                .row
+                  .col-lg-12
+                    = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+                  .col-lg-12
+                    .card_cow_content{ :style => "text-align: center;"}
+                      %h1
+                        = @cow.serie_number
+                      %small= "(#{@cow.short_name})" unless @cow.short_name.blank?
+                      %strong
+                        = @cow.status&.typology unless @cow.status&.blank?
+                      %span= @cow.race
+            .col-lg-9
+              .row
+                .col-lg-4
+                  %dl
+                    %dt Número de serie
+                    %dd= @cow.serie_number
+                    %dt Nombre corto
+                    %dd= @cow.short_name
+                    %dt Condición corporal
+                    %dd= @cow.status&.corporal_condition unless @cow.status&.blank?
+                    -# %dt Color Pelaje
+                    -# %dd= @cow.coat_color
+                    -# %dt Color de Borla
+                    -# %dd= @cow.tassel_color
+                .col-lg-4
+                  %dl
+                    -# %dt Edad (Años-Meses)
+                    -# %dd #{@cow.years}-#{@cow.months}
+                    %dt Fecha de Nacimiento
+                    %dd= @cow.birthdate
+                    %dt Raza
+                    %dd= @cow.race
+                    -# %dt Nombre largo
+                    -# %dd= @cow.long_name
+                    %dt Procedencia
+                    %dd= @cow.provenance
+                    -# %dt Color Morro
+                    -# %dd= @cow.nose_color
+                    -# - if @cow.status&.strategic_lot
+                    -#   %dt Lote estrátegico
+                    -#   %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
+                .col-lg-4
+                  %dl
+                    %dt Color Pelaje
+                    %dd= @cow.coat_color
+                    %dt Color de Borla
+                    %dd= @cow.tassel_color
+                    %dt Color Morro
+                    %dd= @cow.nose_color
+              %hr/
+              .row
+                .col-lg-4
+                  %dl
+                    %dt
+                      -# %i.icofont-home
+                      Finca
+                    %dd
+                      = @cow.status.farm_name
+                    
+                .col-lg-4
+                  %dl
+                    %dt Lote estrátegico
+                    %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
+                   
+                .col-lg-4
+                  %dl
+                    %dt Activo
+                    
+              
+              
+      // Current Status
+      .col-md-4
+        .card_status_specific
+          .card_status--title.card_status_title
+            %h2
+              Peso
+          .box-body.no-padding
+            .row
+              .col-lg-12
+                .counter
+                  %dl
+                    %dd
+                      = @cow.status.weight
+                      %small KG 
+                .row
+                  .col-lg-6
+                    %dl
+                      %dt.card_status_details
+                        -# %i.icofont-dumbbell
+                        Peso Ganado
+                      %dd.card_status_details
+                        = @cow.status.gained_weight
+                        KG
+           
+                  .col-lg-6
+                    %dl
+                      %dt.card_status_details
+                        -# %i.icofont-muscle
+                        Condición corporal
+                      %dd.card_status_details= @cow.status.corporal_condition 
+      .col-md-4
+        .card_status_specific
+          .card_status--title.card_status_title
+            %h2
+              Edad
+          .box-body.no-padding
+            .row
+              .col-lg-12
+                .counter
+                  %dl
+                    %dd
+                      .months
+                      = @cow.status.months
+                      = "-"
+                      = @cow.status.years
+                      %small A - M
+                      -# %strong Edad (años - meses)
+                .row
+                  .col-lg-6
+                    %dl
+                      %dt.card_status_details Fecha de Nacimiento
+                      %dd.card_status_details= @cow.birthdate
+           
+                  .col-lg-6
+                    %dl
+                      %dt.card_status_details
+                        -# %i.icofont-infant-nipple
+                        Días de nacido
+                      %dd.card_status_details= @cow.status.days
+      .col-md-4
+        .card_status_specific
+          .card_status--title.card_status_title
+            %h2
+              Padres
+          .box-body.no-padding
+            .row
+              .col-lg-12
+                .row
+                  .col-lg-6
+                    .parent_card
+                      - if @cow.mother
+                        = link_to app_farm_cow_path(@farm, @cow.mother) do
+                          .parent_img
+                            = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+                          %dl
+                            %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                              = @cow.mother&.serie_number
+                            %dt{:style => "font-weight:400; color: #6f6f6f;"} Madre
+                            -# %h3 Madre
+                        
+                          -# - if @cow.mother&.image&.url 
+                            = image_tag @cow.mother&.image&.url
+                          -# - else
+                            = image_tag '/assets/keppler_cattle/cow_shadow'
+                            %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+                      - else
+                        
+                        %h3 SIN MADRE
+                  .col-lg-6
+                    .parent_card
+                      - if @cow.father
+                        = link_to app_farm_cow_path(@farm, @cow.father) do
+                          .parent_img
+                            = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+                          %dl
+                            %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                              = @cow.father&.serie_number
+                            %dt{:style => "font-weight:400; color: #6f6f6f;"} Padre
+                          -# - if @cow.father&.image&.url 
+                            = image_tag @cow.father&.image&.url
+                          -# - else
+                            = image_tag '/assets/keppler_cattle/bull_shadow'
+                            %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+                          
+                      - else
+                        %h3 SIN PADRE
+                    
+      -# .col-md-6
+      -#   .card_show.card_status
+      -#     .card_status--bar
+      -#       - if @cow.gender?('male')
+      -#         %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Recelador</h4>' }
+      -#           %i.icofont-bull{ class: ('active' if @cow.status.defiant) }
+      -#         %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Reproductor</h4>' }
+      -#           %i.icofont-dna{ class: ('active' if @cow.status.reproductive) }
+      -#       - else
+      -#         %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Preñada</h4>' }
+      -#           %i.icofont-baby{ class: ('active' if @cow.status.pregnant) }
+      -#         %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Lactando</h4>' }
+      -#           %i.icofont-baby-milk-bottle{ class: ('active' if @cow.status.lactating)  }
+      -#         %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Criando</h4>' }
+      -#           %i.icofont-holding-hands{ class: ('active' if @cow.status.breeding) }
+      -#       -# %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Dado de baja</h4>' }
+      -#         %i.icofont-danger-zone{ class: ('active' if @cow.status.dead) }
+      -#     .card_status--title
+      -#       %h2
+      -#         Estado actual
+      -#         %small (#{@cow.status.created_at.to_formatted_s(:day)})
+      -#     .box-body.no-padding
+      -#       .row
+      -#         .col-lg-6
+      -#           %dl
+      -#             %dt
+      -#               %i.icofont-dumbbell
+      -#               Peso
+      -#             %dd
+      -#               = @cow.status.weight
+      -#               KG
+      -#             %dt
+      -#               %i.icofont-baby-cloth
+      -#               Edad (años - meses)
+      -#             %dd
+      -#               = @cow.status.years
+      -#               = "-"
+      -#               = @cow.status.months
+      -#             %dt
+      -#               %i.icofont-muscle
+      -#               Condición corporal
+      -#             %dd= @cow.status.corporal_condition
+      -#             %dt
+      -#               %i.icofont-home
+      -#               Finca
+      -#             %dd
+      -#               = @cow.status.farm_name
+      -#         .col-lg-6
+      -#           %dl
+      -#             %dt
+      -#               %i.icofont-dumbbell
+      -#               Peso Ganado
+      -#             %dd
+      -#               = @cow.status.gained_weight
+      -#               KG
+      -#             %dt
+      -#               %i.icofont-infant-nipple
+      -#               Días de nacido
+      -#             %dd= @cow.status.days
+      -#             %dt
+      -#               %i.icofont-cow
+      -#               Tipología
+      -#             %dd= @cow.status.typology
+      -#             - unless @cow.status.strategic_lot.blank?
+      -#               %dt
+      -#               %i.icofont-users
+      -#               Lote estratégico
+      -#             %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
+        
+        .row
+          .col-md-6
+            .card_show.p-5
+              .parent_card
+                - if @cow.mother
+                  = link_to app_farm_cow_path(@farm, @cow.mother) do
+                    .parent_img
+                      = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+                    %h3 Madre
+                  
+                    -# - if @cow.mother&.image&.url 
+                      = image_tag @cow.mother&.image&.url
+                    -# - else
+                      = image_tag '/assets/keppler_cattle/cow_shadow'
+                      %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+                    = @cow.mother&.serie_number
+                - else
+                  
+                  %h3 SIN MADRE
+              -# .parent_card
+              -#   - if @cow.father
+              -#     = link_to app_farm_cow_path(@farm, @cow.father) do
+              -#       %h3 Padre
+              -#       -# - if @cow.father&.image&.url 
+              -#         = image_tag @cow.father&.image&.url
+              -#       -# - else
+              -#         = image_tag '/assets/keppler_cattle/bull_shadow'
+              -#         %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+              -#       = @cow.father&.serie_number
+              -#   - else
+              -#     %h3 SIN PADRE
+          
+            -# %table.table
+              %tbody
+                - if @cow.status
+                  - @cow.status&.as_json(except: %w[id cow_id position deleted_at]).each do |attribute, value|
+                    - unless value.nil?
+                      %tr.list-row
+                        %th.display-label= t("activerecord.attributes.#{attribute}").humanize
+                        %td.display-value.fs-body-1.tc-black-2
+                          - if @attachments.dig('images', 'names').include?(attribute)
+                            = image_tag value.url if value.url
+                          - elsif @attachments.dig('images', 'names').map(&:pluralize).include?(attribute)
+                            - value.each do |image|
+                              = image_tag image.url if image.url
+                          - elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
+                            = value ? 'Sí' : 'No'
+                          - elsif attribute.include?('_id')
+                            = object_name(@cow.status, attribute) #|| model_name('keppler_cattle', attribute, value) unless @cow.status&.blank?
+                          - else 
+                            = sanitize raw value
+      
+      .col-lg-4
+        .card_show.card_status.card_history#status-history
+          .float-right
+            %a#close-status-history{ href: '#' }
+              %i.icofont-ui-close
+          .card_status--title
+            %h2 Historial de estados
+          - @statuses.each do |status|
+            .card_status--inner{"data-toggle" => "modal", "data-target" => "#modalStatus-#{status.id}"}
               %dt Condición corporal
               %dd= @cow.status&.corporal_condition unless @cow.status&.blank?
               %dt Color Pelaje
@@ -74,14 +366,11 @@
               %dd= @cow.provenance
               %dt Color Morro
               %dd= @cow.nose_color
-<<<<<<< HEAD
               %dt Color de Borla
               %dd= @cow.tassel_color
-=======
               - if @cow.status&.strategic_lot
                 %dt Lote estrátegico
                 %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
->>>>>>> staging
             
     // Current Status
     .col-md-6
@@ -110,119 +399,16 @@
             .col-lg-6
               %dl
                 %dt
-                  %i.icofont-dumbbell
-                  Peso
-                %dd
-                  = @cow.status.weight
-                  KG
-                %dt
-                  %i.icofont-baby-cloth
-                  Edad (años - meses)
-                %dd
-                  = @cow.status.years
-                  = "-"
-                  = @cow.status.months
-                %dt
-                  %i.icofont-muscle
-                  Condición corporal
-                %dd= @cow.status.corporal_condition
-                %dt
-                  %i.icofont-home
-                  Finca
-                %dd
-                  = @cow.status.farm_name
-            .col-lg-6
-              %dl
+                  %i.icofont-ui-calendar
+                %dd= status&.created_at.to_formatted_s(:day)
                 %dt
                   %i.icofont-dumbbell
-                  Peso Ganado
-                %dd
-                  = @cow.status.gained_weight
-                  KG
+                %dd #{status&.weight} (KG)
                 %dt
-                  %i.icofont-infant-nipple
-                  Días de nacido
-                %dd= @cow.status.days
-                %dt
-                  %i.icofont-cow
-                  Tipología
-                %dd= @cow.status.typology.name
-                - unless @cow.status.strategic_lot.blank?
-                  %dt
-                  %i.icofont-users
-                  Lote estratégico
-                %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
-      
-      .row
-        .col-md-6
-          .card_show.p-5
-            .parent_card
-              - if @cow.mother
-                = link_to app_farm_cow_path(@farm, @cow.mother) do
-                  %h3 Madre
-                  -# - if @cow.mother&.image&.url 
-                    = image_tag @cow.mother&.image&.url
-                  -# - else
-                    = image_tag '/assets/keppler_cattle/cow_shadow'
-                    %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
-                  = @cow.mother&.serie_number
-              - else
-                %h3 SIN MADRE
-        .col-md-6
-          .card_show.p-5
-            .parent_card
-              - if @cow.father
-                = link_to app_farm_cow_path(@farm, @cow.father) do
-                  %h3 Padre
-                  -# - if @cow.father&.image&.url 
-                    = image_tag @cow.father&.image&.url
-                  -# - else
-                    = image_tag '/assets/keppler_cattle/bull_shadow'
-                    %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
-                  = @cow.father&.serie_number
-              - else
-                %h3 SIN PADRE
-          -# %table.table
-            %tbody
-              - if @cow.status
-                - @cow.status&.as_json(except: %w[id cow_id position deleted_at]).each do |attribute, value|
-                  - unless value.nil?
-                    %tr.list-row
-                      %th.display-label= t("activerecord.attributes.#{attribute}").humanize
-                      %td.display-value.fs-body-1.tc-black-2
-                        - if @attachments.dig('images', 'names').include?(attribute)
-                          = image_tag value.url if value.url
-                        - elsif @attachments.dig('images', 'names').map(&:pluralize).include?(attribute)
-                          - value.each do |image|
-                            = image_tag image.url if image.url
-                        - elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
-                          = value ? 'Sí' : 'No'
-                        - elsif attribute.include?('_id')
-                          = object_name(@cow.status, attribute) #|| model_name('keppler_cattle', attribute, value) unless @cow.status&.blank?
-                        - else 
-                          = sanitize raw value
-    
-    .col-lg-4
-      .card_show.card_status.card_history#status-history
-        .float-right
-          %a#close-status-history{ href: '#' }
-            %i.icofont-ui-close
-        .card_status--title
-          %h2 Historial de estados
-        - @statuses.each do |status|
-          .card_status--inner{"data-toggle" => "modal", "data-target" => "#modalStatus-#{status.id}"}
-            %dl
-              %dt
-                %i.icofont-ui-calendar
-              %dd= status&.created_at.to_formatted_s(:day)
-              %dt
-                %i.icofont-dumbbell
-              %dd #{status&.weight} (KG)
-              %dt
-                %i.icofont-info
-              %dd #{status&.typology.name}
-- @statuses.each do |status|
-  = render 'keppler_frontend/app/cattle/partials/modal_status', cow: @cow, status: status
+                  %i.icofont-info
+                %dd #{status&.typology}
+  - @statuses.each do |status|
+    = render 'keppler_frontend/app/cattle/partials/modal_status', cow: @cow, status: status
 
 :scss
   #status-history {
@@ -245,11 +431,16 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    //border: 2px solid #f4f5f6;
+    border-radius: 4px;
+    padding: 10px;
+    
     img {
       max-width: 200px;
     }
   }
 
+ 
   .svg-icon-md {
     height: 30px;
   }

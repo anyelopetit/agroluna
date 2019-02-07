@@ -1,7 +1,7 @@
 .btn_custom {
   background-color: transparent;
   border: 1px solid $primary;
-  border-radius: 25px;
+  border-radius: 5px;
   color: $primary;
   padding: 0.5rem 1rem;
   line-height: 1.1;
@@ -28,11 +28,16 @@
 
 .btn--filled {
   background-color: $primary;
+  // background: #0bc5b7; 
+  // background: -moz-linear-gradient(70deg,  #0bc5b7 0%,#28C76F 100%); 
+  // background: -webkit-linear-gradient(70deg,  #0bc5b7 0%,#28C76F 100%); 
+  // background: linear-gradient(70deg,  #0bc5b7 0%,#28C76F 100%);
   color: white;
   transition: all ease-in-out .3s;
 
   &:hover {
     background-color: transparent;
+    border: 1px solid $primary;
     color: $primary;
     transition: all ease-in-out .3s;
   }
@@ -46,3 +51,5 @@
   text-transform: uppercase;
   font-weight: $medium;
 }
+
+

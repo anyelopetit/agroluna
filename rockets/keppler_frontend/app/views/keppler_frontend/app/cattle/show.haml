@@ -48,7 +48,7 @@
                       %small= "(#{@cow.short_name})" unless @cow.short_name.blank?
                       %strong
                         = @cow.status&.typology unless @cow.status&.blank?
-                      %span= @cow.race
+                      %span= @cow.race&.name
             .col-lg-9
               .row
                 .col-lg-4
@@ -359,7 +359,7 @@
               %dt Fecha de Nacimiento
               %dd= @cow.birthdate
               %dt Raza
-              %dd= @cow.race
+              %dd= @cow.race&.name
               -# %dt Nombre largo
               -# %dd= @cow.long_name
               %dt Procedencia
@@ -400,13 +400,13 @@
               %dl
                 %dt
                   %i.icofont-ui-calendar
-                %dd= status&.created_at.to_formatted_s(:day)
+                %dd= @cow.status&.created_at.to_formatted_s(:day)
                 %dt
                   %i.icofont-dumbbell
-                %dd #{status&.weight} (KG)
+                %dd #{@cow.status&.weight} (KG)
                 %dt
                   %i.icofont-info
-                %dd #{status&.typology}
+                %dd #{@cow.status&.typology}
   - @statuses.each do |status|
     = render 'keppler_frontend/app/cattle/partials/modal_status', cow: @cow, status: status
 

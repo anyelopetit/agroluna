@@ -72,6 +72,7 @@ module KepplerFrontend
     end
 
     def index_variables
+      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
       @q = @farm.cows.ransack(params[:q])
       @cows = @q.result(distinct: true)
       @active_cows = @cows.actives

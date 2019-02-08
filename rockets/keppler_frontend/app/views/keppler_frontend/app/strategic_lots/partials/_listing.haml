@@ -1,16 +1,16 @@
-= render 'keppler_frontend/app/frontend/components/navbar_fixed', farm: @farm, farms: @farms
+= render 'keppler_frontend/app/frontend/components/navbar', farm: @farm, farms: @farms
 .app_wrapper
   .container_custom
     .float-left
       -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
     .d-flex.justify-content-end.mb-5
-      -# .toolbar
-        %a{ href: '' }
-          %i.icofont-trash
-        %a{ href: '' }
-          %i.icofont-refresh
-        %a{ href: '' }
-          %i.icofont-download
+      // .toolbar
+      //   %a{ href: '' }
+      //     %i.icofont-trash
+      //   %a{ href: '' }
+      //     %i.icofont-refresh
+      //   %a{ href: '' }
+      //     %i.icofont-download
       .toolbar
         -# - if can?(KepplerFarm::StrategicLot).destroy_multiple?
           .toolbar-item
@@ -36,7 +36,7 @@
             = link_to '#', class: 'tool-btn', title: t('keppler.actions.upload_records'), id: 'upload' do
               %i.icon-cloud-upload
         .toolbar-item
-          -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+          %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
           = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
             %i.icofont-trash
             Eliminar

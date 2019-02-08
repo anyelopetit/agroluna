@@ -36,7 +36,7 @@
 .login_box {
   display: flex;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 10px;
   height: 100%;
   background-color: white;
   box-shadow: 0 6px 6px -3px rgba(0,0,0,.2), 0 10px 14px 1px rgba(0,0,0,.14), 0 4px 18px 3px rgba(0,0,0,.12);
@@ -48,36 +48,66 @@
 
 .login_left {
   width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: column;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  // flex-wrap: wrap;
+  // flex-direction: column;
 
   @include respond-to(xs) {
     width: 100%;
   }
 }
 
+.login_left_logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding-top: 30px;
+}
+
+.login_left_company {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .login_right {
   width: 50%;
-  img {
+  .img_bg {
     height: 100%;
     width: 100%;
-    object-fit: cover;
-    filter: grayscale(100%);
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+    // background-size: cover;
+    // filter: grayscale(100%);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+
+    .img_bg_blur {
+      background: inherit;
+      // background-repeat: no-repeat;
+      width: 100%;
+      height: 20%;
+      position: absolute;
+      top: -27px;
+      left: 50%;
+      filter: blur(5px);
+      transform: translate(-50%, 25%);
+    }
   }
 
   &::before {
     @include pseudo();
-    background-color: rgba($primary, .5);
+    // background-color: rgba($primary, .5);
+    background-color: rgba($black, .5);
     width: 100%;
     height: 100%;
     z-index: 1;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 
   @include respond-to(xs) {

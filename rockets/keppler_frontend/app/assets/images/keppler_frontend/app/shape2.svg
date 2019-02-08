@@ -6,8 +6,8 @@
       <mask id="bubble-4-b" fill="#fff">
           <use xlink:href="#bubble-4-a"></use>
       </mask>
-      <use fill="#fa6d08" xlink:href="#bubble-4-a"></use>
-      <circle fill="#fa6d08" mask="url(#bubble-4-b)" cx="30" cy="108" r="108"></circle>
-      <circle fill="#ff8d3b" opacity=".7" mask="url(#bubble-4-b)" cx="265" cy="88" r="108"></circle>
+      <use fill="#f28d23" xlink:href="#bubble-4-a"></use>
+      <circle fill="#f28d23" mask="url(#bubble-4-b)" cx="30" cy="108" r="108"></circle>
+      <circle fill="#f28d23" opacity=".7" mask="url(#bubble-4-b)" cx="265" cy="88" r="108"></circle>
   </g>
 </svg>

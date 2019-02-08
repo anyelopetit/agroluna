@@ -8,9 +8,10 @@
       %img.bg-shape2{src:'/assets/keppler_frontend/app/shape2.svg'}
       .login_box
         .login_left
-          %span.login_title Bienvenido a
-          %img.login_logo{ src: 'https://www.logolynx.com/images/logolynx/38/38823bcbd5b510b67596a10f4cbacb06.png' }
-          %span.recoverable Inicia sesión para comenzar
+          .login_left_logo
+            %span.login_title Bienvenido a
+            %img.login_logo{ src: 'https://www.logolynx.com/images/logolynx/38/38823bcbd5b510b67596a10f4cbacb06.png' }
+            %span.recoverable Inicia sesión para comenzar
           = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f|
             .login_card
               .form-group.mb-5
@@ -34,11 +35,15 @@
                 %center.devise-errors.center-align
                   - flash.each do |name, msg|
                     = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
-            %span.powered_by
-              Desarrollado por
-              %a{ href: 'https://slicegroup.co' } Slice Group
+            .login_left_company
+              %span.powered_by
+                Desarrollado por
+                %a{ href: 'https://slicegroup.co' } Slice Group
+        - images = ['/assets/keppler_frontend/app/img_login1.jpg', '/assets/keppler_frontend/app/img_login2.jpg']
         .login_right
-          %img{ src: 'https://trello-attachments.s3.amazonaws.com/5c06d7593c101b39010a93ea/1180x600/31f83c8b77265d6f921448fab48e0170/Imagen_Ejemplo.jpg' }
+          .img_bg{ style: "background-image: url('#{images.sample}')" }
+            .img_bg_blur
+          // %img{ src: images.sample }
     %script{ src: 'https://code.jquery.com/jquery-3.3.1.min.js' }
     %script{ src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' }
     %script{ src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' }
@@ -48,7 +53,4 @@
 :scss
   .new_user {
     width: 100%;
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
   }

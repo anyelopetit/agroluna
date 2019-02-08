@@ -1,0 +1,189 @@
+= simple_form_for [:app, @farm, @insemination] do |f|
+  .form-padding
+    .row
+      -# .col-sm-12
+        %center.file-uploader
+          .file-container{ class: ('already-uploaded' unless @insemination.image&.url.blank?), style: ("background-image: url(#{f.object&.image&.url})" unless @insemination.image&.url.blank?) }
+            = f.input :image, label: 'Imagen'
+            %i.file-icon.icofont-image{ style: 'font-size: 50px'}
+            %h5.file-text Arrastra una imagen o haz click aquí
+          %br
+          %span (.JPG, .JPEG, .PNG)
+      .col-sm-4
+        = f.input :serie_number, as: :string, label: 'Número de serie', required: true, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :short_name, as: :string, label: 'Nombre corto', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      -# .col-sm-12
+        = f.input :long_name, as: :string, label: 'Nombre largo', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :species, collection: @species, include_blank: false, label: 'Especie', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      -# .col-sm-4
+        = f.input :gender, collection: @genders, include_blank: false, label: 'Género', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :race, collection: @races, include_blank: false, label: 'Raza', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :birthdate, as: :string, label: 'Fecha de nacimiento', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom datepicker' }
+      .col-sm-4
+        = f.input :coat_color, collection: @colors, label: 'Color de pelaje', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom color' }
+      .col-sm-4
+        = f.input :nose_color, collection: @colors, label: 'Color de morro', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom color' }
+      .col-sm-4
+        = f.input :tassel_color, collection: @colors, label: 'Color de borla', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom color' }
+      .col-sm-4
+        = f.input :provenance, as: :string, label: 'Procedencia', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :mother_id, collection: @posible_mothers, label: 'Madre', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :father_id, collection: @posible_fathers, label: 'Padre', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-12
+        = f.input :observations, label: 'Observaciones', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-12
+        .float-right
+          %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+            %i.icofont-save
+            Guardar
+
+:javascript
+
+  window.I18n = #{es_translations.to_json.html_safe}
+
+  function doesFileExist(urlToFile) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('HEAD', urlToFile, false);
+    xhr.send();
+
+    return xhr.status == "404" ? false : true;
+  }
+  
+  function imageSelect (option) {
+    var optionTxt = option.text.toLowerCase()
+    if (!option.id) return optionTxt;
+    var baseUrl = '/assets/keppler_cattle/';
+    var url = baseUrl + (doesFileExist(baseUrl + optionTxt) ? optionTxt : '/ternera')
+    var $option = $(
+      '<span class="inseminations-option">' +
+        `<div style="background-image: url(${url})" class="img-inseminations-list"></div>` + 
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+  
+  function motherSelect (option) {
+    var optionTxt = option.text
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="inseminations-option">' +
+        `<div style="background-image: url(/assets/keppler_cattle/female)" class="img-inseminations-list"></div>` + 
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+  
+  function fatherSelect (option) {
+    var optionTxt = option.text
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="inseminations-option">' +
+        `<div style="background-image: url(/assets/keppler_cattle/male)" class="img-inseminations-list"></div>` + 
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+  
+  function noImageSelect (option) {
+    var optionTxt = option.text
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="inseminations-option">' +
+        optionTxt +
+      '</span>'
+    );
+    return $option;
+  };
+
+  $('#insemination_species').select2({
+    placeholder: "Elige una especie",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });
+
+  $('#insemination_race').select2({
+    placeholder: "Elige una raza",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });
+
+  $('#insemination_mother_id').select2({
+    placeholder: "Elige una madre",
+    templateResult: motherSelect,
+    templateSelection: motherSelect
+  });
+
+  $('#insemination_father_id').select2({
+    placeholder: "Elige un padre",
+    templateResult: fatherSelect,
+    templateSelection: fatherSelect
+  });
+
+  $('.color').select2({
+    placeholder: "Elige un color",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });
+
+  $.datepicker.regional['es'] = {
+    closeText: 'Cerrar',
+    prevText: '< Ant',
+    nextText: 'Sig >',
+    currentText: 'Hoy',
+    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+    weekHeader: 'Sm',
+    dateFormat: 'dd/mm/yy',
+    firstDay: 1,
+    isRTL: false,
+    showMonthAfterYear: false,
+    yearSuffix: ''
+  };
+
+  $.datepicker.setDefaults($.datepicker.regional['es']);
+
+  $('.datepicker').datepicker({
+    dateFormat: 'yy-mm-dd',
+    showOtherMonths: true,
+    selectOtherMonths: true,
+    changeMonth: true,
+    changeYear: true,
+    maxDate: 0,
+    setDate: 0,
+    yearRange: "c-40:c",
+  }, $.datepicker.regional[ "es" ])
+
+:scss
+
+
+  .inseminations-list {
+    height: 187px;
+    overflow: scroll;
+  }
+
+  .inseminations-option {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+
+    .img-inseminations-list {
+      height: 20px;
+      margin: 0 5px;
+      width: 20px;
+      display: inline-flex;
+      background-size: cover;
+      background-position: top center;
+    }
+  }

@@ -276,10 +276,17 @@ puts 'Especies, razas, tipologías y pesajes creadas'
     cow_id: cow.id
   )
 
+  species = KepplerCattle::Species.find_by(id: [1,2,3].sample)
+  race = species&.races&.sample
+
   # Pajuelas
   KepplerCattle::Insemination.create(
     serie_number: Faker::Number.between(111111, 999999),
-    race_id: KepplerCattle::Species.find_by(id: [1,2,3].sample).races.first.id,
+    short_name: Faker::Name.first_name,
+    species_id: species&.id,
+    race_id: race&.id,
+    mother_id: KepplerCattle::Cow.where(gender: 'female')&.sample&.id,
+    father_id: KepplerCattle::Cow.where(gender: 'male')&.sample&.id,
     birthdate: Faker::Date.birthday(1, 15),
     coat_color: Faker::Color.color_name,
     nose_color: Faker::Color.color_name,

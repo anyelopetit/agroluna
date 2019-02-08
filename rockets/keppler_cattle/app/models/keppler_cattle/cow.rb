@@ -9,6 +9,7 @@ module KepplerCattle
     include Downloadable
     include Sortable
     include Searchable
+    include KepplerCattle::Concerns::Ageable
     mount_uploader :image, AttachmentUploader
     acts_as_list
     acts_as_paranoid
@@ -94,62 +95,14 @@ module KepplerCattle
       KepplerFarm::StrategicLot.find_by(id: status.strategic_lot_id)
     end
 
-    def self.actives(farm)
-      select { |x| x.status.farm_id.eql?(farm.id) && x.status.dead != true unless x.status.blank? } if farm
-      # farm&.cows&.select { |x| x.status.dead == true }
+    def self.actives
+      active_ids = select { |x| x.status.dead != true unless x.status.blank? }.map(&:id)
+      where(id: active_ids)
     end
 
-    def self.inactives(farm)
-      select { |x| x.status.farm_id.eql?(farm.id) && x.status.dead == true unless x.status.blank? } if farm
-      # farm&.cows&.select { |x| x.status.dead != true }
-    end
-
-    def years 
-      now = Time.now.utc.to_date 
-      now.year - birthdate.year - (birthdate.to_date.change(:year => now.year) > now.year ? 1 : 0) 
-    end 
-
-    def months
-      now = Time.now.utc.to_date 
-      now.month >= birthdate.month ? (now.month - birthdate.month) : (12 - (birthdate.month - now.month))
-    end
-
-    def days
-      now = Time.now.utc.to_date 
-      days_count = 0
-      # Suma de los años completos que han pasado x 365
-      for y in birthdate.year+1..now.year-1
-        for m in 01..12
-          days_count += Time.days_in_month(m, y)
-        end
-      end
-      # Suma desde el mes que naciste hasta finalizar ese año
-      for m in birthdate.month..12
-        days_count += Time.days_in_month(m, birthdate.year)
-      end
-      # Suma desde el primero de enero hasta un mes antes de ahora
-      for m in 1..now.month-1
-        days_count += Time.days_in_month(m, now.year)
-      end
-      # Suma o resta de los días del mes actual con tu día de nacimiento
-      if birthdate.day > now.day
-        days_count -= (birthdate.day - now.day)
-      else
-        days_count += (now.day - birthdate.day)
-      end
-    end
-
-    def next_day
-      days_list = [210, 365, 540, 730]
-      left = 999
-      next_d = 0
-      days_list.each do |d|
-        if (d - days < left && d - days > 0)
-          left = (days - d) 
-          next_d = d
-        end
-      end
-      next_d
+    def self.inactives
+      inactive_ids = select { |x| x.status.dead == true unless x.status.blank? }.map(&:id)
+      where(id: inactive_ids)
     end
   end
 end

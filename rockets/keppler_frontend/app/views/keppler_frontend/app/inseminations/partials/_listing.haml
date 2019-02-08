@@ -1,0 +1,71 @@
+.container_custom
+  -# = render 'keppler_frontend/app/inseminations/partials/search', farm: farm, search: search
+  .d-flex.justify-content-end
+    -# .toolbar
+      .toolbar-item
+        -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+        = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
+          %i.icofont-trash
+    = link_to({action: :index, format: :pdf}, {class: 'float-right mt-4 mb-4', target: '_blank'}) do
+      %button.btn.btn_custom.btn--filled.btn--medium
+        %i.icofont-clip-board
+        Reporte
+    %a.float-right.mt-4.mb-4.ml-1{ href: app_farm_insemination_new_path(farm) }
+      %button.btn.btn_custom.btn--filled.btn--medium
+        %i.icofont-plus
+        Agregar
+  - if inseminations.blank? && @farm.inseminations.count > 0
+    = link_to 'Mostrar todos', app_farm_inseminations_path(farm)
+  %table.insemination-table
+    - if inseminations.size.zero?
+      %thead
+        %tr
+          %th.not-records.center
+            %center No se encontraron ganados
+    - else
+      %thead
+        %tr
+          -# %th
+            %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
+            %label{for: "styled-checkbox-all"}
+          %th
+            - if can?(KepplerCattle::Insemination).destroy_multiple?
+              .toolbar-item
+                .item-check
+                  .checkbox
+                    %label{ for: 'checkbox-all' }
+                      %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+                      %span.cr
+                        %i.cr-icon.icofont-check
+          -# %th Imagen
+          %th
+            = sort_link(@q, 'serie_number') do 
+              Serie
+          %th 
+            = sort_link(@q, 'status.weight') do
+              Especie
+          %th 
+            = sort_link(@q, 'status.days') do 
+              Raza
+      %tbody
+        - inseminations.each do |insemination|
+          %tr{ style: "border-bottom: 1px #eee solid;" }
+            - if can?(KepplerCattle::Insemination).destroy_multiple?
+              %td
+                .checkbox{ style: 'margin: 3px' }
+                  %label{ for: "checkbox-#{insemination.id}" }
+                    %input{ type:"checkbox", id: "checkbox-#{insemination.id}", 'checklist-model' => 'check', 'checklist-value' => "#{insemination.id}", '@click' => "listDelete(#{insemination.id})"}
+                    %span.cr
+                      %i.cr-icon.icofont-check
+            -# %td
+              = link_to({controller: :inseminations, action: :show, farm_id: @farm.id, insemination_id: insemination.id}) do
+                = image_tag insemination&.image&.url if insemination.image.url
+            %td
+              = link_to({controller: :inseminations, action: :show, farm_id: @farm.id, insemination_id: insemination.id}) do
+                = insemination&.serie_number
+            %td
+              = link_to({controller: :inseminations, action: :show, farm_id: @farm.id, insemination_id: insemination.id}) do
+                = insemination&.species&.name
+            %td
+              = link_to({controller: :inseminations, action: :show, farm_id: @farm.id, insemination_id: insemination.id}) do
+                = insemination&.race&.name

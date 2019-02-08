@@ -6,25 +6,25 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    before_action :set_farm, except: %i[root index]
-    before_action :set_cow, only: %i[new_status create_status show_cattle edit_cattle update_cattle]
-    before_action :cow_attributes, only: %i[new_cattle edit_cattle create_cattle]
+    before_action :set_farm, except: %i[root landing]
     before_action :set_farms
     before_action :default_logo
+    before_action :attachments
     before_action :last_page
+    before_action :user_authenticate
     
     include ObjectQuery
 
     def root
       if current_user
-        redirect_to index_path
+        redirect_to landing_path
       else
         redirect_to main_app.new_user_session_path, locale: :es
       end
     end
 
     # begin index
-    def index
+    def landing
       case current_user.role_ids[0]
       when 1
         if KepplerFarm::Farm.all.count > 0
@@ -61,9 +61,15 @@ module KepplerFrontend
 
     # begin callback user_authenticate
     def user_authenticate
-      redirect_to '/' unless user_signed_in?
+      redirect_to '/users/sign_in' unless user_signed_in?
     end
     # end callback user_authenticate
+
+    def attachments
+      @attachments = YAML.load_file(
+        "#{Rails.root}/config/attachments.yml"
+      )
+    end
 
     def last_page
       session[:last_page] = request.env['HTTP_REFERER']

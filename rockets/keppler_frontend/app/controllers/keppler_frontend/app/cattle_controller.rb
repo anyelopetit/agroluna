@@ -72,10 +72,10 @@ module KepplerFrontend
     end
 
     def index_variables
-      @q = KepplerCattle::Cow.ransack(params[:q])
+      @q = @farm.cows.ransack(params[:q])
       @cows = @q.result(distinct: true)
-      @active_cows = @cows.actives(@farm)
-      @inactive_cows = @cows.inactives(@farm)
+      @active_cows = @cows.actives
+      @inactive_cows = @cows.inactives
       @total = @cows.size
       @attributes = KepplerCattle::Cow.index_attributes
       @typologies = KepplerCattle::Typology.all

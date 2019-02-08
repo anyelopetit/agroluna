@@ -24,7 +24,7 @@ module KepplerFrontend
     end
 
     def new
-      @cows = @farm.cows.map { |c| [c.serie_number, c.id] }
+      @cows = @farm.cows.actives.map { |c| [c.serie_number, c.id] }
       @transference = KepplerCattle::Transference.new
     end
 

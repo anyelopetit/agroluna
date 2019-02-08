@@ -21,5 +21,13 @@ module KepplerCattle
     def races
       KepplerCattle::Race.where(species_id: id)
     end
+
+    def typologies
+      KepplerCattle::Typology.where(species_id: id)
+    end
+
+    def weighing_days
+      KepplerCattle::WeighingDay.where(species_id: id)
+    end
   end
 end

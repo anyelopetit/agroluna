@@ -1,6 +1,7 @@
-.home_custom
-  %nav.navbar.navbar-expand-lg.navbar_custom
-    .navbar_img_custom.navbar-js{ style: "background-image: url('#{farm&.photos&.find_by(cover: true)&.photo&.url || 'https://images.unsplash.com/photo-1547046219-d3ce5318c5c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80'}')" }
+
+.home_custom_fixed
+  %nav.navbar.navbar-expand-lg.navbar_custom_fixed
+    .navbar_js_fixed{ style: "background-image: url('#{farm&.photos&.find_by(cover: true)&.photo&.url || 'https://images.unsplash.com/photo-1547046219-d3ce5318c5c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80'}')" }
       .top_img
     .navbar_custom_content
       %a#navbarDropdown.nav-link{ class: ('dropdown-toggle' if farms), "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
@@ -21,18 +22,30 @@
           - if farm
             %li.nav-item
               = link_to app_farm_path(farm), class: "nav-link #{('active' if controller_name.eql?('frontend'))}" do
-                = farm&.title
-            %li.nav-item
-              %a#navbarFarm.nav-link{ class: "#{'active' if %w[cattle strategic_lots transferences].include?(controller_name)} dropdown-toggle", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+                -# Inicio
+                -# = farm&.title
+            %li.nav-item{ style: "position: relative;"}
+              %a.click#navbarFarm.nav-link{ class: "#{'active' if %w[cattle strategic_lots transferences].include?(controller_name)} dropdown-toggle", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
                 Ganadería
                 %i.icofont-simple-down
-              .dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarFarm"}
-                = link_to app_farm_cows_path(farm), class: "dropdown-item  #{('active' if controller_name.eql?('cattle'))}" do
-                  Ganadería
-                = link_to app_farm_strategic_lots_path(farm), class: "dropdown-item  #{('active' if controller_name.eql?('strategic_lots'))}" do
+              .farm_menu{"aria-labelledby" => "navbarFarm"}
+                = link_to app_farm_cows_path(farm), style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item #{('active_sub' if controller_name.eql?('cattle'))}" do
+                  Ganado
+                = link_to app_farm_strategic_lots_path(farm), style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item  #{('active_sub' if controller_name.eql?('strategic_lots'))}" do
                   Lotes estratégicos
-                = link_to app_farm_transferences_path(farm), class: "dropdown-item  #{('active' if controller_name.eql?('transferences'))}" do
+                = link_to app_farm_transferences_path(farm), style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item  #{('active_sub' if controller_name.eql?('transferences'))}" do
                   Transferencias
+            // %li.nav-item
+            //   %a#navbarFarm.nav-link{ class: "#{'active' if %w[cattle strategic_lots transferences].include?(controller_name)} dropdown-toggle", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+            //     Ganadería
+            //     %i.icofont-simple-down
+            //   .dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarFarm"}
+            //     = link_to app_farm_cows_path(farm), class: "dropdown-item  #{('active' if controller_name.eql?('cattle'))}" do
+            //       Ganadería
+            //     = link_to app_farm_strategic_lots_path(farm), class: "dropdown-item  #{('active' if controller_name.eql?('strategic_lots'))}" do
+            //       Lotes estratégicos
+            //     = link_to app_farm_transferences_path(farm), class: "dropdown-item  #{('active' if controller_name.eql?('transferences'))}" do
+            //       Transferencias
             -# %li.nav-item
               = link_to app_farm_strategic_lots_path(farm), class: "nav-link #{('active' if controller_name.eql?('strategic_lots'))}" do
                 Lotes estratégicos
@@ -71,9 +84,10 @@
                   .pull-left
                     = image_tag 'admin/es.png', class: 'small-flat small-profile-img keppler-background'
                   %p.small-flat= t('keppler.language.es')
-  .home_description
-    %h1.profile_name= farm&.title
-    %span.profile_activity= farm&.processes&.join(', ')
+  
+  -# .home_description
+  -#   %h1.profile_name= farm&.title
+  -#   %span.profile_activity= farm&.processes&.join(', ')
 
 :scss
   .top_img{
@@ -88,32 +102,7 @@
     background-color: #030708;
   }
 
-  
-  .navbar_custom {
-    &.size_fixed {
-      height: 90px;
-      width: 100%;
-      overflow: hidden;
-      border-radius: 0px;
 
-    }
-  }
-  .home_custom {
-    &.fixed-nav {
-      height: 60px;
-    }
-  }
-  .navbar-js {
-    &.fixed {
-      min-height: 100px;
-      height:100px;
-      //background: #008500 !important;
-      filter: blur(2px);
-      top: -2px;
-      left: -2px;
-      right: -1px;
-    }
-  }
   .farm-logo img {
     width: 30px;
     margin-right: 10px;
@@ -172,8 +161,77 @@
     display: flex;
     align-items: center;
   }
-:javascript
-  $('.navbar_img_custom').addClass('fixed');
-  $('.home_custom').addClass('fixed-nav');
-  $('.navbar_custom').addClass('size_fixed');
+  
+  .farm_menu {
+    display: flex;
+    position: absolute;
+    &.visibility {
+      // display: none;
+      display: flex;
+      position: absolute;
+    }
+  }
+
+  a.modelOne { 
+    transition: .3s ease-in-out !important;
+    font-family: "Lato", sans-serif;
+    &:nth-child(1){
+      padding: .25rem 1.5rem .25rem 0.5rem;
+    }
  
+    &:hover {
+      color: white !important;
+      transition: .3s ease-in-out !important;
+      font-weight: 6  00;
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 5px;
+        background-color: #fa6d08;
+        width: 100%;
+        height: 3px;
+      }
+    }
+  }
+  .active_sub {
+    color: white !important;
+    position: relative;
+    transition: .3s ease-in-out !important;
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: -3px;
+      left: 6px;
+      background-color: #fa6d08;
+      width: 100%;
+      height: 3px;
+    }
+  }
+:javascript
+
+  $('.click').on('click', function(){
+    $('.farm_menu').toggleClass('visibility');
+  })
+  let modelOne = $('a.modelOne');
+
+  modelOne.click(function () {
+    var $this = $(this);
+    if (modelOne.hasClass('active_sub')) {
+      modelOne.toggleClass('active_sub');
+    }
+  });
+
+  let activeOne = $('.farm_menu ').find('a.modelOne.active_sub');
+
+  modelOne.hover(function () {
+    activeOne.removeClass('active_sub')
+    $(this).addClass('active_sub')
+  }, function () {
+    $(this).removeClass('active_sub')
+    activeOne.addClass('active_sub')
+  })
+  modelOne.on('click', function(){
+    modelOne.removeClass('active-sub')
+    $(this).addClass('active_sub')
+  })

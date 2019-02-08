@@ -1,23 +1,25 @@
-= render 'keppler_frontend/app/frontend/components/navbar', farm: @farm, farms: @farms
+= render 'keppler_frontend/app/frontend/components/navbar_fixed', farm: @farm, farms: @farms
 .app_wrapper
   .container_custom
     -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
-    .float-left.mb-4{ style: 'width: 80%' }
+    .float-left.mb-4
       %h1
         = link_to({action: :index}) do
-          Transferencias >
-        #{@transference.reason} (#{@transference.cattle.size})
+          Lotes estratégicos >
+        #{@strategic_lot.name}
+        %br
+        .badge.badge-secondary #{@strategic_lot.function}
     .d-flex.justify-content-end
       -# .toolbar
         .toolbar-item
           -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
-          = link_to app_farm_transference_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
+          = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
             %i.icofont-trash
-      = link_to({action: :show, format: :pdf}, {class: 'float-right mt-4 mb-4', target: '_blank'}) do
+      = link_to({action: :index, format: :pdf}, {class: 'float-right mt-4 mb-4', target: '_blank'}) do
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-clip-board
           Reporte
-      -# %a.float-right.mt-4.mb-4.ml-3{ href: app_farm_cow_new_path(farm) }
+      %a.float-right.mt-4.mb-4.ml-3{ href: app_farm_cow_new_path(farm) }
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-plus
           Agregar
@@ -35,7 +37,7 @@
             -# %th
               %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
               %label{for: "styled-checkbox-all"}
-            -# %th
+            %th
               - if can?(KepplerCattle::Cow).destroy_multiple?
                 .toolbar-item
                   .item-check
@@ -64,7 +66,7 @@
         %tbody
           - @cows.each do |cow|
             %tr{ style: "border-bottom: 1px #eee solid;" }
-              -# - if can?(KepplerCattle::Cow).destroy_multiple?
+              - if can?(KepplerCattle::Cow).destroy_multiple?
                 %td
                   .checkbox{ style: 'margin: 3px' }
                     %label{ for: "checkbox-#{cow.id}" }

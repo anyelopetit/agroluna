@@ -2,7 +2,7 @@ KepplerFrontend::Engine.routes.draw do
   
   # Root
   root to: 'app/frontend#root'
-  get '/index', to: 'app/frontend#index', as: :index
+  get '/landing', to: 'app/frontend#landing', as: :landing
   get '/login', to: 'app/frontend#login', as: :login
 
   #Farm
@@ -36,11 +36,20 @@ KepplerFrontend::Engine.routes.draw do
   # Farm Transferences
   get '/finca/:farm_id/transferencias', to: 'app/transferences#index', as: :app_farm_transferences
   get '/finca/:farm_id/transferencias/:transference_id', to: 'app/transferences#show', as: :app_farm_transference
-  get '/finca/:farm_id/editar-transferencias/:transference_id', to: 'app/transferences#edit', as: :app_farm_transference_edit
+  # get '/finca/:farm_id/editar-transferencias/:transference_id', to: 'app/transferences#edit', as: :app_farm_transference_edit
   get '/finca/:farm_id/nueva-transferencia', to: 'app/transferences#new', as: :app_farm_transference_new
   post '/finca/:farm_id/transferencias', to: 'app/transferences#create', as: :app_farm_transference_create
-  patch '/finca/:farm_id/transferencias/:transference_id', to: 'app/transferences#update', as: :app_farm_transference_update
-  delete '/finca/:farm_id/transferencias/:transference_id/eliminar', to: 'app/transferences#destroy', as: :app_farm_transference_destroy
+  # patch '/finca/:farm_id/transferencias/:transference_id', to: 'app/transferences#update', as: :app_farm_transference_update
+  # delete '/finca/:farm_id/transferencias/:transference_id/eliminar', to: 'app/transferences#destroy', as: :app_farm_transference_destroy
+
+  # Farm Cattle
+  get '/finca/:farm_id/pajuelas', to: 'app/inseminations#index', as: :app_farm_inseminations
+  get '/finca/:farm_id/pajuela/:insemination_id', to: 'app/inseminations#show', as: :app_farm_insemination
+  get '/finca/:farm_id/editar-pajuela/:insemination_id', to: 'app/inseminations#edit', as: :app_farm_insemination_edit
+  get '/finca/:farm_id/nueva-pajuela', to: 'app/inseminations#new', as: :app_farm_insemination_new
+  post '/finca/:farm_id/pajuela', to: 'app/inseminations#create', as: :app_farm_insemination_create
+  patch '/finca/:farm_id/pajuela/:insemination_id', to: 'app/inseminations#update', as: :app_farm_insemination_update
+  delete '/finca/:farm_id/pajuela/:insemination_id/eliminar', to: 'app/inseminations#destroy', as: :app_farm_insemination_destroy
 
   namespace :admin do
     scope :frontend, as: :frontend do

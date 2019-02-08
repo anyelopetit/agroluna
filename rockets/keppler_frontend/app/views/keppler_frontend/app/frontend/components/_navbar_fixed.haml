@@ -35,17 +35,8 @@
                   Lotes estratégicos
                 = link_to app_farm_transferences_path(farm), style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item  #{('active_sub' if controller_name.eql?('transferences'))}" do
                   Transferencias
-            // %li.nav-item
-            //   %a#navbarFarm.nav-link{ class: "#{'active' if %w[cattle strategic_lots transferences].include?(controller_name)} dropdown-toggle", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
-            //     Ganadería
-            //     %i.icofont-simple-down
-            //   .dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarFarm"}
-            //     = link_to app_farm_cows_path(farm), class: "dropdown-item  #{('active' if controller_name.eql?('cattle'))}" do
-            //       Ganadería
-            //     = link_to app_farm_strategic_lots_path(farm), class: "dropdown-item  #{('active' if controller_name.eql?('strategic_lots'))}" do
-            //       Lotes estratégicos
-            //     = link_to app_farm_transferences_path(farm), class: "dropdown-item  #{('active' if controller_name.eql?('transferences'))}" do
-            //       Transferencias
+                = link_to app_farm_inseminations_path(farm), class: "dropdown-item  #{('active' if controller_name.eql?('inseminations'))}" do
+                  Pajuelas
             -# %li.nav-item
               = link_to app_farm_strategic_lots_path(farm), class: "nav-link #{('active' if controller_name.eql?('strategic_lots'))}" do
                 Lotes estratégicos
@@ -103,6 +94,24 @@
   }
 
 
+    }
+  }
+  .home_custom {
+    &.fixed-nav {
+      height: 60px;
+    }
+  }
+  .navbar-js {
+    &.fixed {
+      min-height: 100px;
+      height:100px;
+      //background: #28C76F !important;
+      filter: blur(2px);
+      top: -2px;
+      left: -2px;
+      right: -1px;
+    }
+  }
   .farm-logo img {
     width: 30px;
     margin-right: 10px;

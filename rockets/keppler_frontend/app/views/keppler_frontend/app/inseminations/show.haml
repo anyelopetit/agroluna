@@ -1,0 +1,201 @@
+= render 'keppler_frontend/app/frontend/components/navbar_fixed', farm: @farm, farms: @farms
+.app_wrapper
+  .container_custom
+    .float-left
+      -# %a.mt-4.mb-4.ml-3{ href: app_farm_inseminations_path(@farm) }
+      = link_to(request.env['HTTP_REFERER'], { class: 'mt-4 mb-4 ml-3' }) do
+        %button.btn.btn_custom.btn--medium
+          %i.icofont-circled-left
+          Listado
+    .d-flex.justify-content-end.mb-5
+      -# .toolbar
+        %a{ href: '' }
+          %i.icofont-trash
+        %a{ href: '' }
+          %i.icofont-refresh
+        %a{ href: '' }
+          %i.icofont-download
+      .actions
+        .float-right
+          = link_to({action: :show, format: :pdf}, {class: 'mt-4 mb-4', target: '_blank'}) do
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-clip-board
+              Reporte
+          %a.mt-4.mb-4{ href: app_farm_insemination_edit_path(@farm, @insemination) }
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-ui-edit
+              Editar
+          %a.mt-4.mb-4{ href: app_farm_insemination_status_new_path(@farm, @insemination) }
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-plus
+              Actualizar
+          %a.mt-4.mb-4#open-status-history
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-clock-time
+              Historial
+  .container_custom
+    .row
+      .col-md-12
+        .card_show.insemination_info.p-5
+          .float-right
+            -# = image_tag "/assets/keppler_cattle/#{@insemination.species}", class: 'svg-icon-md' unless @insemination.species.blank?
+            = image_tag "/assets/keppler_cattle/male", class: 'svg-icon-md'
+          .row.mt-5
+            .col-lg-3{ :style =>"display: flex; justify-content: center;"}
+              .card_insemination
+                .row
+                  .col-lg-12
+                    = image_tag (@insemination.try(:image)&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_insemination'
+                  .col-lg-12
+                    .card_insemination_content{ :style => "text-align: center;"}
+                      %h1
+                        = @insemination.serie_number
+                      %small= "(#{@insemination.short_name})" unless @insemination.short_name.blank?
+                      %span= @insemination.race&.name
+            .col-lg-9
+              .row
+                .col-lg-4
+                  %dl
+                    %dt Número de serie
+                    %dd= @insemination.serie_number
+                    %dt Nombre corto
+                    %dd= @insemination.short_name
+                    %dt Especie
+                    %dd= @insemination.species&.name
+                    %dt Procedencia
+                    %dd= @insemination.provenance
+                .col-lg-4
+                  %dl
+                    %dt Edad (Años-Meses)
+                    %dd #{@insemination.years}-#{@insemination.months}
+                    %dt Fecha de Nacimiento
+                    %dd= @insemination.birthdate
+                    %dt Raza
+                    %dd= @insemination.race&.name
+                .col-lg-4
+                  %dl
+                    %dt Color Pelaje
+                    %dd= @insemination.coat_color
+                    %dt Color de Borla
+                    %dd= @insemination.tassel_color
+                    %dt Color Morro
+                    %dd= @insemination.nose_color
+      .col-md-4
+        .card_status_specific
+          .card_status--title.card_status_title
+            %h2
+              Edad
+          .box-body.no-padding
+            .row
+              .col-lg-12
+                .counter
+                  %dl
+                    %dd
+                      .months
+                      = @insemination.months
+                      = "-"
+                      = @insemination.years
+                      %small A - M
+                      -# %strong Edad (años - meses)
+                .row
+                  .col-lg-6
+                    %dl
+                      %dt.card_status_details Fecha de Nacimiento
+                      %dd.card_status_details= @insemination.birthdate
+           
+                  .col-lg-6
+                    %dl
+                      %dt.card_status_details
+                        -# %i.icofont-infant-nipple
+                        Días de nacido
+                      %dd.card_status_details= @insemination.days
+      .col-md-4
+        .card_status_specific
+          .card_status--title.card_status_title
+            %h2
+              Padres
+          .box-body.no-padding
+            .row
+              .col-lg-12
+                .row
+                  .col-lg-6
+                    .parent_card
+                      - if @insemination.mother
+                        = link_to app_farm_insemination_path(@farm, @insemination.mother) do
+                          .parent_img
+                            = image_tag (@insemination.mother&.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_insemination'
+                          %dl
+                            %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                              = @insemination.mother&.serie_number
+                            %dt{:style => "font-weight:400; color: #6f6f6f;"} Madre
+                      - else
+                        
+                        %h3 SIN MADRE
+                  .col-lg-6
+                    .parent_card
+                      - if @insemination.father
+                        = link_to app_farm_insemination_path(@farm, @insemination.father) do
+                          .parent_img
+                            = image_tag (@insemination.mother&.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_insemination' 
+                          %dl
+                            %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                              = @insemination.father&.serie_number
+                            %dt{:style => "font-weight:400; color: #6f6f6f;"} Padre
+                      - else
+                        %h3 SIN PADRE
+:scss
+  #status-history {
+    height: 100vh;
+    width: 300px;
+    position: fixed;
+    right: -300px;
+    top: 0;
+    z-index: 4;
+    transition: .3s;
+  }
+
+  #close-status-history {
+    color: #28C76F;
+    z-index: 4;
+  }
+
+  .parent_card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    //border: 2px solid #f4f5f6;
+    border-radius: 4px;
+    padding: 10px;
+    
+    img {
+      max-width: 200px;
+    }
+  }
+
+ 
+  .svg-icon-md {
+    height: 30px;
+  }
+
+  .insemination_info {
+    dt {
+      margin-top: 20px;
+    }
+  }
+
+:javascript
+  $('#open-status-history').click(function() {
+    $('#status-history').css({
+      right: '0'
+    })
+  })
+  $('#close-status-history').click(function() {
+    $('#status-history').css({
+      right: '-300px'
+    })
+  })
+
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })

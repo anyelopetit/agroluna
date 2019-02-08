@@ -4,15 +4,16 @@
     %meta{ charset: 'UTF-8' }
     %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
     %meta{ name: 'theme-color', content: '#fff' }
+    %title Pajuelas
   %body
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
-      %h2.report-title Catálogo de Ganado por Orden de Serie
+      %h2.report-title Catálogo de Pajuelas por orden de Serie
     .header-right
       %p= Time.now.strftime('%d-%m-%Y')
       %p Pág. 1
-    %table.cow-table
-      - if @active_cows.size.zero?
+    %table.insemination-table
+      - if @active_inseminations.size.zero?
         %thead
           %tr
             %th.not-records.center
@@ -21,34 +22,22 @@
         %thead
           %tr
             %th Serie
-            %th Raza
-            %th
-              Edad
-              %br
-              A - M
-            %th Tipología
+            %th Nombre corto
             %th Madre
             %th Padre
-            %th Fecha
-            %th KG
-            %th Pelaje
-            %th Lote
+            %th Especie
+            %th Raza
+            %th Fecha de nacimiento
         %tbody
-          - @active_cows.each do |cow|
+          - @active_inseminations.each do |insemination|
             %tr
-              %td= cow&.serie_number
-              %td= cow&.race&.name
-              %td
-                = cow&.status&.years
-                \-
-                = cow&.status&.months
-              %td= cow&.status&.typology.name
-              %td= cow&.mother&.serie_number
-              %td= cow&.father&.serie_number
-              %td= cow&.status&.created_at&.strftime('%d-%m-%Y')
-              %td= cow&.status&.weight
-              %td= cow&.coat_color
-              %td= cow&.strategic_lot&.name
+              %td= insemination&.serie_number
+              %td= insemination&.short_name
+              %td= insemination&.mother&.serie_number
+              %td= insemination&.father&.serie_number
+              %td= insemination&.species&.name
+              %td= insemination&.race&.name
+              %td= insemination&.birthdate
 :scss
   body {
     font-size: 10px;

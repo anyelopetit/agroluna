@@ -2,7 +2,8 @@
 .app_wrapper
   .container_custom
     .float-left
-      %a.mt-4.mb-4.ml-3{ href: app_farm_cows_path(@farm) }
+      -# %a.mt-4.mb-4.ml-3{ href: app_farm_cows_path(@farm) }
+      = link_to(request.env['HTTP_REFERER'], { class: 'mt-4 mb-4 ml-3' }) do
         %button.btn.btn_custom.btn--medium
           %i.icofont-circled-left
           Listado
@@ -16,7 +17,11 @@
           %i.icofont-download
       .actions
         .float-right
-          %a.mt-4.mb-4.ml-3{ href: app_farm_cow_edit_path(@farm, @cow) }
+          = link_to({action: :show, format: :pdf}, {class: 'mt-4 mb-4', target: '_blank'}) do
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-clip-board
+              Reporte
+          %a.mt-4.mb-4{ href: app_farm_cow_edit_path(@farm, @cow) }
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-ui-edit
               Editar
@@ -33,7 +38,7 @@
       .col-md-12
         .card_show.cow_info.p-5
           .float-right
-            = image_tag "/assets/keppler_cattle/#{@cow.species}", class: 'svg-icon-md' unless @cow.species.blank?
+            -# = image_tag "/assets/keppler_cattle/#{@cow.species}", class: 'svg-icon-md' unless @cow.species.blank?
             = image_tag "/assets/keppler_cattle/#{@cow.gender}", class: 'svg-icon-md' unless @cow.gender.blank?
           .row.mt-5
             .col-lg-3{ :style =>"display: flex; justify-content: center;"}
@@ -47,8 +52,8 @@
                         = @cow.serie_number
                       %small= "(#{@cow.short_name})" unless @cow.short_name.blank?
                       %strong
-                        = @cow.status&.typology unless @cow.status&.blank?
-                      %span= @cow.race
+                        = @cow.status&.typology&.name unless @cow.status&.blank?
+                      %span= @cow.race&.name
             .col-lg-9
               .row
                 .col-lg-4
@@ -70,7 +75,7 @@
                     %dt Fecha de Nacimiento
                     %dd= @cow.birthdate
                     %dt Raza
-                    %dd= @cow.race
+                    %dd= @cow.race&.name
                     -# %dt Nombre largo
                     -# %dd= @cow.long_name
                     %dt Procedencia
@@ -105,7 +110,8 @@
                    
                 .col-lg-4
                   %dl
-                    %dt Activo
+                    %dt= @cow.status.dead ? 'Inactivo' : 'Activo'
+                    %dd= @cow.status.dead
                     
               
               
@@ -278,7 +284,7 @@
       -#             %dt
       -#               %i.icofont-cow
       -#               Tipología
-      -#             %dd= @cow.status.typology
+      -#             %dd= @cow.status.typology&.name
       -#             - unless @cow.status.strategic_lot.blank?
       -#               %dt
       -#               %i.icofont-users
@@ -359,7 +365,7 @@
               %dt Fecha de Nacimiento
               %dd= @cow.birthdate
               %dt Raza
-              %dd= @cow.race
+              %dd= @cow.race&.name
               -# %dt Nombre largo
               -# %dd= @cow.long_name
               %dt Procedencia
@@ -400,13 +406,13 @@
               %dl
                 %dt
                   %i.icofont-ui-calendar
-                %dd= status&.created_at.to_formatted_s(:day)
+                %dd= @cow.status&.created_at.to_formatted_s(:day)
                 %dt
                   %i.icofont-dumbbell
-                %dd #{status&.weight} (KG)
+                %dd #{@cow.status&.weight} (KG)
                 %dt
                   %i.icofont-info
-                %dd #{status&.typology}
+                %dd #{@cow.status&.typology&.name}
   - @statuses.each do |status|
     = render 'keppler_frontend/app/cattle/partials/modal_status', cow: @cow, status: status
 
@@ -422,7 +428,7 @@
   }
 
   #close-status-history {
-    color: #008500;
+    color: #28C76F;
     z-index: 4;
   }
 

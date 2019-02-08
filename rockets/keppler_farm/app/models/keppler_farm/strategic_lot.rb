@@ -26,7 +26,7 @@ module KepplerFarm
 
     def cows
       assignments = KepplerCattle::Assignment.where(strategic_lot_id: id).map(&:cow_id).uniq
-      KepplerCattle::Cow.find_by(id: assignments)
+      KepplerCattle::Cow.where(id: assignments)
     end
   end
 end

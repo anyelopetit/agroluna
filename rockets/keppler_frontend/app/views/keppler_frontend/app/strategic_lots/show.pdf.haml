@@ -12,6 +12,7 @@
     .header-right
       %p= Time.now.strftime('%d-%m-%Y')
       %p Pág. 1
+      %p #{@strategic_lot.cows.count} / #{@strategic_lot.cows.count}
     %table.cow-table
       - if @strategic_lots.size.zero?
         %thead
@@ -31,7 +32,7 @@
             %th Madre
             %th Padre
             %th Fecha
-            %th KGS
+            %th KG
             %th Pelaje
         %tbody
           - @strategic_lot.cows.each do |cow|

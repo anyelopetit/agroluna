@@ -20,6 +20,7 @@ module KepplerFrontend
 
     def show
       @statuses = @cow.statuses.order(id: :desc)
+      respond_to_formats(@cow)
     end
 
     def new
@@ -73,8 +74,8 @@ module KepplerFrontend
     def index_variables
       @q = KepplerCattle::Cow.ransack(params[:q])
       @cows = @q.result(distinct: true)
-      @active_cows = @cows.page(@current_page).actives(@farm)
-      @inactive_cows = @cows.page(@current_page).inactives(@farm)
+      @active_cows = @cows.actives(@farm)
+      @inactive_cows = @cows.inactives(@farm)
       @total = @cows.size
       @attributes = KepplerCattle::Cow.index_attributes
       @typologies = KepplerCattle::Typology.all

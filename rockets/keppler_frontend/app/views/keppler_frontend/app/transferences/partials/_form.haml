@@ -2,7 +2,7 @@
   .form-padding
     .row
       .col-sm-12.col-md-6
-        = f.input :cow_id, collection: @cows, label: 'Ganado', include_blank: 'Selecciona una serie', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom select2' }
+        = f.input :cattle, collection: @cows, label: 'Ganado', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom select2-multiple' }
       -# .col-sm-12.col-md-6
       = f.input :from_farm_id, input_html: { value: @farm.id, class: 'form-control input_custom' }, as: :hidden # collection: @farms, label: 'Desde Finca', include_blank: 'Selecciona una finca', label_html: { class: 'label_custom--strong' }
       .col-sm-12.col-md-6
@@ -14,3 +14,6 @@
             Guardar
 :javascript
   $('.select2').select2()
+  $('.select2-multiple').select2({
+    multiple: true
+  })

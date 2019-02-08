@@ -5,7 +5,7 @@ class CreateKepplerCattleTransferences < ActiveRecord::Migration[5.2]
       t.jsonb :cattle
       t.integer :from_farm_id
       t.integer :to_farm_id
-      t.text :description
+      t.string :reason
       t.integer :position
       t.datetime :deleted_at
 

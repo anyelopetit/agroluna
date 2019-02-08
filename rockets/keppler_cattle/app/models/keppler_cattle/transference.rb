@@ -13,11 +13,11 @@ module KepplerCattle
     acts_as_paranoid
 
     def self.index_attributes
-      %i[cow_id from_farm_id to_farm_id]
+      %i[cattle from_farm_id to_farm_id]
     end
 
-    def cow
-      KepplerCattle::Cow.find_by(id: cow_id)
+    def cows
+      KepplerCattle::Cow.where(id: cattle)
     end
 
     def from_farm

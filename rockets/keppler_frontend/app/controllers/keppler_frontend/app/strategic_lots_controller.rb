@@ -22,6 +22,7 @@ module KepplerFrontend
     end
 
     def show
+      @cows = @strategic_lot.cows
       respond_to_formats(@strategic_lot)
     end
 

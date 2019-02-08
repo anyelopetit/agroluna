@@ -25,7 +25,7 @@
         .box-body#cows
           = simple_form_for [:admin, :cattle, @assign], url: admin_farm_farm_strategic_lot_assign_cattle_path(@farm, strategic_lot) do |f|
             .col-sm-8
-              = f.input :cow_id, collection: @cows, label: false
+              = f.input :cow_id#, collection: @cows, label: false
               = f.input :strategic_lot_id, value: strategic_lot.id, as: :hidden
             .col-sm-4
               = f.submit :add, value: t('keppler.actions.add'), id: 'add-cows', disabled: true

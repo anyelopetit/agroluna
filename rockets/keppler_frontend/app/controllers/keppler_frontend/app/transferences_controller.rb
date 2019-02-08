@@ -18,7 +18,10 @@ module KepplerFrontend
       respond_to_formats(KepplerCattle::Transference.all)
     end
 
-    def show; end
+    def show
+      @cows = @transference.cows
+      respond_to_formats(@transference)
+    end
 
     def new
       @cows = @farm.cows.map { |c| [c.serie_number, c.id] }
@@ -30,7 +33,7 @@ module KepplerFrontend
 
       unless @transference.from_farm_id == @transference.to_farm_id
         if @transference.save!
-          @transference.cow.status.update(farm_id: @transference.to_farm_id)
+          @transference.cows.map { |x| x.status.update(farm_id: @transference.to_farm_id) }
           redirect_to app_farm_transferences_path(@farm)
         else
           flash[:error] = 'Revisa los datos del formulario'

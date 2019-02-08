@@ -1,7 +1,7 @@
-= render 'keppler_frontend/app/frontend/components/navbar_fixed', farm: @farm, farms: @farms
+= render 'keppler_frontend/app/frontend/components/navbar', farm: @farm, farms: @farms
 .app_wrapper
   #index-container
-    %ul#moduleTabs.nav.nav-tabs.mt-4{role: "tablist"}
+    %ul#moduleTabs.nav.nav-tabs{role: "tablist"}
       %li.nav-item
         %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#mfg", role: "tab"}
           Activos
@@ -10,7 +10,7 @@
           Dados de baja
       -# %li.nav-item
         %a#transfers-tab.nav-link{"aria-controls" => "transfers", "aria-selected" => "false", "data-toggle" => "tab", href: "#transfers", role: "tab"} Transferencias
-    %hr{ :style => "margin-top: 0;width: 90%; margin-bottom: 20px;"}
+    %hr{ :style => "margin-top: 0;width: 90%; margin-bottom: 0px;"}
     #moduleContent.tab-content
       #mfg.tab-pane.fade.show.active{ "aria-labelledby" => "mfg-tab", role: "tabpanel" }
         = render 'keppler_frontend/app/cattle/partials/listing', farm: @farm, cows: @active_cows, search: @q

@@ -6,7 +6,7 @@
       = link_to(request.env['HTTP_REFERER'], { class: 'mt-4 mb-4 ml-3' }) do
         %button.btn.btn_custom.btn--medium
           %i.icofont-circled-left
-          Listado
+          Listado 
     .d-flex.justify-content-end.mb-5
       -# .toolbar
         %a{ href: '' }
@@ -15,7 +15,7 @@
           %i.icofont-refresh
         %a{ href: '' }
           %i.icofont-download
-      .actions
+      .actions.d-none.d-sm-block
         .float-right
           = link_to({action: :show, format: :pdf}, {class: 'mt-4 mb-4', target: '_blank'}) do
             %button.btn.btn_custom.btn--filled.btn--medium
@@ -33,6 +33,22 @@
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-clock-time
               Historial
+      .actions_movil.d-sm-none
+        .float-right
+          %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-simple-down
+              Acciones
+          .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
+            %a{ class: 'dropdown-item', href: app_farm_cow_edit_path(@farm, @cow) }
+              Editar
+            %a{ class: 'dropdown-item', href: app_farm_cow_status_new_path(@farm, @cow) }
+              Actualizar
+            %a#open-status-history{class: "dropdown-item"}
+              Historial
+            = link_to({action: :show, format: :pdf}, {class: 'mt-4 mb-4 dropdown-item', target: '_blank'}) do
+              Reporte
+      
   .container_custom
     .row
       .col-md-12
@@ -56,7 +72,7 @@
                       %span= @cow.race&.name
             .col-lg-9
               .row
-                .col-lg-4
+                .col-lg-4.col-sm-4
                   %dl
                     %dt Número de serie
                     %dd= @cow.serie_number
@@ -68,7 +84,7 @@
                     -# %dd= @cow.coat_color
                     -# %dt Color de Borla
                     -# %dd= @cow.tassel_color
-                .col-lg-4
+                .col-lg-4.col-sm-4
                   %dl
                     -# %dt Edad (Años-Meses)
                     -# %dd #{@cow.years}-#{@cow.months}
@@ -85,7 +101,7 @@
                     -# - if @cow.status&.strategic_lot
                     -#   %dt Lote estrátegico
                     -#   %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
-                .col-lg-4
+                .col-lg-4.col-sm-4
                   %dl
                     %dt Color Pelaje
                     %dd= @cow.coat_color
@@ -95,7 +111,7 @@
                     %dd= @cow.nose_color
               %hr/
               .row
-                .col-lg-4
+                .col-lg-4.col-sm-4
                   %dl
                     %dt
                       -# %i.icofont-home
@@ -103,12 +119,12 @@
                     %dd
                       = @cow.status.farm_name
                     
-                .col-lg-4
+                .col-lg-4.col-sm-4
                   %dl
                     %dt Lote estrátegico
                     %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
                    
-                .col-lg-4
+                .col-lg-4.col-sm-4
                   %dl
                     %dt= @cow.status.dead ? 'Inactivo' : 'Activo'
                     %dd= @cow.status.dead
@@ -116,7 +132,7 @@
               
               
       // Current Status
-      .col-md-4
+      .col-lg-4.col-md-6
         .card_status_specific
           .card_status--title.card_status_title
             %h2
@@ -145,7 +161,7 @@
                         -# %i.icofont-muscle
                         Condición corporal
                       %dd.card_status_details= @cow.status.corporal_condition 
-      .col-md-4
+      .col-lg-4.col-md-6
         .card_status_specific
           .card_status--title.card_status_title
             %h2
@@ -175,8 +191,8 @@
                       %dt.card_status_details
                         Días de nacido
                       %dd.card_status_details= @cow.status.days
-      .col-md-4
-        .card_status_specific
+      .col-lg-4.col-md-12
+        .card_status_specific.card_status_parent
           .card_status--title.card_status_title
             %h2
               Padres
@@ -184,7 +200,7 @@
             .row
               .col-lg-12
                 .row
-                  .col-lg-6
+                  .col-lg-6.col-md-6
                     .parent_card
                       - if @cow.mother
                         = link_to app_farm_cow_path(@farm, @cow.mother) do
@@ -197,7 +213,7 @@
                       - else
                         
                         %h3 SIN MADRE
-                  .col-lg-6
+                  .col-lg-6.col-md-6
                     .parent_card
                       - if @cow.father
                         = link_to app_farm_cow_path(@farm, @cow.father) do
@@ -210,7 +226,127 @@
                           
                       - else
                         %h3 SIN PADRE
-      
+                    
+      .col-md-6
+        .card_show.card_status
+          .card_status--bar
+            - if @cow.gender?('male')
+              %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Recelador</h4>' }
+                %i.icofont-bull{ class: ('active' if @cow.status.defiant) }
+              %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Reproductor</h4>' }
+                %i.icofont-dna{ class: ('active' if @cow.status.reproductive) }
+            - else
+              %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Preñada</h4>' }
+                %i.icofont-baby{ class: ('active' if @cow.status.pregnant) }
+              %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Lactando</h4>' }
+                %i.icofont-baby-milk-bottle{ class: ('active' if @cow.status.lactating)  }
+              %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Criando</h4>' }
+                %i.icofont-holding-hands{ class: ('active' if @cow.status.breeding) }
+            -# %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Dado de baja</h4>' }
+              %i.icofont-danger-zone{ class: ('active' if @cow.status.dead) }
+          .card_status--title
+            %h2
+              Estado actual
+              %small (#{@cow.status.created_at.to_formatted_s(:day)})
+          .box-body.no-padding
+            .row
+              .col-lg-6
+                %dl
+                  %dt
+                    %i.icofont-dumbbell
+                    Peso
+                  %dd
+                    = @cow.status.weight
+                    KG
+                  %dt
+                    %i.icofont-baby-cloth
+                    Edad (años - meses)
+                  %dd
+                    = @cow.status.years
+                    = "-"
+                    = @cow.status.months
+                  %dt
+                    %i.icofont-muscle
+                    Condición corporal
+                  %dd= @cow.status.corporal_condition
+                  %dt
+                    %i.icofont-home
+                    Finca
+                  %dd
+                    = @cow.status.farm_name
+              .col-lg-6
+                %dl
+                  %dt
+                    %i.icofont-dumbbell
+                    Peso Ganado
+                  %dd
+                    = @cow.status.gained_weight
+                    KG
+                  %dt
+                    %i.icofont-infant-nipple
+                    Días de nacido
+                  %dd= @cow.status.days
+                  %dt
+                    %i.icofont-cow
+                    Tipología
+                  %dd= @cow.status.typology&.name
+                  - unless @cow.status.strategic_lot.blank?
+                    %dt
+                    %i.icofont-users
+                    Lote estratégico
+                  %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
+        
+        .row
+          .col-md-6
+            .card_show.p-5
+              .parent_card
+                - if @cow.mother
+                  = link_to app_farm_cow_path(@farm, @cow.mother) do
+                    .parent_img
+                      = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+                    %h3 Madre
+                  
+                    -# - if @cow.mother&.image&.url 
+                      = image_tag @cow.mother&.image&.url
+                    -# - else
+                      = image_tag '/assets/keppler_cattle/cow_shadow'
+                      %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+                    = @cow.mother&.serie_number
+                - else
+                  
+                  %h3 SIN MADRE
+              -# .parent_card
+              -#   - if @cow.father
+              -#     = link_to app_farm_cow_path(@farm, @cow.father) do
+              -#       %h3 Padre
+              -#       -# - if @cow.father&.image&.url 
+              -#         = image_tag @cow.father&.image&.url
+              -#       -# - else
+              -#         = image_tag '/assets/keppler_cattle/bull_shadow'
+              -#         %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+              -#       = @cow.father&.serie_number
+              -#   - else
+              -#     %h3 SIN PADRE
+          
+            -# %table.table
+              %tbody
+                - if @cow.status
+                  - @cow.status&.as_json(except: %w[id cow_id position deleted_at]).each do |attribute, value|
+                    - unless value.nil?
+                      %tr.list-row
+                        %th.display-label= t("activerecord.attributes.#{attribute}").humanize
+                        %td.display-value.fs-body-1.tc-black-2
+                          - if @attachments.dig('images', 'names').include?(attribute)
+                            = image_tag value.url if value.url
+                          - elsif @attachments.dig('images', 'names').map(&:pluralize).include?(attribute)
+                            - value.each do |image|
+                              = image_tag image.url if image.url
+                          - elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
+                            = value ? 'Sí' : 'No'
+                          - elsif attribute.include?('_id')
+                            = object_name(@cow.status, attribute) #|| model_name('keppler_cattle', attribute, value) unless @cow.status&.blank?
+                          - else 
+                            = sanitize raw value
       .col-lg-4
         .card_show.card_status.card_history#status-history
           .float-right
@@ -242,46 +378,634 @@
               - if @cow.status&.strategic_lot
                 %dt Lote estrátegico
                 %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
+    
             
     // Current Status
-    .col-md-6
-      .card_show.card_status
-        .card_status--bar
-          - if @cow.gender?('male')
-            %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Recelador</h4>' }
-              %i.icofont-bull{ class: ('active' if @cow.status.defiant) }
-            %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Reproductor</h4>' }
-              %i.icofont-dna{ class: ('active' if @cow.status.reproductive) }
-          - else
-            %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Preñada</h4>' }
-              %i.icofont-baby{ class: ('active' if @cow.status.pregnant) }
-            %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Lactando</h4>' }
-              %i.icofont-baby-milk-bottle{ class: ('active' if @cow.status.lactating)  }
-            %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Criando</h4>' }
-              %i.icofont-holding-hands{ class: ('active' if @cow.status.breeding) }
-          -# %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Dado de baja</h4>' }
-            %i.icofont-danger-zone{ class: ('active' if @cow.status.dead) }
-        .card_status--title
-          %h2
-            Estado actual
-            %small (#{@cow.status.created_at.to_formatted_s(:day)})
-        .box-body.no-padding
-          .row
-            .col-lg-6
-              %dl
-                %dt
-                  %i.icofont-ui-calendar
-                %dd= @cow.status&.created_at.to_formatted_s(:day)
-                %dt
-                  %i.icofont-dumbbell
-                %dd #{@cow.status&.weight} (KG)
-                %dt
-                  %i.icofont-info
-                %dd #{@cow.status&.typology&.name}
+    -# .col-md-6
+    -#   .card_show.card_status
+    -#     .card_status--bar
+    -#       - if @cow.gender?('male')
+    -#         %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Recelador</h4>' }
+    -#           %i.icofont-bull{ class: ('active' if @cow.status.defiant) }
+    -#         %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Reproductor</h4>' }
+    -#           %i.icofont-dna{ class: ('active' if @cow.status.reproductive) }
+    -#       - else
+    -#         %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Preñada</h4>' }
+    -#           %i.icofont-baby{ class: ('active' if @cow.status.pregnant) }
+    -#         %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Lactando</h4>' }
+    -#           %i.icofont-baby-milk-bottle{ class: ('active' if @cow.status.lactating)  }
+    -#         %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Criando</h4>' }
+    -#           %i.icofont-holding-hands{ class: ('active' if @cow.status.breeding) }
+    -#       -# %a.status-tooltip{ 'data-toggle': "tooltip", 'data-placement': "top", 'data-html': 'true', title: '<h4>Dado de baja</h4>' }
+    -#         %i.icofont-danger-zone{ class: ('active' if @cow.status.dead) }
+    -#     .card_status--title
+    -#       %h2
+    -#         Estado actual
+    -#         %small (#{@cow.status.created_at.to_formatted_s(:day)})
+    -#     .box-body.no-padding
+    -#       .row
+    -#         .col-lg-6
+    -#           %dl
+    -#             %dt
+    -#               %i.icofont-ui-calendar
+    -#             %dd= @cow.status&.created_at.to_formatted_s(:day)
+    -#             %dt
+    -#               %i.icofont-dumbbell
+    -#             %dd #{@cow.status&.weight} (KG)
+    -#             %dt
+    -#               %i.icofont-info
+    -#             %dd #{@cow.status&.typology&.name}
+
+
+
+
+    .col-12{ style: "display: flex; justify-content:center;"}
+      .col-lg-2
+        .card_status_specific.block_one{ style: "width: 140px; min-height: 185px;"}
+          .parent_card
+            - if @cow.mother
+              = link_to app_farm_cow_path(@farm, @cow.mother) do
+                .parent_img
+                  = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+                %dl
+                  %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                    = @cow.mother&.serie_number
+                  %dt{:style => "font-weight:400; color: #6f6f6f;"} Madre
+                  -# %h3 Madre
+              
+                -# - if @cow.mother&.image&.url 
+                  = image_tag @cow.mother&.image&.url
+                -# - else
+                  = image_tag '/assets/keppler_cattle/cow_shadow'
+                  %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+            - else
+              %h3 HIJO
+    .col-12{ style: "display: flex; justify-content:center;"}
+      .col-lg-2
+        .card_status_specific.block_two-left{ style: "width: 140px; min-height: 185px;"}  
+          .parent_card
+            - if @cow.father
+              = link_to app_farm_cow_path(@farm, @cow.father) do
+                .parent_img
+                  = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+                %dl
+                  %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                    = @cow.father&.serie_number
+                  %dt{:style => "font-weight:400; color: #6f6f6f;"} Padre
+                -# - if @cow.father&.image&.url 
+                  = image_tag @cow.father&.image&.url
+                -# - else
+                  = image_tag '/assets/keppler_cattle/bull_shadow'
+                  %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+                
+            - else
+              %h3 PADRE
+      
+      .col-lg-2
+        .card_status_specific.block_two-right{ style: "width: 140px; min-height: 185px;"}
+          .parent_card
+            - if @cow.mother
+              = link_to app_farm_cow_path(@farm, @cow.mother) do
+                .parent_img
+                  = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+                %dl
+                  %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                    = @cow.mother&.serie_number
+                  %dt{:style => "font-weight:400; color: #6f6f6f;"} Madre
+                  -# %h3 Madre
+              
+                -# - if @cow.mother&.image&.url 
+                  = image_tag @cow.mother&.image&.url
+                -# - else
+                  = image_tag '/assets/keppler_cattle/cow_shadow'
+                  %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+            - else
+              %h3 MADRE
+    .col-12{ style: "display: flex; justify-content:center;"}
+      .col-lg-2
+        .card_status_specific.block_three-left-one{ style: "width: 140px; min-height: 185px;"}
+          .parent_card
+            - if @cow.father
+              = link_to app_farm_cow_path(@farm, @cow.father) do
+                .parent_img
+                  = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+                %dl
+                  %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                    = @cow.father&.serie_number
+                  %dt{:style => "font-weight:400; color: #6f6f6f;"} Padre
+                -# - if @cow.father&.image&.url 
+                  = image_tag @cow.father&.image&.url
+                -# - else
+                  = image_tag '/assets/keppler_cattle/bull_shadow'
+                  %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+                
+            - else
+              %h3 PADRE
+      
+      .col-lg-2
+        .card_status_specific.block_three-left-two{ style: "width: 140px; min-height: 185px;"}
+          .parent_card
+            - if @cow.mother
+              = link_to app_farm_cow_path(@farm, @cow.mother) do
+                .parent_img
+                  = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+                %dl
+                  %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                    = @cow.mother&.serie_number
+                  %dt{:style => "font-weight:400; color: #6f6f6f;"} Madre
+                  -# %h3 Madre
+              
+                -# - if @cow.mother&.image&.url 
+                  = image_tag @cow.mother&.image&.url
+                -# - else
+                  = image_tag '/assets/keppler_cattle/cow_shadow'
+                  %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+            - else
+              %h3 MADRE 
+      .col-lg-2
+        .card_status_specific.block_three-right-one{ style: "width: 140px; min-height: 185px;"}
+          .parent_card
+            - if @cow.father
+              = link_to app_farm_cow_path(@farm, @cow.father) do
+                .parent_img
+                  = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+                %dl
+                  %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                    = @cow.father&.serie_number
+                  %dt{:style => "font-weight:400; color: #6f6f6f;"} Padre
+                -# - if @cow.father&.image&.url 
+                  = image_tag @cow.father&.image&.url
+                -# - else
+                  = image_tag '/assets/keppler_cattle/bull_shadow'
+                  %p{ style:  'position:absolute; top:50right:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+                
+            - else
+              %h3 PADRE
+      
+      .col-lg-2
+        .card_status_specific.block_three-right-two{ style: "width: 140px; min-height: 185px;"}
+          .parent_card
+            - if @cow.mother
+              = link_to app_farm_cow_path(@farm, @cow.mother) do
+                .parent_img
+                  = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+                %dl
+                  %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                    = @cow.mother&.serie_number
+                  %dt{:style => "font-weight:400; color: #6f6f6f;"} Madre
+                  -# %h3 Madre
+              
+                -# - if @cow.mother&.image&.url 
+                  = image_tag @cow.mother&.image&.url
+                -# - else
+                  = image_tag '/assets/keppler_cattle/cow_shadow'
+                  %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+            - else
+              %h3 MADRE 
+    .col-12{ style: "display: flex; justify-content:center;"}
+      .col
+        .card_status_specific.block_four-left-one{ style: "width: 140px; min-height: 185px;"}
+          .parent_card
+            - if @cow.father
+              = link_to app_farm_cow_path(@farm, @cow.father) do
+                .parent_img
+                  = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+                %dl
+                  %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                    = @cow.father&.serie_number
+                  %dt{:style => "font-weight:400; color: #6f6f6f;"} Padre
+                -# - if @cow.father&.image&.url 
+                  = image_tag @cow.father&.image&.url
+                -# - else
+                  = image_tag '/assets/keppler_cattle/bull_shadow'
+                  %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+                
+            - else
+              %h3 PADRE
+      
+      .col
+        .card_status_specific.block_four-left-two{ style: "width: 140px; min-height: 185px;"}
+          .parent_card
+            - if @cow.mother
+              = link_to app_farm_cow_path(@farm, @cow.mother) do
+                .parent_img
+                  = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+                %dl
+                  %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                    = @cow.mother&.serie_number
+                  %dt{:style => "font-weight:400; color: #6f6f6f;"} Madre
+                  -# %h3 Madre
+              
+                -# - if @cow.mother&.image&.url 
+                  = image_tag @cow.mother&.image&.url
+                -# - else
+                  = image_tag '/assets/keppler_cattle/cow_shadow'
+                  %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+            - else
+              %h3 MADRE 
+      .col
+        .card_status_specific.block_four-left-three{ style: "width: 140px; min-height: 185px;"}
+          .parent_card
+            - if @cow.father
+              = link_to app_farm_cow_path(@farm, @cow.father) do
+                .parent_img
+                  = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+                %dl
+                  %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                    = @cow.father&.serie_number
+                  %dt{:style => "font-weight:400; color: #6f6f6f;"} Padre
+                -# - if @cow.father&.image&.url 
+                  = image_tag @cow.father&.image&.url
+                -# - else
+                  = image_tag '/assets/keppler_cattle/bull_shadow'
+                  %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+                
+            - else
+              %h3 PADRE
+      
+      .col
+        .card_status_specific.block_four-left-four{ style: "width: 140px; min-height: 185px;"}
+          .parent_card
+            - if @cow.mother
+              = link_to app_farm_cow_path(@farm, @cow.mother) do
+                .parent_img
+                  = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+                %dl
+                  %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                    = @cow.mother&.serie_number
+                  %dt{:style => "font-weight:400; color: #6f6f6f;"} Madre
+                  -# %h3 Madre
+              
+                -# - if @cow.mother&.image&.url 
+                  = image_tag @cow.mother&.image&.url
+                -# - else
+                  = image_tag '/assets/keppler_cattle/cow_shadow'
+                  %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+            - else
+              %h3 MADRE 
+    
+      .col
+        .card_status_specific.block_four-right-one{ style: "width: 140px; min-height: 185px;"}
+          .parent_card
+            - if @cow.father
+              = link_to app_farm_cow_path(@farm, @cow.father) do
+                .parent_img
+                  = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+                %dl
+                  %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                    = @cow.father&.serie_number
+                  %dt{:style => "font-weight:400; color: #6f6f6f;"} Padre
+                -# - if @cow.father&.image&.url 
+                  = image_tag @cow.father&.image&.url
+                -# - else
+                  = image_tag '/assets/keppler_cattle/bull_shadow'
+                  %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+                
+            - else
+              %h3 PADRE
+      
+      .col
+        .card_status_specific.block_four-right-two{ style: "width: 140px; min-height: 185px;"}
+          .parent_card
+            - if @cow.mother
+              = link_to app_farm_cow_path(@farm, @cow.mother) do
+                .parent_img
+                  = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+                %dl
+                  %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                    = @cow.mother&.serie_number
+                  %dt{:style => "font-weight:400; color: #6f6f6f;"} Madre
+                  -# %h3 Madre
+              
+                -# - if @cow.mother&.image&.url 
+                  = image_tag @cow.mother&.image&.url
+                -# - else
+                  = image_tag '/assets/keppler_cattle/cow_shadow'
+                  %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+            - else
+              %h3 MADRE 
+      .col
+        .card_status_specific.block_four-right-three{ style: "width: 140px; min-height: 185px;"}
+          .parent_card
+            - if @cow.father
+              = link_to app_farm_cow_path(@farm, @cow.father) do
+                .parent_img
+                  = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+                %dl
+                  %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                    = @cow.father&.serie_number
+                  %dt{:style => "font-weight:400; color: #6f6f6f;"} Padre
+                -# - if @cow.father&.image&.url 
+                  = image_tag @cow.father&.image&.url
+                -# - else
+                  = image_tag '/assets/keppler_cattle/bull_shadow'
+                  %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+                
+            - else
+              %h3 PADRE
+      
+      .col
+        .card_status_specific.block_four-right-four{ style: "width: 140px; min-height: 185px;"}
+          .parent_card
+            - if @cow.mother
+              = link_to app_farm_cow_path(@farm, @cow.mother) do
+                .parent_img
+                  = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+                %dl
+                  %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                    = @cow.mother&.serie_number
+                  %dt{:style => "font-weight:400; color: #6f6f6f;"} Madre
+                  -# %h3 Madre
+              
+                -# - if @cow.mother&.image&.url 
+                  = image_tag @cow.mother&.image&.url
+                -# - else
+                  = image_tag '/assets/keppler_cattle/cow_shadow'
+                  %p{ style:  'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#fff;'} SIN FOTO
+            - else
+              %h3 MADRE 
   - @statuses.each do |status|
     = render 'keppler_frontend/app/cattle/partials/modal_status', cow: @cow, status: status
 
 :scss
+  // nivel 1
+  .block_one {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 30%;
+      height: 2px;
+      top: 50%;
+      left: -30%;
+      background-color: #28C76F;
+
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      width: 30%;
+      height: 2px;
+      top: 50%;
+      right: -30%;
+      background-color: #28C76F;
+
+    }
+  }
+
+  // nivel 2
+  .block_two-left {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 71%;
+      top: -71%;
+      left: 40%;
+      background-color: #28C76F;
+
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      width: 80%;
+      height: 2px;
+      top: 50%;
+      left: -80%;
+      background-color: #28C76F;
+
+    }
+  }
+  .block_two-right {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 71%;
+      top: -71%;
+      right: 40%;
+      background-color: #28C76F;
+
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      width: 80%;
+      height: 2px;
+      top: 50%;
+      right: -80%;
+      background-color: #28C76F;
+
+    }
+  }
+
+
+  // nivel 3
+  .block_three-left-one {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 71%;
+      top: -71%;
+      left: 61%;
+      background-color: #28C76F;
+
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      width: 160%;
+      height: 2px;
+      top: 50%;
+      left: -160%;
+      background-color: #28C76F;
+
+    }
+  }
+  .block_three-left-two {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 20%;
+      top: -20%;
+      right: 50%;
+      background-color: #28C76F;
+
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      width: 20%;
+      height: 2px;
+      top: 50%;
+      left: -20%;
+      background-color: #28C76F;
+
+    }
+  }
+
+  .block_three-right-one {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 33%;
+      height: 2px;
+      top: 50%;
+      right: -33%;
+      background-color: #28C76F;
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      width: 20%;
+      height: 2px;
+      top: 50%;
+      right: -20%;
+      background-color: #28C76F;
+
+    }
+  }
+  .block_three-right-two {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 72%;
+      top: -71%;
+      right: 60%;
+      background-color: #28C76F;
+
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      width: 160%;
+      height: 2px;
+      top: 50%;
+      right: -160%;
+      background-color: #28C76F;
+
+    }
+  }
+
+  // nivel 4
+  .block_four-left-one {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 72%;
+      top: -71%;
+      left: 40%;
+      background-color: #28C76F;
+
+    }
+  }
+  .block_four-left-two {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 72%;
+      top: -71%;
+      right: 60%;
+      background-color: #28C76F;
+
+    }
+  }
+
+  .block_four-left-three {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 72%;
+      top: -71%;
+      right: 18%;
+      background-color: #28C76F;
+
+    }
+  }
+  .block_four-left-four {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 20%;
+      top: -20%;
+      right: 60%;
+      background-color: #28C76F;
+
+    }
+  }
+
+  .block_four-right-one {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 20%;
+      top: -20%;
+      left: 50%;
+      background-color: #28C76F;
+
+    }
+  }
+  .block_four-right-two {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 72%;
+      top: -71%;
+      left: 10%;
+      background-color: #28C76F;
+
+    }
+  }
+
+  .block_four-right-three {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 72%;
+      top: -71%;
+      left: 40%;
+      background-color: #28C76F;
+
+    }
+  }
+  .block_four-right-four {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 72%;
+      top: -71%;
+      right: 60%;
+      background-color: #28C76F;
+
+    }
+  }
+
+
   #status-history {
     height: 100vh;
     width: 300px;
@@ -316,11 +1040,6 @@
     height: 30px;
   }
 
-  .cow_info {
-    dt {
-      margin-top: 20px;
-    }
-  }
 
 :javascript
   $('#open-status-history').click(function() {

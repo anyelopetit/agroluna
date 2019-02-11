@@ -1,6 +1,6 @@
 .container_custom
   -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
-  .d-flex.justify-content-end
+  .d-flex.justify-content-end.content-btn
     -# .toolbar
       .toolbar-item
         -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
@@ -16,27 +16,28 @@
         Agregar
   - if cows.blank? && @farm.cows.count > 0
     = link_to 'Mostrar todos', app_farm_cows_path(farm)
-  %table.cow-table
-    - if cows.size.zero?
-      %thead
-        %tr
-          %th.not-records.center
-            %center No se encontraron ganados
-    - else
-      %thead
-        %tr
-          -# %th
-            %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
-            %label{for: "styled-checkbox-all"}
-          %th
-            - if can?(KepplerCattle::Cow).destroy_multiple?
-              .toolbar-item
-                .item-check
-                  .checkbox
-                    %label{ for: 'checkbox-all' }
-                      %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
-                      %span.cr
-                        %i.cr-icon.icofont-check
+  .content-table
+    %table.cow-table
+      - if cows.size.zero?
+        %thead
+          %tr
+            %th.not-records.center
+              %center No se encontraron ganados
+      - else
+        %thead
+          %tr
+            -# %th
+              %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
+              %label{for: "styled-checkbox-all"}
+            %th
+              - if can?(KepplerCattle::Cow).destroy_multiple?
+                .toolbar-item
+                  .item-check
+                    .checkbox
+                      %label{ for: 'checkbox-all' }
+                        %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+                        %span.cr
+                          %i.cr-icon.icofont-check
           %th
             = sort_link(@q, 'serie_number') do 
               Serie

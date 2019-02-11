@@ -9,7 +9,7 @@ $('.items').slick({
   dots: false,
   responsive: [
     {
-      breakpoint: 480,
+      breakpoint: 991,
       settings: {
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -17,11 +17,14 @@ $('.items').slick({
       }
     },
     {
-      breakpoint: 991,
+      breakpoint: 480,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 1,
         slidesToScroll: 1,
-        arrows: false
+        arrows: false,
+        autoplay: true,
+        dots: false,
+        autoplaySpeed: 3000,
       }
     }
   ]
@@ -34,16 +37,30 @@ $('.multiple-items').slick({
   dots: false,
   asNavFor: '.items',
   dots: true,
-  focusOnSelect: true
+  focusOnSelect: true,
+  responsive: [
+    {
+      breakpoint: 991,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        arrows: false
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        autoPlay: true
+      }
+    }
+  ]
 });
 
 
-
-// $('.single-item').slick({
-//   infinite: false
-// });
-
-
+// Font
 $(document).ready(function () {
   WebFontConfig = {
     google: {
@@ -60,3 +77,12 @@ $(document).ready(function () {
   })();
 
 });
+
+// Navbar Resposive
+$(function () {
+  $('[data-toggle="offcanvas"]').on('click', function () {
+    $('.offcanvas-collapse').toggleClass('open')
+    $('body').toggleClass('offcanvas-expanded');
+    $('.home_description').toggleClass('home_description-hidden')
+  })
+})

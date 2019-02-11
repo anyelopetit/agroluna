@@ -10,7 +10,7 @@
           Inactivos (#{@inactive_cows.count})
       -# %li.nav-item
         %a#transfers-tab.nav-link{"aria-controls" => "transfers", "aria-selected" => "false", "data-toggle" => "tab", href: "#transfers", role: "tab"} Transferencias
-    %hr{ :style => "margin-top: 0;width: 90%; margin-bottom: 0px;"}
+    %hr.line-tabs
     #moduleContent.tab-content
       #mfg.tab-pane.fade.show.active{ "aria-labelledby" => "mfg-tab", role: "tabpanel" }
         = render 'keppler_frontend/app/cattle/partials/listing', farm: @farm, cows: @active_cows, search: @q

@@ -183,7 +183,13 @@
         modelOne.toggleClass('active_sub');
       }
     });
-
+    $(function () {
+      $('[data-toggle="offcanvas"]').on('click', function () {
+        $('.offcanvas-collapse').toggleClass('open')
+        $('body').toggleClass('offcanvas-expanded');
+        $('.home_description').toggleClass('home_description-hidden')
+      })
+    })
 - else 
   :scss
     .navbar-collapse {
@@ -210,5 +216,12 @@
     }, function () {
       $(this).removeClass('active_sub')
       activeOne.addClass('active_sub')
+    })
+    $(function () {
+      $('[data-toggle="offcanvas"]').on('click', function () {
+        $('.offcanvas-collapse').toggleClass('open')
+        $('body').toggleClass('offcanvas-expanded');
+        $('.home_description').toggleClass('home_description-hidden')
+      })
     })
     

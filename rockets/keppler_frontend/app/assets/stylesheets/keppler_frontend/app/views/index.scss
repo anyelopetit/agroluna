@@ -78,10 +78,32 @@
   
 }
 
+.container_custom table {
+  td {
+    padding: 0;
+
+    a {
+      color: #4d5663;
+      display: inline-flex;
+      padding: 10px 0;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  .checkbox {
+    justify-content: center
+  }
+}
+
 .actions.dropdown-menu {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.175);
   left: auto !important;
   min-width: 130px;
   right: 120px !important;
   top: 15px !important;
+
+  a {
+    justify-content: flex
+  }
 }

@@ -83,7 +83,7 @@
             %td.status
               = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
                 =# cow&.status&.created_at&.strftime("%d-%m-%Y")
-                .card_status--bar
+                .card_status--bar{ style: 'display:flex' }
                   - if cow&.gender?('male')
                     %a.status-tooltip{ title: 'Recelador' }
                       %i.icofont-bull{ class: ('active' if cow&.status&.defiant) }

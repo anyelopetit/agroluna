@@ -178,8 +178,7 @@ a.modelOne {
     font-weight: 6  00;
     &:after {
       transition: .3s ease-in-out;
-      content: "";
-      position: absolute;
+      @include pseudo();
       bottom: -3px;
       left: 5px;
       background-color: #f28d23;
@@ -201,8 +200,7 @@ a.modelOne {
     color: white !important;
     position: relative;
     &:after {
-      content: "";
-      position: absolute;
+      @include pseudo();
       bottom: -3px;
       left: 5px;
       background-color: #f28d23;

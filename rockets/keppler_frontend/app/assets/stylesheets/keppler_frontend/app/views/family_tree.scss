@@ -1,0 +1,453 @@
+.col_family-tree {
+  display: flex;
+  justify-content: center;
+  &:last-child{
+    @include respond-to(sm){
+      display: none;
+    }
+    @include respond-to(xs){
+      display: none;
+    }
+    
+  }
+  @include respond-to(xs){
+    justify-content: flex-start;
+  }
+  &.level3 {
+    @include respond-to(xs){
+      display: none !important;
+    }
+  }
+}
+
+.content_family_tree {
+  @include respond-to(sm){
+    display: flex;
+    justify-content: center;
+  }
+  @include respond-to(xs){
+    display: flex;
+    justify-content: center;
+  }
+}
+.family_tree{
+  width: 140px !important;
+  min-height: 185px; 
+
+  @include respond-to(md){
+    width: 100px !important;
+    min-height: 185px;
+  }
+  @include respond-to(sm){
+    width: 110px !important;
+    min-height: 100px;
+  }
+  @include respond-to(xs){
+    width: 100px !important;
+    min-height: 80px;
+  }
+  .parent_img {
+    
+    
+  }
+}
+// nivel 1
+.block_one {
+  position: relative;
+  &:before {
+    @include pseudo();
+    width: 30%;
+    height: 2px;
+    top: 50%;
+    left: -30%;
+    background-color: #28C76F;
+    @include respond-to(sm){
+      left: 50%;
+      width: 2px;
+      height: 73%;
+      top: 100%;
+      // display: none;
+    }
+    @include respond-to(xs) {
+      left: 50%;
+      width: 2px;
+      height: 75%;
+      top: 100%;
+    }
+
+  }
+  &:after {
+    @include pseudo();
+    width: 30%;
+    height: 2px;
+    top: 50%;
+    right: -30%;
+    background-color: #28C76F;
+    @include respond-to(sm){
+      width: 155%;
+      right: -155%;
+      display: none;
+    }
+    @include respond-to(xs) {
+      display: none;
+    }
+    
+
+  }
+}
+
+// nivel 2
+.block_two-left {
+  position: relative;
+  &:before {
+    @include pseudo();
+    width: 2px;
+    height: 71%;
+    top: -71%;
+    left: 40%;
+    background-color: #28C76F;
+    @include respond-to(md) {
+      left: 45%;
+    }
+    // @include respond-to(sm){
+    //   left: 50%;
+    //   height: 70%;
+    //   top: -70%;
+    // }
+    @include respond-to(sm) {
+      height: 2px;
+      top: 50%;
+      width: 160%;
+      left: 100%;
+    }
+    @include respond-to(xs){
+      height: 2px;
+      top: 50%;
+      width: 40%;
+      left: 100%;
+    }
+  }
+  &:after {
+    @include pseudo();
+    width: 80%;
+    height: 2px;
+    top: 50%;
+    left: -80%;
+    background-color: #28C76F;
+    @include respond-to(sm){
+      left: 50%;
+      width: 2px;
+      height: 73%;
+      top: 100%;
+    } 
+    @include respond-to(xs){
+      display: none;
+    }
+    
+  }
+}
+.block_two-right {
+  position: relative;
+  &:before {
+    @include pseudo();
+    width: 2px;
+    height: 71%;
+    top: -71%;
+    right: 40%;
+    background-color: #28C76F;
+    @include respond-to(md) {
+      right: 45%;
+    }
+
+    // @include respond-to(sm) {
+    //   right: 50%;
+    //   height: 70%;
+    //   top: -70%;
+    // }
+    @include respond-to(sm) {
+      height: 2px;
+      top: 50%;
+      width: 160%;
+      right: 100%;
+    }
+    @include respond-to(xs) {
+      height: 2px;
+      top: 50%;
+      width: 30%;
+      right: 100%;
+    }
+    
+
+  }
+  &:after {
+    @include pseudo();
+    width: 80%;
+    height: 2px;
+    top: 50%;
+    right: -80%;
+    background-color: #28C76F;
+    @include respond-to(sm){
+      right: 50%;
+      width: 2px;
+      height: 73%;
+      top: 100%;
+    }
+    @include respond-to(xs){
+      display: none;
+    }
+  }
+}
+
+
+// nivel 3
+.block_three-left-one {
+  position: relative;
+  &:before {
+    @include pseudo();
+    width: 2px;
+    height: 71%;
+    top: -71%;
+    left: 61%;
+    background-color: #28C76F;
+    @include respond-to(md) {
+      left: 68%;
+    }
+    @include respond-to(sm){
+    height: 20%;
+    top: -20%;
+    left: 50%;
+    display: none;
+    }
+     
+
+  }
+  &:after {
+    @include pseudo();
+    width: 160%;
+    height: 2px;
+    top: 50%;
+    left: -160%;
+    background-color: #28C76F;
+    @include respond-to(sm){
+      left: 100%;
+      width: 55%;
+      // display: none;
+    } 
+
+  }
+}
+.block_three-left-two {
+  position: relative;
+  &:before {
+    @include pseudo();
+    width: 2px;
+    height: 20%;
+    top: -20%;
+    right: 50%;
+    background-color: #28C76F;
+    @include respond-to(sm) {
+      height: 80%;
+      top: -80%;
+      display: none;
+    }
+
+  }
+  &:after {
+    @include pseudo();
+    width: 20%;
+    height: 2px;
+    top: 50%;
+    left: -20%;
+    background-color: #28C76F;
+    @include respond-to(sm){
+      left: -50%;
+      width: 50%;
+    }
+
+  }
+}
+
+.block_three-right-one {
+  position: relative;
+  &:before {
+    @include pseudo();
+    width: 2px;
+    height: 20%;
+    top: -20%;
+    right: 50%;
+    background-color: #28C76F;
+    @include respond-to(sm){
+      // height: 80%;
+      // top: -80%;
+      display: none;
+    }
+  }
+  &:after {
+    @include pseudo();
+    width: 32%;
+    height: 2px;
+    top: 50%;
+    right: -32%;
+    background-color: #28C76F;
+    @include respond-to(sm){
+      width: 50%;
+      right: -50%;
+    }
+
+  }
+}
+.block_three-right-two {
+  position: relative;
+  &:before {
+    @include pseudo();
+    width: 2px;
+    height: 72%;
+    top: -71%;
+    right: 60%;
+    background-color: #28C76F;
+    @include respond-to(md) {
+      right: 68%;
+    }
+    @include respond-to(sm){
+      display: none;
+    }
+
+  }
+  &:after {
+    @include pseudo();
+    width: 160%;
+    height: 2px;
+    top: 50%;
+    right: -160%;
+    background-color: #28C76F;
+    @include respond-to(sm){
+      left: -50%;
+      width: 50%;
+    }
+
+  }
+}
+
+// nivel 4
+.block_four-left-one {
+  position: relative;
+  &:before {
+    @include pseudo();
+    width: 2px;
+    height: 72%;
+    top: -71%;
+    left: 40%;
+    background-color: #28C76F;
+    @include respond-to(md) {
+      left: 60%;
+    }
+    @include respond-to(sm){
+      height: 30%;
+      top: -30%;
+      left: 50%;
+    }
+  }
+}
+.block_four-left-two {
+  position: relative;
+  &:before {
+    @include pseudo();
+    width: 2px;
+    height: 72%;
+    top: -71%;
+    right: 60%;
+    background-color: #28C76F;
+    @include respond-to(sm){
+      height: 80%;
+      top: -80%;
+      right: 50%;
+    }
+
+  }
+}
+
+.block_four-left-three {
+  position: relative;
+  &:before {
+    @include pseudo();
+    width: 2px;
+    height: 72%;
+    top: -71%;
+    right: 18%;
+    background-color: #28C76F;
+    @include respond-to(md) {
+      right: 10%;
+    }
+
+  }
+}
+.block_four-left-four {
+  position: relative;
+  &:before {
+    @include pseudo();
+    width: 2px;
+    height: 20%;
+    top: -20%;
+    right: 60%;
+    background-color: #28C76F;
+
+  }
+}
+
+.block_four-right-one {
+  position: relative;
+  &:before {
+    @include pseudo();
+    width: 2px;
+    height: 20%;
+    top: -20%;
+    left: 50%;
+    background-color: #28C76F;
+
+  }
+}
+.block_four-right-two {
+  position: relative;
+  &:before {
+    @include pseudo();
+    width: 2px;
+    height: 72%;
+    top: -71%;
+    left: 10%;
+    background-color: #28C76F;
+    @include respond-to(md)  {
+      left: 0;
+    }
+
+
+  }
+}
+
+.block_four-right-three {
+  position: relative;
+  &:before {
+    @include pseudo();
+    width: 2px;
+    height: 72%;
+    top: -71%;
+    left: 40%;
+    background-color: #28C76F;
+
+  }
+}
+.block_four-right-four {
+  position: relative;
+  &:before {
+    @include pseudo();
+    width: 2px;
+    height: 72%;
+    top: -71%;
+    right: 60%;
+    background-color: #28C76F;
+
+    @include respond-to(md) {
+      right: 80%;
+    }
+
+  }
+}

@@ -307,6 +307,7 @@ es:
       ga_account_id: Identificador de la cuenta
       ga_tracking: Identificador de segumiento
       ga_status: Habilitar Google Analytics
+      position: posición
     errors:
       format: "%{attribute} %{message}"
       messages:

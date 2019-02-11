@@ -269,6 +269,7 @@ en:
       check_out: 'Check Out'
       created_at: Created at
       updated_at: Updated at
+      position: position
       google_analytics_setting:
         ga_account_id: Account id
         ga_tracking_id: Tracking id

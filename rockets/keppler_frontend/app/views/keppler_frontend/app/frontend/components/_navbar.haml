@@ -10,7 +10,7 @@
       #navbarSupportedContent.collapse.navbar-collapse
         .logo
           %a#navbarDropdown.nav-link{ class: ('dropdown-toggle' if farms), "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
-            = image_tag (farm&.logo&.url || @default_logo),class: "image_logo_company", style: 'width: 80px; z-index: 5;'
+            = image_tag (farm&.logo&.url || @default_logo),class: "image_logo_company", style: 'max-width: 80px; max-height: 60px; z-index: 5;'
           - if farms.blank?
             .farms-menu.dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}
               .dropdown-item No tienes fincas asignadas

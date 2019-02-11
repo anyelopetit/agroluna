@@ -32,7 +32,7 @@ module KepplerCattle
     end
 
     def species
-      race.species
+      race&.species
     end
 
     def self.genders

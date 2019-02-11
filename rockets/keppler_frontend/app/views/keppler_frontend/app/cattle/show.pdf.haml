@@ -30,13 +30,13 @@
                 %td= @cow.birthdate
               %tr
                 %th Especie
-                %th Tipología
                 %th Raza
+                %th Tipología
                 %th Condición corporal
               %tr
                 %td= @cow.species&.name
-                %td= @cow.status&.typology&.name
                 %td= @cow.race&.name
+                %td= @cow.status&.typology&.name
                 %td= @cow.status&.corporal_condition unless @cow.status&.blank?
               %tr
                 %th Peso

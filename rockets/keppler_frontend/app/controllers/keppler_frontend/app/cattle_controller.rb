@@ -12,6 +12,7 @@ module KepplerFrontend
     before_action :set_farms
     before_action :index_variables
     before_action :attachments
+    before_action :show_history
     include ObjectQuery
 
     def index
@@ -75,8 +76,8 @@ module KepplerFrontend
       @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
       @q = @farm.cows.ransack(params[:q])
       @cows = @q.result(distinct: true)
-      @active_cows = @cows.actives
-      @inactive_cows = @cows.inactives
+      @active_cows = @cows.actives.order(:serie_number)
+      @inactive_cows = @cows.inactives.order(:serie_number)
       @total = @cows.size
       @attributes = KepplerCattle::Cow.index_attributes
       @typologies = KepplerCattle::Typology.all
@@ -116,6 +117,20 @@ module KepplerFrontend
       )
     end
 
+    def show_history
+      get_history(KepplerCattle::Cow)
+    end
+
+    def get_history(model)
+      @activities = PublicActivity::Activity.where(
+        trackable_type: model.to_s
+      ).or(
+        PublicActivity::Activity.where(
+          recipient_type: model.to_s
+        )
+      ).order('created_at desc').limit(50)
+    end
+
     # Only allow a trusted parameter "white list" through.
     def cow_params
       params.require(:cow).permit(
@@ -124,9 +139,9 @@ module KepplerFrontend
         :short_name,
         :long_name,
         :species_id,
+        :race_id,
         :gender,
         :birthdate,
-        :race,
         :coat_color,
         :nose_color,
         :tassel_color,

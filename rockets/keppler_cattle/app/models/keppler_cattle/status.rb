@@ -4,6 +4,7 @@ module KepplerCattle
   # Status Model
   class Status < ApplicationRecord
     include ActivityHistory
+    tracked recipient: -> (controller, _) { _.cow }
     include CloneRecord
     include Uploadable
     include Downloadable
@@ -27,7 +28,13 @@ module KepplerCattle
     end
 
     def self.corporal_conditions
-      ['CONDICIÓN CORPORAL 1', 'CONDICIÓN CORPORAL 2', 'CONDICIÓN CORPORAL 3']
+      [
+        'CONDICIÓN CORPORAL 1',
+        'CONDICIÓN CORPORAL 2',
+        'CONDICIÓN CORPORAL 3',
+        'CONDICIÓN CORPORAL 4',
+        'CONDICIÓN CORPORAL 5'
+      ]
     end
 
     def self.strategic_lots

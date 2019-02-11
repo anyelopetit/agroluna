@@ -37,10 +37,10 @@
                       %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
                       %span.cr
                         %i.cr-icon.icofont-check
-          %th Imagen
           %th
             = sort_link(@q, 'serie_number') do 
               Serie
+          %th Imagen
           %th 
             = sort_link(@q, 'status.weight') do
               Peso
@@ -66,10 +66,10 @@
                       %i.cr-icon.icofont-check
             %td
               = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                = image_tag cow&.image&.url if cow.image.url
+                = cow&.serie_number
             %td
               = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                = cow&.serie_number
+                = image_tag cow&.image&.url if cow.image.url
             %td
               = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
                 = cow&.status&.weight

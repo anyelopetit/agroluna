@@ -74,5 +74,11 @@ module KepplerFrontend
     def last_page
       session[:last_page] = request.env['HTTP_REFERER']
     end
+
+    def get_history(model)
+      @activities = PublicActivity::Activity.where(
+        trackable_type: model.to_s
+      ).order('created_at desc').limit(50)
+    end
   end
 end

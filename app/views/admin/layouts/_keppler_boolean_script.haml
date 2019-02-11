@@ -1,12 +1,11 @@
 :javascript
   $('.keppler-switch').click(function(event) {
     event.preventDefault()
-    var input = $(this).find_by(id: 'input')
-    var label = $(this).find_by(id: '.inline-label')
+    var input = $(this).find('input')
+    var label = $(this).find('.inline-label')
     input
       .toggleClass('active')
       .val(input.hasClass('active'))
     label
       .toggleClass('active')
-      //.text(label.hasClass('active'))
   })

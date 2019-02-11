@@ -237,11 +237,13 @@ puts 'Especies, razas, tipologías y pesajes creadas'
 
 # Series
 100.times do |i|
+  species = KepplerCattle::Species.find_by(id: [1,2,3].sample)
   cow = KepplerCattle::Cow.create(
     serie_number: Faker::Number.between(111111, 999999),
     short_name: Faker::Name.first_name,
     gender: ['male', 'female'].sample,
-    race_id: KepplerCattle::Species.find_by(id: [1,2,3].sample).races.first.id,
+    species_id: species.id,
+    race_id: species.races.first.id,
     birthdate: Faker::Date.birthday(1, 15),
     coat_color: Faker::Color.color_name,
     nose_color: Faker::Color.color_name,
@@ -276,15 +278,12 @@ puts 'Especies, razas, tipologías y pesajes creadas'
     cow_id: cow.id
   )
 
-  species = KepplerCattle::Species.find_by(id: [1,2,3].sample)
-  race = species&.races&.sample
-
   # Pajuelas
   KepplerCattle::Insemination.create(
     serie_number: Faker::Number.between(111111, 999999),
     short_name: Faker::Name.first_name,
     species_id: species&.id,
-    race_id: race&.id,
+    race_id: species&.races&.sample&.id,
     mother_id: KepplerCattle::Cow.where(gender: 'female')&.sample&.id,
     father_id: KepplerCattle::Cow.where(gender: 'male')&.sample&.id,
     birthdate: Faker::Date.birthday(1, 15),
@@ -298,7 +297,7 @@ end
 puts 'Series creadas'
 
 2.times do |farm|
-  puts "Finca id #{farm+1}"
+  puts "Llenando #{KepplerFarm::Farm.find(farm+1).title} de 20 transferencias "
   20.times do |transference|
     KepplerCattle::Transference.create(
       cattle: KepplerFarm::Farm.find_by(id: farm+1).cows.take(transference).map(&:id),#take([1..20].sample),

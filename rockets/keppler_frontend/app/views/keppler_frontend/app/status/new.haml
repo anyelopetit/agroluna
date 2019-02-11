@@ -16,7 +16,7 @@
             .row
               = f.input :cow_id, include_blank: false, input_html: { class: 'form-control input_custom', value: @cow.id }, as: :hidden, label_html: { class: 'label_custom--strong' }
               .col-sm-12.col-md-6
-                = f.input :weight, autofocus: true, placeholder: '0.00 KG', label: 'Peso (KG)', input_html: { class: 'form-control input_custom', min: 0, value: (@last_status.weight if @last_status) }, label_html: { class: 'label_custom--strong' }
+                = f.input :weight, autofocus: true, placeholder: '0.00 KG', label: 'Peso (KG)', input_html: { class: 'form-control input_custom', min: 0, value: (@last_status.weight.blank? ? 0 : @last_status.weight) }, label_html: { class: 'label_custom--strong' }
               .col-sm-12.col-md-6
                 = f.input :gained_weight, input_html: { class: 'form-control input_custom   status_gainded_weight' }, disabled: true, placeholder: '0.00 KG', label: 'Peso ganado (KG)', label_html: { class: 'label_custom--strong' }
                 = f.input :gained_weight, input_html: { class: 'form-control input_custom   status_gainded_weight' }, as: :hidden, label_html: { class: 'label_custom--strong' }
@@ -86,8 +86,8 @@
 :javascript
   $('.keppler-switch').click(function(event) {
     event.preventDefault()
-    var input = $(this).find_by(id: 'input')
-    var label = $(this).find_by(id: '.inline-label')
+    var input = $(this).find('input')
+    var label = $(this).find('.inline-label')
     input
       .toggleClass('active')
       .val(input.hasClass('active'))
@@ -97,7 +97,7 @@
   })
 
   $('.status_dead').click(function() {
-    if ($(this).find_by(id: '.inline-label').hasClass('active')) {
+    if ($(this).find('.inline-label').hasClass('active')) {
       document.getElementById('status_deathdate').disabled = false
     } else {
       document.getElementById('status_deathdate').disabled = true

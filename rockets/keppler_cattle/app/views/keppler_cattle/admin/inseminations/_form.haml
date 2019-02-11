@@ -22,12 +22,14 @@
                   .col-sm-6
                     = f.input :serie_number, as: :string
                   .col-sm-6
+                    = f.input :short_name, as: :string
+                  .col-sm-6
                     = f.input :species_id, collection: @species, include_blank: false
                   .col-sm-6
                     = f.input :race_id, collection: @races, include_blank: false
                   .col-sm-6
                     = f.input :farm_id, collection: @farms, include_blank: false
-                  .col-sm-6
+                  -# .col-sm-6
                     = f.input :corporal_condition, collection: @corporal_conditions, include_blank: false
                   .col-sm-6
                     = f.input :birthdate, as: :string, input_html: { class: 'datepicker' }
@@ -39,6 +41,10 @@
                     = f.input :tassel_color, collection: @colors, include_blank: false
                   .col-sm-6
                     = f.input :provenance, as: :string
+                  .col-sm-6
+                    = f.input :mother_id, collection: @posible_mothers
+                  .col-sm-6
+                    = f.input :father_id, collection: @posible_fathers
                   .col-sm-12
                     = f.input :observations
                   .col-sm-12

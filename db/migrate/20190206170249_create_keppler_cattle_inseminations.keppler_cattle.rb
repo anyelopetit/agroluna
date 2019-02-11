@@ -17,12 +17,12 @@ class CreateKepplerCattleInseminations < ActiveRecord::Migration[5.2]
       t.integer :position
       t.datetime :deleted_at
 
-      t.string :farm_id
-      t.string :species_id
-      t.string :race_id
+      t.integer :farm_id
+      t.integer :species_id
+      t.integer :race_id
       
-      t.string :mother_id
-      t.string :father_id
+      t.integer :mother_id
+      t.integer :father_id
 
       t.timestamps null: false
     end

@@ -100,10 +100,14 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.175);
   left: auto !important;
   min-width: 130px;
-  right: 120px !important;
-  top: 15px !important;
+  right: 100px !important;
+  // top: 15px !important;
 
   a {
-    justify-content: flex
+    justify-content: flex-start;
+    
+    i {
+      padding: 0 10px;
+    }
   }
 }

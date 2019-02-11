@@ -21,3 +21,10 @@
       %script{ src: '/assets/vue_admin/index.js' }
     = keppler_boolean_script
 = render 'admin/layouts/git_info', git: @git
+:javascript
+  $('.sidebar-item').click(function() {
+    $('.sidebar-item').removeClass('active')
+    $('.treeview-menu').removeClass('menu-open')
+    $(this).addClass('active')
+    $(this).find('.treeview-menu').addClass('menu-open')
+  })

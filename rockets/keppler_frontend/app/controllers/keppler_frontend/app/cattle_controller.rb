@@ -21,7 +21,21 @@ module KepplerFrontend
 
     def show
       @statuses = @cow.statuses.order(id: :desc)
-      respond_to_formats(@cow)
+      # respond_to_formats(@cow)
+      respond_to do |format|
+        format.html
+        format.pdf do
+          render {
+            pdf: 'file_name',
+            margin:  {
+              top:               5,                     # default 10 (mm)
+              bottom:            5,
+              left:              5,
+              right:             5
+            }
+          }
+        end
+      end
     end
 
     def new

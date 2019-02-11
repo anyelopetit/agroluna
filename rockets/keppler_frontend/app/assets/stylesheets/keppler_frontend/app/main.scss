@@ -13,6 +13,13 @@
   background-color: #f8f8f8;
   // min-height: 100vh;
   overflow: hidden;
+
+  a {
+    color: #28c76f;
+    &:hover {
+      filter: brightness(80%);
+    }
+  }
 }
 
 .description_land, .photos_land {

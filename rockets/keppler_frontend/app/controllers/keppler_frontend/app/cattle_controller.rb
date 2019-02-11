@@ -12,7 +12,8 @@ module KepplerFrontend
     before_action :set_farms
     before_action :index_variables
     before_action :attachments
-    before_action :show_history
+    before_action :index_history, only: %i[index]
+    before_action :show_history, only: %i[show]
     include ObjectQuery
 
     def index
@@ -121,16 +122,22 @@ module KepplerFrontend
       )
     end
 
-    def show_history
-      get_history(KepplerCattle::Cow)
-    end
-
-    def get_history(model)
+    def index_history
       @activities = PublicActivity::Activity.where(
-        trackable_type: model.to_s
+        trackable_type: KepplerCattle::Cow.to_s
       ).or(
         PublicActivity::Activity.where(
-          recipient_type: model.to_s
+          recipient_type: KepplerCattle::Cow.to_s
+        )
+      ).order('created_at desc').limit(50)
+    end
+
+    def show_history
+      @activities = PublicActivity::Activity.where(
+        trackable_id: @cow.id.to_s
+      ).or(
+        PublicActivity::Activity.where(
+          recipient_id: @cow.id.to_s
         )
       ).order('created_at desc').limit(50)
     end

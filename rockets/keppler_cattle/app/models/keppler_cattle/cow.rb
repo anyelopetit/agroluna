@@ -54,11 +54,7 @@ module KepplerCattle
 
     def possible_typologies
       KepplerCattle::Typology
-        .where(gender: gender)
-        .or(
-          KepplerCattle::Typology
-          .where(species_id: species_id)
-        )
+        .where(species_id: species_id, gender: gender)
     end
 
     def status

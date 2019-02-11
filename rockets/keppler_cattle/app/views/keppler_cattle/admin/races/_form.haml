@@ -22,7 +22,9 @@
                   .col-xs-6
                     = f.input :name, as: :string
                   .col-xs-6
-                    = f.input :abbreviation, as: :string
+                    -# %label 
+                    -# %small (Para ser reconocido en los reportes)
+                    = f.input :abbreviation, as: :string, label: false
                   .col-xs-12
                     = f.input :description
                   .col-xs-12

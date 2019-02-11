@@ -42,6 +42,7 @@
                         - when '2'
                           Partos
                       - elsif attribute.eql?('species_id')
-                        = @race.species.name
+                        - unless value.blank?
+                          = @race.species&.name
                       - else 
                         = sanitize raw value

@@ -768,7 +768,7 @@
     this.element = $(element).addClass('colorpicker-element');
     this.options = $.extend(true, {}, defaults, this.element.data(), options);
     this.component = this.options.component;
-    this.component = (this.component !== false) ? this.element.find_by(id: this.component) : false;
+    this.component = (this.component !== false) ? this.element.find(this.component) : false;
     if (this.component && (this.component.length === 0)) {
       this.component = false;
     }
@@ -777,7 +777,7 @@
 
     // Is the element an input? Should we search inside for any input?
     this.input = this.element.is('input') ? this.element : (this.options.input ?
-      this.element.find_by(id: this.options.input) : false);
+      this.element.find(this.options.input) : false);
     if (this.input && (this.input.length === 0)) {
       this.input = false;
     }
@@ -821,7 +821,7 @@
     }
     if (this.options.colorSelectors) {
       var colorpicker = this,
-        selectorsContainer = colorpicker.picker.find_by(id: '.colorpicker-selectors');
+        selectorsContainer = colorpicker.picker.find('.colorpicker-selectors');
 
       if (selectorsContainer.length > 0) {
         $.each(this.options.colorSelectors, function(name, color) {
@@ -850,7 +850,7 @@
     }, this));
 
     // Bind click/tap events on the sliders
-    $picker.find_by(id: '.colorpicker-saturation, .colorpicker-hue, .colorpicker-alpha')
+    $picker.find('.colorpicker-saturation, .colorpicker-hue, .colorpicker-alpha')
       .on('mousedown.colorpicker touchstart.colorpicker', $.proxy(this.mousedown, this));
 
     $picker.appendTo(this.container ? this.container : $('body'));
@@ -998,7 +998,7 @@
         this.color = this.createColor(val);
       }
       var sl = (this.options.horizontal === false) ? this.options.sliders : this.options.slidersHorz;
-      var icns = this.picker.find_by(id: 'i');
+      var icns = this.picker.find('i');
       if (icns.length === 0) {
         return;
       }
@@ -1016,13 +1016,13 @@
         'left': this.color.value.s * sl.saturation.maxLeft
       });
 
-      this.picker.find_by(id: '.colorpicker-saturation')
+      this.picker.find('.colorpicker-saturation')
         .css('backgroundColor', this.color.toHex(true, this.color.value.h, 1, 1, 1));
 
-      this.picker.find_by(id: '.colorpicker-alpha')
+      this.picker.find('.colorpicker-alpha')
         .css('backgroundColor', this.color.toHex(true));
 
-      this.picker.find_by(id: '.colorpicker-color, .colorpicker-color div')
+      this.picker.find('.colorpicker-color, .colorpicker-color div')
         .css('backgroundColor', this.color.toString(true, this.format));
 
       return val;
@@ -1037,7 +1037,7 @@
       }
 
       if (this.component !== false) {
-        var icn = this.component.find_by(id: 'i').eq(0);
+        var icn = this.component.find('i').eq(0);
         if (icn.length > 0) {
           icn.css({
             'backgroundColor': color.toString(true, this.format)
@@ -1161,7 +1161,7 @@
         }
         var offset = zone.offset();
         //reference to guide's style
-        this.currentSlider.guide = zone.find_by(id: 'i')[0].style;
+        this.currentSlider.guide = zone.find('i')[0].style;
         this.currentSlider.left = e.pageX - offset.left;
         this.currentSlider.top = e.pageY - offset.top;
         this.mousePointer = {

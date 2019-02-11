@@ -87,6 +87,8 @@ en:
       farm_id: farm
       farms: farms
       races: races
+      used: used
+      status: status
     errors:
       messages:
   errors:

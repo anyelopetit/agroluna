@@ -45,8 +45,8 @@ module KepplerFrontend
     def index_variables
       @q = KepplerCattle::Cow.ransack(params[:q])
       @cows = @q.result(distinct: true)
-      @active_cows = @cows.page(@current_page).order(position: :desc).actives(@farm)
-      @inactive_cows = @cows.page(@current_page).order(position: :desc).inactives(@farm)
+      @active_cows = @cows.page(@current_page).order(position: :desc).actives
+      @inactive_cows = @cows.page(@current_page).order(position: :desc).inactives
       @total = @cows.size
       @attributes = KepplerCattle::Cow.index_attributes
     end
@@ -95,7 +95,7 @@ module KepplerFrontend
         :breeding,
         :dead,
         :deathdate,
-        :typology,
+        :typology_id,
         :strategic_lot_id,
         :user_id,
         :comments

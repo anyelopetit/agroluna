@@ -100,6 +100,8 @@ es:
       min_days: Mínimo de días
       specific_day: Día exacto
       max_days: Máximo de días
+      used: usado
+      status: estado
     errors:
       messages:
   errors:

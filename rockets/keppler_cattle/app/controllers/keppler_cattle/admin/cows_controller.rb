@@ -110,14 +110,14 @@ module KepplerCattle
       # Only allow a trusted parameter "white list" through.
       def cow_params
         params.require(:cow).permit(
-          :serie_number,
           :image,
+          :serie_number,
           :short_name,
           :long_name,
-          :species,
+          :species_id,
+          :race_id,
           :gender,
           :birthdate,
-          :race,
           :coat_color,
           :nose_color,
           :tassel_color,

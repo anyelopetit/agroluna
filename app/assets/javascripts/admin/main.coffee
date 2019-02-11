@@ -37,10 +37,7 @@ $(document).on 'turbolinks:load', ->
     showOtherMonths: true,
     selectOtherMonths: true,
     changeMonth: true,
-    changeYear: true,
-    maxDate: 0,
-    setDate: 0,
-    yearRange: "c-40:c"
+    changeYear: true
 
     # Ver documentación en https://jqueryui.com/datepicker
   })

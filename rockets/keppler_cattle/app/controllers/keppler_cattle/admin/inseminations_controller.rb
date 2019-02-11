@@ -92,6 +92,8 @@ module KepplerCattle
         @farms = KepplerFarm::Farm.all
         @corporal_conditions = KepplerCattle::Status.corporal_conditions
         @colors = KepplerCattle::Cow.colors
+        @posible_mothers = KepplerCattle::Insemination.posible_mothers
+        @posible_fathers = KepplerCattle::Insemination.posible_fathers
       end
 
       # Use callbacks to share common setup or constraints between actions.
@@ -102,7 +104,20 @@ module KepplerCattle
       # Only allow a trusted parameter "white list" through.
       def insemination_params
         params.require(:insemination).permit(
-          :serie_number, :species_id, :race_id, :farm_id, :corporal_condition, :birthdate, :coat_color, :nose_color, :tassel_color, :provenance, :observations
+          :serie_number,
+          :short_name,
+          :species_id,
+          :race_id,
+          :farm_id,
+          :mother_id,
+          :father_id,
+          :corporal_condition,
+          :birthdate,
+          :coat_color,
+          :nose_color,
+          :tassel_color,
+          :provenance,
+          :observations
         )
       end
     end

@@ -16,7 +16,8 @@ class CreateKepplerCattleCows < ActiveRecord::Migration[5.2]
       t.integer :position
       t.datetime :deleted_at
 
-      t.integer :race_id, foreign_key: true
+      t.integer :species_id
+      t.integer :race_id
 
       t.timestamps
     end

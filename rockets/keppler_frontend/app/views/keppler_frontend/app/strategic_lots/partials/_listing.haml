@@ -21,7 +21,7 @@
                   %span.cr
                     %i.cr-icon.icofont-check
         
-        .toolbar-item
+        -# .toolbar-item
           -# = link_to reload_admin_farm_farm_strategic_lots_path(@farm), class: 'tool-btn', remote: true, title: t('keppler.actions.reload_page') do
             %i.icofont-refresh
         -# - if can?(KepplerFarm::StrategicLot).download?
@@ -36,7 +36,7 @@
             = link_to '#', class: 'tool-btn', title: t('keppler.actions.upload_records'), id: 'upload' do
               %i.icon-cloud-upload
         .toolbar-item
-          %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+          -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
           = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
             %i.icofont-trash
             Eliminar

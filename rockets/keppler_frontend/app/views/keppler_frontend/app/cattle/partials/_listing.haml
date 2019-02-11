@@ -1,6 +1,6 @@
 .container_custom
   -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
-  .d-flex.justify-content-end
+  .d-flex.justify-content-end.content-btn
     -# .toolbar
       .toolbar-item
         -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
@@ -16,90 +16,91 @@
         Agregar
   - if cows.blank? && @farm.cows.count > 0
     = link_to 'Mostrar todos', app_farm_cows_path(farm)
-  %table.cow-table
-    - if cows.size.zero?
-      %thead
-        %tr
-          %th.not-records.center
-            %center No se encontraron ganados
-    - else
-      %thead
-        %tr
-          -# %th
-            %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
-            %label{for: "styled-checkbox-all"}
-          %th
-            - if can?(KepplerCattle::Cow).destroy_multiple?
-              .toolbar-item
-                .item-check
-                  .checkbox
-                    %label{ for: 'checkbox-all' }
-                      %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+  .content-table
+    %table.cow-table
+      - if cows.size.zero?
+        %thead
+          %tr
+            %th.not-records.center
+              %center No se encontraron ganados
+      - else
+        %thead
+          %tr
+            -# %th
+              %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
+              %label{for: "styled-checkbox-all"}
+            %th
+              - if can?(KepplerCattle::Cow).destroy_multiple?
+                .toolbar-item
+                  .item-check
+                    .checkbox
+                      %label{ for: 'checkbox-all' }
+                        %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+                        %span.cr
+                          %i.cr-icon.icofont-check
+            %th Imagen
+            %th
+              = sort_link(@q, 'serie_number') do 
+                Serie
+            %th 
+              = sort_link(@q, 'status.weight') do
+                Peso
+            %th 
+              = sort_link(@q, 'status.days') do 
+                Días de nacido
+            %th 
+              = sort_link(@q, 'status.typology') do 
+                Tipología
+            %th 
+              = sort_link(@q, 'status.created_at') do 
+                Status
+            %th Controles
+        %tbody
+          - cows.each do |cow|
+            %tr{ style: "border-bottom: 1px #eee solid;" }
+              - if can?(KepplerCattle::Cow).destroy_multiple?
+                %td
+                  .checkbox{ style: 'margin: 3px' }
+                    %label{ for: "checkbox-#{cow.id}" }
+                      %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
                       %span.cr
                         %i.cr-icon.icofont-check
-          %th Imagen
-          %th
-            = sort_link(@q, 'serie_number') do 
-              Serie
-          %th 
-            = sort_link(@q, 'status.weight') do
-              Peso
-          %th 
-            = sort_link(@q, 'status.days') do 
-              Días de nacido
-          %th 
-            = sort_link(@q, 'status.typology') do 
-              Tipología
-          %th 
-            = sort_link(@q, 'status.created_at') do 
-              Status
-          %th Controles
-      %tbody
-        - cows.each do |cow|
-          %tr{ style: "border-bottom: 1px #eee solid;" }
-            - if can?(KepplerCattle::Cow).destroy_multiple?
               %td
-                .checkbox{ style: 'margin: 3px' }
-                  %label{ for: "checkbox-#{cow.id}" }
-                    %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
-                    %span.cr
-                      %i.cr-icon.icofont-check
-            %td
-              = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                = image_tag cow&.image&.url if cow.image.url
-            %td
-              = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                = cow&.serie_number
-            %td
-              = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                = cow&.status&.weight
-                KG
-            %td
-              = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                = cow&.status&.days
-            %td
-              = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                = cow&.status&.typology&.name
-            %td.status
-              = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                =# cow&.status&.created_at&.strftime("%d-%m-%Y")
-                .card_status--bar
-                  - if cow&.gender?('male')
-                    %a.status-tooltip{ title: 'Recelador' }
-                      %i.icofont-bull{ class: ('active' if cow&.status&.defiant) }
-                    %a.status-tooltip{ title: 'Reproductor' }
-                      %i.icofont-dna{ class: ('active' if cow&.status&.reproductive) }
-                  - else
-                    %a.status-tooltip{ title: 'Preñada' }
-                      %i.icofont-baby{ class: ('active' if cow&.status&.pregnant) }
-                    %a.status-tooltip{ title: 'Lactando' }
-                      %i.icofont-baby-milk-bottle{ class: ('active' if cow&.status&.lactating)  }
-                    %a.status-tooltip{ title: 'Criando' }
-                      %i.icofont-holding-hands{ class: ('active' if cow&.status&.breeding) }
-                  -# %a.status-tooltip{ title: 'Dado de baja' }
-                    %i.icofont-danger-zone{ class: ('active' if cow&.status&.dead) }
-            %td.actions
-              = link_to app_farm_cow_path(farm, cow), class: 'floating-btn' do
-                %span.icofont-eye
-              = link_to app_farm_cow_status_new_path(farm, cow), class: 'floating-btn' do
-                %span.icofont-ui-add
+                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
+                  = image_tag cow&.image&.url if cow.image.url
+              %td
+                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
+                  = cow&.serie_number
+              %td
+                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
+                  = cow&.status&.weight
+                  KG
+              %td
+                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
+                  = cow&.status&.days
+              %td
+                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
+                  = cow&.status&.typology&.name
+              %td.status
+                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
+                  =# cow&.status&.created_at&.strftime("%d-%m-%Y")
+                  .card_status--bar
+                    - if cow&.gender?('male')
+                      %a.status-tooltip{ title: 'Recelador' }
+                        %i.icofont-bull{ class: ('active' if cow&.status&.defiant) }
+                      %a.status-tooltip{ title: 'Reproductor' }
+                        %i.icofont-dna{ class: ('active' if cow&.status&.reproductive) }
+                    - else
+                      %a.status-tooltip{ title: 'Preñada' }
+                        %i.icofont-baby{ class: ('active' if cow&.status&.pregnant) }
+                      %a.status-tooltip{ title: 'Lactando' }
+                        %i.icofont-baby-milk-bottle{ class: ('active' if cow&.status&.lactating)  }
+                      %a.status-tooltip{ title: 'Criando' }
+                        %i.icofont-holding-hands{ class: ('active' if cow&.status&.breeding) }
+                    -# %a.status-tooltip{ title: 'Dado de baja' }
+                      %i.icofont-danger-zone{ class: ('active' if cow&.status&.dead) }
+              %td.actions
+                = link_to app_farm_cow_path(farm, cow), class: 'floating-btn' do
+                  %span.icofont-eye
+                = link_to app_farm_cow_status_new_path(farm, cow), class: 'floating-btn' do
+                  %span.icofont-ui-add

@@ -30,3 +30,17 @@
     }
   }
 }
+
+.line-tabs {
+  margin-top: 0;
+  margin-bottom: 0;
+  width: 90%;
+
+  @include respond-to(sm) {
+    margin-bottom: 10px;
+  }
+  @include respond-to(xs) {
+    margin-bottom: 20px;
+  }
+
+}

@@ -23,6 +23,7 @@ module KepplerFrontend
 
     def show
       @cows = @strategic_lot.cows
+      @assign = KepplerCattle::Assignment.new
       respond_to_formats(@strategic_lot)
     end
 

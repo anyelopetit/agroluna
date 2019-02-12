@@ -2,13 +2,13 @@
 .app_wrapper
   .container_custom
     -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
-    .float-left.mb-4
+    .float-left
       %h1
         = link_to({action: :index}) do
           Lotes estratégicos >
         #{@strategic_lot.name}
-        %br
-        .badge.badge-secondary #{@strategic_lot.function}
+        .badge.badge-secondary
+          %small #{@strategic_lot.function}
     .d-flex.justify-content-end
       -# .toolbar
         .toolbar-item
@@ -23,7 +23,17 @@
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-plus
           Agregar
-    - if @cows.blank? && @farm.cows.count > 0
+    .row
+      .col-sm-8
+        = simple_form_for [:app, :cattle, @assign], url: app_farm_strategic_lot_assign_cattle_path(@farm, @strategic_lot), html: { style: 'width: 100%' } do |f|
+          .row.mb-4
+            .col-sm-8
+              %select{ name: 'strategic_lot[cattle]', label: 'Ganado', class: 'form-control input_custom select2-multiple' }
+                - @farm.cows.order(:serie_number).each do |cow|
+                  %option{ value: cow.id } #{cow.serie_number}
+            .col-sm-4
+              %button{ type: 'submit', class: 'btn btn_custom btn--filled btn--medium' } Agregar
+    - if @cows.blank? && @strategic_lot.cows.count > 0
       = link_to 'Mostrar todos', app_farm_cows_path(@farm)
     %table.cow-table
       - if @cows.size.zero?
@@ -111,3 +121,8 @@
                   %span.icofont-eye
                 = link_to app_farm_cow_status_new_path(farm, cow), class: 'floating-btn' do
                   %span.icofont-ui-add
+:javascript
+  $('.select2').select2()
+  $('.select2-multiple').select2({
+    multiple: true
+  })

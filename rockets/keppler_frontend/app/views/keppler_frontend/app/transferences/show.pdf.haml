@@ -9,6 +9,7 @@
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
       %h2.report-title Transferencia desde #{@transference.from_farm&.title} hacia #{@transference.to_farm&.title} (#{@transference.created_at.to_formatted_s(:day)})
+      %h3 Motivo de transferencia: #{@transference.reason}
     .header-right
       %p= Time.now.strftime('%d-%m-%Y')
       %p Pág. 1
@@ -43,7 +44,7 @@
                 = cow&.status&.years
                 \-
                 = cow&.status&.months
-              %td= cow&.status&.typology.name
+              %td= cow&.status&.typology&.name
               %td= cow&.mother&.serie_number
               %td= cow&.father&.serie_number
               %td= cow&.status&.created_at&.strftime('%d-%m-%Y')

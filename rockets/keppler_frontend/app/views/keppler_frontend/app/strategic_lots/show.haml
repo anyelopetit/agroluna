@@ -12,10 +12,12 @@
     .d-flex.justify-content-end
       -# .toolbar
         .toolbar-item
-          -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
-          = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
             %i.icofont-trash
-      = link_to({action: :index, format: :pdf}, {class: 'float-right mt-4 mb-4', target: '_blank'}) do
+      = link_to({action: :delete_assignment}, {class: 'destroy_multiple float-right mt-4 mb-4', method: :delete}) do
+        %button.btn.btn_custom.btn--filled.btn--medium
+          %i.icofont-trash
+          Remover de lote
+      = link_to({action: :index, format: :pdf}, {class: 'float-right mt-4 mb-4 ml-1', target: '_blank'}) do
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-clip-board
           Reporte
@@ -25,104 +27,83 @@
           Agregar
     .row
       .col-sm-8
+        -# = @assign.inspect
         = simple_form_for [:app, :cattle, @assign], url: app_farm_strategic_lot_assign_cattle_path(@farm, @strategic_lot), html: { style: 'width: 100%' } do |f|
           .row.mb-4
             .col-sm-8
-              %select{ name: 'strategic_lot[cattle]', label: 'Ganado', class: 'form-control input_custom select2-multiple' }
+              %select#strategic_lot_cattle{ name: 'strategic_lot[cattle][]', label: 'Ganado', class: 'form-control input_custom select2-multiple' }
                 - @farm.cows.order(:serie_number).each do |cow|
                   %option{ value: cow.id } #{cow.serie_number}
             .col-sm-4
               %button{ type: 'submit', class: 'btn btn_custom btn--filled btn--medium' } Agregar
     - if @cows.blank? && @strategic_lot.cows.count > 0
       = link_to 'Mostrar todos', app_farm_cows_path(@farm)
-    %table.cow-table
-      - if @cows.size.zero?
-        %thead
-          %tr
-            %th.not-records.center
-              %center No se encontraron ganados
-      - else
-        %thead
-          %tr
-            -# %th
-              %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
-              %label{for: "styled-checkbox-all"}
-            %th
-              - if can?(KepplerCattle::Cow).destroy_multiple?
-                .toolbar-item
-                  .item-check
-                    .checkbox
-                      %label{ for: 'checkbox-all' }
-                        %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
-                        %span.cr
-                          %i.cr-icon.icofont-check
-            %th Imagen
-            %th
-              = sort_link(@q, 'serie_number') do 
-                Serie
-            %th 
-              = sort_link(@q, 'status.weight') do
-                Peso
-            %th 
-              = sort_link(@q, 'status.days') do 
-                Días de nacido
-            %th 
-              = sort_link(@q, 'status.typology') do 
-                Tipología
-            %th 
-              = sort_link(@q, 'status.created_at') do 
-                Status
-            %th Controles
-        %tbody
-          - @cows.each do |cow|
-            %tr{ style: "border-bottom: 1px #eee solid;" }
-              - if can?(KepplerCattle::Cow).destroy_multiple?
-                %td
-                  .checkbox{ style: 'margin: 3px' }
-                    %label{ for: "checkbox-#{cow.id}" }
-                      %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
-                      %span.cr
-                        %i.cr-icon.icofont-check
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                  = image_tag cow&.image&.url if cow.image.url
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                  = cow&.serie_number
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                  #{cow&.status&.weight} KG
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                  = cow&.status&.days
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                  = cow&.status&.typology&.name
-              %td.status
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                  =# cow&.status&.created_at&.strftime("%d-%m-%Y")
-                .card_status--bar
-                  - if cow&.gender?('male')
-                    %a.status-tooltip{ title: 'Recelador' }
-                      %i.icofont-bull{ class: ('active' if cow&.status&.defiant) }
-                    %a.status-tooltip{ title: 'Reproductor' }
-                      %i.icofont-dna{ class: ('active' if cow&.status&.reproductive) }
-                  - else
-                    %a.status-tooltip{ title: 'Preñada' }
-                      %i.icofont-baby{ class: ('active' if cow&.status&.pregnant) }
-                    %a.status-tooltip{ title: 'Lactando' }
-                      %i.icofont-baby-milk-bottle{ class: ('active' if cow&.status&.lactating)  }
-                    %a.status-tooltip{ title: 'Criando' }
-                      %i.icofont-holding-hands{ class: ('active' if cow&.status&.breeding) }
-                  -# %a.status-tooltip{ title: 'Dado de baja' }
-                    %i.icofont-danger-zone{ class: ('active' if cow&.status&.dead) }
-              %td.actions
-                = link_to app_farm_cow_path(farm, cow), class: 'floating-btn' do
-                  %span.icofont-eye
-                = link_to app_farm_cow_status_new_path(farm, cow), class: 'floating-btn' do
-                  %span.icofont-ui-add
+    = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
 :javascript
   $('.select2').select2()
   $('.select2-multiple').select2({
-    multiple: true
+    multiple: true,
+    placeholder: 'Agrega una o más series',
+    allowClear: true
+  })
+
+  $('.select2-selection__choice').remove()
+  $('#strategic_lot_cattle').val('')
+
+  $('#select-search').change(function() {
+    $('.select-field').hide()
+    var $id = $(this).find('option:selected').val()
+    $("#" + $id).show()
+  })
+
+  var $ids = #{@cows.map(&:id)}
+  var $final_array = []
+  var href = $('.destroy_multiple').attr('href')
+
+  function ids_loop() {
+    $ids.forEach(function (id) {
+      $('[checklist-model="check"]:checked').each(function( index ) {
+        if ($(this).prop('id').includes(id)) {
+          if ( !$final_array.includes(id) ) {
+            $final_array.push(id)
+          }
+        }
+      });
+      $('[checklist-model="check"]:not(:checked)').each(function( index ) {
+        if ($(this).prop('id').includes(id)) {
+          if ($final_array.includes(id)) {
+            $final_array.splice($final_array.indexOf(id), 1);
+          }
+        }
+      });
+    });
+    $('.destroy_multiple').attr('href', (`${href}&multiple_ids=[${$final_array}]`))
+  }
+
+  $('#checkbox-all').click(function() {
+    $('[checklist-model="check"]').prop( "checked", $(this).prop( "checked" ) )
+    ids_loop()
+  })
+
+  $('[checklist-model="check"]').click(function() {
+    ids_loop()
+    $('#checkbox-all').prop(
+      'checked',
+      JSON.stringify($ids) === JSON.stringify($final_array)
+    )
+  })
+
+  $('#open-status-history').click(function() {
+    $('#status-history').css({
+      right: '0'
+    })
+  })
+  $('#close-status-history').click(function() {
+    $('#status-history').css({
+      right: '-300px'
+    })
+  })
+
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
   })

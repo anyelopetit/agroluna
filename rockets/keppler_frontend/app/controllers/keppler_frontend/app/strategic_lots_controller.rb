@@ -6,7 +6,7 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    before_action :set_strategic_lot, only: %i[show edit update destroy]
+    before_action :set_strategic_lot, only: %i[show edit update destroy assign_cattle delete_assignment]
     before_action :set_farm
     before_action :set_farms
     before_action :index_variables
@@ -64,37 +64,41 @@ module KepplerFrontend
     end
 
     def assign_cattle
-      @assignment = KepplerCattle::Assignment.new(
-        strategic_lot_id: params[:strategic_lot_id],
-        cow_id: params[:assignment][:cow_id]
-      )
-
-      if @assignment.validate_cow
-        @assignment.save!
-        flash[:notice] = "La serie #{@assignment.cow.serie_number} fue asignada satisfactoriamente"
-      else
-        flash[:error] = "Error: La serie #{@assignment.cow.serie_number} no fue asignada"
+      params[:strategic_lot][:cattle].each do |id|
+        cow = KepplerCattle::Cow.find_by(id: id)
+        if cow
+          assignment = KepplerCattle::Assignment.new(
+            strategic_lot_id: params[:strategic_lot_id],
+            cow_id: id
+          )
+          if assignment.validate_cow
+            assignment.save
+            flash[:notice] = "La series fueron asignada satisfactoriamente"
+          end
+        end
       end
-      redirect_to app_farm_strategic_lots_path(@farm)
+      redirect_to action: :show
     end
       
     def delete_assignment
-      @assignment = KepplerCattle::Assignment.find_by(
-        strategic_lot_id: params[:strategic_lot_id],
-        cow_id: params[:cow_id]
-      )
+      params[:multiple_ids].remove("[", "]").split(',').each do |id|
+        assignment = KepplerCattle::Assignment.find_by(
+          strategic_lot_id: params[:strategic_lot_id],
+          cow_id: id
+        )
 
-      if @assignment.try(:exists?)
-        if @assignment.destroy!
-          flash[:notice] = 
-            t('keppler.messages.cattle.deleted', cattle: @assignment.cow.serial_number) if @assignment.destroy!
-        else
-          flash[:error] = t('keppler.messages.cattle.not_deleted', cattle: @assignment.cow.serial_number)
+        if assignment&.exists?
+          if assignment.destroy
+            flash[:notice] = 
+              t('keppler.messages.cattle.deleted', cattle: assignment.cow.serie_number) if assignment.destroy!
+          # else
+          #   flash[:error] = t('keppler.messages.cattle.not_deleted', cattle: assignment.cow.serie_number)
+          end
+        # else
+        #   flash[:error] = t('keppler.messages.cattle.doesnt_exist', cattle: assignment.cow.serie_number)
         end
-      else
-        flash[:error] = t('keppler.messages.cattle.doesnt_exist', cattle: @assignment.cow.serial_number)
       end
-      redirect_to action: :index, id: params[:farm_id]
+      redirect_to action: :show, id: @farm.id, strategic_lot_id: @strategic_lot.id
     end
 
     private
@@ -139,7 +143,7 @@ module KepplerFrontend
     # Only allow a trusted parameter "white list" through.
     def strategic_lot_params
       params.require(:strategic_lot).permit(
-        :name, :function, :description, :farm_id
+        { cattle: [] }, :name, :function, :description, :farm_id
       )
     end
   end

@@ -1,7 +1,7 @@
 - farm_view = controller_name.eql?('frontend') && action_name.eql?('farm')  
 %div{ class: (farm_view ? 'home_custom' : 'home_custom_fixed') }
   %nav.navbar.navbar-expand-lg{ class: (farm_view ? 'navbar_custom' : 'navbar_custom_fixed') }
-    %div{ class: (farm_view ? 'navbar_img_custom navbar-js' : 'navbar_js_fixed'), style: "background-image: url('#{farm&.photos&.find_by(cover: true)&.photo&.url || 'https://images.unsplash.com/photo-1547046219-d3ce5318c5c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80'}')" }
+    %div{ class: (farm_view ? 'navbar_img_custom navbar-js' : 'navbar_js_fixed'), style: "background-image: url('#{farm&.photos&.find_by(cover: true)&.photo&.url || 'https://images.pexels.com/photos/787647/pexels-photo-787647.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'}')" }
       .top_img
     .navbar_custom_content
       
@@ -38,7 +38,7 @@
                   Lotes estratégicos
                 = link_to app_farm_transferences_path(farm),style: "background-color: transparent !important; color: white;",  class: "modelOne dropdown-item  #{('active_sub' if controller_name.eql?('transferences'))}" do
                   Transferencias
-                = link_to app_farm_transferences_path(farm),style: "background-color: transparent !important; color: white;",  class: "modelOne dropdown-item  #{('active_sub' if controller_name.eql?('inseminations'))}" do
+                = link_to app_farm_inseminations_path(farm),style: "background-color: transparent !important; color: white;",  class: "modelOne dropdown-item  #{('active_sub' if controller_name.eql?('inseminations'))}" do
                   Pajuelas
             -# %li.nav-item
               = link_to app_farm_strategic_lots_path(farm), class: "nav-link #{('active' if controller_name.eql?('strategic_lots'))}" do

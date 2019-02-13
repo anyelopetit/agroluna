@@ -34,7 +34,6 @@
       -# = render_activities(@activities, locals: { method: 'serie_number' })
       - @activities.each do |activity|
         = render partial: "keppler_frontend/app/layouts/public_activity/#{activity.key.split('.').second}", locals: { activity: activity, method: 'serie_number' }
-
 :scss
   #status-history {
     height: 100vh;

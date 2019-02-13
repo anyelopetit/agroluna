@@ -9,9 +9,13 @@
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
       %h2.report-title Transferencia desde #{@transference.from_farm&.title} hacia #{@transference.to_farm&.title} (#{@transference.created_at.to_formatted_s(:day)})
+<<<<<<< HEAD
       %p 
         %b Motivo de transferencia: 
         #{@transference.reason}
+=======
+      %h3 Motivo de transferencia: #{@transference.reason}
+>>>>>>> staging
     .header-right
       %p= Time.now.strftime('%d-%m-%Y')
       %p Pág. 1

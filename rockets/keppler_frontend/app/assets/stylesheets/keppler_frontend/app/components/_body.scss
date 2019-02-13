@@ -2,6 +2,10 @@ body {
   font-family: $lato;
   margin: 0;
   padding: 0;
+  &.offcanvas-expanded {
+    overflow-y: hidden;
+  }
+  
 }
 
 * {

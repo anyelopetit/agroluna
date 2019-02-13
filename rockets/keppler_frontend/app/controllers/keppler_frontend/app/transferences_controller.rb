@@ -26,6 +26,8 @@ module KepplerFrontend
     def new
       @cows = @farm.cows.actives.map { |c| [c.serie_number, c.id] }
       @transference = KepplerCattle::Transference.new
+      @farms = KepplerFarm::Farm.where.not(id: @farm.id)
+      # @reasons = KepplerCattle::Transference.reasons
     end
 
     def create
@@ -75,7 +77,7 @@ module KepplerFrontend
     def index_variables
       @q = KepplerCattle::Transference.ransack(params[:q])
       transferences = @q.result(distinct: true)
-      @transferences = transferences.page(@current_page).include_this_farm(@farm)
+      @transferences = transferences.page(@current_page).where_from(@farm.id).order(created_at: :desc)
       if params[:search]
         if params[:search][:from].to_i > 0
           @transferences = @transferences.where_from(params[:search][:from].to_i)
@@ -116,7 +118,7 @@ module KepplerFrontend
     # Only allow a trusted parameter "white list" through.
     def transference_params
       params.require(:transference).permit(
-        { cattle: [] }, :from_farm_id, :to_farm_id, :description
+        { cattle: [] }, :from_farm_id, :to_farm_id, :reason
       )
     end
   end

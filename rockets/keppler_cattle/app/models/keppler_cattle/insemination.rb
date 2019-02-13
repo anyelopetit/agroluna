@@ -32,13 +32,13 @@ module KepplerCattle
       KepplerFarm::Farm.find_by(id: farm_id)
     end
     
-    # def self.where_used
-    #   where(used: !nil)
-    # end
+    def self.where_used
+      where.not(used: nil)
+    end
     
-    # def self.where_no_used
-    #   where(used: nil)
-    # end
+    def self.where_no_used
+      where(used: nil)
+    end
 
     def self.colors
       ['No Registrado',

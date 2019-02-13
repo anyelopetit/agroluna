@@ -66,8 +66,8 @@ module KepplerFrontend
     def index_variables
       @q = KepplerCattle::Insemination.ransack(params[:q])
       @inseminations = @q.result(distinct: true)
-      @active_inseminations = @inseminations#.where_no_used
-      @inactive_inseminations = @inseminations#.where_used
+      @active_inseminations = @inseminations.where_no_used
+      @inactive_inseminations = @inseminations.where_used
       @total = @inseminations.size
       @attributes = KepplerCattle::Insemination.index_attributes
       @typologies = KepplerCattle::Typology.all

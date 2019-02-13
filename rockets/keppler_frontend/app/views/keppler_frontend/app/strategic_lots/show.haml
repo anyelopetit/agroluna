@@ -4,10 +4,10 @@
     -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
     .float-left
       %h1
-        = link_to({action: :index}) do
+        -# = link_to({action: :index}) do
           Lotes estratégicos >
         #{@strategic_lot.name}
-        .badge.badge-secondary
+        -# .badge.badge-secondary
           %small #{@strategic_lot.function}
     .d-flex.justify-content-end
       -# .toolbar

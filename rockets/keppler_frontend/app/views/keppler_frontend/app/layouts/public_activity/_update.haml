@@ -5,11 +5,20 @@
         %b
           = activity.owner&.name
       %small
-        actualizó ganado
-        #{activity.trackable.species&.name}
-        #{activity.trackable.race&.name}
-        %b
-          = activity.trackable.send(method) if activity.trackable
+        - if activity.trackable_type.eql?("KepplerCattle::Cow")
+          actualizó ganado
+          #{activity.trackable.species&.name}
+          #{activity.trackable.race&.name}
+          %b
+            = activity.trackable.try('serie_number')
+        - else
+          actualizó
+          = t("activerecord.attributes.#{activity.trackable_type.split('::').last.downcase}")
+          de ganado
+          #{activity.recipient&.species&.name}
+          #{activity.recipient&.race&.name}
+          %b
+            = activity.recipient.try('serie_number')
       %span.time
         %i.icofont-clock-time
         a las

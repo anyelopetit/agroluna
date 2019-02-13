@@ -46,5 +46,9 @@ module KepplerFarm
     def strategic_lots
       KepplerFarm::StrategicLot.where(farm_id: id)
     end
+
+    def inseminations
+      KepplerCattle::Insemination.where(farm_id: id)
+    end
   end
 end

@@ -20,7 +20,12 @@
               %tbody
                 .form-padding
                   .col-xs-12
-                    = f.input :logo, as: :keppler_file # , max_size: 225
+                    -# = f.input :logo, as: :keppler_file # , max_size: 225
+                    .file-uploader
+                      .file-container
+                        = f.input :logo
+                        %i.file-icon.bx.bx-image
+                        %h5.file-text= t 'keppler.actions.drop_file'
                   .col-xs-12
                     = f.input :title, as: :string
                   .col-xs-12
@@ -50,3 +55,4 @@
           #{p}
         </li>`
       )
+= javascript_include_tag '/assets/admin/file_uploader'

@@ -49,6 +49,7 @@ en:
       choose_gender: Choose a gender
       of_series: of series
       series: series
+      cattle:
 
   activerecord:
     attributes:
@@ -93,3 +94,6 @@ en:
       messages:
   errors:
   helpers:
+
+  app:
+    

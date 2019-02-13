@@ -77,3 +77,97 @@
   }
   
 }
+
+.container_custom table {
+  td {
+    padding: 0;
+
+    a {
+      color: #4d5663;
+      display: inline-flex;
+      padding: 10px 0;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  .checkbox {
+    justify-content: center
+  }
+}
+
+.actions.dropdown-menu {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.175);
+  left: auto !important;
+  min-width: 130px;
+  right: 100px !important;
+  // top: 15px !important;
+
+  a {
+    justify-content: flex-start;
+    
+    i {
+      padding: 0 10px;
+    }
+  }
+}
+
+
+.center {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+
+.not-records {
+  background-color: #fff;
+  border: 0;
+}
+
+table img {
+  max-height: 50px; 
+}
+
+.floating-btn {
+  border-radius: 20px;
+  //box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  margin-left: auto;
+  height: 40px;
+  width: 40px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: .3s;
+
+  &:hover {
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+    color: #008500;
+    transition: .3s;
+  }
+}
+
+.flex-search {
+  display: flex;
+}
+
+#serie_number {
+  display: block;
+}
+
+.select-field {
+  display: none;
+}
+
+.cow-table {
+
+  td.status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.days-alert {
+  color: orange;
+}

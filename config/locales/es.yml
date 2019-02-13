@@ -206,6 +206,7 @@ es:
       apply: Aplicar
       download_records: Descargar registros
       upload_records: Cargar registros
+      drop_file: Arrastra un archivo o presiona aquí
       drop_files: Arrastra un archivo o presiona aquí
       reload_page: Recargar página
       go_to_app: Ir a la app
@@ -306,6 +307,7 @@ es:
       ga_account_id: Identificador de la cuenta
       ga_tracking: Identificador de segumiento
       ga_status: Habilitar Google Analytics
+      position: posición
     errors:
       format: "%{attribute} %{message}"
       messages:

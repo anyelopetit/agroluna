@@ -12,16 +12,17 @@ module KepplerFrontend
     before_action :set_farms
     before_action :index_variables
     before_action :attachments
-    before_action :show_history
+    before_action :index_history, only: %i[index]
+    before_action :show_history, only: %i[show]
+    before_action :respond_to_formats
     include ObjectQuery
 
     def index
-      respond_to_formats(KepplerCattle::Cow.all)
     end
 
     def show
       @statuses = @cow.statuses.order(id: :desc)
-      respond_to_formats(@cow)
+      # respond_to_formats(@cow)
     end
 
     def new
@@ -117,18 +118,36 @@ module KepplerFrontend
       )
     end
 
-    def show_history
-      get_history(KepplerCattle::Cow)
-    end
-
-    def get_history(model)
+    def index_history
       @activities = PublicActivity::Activity.where(
-        trackable_type: model.to_s
+        trackable_type: KepplerCattle::Cow.to_s
       ).or(
         PublicActivity::Activity.where(
-          recipient_type: model.to_s
+          recipient_type: KepplerCattle::Cow.to_s
         )
       ).order('created_at desc').limit(50)
+    end
+
+    def show_history
+      @activities = PublicActivity::Activity.where(
+        trackable_id: @cow.id.to_s
+      ).or(
+        PublicActivity::Activity.where(
+          recipient_id: @cow.id.to_s
+        )
+      ).order('created_at desc').limit(50)
+    end
+
+    def respond_to_formats
+      respond_to do |format|
+        format.html
+        # format.csv { send_format_data(objects.model.all, 'csv') }
+        # format.xls { send_format_data(objects.model.all, 'xls') }
+        format.json
+        format.pdf do
+          render pdf_options
+        end
+      end
     end
 
     # Only allow a trusted parameter "white list" through.
@@ -150,6 +169,21 @@ module KepplerFrontend
         :mother_id,
         :father_id
       )
+    end
+
+    protected
+
+    def send_format_data(objects, extension)
+      models = objects.model.to_s.downcase.pluralize
+      t_models = t("keppler.models.pluralize.#{models}").humanize
+      filename = "#{t_models} - #{I18n.l(Time.now, format: :short)}"
+      objects_array = objects.order(:created_at)
+      case extension
+      when 'csv'
+        send_data objects_array.to_csv, filename: "#{filename}.csv"
+      when 'xls'
+        send_data objects_array.to_a.to_xls, filename: "#{filename}.xls"
+      end
     end
   end
 end

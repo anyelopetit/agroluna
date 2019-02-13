@@ -11,8 +11,15 @@
 .app_wrapper {
   padding-top: 40px;
   background-color: #f8f8f8;
-  min-height: 100vh;
+  min-height: calc(100vh - 115px);
   overflow: hidden;
+
+  a {
+    color: #28c76f;
+    &:hover {
+      filter: brightness(80%);
+    }
+  }
 }
 
 .description_land, .photos_land {

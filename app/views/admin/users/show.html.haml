@@ -28,7 +28,7 @@
           .box-body.box-body-no-padding
             %table.table
               %tbody
-                - @user.as_json(except: %i[username deleted_at]).each do |attribute, value|
+                - @user.as_json(except: %i[avatar username deleted_at]).each do |attribute, value|
                   %tr.list-row
                     %th.display-label= t("activerecord.attributes.#{attribute}").humanize
                     %td.display-value.fs-body-1.tc-black-2= value

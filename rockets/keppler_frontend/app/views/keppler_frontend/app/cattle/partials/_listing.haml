@@ -21,11 +21,6 @@
         Agregar
   - if cows.blank? && @farm.cows.count > 0
     = link_to 'Mostrar todos', app_farm_cows_path(farm)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    
->>>>>>> e6a957d2dab2a50e6974659505835ccf5053b289
   = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: cows
 
 .card_show.card_status.card_history#status-history
@@ -39,96 +34,56 @@
       -# = render_activities(@activities, locals: { method: 'serie_number' })
       - @activities.each do |activity|
         = render partial: "keppler_frontend/app/layouts/public_activity/#{activity.key.split('.').second}", locals: { activity: activity, method: 'serie_number' }
-<<<<<<< HEAD
-=======
-  .content-table
-    %table.cow-table
-      - if cows.size.zero?
-        %thead
-          %tr
-            %th.not-records.center
-              %center No se encontraron ganados
-      - else
-        %thead
-          %tr
-            -# %th
-              %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
-              %label{for: "styled-checkbox-all"}
-            %th
-              - if can?(KepplerCattle::Cow).destroy_multiple?
-                .toolbar-item
-                  .item-check
-                    .checkbox
-                      %label{ for: 'checkbox-all' }
-                        %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
-                        %span.cr
-                          %i.cr-icon.icofont-check
-            %th
-              = sort_link(@q, 'serie_number') do 
-                Serie
-            %th Imagen
-            %th 
-              = sort_link(@q, 'status.weight') do
-                Peso
-            %th 
-              = sort_link(@q, 'status.days') do 
-                Días de nacido
-            %th 
-              = sort_link(@q, 'status.typology') do 
-                Tipología
-            %th 
-              = sort_link(@q, 'status.created_at') do 
-                Status
-            %th Controles
-        %tbody
-          - cows.each do |cow|
-            %tr{ style: "border-bottom: 1px #eee solid;" }
-              - if can?(KepplerCattle::Cow).destroy_multiple?
-                %td
-                  .checkbox{ style: 'margin: 3px' }
-                    %label{ for: "checkbox-#{cow.id}" }
-                      %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
-                      %span.cr
-                        %i.cr-icon.icofont-check
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                  = cow&.serie_number
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                  = image_tag cow&.image&.url if cow.image.url
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                  = cow&.status&.weight
-                  KG
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                  = cow&.status&.days
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                  = cow&.status&.typology&.name
-              %td.status
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                  =# cow&.status&.created_at&.strftime("%d-%m-%Y")
-                  .card_status--bar
-                    - if cow&.gender?('male')
-                      %a.status-tooltip{ title: 'Recelador' }
-                        %i.icofont-bull{ class: ('active' if cow&.status&.defiant) }
-                      %a.status-tooltip{ title: 'Reproductor' }
-                        %i.icofont-dna{ class: ('active' if cow&.status&.reproductive) }
-                    - else
-                      %a.status-tooltip{ title: 'Preñada' }
-                        %i.icofont-baby{ class: ('active' if cow&.status&.pregnant) }
-                      %a.status-tooltip{ title: 'Lactando' }
-                        %i.icofont-baby-milk-bottle{ class: ('active' if cow&.status&.lactating)  }
-                      %a.status-tooltip{ title: 'Criando' }
-                        %i.icofont-holding-hands{ class: ('active' if cow&.status&.breeding) }
-                    -# %a.status-tooltip{ title: 'Dado de baja' }
-                      %i.icofont-danger-zone{ class: ('active' if cow&.status&.dead) }
-              %td.actions
-                = link_to app_farm_cow_path(farm, cow), class: 'floating-btn' do
-                  %span.icofont-eye
-                = link_to app_farm_cow_status_new_path(farm, cow), class: 'floating-btn' do
-                  %span.icofont-ui-add
->>>>>>> 27ee3f1a37fe11e4db2dc79e7d25c94ae7bccfa3
-=======
->>>>>>> e6a957d2dab2a50e6974659505835ccf5053b289
+        
+:scss
+  #status-history {
+    height: 100vh;
+    width: 300px;
+    position: fixed;
+    right: -300px;
+    top: 0;
+    z-index: 4;
+    transition: .3s;
+  }
+
+  #close-status-history {
+    color: #28C76F;
+    z-index: 4;
+  }
+
+  .parent_card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    //border: 2px solid #f4f5f6;
+    border-radius: 4px;
+    padding: 10px;
+    
+    img {
+      max-height: 70px;
+      max-width: 200px;
+    }
+  }
+
+ 
+  .svg-icon-md {
+    height: 30px;
+  }
+
+
+:javascript
+  $('#open-status-history').click(function() {
+    $('#status-history').css({
+      right: '0'
+    })
+  })
+  $('#close-status-history').click(function() {
+    $('#status-history').css({
+      right: '-300px'
+    })
+  })
+
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })

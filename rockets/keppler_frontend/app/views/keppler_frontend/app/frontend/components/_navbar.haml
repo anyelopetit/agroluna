@@ -4,10 +4,20 @@
     %div{ class: (farm_view ? 'navbar_img_custom navbar-js' : 'navbar_js_fixed'), style: "background-image: url('#{farm&.photos&.find_by(cover: true)&.photo&.url || 'https://images.pexels.com/photos/787647/pexels-photo-787647.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'}')" }
       .top_img
     .navbar_custom_content
-      
-      %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", type: "button"}
+      %a#navbarDropdown.nav-link.d-lg-none.mr-auto.mr-lg-0{ class: ('dropdown-toggle' if farms), "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+        = image_tag (farm&.logo&.url || @default_logo),class: "image_logo_company", style: 'width: 80px; z-index: 5;'
+      - if farms.blank?
+        .farms-menu.dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}
+          .dropdown-item No tienes fincas asignadas
+      - else
+        .farms-menu.dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}
+          - farms.each do |f|
+            %a.farm-item.dropdown-item{ href: app_farm_path(f) }
+              .farm-logo= image_tag f&.logo&.url || @default_logo
+              .farm-title= f.title
+      %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "offcanvas", type: "button"}
         %span.navbar-toggler-icon.icofont-navigation-menu
-      #navbarSupportedContent.collapse.navbar-collapse
+      #navbarSupportedContent.navbar-collapse.offcanvas-collapse
         .logo
           %a#navbarDropdown.nav-link{ class: ('dropdown-toggle' if farms), "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
             = image_tag (farm&.logo&.url || @default_logo),class: "image_logo_company", style: 'max-width: 80px; max-height: 60px; z-index: 5;'
@@ -28,27 +38,23 @@
                 -# Inicio
                 -# = farm&.title
             %li.nav-item{ style: "position: relative;"}
-              %a.click#navbarFarm.nav-link{ class: "#{'active' if %w[cattle strategic_lots transferences].include?(controller_name)} dropdown-toggle", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+              %a.click.nav-link{ class: "#{'active' if %w[cattle strategic_lots transferences].include?(controller_name)} dropdown-toggle", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
                 Ganadería
                 %i.icofont-simple-down
-              .farm_menu{"aria-labelledby" => "navbarFarm", class: ('visibility' if %w[cattle strategic_lots transferences inseminations].include?(controller_name))}
+              .farm_menu{ class: ('visibility' if %w[cattle strategic_lots transferences inseminations].include?(controller_name))}
                 = link_to app_farm_cows_path(farm),style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item #{('active_sub' if controller_name.eql?('cattle'))}" do
-                  Ganadería
+                  Ganado
                 = link_to app_farm_strategic_lots_path(farm),style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item  #{('active_sub' if controller_name.eql?('strategic_lots'))}" do
                   Lotes estratégicos
                 = link_to app_farm_transferences_path(farm),style: "background-color: transparent !important; color: white;",  class: "modelOne dropdown-item  #{('active_sub' if controller_name.eql?('transferences'))}" do
                   Transferencias
                 = link_to app_farm_inseminations_path(farm),style: "background-color: transparent !important; color: white;",  class: "modelOne dropdown-item  #{('active_sub' if controller_name.eql?('inseminations'))}" do
                   Pajuelas
-            -# %li.nav-item
-              = link_to app_farm_strategic_lots_path(farm), class: "nav-link #{('active' if controller_name.eql?('strategic_lots'))}" do
-                Lotes estratégicos
-            -# %li.nav-item
-              = link_to app_farm_transferences_path(farm), class: "nav-link #{('active' if controller_name.eql?('transferences'))}" do
-                Transferencias
+           
           %li.nav-item.d-lg-none
             = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: "nav-link"
-        -# %ul.navbar-nav.mr-auto.language-select
+      
+
         %ul.navbar-nav.ml-auto.user_logo
           %li.nav-item{ style: 'display: flex;align-items: center;' }
             -# %a.float-right{ href: '/admin' }
@@ -84,41 +90,6 @@
       %span.profile_activity= farm&.processes&.join(', ')
 
 :scss
-  .top_img{
-    position: absolute;
-    top: -20px;
-    left: 0;
-    right: 0;
-    height: 25%;
-    filter: blur(80px);
-    z-index: 4;
-    background-position: top;
-    background-color: #030708;
-    // background: inherit;
-    // width: 100%;
-    // height: 20%;
-    // position: absolute;
-    // top: -27px;
-    // left: 50%;
-    // filter: blur(5px);
-    // transform: translate(-50%, 25%);
-  }
-  .home_custom {
-    &.fixed-nav {
-      height: 100px;
-    }
-  }
-  .navbar-js {
-    &.fixed {
-      min-height: 100px;
-      height:100px;
-      //background: #28C76F !important;
-      filter: blur(2px);
-      top: -2px;
-      left: -2px;
-      right: -1px;
-    }
-  }
   .farm-logo img {
     width: 30px;
     margin-right: 10px;
@@ -184,77 +155,6 @@
     align-items: center;
   }
 
-  .farm_menu {
-    display: none;
-    &.visibility {
-      display: flex !important;
-      position: absolute;
-    }
-  }
- 
-  a.modelOne { 
-    transition: .3s ease-in-out;
-    &:nth-child(1){
-      padding: .25rem 0.5rem;
-    }
-    &:nth-child(3){
-    }
-
-    &:hover {
-      color: white !important;
-      transition: .3s ease-in-out;
-      font-weight: 6  00;
-      &:after {
-        transition: .3s ease-in-out;
-        content: "";
-        position: absolute;
-        bottom: -3px;
-        left: 5px;
-        background-color: #fa6d08;
-        width: 100%;
-        height: 3px;
-      }
-    }
-    &.active_sub {
-      color: white !important;
-      //font-weight: 900 !important;
-      position: relative;
-      &:after {
-        content: "";
-        position: absolute;
-        bottom: -3px;
-        left: 5px;
-        background-color: #fa6d08;
-        width: 100%;
-        height: 3px;
-      }
-    }
-  }
-  .navbar_custom {
-    &.size_fixed {
-      height: 100px;
-      width: 100%;
-      overflow: hidden;
-      border-radius: 0px;
-
-    }
-  }
-  .home_custom {
-    &.fixed-nav {
-      height: 100px;
-    }
-  }
-  .navbar-js {
-    &.fixed {
-      min-height: 100px;
-      height:110px;
-      //background: #008500 !important;
-      filter: blur(2px);
-      top: -2px;
-      left: -2px;
-      right: -1px;
-    }
-  }
 - if farm_view
   :scss
     .navbar-collapse {
@@ -263,16 +163,17 @@
     
   :javascript
     $(window).scroll(function () {
-      if ($(document).scrollTop() > 15 && ($(window).width() >= 768)) {
+      if ($(document).scrollTop() > 15 && ($(window).width() >= 320)) {
         $('.navbar_img_custom').addClass('fixed');
         $('.home_custom').addClass('fixed-nav');
         $('.navbar_custom').addClass('size_fixed');
-
+        $('.home_description').addClass('home_description-hidden')
       }
       else {
         $('.navbar_img_custom').removeClass('fixed');
         $('.home_custom').removeClass('fixed-nav');
         $('.navbar_custom').removeClass('size_fixed');
+        $('.home_description').removeClass('home_description-hidden')
       }
     });
 
@@ -288,6 +189,13 @@
         modelOne.toggleClass('active_sub');
       }
     });
+    $(function () {
+      $('[data-toggle="offcanvas"]').on('click', function () {
+        $('.offcanvas-collapse').toggleClass('open')
+        $('body').toggleClass('offcanvas-expanded');
+        $('.home_description').toggleClass('home_description-hidden')
+      })
+    })
 - else 
   :scss
     .navbar-collapse {
@@ -299,12 +207,13 @@
     .image_logo_company {
       margin-top: 15px;
     }
+    @media (min-width: 0px) and (max-width: 767px){
+      .image_logo_company {
+        margin-top: 0px;
+      }
+    }
   :javascript
-    $('.click').on('click', function(){
-      $('.farm_menu').toggleClass('visibility');
-    })
     let modelOne = $('a.modelOne');
-
     let activeOne = $('.farm_menu ').find('a.modelOne.active_sub');
 
     modelOne.hover(function () {
@@ -313,5 +222,12 @@
     }, function () {
       $(this).removeClass('active_sub')
       activeOne.addClass('active_sub')
+    })
+    $(function () {
+      $('[data-toggle="offcanvas"]').on('click', function () {
+        $('.offcanvas-collapse').toggleClass('open')
+        $('body').toggleClass('offcanvas-expanded');
+        $('.home_description').toggleClass('home_description-hidden')
+      })
     })
     

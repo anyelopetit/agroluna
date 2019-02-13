@@ -53,6 +53,24 @@
   margin-left: 10px;
 }
 
+.cow_info {
+  dt {
+    margin-top: 20px;
+    font-size: 15px;
+  }
+  dd {
+    font-size: 15px;
+  }
+}
+
+dt {
+  font-size: 15px;
+}
+
+dd {
+  font-size: 15px;
+}
+
 .card_status {
   // overflow-y: scroll;
   // max-height: 100vh;
@@ -72,6 +90,10 @@
   &--bar {
     float: right;
     font-size: 25px;
+
+    @include respond-to(md){
+      font-size: 18px;
+    }
 
     i {
       border-radius: 1px solid transparent;
@@ -94,7 +116,8 @@
   dt {
     float: left;
     margin-top: 0;
-    width: 20px;
+    // width: 20px;
+    width: 100%;
   }
 }
 
@@ -189,4 +212,10 @@
 
 .card_status_details{
   text-align: center;
+}
+.card_status_parent{
+  min-height: 257px;
+  @include respond-to(md){
+    min-height: 280px;
+  }
 }

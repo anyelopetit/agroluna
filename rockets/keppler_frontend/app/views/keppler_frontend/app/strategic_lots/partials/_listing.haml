@@ -3,7 +3,7 @@
   .container_custom
     .float-left
       -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
-    .d-flex.justify-content-end.mb-5
+    .d-flex.justify-content-end
       // .toolbar
       //   %a{ href: '' }
       //     %i.icofont-trash
@@ -21,7 +21,7 @@
                   %span.cr
                     %i.cr-icon.icofont-check
         
-        .toolbar-item
+        -# .toolbar-item
           -# = link_to reload_admin_farm_farm_strategic_lots_path(@farm), class: 'tool-btn', remote: true, title: t('keppler.actions.reload_page') do
             %i.icofont-refresh
         -# - if can?(KepplerFarm::StrategicLot).download?
@@ -36,7 +36,7 @@
             = link_to '#', class: 'tool-btn', title: t('keppler.actions.upload_records'), id: 'upload' do
               %i.icon-cloud-upload
         .toolbar-item
-          %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+          -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
           = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
             %i.icofont-trash
             Eliminar
@@ -46,22 +46,37 @@
         Agregar
     - if strategic_lots.blank? && @farm.strategic_lots.count > 0
       = link_to 'Mostrar todos', app_farm_strategic_lots_path(farm)
-    %table
-      - if strategic_lots.size.zero?
-        %thead
-          %tr
-            %th.not-records.center
-              %center No se encontraron lotes estratégicos
-      - else
-        %thead
-          %tr
-            %th
-              - if can?(KepplerFarm::StrategicLot).destroy_multiple?
-                .toolbar-item
-                  .item-check
-                    .checkbox
-                      %label{ for: 'checkbox-all' }
-                        %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+    .content-table
+      %table
+        - if strategic_lots.size.zero?
+          %thead
+            %tr
+              %th.not-records.center
+                %center No se encontraron lotes estratégicos
+        - else
+          %thead
+            %tr
+              %th
+                - if can?(KepplerFarm::StrategicLot).destroy_multiple?
+                  .toolbar-item
+                    .item-check
+                      .checkbox
+                        %label{ for: 'checkbox-all' }
+                          %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+                          %span.cr
+                            %i.cr-icon.icofont-check
+              %th Lote estratégico
+              %th Función
+              %th Cantidad de series
+              -# %th Controles
+          %tbody
+            - strategic_lots.each do |strategic_lot|
+              %tr{ style: "border-bottom: 1px #eee solid;" }
+                - if can?(KepplerFarm::StrategicLot).destroy_multiple?
+                  %td
+                    .checkbox{ style: 'margin: 3px' }
+                      %label{ for: "checkbox-#{strategic_lot.id}" }
+                        %input{ type:"checkbox", id: "checkbox-#{strategic_lot.id}", 'checklist-model' => 'check', 'checklist-value' => "#{strategic_lot.id}", '@click' => "listDelete(#{strategic_lot.id})"}
                         %span.cr
                           %i.cr-icon.icofont-check
             %th Lote estratégico

@@ -69,7 +69,7 @@ module KepplerCattle
     # end
 
     def typology
-      KepplerCattle::Typology.find_by(id: typology_id)
+      # KepplerCattle::Typology .find_by(id: typology_id)
     end
 
     def farm

@@ -1,6 +1,6 @@
 .container_custom
   -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
-  .d-flex.justify-content-end
+  .d-flex.justify-content-end.content-btn
     -# .toolbar
       .toolbar-item
         -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
@@ -21,6 +21,7 @@
         Agregar
   - if cows.blank? && @farm.cows.count > 0
     = link_to 'Mostrar todos', app_farm_cows_path(farm)
+    
   = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: cows
 
 .card_show.card_status.card_history#status-history

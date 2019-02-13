@@ -28,11 +28,11 @@ module KepplerCattle
     end
 
     def race
-      KepplerCattle::Race.find_by(id: race_id)
+      # KepplerCattle::Race.find_by(id: race_id)
     end
 
     def species
-      race&.species
+      # race.species
     end
 
     def self.genders

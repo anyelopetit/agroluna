@@ -22,6 +22,10 @@
   - if cows.blank? && @farm.cows.count > 0
     = link_to 'Mostrar todos', app_farm_cows_path(farm)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    
+>>>>>>> e6a957d2dab2a50e6974659505835ccf5053b289
   = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: cows
 
 .card_show.card_status.card_history#status-history
@@ -35,6 +39,7 @@
       -# = render_activities(@activities, locals: { method: 'serie_number' })
       - @activities.each do |activity|
         = render partial: "keppler_frontend/app/layouts/public_activity/#{activity.key.split('.').second}", locals: { activity: activity, method: 'serie_number' }
+<<<<<<< HEAD
 =======
   .content-table
     %table.cow-table
@@ -125,3 +130,5 @@
                 = link_to app_farm_cow_status_new_path(farm, cow), class: 'floating-btn' do
                   %span.icofont-ui-add
 >>>>>>> 27ee3f1a37fe11e4db2dc79e7d25c94ae7bccfa3
+=======
+>>>>>>> e6a957d2dab2a50e6974659505835ccf5053b289

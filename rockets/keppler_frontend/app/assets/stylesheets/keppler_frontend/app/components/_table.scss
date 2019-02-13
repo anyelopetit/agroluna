@@ -30,15 +30,22 @@ table {
   background-color: white;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   img {
     
 =======
+=======
+  img {
+>>>>>>> e6a957d2dab2a50e6974659505835ccf5053b289
   @include respond-to(sm) {
     width: 150%;
   }
   @include respond-to(xs) {
     width: 350%;
+<<<<<<< HEAD
 >>>>>>> 27ee3f1a37fe11e4db2dc79e7d25c94ae7bccfa3
+=======
+>>>>>>> e6a957d2dab2a50e6974659505835ccf5053b289
   }
 }
 

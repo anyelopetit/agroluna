@@ -8,7 +8,6 @@
     width: 100%;
     overflow-x: auto;
   }
-  
 }
 .content-table::-webkit-scrollbar {
   background-color: #fff;
@@ -30,11 +29,12 @@ table {
   background-color: white;
 
   img {
-  @include respond-to(sm) {
-    width: 150%;
-  }
-  @include respond-to(xs) {
-    width: 350%;
+    @include respond-to(sm) {
+      width: 150%;
+    }
+    @include respond-to(xs) {
+      width: 350%;
+    }
   }
 }
 

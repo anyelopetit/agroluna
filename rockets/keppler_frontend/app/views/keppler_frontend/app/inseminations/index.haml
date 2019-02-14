@@ -7,14 +7,9 @@
         %a#mfg-tab.nav-link.active{ href: "#mfg", role: "tab" }
           Inventario (#{@active_inseminations.size})
       %li.nav-item
-<<<<<<< HEAD
-        %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#ale", role: "tab"}
-          Usadas (#{@inactive_inseminations.count})
-=======
         -# %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#ale", role: "tab"}
         = link_to({ action: :index_used }, { class: "nav-link" }) do
           Usadas (#{@inactive_inseminations.size})
->>>>>>> 0598caef8a8ea8131d2308bff29ee3b3e4e034fd
       -# %li.nav-item
         %a#transfers-tab.nav-link{"aria-controls" => "transfers", "aria-selected" => "false", "data-toggle" => "tab", href: "#transfers", role: "tab"} Transferencias
     %hr{ :style => "margin-top: 0;width: 90%; margin-bottom: 20px;"}

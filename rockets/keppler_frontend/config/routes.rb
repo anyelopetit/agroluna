@@ -22,6 +22,7 @@ KepplerFrontend::Engine.routes.draw do
 
   # Farm Cattle
   get '/finca/:farm_id/ganado', to: 'app/cattle#index', as: :app_farm_cows
+  get '/finca/:farm_id/ganado-inactivo', to: 'app/cattle#index_inactive', as: :app_farm_cows_inactive
   get '/finca/:farm_id/ganado/:cow_id', to: 'app/cattle#show', as: :app_farm_cow
   get '/finca/:farm_id/editar-ganado/:cow_id', to: 'app/cattle#edit', as: :app_farm_cow_edit
   get '/finca/:farm_id/nuevo-ganado', to: 'app/cattle#new', as: :app_farm_cow_new

@@ -31,13 +31,17 @@ module KepplerCattle
     def farm
       KepplerFarm::Farm.find_by(id: farm_id)
     end
-    
-    def self.where_used
-      where.not(used: nil)
+
+    def self.farm
+      KepplerFarm::Farm.find_by(id: $request.params[:farm_id])
     end
     
-    def self.where_no_used
-      where(used: nil)
+    def self.active
+      farm.inseminations.where(used: nil)
+    end
+    
+    def self.inactive
+      farm.inseminations.where.not(used: nil)
     end
 
     def self.colors

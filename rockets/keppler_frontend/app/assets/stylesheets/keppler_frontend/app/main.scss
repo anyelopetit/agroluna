@@ -86,3 +86,10 @@
     text-decoration: none;
     background-color: #28C76F33;
 }
+
+button, a, .btn {
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}

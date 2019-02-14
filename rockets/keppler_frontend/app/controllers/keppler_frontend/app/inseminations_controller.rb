@@ -6,14 +6,20 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    before_action :set_insemination, only: %i[show edit update destroy]
+    before_action :set_insemination, only: %i[show edit update destroy mark_as_used]
     before_action :insemination_attributes, only: %i[new edit create]
     before_action :index_variables
     before_action :user_authenticate
     include ObjectQuery
 
     def index
-      respond_to_formats(KepplerCattle::Insemination.all)
+      @active_inseminations = @inseminations.where_no_used
+      respond_to_formats(@active_inseminations)
+    end
+
+    def index_used
+      @inactive_inseminations = @inseminations.where_used
+      respond_to_formats(@inactive_inseminations)
     end
 
     def show
@@ -57,6 +63,9 @@ module KepplerFrontend
       redirect_to app_farm_inseminations_path(@farm)
     end
 
+    def mark_as_used
+    end
+
     private
 
     def set_insemination
@@ -66,8 +75,6 @@ module KepplerFrontend
     def index_variables
       @q = KepplerCattle::Insemination.ransack(params[:q])
       @inseminations = @q.result(distinct: true)
-      @active_inseminations = @inseminations.where_no_used
-      @inactive_inseminations = @inseminations.where_used
       @total = @inseminations.size
       @attributes = KepplerCattle::Insemination.index_attributes
       @typologies = KepplerCattle::Typology.all

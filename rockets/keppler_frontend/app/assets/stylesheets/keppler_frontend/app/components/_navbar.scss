@@ -233,7 +233,7 @@ a.modelOne {
   left: 1%;
   bottom: 20%;
   padding: 50px;
-  z-index: 3;
+  z-index: 1;
   @include respond-to(md) {
     padding: 0;
     left: 5%;
@@ -251,6 +251,7 @@ a.modelOne {
   }
   &.home_description-hidden{
     opacity: 0;
+    transition: .3s ease-in-out;
   }
 
   .profile_name, .profile_activity {

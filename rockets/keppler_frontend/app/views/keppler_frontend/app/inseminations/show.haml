@@ -17,6 +17,15 @@
           %i.icofont-download
       .actions
         .float-right
+          - if @insemination.used
+            .btn.btn_custom.btn--medium.disabled{ disabled: true }
+              %i.icofont-check
+              Usada
+          - else
+            = link_to({action: :mark_as_used, farm_id: @farm.id, insemination_id: @insemination.id}, { class: 'mt-4 mb-4' }) do
+              %button.btn.btn_custom.btn--filled.btn--medium
+                %i.icofont-check
+                Marcar como usada
           = link_to({action: :show, format: :pdf}, {class: 'mt-4 mb-4', target: '_blank'}) do
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-clip-board
@@ -29,7 +38,7 @@
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-clock-time
               Historial
-  .container_custom
+  .container_custom{ class: ('filter' if @insemination.used) }
     .row
       .col-md-12
         .card_show.insemination_info.p-5
@@ -41,13 +50,20 @@
               .card_insemination
                 .row
                   .col-lg-12
-                    = image_tag (@insemination.try(:image)&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_insemination'
+                    = image_tag (@insemination.try(:image)&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
                   .col-lg-12
                     .card_insemination_content{ :style => "text-align: center;"}
                       %h1
                         = @insemination.serie_number
                       %small= "(#{@insemination.short_name})" unless @insemination.short_name.blank?
+                      %br
                       %span= @insemination.race&.name
+                      %br
+                      - if @insemination.used
+                        %span
+                          %i.icofont-check
+                          %b Usada:
+                          = @insemination.used
             .col-lg-9
               .row
                 .col-lg-4
@@ -58,8 +74,8 @@
                     %dd= @insemination.short_name
                     %dt Especie
                     %dd= @insemination.species&.name
-                    %dt Procedencia
-                    %dd= @insemination.provenance
+                    -# %dt Procedencia
+                    -# %dd= @insemination.provenance
                 .col-lg-4
                   %dl
                     %dt Edad (Años-Meses)
@@ -119,7 +135,7 @@
                       - if @insemination.mother
                         = link_to app_farm_insemination_path(@farm, @insemination.mother) do
                           .parent_img
-                            = image_tag (@insemination.mother&.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_insemination'
+                            = image_tag (@insemination.mother&.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
                           %dl
                             %dt{:style => "font-weight: 700; color: #6f6f6f;"}
                               = @insemination.mother&.serie_number
@@ -132,7 +148,7 @@
                       - if @insemination.father
                         = link_to app_farm_insemination_path(@farm, @insemination.father) do
                           .parent_img
-                            = image_tag (@insemination.mother&.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_insemination' 
+                            = image_tag (@insemination.mother&.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
                           %dl
                             %dt{:style => "font-weight: 700; color: #6f6f6f;"}
                               = @insemination.father&.serie_number
@@ -178,6 +194,10 @@
     dt {
       margin-top: 20px;
     }
+  }
+
+  .container_custom.filter {
+    filter: grayscale(100%);
   }
 
 :javascript

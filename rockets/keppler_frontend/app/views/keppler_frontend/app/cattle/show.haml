@@ -33,6 +33,7 @@
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-clock-time
               Historial
+      
       .actions_movil.d-sm-none
         .float-right
           %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
@@ -48,7 +49,8 @@
               Historial
             = link_to({action: :show, format: :pdf}, {class: 'mt-4 mb-4 dropdown-item', target: '_blank'}) do
               Reporte
-      
+
+  
   .container_custom
     .row
       .col-md-12

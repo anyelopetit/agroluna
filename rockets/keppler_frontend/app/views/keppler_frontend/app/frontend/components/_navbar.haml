@@ -85,10 +85,10 @@
                   .pull-left
                     = image_tag 'admin/es.png', class: 'small-flat small-profile-img keppler-background'
                   %p.small-flat= t('keppler.language.es')
-  - if farm_view
-    .home_description
-      %h1.profile_name= farm&.title
-      %span.profile_activity= farm&.processes&.join(', ')
+    - if farm_view
+      .home_description
+        %h1.profile_name= farm&.title
+        %span.profile_activity= farm&.processes&.join(', ')
 
 :scss
   .farm-logo img {
@@ -159,7 +159,8 @@
 - if farm_view
   :scss
     .navbar-collapse {
-      align-items: flex-end;
+      // align-items: flex-end;
+      align-items: flex-start;
     }
     
   :javascript

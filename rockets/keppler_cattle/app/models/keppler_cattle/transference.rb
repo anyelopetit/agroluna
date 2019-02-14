@@ -39,5 +39,12 @@ module KepplerCattle
     def self.where_to(params)
       where(to_farm_id: params)
     end
+
+    def reasons
+      [
+        'Motivo 1',
+        'Motivo 2'
+      ]
+    end
   end
 end

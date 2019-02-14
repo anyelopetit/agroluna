@@ -264,7 +264,7 @@ puts 'Especies, razas, tipologías y pesajes creadas'
       days: cow.days,
       dead: [true, false].sample,
       corporal_condition: "CONDICION CORPORAL #{(0..5).to_a.sample}",
-      typology_id: cow.race.species.id,
+      typology_id: KepplerCattle::Typology.find_by(id: (1..10).to_a.sample).id,
       strategic_lot_id: (1..5).to_a.sample,
       user_id: 1,
       comments: Faker::Lorem.paragraph,

@@ -42,11 +42,13 @@ KepplerFrontend::Engine.routes.draw do
   # patch '/finca/:farm_id/transferencias/:transference_id', to: 'app/transferences#update', as: :app_farm_transference_update
   # delete '/finca/:farm_id/transferencias/:transference_id/eliminar', to: 'app/transferences#destroy', as: :app_farm_transference_destroy
 
-  # Farm Cattle
+  # Farm Inseminations
   get '/finca/:farm_id/pajuelas', to: 'app/inseminations#index', as: :app_farm_inseminations
+  get '/finca/:farm_id/pajuelas-usadas', to: 'app/inseminations#index_used', as: :app_farm_inseminations_used
   get '/finca/:farm_id/pajuela/:insemination_id', to: 'app/inseminations#show', as: :app_farm_insemination
   get '/finca/:farm_id/editar-pajuela/:insemination_id', to: 'app/inseminations#edit', as: :app_farm_insemination_edit
   get '/finca/:farm_id/nueva-pajuela', to: 'app/inseminations#new', as: :app_farm_insemination_new
+  get '/finca/:farm_id/marcar-como-usada/:insemination_id', to: 'app/inseminations#mark_as_used', as: :app_farm_insemination_mark_as_used
   post '/finca/:farm_id/pajuela', to: 'app/inseminations#create', as: :app_farm_insemination_create
   patch '/finca/:farm_id/pajuela/:insemination_id', to: 'app/inseminations#update', as: :app_farm_insemination_update
   delete '/finca/:farm_id/pajuela/:insemination_id/eliminar', to: 'app/inseminations#destroy', as: :app_farm_insemination_destroy

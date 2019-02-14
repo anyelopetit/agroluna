@@ -6,13 +6,13 @@
           = activity.owner&.name
       %small
         - if activity.trackable_type.eql?("KepplerCattle::Cow")
-          actualizó ganado
+          eliminó ganado
           #{activity.trackable.species&.name}
           #{activity.trackable.race&.name}
           %b
             = activity.trackable.try('serie_number')
         - else
-          actualizó
+          eliminó
           = t("activerecord.attributes.#{activity.trackable_type.split('::').last.downcase}")
           de ganado
           #{activity.recipient&.species&.name}

@@ -282,6 +282,7 @@ puts 'Especies, razas, tipologías y pesajes creadas'
   KepplerCattle::Insemination.create(
     serie_number: Faker::Number.between(111111, 999999),
     short_name: Faker::Name.first_name,
+    farm_id: [1,2].sample,
     species_id: species&.id,
     race_id: species&.races&.sample&.id,
     mother_id: KepplerCattle::Cow.where(gender: 'female')&.sample&.id,
@@ -300,7 +301,7 @@ puts 'Series creadas'
   puts "Llenando #{KepplerFarm::Farm.find(farm+1).title} de 20 transferencias "
   20.times do |transference|
     KepplerCattle::Transference.create(
-      cattle: KepplerFarm::Farm.find_by(id: farm+1).cows.take(transference).map(&:id),#take([1..20].sample),
+      cattle: KepplerFarm::Farm.find_by(id: farm+1).cows.take(transference).pluck(:id),#take([1..20].sample),
       from_farm_id: farm.eql?(1) ? 1 : 2,
       to_farm_id: farm.eql?(1) ? 2 : 1,
       reason: Faker::GameOfThrones.quote

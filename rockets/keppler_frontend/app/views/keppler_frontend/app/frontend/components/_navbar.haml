@@ -60,7 +60,7 @@
           %li.nav-item{ style: 'display: flex;align-items: center;' }
             -# %a.float-right{ href: '/admin' }
               %button.btn.btn_custom.btn--medium.btn--filled Ir a Keppler Admin
-            -# = current_user.roles.map(&:id)
+            -# = current_user.roles.pluck(:id)
           %li.nav-item.d-none.d-lg-block
             %a#profileDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
               %span= current_user&.name

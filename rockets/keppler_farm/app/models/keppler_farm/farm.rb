@@ -34,12 +34,12 @@ module KepplerFarm
     end
 
     def cows
-      cow_ids = KepplerCattle::Cow.all.select { |c| c&.status&.farm_id&.eql?(id) if c&.status&.farm_id }.map(&:id)
+      cow_ids = KepplerCattle::Cow.all.select { |c| c&.status&.farm_id&.eql?(id) if c&.status&.farm_id }.pluck(:id)
       KepplerCattle::Cow.where(id: cow_ids)
     end
 
     def transferences
-      transference_ids = KepplerCattle::Transference.all.select { |t| t&.from_farm_id&.eql?(id) || t&.to_farm_id&.eql?(id) }.map(&:id)
+      transference_ids = KepplerCattle::Transference.all.select { |t| t&.from_farm_id&.eql?(id) || t&.to_farm_id&.eql?(id) }.pluck(:id)
       KepplerCattle::Transference.where(id: transference_ids)
     end
 

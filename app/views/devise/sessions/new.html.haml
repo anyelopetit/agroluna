@@ -18,12 +18,12 @@
                 %label.label_custom.label_login
                   %i.icofont-ui-message
                   Correo
-                = f.email_field :email, :autofocus => true, class: "form-control input_custom input_login validate"
+                = f.email_field :email, :autofocus => true, class: "form-control input_custom  validate"
               .form-group.mb-5
                 %label.label_custom.label_login
                   %i.icofont-ui-password
                   Contraseña
-                = f.password_field :password, :autofocus => true, class: "form-control input_custom input_login validate #{'invalid' if flash[:alert]}"
+                = f.password_field :password, :autofocus => true, class: "form-control input_custom  validate #{'invalid' if flash[:alert]}"
               %div
                 .login-bottom.d-flex.justify-content-center
                   = f.submit :Entrar, type: 'submit', class: 'btn btn_custom btn--medium btn--filled w-100 btn-shadow btn-text-transform'

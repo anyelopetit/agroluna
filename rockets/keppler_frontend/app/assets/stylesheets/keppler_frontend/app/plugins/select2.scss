@@ -1,16 +1,16 @@
 
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
-  background-color: $keppler-color !important;
-  border-color: $keppler-color !important;
-  border-radius: 20px !important;
+  background-color: $primary !important;
+  border-color: $primary !important;
+  border-radius: 5px !important;
   color: #fff !important;
   padding: 1px 10px !important;
   transition: .2s;
 }
 
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
-  background-color: $keppler-color !important;
+  background-color: $primary !important;
   color: white !important;
   transition: .2s;
 }
@@ -18,13 +18,13 @@
 .select2-dropdown .select2-search__field:focus,
 .select2-search--inline .select2-search__field:focus {
   outline: none !important;
-  // border: 1px solid $keppler-color !important;
+  // border: 1px solid $primary !important;
   transition: .2s;
 }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple {
-  border: solid $keppler-color 1px !important;
-  border-radius: 20px !important;
+  border: solid $primary 1px !important;
+  border-radius: 5px !important;
   outline: 0 !important;
   transition: .2s;
 }
@@ -35,9 +35,11 @@
 }
 
 .select2-container--default .select2-selection--multiple {
-  border: solid 1px #d2d6de;
-  border-radius: 20px !important;
+  border:0;
+  border: solid 1px $white;
+  border-radius: 5px !important;
   transition: .2s;
+  background-color: $white !important;
 }
 
 .select2-container .select2-selection--single {
@@ -51,7 +53,7 @@
 .select2-container--default .select2-selection--single {
   border: 1px solid #d2d6de !important;
   background-color: #fff !important;
-  border-radius: 20px !important;
+  border-radius: 0px !important;
 }
 
 .select2-container--default .select2-selection--single, .select2-selection .select2-selection--single {
@@ -60,6 +62,6 @@
 
 .select2-selection.select2-selection--single {
   border: 1px solid #d2d6de !important;
-  background-color: #fff !important;
+  background-color: #f8f8f8 !important;
   border-radius: 20px !important;
 }

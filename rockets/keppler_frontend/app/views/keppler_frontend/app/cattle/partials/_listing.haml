@@ -33,7 +33,9 @@
             %i.icofont-plus
             Agregar
       - if cows.blank? && @farm.cows.count > 0
-        = link_to 'Mostrar todos', app_farm_cows_path(farm)
+        .toolbar{ style: "top: 60px;"}
+          .toolbar-item
+            = link_to 'Mostrar todos', app_farm_cows_path(farm)
       = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: cows
 
 .card_show.card_status.card_history#status-history

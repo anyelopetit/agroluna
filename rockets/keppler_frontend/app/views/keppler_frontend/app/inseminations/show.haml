@@ -3,7 +3,8 @@
   .container_custom
     .float-left
       -# %a.mt-4.mb-4.ml-3{ href: app_farm_inseminations_path(@farm) }
-      = link_to(request.env['HTTP_REFERER'], { class: 'mt-4 mb-4 ml-3' }) do
+      -# = link_to(request.env['HTTP_REFERER'], { class: 'mt-4 mb-4 ml-3' }) do
+      = link_to({action: :index}, { class: 'mt-4 mb-4 ml-3' }) do
         %button.btn.btn_custom.btn--medium
           %i.icofont-circled-left
           Listado

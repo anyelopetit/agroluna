@@ -13,12 +13,10 @@ module KepplerFrontend
     include ObjectQuery
 
     def index
-      @active_inseminations = @inseminations.where_no_used
       respond_to_formats(@active_inseminations)
     end
 
     def index_used
-      @inactive_inseminations = @inseminations.where_used
       respond_to_formats(@inactive_inseminations)
     end
 
@@ -75,6 +73,8 @@ module KepplerFrontend
     def index_variables
       @q = KepplerCattle::Insemination.ransack(params[:q])
       @inseminations = @q.result(distinct: true)
+      @active_inseminations = @inseminations.active
+      @inactive_inseminations = @inseminations.inactive
       @total = @inseminations.size
       @attributes = KepplerCattle::Insemination.index_attributes
       @typologies = KepplerCattle::Typology.all

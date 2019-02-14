@@ -27,6 +27,10 @@ module KepplerCattle
       KepplerFarm::Farm.find_by(id: status.farm_id)
     end
 
+    def self.farm
+      KepplerFarm::Farm.find_by(id: $request.params[:farm_id])
+    end
+
     def race
       # KepplerCattle::Race.find_by(id: race_id)
     end
@@ -92,12 +96,12 @@ module KepplerCattle
     end
 
     def self.actives
-      active_ids = select { |x| x.status.dead != true unless x.status.blank? }.map(&:id)
+      active_ids = farm.cows.select { |x| !x&.status&.deathdate }.pluck(:id).uniq
       where(id: active_ids)
     end
 
     def self.inactives
-      inactive_ids = select { |x| x.status.dead == true unless x.status.blank? }.map(&:id)
+      inactive_ids = farm.cows.select { |x| x&.status&.deathdate }.pluck(:id).uniq
       where(id: inactive_ids)
     end
   end

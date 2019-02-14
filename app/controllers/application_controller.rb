@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
   before_action :set_admin_locale
   before_action :git_info
   before_action :set_mailer_settings
+  before_action :beforeFilter
+  protect_from_forgery
 
   skip_around_action :set_locale_from_url
   include Pundit
@@ -144,4 +146,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def beforeFilter
+     $request = request
+  end  
 end

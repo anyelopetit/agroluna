@@ -9,7 +9,7 @@
     placeholder: 'Seleccionar ganado'
   })
 
-  var $ids = #{@strategic_lots.map(&:id)}
+  var $ids = #{@strategic_lots.pluck(:id)}
   var $final_array = []
   var href = $('.destroy_multiple').attr('href')
 

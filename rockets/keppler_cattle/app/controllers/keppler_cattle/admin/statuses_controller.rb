@@ -31,7 +31,7 @@ module KepplerCattle
         @corporal_conditions = Status.corporal_conditions
         @strategic_lots = KepplerFarm::StrategicLot.all
         @typologies = @cow.gender?('male') ? Status.male_typologies : Status.female_typologies
-        @last_status = Status.last
+        @last_status = @cow.status
         @farms = KepplerFarm::Farm.order(title: :asc)
       end
 

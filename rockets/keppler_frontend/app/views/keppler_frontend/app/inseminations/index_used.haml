@@ -4,20 +4,23 @@
     %ul#moduleTabs.nav.nav-tabs.mt-4{role: "tablist"}
       %li.nav-item
         -# %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#mfg", role: "tab"}
-        = link_to_if(action_name.eql?('index'), "Inventario (#{@active_inseminations.count})", { action: :index }, { class: "nav-link #{'active' if action_name.eql?('index')}" })
+        = link_to({ action: :index }, { class: "nav-link" }) do
+          Inventario (#{@active_inseminations.size})
       %li.nav-item
+        -# = link_to({ action: :index_used }, { class: "nav-link" }) do
         -# %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#ale", role: "tab"}
-        = link_to_if(action_name.eql?('index_used'), "Usadas (#{@inactive_inseminations.count})", { action: :index_used }, { class: "nav-link #{'active' if action_name.eql?('index_used')}" })
+        %a#ale-tab.nav-link.active{ href: "#ale", role: "tab" }
+          Usadas (#{@inactive_inseminations.size})
       -# %li.nav-item
         %a#transfers-tab.nav-link{"aria-controls" => "transfers", "aria-selected" => "false", "data-toggle" => "tab", href: "#transfers", role: "tab"} Transferencias
     %hr{ :style => "margin-top: 0;width: 90%; margin-bottom: 20px;"}
     -# #moduleContent.tab-content
       #mfg.tab-pane.fade.show.active{ "aria-labelledby" => "mfg-tab", role: "tabpanel" }
-        = render 'keppler_frontend/app/inseminations/partials/listing', farm: @farm, inseminations: @active_inseminations, search: @q
-      -# #ale.tab-pane.fade{ "aria-labelledby" => "ale-tab", role: "tabpanel" }
-    = render 'keppler_frontend/app/inseminations/partials/listing', farm: @farm, inseminations: @inactive_inseminations, search: @q
-      -# #transfers.tab-pane.fade{ "aria-labelledby" => "transfers-tab", role: "tabpanel" }
-        = render 'keppler_frontend/app/inseminations/partials/listing', farm: @farm, inseminations: @inactive_inseminations, search: @q
+    = render 'keppler_frontend/app/inseminations/partials/listing', farm: @farm, inseminations: @active_inseminations, search: @q
+    -# #ale.tab-pane.fade{ "aria-labelledby" => "ale-tab", role: "tabpanel" }
+      = render 'keppler_frontend/app/inseminations/partials/listing', farm: @farm, inseminations: @inactive_inseminations, search: @q
+    -# #transfers.tab-pane.fade{ "aria-labelledby" => "transfers-tab", role: "tabpanel" }
+      = render 'keppler_frontend/app/inseminations/partials/listing', farm: @farm, inseminations: @inactive_inseminations, search: @q
 :scss
   .center {
     align-items: center;
@@ -76,7 +79,7 @@
     $("#" + $id).show()
   })
 
-  var $ids = #{@inseminations.map(&:id)}
+  var $ids = #{@inseminations.pluck(:id)}
   var $final_array = []
   var href = $('.destroy_multiple').attr('href')
 

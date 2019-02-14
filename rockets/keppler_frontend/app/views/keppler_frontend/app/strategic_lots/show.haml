@@ -25,8 +25,9 @@
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-plus
           Agregar
+          
     .row
-      .col-sm-8
+      .col-sm-8.mb-4
         -# = @assign.inspect
         = simple_form_for [:app, :cattle, @assign], url: app_farm_strategic_lot_assign_cattle_path(@farm, @strategic_lot), html: { style: 'width: 100%' } do |f|
           .row.mb-4

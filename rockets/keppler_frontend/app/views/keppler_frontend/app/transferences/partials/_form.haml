@@ -17,6 +17,10 @@
           %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
             %i.icofont-save
             Guardar
+:scss
+  .select2-container--default .select2-selection--multiple {
+    background-color: rgba(221,221,221,.44) !important;
+  }
 :javascript
   $('.select2').select2()
   $('.select2-multiple').select2({

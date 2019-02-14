@@ -33,20 +33,22 @@
             %i.icofont-plus
             Agregar
       - if cows.blank? && @farm.cows.count > 0
-        = link_to 'Mostrar todos', app_farm_cows_path(farm)
+        .toolbar{ style: "top: 60px;"}
+          .toolbar-item
+            = link_to 'Mostrar todos', app_farm_cows_path(farm)
       = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: cows
 
-    .card_show.card_status.card_history#status-history
-      .float-right
-        %a#close-status-history{ href: '#' }
-          %i.icofont-ui-close
-      .card_status--title
-        %h2 Historial
-        %ul.timeline
-          = 'No hay actividades' if @activities.empty?
-          -# = render_activities(@activities, locals: { method: 'serie_number' })
-          - @activities.each do |activity|
-            = render partial: "keppler_frontend/app/layouts/public_activity/#{activity.key.split('.').second}", locals: { activity: activity, method: 'serie_number' }
+        .card_show.card_status.card_history#status-history
+          .float-right
+            %a#close-status-history{ href: '#' }
+              %i.icofont-ui-close
+          .card_status--title
+            %h2 Historial
+            %ul.timeline
+              = 'No hay actividades' if @activities.empty?
+              -# = render_activities(@activities, locals: { method: 'serie_number' })
+              - @activities.each do |activity|
+                = render partial: "keppler_frontend/app/layouts/public_activity/#{activity.key.split('.').second}", locals: { activity: activity, method: 'serie_number' }
 :scss
   #status-history {
     height: 100vh;

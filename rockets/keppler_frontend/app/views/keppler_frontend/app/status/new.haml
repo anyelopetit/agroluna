@@ -5,7 +5,7 @@
   .container_carousel
     .single-item
       - unless @cow.status.blank?
-        = link_to :back, class: 'mt-4 mb-4' do
+        = link_to({controller: :cattle, action: :index}, { class: 'mt-4 mb-4 ml-3' }) do
           %button.btn.btn_custom.btn--medium
             %i.icofont-circled-left
             Listado

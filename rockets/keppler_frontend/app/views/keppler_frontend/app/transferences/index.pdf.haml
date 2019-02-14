@@ -37,7 +37,7 @@
               %td
                 = transference&.to_farm&.title
               %td
-                = transference&.try(:description)
+                = transference&.try(:reason)
               %td
                 = transference&.created_at.strftime("%d-%m-%Y")
 :scss

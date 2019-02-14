@@ -22,7 +22,7 @@ module KepplerFrontend
       @strategic_lots = KepplerFarm::StrategicLot.all
       @strategic_lot = @status.find_lot
       @typologies = @cow.possible_typologies
-      @last_status = KepplerCattle::Status.last
+      @last_status = @cow.status
       @farms = KepplerFarm::Farm.order(title: :asc)
     end
 

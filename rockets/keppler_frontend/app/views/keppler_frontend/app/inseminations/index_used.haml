@@ -4,11 +4,12 @@
     %ul#moduleTabs.nav.nav-tabs.mt-4{role: "tablist"}
       %li.nav-item
         -# %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#mfg", role: "tab"}
-        %a#mfg-tab.nav-link.active{ href: "#mfg", role: "tab" }
+        = link_to({ action: :index }, { class: "nav-link" }) do
           Inventario (#{@active_inseminations.size})
       %li.nav-item
+        -# = link_to({ action: :index_used }, { class: "nav-link" }) do
         -# %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#ale", role: "tab"}
-        = link_to({ action: :index_used }, { class: "nav-link" }) do
+        %a#ale-tab.nav-link.active{ href: "#ale", role: "tab" }
           Usadas (#{@inactive_inseminations.size})
       -# %li.nav-item
         %a#transfers-tab.nav-link{"aria-controls" => "transfers", "aria-selected" => "false", "data-toggle" => "tab", href: "#transfers", role: "tab"} Transferencias

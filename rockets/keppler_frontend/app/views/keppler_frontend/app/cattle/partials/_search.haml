@@ -17,7 +17,7 @@
         %select#min-typology{ name: 'search[typology]', class: 'btn btn--medium btn--select ml-2' }
           %option Sin tipología
           - @typologies.each do |typology|
-            %option{ value: typology } #{typology}
+            %option{ value: typology&.id } #{typology&.name}
     .select-field#weight.ml-2
       .search-weight
         %select#min-weight.ml-2{ name: 'search[weight][min]', class: 'btn btn--medium btn--select' }

@@ -98,7 +98,7 @@
                         %li
                           = link_to({action: :show, farm_id: @farm.id, strategic_lot_id: strategic_lot.id}) do
                             %i.icofont-eye
-                            Ver ficha de ganado
+                            Ver lote
                       - if can?(KepplerFarm::StrategicLot).update?
                         %li
                           = link_to({action: :edit, farm_id: @farm.id, strategic_lot_id: strategic_lot.id}) do

@@ -29,7 +29,7 @@
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-plus
               Actualizar
-          %a.mt-4.mb-4#open-status-history
+          %a.mt-4.mb-4.open-status-history
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-clock-time
               Historial
@@ -45,7 +45,7 @@
               Editar
             %a{ class: 'dropdown-item', href: app_farm_cow_status_new_path(@farm, @cow) }
               Actualizar
-            %a#open-status-history{class: "dropdown-item"}
+            %a.open-status-history{class: "dropdown-item"}
               Historial
             = link_to({action: :show, format: :pdf}, {class: 'mt-4 mb-4 dropdown-item', target: '_blank'}) do
               Reporte
@@ -331,7 +331,7 @@
       .col-lg-4
         .card_show.card_status.card_history#status-history
           .float-right
-            %a#close-status-history{ href: '#' }
+            %a.close-status-history{ href: '#' }
               %i.icofont-ui-close
           .card_status--title
             %h2 Historial
@@ -743,15 +743,19 @@
   .svg-icon-md {
     height: 30px;
   }
+  .close-status-history {
+    z-index: 5;
+  }
 
 
 :javascript
-  $('#open-status-history').click(function() {
+  $('.open-status-history').click(function() {
     $('#status-history').css({
       right: '0'
     })
   })
-  $('#close-status-history').click(function() {
+
+  $('.close-status-history').click(function() {
     $('#status-history').css({
       right: '-300px'
     })

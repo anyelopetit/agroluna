@@ -1,0 +1,322 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900");
+/* line 1, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.keppler-color {
+  color: #f44336;
+}
+
+/* line 2, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.keppler-background {
+  background: #f44336;
+}
+
+/* line 3, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.keppler-border-top-color {
+  border-top-color: #f44336;
+}
+
+/* line 5, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.skin-blue .content-header {
+  background: transparent;
+}
+
+/* line 11, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.wrapper .content-wrapper {
+  background: #f4f4f4;
+  min-height: 100vh;
+  padding-top: 70px;
+}
+
+/* line 18, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.btn-ks {
+  background: #f44336;
+  border: 1px solid #f44336;
+  color: #fff;
+  transition: .5s all;
+}
+/* line 24, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.btn-ks:hover {
+  background: #d11421;
+  border: 1px solid #d11421;
+  color: #fff;
+  transition: .5s all;
+}
+
+/* line 32, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.btn-ks-inverse {
+  border: 1px solid #f44336;
+  color: #f44336;
+  transition: .5s all;
+}
+/* line 37, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.btn-ks-inverse:hover {
+  background: #f44336;
+  border: 1px solid #f44336;
+  color: #fff;
+  transition: .5s all;
+}
+
+/* line 45, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.btn-gr {
+  background: #555;
+  border: 1px solid #555;
+  color: #fff;
+  transition: .5s all;
+}
+/* line 51, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.btn-gr:hover {
+  background: #252525;
+  border: 1px solid #555;
+  color: #fff;
+  transition: .5s all;
+}
+
+/* line 59, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.btn-gr-inverse {
+  border: 1px solid #555;
+  color: #555;
+  transition: .5s all;
+}
+/* line 64, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.btn-gr-inverse:hover {
+  background: #555;
+  border: 1px solid #555;
+  color: #fff;
+  transition: .5s all;
+}
+
+/* line 72, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.appearance-img {
+  height: 350px !important;
+  width: 100% !important;
+}
+
+/* line 77, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.minicolors-theme-default .minicolors-input {
+  display: inline-block;
+  height: 30px;
+  padding-left: 26px;
+  width: auto;
+}
+
+/* line 84, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.label-primary {
+  background: #f44336;
+}
+
+/* line 88, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.content-wrapper,
+.right-side {
+  background-color: #fdfdfd;
+  min-height: 100%;
+  z-index: 800;
+}
+
+@media (max-width: 767px) {
+  /* line 95, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+  .box-body {
+    padding: 0 0 20px;
+  }
+}
+/* line 100, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.box-body thead {
+  background-color: #ededed;
+}
+/* line 103, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.box-body thead th {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .1px;
+  text-transform: uppercase;
+}
+/* line 110, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.box-body thead th:first-child {
+  padding: 10px 20px;
+}
+
+/* line 116, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+.form-control {
+  border-radius: 15px;
+}
+
+@media (max-width: 767px) {
+  /* line 120, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_theme.scss */
+  .box-header {
+    padding: 10px 0;
+  }
+}
+
+/* line 1, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_base.scss */
+html,
+body {
+  color: #555;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 9, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_base.scss */
+html {
+  font-size: 10px;
+}
+
+/* line 13, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_base.scss */
+body {
+  background: #f4f4f4;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.5rem;
+}
+
+/* line 19, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_base.scss */
+a {
+  color: inherit;
+  cursor: pointer;
+}
+/* line 23, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_base.scss */
+a:hover {
+  color: inherit;
+}
+
+/* line 28, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_base.scss */
+.container {
+  width: 100%;
+}
+
+/* line 32, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_base.scss */
+.center {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+
+/* line 39, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_base.scss */
+.text-overflow {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* line 47, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_base.scss */
+.box-tools i {
+  color: #dadada;
+  cursor: pointer;
+  font-size: 1.7rem;
+  padding: 0 5px;
+  transition: all ease .3s;
+}
+/* line 54, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_base.scss */
+.box-tools i:hover {
+  color: #555;
+  transition: all ease .3s;
+}
+
+@media screen and (min-width: 0) and (max-width: 991px) {
+  /* line 61, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/utils/_base.scss */
+  .breadcrumb {
+    display: none;
+  }
+}
+
+/* line 2, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/farm/show.scss */
+.photo-toolbar {
+  background: #fff;
+  border-radius: 20px;
+  width: auto;
+  display: inline-flex;
+  padding: 5px 10px;
+}
+/* line 9, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/farm/show.scss */
+.photo-toolbar .toolbar-item {
+  display: flex;
+  align-items: center;
+}
+
+/* line 15, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/farm/show.scss */
+.item-toolbar {
+  display: flex;
+}
+/* line 18, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/farm/show.scss */
+.item-toolbar .item {
+  margin: 0 5px;
+}
+
+/* line 25, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/farm/show.scss */
+#operators [type=submit] {
+  background: #f44336;
+  border: 0;
+  border-radius: 20px;
+  color: #fff;
+  display: table;
+  outline: none;
+  padding: 6.5px 20px;
+  transition: .3s;
+  width: 100%;
+}
+/* line 36, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/farm/show.scss */
+#operators [type=submit]:not(:disabled) {
+  background: #f44336;
+}
+/* line 39, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/farm/show.scss */
+#operators [type=submit]:not(:disabled):hover {
+  filter: brightness(110%);
+  transition: .3s;
+}
+/* line 45, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/farm/show.scss */
+#operators [type=submit]:disabled {
+  background-color: #ffb7b2;
+}
+
+/* line 51, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/farm/show.scss */
+.operators-list {
+  height: 225px;
+  overflow: scroll;
+}
+
+/* line 56, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/farm/show.scss */
+.operator-option {
+  display: flex;
+  align-items: center;
+}
+/* line 61, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/farm/show.scss */
+.operator-option .img-user-list {
+  height: 20px;
+  margin: 0 5px;
+  width: 20px;
+  display: inline-flex;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: top center;
+}
+
+/* line 72, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/farm/show.scss */
+.operator-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: solid 1px #f0f0f0;
+}
+
+/* line 79, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/farm/show.scss */
+.operator-avatar img {
+  border-radius: 50%;
+  height: 30px;
+  margin: 0 5px;
+  object-fit: cover;
+  width: 30px;
+}
+
+/* line 87, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/farm/show.scss */
+.delete-operator {
+  border-radius: 20px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  margin-left: auto;
+  padding: 8px 10px;
+  transition: .3s;
+}
+/* line 94, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_farm/app/assets/stylesheets/keppler_farm/farm/show.scss */
+.delete-operator:hover {
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+  color: #f44336;
+  transition: .3s;
+}

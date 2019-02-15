@@ -12,6 +12,8 @@ module KepplerCattle
     acts_as_list
     acts_as_paranoid
 
+    has_many :cows, class_name: 'KepplerCattle::Cow'
+
     validates_uniqueness_of :name, :abbreviation
 
     def self.index_attributes

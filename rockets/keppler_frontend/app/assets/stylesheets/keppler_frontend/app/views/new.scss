@@ -20,14 +20,17 @@
     position: relative;
     width: 50%;
     margin-bottom: 30px;
-
-    &::after {
-      @include pseudo();
-      bottom: -5px;
-      left: 0;
-      width: 5%;
-      height: 3px;
-      background-color: $secundary;
+    @include respond-to(xs) {
+      width: 100%;
     }
+
+    // &::after {
+    //   @include pseudo();
+    //   bottom: -5px;
+    //   left: 0;
+    //   width: 5%;
+    //   height: 3px;
+    //   background-color: $secundary;
+    // }
   }
 }

@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   &:last-child{
+    
     @include respond-to(sm){
       display: none;
     }
@@ -33,6 +34,18 @@
 .family_tree{
   width: 140px !important;
   min-height: 185px; 
+  @media only screen and (max-width: 1280px) {
+    width: 130px !important;
+    min-height: 185px;
+  }
+  @media only screen and (max-width: 1440px) {
+    width: 150px !important;
+    min-height: 185px;
+  }
+  @media only screen and (max-width: 1366px) {
+    width: 140px !important;
+    min-height: 185px;
+  }
 
   @include respond-to(md){
     width: 100px !important;
@@ -45,10 +58,6 @@
   @include respond-to(xs){
     width: 100px !important;
     min-height: 80px;
-  }
-  .parent_img {
-    
-    
   }
 }
 // nivel 1
@@ -64,15 +73,64 @@
     @include respond-to(sm){
       left: 50%;
       width: 2px;
-      height: 73%;
+      height: 72%;
       top: 100%;
       // display: none;
     }
-    @include respond-to(xs) {
+    
+    @media (min-width: 0px) and (max-width: 340px){
       left: 50%;
       width: 2px;
-      height: 75%;
+      height: 73%;
       top: 100%;
+    }
+    @media (min-width: 341px) and (max-width: 350px){
+      left: 50%;
+      width: 2px;
+      height: 73%;
+      top: 100%;
+    }
+    @media (min-width: 351px) and (max-width: 375px){
+      left: 50% !important;
+      width: 2px !important;
+      height: 73% !important;
+      top: 100% !important;
+    }
+     @media (min-width: 376px) and (max-width: 450px) {
+      left: 50%;
+      width: 2px;
+      height: 73%;
+      top: 100%;
+    }
+    @media (min-width: 451px) and (max-width: 550px) {
+      left: 50%;
+      width: 2px;
+      height: 73%;
+      top: 100%;
+    }
+    @media (min-width: 551px) and (max-width: 650px) {
+      left: 50%;
+      width: 2px;
+      height: 72%;
+      top: 100%;  
+    }
+    @media (min-width: 651px) and (max-width: 767px) {
+      left: 50%;
+      width: 2px;
+      height: 72%;
+      top: 100%; 
+    }
+    @media (min-width: 992px) and (max-width: 1000px) {
+      width: 27%;
+      left: -27%;
+    }
+    @media (min-width: 1001px) and (max-width: 1024px) {
+      width: 29%;
+      left: -29%;
+    }
+    @media (min-width: 1025px) and (max-width: 1130px) {
+      width: 35%;
+      left: -35%;
     }
 
   }
@@ -91,6 +149,18 @@
     @include respond-to(xs) {
       display: none;
     }
+    @media (min-width: 992px) and (max-width: 1000px) {
+      width: 27%;
+      right: -27%;
+    }
+    @media (min-width: 1001px) and (max-width: 1024px) {
+      width: 27%;
+      right: -27%;
+    }
+    @media (min-width: 1025px) and (max-width: 1130px) {
+      width: 35%;
+      right: -35%;
+    }
     
 
   }
@@ -108,24 +178,65 @@
     background-color: #28C76F;
     @include respond-to(md) {
       left: 45%;
+      height: 72%;
+      top: -72%;
     }
-    // @include respond-to(sm){
-    //   left: 50%;
-    //   height: 70%;
-    //   top: -70%;
-    // }
+  
     @include respond-to(sm) {
       height: 2px;
       top: 50%;
       width: 160%;
       left: 100%;
     }
-    @include respond-to(xs){
+    @media (min-width: 0px) and (max-width: 340px){
       height: 2px;
       top: 50%;
       width: 40%;
       left: 100%;
     }
+    @media (min-width: 341px) and (max-width: 350px){
+      height: 2px;
+      top: 50%;
+      width: 40%;
+      left: 100%;
+    }
+    @media (min-width: 351px) and (max-width: 375px){
+      height: 2px;
+      top: 50%;
+      width: 30%;
+      left: 100%;
+    }
+     @media (min-width: 376px) and (max-width: 450px) {
+      height: 2px;
+      top: 50%;
+      width: 50%;
+      left: 100%;
+    }
+    @media (min-width: 451px) and (max-width: 550px) {
+      height: 2px;
+      top: 50%;
+      width: 70%;
+      left: 100%;
+    }
+    @media (min-width: 551px) and (max-width: 650px) {
+      height: 2px;
+      top: 50%;
+      width: 100%;
+      left: 100%; 
+    }
+    @media (min-width: 651px) and (max-width: 767px) {
+      height: 2px;
+      top: 50%;
+      width: 120%;
+      left: 100%; 
+    }
+      
+    // @include respond-to(xs){
+    //   height: 2px;
+    //   top: 50%;
+    //   width: 40%;
+    //   left: 100%;
+    // }
   }
   &:after {
     @include pseudo();
@@ -137,11 +248,27 @@
     @include respond-to(sm){
       left: 50%;
       width: 2px;
-      height: 73%;
+      height: 72%;
       top: 100%;
     } 
     @include respond-to(xs){
       display: none;
+    }
+    @media (min-width: 992px) and (max-width: 1000px) {
+      width: 76%;
+      left: -76%;
+    }
+    @media (min-width: 1001px) and (max-width: 1015px) {
+      width: 77%;
+      left: -77%;
+    }
+    @media (min-width: 1015px) and (max-width: 1024px) {
+      width: 77%;
+      left: -77%;
+    }
+    @media (min-width: 1025px) and (max-width: 1130px) {
+      width: 96%;
+      left: -96%;
     }
     
   }
@@ -170,12 +297,55 @@
       width: 160%;
       right: 100%;
     }
-    @include respond-to(xs) {
+
+    @media (min-width: 0px) and (max-width: 340px){
       height: 2px;
       top: 50%;
       width: 30%;
       right: 100%;
     }
+    @media (min-width: 341px) and (max-width: 350px){
+      height: 2px;
+      top: 50%;
+      width: 30%;
+      right: 100%;
+    }
+    @media (min-width: 351px) and (max-width: 375px){
+      height: 2px;
+      top: 50%;
+      width: 30%;
+      right: 100%;
+    }
+     @media (min-width: 376px) and (max-width: 450px) {
+      height: 2px;
+      top: 50%;
+      width: 40% !important;
+      right: 100%;
+    }
+    @media (min-width: 451px) and (max-width: 550px) {
+      height: 2px;
+      top: 50%;
+      width: 70% !important;
+      right: 100%;
+    }
+    @media (min-width: 551px) and (max-width: 650px) {
+      height: 2px;
+      top: 50%;
+      width: 90% !important;
+      right: 100%;  
+    }
+    @media (min-width: 651px) and (max-width: 767px) {
+      height: 2px;
+      top: 50%;
+      width: 120% !important;
+      right: 100%;
+    }
+    // @include respond-to(xs) {
+    //   height: 2px;
+    //   top: 50%;
+    //   width: 30%;
+    //   right: 100%;
+    // }
     
 
   }
@@ -189,11 +359,23 @@
     @include respond-to(sm){
       right: 50%;
       width: 2px;
-      height: 73%;
+      height: 72%;
       top: 100%;
     }
     @include respond-to(xs){
       display: none;
+    }
+    @media (min-width: 992px) and (max-width: 1000px) {
+      width: 76%;
+      right: -76%;
+    }
+    @media (min-width: 1001px) and (max-width: 1011px) {
+      width: 77%;
+      right: -77%;
+    }
+    @media (min-width: 1025px) and (max-width: 1130px) {
+      width: 96%;
+      right: -96%;
     }
   }
 }
@@ -233,6 +415,22 @@
       width: 55%;
       // display: none;
     } 
+    @media (min-width: 992px) and (max-width: 1000px) {
+      width: 170%;
+      left: -170%;
+    }
+    @media (min-width: 1001px) and (max-width: 1015px) {
+      width: 165%;
+      left: -165%;
+    }
+    @media (min-width: 1016px) and (max-width: 1024px){
+      width: 163%;
+      left: -163%;
+    }
+    @media (min-width: 1025px) and (max-width: 1130px) {
+      width: 130%;
+      left: -130%;
+    }
 
   }
 }
@@ -263,7 +461,19 @@
       left: -50%;
       width: 50%;
     }
-
+    @media (min-width: 992px) and (max-width: 1000px) {
+      width: 30%;
+      left: -30%;
+    }
+    @media (min-width: 1001px) and (max-width: 1015px) {
+      width: 24%;
+      left: -24%;
+    }
+    @media (min-width: 1016px) and (max-width: 1024px){
+      width: 23%;
+      left: -23%;
+    }
+    
   }
 }
 
@@ -324,6 +534,18 @@
       left: -50%;
       width: 50%;
     }
+    @media (min-width: 992px) and (max-width: 1000px) {
+      width: 165%;
+      right: -165%;
+    }
+     @media (min-width: 1001px) and (max-width: 1015px) {
+      width: 163%;
+      right: -163%;
+    }
+    @media (min-width: 1025px) and (max-width: 1130px) {
+      width: 145%;
+      right: -145%;
+    }
 
   }
 }
@@ -362,6 +584,7 @@
       top: -80%;
       right: 50%;
     }
+ 
 
   }
 }

@@ -59,7 +59,17 @@
 }
 .btn--select {
   font-size: 14px;
+  background-color: rgba(221,221,221,.44);
+  
 }
 .select {
   background-color: #f8f8f8;
+}
+@-moz-document url-prefix() {
+ .btn--select {
+    font-size: 14px;
+    background-color: rgba(221,221,221,.44);
+    color: $black;
+    
+  }
 }

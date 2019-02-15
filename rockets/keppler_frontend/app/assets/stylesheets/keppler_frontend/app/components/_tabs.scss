@@ -1,6 +1,12 @@
 .nav-tabs {
   padding: 0 5%;
   border-bottom: 1px solid transparent !important;
+  @include respond-to(sm) {
+    padding: 0 1%;
+  }
+  @include respond-to(xs) {
+    padding: 0 1%;
+  }
 
   .nav-item {
     margin-right: 15px;

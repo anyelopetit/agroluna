@@ -10,8 +10,10 @@
             %h1{style: "text-transform: uppercase;font-size: 25px;color: #28C76F;position: relative;margin-bottom: 5px;"} Hijos          
           .box-body.no-padding
             .row
-              .col-lg-6
-                %dl
-                  %dt
-                    = image_tag "/assets/keppler_cattle/#{@cow.gender}", class: 'svg-icon-md' unless @cow.gender.blank?
-                    = @cow.serie_number
+              - @cow.sons.each do |son|
+                .col-lg-12
+                  %dl
+                    %dt
+                      = link_to(action: :show, cow_id: son.id) do
+                        = image_tag "/assets/keppler_cattle/#{son.gender}", class: 'svg-icon-md' unless son.gender.blank?
+                        = son.serie_number

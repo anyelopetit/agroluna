@@ -14,7 +14,7 @@
           .card_new
             %h1 
               Crear status inicial 
-              %span.ml-3{style: "color:#797979 !important;"}= @cow.serie_number
+              %span.ml-3{style: "color:#797979 !important;"} (#{@cow.serie_number})
             = simple_form_for [:app, @farm, @cow, @status] do |f|
               .form-padding
                 .row

@@ -116,11 +116,14 @@
               .row
                 .col-lg-4.col-sm-4
                   %dl
+                    -# %dt
+                    -#   -# %i.icofont-home
+                    -#   Finca
+                    -# %dd
+                    -#   = @cow.status.farm_name
                     %dt
-                      -# %i.icofont-home
-                      Finca
-                    %dd
-                      = @cow.status.farm_name
+                      Tipología
+                    %dd= @cow.status.typology&.name
                     
                 .col-lg-4.col-sm-4
                   %dl
@@ -131,7 +134,7 @@
                   %dl
                     -# %dt= @cow.status.dead ? 'Inactivo' : 'Activo'
                     -# %dd= @cow.status.dead
-                    %dt Crías
+                    %dt Cantidad de hijos
                     %a#open-sons-modal{ href: '#modal' }
                       %dd= @cow.sons.count
                     
@@ -401,10 +404,8 @@
     -#               %i.icofont-info
     -#             %dd #{@cow.status&.typology&.name}
 
-
-
-
     = render 'keppler_frontend/app/cattle/partials/family_tree'
+
   - @statuses.each do |status|
     = render 'keppler_frontend/app/cattle/partials/modal_status', cow: @cow, status: status
 

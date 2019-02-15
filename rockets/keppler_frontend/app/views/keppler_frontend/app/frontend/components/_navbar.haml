@@ -19,7 +19,7 @@
         %span.navbar-toggler-icon.icofont-navigation-menu
       #navbarSupportedContent.navbar-collapse.offcanvas-collapse
         .logo
-          %a#navbarDropdown.nav-link{ class: ('dropdown-toggle' if farms), "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+          %a#navbarDropdown.nav-link.d-none.d-lg-block{ class: ('dropdown-toggle' if farms), "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
             = image_tag (farm&.logo&.url || @default_logo),class: "image_logo_company", style: 'max-width: 80px; max-height: 60px; z-index: 5;'
 
           - if farms.blank?

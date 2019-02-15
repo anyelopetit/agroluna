@@ -1,22 +1,50 @@
-%table.cow-table
-  - if cows.size.zero?
-    %thead
-      %tr
-        %th.not-records.center
-          %center No se encontraron ganados
-  - else
-    %thead
-      %tr
-        -# %th
-          %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
-          %label{for: "styled-checkbox-all"}
-        %th
-          - if can?(KepplerCattle::Cow).destroy_multiple?
-            .toolbar-item
-              .item-check
-                .checkbox
-                  %label{ for: 'checkbox-all' }
-                    %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+.content-table
+  %table.cow-table
+    - if cows.size.zero?
+      %thead
+        %tr
+          %th.not-records.center
+            %center No se encontraron ganados
+    - else
+      %thead
+        %tr
+          -# %th
+            %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
+            %label{for: "styled-checkbox-all"}
+          %th
+            - if can?(KepplerCattle::Cow).destroy_multiple?
+              .toolbar-item
+                .item-check
+                  .checkbox
+                    %label{ for: 'checkbox-all' }
+                      %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+                      %span.cr
+                        %i.cr-icon.icofont-check
+          %th
+            = sort_link(@q, 'serie_number') do 
+              Serie
+          %th Imagen
+          %th 
+            = sort_link(@q, 'status.weight') do
+              Peso
+          %th 
+            = sort_link(@q, 'race_id') do 
+              Raza
+          %th 
+            = sort_link(@q, 'status.typology') do 
+              Tipología
+          %th 
+            = sort_link(@q, 'status.created_at') do 
+              Status
+          %th Controles
+      %tbody
+        - cows.each do |cow|
+          %tr{ style: "border-bottom: 1px #eee solid;" }
+            - if can?(KepplerCattle::Cow).destroy_multiple?
+              %td
+                .checkbox{ style: 'margin: 3px' }
+                  %label{ for: "checkbox-#{cow.id}" }
+                    %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
                     %span.cr
                       %i.cr-icon.icofont-check
         %th
@@ -102,11 +130,8 @@
                       %i.icofont-eye
                       Ver ficha de ganado
                 - if can?(KepplerCattle::Cow).update?
+
                   %li
-                    = link_to({controller: :cattle, action: :edit, farm_id: @farm.id, cow_id: cow.id}) do
-                      %i.icofont-edit-alt
-                      Editar
-                %li
-                  = link_to({controller: :status, action: :new, farm_id: @farm.id, cow_id: cow.id})do
-                    %i.icofont-refresh
-                    Actualizar estado
+                    = link_to({controller: :status, action: :new, farm_id: @farm.id, cow_id: cow.id})do
+                      %i.icofont-refresh
+                      Actualizar estado

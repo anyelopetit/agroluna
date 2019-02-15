@@ -30,7 +30,7 @@
             %th Tipología
             %th Madre
             %th Padre
-            %th Fecha
+            %th Fecha Nac.
             %th KG
             %th Pelaje
             %th Lote
@@ -46,7 +46,7 @@
               %td= cow&.status&.typology&.name
               %td= cow&.mother&.serie_number
               %td= cow&.father&.serie_number
-              %td= cow&.status&.created_at&.strftime('%d-%m-%Y')
+              %td= cow&.birthdate&.strftime('%d-%m-%Y')
               %td= cow&.status&.weight
               %td= cow&.coat_color
               %td= cow&.strategic_lot&.name

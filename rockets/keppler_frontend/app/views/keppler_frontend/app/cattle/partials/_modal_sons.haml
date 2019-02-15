@@ -11,9 +11,16 @@
           .box-body.no-padding
             .row
               - @cow.sons.each do |son|
-                .col-lg-12
-                  %dl
-                    %dt
-                      = link_to(action: :show, cow_id: son.id) do
+                .col-lg-12.son-item
+                  = link_to(action: :show, cow_id: son.id) do
+                    %dl
+                      %dt
                         = image_tag "/assets/keppler_cattle/#{son.gender}", class: 'svg-icon-md' unless son.gender.blank?
-                        = son.serie_number
+                        %span= son.serie_number
+                        %small= "(#{@cow.short_name})" unless @cow.short_name.blank?
+:scss
+  .son-item {
+    &:hover {
+      background: #fafafa;
+    }
+  }

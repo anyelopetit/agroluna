@@ -29,14 +29,13 @@
             %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
             %label{for: "styled-checkbox-all"}
           %th
-            - if can?(KepplerCattle::Insemination).destroy_multiple?
-              .toolbar-item
-                .item-check
-                  .checkbox
-                    %label{ for: 'checkbox-all' }
-                      %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
-                      %span.cr
-                        %i.cr-icon.icofont-check
+            .toolbar-item
+              .item-check
+                .checkbox
+                  %label{ for: 'checkbox-all' }
+                    %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+                    %span.cr
+                      %i.cr-icon.icofont-check
           -# %th Imagen
           %th
             = sort_link(@q, 'serie_number') do 
@@ -51,13 +50,12 @@
       %tbody
         - inseminations.each do |insemination|
           %tr{ style: "border-bottom: 1px #eee solid;" }
-            - if can?(KepplerCattle::Insemination).destroy_multiple?
-              %td
-                .checkbox{ style: 'margin: 3px' }
-                  %label{ for: "checkbox-#{insemination.id}" }
-                    %input{ type:"checkbox", id: "checkbox-#{insemination.id}", 'checklist-model' => 'check', 'checklist-value' => "#{insemination.id}", '@click' => "listDelete(#{insemination.id})"}
-                    %span.cr
-                      %i.cr-icon.icofont-check
+            %td
+              .checkbox{ style: 'margin: 3px' }
+                %label{ for: "checkbox-#{insemination.id}" }
+                  %input{ type:"checkbox", id: "checkbox-#{insemination.id}", 'checklist-model' => 'check', 'checklist-value' => "#{insemination.id}", '@click' => "listDelete(#{insemination.id})"}
+                  %span.cr
+                    %i.cr-icon.icofont-check
             -# %td
               = link_to({controller: :inseminations, action: :show, farm_id: @farm.id, insemination_id: insemination.id}) do
                 = image_tag insemination&.image&.url if insemination.image.url

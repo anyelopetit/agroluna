@@ -194,11 +194,25 @@ puts 'Fincas y lotes creados'
   end
 
   # Tipologías
-  10.times do |typology|
+  ['BECERRO', 'BECERRO SUTE', 'MAUTE', 'NOVILLO', 'TORO', 'TORO PADROTE'].each do |typology|
     KepplerCattle::Typology.create(
-      name: Faker::GameOfThrones.character,
+      name: typology,
       abbreviation: Faker::Compass.abbreviation,
-      gender: ['male', 'female'].sample,
+      gender: 'male',
+      counter: ['1', '2'].sample,
+      min_age: (0..15).to_a.sample,
+      min_weight: (30..600).to_a.sample,
+      description: Faker::Lorem.paragraph,
+      species_id: species.id
+    )
+  end
+
+  ['BECERRA', 'BECERRA SUTE', 'MAUTA', 'NOVILLA', 'NOVILLA PREÑADA', 'VACA VACÍA',
+    'VACA PROD.VACIA', 'VACA VACÍA SIN CRÍA', 'VACA PREÑADA', 'VACA SECA/HORRA'].each do |typology|
+    KepplerCattle::Typology.create(
+      name: typology,
+      abbreviation: Faker::Compass.abbreviation,
+      gender: 'female',
       counter: ['1', '2'].sample,
       min_age: (0..15).to_a.sample,
       min_weight: (30..600).to_a.sample,
@@ -225,9 +239,9 @@ puts 'Fincas y lotes creados'
     gender: ['male', 'female'].sample,
     race_id: species.races.first.id,
     birthdate: Faker::Date.birthday(1, 15),
-    coat_color: Faker::Color.color_name,
-    nose_color: Faker::Color.color_name,
-    tassel_color: Faker::Color.color_name,
+    coat_color: KepplerCattle::Cow.colors.sample,
+    nose_color: KepplerCattle::Cow.colors.sample,
+    tassel_color: KepplerCattle::Cow.colors.sample,
     provenance: Faker::LordOfTheRings.location,
     observations: Faker::Lorem.paragraph
   )
@@ -241,6 +255,7 @@ puts 'Especies, razas, tipologías y pesajes creadas'
   cow = KepplerCattle::Cow.create(
     serie_number: Faker::Number.between(111111, 999999),
     short_name: Faker::Name.first_name,
+    # farm_id: [1,2].sample,
     gender: ['male', 'female'].sample,
     species_id: species.id,
     race_id: species.races.first.id,

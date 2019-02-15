@@ -31,12 +31,12 @@ module KepplerCattle
       KepplerFarm::Farm.find_by(id: $request.params[:farm_id])
     end
 
-    def race
-      # KepplerCattle::Race.find_by(id: race_id)
+    def species
+      KepplerCattle::Species.find_by(id: species_id)
     end
 
-    def species
-      # race.species
+    def race
+      KepplerCattle::Race.find_by(id: race_id)
     end
 
     def self.genders

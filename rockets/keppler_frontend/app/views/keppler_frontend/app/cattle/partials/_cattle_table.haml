@@ -42,13 +42,12 @@
         %tbody
           - cows.each do |cow|
             %tr{ style: "border-bottom: 1px #eee solid;" }
-              - if can?(KepplerCattle::Cow).destroy_multiple?
-                %td
-                  .checkbox{ style: 'margin: 3px' }
-                    %label{ for: "checkbox-#{cow.id}" }
-                      %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
-                      %span.cr
-                        %i.cr-icon.icofont-check
+              %td
+                .checkbox{ style: 'margin: 3px' }
+                  %label{ for: "checkbox-#{cow.id}" }
+                    %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
+                    %span.cr
+                      %i.cr-icon.icofont-check
               %td
                 = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
                   = cow&.serie_number
@@ -96,14 +95,11 @@
                   %a.action-btn.pull-right{:id => "menu-#{cow.id}", 'aria-expanded': 'false', 'aria-haspopup': 'true', 'data-toggle': 'dropdown' }
                     %i.icofont-navigation-menu
                   %ul.actions.dropdown-menu{ 'aria-labelledby': "menu-#{cow.id}" }
-                    - if can?(KepplerCattle::Cow).index?
-                      %li
-                        = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                          %i.icofont-eye
-                          Ver ficha de ganado
-                    - if can?(KepplerCattle::Cow).update?
-
-                      %li
-                        = link_to({controller: :status, action: :new, farm_id: @farm.id, cow_id: cow.id})do
-                          %i.icofont-refresh
-                          Actualizar estado
+                    %li
+                      = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
+                        %i.icofont-eye
+                        Ver ficha de ganado
+                    %li
+                      = link_to({controller: :status, action: :new, farm_id: @farm.id, cow_id: cow.id})do
+                        %i.icofont-refresh
+                        Actualizar estado

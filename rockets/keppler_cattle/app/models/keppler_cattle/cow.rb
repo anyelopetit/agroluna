@@ -15,6 +15,9 @@ module KepplerCattle
     acts_as_paranoid
 
     has_many :statuses, dependent: :destroy
+    has_one :species
+    has_one :race
+    has_one :typology, through: :status
 
     validates_presence_of :birthdate, :serie_number
     validates_uniqueness_of :serie_number
@@ -89,6 +92,12 @@ module KepplerCattle
 
     def father
       KepplerCattle::Cow.find_by(id: father_id) if father_id
+    end
+
+    def sons
+      KepplerCattle::Cow.where(mother_id: id).or(
+        KepplerCattle::Cow.where(father_id: id)
+      )
     end
 
     def strategic_lot

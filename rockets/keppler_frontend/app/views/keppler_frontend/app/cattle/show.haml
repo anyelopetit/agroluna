@@ -64,7 +64,7 @@
               .card_cow
                 .row
                   %center.col-lg-12
-                    = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+                    = image_tag (@cow.image&.url || (@cow.gender?('male') ? 'https://image.flaticon.com/icons/svg/1495/1495074.svg' : 'https://image.flaticon.com/icons/svg/523/523448.svg')), class: 'avatar_cow'
                   .col-lg-12
                     .card_cow_content{ :style => "text-align: center;"}
                       %h1
@@ -129,8 +129,11 @@
                    
                 .col-lg-4.col-sm-4
                   %dl
-                    %dt= @cow.status.dead ? 'Inactivo' : 'Activo'
-                    %dd= @cow.status.dead
+                    -# %dt= @cow.status.dead ? 'Inactivo' : 'Activo'
+                    -# %dd= @cow.status.dead
+                    %dt Crías
+                    %a#open-sons-modal{ href: '#modal' }
+                      %dd= @cow.sons.count
                     
               
               

@@ -42,8 +42,8 @@
               %a.click.nav-link{ class: "#{'active' if %w[cattle strategic_lots transferences].include?(controller_name)} dropdown-toggle", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
                 Ganadería
                 %i.icofont-simple-down
-              .farm_menu{ class: ('visibility' if %w[cattle strategic_lots transferences inseminations].include?(controller_name))}
-                = link_to app_farm_cows_path(farm),style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item #{('active_sub' if controller_name.eql?('cattle'))}" do
+              .farm_menu{ class: ('visibility' if %w[cattle strategic_lots transferences inseminations status].include?(controller_name))}
+                = link_to app_farm_cows_path(farm),style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item #{('active_sub' if %w[cattle status].include?(controller_name))}" do
                   Ganado
                 = link_to app_farm_strategic_lots_path(farm),style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item  #{('active_sub' if controller_name.eql?('strategic_lots'))}" do
                   Lotes estratégicos

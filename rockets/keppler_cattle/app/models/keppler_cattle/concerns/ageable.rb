@@ -8,7 +8,7 @@ module KepplerCattle
       included do
         def years 
           now = Time.now.utc.to_date 
-          now.year - birthdate.year - (birthdate.to_date.change(:year => now.year) > now.year ? 1 : 0) 
+          now.year - birthdate.year - (birthdate.to_date.change(:year => now.year) <= now.year ? 0 : 1) 
         end 
 
         def months

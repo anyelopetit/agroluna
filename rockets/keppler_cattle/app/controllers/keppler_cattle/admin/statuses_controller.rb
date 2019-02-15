@@ -27,10 +27,10 @@ module KepplerCattle
       # GET /cattles/new
       def new
         @status = Status.new
-        @ubications = Status.ubications
+        # @ubications = Status.ubications
         @corporal_conditions = Status.corporal_conditions
         @strategic_lots = KepplerFarm::StrategicLot.all
-        @typologies = @cow.gender?('male') ? Status.male_typologies : Status.female_typologies
+        # @typologies = @cow.gender?('male') ? Status.male_typologies : Status.female_typologies
         @last_status = @cow.status
         @farms = KepplerFarm::Farm.order(title: :asc)
       end

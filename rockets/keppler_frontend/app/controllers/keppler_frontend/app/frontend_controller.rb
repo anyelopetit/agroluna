@@ -56,7 +56,7 @@ module KepplerFrontend
     end
 
     def default_logo
-      @default_logo = 'http://www.stickpng.com/assets/images/5a1d2dc54ac6b00ff574e292.png'
+      @default_logo = '/assets/keppler_frontend/app/logo_default.png.png'
     end
 
     # begin callback user_authenticate

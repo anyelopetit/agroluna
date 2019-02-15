@@ -16,7 +16,7 @@
     %hr{ :style => "margin-top: 0;width: 90%; margin-bottom: 20px;"}
     -# #moduleContent.tab-content
       #mfg.tab-pane.fade.show.active{ "aria-labelledby" => "mfg-tab", role: "tabpanel" }
-    = render 'keppler_frontend/app/inseminations/partials/listing', farm: @farm, inseminations: @active_inseminations, search: @q
+    = render 'keppler_frontend/app/inseminations/partials/listing', farm: @farm, inseminations: @inactive_inseminations, search: @q
     -# #ale.tab-pane.fade{ "aria-labelledby" => "ale-tab", role: "tabpanel" }
       = render 'keppler_frontend/app/inseminations/partials/listing', farm: @farm, inseminations: @inactive_inseminations, search: @q
     -# #transfers.tab-pane.fade{ "aria-labelledby" => "transfers-tab", role: "tabpanel" }

@@ -12562,6 +12562,8 @@ table img {
 /* line 154, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/index.scss */
 #serie_number {
   display: block;
+  width: 100%;
+  max-width: 300px;
 }
 
 /* line 158, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/index.scss */

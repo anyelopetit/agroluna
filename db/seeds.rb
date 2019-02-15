@@ -325,3 +325,142 @@ puts 'Series creadas'
 end
 puts 'Transferencias creadas'
 
+
+species = KepplerCattle::Species.find_by(id: [1,2,3].sample)
+
+8.times do |index|
+  cow = KepplerCattle::Cow.create(
+    serie_number: ((index+1)*11111111),
+    short_name: "Bisabuelo #{((index+1)*11111111)}",
+    # farm_id: [1,2].sample,
+    gender: ['male', 'female'][index%2],
+    species_id: species.id,
+    race_id: species.races.first.id,
+    birthdate: Faker::Date.birthday(1, 15),
+    coat_color: Faker::Color.color_name,
+    nose_color: Faker::Color.color_name,
+    tassel_color: Faker::Color.color_name,
+    provenance: Faker::LordOfTheRings.location,
+    observations: Faker::Lorem.paragraph,
+    mother_id: KepplerCattle::Cow.all.sample.id,
+    father_id: KepplerCattle::Cow.all.sample.id
+  )
+  KepplerCattle::Status.create(
+    cow_id: cow.id,
+    weight: Faker::Number.decimal(2),
+    years: cow.years,
+    months: cow.months,
+    days: cow.days,
+    dead: [true, false].sample,
+    corporal_condition: "CONDICION CORPORAL #{(0..5).to_a.sample}",
+    typology_id: KepplerCattle::Typology.find_by(id: (1..10).to_a.sample).id,
+    strategic_lot_id: (1..5).to_a.sample,
+    user_id: 1,
+    comments: Faker::Lorem.paragraph,
+    farm_id: 1
+  )
+end
+puts 'Bisabuelos creados'
+
+%w[11112222 33334444 55556666 77778888].each_with_index do |serie_number, index|
+  cow = KepplerCattle::Cow.create(
+    serie_number: serie_number,
+    short_name: "Abuelo #{serie_number}",
+    # farm_id: [1,2].sample,
+    gender: ['male', 'female'][index%2],
+    species_id: species.id,
+    race_id: species.races.first.id,
+    birthdate: Faker::Date.birthday(1, 15),
+    coat_color: Faker::Color.color_name,
+    nose_color: Faker::Color.color_name,
+    tassel_color: Faker::Color.color_name,
+    provenance: Faker::LordOfTheRings.location,
+    observations: Faker::Lorem.paragraph,
+    father_id: KepplerCattle::Cow.find_by(serie_number: serie_number.first*8).id,
+    mother_id: KepplerCattle::Cow.find_by(serie_number: serie_number.last*8).id
+  )
+  KepplerCattle::Status.create(
+    cow_id: cow.id,
+    weight: Faker::Number.decimal(2),
+    years: cow.years,
+    months: cow.months,
+    days: cow.days,
+    dead: [true, false].sample,
+    corporal_condition: "CONDICION CORPORAL #{(0..5).to_a.sample}",
+    typology_id: KepplerCattle::Typology.find_by(id: (1..10).to_a.sample).id,
+    strategic_lot_id: (1..5).to_a.sample,
+    user_id: 1,
+    comments: Faker::Lorem.paragraph,
+    farm_id: 1
+  )
+end
+puts 'Abuelos creados'
+
+%w[11223344 55667788].each_with_index do |serie_number, index|
+  cow = KepplerCattle::Cow.create(
+    serie_number: serie_number,
+    short_name: "#{['Padre', 'Madre'][index%2]}",
+    # farm_id: [1,2].sample,
+    gender: ['male', 'female'][index%2],
+    species_id: species.id,
+    race_id: species.races.first.id,
+    birthdate: Faker::Date.birthday(1, 15),
+    coat_color: Faker::Color.color_name,
+    nose_color: Faker::Color.color_name,
+    tassel_color: Faker::Color.color_name,
+    provenance: Faker::LordOfTheRings.location,
+    observations: Faker::Lorem.paragraph,
+    father_id: KepplerCattle::Cow.find_by(serie_number: serie_number[0..1]*2 + serie_number[2..3]*2).id,
+    mother_id: KepplerCattle::Cow.find_by(serie_number: serie_number[4..5]*2 + serie_number[6..7]*2).id
+  )
+  KepplerCattle::Status.create(
+    cow_id: cow.id,
+    weight: Faker::Number.decimal(2),
+    years: cow.years,
+    months: cow.months,
+    days: cow.days,
+    dead: [true, false].sample,
+    corporal_condition: "CONDICION CORPORAL #{(0..5).to_a.sample}",
+    typology_id: KepplerCattle::Typology.find_by(id: (1..10).to_a.sample).id,
+    strategic_lot_id: (1..5).to_a.sample,
+    user_id: 1,
+    comments: Faker::Lorem.paragraph,
+    farm_id: 1
+  )
+end
+puts 'Padres creados'
+
+
+cow = KepplerCattle::Cow.create(
+  serie_number: '12345678',
+  short_name: "Hijo",
+  # farm_id: [1,2].sample,
+  gender: 'male',
+  species_id: KepplerCattle::Species.first.id,
+  race_id: KepplerCattle::Species.first.races.sample.id,
+  birthdate: Faker::Date.birthday(1, 15),
+  coat_color: Faker::Color.color_name,
+  nose_color: Faker::Color.color_name,
+  tassel_color: Faker::Color.color_name,
+  provenance: Faker::LordOfTheRings.location,
+  observations: Faker::Lorem.paragraph,
+  father_id: KepplerCattle::Cow.find_by(serie_number: "11223344").id,
+  mother_id: KepplerCattle::Cow.find_by(serie_number: "55667788").id
+)
+KepplerCattle::Status.create(
+  cow_id: cow.id,
+  weight: Faker::Number.decimal(2),
+  years: cow.years,
+  months: cow.months,
+  days: cow.days,
+  dead: [true, false].sample,
+  corporal_condition: "CONDICION CORPORAL #{(0..5).to_a.sample}",
+  typology_id: KepplerCattle::Typology.find_by(id: (1..10).to_a.sample).id,
+  strategic_lot_id: (1..5).to_a.sample,
+  user_id: 1,
+  comments: Faker::Lorem.paragraph,
+  farm_id: 1
+)
+puts 'Hijo creado'
+
+puts 'Arbol genealogico creado'

@@ -19,7 +19,7 @@ module KepplerCattle
 
       # GET /cattles/1
       def show
-        @statuses = @cow.statuses.order(:serie_number)
+        @statuses = @cow.statuses.order(created_at: :desc)
       end
 
       # GET /cattles/new

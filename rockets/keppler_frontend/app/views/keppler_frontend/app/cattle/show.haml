@@ -135,8 +135,8 @@
                     -# %dt= @cow.status.dead ? 'Inactivo' : 'Activo'
                     -# %dd= @cow.status.dead
                     %dt Cantidad de hijos
-                    %a#open-sons-modal{ href: '#modal' }
-                      %dd= @cow.sons.count
+                    %a{ 'data-target': "#modalSons", 'data-toggle': 'modal', href: ""}
+                      %dd{style:"color:#6f6f6f;"}= @cow.sons.count
                     
               
               
@@ -404,8 +404,10 @@
     -#               %i.icofont-info
     -#             %dd #{@cow.status&.typology&.name}
 
+    
+                  
     = render 'keppler_frontend/app/cattle/partials/family_tree'
-
+    = render 'keppler_frontend/app/cattle/partials/modal_sons'
   - @statuses.each do |status|
     = render 'keppler_frontend/app/cattle/partials/modal_status', cow: @cow, status: status
 

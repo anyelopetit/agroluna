@@ -50,5 +50,11 @@ module KepplerFarm
     def inseminations
       KepplerCattle::Insemination.where(farm_id: id)
     end
+
+    def activities
+      ids = cows.pluck(:id)
+      PublicActivity::Activity.where(trackable_id: ids)
+        .or(PublicActivity::Activity.where(recipient_id: ids))
+    end
   end
 end

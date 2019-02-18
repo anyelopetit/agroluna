@@ -43,7 +43,7 @@
         Agregar
     - if strategic_lots.blank? && @farm.strategic_lots.count > 0
       = link_to 'Mostrar todos', app_farm_strategic_lots_path(farm)
-    .content-table
+    .content-table{ style: 'position:initial' }
       %table
         - if strategic_lots.size.zero?
           %thead

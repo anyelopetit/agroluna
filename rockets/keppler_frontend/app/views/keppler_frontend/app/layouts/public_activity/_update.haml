@@ -10,7 +10,7 @@
           #{activity.trackable.species&.name}
           #{activity.trackable.race&.name}
           %b
-            = activity.trackable.try('serie_number')
+            = activity.trackable.try('serie_number') || activity.trackableid
         - else
           actualizó
           = t("activerecord.attributes.#{activity.trackable_type.split('::').last.downcase}")
@@ -18,7 +18,7 @@
           #{activity.recipient&.species&.name}
           #{activity.recipient&.race&.name}
           %b
-            = activity.recipient.try('serie_number')
+            = activity.recipient.try('serie_number') || activity.recipientid
       %span.time
         %i.icofont-clock-time
         a las

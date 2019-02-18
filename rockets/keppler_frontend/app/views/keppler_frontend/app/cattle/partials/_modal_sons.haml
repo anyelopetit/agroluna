@@ -10,6 +10,8 @@
             %h1{style: "text-transform: uppercase;font-size: 25px;color: #28C76F;position: relative;margin-bottom: 5px;"} Hijos          
           .box-body.no-padding
             .row
+              - if @cow.sons.blank?
+                %center Aún no ha tenido crías
               - @cow.sons.each do |son|
                 .col-lg-12.son-item
                   = link_to(action: :show, cow_id: son.id) do

@@ -120,20 +120,20 @@ module KepplerFrontend
     end
 
     def index_history
-      @activities = PublicActivity::Activity.where(
+      @activities = @farm.activities.where(
         trackable_type: KepplerCattle::Cow.to_s
       ).or(
-        PublicActivity::Activity.where(
+        @farm.activities.where(
           recipient_type: KepplerCattle::Cow.to_s
         )
       ).order('created_at desc').limit(50)
     end
 
     def show_history
-      @activities = PublicActivity::Activity.where(
+      @activities = @farm.activities.where(
         trackable_id: @cow.id.to_s
       ).or(
-        PublicActivity::Activity.where(
+        @farm.activities.where(
           recipient_id: @cow.id.to_s
         )
       ).order('created_at desc').limit(50)

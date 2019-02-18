@@ -108,7 +108,7 @@ module KepplerCattle
     def self.actives
       cows = select do |cow|
         cow&.status&.farm_id == farm.id &&
-        !cow&.status&.deathdate
+        !cow&.status&.dead && !cow&.status&.deathdate
       end
       active_ids = cows.pluck(:id).uniq
       where(id: active_ids)
@@ -118,7 +118,7 @@ module KepplerCattle
       cows = select do |cow|
         (cow&.statuses&.map(&:farm_id).include?(farm.id) &&
         cow&.status&.farm_id != farm.id) || 
-        cow&.status&.deathdate
+        cow&.status&.dead || cow&.status&.deathdate
       end
       inactive_ids = cows.pluck(:id).uniq
       where(id: inactive_ids)

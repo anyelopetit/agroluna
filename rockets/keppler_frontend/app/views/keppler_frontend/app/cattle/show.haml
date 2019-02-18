@@ -73,6 +73,7 @@
                       %strong
                         = @cow.status&.typology&.name unless @cow.status&.blank?
                       %span= @cow.race&.name
+                      %p= @cow.observations
             .col-lg-9
               .row
                 .col-lg-4.col-sm-4

@@ -45,9 +45,9 @@ module InyxmaterRails
 
     config.assets.initialize_on_precompile = false
 
-    Dotenv::Railtie.load
+    # Dotenv::Railtie.load
 
-    HOSTNAME = ENV['HOSTNAME']
+    # HOSTNAME = ENV['HOSTNAME']
 
   end
 end

@@ -35,7 +35,13 @@ module KepplerFrontend
 
       unless @transference.from_farm_id == @transference.to_farm_id
         if @transference.save!
-          @transference.cows.map { |x| x.status.update(farm_id: @transference.to_farm_id) }
+          @transference.cows.map do |c|
+            status = KepplerCattle::Status.new(
+              c.status.as_json(except: :id)
+            )
+            status.farm_id = @transference.to_farm_id
+            status.save!
+          end
           redirect_to app_farm_transferences_path(@farm)
         else
           flash[:error] = 'Revisa los datos del formulario'

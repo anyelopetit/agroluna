@@ -32,15 +32,15 @@ $(document).on 'turbolinks:load', ->
       $('.hide-search').removeClass 'appear'
       $('.search-button').removeClass 'submit'
 
-  $('.datepicker').datepicker({
-    dateFormat: 'yy-mm-dd', # formato obligatorio para Keppler
-    showOtherMonths: true,
-    selectOtherMonths: true,
-    changeMonth: true,
-    changeYear: true
+  # $('.datepicker').datepicker({
+  #   dateFormat: 'yy-mm-dd', # formato obligatorio para Keppler
+  #   showOtherMonths: true,
+  #   selectOtherMonths: true,
+  #   changeMonth: true,
+  #   changeYear: true
 
-    # Ver documentación en https://jqueryui.com/datepicker
-  })
+  #   # Ver documentación en https://jqueryui.com/datepicker
+  # })
 
   $('.close-index-show').click ->
     $('.index-show').css 'right', -$('.index-show').outerWidth()

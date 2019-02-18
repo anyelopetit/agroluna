@@ -139,6 +139,7 @@ group :development, :test do
   gem 'shoulda-matchers', '~> 3.0', require: false
   gem 'pundit-matchers', '~> 1.4.1'
   gem 'rails-controller-testing'
+  gem 'dotenv-rails'
 end
 
 gem 'google-api-client', '~> 0.7.1'

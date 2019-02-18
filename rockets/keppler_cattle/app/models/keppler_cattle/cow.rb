@@ -100,17 +100,27 @@ module KepplerCattle
       )
     end
 
+
     def strategic_lot
       KepplerFarm::StrategicLot.find_by(id: status.strategic_lot_id)
     end
 
     def self.actives
-      active_ids = farm.cows.select { |x| !x&.status&.deathdate }.pluck(:id).uniq
+      cows = select do |cow|
+        cow&.status&.farm_id == farm.id &&
+        !cow&.status&.deathdate
+      end
+      active_ids = cows.pluck(:id).uniq
       where(id: active_ids)
     end
 
     def self.inactives
-      inactive_ids = farm.cows.select { |x| x&.status&.deathdate }.pluck(:id).uniq
+      cows = select do |cow|
+        (cow&.statuses&.map(&:farm_id).include?(farm.id) &&
+        cow&.status&.farm_id != farm.id) || 
+        cow&.status&.deathdate
+      end
+      inactive_ids = cows.pluck(:id).uniq
       where(id: inactive_ids)
     end
   end

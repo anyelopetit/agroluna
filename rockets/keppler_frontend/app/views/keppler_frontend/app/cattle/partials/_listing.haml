@@ -5,11 +5,11 @@
         -# %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#mfg", role: "tab"}
         -# %a#mfg-tab.nav-link.active{ href: "#mfg", role: "tab" }
         = link_to(action_name.eql?('index') ? '#' : {action: :index}, { class: "nav-link #{'active' if action_name.eql?('index')}" }) do
-          Activos (#{@active_cows.size})
+          Activos (#{@farm.cows.actives.size})
       %li.nav-item
         -# %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#ale", role: "tab"}
         = link_to(action_name.eql?('index_inactive') ? '#' : {action: :index_inactive}, { class: "nav-link #{'active' if action_name.eql?('index_inactive')}" }) do
-          Inactivos (#{@inactive_cows.size})
+          Inactivos (#{@farm.cows.inactives.size})
     %hr{ :style => "margin-top: 0;width: 90%; margin-bottom: 20px;"}
     .container_custom
       = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
@@ -19,6 +19,16 @@
             -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
             = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
               %i.icofont-trash
+        - if action_name.eql?('index')
+          - if cows.size < @farm.cows.actives.size
+            .toolbar
+              .toolbar-item
+                = link_to 'Mostrar todos', app_farm_cows_path(farm)
+        - else
+          - if cows.size < @farm.cows.inactives.size
+            .toolbar
+              .toolbar-item
+                = link_to 'Mostrar todos', app_farm_cows_inactive_path(farm)
         .actions.d-none.d-sm-block
           .float-right.mb-4
             - unless cows.size.zero?
@@ -48,10 +58,7 @@
               = link_to({action: :index, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
                 Reporte
               
-      - if cows.blank? && @farm.cows.count > 0
-        .toolbar{ style: "top: 60px;"}
-          .toolbar-item
-            = link_to 'Mostrar todos', app_farm_cows_path(farm)
+      
       = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: cows
 
 .card_show.card_status.card_history#status-history

@@ -21,6 +21,11 @@ module KepplerFrontend
 
     def index_inactive; end
 
+    def search
+      url = Rails.application.routes.recognize_path(request.referrer)
+      render controller: url[:controller], action: url[:action]
+    end
+
     def show
       @statuses = @cow.statuses.order(id: :desc)
       # respond_to_formats(@cow)

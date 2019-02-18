@@ -22,7 +22,7 @@ module KepplerFrontend
     end
 
     def show
-      @cows = @strategic_lot.cows
+      @cows = @strategic_lot.cows.order(:serie_number)
       @assign = KepplerCattle::Assignment.new
       respond_to_formats(@strategic_lot)
     end

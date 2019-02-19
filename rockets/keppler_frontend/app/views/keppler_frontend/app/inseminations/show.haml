@@ -75,8 +75,9 @@
                       %small= "(#{@insemination.short_name})" unless @insemination.short_name.blank?
                       %span= @insemination.race&.name
                       %p= @insemination.observations
-                      %b Usada:
-                      %span= @insemination.used
+                      - if @insemination.used
+                        %b Usada:
+                        %span= @insemination.used
                       
             .col-lg-9
               .row

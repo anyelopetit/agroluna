@@ -222,6 +222,7 @@ module KepplerFrontend
       end
 
       def redefine_ids(ids)
+        return if ids.nil?
         ids.delete('[]').split(',').select do |id|
           View.find_by(id: id).uninstall if model.exists? id
           id if model.exists? id

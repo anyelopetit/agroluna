@@ -3,19 +3,19 @@ $.rails.allowAction = function(link){
   if (link.data("confirm") == undefined){
     return true;
   }
-  $.rails.showConfirmationDialog(link);
+  showConfirmationDialog(link);
   return false;
 }
 
 //User click confirm button
-$.rails.confirmed = function(link){
+confirmed = function(link){
   link.data("confirm", null);
   // Turbolinks.visit(link.attr('href'))
   link.trigger("click.rails");
 }
 
 //Display the confirmation dialog
-$.rails.showConfirmationDialog = function(link){
+showConfirmationDialog = function(link){
   var message = link.data("confirm");
   swal({
     title: message,
@@ -24,7 +24,7 @@ $.rails.showConfirmationDialog = function(link){
   }).then((result) => {
     if (result.value) {
       $('.spinner').fadeIn();
-      $.rails.confirmed(link);
+      confirmed(link);
     }
   });
 };

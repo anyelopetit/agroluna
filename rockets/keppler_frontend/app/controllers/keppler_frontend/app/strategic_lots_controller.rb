@@ -59,7 +59,12 @@ module KepplerFrontend
     end
 
     def destroy_multiple
-      KepplerFarm::StrategicLot.destroy redefine_ids('farm', params[:multiple_ids])
+      if farm_ids = redefine_ids('farm', params[:multiple_ids])
+        flash[:notice] = 'Los lotes estratégicos han sido eliminados'
+        KepplerFarm::StrategicLot.destroy farm_ids
+      else
+        flash[:error] = 'No se pudieron eliminar'
+      end
       redirect_to app_farm_strategic_lots_path(@farm)
     end
 

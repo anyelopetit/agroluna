@@ -66,6 +66,7 @@ module KepplerFrontend
     end
 
     def redefine_ids(rocket, ids)
+      return if ids.nil?
       ids.delete('[]').split(',').select do |id|
         id if frontend_model(rocket).exists? id
       end

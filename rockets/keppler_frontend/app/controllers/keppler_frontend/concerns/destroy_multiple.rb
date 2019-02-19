@@ -16,6 +16,7 @@ module KepplerFrontend
       end
 
       def redefine_ids(ids)
+        return if ids.nil?
         ids.delete('[]').split(',').select do |id|
           id if model.exists? id
         end

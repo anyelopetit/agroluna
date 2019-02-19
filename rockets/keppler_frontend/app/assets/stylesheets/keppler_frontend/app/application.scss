@@ -1,5 +1,6 @@
 
 //= require select2
+//= require sweetalert2
 // require_self
 
 //  @import 'font-awesome';
@@ -15,6 +16,7 @@
 @import 'main';
 
 @import 'plugins/select2';
+@import 'plugins/sweetalert2';
 
 @import 'partials/form';
 

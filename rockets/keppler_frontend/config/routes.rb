@@ -53,7 +53,7 @@ KepplerFrontend::Engine.routes.draw do
   get '/finca/:farm_id/editar-pajuela/:insemination_id', to: 'app/inseminations#edit', as: :app_farm_insemination_edit
   get '/finca/:farm_id/nueva-pajuela', to: 'app/inseminations#new', as: :app_farm_insemination_new
   get '/finca/:farm_id/marcar-como-usada/:insemination_id', to: 'app/inseminations#mark_as_used', as: :app_farm_insemination_mark_as_used
-  post '/finca/:farm_id/pajuela', to: 'app/inseminations#create', as: :app_farm_insemination_create
+  post '/finca/:farm_id/pajuelas', to: 'app/inseminations#create', as: :app_farm_insemination_create
   patch '/finca/:farm_id/pajuela/:insemination_id', to: 'app/inseminations#update', as: :app_farm_insemination_update
   delete '/finca/:farm_id/pajuela/:insemination_id/eliminar', to: 'app/inseminations#destroy', as: :app_farm_insemination_destroy
 

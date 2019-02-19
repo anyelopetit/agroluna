@@ -15,7 +15,7 @@ module KepplerCattle
     acts_as_paranoid
 
     has_many :statuses, dependent: :destroy
-    has_one :species
+    has_one :species, through: :race
     has_one :race
     has_one :typology, through: :status
 
@@ -23,7 +23,7 @@ module KepplerCattle
     validates_uniqueness_of :serie_number
 
     def self.index_attributes
-      %i[serie_number image short_name provenance]
+      %i[serie_number short_name race_name typology_name gender]
     end
 
     def farm

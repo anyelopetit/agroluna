@@ -231,7 +231,7 @@ puts 'Fincas y lotes creados'
       species_id: species.id
     )
   end
-
+  
   # Madre Sute
   KepplerCattle::Cow.create(
     serie_number: '0000',

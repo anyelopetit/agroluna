@@ -32,7 +32,7 @@ module KepplerFrontend
       @insemination = KepplerCattle::Insemination.new(insemination_params)
 
       if @insemination.save
-        redirect_to action: :show
+        redirect_to action: :show, insemination_id: @insemination.id
       else
         flash[:error] = 'Revisa los datos del formulario'
         render :new
@@ -41,7 +41,7 @@ module KepplerFrontend
 
     def update
       if @insemination.update(insemination_params)
-        redirect_to action: :show
+        redirect_to action: :show, insemination_id: @insemination.id
       else
         render :edit
       end

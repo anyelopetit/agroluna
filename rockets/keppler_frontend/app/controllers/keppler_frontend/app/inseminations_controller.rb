@@ -10,18 +10,21 @@ module KepplerFrontend
     before_action :insemination_attributes, only: %i[new edit create]
     before_action :index_variables
     before_action :user_authenticate
+    before_action :respond_to_formats
+    before_action :index_history, only: %i[index index_inactive]
+    before_action :show_history, only: %i[show]
     include ObjectQuery
 
     def index
-      respond_to_formats(@active_inseminations)
+      # respond_to_formats(@active_inseminations)
     end
 
     def index_used
-      respond_to_formats(@inactive_inseminations)
+      # respond_to_formats(@inactive_inseminations)
     end
 
     def show
-      respond_to_formats(@insemination)
+      # respond_to_formats(@insemination)
     end
 
     def new
@@ -100,15 +103,51 @@ module KepplerFrontend
       )
     end
 
+    def respond_to_formats
+      respond_to do |format|
+        format.html
+        # format.csv { send_format_data(objects.model.all, 'csv') }
+        # format.xls { send_format_data(objects.model.all, 'xls') }
+        format.json
+        format.pdf do
+          render pdf_options
+        end
+      end
+    end
+
+    def index_history
+      @activities = @farm.activities.where(
+        trackable_type: KepplerCattle::Insemination.to_s
+      ).or(
+        @farm.activities.where(
+          recipient_type: KepplerCattle::Insemination.to_s
+        )
+      ).order('created_at desc').limit(50)
+    end
+
+    def show_history
+      @activities = @farm.activities.where(
+        trackable_type: 'KepplerCattle::Insemination',
+        trackable_id: @insemination.id.to_s
+      ).or(
+        @farm.activities.where(
+          recipient_type: 'KepplerCattle::Insemination',
+          recipient_id: @insemination.id.to_s
+        )
+      ).order('created_at desc').limit(50)
+    end
+
     # Only allow a trusted parameter "white list" through.
     def insemination_params
       params.require(:insemination).permit(
         :serie_number,
         :short_name,
+        :farm_id,
         :species_id,
         :race_id,
         :typology_id,
-        :farm_id,
+        :mother_id,
+        :father_id,
         :corporal_condition,
         :birthdate,
         :used,

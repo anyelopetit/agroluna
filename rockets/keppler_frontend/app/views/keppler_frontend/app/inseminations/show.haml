@@ -3,7 +3,7 @@
   .container_custom
     .float-left
       -# %a.mt-4.mb-4.ml-3{ href: app_farm_inseminations_path(@farm) }
-      -# = link_to(request.env['HTTP_REFERER'], { class: 'mt-4 mb-4 ml-3' }) do
+      =# request.env['HTTP_REFERER']
       = link_to({action: :index}, { class: 'mt-4 mb-4 ml-3' }) do
         %button.btn.btn_custom.btn--medium
           %i.icofont-circled-left
@@ -16,7 +16,7 @@
           %i.icofont-refresh
         %a{ href: '' }
           %i.icofont-download
-      .actions
+      .actions.d-none.d-sm-block
         .float-right
           - if @insemination.used
             .btn.btn_custom.btn--medium.disabled{ disabled: true }
@@ -35,11 +35,27 @@
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-ui-edit
               Editar
-          %a.mt-4.mb-4#open-status-history
+          %a.mt-4.mb-4.open-status-history
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-clock-time
               Historial
-  .container_custom{ class: ('filter' if @insemination.used) }
+      
+      .actions_movil.d-sm-none
+        .float-right
+          %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-simple-down
+              Acciones
+          .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
+            %a{ class: 'dropdown-item', href: app_farm_insemination_edit_path(@farm, @insemination) }
+              Editar
+            %a.open-status-history{class: "dropdown-item"}
+              Historial
+            = link_to({action: :show, format: :pdf}, {class: 'mt-4 mb-4 dropdown-item', target: '_blank'}) do
+              Reporte
+
+  
+  .container_custom
     .row
       .col-md-12
         .card_show.insemination_info.p-5
@@ -50,42 +66,35 @@
             .col-lg-3{ :style =>"display: flex; justify-content: center;"}
               .card_insemination
                 .row
-                  .col-lg-12
-                    = image_tag (@insemination.try(:image)&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+                  %center.col-lg-12
+                    = image_tag 'https://image.flaticon.com/icons/svg/1495/1495074.svg', class: 'avatar_cow'
                   .col-lg-12
                     .card_insemination_content{ :style => "text-align: center;"}
                       %h1
                         = @insemination.serie_number
                       %small= "(#{@insemination.short_name})" unless @insemination.short_name.blank?
-                      %br
                       %span= @insemination.race&.name
-                      %br
-                      - if @insemination.used
-                        %span
-                          %i.icofont-check
-                          %b Usada:
-                          = @insemination.used
+                      %p= @insemination.observations
+                      %b Usada:
+                      %span= @insemination.used
+                      
             .col-lg-9
               .row
-                .col-lg-4
+                .col-lg-4.col-sm-4
                   %dl
                     %dt Número de serie
                     %dd= @insemination.serie_number
                     %dt Nombre corto
                     %dd= @insemination.short_name
-                    %dt Especie
-                    %dd= @insemination.species&.name
-                    -# %dt Procedencia
-                    -# %dd= @insemination.provenance
-                .col-lg-4
+                .col-lg-4.col-sm-4
                   %dl
-                    %dt Edad (Años-Meses)
-                    %dd #{@insemination.years}-#{@insemination.months}
                     %dt Fecha de Nacimiento
                     %dd= @insemination.birthdate
                     %dt Raza
                     %dd= @insemination.race&.name
-                .col-lg-4
+                    %dt Procedencia
+                    %dd= @insemination.provenance
+                .col-lg-4.col-sm-4
                   %dl
                     %dt Color Pelaje
                     %dd= @insemination.coat_color
@@ -93,11 +102,26 @@
                     %dd= @insemination.tassel_color
                     %dt Color Morro
                     %dd= @insemination.nose_color
-      .col-md-4
+              %hr/
+              .row
+                .col-lg-4.col-sm-4
+                  %dl
+                    -# %dt= @insemination.dead ? 'Inactivo' : 'Activo'
+                    -# %dd= @insemination.dead
+                    %dt Cantidad de hijos
+                    %a{ 'data-target': "#modalSons", 'data-toggle': 'modal', href: ""}
+                      %dd= @insemination.sons.count
+                    
+              
+              
+      // Current Status
+      .col-lg-4.col-md-6
         .card_status_specific
           .card_status--title.card_status_title
             %h2
               Edad
+              %br
+              Años - Meses
           .box-body.no-padding
             .row
               .col-lg-12
@@ -105,11 +129,9 @@
                   %dl
                     %dd
                       .months
-                      = @insemination.months
-                      = "-"
                       = @insemination.years
-                      %small A - M
-                      -# %strong Edad (años - meses)
+                      = "-"
+                      = @insemination.months
                 .row
                   .col-lg-6
                     %dl
@@ -119,11 +141,10 @@
                   .col-lg-6
                     %dl
                       %dt.card_status_details
-                        -# %i.icofont-infant-nipple
                         Días de nacido
                       %dd.card_status_details= @insemination.days
-      .col-md-4
-        .card_status_specific
+      .col-lg-4.col-md-12
+        .card_status_specific.card_status_parent
           .card_status--title.card_status_title
             %h2
               Padres
@@ -131,12 +152,12 @@
             .row
               .col-lg-12
                 .row
-                  .col-lg-6
+                  .col-lg-6.col-md-6
                     .parent_card
                       - if @insemination.mother
                         = link_to app_farm_insemination_path(@farm, @insemination.mother) do
                           .parent_img
-                            = image_tag (@insemination.mother&.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+                            = image_tag (@insemination.mother&.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_insemination'
                           %dl
                             %dt{:style => "font-weight: 700; color: #6f6f6f;"}
                               = @insemination.mother&.serie_number
@@ -144,18 +165,36 @@
                       - else
                         
                         %h3 SIN MADRE
-                  .col-lg-6
+                  .col-lg-6.col-md-6
                     .parent_card
                       - if @insemination.father
                         = link_to app_farm_insemination_path(@farm, @insemination.father) do
                           .parent_img
-                            = image_tag (@insemination.mother&.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+                            = image_tag (@insemination.father&.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), class: 'avatar_insemination', style: "width: 50px;" 
                           %dl
                             %dt{:style => "font-weight: 700; color: #6f6f6f;"}
                               = @insemination.father&.serie_number
                             %dt{:style => "font-weight:400; color: #6f6f6f;"} Padre
+                          
                       - else
                         %h3 SIN PADRE
+      .col-lg-4
+        .card_show.card_status.card_history#status-history
+          .float-right
+            %a.close-status-history{ href: '#' }
+              %i.icofont-ui-close
+          .card_status--title
+            %h2 Historial
+            %ul.timeline
+              = 'No hay actividades' if @activities.empty?
+              -# = render_activities(@activities, locals: { method: 'serie_number' })
+              - @activities.each do |activity|
+                = render partial: "keppler_frontend/app/layouts/public_activity/#{activity.key.split('.').second}", locals: { activity: activity, method: 'serie_number' }
+
+    
+                  
+    = render 'keppler_frontend/app/inseminations/partials/family_tree'
+    = render 'keppler_frontend/app/inseminations/partials/modal_sons'
 :scss
   #status-history {
     height: 100vh;
@@ -182,37 +221,13 @@
     padding: 10px;
     
     img {
+      max-height: 70px;
       max-width: 200px;
     }
   }
-
- 
   .svg-icon-md {
     height: 30px;
   }
-
-  .insemination_info {
-    dt {
-      margin-top: 20px;
-    }
+  .close-status-history {
+    z-index: 5;
   }
-
-  .container_custom.filter {
-    filter: grayscale(100%);
-  }
-
-:javascript
-  $('#open-status-history').click(function() {
-    $('#status-history').css({
-      right: '0'
-    })
-  })
-  $('#close-status-history').click(function() {
-    $('#status-history').css({
-      right: '-300px'
-    })
-  })
-
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  })

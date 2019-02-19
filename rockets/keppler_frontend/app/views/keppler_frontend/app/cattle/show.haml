@@ -442,29 +442,9 @@
       max-width: 200px;
     }
   }
-
- 
   .svg-icon-md {
     height: 30px;
   }
   .close-status-history {
     z-index: 5;
   }
-
-
-:javascript
-  $('.open-status-history').click(function() {
-    $('#status-history').css({
-      right: '0'
-    })
-  })
-
-  $('.close-status-history').click(function() {
-    $('#status-history').css({
-      right: '-300px'
-    })
-  })
-
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  })

@@ -1,4 +1,0 @@
-.profile_banner{ style: "background-image: url('#{farm&.photos&.find_by(cover: true)&.photo&.url || 'https://images.pexels.com/photos/787647/pexels-photo-787647.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'}')" }
-  .profile_box
-    %h1.profile_name= farm&.title
-    %span.profile_activity= farm&.processes&.join(', ')

@@ -1,5 +1,0 @@
-scss_files: 'app/assets/stylesheets/admin/**/*.scss'
-exclude: 'app/assets/stylesheets/admin/codemirror*'
-
-ImportantRule:
-  enabled: false

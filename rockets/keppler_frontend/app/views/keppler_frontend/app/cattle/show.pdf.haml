@@ -48,6 +48,50 @@
                 %td= @cow.years
                 %td= @cow.months
                 %td= @cow.days
+          %hr
+          %h2 Hijos (#{@cow.sons&.size})
+          %table.cow-table
+            - if @cow.sons&.size&.zero?
+              %thead
+                %tr
+                  %th.not-records.center
+                    %center No se encontraron ganados
+            - else
+              %thead
+                %tr
+                  %th Serie
+                  %th Raza
+                  %th
+                    Edad
+                    %br
+                    A - M
+                  %th Tipología
+                  - if @cow.gender?('male')
+                    %th Madre
+                  - else
+                    %th Padre
+                  %th Fecha Nac.
+                  %th KG
+                  %th Pelaje
+                  %th Lote
+              %tbody
+                - @cow.sons&.each do |cow|
+                  %tr
+                    %td= cow&.serie_number
+                    %td= cow&.race&.name
+                    %td
+                      = cow&.status&.years
+                      \-
+                      = cow&.status&.months
+                    %td= cow&.status&.typology&.name
+                    - if @cow.gender?('male')
+                      %td= cow&.mother&.serie_number
+                    - else
+                      %td= cow&.father&.serie_number
+                    %td= cow&.birthdate&.strftime('%d-%m-%Y')
+                    %td= cow&.status&.weight
+                    %td= cow&.coat_color
+                    %td= cow&.strategic_lot&.name
 :scss
   body {
     font-size: 12px;

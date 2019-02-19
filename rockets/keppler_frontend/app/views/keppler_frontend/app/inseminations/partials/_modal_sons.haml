@@ -10,17 +10,17 @@
             %h1{style: "text-transform: uppercase;font-size: 25px;color: #28C76F;position: relative;margin-bottom: 5px;"} Hijos          
           .box-body.no-padding
             .row
-              - if @cow.sons.blank?
+              - if @insemination.sons.blank?
                 %center.col-lg-12
                   Aún no ha tenido crías
-              - @cow.sons.each do |son|
+              - @insemination.sons.each do |son|
                 .col-lg-12.son-item
-                  = link_to(action: :show, cow_id: son.id) do
+                  = link_to(action: :show, insemination_id: son.id) do
                     %dl
                       %dt
                         = image_tag "/assets/keppler_cattle/#{son.gender}", class: 'svg-icon-md' unless son.gender.blank?
                         %span= son.serie_number
-                        %small= "(#{@cow.short_name})" unless @cow.short_name.blank?
+                        %small= "(#{@insemination.short_name})" unless @insemination.short_name.blank?
 :scss
   .son-item {
     &:hover {

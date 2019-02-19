@@ -8,7 +8,7 @@
     $("#" + $id).show()
   })
 
-  var $ids = #{@cows.pluck(:id)}
+  var $ids = #{@cows.map(&:id)}
   var $final_array = []
   var href = $('.destroy_multiple').attr('href')
 

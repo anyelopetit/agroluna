@@ -10,8 +10,8 @@ default: &default
   encoding: utf8
   database: <%= Rails.application.secrets.database[:name] %>
   pool: 5
-  username: <%= Rails.application.secrets.database[:username] %>
-  password: <%= Rails.application.secrets.database[:password] %>
+  username: <%= ENV['PG_USER'] || Rails.application.secrets.database[:username] %>
+  password: <%= ENV['PG_PASSWORD'] || Rails.application.secrets.database[:password] %>
   template: template0
 
 

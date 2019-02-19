@@ -19,6 +19,16 @@
             -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
             = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
               %i.icofont-trash
+        - if action_name.eql?('index')
+          - if cows.size < @active_cows.size
+            .toolbar
+              .toolbar-item
+                = link_to 'Mostrar todos', app_farm_cows_path(farm)
+        - else
+          - if cows.size < @inactive_cows.size
+            .toolbar
+              .toolbar-item
+                = link_to 'Mostrar todos', app_farm_cows_inactive_path(farm)
         .actions.d-none.d-sm-block
           .float-right.mb-4
             - unless cows.size.zero?
@@ -48,39 +58,12 @@
               = link_to({action: :index, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
                 Reporte
               
-      - if cows.blank? && @farm.cows.count > 0
-        .toolbar{ style: "top: 60px;"}
-          .toolbar-item
-            = link_to 'Mostrar todos', app_farm_cows_path(farm)
+      
       = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: cows
 
-.card_show.card_status.card_history#status-history
-  .float-right
-    %a#close-status-history{ href: '#' }
-      %i.icofont-ui-close
-  .card_status--title
-    %h2 Historial
-    %ul.timeline
-      = 'No hay actividades' if @activities.empty?
-      -# = render_activities(@activities, locals: { method: 'serie_number' })
-      - @activities.each do |activity|
-        = render partial: "keppler_frontend/app/layouts/public_activity/#{activity.key.split('.').second}", locals: { activity: activity, method: 'serie_number' }
+= render 'keppler_frontend/app/layouts/public_activity/history'
 
 :scss
-  #status-history {
-    height: 100vh;
-    width: 300px;
-    position: fixed;
-    right: -300px;
-    top: 0;
-    z-index: 4;
-    transition: .3s;
-  }
-
-  #close-status-history {
-    color: #28C76F;
-    z-index: 4;
-  }
 
   .parent_card {
     display: flex;
@@ -101,21 +84,3 @@
   .svg-icon-md {
     height: 30px;
   }
-
-
-:javascript
-  $('.open-status-history').click(function() {
-    $('#status-history').css({
-      right: '0'
-    })
-  })
-
-  $('.close-status-history').click(function() {
-    $('#status-history').css({
-      right: '-300px'
-    })
-  })
-
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  })

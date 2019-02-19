@@ -1,10 +1,11 @@
 // Title & Meta tags
-= render 'layouts/keppler_frontend/app/layouts/meta_tags' unless controller_name.eql?('sessions')
+-# = render 'layouts/keppler_frontend/app/layouts/meta_tags' unless controller_name.eql?('sessions')
 
 %meta{ charset: 'UTF-8' }
 %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
 %meta{ name: 'theme-color', content: '#fff' }
-%title Agroluna
+%title= @farm&.title || 'Agropecuaria'
+= favicon_link_tag @farm&.logo&.url || '/assets/keppler_frontend/app/logo_default.png.png'
 %link{ rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' }
 
 

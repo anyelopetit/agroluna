@@ -8,7 +8,9 @@ module KepplerCattle
       included do
         def years 
           now = Time.now.utc.to_date 
-          now.year - birthdate.year - (birthdate.to_date.change(:year => now.year) <= now.year ? 0 : 1) 
+          now.year > birthdate.year ?
+            now.year - birthdate.year - (birthdate.to_date.change(:year => now.year) <= now.year ? 0 : 1) :
+            0
         end 
 
         def months
@@ -26,12 +28,14 @@ module KepplerCattle
             end
           end
           # Suma desde el mes que naciste hasta finalizar ese año
-          for m in birthdate.month..12
-            days_count += Time.days_in_month(m, birthdate.year)
-          end
-          # Suma desde el primero de enero hasta un mes antes de ahora
-          for m in 1..now.month-1
-            days_count += Time.days_in_month(m, now.year)
+          if now.year > birthdate.year
+            for m in birthdate.month..12
+              days_count += Time.days_in_month(m, birthdate.year)
+            end
+            # Suma desde el primero de enero hasta un mes antes de ahora
+            for m in 1..now.month-1
+              days_count += Time.days_in_month(m, now.year)
+            end
           end
           # Suma o resta de los días del mes actual con tu día de nacimiento
           if birthdate.day > now.day

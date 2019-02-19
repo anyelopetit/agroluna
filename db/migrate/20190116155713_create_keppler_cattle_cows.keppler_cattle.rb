@@ -20,6 +20,8 @@ class CreateKepplerCattleCows < ActiveRecord::Migration[5.2]
       t.integer :race_id
 
       t.timestamps
+
+      add_index :keppler_cattle_cows, :serie_number, unique: true
     end
   end
 end

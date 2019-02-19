@@ -21,6 +21,11 @@ module KepplerFrontend
 
     def index_inactive; end
 
+    def search
+      url = Rails.application.routes.recognize_path(request.referrer)
+      render controller: url[:controller], action: url[:action]
+    end
+
     def show
       @statuses = @cow.statuses.order(id: :desc)
       # respond_to_formats(@cow)
@@ -76,11 +81,10 @@ module KepplerFrontend
 
     def index_variables
       @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
-      @q = @farm.cows.ransack(params[:q])
+      @q = KepplerCattle::Cow.ransack(params[:q]) # @farm.cows.ransack(params[:q])
       @cows = @q.result(distinct: true)
       @active_cows = @cows.actives.order(:serie_number)
       @inactive_cows = @cows.inactives.order(:serie_number)
-      @total = @cows.size
       @attributes = KepplerCattle::Cow.index_attributes
       @typologies = KepplerCattle::Typology.all
     end
@@ -120,20 +124,22 @@ module KepplerFrontend
     end
 
     def index_history
-      @activities = PublicActivity::Activity.where(
+      @activities = @farm.activities.where(
         trackable_type: KepplerCattle::Cow.to_s
       ).or(
-        PublicActivity::Activity.where(
+        @farm.activities.where(
           recipient_type: KepplerCattle::Cow.to_s
         )
       ).order('created_at desc').limit(50)
     end
 
     def show_history
-      @activities = PublicActivity::Activity.where(
+      @activities = @farm.activities.where(
+        trackable_type: 'KepplerCattle::Cow',
         trackable_id: @cow.id.to_s
       ).or(
-        PublicActivity::Activity.where(
+        @farm.activities.where(
+          recipient_type: 'KepplerCattle::Cow',
           recipient_id: @cow.id.to_s
         )
       ).order('created_at desc').limit(50)

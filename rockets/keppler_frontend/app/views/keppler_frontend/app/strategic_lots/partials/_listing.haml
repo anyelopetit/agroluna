@@ -12,32 +12,29 @@
       //   %a{ href: '' }
       //     %i.icofont-download
       .toolbar
-        -# - if can?(KepplerFarm::StrategicLot).destroy_multiple?
-          .toolbar-item
-            .item-check
-              .checkbox
-                %label{ for: 'checkbox-all' }
-                  %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
-                  %span.cr
-                    %i.cr-icon.icofont-check
+        -# .toolbar-item
+          .item-check
+            .checkbox
+              %label{ for: 'checkbox-all' }
+                %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+                %span.cr
+                  %i.cr-icon.icofont-check
         
         -# .toolbar-item
           -# = link_to reload_admin_farm_farm_strategic_lots_path(@farm), class: 'tool-btn', remote: true, title: t('keppler.actions.reload_page') do
             %i.icofont-refresh
-        -# - if can?(KepplerFarm::StrategicLot).download?
-          %li.toolbar-item.dropdown
-            %a.dropdown-toggle{ 'data-toggle': 'dropdown', href: '#', title: t('keppler.actions.download_records') }
-              %i.icon-cloud-download
-            %ul.dropdown-menu
-              %li= link_to t('keppler.actions.download.csv'), admin_farm_farm_strategic_lots_path(@farm, format: :csv), class: 'tool-btn'
-              %li= link_to t('keppler.actions.download.xls'), admin_farm_farm_strategic_lots_path(@farm, format: :xls), class: 'tool-btn'
-        -# - if can?(KepplerFarm::StrategicLot).upload?
-          .toolbar-item
-            = link_to '#', class: 'tool-btn', title: t('keppler.actions.upload_records'), id: 'upload' do
-              %i.icon-cloud-upload
+        -# %li.toolbar-item.dropdown
+          %a.dropdown-toggle{ 'data-toggle': 'dropdown', href: '#', title: t('keppler.actions.download_records') }
+            %i.icon-cloud-download
+          %ul.dropdown-menu
+            %li= link_to t('keppler.actions.download.csv'), admin_farm_farm_strategic_lots_path(@farm, format: :csv), class: 'tool-btn'
+            %li= link_to t('keppler.actions.download.xls'), admin_farm_farm_strategic_lots_path(@farm, format: :xls), class: 'tool-btn'
+        -# .toolbar-item
+          = link_to '#', class: 'tool-btn', title: t('keppler.actions.upload_records'), id: 'upload' do
+            %i.icon-cloud-upload
         .toolbar-item
           -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
-          = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
+          = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), class: 'destroy_multiple', method: :delete, data: { confirm: t('keppler.messages.data_confirm') }   do
             %i.icofont-trash
             Eliminar
     %a.float-right.mt-4.mb-4{ href: app_farm_strategic_lot_new_path(farm) }
@@ -46,7 +43,7 @@
         Agregar
     - if strategic_lots.blank? && @farm.strategic_lots.count > 0
       = link_to 'Mostrar todos', app_farm_strategic_lots_path(farm)
-    .content-table
+    .content-table{ style: 'position:initial' }
       %table
         - if strategic_lots.size.zero?
           %thead
@@ -57,14 +54,13 @@
           %thead
             %tr
               %th
-                - if can?(KepplerFarm::StrategicLot).destroy_multiple?
-                  .toolbar-item
-                    .item-check
-                      .checkbox
-                        %label{ for: 'checkbox-all' }
-                          %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
-                          %span.cr
-                            %i.cr-icon.icofont-check
+                .toolbar-item
+                  .item-check
+                    .checkbox
+                      %label{ for: 'checkbox-all' }
+                        %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+                        %span.cr
+                          %i.cr-icon.icofont-check
               %th Lote estratégico
               %th Función
               %th Cantidad de series
@@ -72,13 +68,12 @@
           %tbody
             - strategic_lots.each do |strategic_lot|
               %tr{ style: "border-bottom: 1px #eee solid;" }
-                - if can?(KepplerFarm::StrategicLot).destroy_multiple?
-                  %td
-                    .checkbox{ style: 'margin: 3px' }
-                      %label{ for: "checkbox-#{strategic_lot.id}" }
-                        %input{ type:"checkbox", id: "checkbox-#{strategic_lot.id}", 'checklist-model' => 'check', 'checklist-value' => "#{strategic_lot.id}", '@click' => "listDelete(#{strategic_lot.id})"}
-                        %span.cr
-                          %i.cr-icon.icofont-check
+                %td
+                  .checkbox{ style: 'margin: 3px' }
+                    %label{ for: "checkbox-#{strategic_lot.id}" }
+                      %input{ type:"checkbox", id: "checkbox-#{strategic_lot.id}", 'checklist-model' => 'check', 'checklist-value' => "#{strategic_lot.id}", '@click' => "listDelete(#{strategic_lot.id})"}
+                      %span.cr
+                        %i.cr-icon.icofont-check
                 %td
                   = link_to({action: :show, farm_id: farm.id, strategic_lot_id: strategic_lot.id}, {title: strategic_lot.description}) do
                     = strategic_lot&.name
@@ -94,13 +89,11 @@
                     %a.action-btn.pull-right{ id: "menu-#{strategic_lot.id}", 'aria-expanded': 'false', 'aria-haspopup': 'true', 'data-toggle': 'dropdown' }
                       %i.icofont-navigation-menu
                     %ul.actions.dropdown-menu{ 'aria-labelledby': "menu-#{strategic_lot.id}" }
-                      - if can?(KepplerFarm::StrategicLot).index?
-                        %li
-                          = link_to({action: :show, farm_id: @farm.id, strategic_lot_id: strategic_lot.id}) do
-                            %i.icofont-eye
-                            Ver lote
-                      - if can?(KepplerFarm::StrategicLot).update?
-                        %li
-                          = link_to({action: :edit, farm_id: @farm.id, strategic_lot_id: strategic_lot.id}) do
-                            %i.icofont-edit-alt
-                            Editar
+                      %li
+                        = link_to({action: :show, farm_id: @farm.id, strategic_lot_id: strategic_lot.id}) do
+                          %i.icofont-eye
+                          Ver lote
+                      %li
+                        = link_to({action: :edit, farm_id: @farm.id, strategic_lot_id: strategic_lot.id}) do
+                          %i.icofont-edit-alt
+                          Editar

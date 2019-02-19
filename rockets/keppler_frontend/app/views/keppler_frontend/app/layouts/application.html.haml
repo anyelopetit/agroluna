@@ -19,8 +19,9 @@
         :javascript
           notify("#{msg}", "#{name}")
 
+= render 'admin/layouts/git_info', git: @git
 = javascript_include_tag '/assets/plugins/jquery-ui/jquery-ui.min'
-:javascript
+-# :javascript
   $('.datepicker').datepicker({
     dateFormat: 'yy-mm-dd',
     showOtherMonths: true,

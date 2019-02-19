@@ -11847,59 +11847,80 @@ body {
   }
 }
 @media (min-width: 0px) and (max-width: 767px) {
-  /* line 16, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 17, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .col_family-tree.level3 {
     display: none !important;
   }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 23, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 24, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .content_family_tree {
     display: flex;
     justify-content: center;
   }
 }
 @media (min-width: 0px) and (max-width: 767px) {
-  /* line 23, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 24, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .content_family_tree {
     display: flex;
     justify-content: center;
   }
 }
 
-/* line 33, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 34, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .family_tree {
   width: 140px !important;
   min-height: 185px;
 }
+@media only screen and (max-width: 1280px) {
+  /* line 34, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .family_tree {
+    width: 130px !important;
+    min-height: 185px;
+  }
+}
+@media only screen and (max-width: 1440px) {
+  /* line 34, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .family_tree {
+    width: 150px !important;
+    min-height: 185px;
+  }
+}
+@media only screen and (max-width: 1366px) {
+  /* line 34, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .family_tree {
+    width: 140px !important;
+    min-height: 185px;
+  }
+}
 @media (min-width: 992px) and (max-width: 1199px) {
-  /* line 33, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 34, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .family_tree {
     width: 100px !important;
     min-height: 185px;
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 33, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 34, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .family_tree {
     width: 110px !important;
     min-height: 100px;
   }
 }
 @media (min-width: 0px) and (max-width: 767px) {
-  /* line 33, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 34, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .family_tree {
     width: 100px !important;
     min-height: 80px;
   }
 }
 
-/* line 55, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 64, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_one {
   position: relative;
 }
-/* line 57, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 66, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_one:before {
   content: "";
   position: absolute;
@@ -11910,7 +11931,16 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 57, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 66, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_one:before {
+    left: 50%;
+    width: 2px;
+    height: 72%;
+    top: 100%;
+  }
+}
+@media (min-width: 0px) and (max-width: 340px) {
+  /* line 66, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_one:before {
     left: 50%;
     width: 2px;
@@ -11918,16 +11948,82 @@ body {
     top: 100%;
   }
 }
-@media (min-width: 0px) and (max-width: 767px) {
-  /* line 57, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+@media (min-width: 341px) and (max-width: 350px) {
+  /* line 66, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_one:before {
     left: 50%;
     width: 2px;
-    height: 75%;
+    height: 73%;
     top: 100%;
   }
 }
-/* line 79, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+@media (min-width: 351px) and (max-width: 375px) {
+  /* line 66, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_one:before {
+    left: 50% !important;
+    width: 2px !important;
+    height: 73% !important;
+    top: 100% !important;
+  }
+}
+@media (min-width: 376px) and (max-width: 450px) {
+  /* line 66, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_one:before {
+    left: 50%;
+    width: 2px;
+    height: 73%;
+    top: 100%;
+  }
+}
+@media (min-width: 451px) and (max-width: 550px) {
+  /* line 66, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_one:before {
+    left: 50%;
+    width: 2px;
+    height: 73%;
+    top: 100%;
+  }
+}
+@media (min-width: 551px) and (max-width: 650px) {
+  /* line 66, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_one:before {
+    left: 50%;
+    width: 2px;
+    height: 72%;
+    top: 100%;
+  }
+}
+@media (min-width: 651px) and (max-width: 767px) {
+  /* line 66, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_one:before {
+    left: 50%;
+    width: 2px;
+    height: 72%;
+    top: 100%;
+  }
+}
+@media (min-width: 992px) and (max-width: 1000px) {
+  /* line 66, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_one:before {
+    width: 27%;
+    left: -27%;
+  }
+}
+@media (min-width: 1001px) and (max-width: 1024px) {
+  /* line 66, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_one:before {
+    width: 29%;
+    left: -29%;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1130px) {
+  /* line 66, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_one:before {
+    width: 35%;
+    left: -35%;
+  }
+}
+/* line 137, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_one:after {
   content: "";
   position: absolute;
@@ -11938,7 +12034,7 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 79, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 137, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_one:after {
     width: 155%;
     right: -155%;
@@ -11946,17 +12042,38 @@ body {
   }
 }
 @media (min-width: 0px) and (max-width: 767px) {
-  /* line 79, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 137, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_one:after {
     display: none;
   }
 }
+@media (min-width: 992px) and (max-width: 1000px) {
+  /* line 137, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_one:after {
+    width: 27%;
+    right: -27%;
+  }
+}
+@media (min-width: 1001px) and (max-width: 1024px) {
+  /* line 137, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_one:after {
+    width: 27%;
+    right: -27%;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1130px) {
+  /* line 137, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_one:after {
+    width: 35%;
+    right: -35%;
+  }
+}
 
-/* line 100, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 170, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_two-left {
   position: relative;
 }
-/* line 102, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 172, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_two-left:before {
   content: "";
   position: absolute;
@@ -11967,13 +12084,15 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
-  /* line 102, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 172, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_two-left:before {
     left: 45%;
+    height: 72%;
+    top: -72%;
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 102, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 172, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_two-left:before {
     height: 2px;
     top: 50%;
@@ -11981,8 +12100,8 @@ body {
     left: 100%;
   }
 }
-@media (min-width: 0px) and (max-width: 767px) {
-  /* line 102, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+@media (min-width: 0px) and (max-width: 340px) {
+  /* line 172, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_two-left:before {
     height: 2px;
     top: 50%;
@@ -11990,7 +12109,61 @@ body {
     left: 100%;
   }
 }
-/* line 130, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+@media (min-width: 341px) and (max-width: 350px) {
+  /* line 172, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-left:before {
+    height: 2px;
+    top: 50%;
+    width: 40%;
+    left: 100%;
+  }
+}
+@media (min-width: 351px) and (max-width: 375px) {
+  /* line 172, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-left:before {
+    height: 2px;
+    top: 50%;
+    width: 30%;
+    left: 100%;
+  }
+}
+@media (min-width: 376px) and (max-width: 450px) {
+  /* line 172, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-left:before {
+    height: 2px;
+    top: 50%;
+    width: 50%;
+    left: 100%;
+  }
+}
+@media (min-width: 451px) and (max-width: 550px) {
+  /* line 172, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-left:before {
+    height: 2px;
+    top: 50%;
+    width: 70%;
+    left: 100%;
+  }
+}
+@media (min-width: 551px) and (max-width: 650px) {
+  /* line 172, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-left:before {
+    height: 2px;
+    top: 50%;
+    width: 100%;
+    left: 100%;
+  }
+}
+@media (min-width: 651px) and (max-width: 767px) {
+  /* line 172, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-left:before {
+    height: 2px;
+    top: 50%;
+    width: 120%;
+    left: 100%;
+  }
+}
+/* line 241, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_two-left:after {
   content: "";
   position: absolute;
@@ -12001,26 +12174,54 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 130, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 241, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_two-left:after {
     left: 50%;
     width: 2px;
-    height: 73%;
+    height: 72%;
     top: 100%;
   }
 }
 @media (min-width: 0px) and (max-width: 767px) {
-  /* line 130, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 241, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_two-left:after {
     display: none;
   }
 }
+@media (min-width: 992px) and (max-width: 1000px) {
+  /* line 241, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-left:after {
+    width: 76%;
+    left: -76%;
+  }
+}
+@media (min-width: 1001px) and (max-width: 1015px) {
+  /* line 241, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-left:after {
+    width: 77%;
+    left: -77%;
+  }
+}
+@media (min-width: 1015px) and (max-width: 1024px) {
+  /* line 241, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-left:after {
+    width: 77%;
+    left: -77%;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1130px) {
+  /* line 241, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-left:after {
+    width: 96%;
+    left: -96%;
+  }
+}
 
-/* line 149, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 276, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_two-right {
   position: relative;
 }
-/* line 151, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 278, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_two-right:before {
   content: "";
   position: absolute;
@@ -12031,13 +12232,13 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
-  /* line 151, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 278, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_two-right:before {
     right: 45%;
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 151, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 278, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_two-right:before {
     height: 2px;
     top: 50%;
@@ -12045,8 +12246,8 @@ body {
     right: 100%;
   }
 }
-@media (min-width: 0px) and (max-width: 767px) {
-  /* line 151, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+@media (min-width: 0px) and (max-width: 340px) {
+  /* line 278, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_two-right:before {
     height: 2px;
     top: 50%;
@@ -12054,7 +12255,61 @@ body {
     right: 100%;
   }
 }
-/* line 182, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+@media (min-width: 341px) and (max-width: 350px) {
+  /* line 278, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-right:before {
+    height: 2px;
+    top: 50%;
+    width: 30%;
+    right: 100%;
+  }
+}
+@media (min-width: 351px) and (max-width: 375px) {
+  /* line 278, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-right:before {
+    height: 2px;
+    top: 50%;
+    width: 30%;
+    right: 100%;
+  }
+}
+@media (min-width: 376px) and (max-width: 450px) {
+  /* line 278, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-right:before {
+    height: 2px;
+    top: 50%;
+    width: 40% !important;
+    right: 100%;
+  }
+}
+@media (min-width: 451px) and (max-width: 550px) {
+  /* line 278, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-right:before {
+    height: 2px;
+    top: 50%;
+    width: 70% !important;
+    right: 100%;
+  }
+}
+@media (min-width: 551px) and (max-width: 650px) {
+  /* line 278, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-right:before {
+    height: 2px;
+    top: 50%;
+    width: 90% !important;
+    right: 100%;
+  }
+}
+@media (min-width: 651px) and (max-width: 767px) {
+  /* line 278, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-right:before {
+    height: 2px;
+    top: 50%;
+    width: 120% !important;
+    right: 100%;
+  }
+}
+/* line 352, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_two-right:after {
   content: "";
   position: absolute;
@@ -12065,26 +12320,47 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 182, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 352, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_two-right:after {
     right: 50%;
     width: 2px;
-    height: 73%;
+    height: 72%;
     top: 100%;
   }
 }
 @media (min-width: 0px) and (max-width: 767px) {
-  /* line 182, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 352, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_two-right:after {
     display: none;
   }
 }
+@media (min-width: 992px) and (max-width: 1000px) {
+  /* line 352, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-right:after {
+    width: 76%;
+    right: -76%;
+  }
+}
+@media (min-width: 1001px) and (max-width: 1011px) {
+  /* line 352, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-right:after {
+    width: 77%;
+    right: -77%;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1130px) {
+  /* line 352, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_two-right:after {
+    width: 96%;
+    right: -96%;
+  }
+}
 
-/* line 203, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 385, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_three-left-one {
   position: relative;
 }
-/* line 205, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 387, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_three-left-one:before {
   content: "";
   position: absolute;
@@ -12095,13 +12371,13 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
-  /* line 205, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 387, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_three-left-one:before {
     left: 68%;
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 205, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 387, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_three-left-one:before {
     height: 20%;
     top: -20%;
@@ -12109,7 +12385,7 @@ body {
     display: none;
   }
 }
-/* line 224, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 406, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_three-left-one:after {
   content: "";
   position: absolute;
@@ -12120,18 +12396,46 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 224, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 406, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_three-left-one:after {
     left: 100%;
     width: 55%;
   }
 }
+@media (min-width: 992px) and (max-width: 1000px) {
+  /* line 406, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_three-left-one:after {
+    width: 170%;
+    left: -170%;
+  }
+}
+@media (min-width: 1001px) and (max-width: 1015px) {
+  /* line 406, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_three-left-one:after {
+    width: 165%;
+    left: -165%;
+  }
+}
+@media (min-width: 1016px) and (max-width: 1024px) {
+  /* line 406, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_three-left-one:after {
+    width: 163%;
+    left: -163%;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1130px) {
+  /* line 406, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_three-left-one:after {
+    width: 130%;
+    left: -130%;
+  }
+}
 
-/* line 239, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 437, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_three-left-two {
   position: relative;
 }
-/* line 241, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 439, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_three-left-two:before {
   content: "";
   position: absolute;
@@ -12142,14 +12446,14 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 241, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 439, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_three-left-two:before {
     height: 80%;
     top: -80%;
     display: none;
   }
 }
-/* line 255, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 453, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_three-left-two:after {
   content: "";
   position: absolute;
@@ -12160,18 +12464,39 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 255, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 453, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_three-left-two:after {
     left: -50%;
     width: 50%;
   }
 }
+@media (min-width: 992px) and (max-width: 1000px) {
+  /* line 453, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_three-left-two:after {
+    width: 30%;
+    left: -30%;
+  }
+}
+@media (min-width: 1001px) and (max-width: 1015px) {
+  /* line 453, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_three-left-two:after {
+    width: 24%;
+    left: -24%;
+  }
+}
+@media (min-width: 1016px) and (max-width: 1024px) {
+  /* line 453, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_three-left-two:after {
+    width: 23%;
+    left: -23%;
+  }
+}
 
-/* line 270, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 480, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_three-right-one {
   position: relative;
 }
-/* line 272, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 482, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_three-right-one:before {
   content: "";
   position: absolute;
@@ -12182,12 +12507,12 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 272, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 482, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_three-right-one:before {
     display: none;
   }
 }
-/* line 285, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 495, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_three-right-one:after {
   content: "";
   position: absolute;
@@ -12198,18 +12523,18 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 285, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 495, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_three-right-one:after {
     width: 50%;
     right: -50%;
   }
 }
 
-/* line 299, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 509, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_three-right-two {
   position: relative;
 }
-/* line 301, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 511, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_three-right-two:before {
   content: "";
   position: absolute;
@@ -12220,18 +12545,18 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
-  /* line 301, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 511, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_three-right-two:before {
     right: 68%;
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 301, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 511, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_three-right-two:before {
     display: none;
   }
 }
-/* line 316, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 526, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_three-right-two:after {
   content: "";
   position: absolute;
@@ -12242,18 +12567,39 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 316, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 526, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_three-right-two:after {
     left: -50%;
     width: 50%;
   }
 }
+@media (min-width: 992px) and (max-width: 1000px) {
+  /* line 526, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_three-right-two:after {
+    width: 165%;
+    right: -165%;
+  }
+}
+@media (min-width: 1001px) and (max-width: 1015px) {
+  /* line 526, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_three-right-two:after {
+    width: 163%;
+    right: -163%;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1130px) {
+  /* line 526, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  .block_three-right-two:after {
+    width: 145%;
+    right: -145%;
+  }
+}
 
-/* line 332, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 554, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-left-one {
   position: relative;
 }
-/* line 334, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 556, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-left-one:before {
   content: "";
   position: absolute;
@@ -12264,13 +12610,13 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
-  /* line 334, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 556, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_four-left-one:before {
     left: 60%;
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 334, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 556, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_four-left-one:before {
     height: 30%;
     top: -30%;
@@ -12278,11 +12624,11 @@ body {
   }
 }
 
-/* line 351, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 573, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-left-two {
   position: relative;
 }
-/* line 353, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 575, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-left-two:before {
   content: "";
   position: absolute;
@@ -12293,7 +12639,7 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 353, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 575, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_four-left-two:before {
     height: 80%;
     top: -80%;
@@ -12301,11 +12647,11 @@ body {
   }
 }
 
-/* line 369, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 592, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-left-three {
   position: relative;
 }
-/* line 371, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 594, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-left-three:before {
   content: "";
   position: absolute;
@@ -12316,17 +12662,17 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
-  /* line 371, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 594, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_four-left-three:before {
     right: 10%;
   }
 }
 
-/* line 384, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 607, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-left-four {
   position: relative;
 }
-/* line 386, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 609, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-left-four:before {
   content: "";
   position: absolute;
@@ -12337,11 +12683,11 @@ body {
   background-color: #28C76F;
 }
 
-/* line 397, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 620, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-right-one {
   position: relative;
 }
-/* line 399, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 622, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-right-one:before {
   content: "";
   position: absolute;
@@ -12352,11 +12698,11 @@ body {
   background-color: #28C76F;
 }
 
-/* line 409, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 632, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-right-two {
   position: relative;
 }
-/* line 411, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 634, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-right-two:before {
   content: "";
   position: absolute;
@@ -12367,17 +12713,17 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
-  /* line 411, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 634, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_four-right-two:before {
     left: 0;
   }
 }
 
-/* line 426, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 649, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-right-three {
   position: relative;
 }
-/* line 428, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 651, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-right-three:before {
   content: "";
   position: absolute;
@@ -12388,11 +12734,11 @@ body {
   background-color: #28C76F;
 }
 
-/* line 438, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 661, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-right-four {
   position: relative;
 }
-/* line 440, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+/* line 663, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
 .block_four-right-four:before {
   content: "";
   position: absolute;
@@ -12403,7 +12749,7 @@ body {
   background-color: #28C76F;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
-  /* line 440, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
+  /* line 663, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/family_tree.scss */
   .block_four-right-four:before {
     right: 80%;
   }
@@ -12566,19 +12912,19 @@ table img {
   max-width: 300px;
 }
 
-/* line 158, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/index.scss */
+/* line 160, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/index.scss */
 .select-field {
   display: none;
 }
 
-/* line 164, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/index.scss */
+/* line 166, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/index.scss */
 .cow-table td.status {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* line 171, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/index.scss */
+/* line 173, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/index.scss */
 .days-alert {
   color: orange;
 }
@@ -12609,15 +12955,11 @@ table img {
   width: 50%;
   margin-bottom: 30px;
 }
-/* line 24, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/new.scss */
-.card_new h1::after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 15%;
-  height: 3px;
-  background-color: #f28d23;
+@media (min-width: 0px) and (max-width: 767px) {
+  /* line 16, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/new.scss */
+  .card_new h1 {
+    width: 100%;
+  }
 }
 
 /* Keppler - profile_land.scss file */
@@ -12785,13 +13127,25 @@ dd {
   border-radius: 3px;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.08);
 }
-/* line 161, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
+@media (min-width: 0px) and (max-width: 767px) {
+  /* line 150, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
+  .toolbar {
+    top: 20px;
+  }
+}
+/* line 163, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
 .toolbar a {
   color: #28C76F;
   margin: 0 7px;
 }
+@media (min-width: 0px) and (max-width: 767px) {
+  /* line 167, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
+  .toolbar .toolbar-item {
+    font-size: 14px;
+  }
+}
 
-/* line 169, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
+/* line 176, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
 .card_status_specific {
   background-color: #fff;
   border-radius: 5px;
@@ -12801,7 +13155,7 @@ dd {
   color: #6f6f6f;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.08);
 }
-/* line 178, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
+/* line 185, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
 .card_status_specific h1 {
   text-transform: uppercase;
   font-size: 25px;
@@ -12809,46 +13163,46 @@ dd {
   position: relative;
   margin-bottom: 5px;
 }
-/* line 186, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
+/* line 193, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
 .card_status_specific h2 {
   font-size: 20px;
   margin-bottom: 30px;
   text-align: center;
 }
 
-/* line 194, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
+/* line 201, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
 .card_status_title {
   display: flex;
   justify-content: center;
 }
 
-/* line 200, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
+/* line 207, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
 .counter {
   display: flex;
   justify-content: center;
 }
-/* line 203, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
+/* line 210, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
 .counter dd {
   font-size: 35px;
   color: #28C76F;
 }
-/* line 206, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
+/* line 213, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
 .counter dd small {
   font-size: 15px;
   color: #252525;
 }
 
-/* line 213, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
+/* line 220, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
 .card_status_details {
   text-align: center;
 }
 
-/* line 216, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
+/* line 223, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
 .card_status_parent {
   min-height: 257px;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
-  /* line 216, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
+  /* line 223, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/views/show.scss */
   .card_status_parent {
     min-height: 280px;
   }
@@ -12946,11 +13300,16 @@ dd {
   background-color: #28C76F33;
 }
 
+/* line 92, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/main.scss */
+button:disabled, a:disabled, .btn:disabled {
+  cursor: not-allowed;
+}
+
 /* line 3, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/plugins/select2.scss */
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
   background-color: #28C76F !important;
   border-color: #28C76F !important;
-  border-radius: 20px !important;
+  border-radius: 5px !important;
   color: #fff !important;
   padding: 1px 10px !important;
   transition: .2s;
@@ -12973,7 +13332,7 @@ dd {
 /* line 25, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/plugins/select2.scss */
 .select2-container--default.select2-container--focus .select2-selection--multiple {
   border: solid #28C76F 1px !important;
-  border-radius: 20px !important;
+  border-radius: 5px !important;
   outline: 0 !important;
   transition: .2s;
 }
@@ -12986,37 +13345,39 @@ dd {
 
 /* line 37, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/plugins/select2.scss */
 .select2-container--default .select2-selection--multiple {
-  border: solid 1px #d2d6de;
-  border-radius: 20px !important;
+  border: 0;
+  border: solid 1px #fff;
+  border-radius: 5px !important;
   transition: .2s;
+  background-color: #fff !important;
 }
 
-/* line 43, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/plugins/select2.scss */
+/* line 45, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/plugins/select2.scss */
 .select2-container .select2-selection--single {
   height: 34px !important;
 }
 
-/* line 47, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/plugins/select2.scss */
+/* line 49, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/plugins/select2.scss */
 .select2-container--default .select2-selection--single .select2-selection__arrow {
   top: 3px !important;
 }
 
-/* line 51, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/plugins/select2.scss */
+/* line 53, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/plugins/select2.scss */
 .select2-container--default .select2-selection--single {
   border: 1px solid #d2d6de !important;
   background-color: #fff !important;
-  border-radius: 20px !important;
+  border-radius: 0px !important;
 }
 
-/* line 57, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/plugins/select2.scss */
+/* line 59, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/plugins/select2.scss */
 .select2-container--default .select2-selection--single, .select2-selection .select2-selection--single {
   border: 1px solid #d2d6de !important;
 }
 
-/* line 61, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/plugins/select2.scss */
+/* line 63, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/plugins/select2.scss */
 .select2-selection.select2-selection--single {
   border: 1px solid #d2d6de !important;
-  background-color: #fff !important;
+  background-color: #f8f8f8 !important;
   border-radius: 20px !important;
 }
 
@@ -13865,59 +14226,88 @@ a.modelOne.active_sub:after {
   font-weight: 700;
 }
 
+/* line 56, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_buttons.scss */
+.btn--input {
+  height: 40px;
+  border-radius: 5px;
+}
+
+/* line 60, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_buttons.scss */
+.btn--select {
+  font-size: 14px;
+  background-color: rgba(221, 221, 221, 0.44);
+}
+
+/* line 65, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_buttons.scss */
+.select {
+  background-color: #f8f8f8;
+}
+
+@-moz-document url-prefix() {
+  /* line 69, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_buttons.scss */
+  .btn--select {
+    font-size: 14px;
+    background-color: rgba(221, 221, 221, 0.44);
+    color: #000;
+  }
+}
 /* line 1, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .form-group {
   margin-bottom: 30px;
 }
 
-/* line 5, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 4, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+.form-control {
+  color: #999;
+}
+
+/* line 7, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .input_custom, .textarea_custom, .select2-selection--single {
-  border-radius: 0 !important;
-  border-top: 0 !important;
-  border-left: 0 !important;
-  border-right: 0 !important;
+  border-radius: 5px !important;
   box-shadow: none;
   font-size: 1.5rem !important;
   height: 28px;
-  border: 1px solid #aaa;
+  border: 1px solid rgba(221, 221, 211, 0.44) !important;
+  background-color: rgba(221, 221, 211, 0.44) !important;
 }
-/* line 16, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 20, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .input_custom:focus, .textarea_custom:focus, .select2-selection--single:focus {
   border-top: 0;
   border-left: 0;
   border-right: 0;
+  border-radius: 5px !important;
   border-color: #28C76F !important;
   box-shadow: 0 0 0 transparent;
   outline: none;
 }
 
-/* line 26, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 31, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select2-container {
   max-width: 100%;
   width: 100% !important;
 }
-/* line 29, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 34, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select2-container .select2-selection--single {
-  border: 1px solid #d2d6de !important;
-  background-color: #fff !important;
-  border-radius: 20px !important;
+  border: 1px solid rgba(221, 221, 211, 0) !important;
+  background-color: rgba(221, 221, 211, 0.44) !important;
+  border-radius: 5px !important;
 }
 
-/* line 36, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 41, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .label_custom {
   color: #797979;
   font-size: 14px;
   font-weight: 400;
 }
 
-/* line 41, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 46, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .label_custom--strong {
   color: #797979;
   font-size: 14px;
   font-weight: 700;
 }
 
-/* line 47, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 52, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select {
   padding-left: 0;
   cursor: pointer;
@@ -13925,18 +14315,18 @@ a.modelOne.active_sub:after {
   list-style: none;
   border-radius: 4px;
 }
-/* line 54, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 60, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select .select_options {
   list-style: none;
   padding-left: 0;
   z-index: 2;
   background: white;
 }
-/* line 61, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 67, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select .select_label {
   margin-bottom: 0;
 }
-/* line 65, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 71, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_expand {
   width: 0;
   height: 40px;
@@ -13944,7 +14334,7 @@ a.modelOne.active_sub:after {
   top: 0;
   right: 0;
 }
-/* line 72, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 78, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_expand::after {
   content: '\ea99';
   font-family: "IcoFont";
@@ -13959,15 +14349,15 @@ a.modelOne.active_sub:after {
   transition: all 250ms cubic-bezier(0.4, 0.25, 0.3, 1);
   opacity: .6;
 }
-/* line 87, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 93, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_expand:hover::after {
   opacity: 1;
 }
-/* line 89, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 95, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_expand:checked::after {
   transform: translate(-50%, -55%) rotate(180deg) scaleX(-1);
 }
-/* line 92, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 98, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_expandLabel {
   display: block;
   width: 100%;
@@ -13977,11 +14367,11 @@ a.modelOne.active_sub:after {
   left: 0;
   cursor: pointer;
 }
-/* line 102, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 108, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_close {
   display: none;
 }
-/* line 104, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 110, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_closeLabel {
   width: 100%;
   height: 40px;
@@ -13990,7 +14380,7 @@ a.modelOne.active_sub:after {
   left: 0;
   display: none;
 }
-/* line 113, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 119, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_items {
   width: 100%;
   position: absolute;
@@ -13999,11 +14389,11 @@ a.modelOne.active_sub:after {
   border-radius: 4px;
   padding-top: 40px;
 }
-/* line 122, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 128, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_input {
   display: none;
 }
-/* line 124, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 130, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_label {
   transition: all 250ms cubic-bezier(0.4, 0.25, 0.3, 1);
   display: block;
@@ -14016,7 +14406,7 @@ a.modelOne.active_sub:after {
   cursor: pointer;
   padding-left: 20px;
 }
-/* line 136, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 142, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_label-placeholder {
   height: 40px;
   vertical-align: middle;
@@ -14026,41 +14416,41 @@ a.modelOne.active_sub:after {
   opacity: .6;
   background-color: transparent;
 }
-/* line 148, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 154, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_expand:checked + .select_closeLabel {
   display: block;
 }
-/* line 152, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 158, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_expand:checked + .select_closeLabel + .select_options .select_label {
   height: 40px;
 }
-/* line 154, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 160, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_expand:checked + .select_closeLabel + .select_options .select_label:hover {
   background-color: #f7f7f7;
 }
-/* line 157, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 163, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_expand:checked + .select_closeLabel + .select_options + .select_expandLabel {
   display: none;
 }
-/* line 162, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 168, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .select_input:checked + .select_label {
   height: 40px;
   margin-top: -40px;
 }
 
-/* line 168, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 174, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .styled-checkbox {
   position: absolute;
   opacity: 0;
 }
-/* line 172, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 178, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .styled-checkbox + label {
   position: relative;
   cursor: pointer;
   padding: 0;
   margin-bottom: 0;
 }
-/* line 180, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 186, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .styled-checkbox + label:before {
   content: '';
   margin-right: 10px;
@@ -14071,19 +14461,19 @@ a.modelOne.active_sub:after {
   height: 20px;
   background: #dbdbdb;
 }
-/* line 192, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 198, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .styled-checkbox:hover + label:before {
   background: #28C76F;
 }
-/* line 197, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 203, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .styled-checkbox:focus + label:before {
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
 }
-/* line 202, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 208, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .styled-checkbox:checked + label:before {
   background: #28C76F;
 }
-/* line 207, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 213, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .styled-checkbox:checked + label:after {
   content: '';
   position: absolute;
@@ -14096,7 +14486,7 @@ a.modelOne.active_sub:after {
   transform: rotate(45deg);
 }
 
-/* line 226, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 232, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .keppler-switch {
   display: block;
   height: 24px;
@@ -14104,16 +14494,16 @@ a.modelOne.active_sub:after {
   position: relative;
   width: 40px;
 }
-/* line 233, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 239, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .keppler-switch input {
   display: none;
 }
-/* line 236, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 242, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .keppler-switch input.active + .slider {
   background-color: #28C76F;
   box-shadow: 0 0 1px #28C76F;
 }
-/* line 246, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 252, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .keppler-switch .slider {
   background-color: #6f6f6f;
   bottom: 0;
@@ -14124,7 +14514,7 @@ a.modelOne.active_sub:after {
   top: 0;
   transition: .4s;
 }
-/* line 256, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 262, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .keppler-switch .slider::before {
   background-color: white;
   bottom: 4px;
@@ -14135,40 +14525,40 @@ a.modelOne.active_sub:after {
   transition: .4s;
   width: 16px;
 }
-/* line 267, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 273, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .keppler-switch .slider.round {
   border-radius: 34px;
 }
-/* line 271, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 277, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .keppler-switch .slider.round::before {
   border-radius: 50%;
 }
-/* line 276, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 282, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .keppler-switch .inline-label {
   margin-left: 50px;
   opacity: .5;
   transition: opacity .3s;
 }
-/* line 281, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 287, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .keppler-switch .inline-label.active {
   opacity: 1;
   transition: opacity .3s;
 }
-/* line 287, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 293, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .keppler-switch a {
   text-decoration: none;
 }
-/* line 291, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 297, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .keppler-switch .active + .slider {
   background-color: #28C76F;
   box-shadow: 0 0 1px #28C76F;
 }
-/* line 295, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 301, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .keppler-switch .active + .slider::before {
   transform: translateX(16px);
 }
 
-/* line 301, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
+/* line 307, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_form.scss */
 .help-block {
   color: #ff4141;
 }
@@ -14316,7 +14706,7 @@ table .actions a:hover {
 
 /* line 115, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_table.scss */
 .sort_link {
-  color: #4d5663;
+  color: #4d5663 !important;
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -14337,11 +14727,23 @@ table .actions a:hover {
   padding: 0 5%;
   border-bottom: 1px solid transparent !important;
 }
-/* line 5, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
+@media (min-width: 768px) and (max-width: 991px) {
+  /* line 1, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
+  .nav-tabs {
+    padding: 0 1%;
+  }
+}
+@media (min-width: 0px) and (max-width: 767px) {
+  /* line 1, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
+  .nav-tabs {
+    padding: 0 1%;
+  }
+}
+/* line 11, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
 .nav-tabs .nav-item {
   margin-right: 15px;
 }
-/* line 9, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
+/* line 15, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
 .nav-tabs .nav-link {
   border: 0;
   text-align: left;
@@ -14349,11 +14751,11 @@ table .actions a:hover {
   position: relative;
   color: #6f6f6f;
 }
-/* line 16, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
+/* line 22, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
 .nav-tabs .nav-link.active {
   background-color: transparent;
 }
-/* line 20, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
+/* line 26, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
 .nav-tabs .nav-link.active::before {
   content: "";
   position: absolute;
@@ -14362,25 +14764,25 @@ table .actions a:hover {
   height: 3px;
   width: 100%;
 }
-/* line 28, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
+/* line 34, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
 .nav-tabs .nav-link:hover {
   border: 0;
 }
 
-/* line 34, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
+/* line 40, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
 .line-tabs {
   margin-top: 0;
   margin-bottom: 0;
   width: 90%;
 }
 @media (min-width: 768px) and (max-width: 991px) {
-  /* line 34, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
+  /* line 40, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
   .line-tabs {
     margin-bottom: 10px;
   }
 }
 @media (min-width: 0px) and (max-width: 767px) {
-  /* line 34, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
+  /* line 40, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_tabs.scss */
   .line-tabs {
     margin-bottom: 20px;
   }

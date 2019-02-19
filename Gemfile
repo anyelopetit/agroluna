@@ -14,6 +14,10 @@ gem 'remotipart', '1.3.0'
 gem 'vuejs-rails', '2.5.13' # VueJS library
 # gem 'rails-assets-sweetalert2', '~> 5.1.1', source: 'https://rails-assets.org'
 # gem 'sweet-alert2-rails'
+gem 'sweetalert2'
+# gem 'sweet-alert'
+# gem 'sweet-alert-confirm'
+# gem 'sweet-alert2-rails'
 # gem 'sweetalert2'
 gem 'select2-rails'
 # gem 'activerecord_any_of'
@@ -139,6 +143,7 @@ group :development, :test do
   gem 'shoulda-matchers', '~> 3.0', require: false
   gem 'pundit-matchers', '~> 1.4.1'
   gem 'rails-controller-testing'
+  gem 'dotenv-rails'
 end
 
 gem 'google-api-client', '~> 0.7.1'

@@ -11,6 +11,7 @@ module KepplerFrontend
     before_action :set_farms
     before_action :index_variables
     before_action :attachments
+    before_action :index_history
     include ObjectQuery
 
     def index
@@ -35,7 +36,13 @@ module KepplerFrontend
 
       unless @transference.from_farm_id == @transference.to_farm_id
         if @transference.save!
-          @transference.cows.map { |x| x.status.update(farm_id: @transference.to_farm_id) }
+          @transference.cows.map do |c|
+            status = KepplerCattle::Status.new(
+              c.status.as_json(except: :id)
+            )
+            status.farm_id = @transference.to_farm_id
+            status.save!
+          end
           redirect_to app_farm_transferences_path(@farm)
         else
           flash[:error] = 'Revisa los datos del formulario'
@@ -120,6 +127,16 @@ module KepplerFrontend
       params.require(:transference).permit(
         { cattle: [] }, :from_farm_id, :to_farm_id, :reason
       )
+    end
+
+    def index_history
+      @activities = @farm.activities.where(
+        trackable_type: KepplerCattle::Transference.to_s
+      ).or(
+        @farm.activities.where(
+          recipient_type: KepplerCattle::Transference.to_s
+        )
+      ).order('created_at desc').limit(50)
     end
   end
 end

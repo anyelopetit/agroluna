@@ -69347,13 +69347,6 @@ return jsc.jscolor;
         return $('.search-button').removeClass('submit');
       });
     };
-    $('.datepicker').datepicker({
-      dateFormat: 'yy-mm-dd',
-      showOtherMonths: true,
-      selectOtherMonths: true,
-      changeMonth: true,
-      changeYear: true
-    });
     $('.close-index-show').click(function() {
       return $('.index-show').css('right', -$('.index-show').outerWidth());
     });

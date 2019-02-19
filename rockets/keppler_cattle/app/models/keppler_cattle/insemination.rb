@@ -13,7 +13,7 @@ module KepplerCattle
     acts_as_list
     acts_as_paranoid
 
-    validates_presence_of :birthdate, :serie_number
+    validates_presence_of :birthdate, :serie_number, :farm_id
     validates_uniqueness_of :serie_number
 
     def self.index_attributes
@@ -82,6 +82,12 @@ module KepplerCattle
 
     def father
       KepplerCattle::Cow.find_by(id: father_id) if father_id
+    end
+
+    def sons
+      KepplerCattle::Cow.where(mother_id: id).or(
+        KepplerCattle::Cow.where(father_id: id)
+      )
     end
   end
 end

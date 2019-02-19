@@ -73,6 +73,7 @@
                       %strong
                         = @cow.status&.typology&.name unless @cow.status&.blank?
                       %span= @cow.race&.name
+                      %p= @cow.observations
             .col-lg-9
               .row
                 .col-lg-4.col-sm-4
@@ -136,7 +137,7 @@
                     -# %dd= @cow.status.dead
                     %dt Cantidad de hijos
                     %a{ 'data-target': "#modalSons", 'data-toggle': 'modal', href: ""}
-                      %dd{style:"color:#6f6f6f;"}= @cow.sons.count
+                      %dd= @cow.sons.count
                     
               
               
@@ -441,29 +442,9 @@
       max-width: 200px;
     }
   }
-
- 
   .svg-icon-md {
     height: 30px;
   }
   .close-status-history {
     z-index: 5;
   }
-
-
-:javascript
-  $('.open-status-history').click(function() {
-    $('#status-history').css({
-      right: '0'
-    })
-  })
-
-  $('.close-status-history').click(function() {
-    $('#status-history').css({
-      right: '-300px'
-    })
-  })
-
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  })

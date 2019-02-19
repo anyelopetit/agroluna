@@ -15,7 +15,7 @@ module KepplerCattle
     acts_as_paranoid
 
     has_many :statuses, dependent: :destroy
-    has_one :species
+    has_one :species, through: :race
     has_one :race
     has_one :typology, through: :status
 
@@ -23,7 +23,7 @@ module KepplerCattle
     validates_uniqueness_of :serie_number
 
     def self.index_attributes
-      %i[serie_number image short_name provenance]
+      %i[serie_number short_name race_name typology_name gender]
     end
 
     def farm
@@ -100,17 +100,27 @@ module KepplerCattle
       )
     end
 
+
     def strategic_lot
       KepplerFarm::StrategicLot.find_by(id: status.strategic_lot_id)
     end
 
     def self.actives
-      active_ids = farm.cows.select { |x| !x&.status&.deathdate }.pluck(:id).uniq
+      cows = select do |cow|
+        cow&.status&.farm_id == farm.id &&
+        !cow&.status&.dead && !cow&.status&.deathdate
+      end
+      active_ids = cows.pluck(:id).uniq
       where(id: active_ids)
     end
 
     def self.inactives
-      inactive_ids = farm.cows.select { |x| x&.status&.deathdate }.pluck(:id).uniq
+      cows = select do |cow|
+        (cow&.statuses&.map(&:farm_id).include?(farm.id) &&
+        cow&.status&.farm_id != farm.id) || 
+        cow&.status&.dead || cow&.status&.deathdate
+      end
+      inactive_ids = cows.pluck(:id).uniq
       where(id: inactive_ids)
     end
   end

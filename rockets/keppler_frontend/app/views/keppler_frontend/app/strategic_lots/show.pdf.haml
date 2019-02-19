@@ -1,0 +1,84 @@
+!!!
+%html{ lang: 'en' }
+  %head
+    %meta{ charset: 'UTF-8' }
+    %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
+    %meta{ name: 'theme-color', content: '#fff' }
+    %title #{@strategic_lot.name}
+  %body
+    .header-left
+      %h1.farm-title= @farm.try(:title)&.upcase
+      %h2.report-title Lote estratégico #{@strategic_lot.name} (#{@strategic_lot.function})
+    .header-right
+      %p= Time.now.strftime('%d-%m-%Y')
+      %p Pág. 1
+      %p #{@strategic_lot.cows.count} / #{@strategic_lot.cows.count}
+    %table.cow-table
+      - if @strategic_lots.size.zero?
+        %thead
+          %tr
+            %th.not-records.center
+              %center No se encontraron ganados
+      - else
+        %thead
+          %tr
+            %th Serie
+            %th Raza
+            %th
+              Edad
+              %br
+              A - M
+            %th Tipología
+            %th Madre
+            %th Padre
+            %th Fecha
+            %th KG
+            %th Pelaje
+        %tbody
+          - @strategic_lot.cows.each do |cow|
+            %tr
+              %td= cow&.serie_number
+              %td= cow&.race&.name
+              %td
+                = cow&.status&.years
+                \-
+                = cow&.status&.months
+              %td= cow&.status&.typology.name
+              %td= cow&.mother&.serie_number
+              %td= cow&.father&.serie_number
+              %td= cow&.status&.created_at&.strftime('%d-%m-%Y')
+              %td= cow&.status&.weight
+              %td= cow&.coat_color
+:scss
+  body {
+    font-size: 10px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr {
+    border-top: solid 1px #eee;
+  }
+  th {
+    text-align: left;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+  }
+  td {
+    margin: 0;
+    padding: 0;
+  }
+  .header-left {
+    float: left;
+  }
+  .header-right {
+    float: right;
+  }
+  .farm-title{
+    width: 150%
+  }
+  .report-title {
+    width: 150%
+  }

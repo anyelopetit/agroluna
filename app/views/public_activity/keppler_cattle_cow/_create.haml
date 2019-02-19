@@ -1,0 +1,18 @@
+%li
+  .timeline-item
+    %h6.timeline-header.no-border
+      %small
+        %b
+          = activity.owner&.name
+      %small
+        creó ganado
+        #{activity.trackable.species&.name}
+        #{activity.trackable.race&.name}
+        %b
+          = activity.trackable.send(method) if activity.trackable
+      %span.time
+        %i.icofont-clock-time
+        a las
+        = activity.created_at.to_formatted_s(:time)
+        del día
+        = activity.created_at.to_formatted_s(:day)

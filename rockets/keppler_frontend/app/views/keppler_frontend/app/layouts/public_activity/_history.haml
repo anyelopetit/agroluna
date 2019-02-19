@@ -1,0 +1,44 @@
+.card_show.card_status.card_history#status-history
+  .float-right
+    %a#close-status-history{ href: '#' }
+      %i.icofont-ui-close
+  .card_status--title
+    %h2 Historial
+    %ul.timeline
+      = 'No hay actividades' if @activities.empty?
+      -# = render_activities(@activities, locals: { method: 'serie_number' })
+      - @activities.each do |activity|
+        = render partial: "keppler_frontend/app/layouts/public_activity/#{activity.key.split('.').second}", locals: { activity: activity }
+:javascript
+  $('.open-status-history').click(function() {
+    $('#status-history').css({
+      right: '0'
+    })
+  })
+
+  $('#close-status-history').click(function() {
+    $('#status-history').css({
+      right: '-300px'
+    })
+  })
+
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+
+
+:scss
+  #status-history {
+    height: 100vh;
+    width: 300px;
+    position: fixed;
+    right: -300px;
+    top: 0;
+    z-index: 4;
+    transition: .3s;
+  }
+
+  #close-status-history {
+    color: #28C76F;
+    z-index: 4;
+  }

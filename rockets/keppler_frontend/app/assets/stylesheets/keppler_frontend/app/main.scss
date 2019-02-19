@@ -1,0 +1,95 @@
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #d2d2d2;
+}
+
+.app_wrapper {
+  padding-top: 40px;
+  background-color: #f8f8f8;
+  min-height: calc(110vh - 115px);
+  overflow: hidden;
+
+  a {
+    color: #28c76f;
+    &:hover {
+      filter: brightness(80%);
+    }
+  }
+}
+
+.description_land, .photos_land {
+  background-color: $white;
+  border-radius: 5px;
+  padding: 30px;
+  width: 100%;
+  color: #5e5e5e;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+  margin: 25px 0;
+
+  h1 {
+    font-weight: $bold;
+    font-size: 30px;
+    font-family: $lato !important;
+  }
+
+  p {
+    font-size: 15px;
+    font-weight: $light;
+    font-family: $lato !important;
+  }
+}
+
+.slick-next {
+  right: -20px;
+}
+
+.slick-prev::before, .slick-next::before {
+  color: $secundary;
+  font-family: 'IcoFont';
+  font-size: 30px;
+}
+
+.slick-prev::before {
+  // content: "\ea7b";
+}
+
+.slick-next::before {
+  // content: "\ea7c";
+}
+
+.slick-slide {
+  outline: 0;
+}
+
+.bg-shape1 {
+  position: absolute;
+  top: -100px;
+  left: -100px;
+  transform: rotate(170deg);
+}
+
+.bg-shape2 {
+  position: absolute;
+  bottom: -40px;
+  right: -50px;
+  transform: rotate(90deg);
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #28C76F33;
+}
+
+button, a, .btn {
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}

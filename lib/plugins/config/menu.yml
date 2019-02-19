@@ -1,0 +1,14 @@
+menu:
+  keppler_rocket:
+    name: keppler menu
+    current: ['/']
+    url_path: /
+    icon: rocket
+    model: User
+    submenu:
+      # - new:
+      #     name: + Add new module
+      #     url_path: /url_path
+      #     current: ['/current_path']
+      #     environment: development
+      #     model: User

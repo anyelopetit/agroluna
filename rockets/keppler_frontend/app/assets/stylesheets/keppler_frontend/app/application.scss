@@ -1,0 +1,39 @@
+
+//= require select2
+//= require sweetalert2
+// require_self
+
+//  @import 'font-awesome';
+//  @import 'bootstrap';
+@import 'slick';
+@import 'slick-theme';
+@import 'icofont';
+@import 'utils/mixins';
+@import 'utils/variables';
+@import 'base/*';
+@import 'partials/*';
+@import 'views/*';
+@import 'main';
+
+@import 'plugins/select2';
+@import 'plugins/sweetalert2';
+
+@import 'partials/form';
+@import 'partials/git_info';
+
+@import 'components/body';
+
+@import 'components/navbar';
+@import 'components/buttons';
+@import 'components/form';
+@import 'components/table';
+@import 'components/tabs';
+@import 'components/files';
+@import 'components/public_activity';
+
+@import 'components/profile-banner';
+@import 'components/multiple-carousel';
+@import 'components/login';
+
+
+// @import 'components/*';

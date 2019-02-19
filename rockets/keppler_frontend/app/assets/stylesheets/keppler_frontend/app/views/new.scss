@@ -1,0 +1,36 @@
+.container_carousel {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.card_new {
+  background-color: $white;
+  border-radius: 5px;
+  padding: 30px;
+  width: 100%;
+  color: #6f6f6f;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 40px;
+  margin-top: 20px;
+
+  h1 {
+    text-transform: uppercase;
+    font-size: 20px;
+    color: $primary;
+    position: relative;
+    width: 50%;
+    margin-bottom: 30px;
+    @include respond-to(xs) {
+      width: 100%;
+    }
+
+    // &::after {
+    //   @include pseudo();
+    //   bottom: -5px;
+    //   left: 0;
+    //   width: 5%;
+    //   height: 3px;
+    //   background-color: $secundary;
+    // }
+  }
+}

@@ -1,0 +1,99 @@
+en:
+  keppler:
+    sidebar-menu:
+      cattle: Cattle
+      cattle-submenu:
+        cow: Cow
+        transference: Transference
+        status: Status
+        insemination: Inseminations
+    permissions:
+    models:
+      singularize:
+        insemination: insemination
+        species: species
+        weighing_day: weighing day
+        typology: typology
+        race: race
+        transference: transference
+        status: status
+        cow: cow
+      pluralize:
+        inseminations: inseminations
+        weighing_days: weighing days
+        typologies: typologies
+        races: races
+        transferences: transferences
+        statuses: statuses
+        cows: cows
+    modules:
+      admin/insemination: Insemination
+      admin/species: Species
+      admin/weighing-days: Weighing days
+      admin/typology: Typology
+      admin/races: Races
+      admin/transference: Transference
+      admin/status: Status
+      admin/cow: Cow
+    messages:
+    actions:
+    # species:
+    bovine: Bovine
+    goat: Goat
+    # genders:
+    male: Male
+    female: Female
+    messages:
+      choose_species: Choose a species
+      choose_race: Choose a race
+      choose_gender: Choose a gender
+      of_series: of series
+      series: series
+      cattle:
+
+  activerecord:
+    attributes:
+      serie_number: serie number
+      short_name: short name
+      long_name: long name
+      species: species
+      gender: gender
+      birthdate: birthdate
+      race: race
+      coat_color: coat color
+      nose_color: nose color
+      tassel_color: tassel color
+      provenance: provenance
+      observations: observations
+      weight: weight (kg)
+      gained_weight: gained weight (kg)
+      years: years
+      months: months
+      days: borned days
+      ubication: ubication
+      corporal_condition: corporal condition
+      reproductive: reproductive
+      defiant: defiant
+      pregnant: pregnant
+      lactating: lactating
+      breeding: breeding
+      dead: dead
+      deathdate: deathdate
+      typology: typology
+      strategic_lot_id: strategic lot
+      user_id: responsable
+      comments: comments
+      mother_id: mother
+      father_id: father
+      farm_id: farm
+      farms: farms
+      races: races
+      used: used
+      status: status
+    errors:
+      messages:
+  errors:
+  helpers:
+
+  app:
+    

@@ -1,0 +1,34 @@
+!!!
+%html{ lang: 'en' }
+  %head
+    = render 'keppler_frontend/app/frontend/partials/head'
+  %body
+    -# = render 'keppler_frontend/app/frontend/components/navbar', farm: @farm, farms: @farms
+    
+    = yield
+    %script{ src: 'https://code.jquery.com/jquery-3.3.1.min.js' }
+    %script{ src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' }
+    %script{ src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' }
+    = javascript_include_tag '/assets/keppler_frontend/app/slick.min'
+    = javascript_include_tag '/assets/keppler_frontend/app/main'
+    
+    -# - if action_name.eql?('index')
+      %script{ src: '/assets/keppler_frontend/vue/index.js' }
+    - flash.each do |name, msg|
+      - if msg.is_a?(String)
+        :javascript
+          notify("#{msg}", "#{name}")
+
+= render 'admin/layouts/git_info', git: @git
+= javascript_include_tag '/assets/plugins/jquery-ui/jquery-ui.min'
+-# :javascript
+  $('.datepicker').datepicker({
+    dateFormat: 'yy-mm-dd',
+    showOtherMonths: true,
+    selectOtherMonths: true,
+    changeMonth: true,
+    changeYear: true,
+    maxDate: 0,
+    setDate: 0,
+    yearRange: "c-40:c"
+  })

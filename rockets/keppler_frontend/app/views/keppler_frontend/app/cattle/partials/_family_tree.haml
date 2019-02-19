@@ -1,0 +1,214 @@
+.col-12.col_family-tree
+  .col-lg-2.content_family_tree
+    .card_status_specific.block_one.family_tree
+      .parent_card
+        - if @parent = @cow
+          = link_to app_farm_cow_path(@farm, @cow) do
+            .parent_img
+              = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+            %dl
+              %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                = @cow.serie_number
+              %dt{:style => "font-weight:400; color: #6f6f6f;"}= @cow.gender?('male') ? 'Hijo' : 'Hija'
+        - else
+          %h3 HIJO
+.col-12.col_family-tree
+  .col-lg-2.content_family_tree
+    .card_status_specific.block_two-left.family_tree  
+      .parent_card
+        - if @parent = @cow.father
+          = link_to app_farm_cow_path(@farm, @parent) do
+            .parent_img
+              = image_tag (@parent&.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+            %dl
+              %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                = @parent&.serie_number
+              %dt{:style => "font-weight:400; color: #6f6f6f;"} Padre
+            
+        - else
+          %h3 PADRE
+  
+  .col-lg-2.content_family_tree
+    .card_status_specific.block_two-right.family_tree
+      .parent_card
+        - if @parent = @cow.mother
+          = link_to app_farm_cow_path(@farm, @parent) do
+            .parent_img
+              = image_tag (@parent&.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), style: "width: 48px;", class: 'avatar_cow' 
+            %dl
+              %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                = @parent&.serie_number
+              %dt{:style => "font-weight:400; color: #6f6f6f;"} Madre
+        - else
+          %h3 MADRE
+.col-12.col_family-tree.level3 
+  .col-lg-2.content_family_tree
+    .card_status_specific.block_three-left-one.family_tree
+      .parent_card
+        - if @parent = @cow.father&.father
+          = link_to app_farm_cow_path(@farm, @parent) do
+            .parent_img
+              = image_tag (@parent&.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+            %dl
+              %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                = @parent&.serie_number
+              %dt{:style => "font-weight:400; color: #6f6f6f;"} Abuelo
+            
+        - else
+          %h3 ABUELO
+  
+  .col-lg-2.content_family_tree
+    .card_status_specific.block_three-left-two.family_tree
+      .parent_card
+        - if @parent = @cow.father&.mother
+          = link_to app_farm_cow_path(@farm, @parent) do
+            .parent_img
+              = image_tag (@parent&.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), style: "width: 48px;", class: 'avatar_cow' 
+            %dl
+              %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                = @parent&.serie_number
+              %dt{:style => "font-weight:400; color: #6f6f6f;"} Abuela
+        - else
+          %h3 ABUELA 
+  .col-lg-2.content_family_tree
+    .card_status_specific.block_three-right-one.family_tree
+      .parent_card
+        - if @parent = @cow.mother&.father
+          = link_to app_farm_cow_path(@farm, @parent) do
+            .parent_img
+              = image_tag (@parent&.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+            %dl
+              %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                = @parent&.serie_number
+              %dt{:style => "font-weight:400; color: #6f6f6f;"} Abuelo
+            
+        - else
+          %h3 ABUELO
+  
+  .col-lg-2.content_family_tree
+    .card_status_specific.block_three-right-two.family_tree
+      .parent_card
+        - if @parent = @cow.mother&.mother
+          = link_to app_farm_cow_path(@farm, @parent) do
+            .parent_img
+              = image_tag (@parent&.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), style: "width: 48px;", class: 'avatar_cow' 
+            %dl
+              %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                = @parent&.serie_number
+              %dt{:style => "font-weight:400; color: #6f6f6f;"} Abuela
+        - else
+          %h3 ABUELO 
+.col-12.col_family-tree
+  .col
+    .card_status_specific.block_four-left-one.family_tree
+      .parent_card
+        - if @parent = @cow.father&.father&.father
+          = link_to app_farm_cow_path(@farm, @parent) do
+            .parent_img
+              = image_tag (@parent&.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+            %dl
+              %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                = @parent&.serie_number
+              %dt{:style => "font-weight:400; color: #6f6f6f;"} Bisabuelo
+            
+        - else
+          %h3 BISABUELO
+  
+  .col
+    .card_status_specific.block_four-left-two.family_tree
+      .parent_card
+        - if @parent = @cow.father&.father&.mother
+          = link_to app_farm_cow_path(@farm, @parent) do
+            .parent_img
+              = image_tag (@parent&.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), style: "width: 48px;", class: 'avatar_cow' 
+            %dl
+              %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                = @parent&.serie_number
+              %dt{:style => "font-weight:400; color: #6f6f6f;"} Bisabuela
+        - else
+          %h3 BISABUELA
+  .col
+    .card_status_specific.block_four-left-three.family_tree
+      .parent_card
+        - if @parent = @cow.father&.mother&.father
+          = link_to app_farm_cow_path(@farm, @parent) do
+            .parent_img
+              = image_tag (@parent&.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+            %dl
+              %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                = @parent&.serie_number
+              %dt{:style => "font-weight:400; color: #6f6f6f;"} Bisabuelo
+            
+        - else
+          %h3 BISABUELO
+  
+  .col
+    .card_status_specific.block_four-left-four.family_tree
+      .parent_card
+        - if @parent = @cow.father&.mother&.mother
+          = link_to app_farm_cow_path(@farm, @parent) do
+            .parent_img
+              = image_tag (@parent&.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), style: "width: 48px;", class: 'avatar_cow' 
+            %dl
+              %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                = @parent&.serie_number
+              %dt{:style => "font-weight:400; color: #6f6f6f;"} Bisabuela
+        - else
+          %h3 BISABUELA
+
+  .col
+    .card_status_specific.block_four-right-one.family_tree
+      .parent_card
+        - if @parent = @cow.mother&.father&.father
+          = link_to app_farm_cow_path(@farm, @parent) do
+            .parent_img
+              = image_tag (@parent&.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+            %dl
+              %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                = @parent&.serie_number
+              %dt{:style => "font-weight:400; color: #6f6f6f;"} Bisabuelo
+            
+        - else
+          %h3 BISABUELO
+  
+  .col
+    .card_status_specific.block_four-right-two.family_tree
+      .parent_card
+        - if @parent = @cow.mother&.father&.mother
+          = link_to app_farm_cow_path(@farm, @parent) do
+            .parent_img
+              = image_tag (@parent&.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), style: "width: 48px;", class: 'avatar_cow' 
+            %dl
+              %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                = @parent&.serie_number
+              %dt{:style => "font-weight:400; color: #6f6f6f;"} Bisabuela
+        - else
+          %h3 BISABUELA 
+  .col
+    .card_status_specific.block_four-right-three.family_tree
+      .parent_card
+        - if @parent = @cow.mother&.mother&.father
+          = link_to app_farm_cow_path(@farm, @parent) do
+            .parent_img
+              = image_tag (@parent&.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_cow' 
+            %dl
+              %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                = @parent&.serie_number
+              %dt{:style => "font-weight:400; color: #6f6f6f;"} Bisabuelo
+            
+        - else
+          %h3 BISABUELO
+  
+  .col
+    .card_status_specific.block_four-right-four.family_tree
+      .parent_card
+        - if @parent = @cow.mother&.mother&.mother
+          = link_to app_farm_cow_path(@farm, @parent) do
+            .parent_img
+              = image_tag (@parent&.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), style: "width: 48px;", class: 'avatar_cow' 
+            %dl
+              %dt{:style => "font-weight: 700; color: #6f6f6f;"}
+                = @parent&.serie_number
+              %dt{:style => "font-weight:400; color: #6f6f6f;"} Bisabuela
+        - else
+          %h3 BISABUELA

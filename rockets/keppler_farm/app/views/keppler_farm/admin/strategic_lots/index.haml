@@ -1,0 +1,130 @@
+#index-container{ controller: 'strategic_lots' }
+  .container
+    .row
+      .listing.col-lg-12.col-xs-12
+        %section.content-header.index-header
+          %h1
+            = link_to admin_farm_farm_path(@farm) do
+              = @farm.title
+            >
+            = t("keppler_farm.models.pluralize.strategic_lots").humanize
+          = entries(@total, @objects)
+        %section.content-actions
+          .toolbar
+            - if can?(model).destroy_multiple?
+              .toolbar-item
+                .item-check
+                  .checkbox
+                    %label{ for: 'checkbox-all' }
+                      %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()' }
+                      %span.cr
+                        %i.cr-icon.glyphicon.glyphicon-ok
+            
+            .toolbar-item
+              = link_to reload_admin_farm_farm_strategic_lots_path(@farm), class: 'tool-btn', remote: true, title: t('keppler.actions.reload_page') do
+                %i.icon-reload
+            - if can?(model).download?
+              %li.toolbar-item.dropdown
+                %a.dropdown-toggle{ 'data-toggle': 'dropdown', href: '#', title: t('keppler.actions.download_records') }
+                  %i.icon-cloud-download
+                %ul.dropdown-menu
+                  %li= link_to t('keppler.actions.download.csv'), admin_farm_farm_strategic_lots_path(@farm, format: :csv), class: 'tool-btn'
+                  %li= link_to t('keppler.actions.download.xls'), admin_farm_farm_strategic_lots_path(@farm, format: :xls), class: 'tool-btn'
+            - if can?(model).upload?
+              .toolbar-item
+                = link_to '#', class: 'tool-btn', title: t('keppler.actions.upload_records'), id: 'upload' do
+                  %i.icon-cloud-upload
+            .toolbar-item
+              %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+                %i.icon-trash
+          - if can?(model).create?
+            .add
+              = link_to new_admin_farm_farm_strategic_lot_path(@farm), class: 'btn-add' do
+                +
+                = t('keppler.actions.add')
+          .hide
+            = form_tag admin_farm_farm_strategic_lot_upload_path(@farm, @objects), id: 'upload-form', multipart: true, method: :post do
+              = file_field_tag :file, id: 'upload-file'
+
+        - if @objects.size.zero?
+          .box.slice-box
+            .box-body.no-padding
+              %table.table
+                %thead
+                  %tr
+                    %th.not-records.center
+                      %h6= t('keppler.messages.not_found_records', model: t('keppler_farm.models.pluralize.strategic_lots'))
+        - else
+          = render 'admin/layouts/listing_preloader'
+          .objects-container
+            = render 'listing', objects: @objects, query: @query, attributes: @attributes
+
+        %center.paginator-module
+          = paginate @objects, window: 1
+  .listing-show
+    = render 'description', activities: @activities
+
+:scss
+  #cows [type=submit]:disabled {
+    background-color: #ffb7b2;
+  }
+
+  #cows [type=submit] {
+    background: #f44336;
+    border: 0;
+    border-radius: 20px;
+    color: #fff;
+    display: table;
+    outline: none;
+    padding: 6.5px 20px;
+    transition: .3s;
+    width: 100%;
+  }
+
+  .cows-list {
+    height: 225px;
+    overflow: scroll;
+  }
+
+  .cow-option {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+
+    .img-user-list {
+      height: 20px;
+      margin: 0 5px;
+      width: 20px;
+      display: inline-flex;
+      background-size: cover;
+      background-position: top center;
+    }
+  }
+
+  .cow-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: solid 1px #f0f0f0;
+  }
+
+  .cow-avatar img {
+    height: 30px;
+    margin: 0 5px;
+    object-fit: cover;
+    width: 30px;
+  }
+
+  .cow-option {
+    border-radius: 20px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    margin-left: auto;
+    padding: 8px 10px;
+    transition: .3s;
+
+    &:hover {
+      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+      color: #f44336;
+      transition: .3s;
+    }
+  }

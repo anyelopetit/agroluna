@@ -1,0 +1,59 @@
+= render 'keppler_frontend/app/frontend/components/navbar', farm: @farm, farms: @farms
+.app_wrapper
+  #index-container
+    = render 'keppler_frontend/app/transferences/partials/listing', farm: @farm, transferences: @transferences, search: @q
+
+
+:scss
+  .center {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+  }
+
+  .not-records {
+    background-color: #fff;
+    border: 0;
+  }
+
+  table img {
+    max-height: 50px; 
+  }
+
+  .floating-btn {
+    border-radius: 20px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    margin-left: auto;
+    height: 40px;
+    width: 40px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    transition: .3s;
+
+    &:hover {
+      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+      color: #28C76F;
+      transition: .3s;
+    }
+  }
+
+  .flex-search {
+    display: flex;
+  }
+
+  .select-field:nth-child(1) {
+    display: block;
+  }
+
+  .select-field {
+    display: none;
+  }
+
+:javascript
+  $('#select-search').change(function() {
+    $('.select-field').hide()
+    var $id = $(this).find('option:selected').val()
+    $("#" + $id).show()
+  })

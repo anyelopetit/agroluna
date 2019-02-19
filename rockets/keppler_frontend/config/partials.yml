@@ -1,0 +1,26 @@
+---
+- id: 1
+  name: devise_login
+  position: 1
+  deleted_at: 
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: 2019-01-10 16:29:09.121552000 Z
+    zone: &1 !ruby/object:ActiveSupport::TimeZone
+      name: America/Caracas
+    time: 2019-01-10 12:29:09.121552000 Z
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: 2019-01-10 16:29:09.121552000 Z
+    zone: *1
+    time: 2019-01-10 12:29:09.121552000 Z
+- id: 2
+  name: navbar
+  position: 2
+  deleted_at: 
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: 2019-01-11 20:55:35.207928000 Z
+    zone: *1
+    time: 2019-01-11 16:55:35.207928000 Z
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: 2019-01-11 20:55:35.207928000 Z
+    zone: *1
+    time: 2019-01-11 16:55:35.207928000 Z

@@ -1,0 +1,127 @@
+
+.content-table {
+  @include respond-to(sm) {
+    width: 100%;
+    overflow-x: auto;
+  }
+  @include respond-to(xs) {
+    width: 100%;
+    overflow-x: auto;
+  }
+}
+.content-table::-webkit-scrollbar {
+  background-color: #fff;
+  height: 4px;
+}
+
+.content-table::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #d2d2d2;
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  // overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  border-radius: 0px;
+  background-color: white;
+
+  img {
+    @include respond-to(sm) {
+      width: 150%;
+    }
+    @include respond-to(xs) {
+      width: 350%;
+    }
+  }
+}
+
+th,
+td {
+  padding: 15px;
+  text-align: center;
+}
+
+thead {
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  background-color: #d9e2e7;
+
+  th {
+    font-weight: $regular;
+    color: #4d5663;
+    text-transform: uppercase;
+    font-size: 14px;
+    
+    @include respond-to(md) {
+      font-size: 13px;
+    }
+     @include respond-to(sm) {
+      font-size: 15px;
+    }
+    @include respond-to(xs) {
+      font-size: 15px;
+    }
+  }
+}
+
+tbody {
+  tr {
+    border-bottom: 1px #eee solid;
+    transition: .5s ease-in-out;
+    &:hover {
+      // background-color: rgba(255,255,255,0.3);
+      box-shadow: 0 0 30px #d9e2e7;
+      transition: .5s ease-in-out;
+    }
+  }
+  td {
+    position: relative;
+    font-weight: $light;
+    
+    a{
+      @include respond-to(md) {
+        font-size: 15px;
+      }
+      @include respond-to(sm) {
+        font-size: 15px;
+      }
+      @include respond-to(xs) {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.checkboxes {
+  width: 50px;
+}
+
+table .actions {
+  width: 180px;
+
+  a {
+    color: #9c9c9c;
+    margin-right: 10px;
+    transition: all ease-in-out .3s;
+
+    &:hover {
+      color: $primary;
+      transition: all ease-in-out .3s;
+    }
+  }
+}
+.sort_link {
+  color: #4d5663 !important;
+}
+
+.content-btn {
+   
+  @include respond-to(sm){
+    margin-bottom: 10px;
+  }
+  @include respond-to(xs){
+    margin-bottom: 20px;
+  }
+}

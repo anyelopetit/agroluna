@@ -1,0 +1,141 @@
+= render 'keppler_frontend/app/strategic_lots/partials/listing', farm: @farm, strategic_lots: @strategic_lots, search: @q
+:javascript
+  function validateCow() {
+    var ar = $('#assignment_cow_id')
+    document.getElementById('add-cows').disabled = ($('#assignment_cow_id').val() == "")
+  }
+
+  $('.assignment_cow_id').select2({
+    placeholder: 'Seleccionar ganado'
+  })
+
+  var $ids = #{@strategic_lots.pluck(:id)}
+  var $final_array = []
+  var href = $('.destroy_multiple').attr('href')
+
+  function ids_loop() {
+    $ids.forEach(function (id) {
+      $('[checklist-model="check"]:checked').each(function( index ) {
+        if ($(this).prop('id').includes(id)) {
+          if ( !$final_array.includes(id) ) {
+            $final_array.push(id)
+          }
+        }
+      });
+      $('[checklist-model="check"]:not(:checked)').each(function( index ) {
+        if ($(this).prop('id').includes(id)) {
+          if ($final_array.includes(id)) {
+            $final_array.splice($final_array.indexOf(id), 1);
+          }
+        }
+      });
+    });
+    $('.destroy_multiple').attr('href', (`${href}&multiple_ids=[${$final_array}]`))
+  }
+
+  $('#checkbox-all').click(function() {
+    $('[checklist-model="check"]').prop( "checked", $(this).prop( "checked" ) )
+    ids_loop()
+  })
+
+  $('[checklist-model="check"]').click(function() {
+    ids_loop()
+    $('#checkbox-all').prop(
+      'checked',
+      JSON.stringify($ids) === JSON.stringify($final_array)
+    )
+  })
+
+  $('.destroy_multiple').click(function(e) {
+    e.preventDefault()
+  })
+
+:scss
+  #cows [type=submit]:disabled {
+    background-color: #28C76F;
+    opacity: .5;
+  }
+
+  #cows [type=submit] {
+    background: #28C76F;
+    border: 0;
+    border-radius: 20px;
+    color: #fff;
+    display: table;
+    outline: none;
+    padding: 6.5px 20px;
+    transition: .3s;
+    width: 100%;
+  }
+
+  .cows-list {
+    height: 225px;
+    overflow: scroll;
+  }
+
+  .cow-option {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+
+    .img-user-list {
+      height: 20px;
+      margin: 0 5px;
+      width: 20px;
+      display: inline-flex;
+      background-size: cover;
+      background-position: top center;
+    }
+  }
+
+  .cow-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: solid 1px #f0f0f0;
+  }
+
+  .cow-avatar img {
+    height: 30px;
+    margin: 0 5px;
+    object-fit: cover;
+    width: 30px;
+  }
+
+  .cow-options {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .cow-option {
+    border-radius: 20px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    transition: .3s;
+
+    &:hover {
+      box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+      color: #f44336;
+      transition: .3s;
+    }
+  }
+
+  .new_assignment {
+    .select2-container--default {
+      width: 100% !important;
+    }
+
+    .inputs {
+      width: 60%;
+    }
+
+    .button {
+      margin-left: auto;
+    }
+  }
+
+  .card_lot {
+    a i {
+      color: #28C76F;
+    }
+  }

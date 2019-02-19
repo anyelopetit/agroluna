@@ -1,0 +1,22 @@
+body {
+  font-family: $lato;
+  margin: 0;
+  padding: 0;
+  &.offcanvas-expanded {
+    overflow-y: hidden;
+  }
+  
+}
+
+* {
+  position: relative;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.container_custom {
+  margin: 0 5% 5%;
+  position: relative;
+}

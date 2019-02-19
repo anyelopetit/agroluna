@@ -1,0 +1,12 @@
+= render 'keppler_frontend/app/frontend/components/navbar', farm: @farm, farms: @farms
+.app_wrapper
+  .container_carousel
+    .single-item
+      %a.mt-4.mb-4{ href: app_farm_inseminations_path(@farm) }
+        %button.btn.btn_custom.btn--medium
+          %i.icofont-circled-left
+          Listado
+      .card_new
+        .float-left
+        %h1 Datos generales
+        = render 'keppler_frontend/app/inseminations/partials/form', farm: @farm

@@ -1,0 +1,10 @@
+#= require jquery
+#= require jquery-ui/widgets/datepicker
+#= require jquery_ujs
+#= require turbolinks
+#= require nprogress
+#= require nprogress-turbolinks
+#= require bootstrap
+#= require jquery.slick
+#= require bootstrap-sprockets
+#= require_tree .

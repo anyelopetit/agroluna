@@ -1,0 +1,49 @@
+= simple_form_for [:admin, :farm, @farm] do |f|
+  .container
+    .row
+      .col-lg-2
+        = link_to admin_farm_farms_path, 'data-position': 'bottom', 'data-tooltip': t('keppler.actions.back') do
+          .arrow-back.btn.btn-default
+            %i.fa.fa-angle-left
+            = t('keppler.actions.back')
+
+    .row
+      .col-lg-12
+        .box.slice-box
+          .box-header.with-border
+            %h3.box-title= t('keppler_farm.models.pluralize.farms').humanize
+            .box-tools.pull-right
+              %a.btn.btn-box-tool{'data-widget': 'collapse', type: 'button'}
+                %i.fa.fa-minus
+          .box-body
+            %table.table.table-bordered
+              %tbody
+                .form-padding
+                  .col-xs-12
+                    -# = f.input :logo, as: :keppler_file # , max_size: 225
+                    .file-uploader
+                      .file-container
+                        = f.input :logo
+                        %i.file-icon.bx.bx-image
+                        %h5.file-text= t 'keppler.actions.drop_file'
+                  .col-xs-12
+                    = f.input :title, as: :string
+                  .col-xs-12
+                    = f.input :description, as: :ckeditor
+                  -# .col-xs-12
+                    = f.input :processes
+                  .col-xs-12
+                    .form-group
+                      %label.control-label= t('activerecord.attributes.processes').humanize
+                      %select.form-control.select.optional{ name: 'farm[processes][]', id: 'farm_processes', multiple: true }
+                        - KepplerFarm::Process.all.each do |process|
+                          %option{ value: process.title, selected: (f.object.processes.include?(process.title)) }= process.title
+                  .col-xs-12
+                    .pull-right
+                      = f.button :submit, t('keppler.actions.save'), name: '_save', class: 'btn-primary'
+                      = f.button :submit, t('keppler.actions.save_and_add_another'), name: '_add_other'
+
+:javascript
+  $('#farm_processes').select2()
+
+= javascript_include_tag '/assets/admin/file_uploader'

@@ -1,0 +1,21 @@
+menu:
+  keppler_farm:
+    name: Keppler Farm
+    current: ['/']
+    url_path: /
+    icon: rocket
+    model: User
+    submenu:
+
+      - farm:
+          name: farm
+          url_path: /admin/farm/farms
+          icon: layers
+          current: ['/admin/farm/farms']
+          model: KepplerFarm::Farm
+      - process:
+          name: process
+          url_path: /admin/farm/processes
+          icon: layers
+          current: ['/admin/farm/processes']
+          model: KepplerFarm::Process

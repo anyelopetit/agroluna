@@ -4,9 +4,10 @@
     -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
     .float-left.mb-4{ style: 'width: 80%' }
       %h1
-        = link_to({action: :index}) do
+        -# = link_to({action: :index}) do
           Transferencias >
-        #{@transference.reason} (#{@transference.cows.size})
+        .badge.badge-secondary #{@transference.reason} (#{@transference.cows.size})
+      %p= @transference&.description
     .d-flex.justify-content-end
       -# .toolbar
         .toolbar-item

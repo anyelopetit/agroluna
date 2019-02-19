@@ -13,6 +13,10 @@
       %button.btn.btn_custom.btn--filled.btn--medium
         %i.icofont-clip-board
         Reporte
+    %a.mt-4.mb-4.ml-1.open-status-history
+      %button.btn.btn_custom.btn--filled.btn--medium
+        %i.icofont-clock-time
+        Historial
     %a.float-right.mt-4.mb-4.ml-1{ href: app_farm_transference_new_path(farm) }
       %button.btn.btn_custom.btn--filled.btn--medium
         %i.icofont-plus
@@ -62,3 +66,4 @@
                 %span.icofont-ui-edit
               = link_to app_farm_transference_destroy_path(farm, transference), class: 'floating-btn' do
                 %span.icofont-trash
+= render 'keppler_frontend/app/layouts/public_activity/history'

@@ -34,7 +34,7 @@
             %i.icon-cloud-upload
         .toolbar-item
           -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
-          = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
+          = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), class: 'destroy_multiple', method: :delete, data: { confirm: t('keppler.messages.data_confirm') }   do
             %i.icofont-trash
             Eliminar
     %a.float-right.mt-4.mb-4{ href: app_farm_strategic_lot_new_path(farm) }

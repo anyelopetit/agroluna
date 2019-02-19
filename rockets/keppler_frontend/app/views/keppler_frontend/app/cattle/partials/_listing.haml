@@ -5,11 +5,11 @@
         -# %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#mfg", role: "tab"}
         -# %a#mfg-tab.nav-link.active{ href: "#mfg", role: "tab" }
         = link_to(action_name.eql?('index') ? '#' : {action: :index}, { class: "nav-link #{'active' if action_name.eql?('index')}" }) do
-          Activos (#{@farm.cows.actives.size})
+          Activos (#{@active_cows.size})
       %li.nav-item
         -# %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#ale", role: "tab"}
         = link_to(action_name.eql?('index_inactive') ? '#' : {action: :index_inactive}, { class: "nav-link #{'active' if action_name.eql?('index_inactive')}" }) do
-          Inactivos (#{@farm.cows.inactives.size})
+          Inactivos (#{@inactive_cows.size})
     %hr{ :style => "margin-top: 0;width: 90%; margin-bottom: 20px;"}
     .container_custom
       = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
@@ -20,12 +20,12 @@
             = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
               %i.icofont-trash
         - if action_name.eql?('index')
-          - if cows.size < @farm.cows.actives.size
+          - if cows.size < @active_cows.size
             .toolbar
               .toolbar-item
                 = link_to 'Mostrar todos', app_farm_cows_path(farm)
         - else
-          - if cows.size < @farm.cows.inactives.size
+          - if cows.size < @inactive_cows.size
             .toolbar
               .toolbar-item
                 = link_to 'Mostrar todos', app_farm_cows_inactive_path(farm)
@@ -61,33 +61,9 @@
       
       = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: cows
 
-.card_show.card_status.card_history#status-history
-  .float-right
-    %a#close-status-history{ href: '#' }
-      %i.icofont-ui-close
-  .card_status--title
-    %h2 Historial
-    %ul.timeline
-      = 'No hay actividades' if @activities.empty?
-      -# = render_activities(@activities, locals: { method: 'serie_number' })
-      - @activities.each do |activity|
-        = render partial: "keppler_frontend/app/layouts/public_activity/#{activity.key.split('.').second}", locals: { activity: activity, method: 'serie_number' }
+= render 'keppler_frontend/app/layouts/public_activity/history'
 
 :scss
-  #status-history {
-    height: 100vh;
-    width: 300px;
-    position: fixed;
-    right: -300px;
-    top: 0;
-    z-index: 4;
-    transition: .3s;
-  }
-
-  #close-status-history {
-    color: #28C76F;
-    z-index: 4;
-  }
 
   .parent_card {
     display: flex;
@@ -108,21 +84,3 @@
   .svg-icon-md {
     height: 30px;
   }
-
-
-:javascript
-  $('.open-status-history').click(function() {
-    $('#status-history').css({
-      right: '0'
-    })
-  })
-
-  $('.close-status-history').click(function() {
-    $('#status-history').css({
-      right: '-300px'
-    })
-  })
-
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  })

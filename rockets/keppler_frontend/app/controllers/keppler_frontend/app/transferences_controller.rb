@@ -11,6 +11,7 @@ module KepplerFrontend
     before_action :set_farms
     before_action :index_variables
     before_action :attachments
+    before_action :index_history
     include ObjectQuery
 
     def index
@@ -126,6 +127,16 @@ module KepplerFrontend
       params.require(:transference).permit(
         { cattle: [] }, :from_farm_id, :to_farm_id, :reason
       )
+    end
+
+    def index_history
+      @activities = @farm.activities.where(
+        trackable_type: KepplerCattle::Transference.to_s
+      ).or(
+        @farm.activities.where(
+          recipient_type: KepplerCattle::Transference.to_s
+        )
+      ).order('created_at desc').limit(50)
     end
   end
 end

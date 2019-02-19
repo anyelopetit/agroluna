@@ -85,7 +85,6 @@ module KepplerFrontend
       @cows = @q.result(distinct: true)
       @active_cows = @cows.actives.order(:serie_number)
       @inactive_cows = @cows.inactives.order(:serie_number)
-      @total = @cows.size
       @attributes = KepplerCattle::Cow.index_attributes
       @typologies = KepplerCattle::Typology.all
     end
@@ -136,9 +135,11 @@ module KepplerFrontend
 
     def show_history
       @activities = @farm.activities.where(
+        trackable_type: 'KepplerCattle::Cow',
         trackable_id: @cow.id.to_s
       ).or(
         @farm.activities.where(
+          recipient_type: 'KepplerCattle::Cow',
           recipient_id: @cow.id.to_s
         )
       ).order('created_at desc').limit(50)

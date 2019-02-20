@@ -12,6 +12,7 @@ module KepplerFrontend
     before_action :user_authenticate
     before_action :index_history, only: %i[index index_inactive]
     before_action :show_history, only: %i[show]
+    before_action :respond_to_formats
     include ObjectQuery
 
     def index

@@ -12,16 +12,17 @@ module KepplerFrontend
     before_action :index_variables
     before_action :attachments
     before_action :index_history
+    before_action :respond_to_formats
     include ObjectQuery
 
     def index
       @search_farms = @farms.map { |f| [f.title, f.id] }
-      respond_to_formats(KepplerCattle::Transference.all)
+      # respond_to_formats(KepplerCattle::Transference.all)
     end
 
     def show
       @cows = @transference.cows
-      respond_to_formats(@transference)
+      # respond_to_formats(@transference)
     end
 
     def new

@@ -17,7 +17,7 @@
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-trash
           Remover de lote
-      = link_to({action: :index, format: :pdf}, {class: 'float-right mt-4 mb-4 ml-1', target: '_blank'}) do
+      = link_to({action: action_name.to_sym, format: :pdf}, {class: 'float-right mt-4 mb-4 ml-1', target: '_blank'}) do
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-clip-board
           Reporte
@@ -51,6 +51,10 @@
 
   $('.select2-selection__choice').remove()
   $('#strategic_lot_cattle').val('')
+  $('.select2-search__field').attr('placeholder', 'Agrega una o más series')
+  $('.select2-search__field').css({
+    'width': 'auto'
+  })
 
   $('#select-search').change(function() {
     $('.select-field').hide()

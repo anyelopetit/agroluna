@@ -11,6 +11,7 @@ module KepplerFrontend
     before_action :set_farms
     before_action :index_variables
     before_action :attachments
+    before_action :respond_to_formats
     helper KepplerFarm::ApplicationHelper
     include ObjectQuery
 
@@ -18,13 +19,13 @@ module KepplerFrontend
       @strategic_lots = @farm.strategic_lots
       @assign = KepplerCattle::Assignment.new
       @cows = @farm.cows.map { |c| [c.serie_number, c.id] }
-      respond_to_formats(@farm.strategic_lots)
+      # respond_to_formats(@farm.strategic_lots)
     end
 
     def show
       @cows = @strategic_lot.cows.order(:serie_number)
       @assign = KepplerCattle::Assignment.new
-      respond_to_formats(@strategic_lot)
+      # respond_to_formats(@strategic_lot)
     end
 
     def new

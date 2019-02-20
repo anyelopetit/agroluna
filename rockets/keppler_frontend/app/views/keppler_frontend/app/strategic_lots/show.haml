@@ -32,7 +32,7 @@
         = simple_form_for [:app, :cattle, @assign], url: app_farm_strategic_lot_assign_cattle_path(@farm, @strategic_lot), html: { style: 'width: 100%' } do |f|
           .row.mb-4
             .col-sm-8
-              %select#strategic_lot_cattle{ name: 'strategic_lot[cattle][]', label: 'Ganado', class: 'form-control input_custom select2-multiple' }
+              %select#strategic_lot_cattle{ name: 'strategic_lot[cattle][]', label: 'Ganado',placeholder: 'Agrega un o más series', class: 'form-control input_custom select2-multiple' }
                 - @farm.cows.order(:serie_number).each do |cow|
                   %option{ value: cow.id } #{cow.serie_number}
             .col-sm-4

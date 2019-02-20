@@ -56,10 +56,12 @@
 .btn--input {
   height: 40px;
   border-radius: 5px;
+  background-color: rgba(221,221,221,.44);
+  // color: $white !important;
 }
 .btn--select {
   font-size: 14px;
-  background-color: rgba(221,221,221,.44);
+  // background-color: rgba(224, 49, 49, 0.44);
   
 }
 .select {

@@ -69,18 +69,23 @@ module KepplerFrontend
     end
 
     def assign_cattle
-      params[:strategic_lot][:cattle].each do |id|
-        cow = KepplerCattle::Cow.find_by(id: id)
-        if cow
-          assignment = KepplerCattle::Assignment.new(
-            strategic_lot_id: params[:strategic_lot_id],
-            cow_id: id
-          )
-          if assignment.validate_cow
-            assignment.save
-            flash[:notice] = "La series fueron asignada satisfactoriamente"
+      if params[:strategic_lot].blank?
+        flash[:error] = 'No se agregó ninguna serie al lote'
+      else
+        params[:strategic_lot][:cattle].each do |id|
+          cow = KepplerCattle::Cow.find_by(id: id)
+          if cow
+            assignment = KepplerCattle::Assignment.new(
+              strategic_lot_id: params[:strategic_lot_id],
+              cow_id: id
+            )
+            if assignment.validate_cow
+              assignment.save
+              flash[:notice] = "La series fueron asignada satisfactoriamente"
+            end
           end
         end
+        flash[:notice] = 'Series agregadas al lote estratégico'
       end
       redirect_to action: :show
     end

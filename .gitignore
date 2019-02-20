@@ -11,8 +11,10 @@
 #----------------------------------------------------------------------------
 
 # Google Api Client
-quickstart.rb
-./quickstart.rb
+# quickstart.rb
+# ./quickstart.rb
+# credentials.json
+# ./credentials.json
 
 # bundler state
 /.bundle

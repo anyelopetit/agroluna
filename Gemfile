@@ -110,7 +110,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 #javascript
 gem 'gon', '6.2.1'
 
-
 # Development
 group :development do
   gem 'better_errors', '2.4.0'
@@ -146,7 +145,7 @@ group :development, :test do
   gem 'dotenv-rails'
 end
 
-gem 'google-api-client', '~> 0.7.1'
+gem 'google-api-client', '~> 0.8'
 gem 'acts-as-taggable-on', '6.0'
 gem 'bootstrap-tagsinput-rails'
 gem 'social-share-button'

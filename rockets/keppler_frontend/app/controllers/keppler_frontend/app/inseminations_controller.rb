@@ -10,7 +10,6 @@ module KepplerFrontend
     before_action :insemination_attributes, only: %i[new edit create]
     before_action :index_variables
     before_action :user_authenticate
-    before_action :respond_to_formats
     before_action :index_history, only: %i[index index_inactive]
     before_action :show_history, only: %i[show]
     include ObjectQuery
@@ -103,18 +102,6 @@ module KepplerFrontend
       )
     end
 
-    def respond_to_formats
-      respond_to do |format|
-        format.html
-        # format.csv { send_format_data(objects.model.all, 'csv') }
-        # format.xls { send_format_data(objects.model.all, 'xls') }
-        format.json
-        format.pdf do
-          render pdf_options
-        end
-      end
-    end
-
     def index_history
       @activities = @farm.activities.where(
         trackable_type: KepplerCattle::Insemination.to_s
@@ -157,21 +144,6 @@ module KepplerFrontend
         :provenance,
         :observations
       )
-    end
-
-    protected
-
-    def send_format_data(objects, extension)
-      models = objects.model.to_s.downcase.pluralize
-      t_models = t("keppler.models.pluralize.#{models}").humanize
-      filename = "#{t_models} - #{I18n.l(Time.now, format: :short)}"
-      objects_array = objects.order(:created_at)
-      case extension
-      when 'csv'
-        send_data objects_array.to_csv, filename: "#{filename}.csv"
-      when 'xls'
-        send_data objects_array.to_a.to_xls, filename: "#{filename}.xls"
-      end
     end
   end
 end

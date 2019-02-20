@@ -10,6 +10,10 @@
 # http://github.com/RailsApps/rails-composer/issues
 #----------------------------------------------------------------------------
 
+# Google Api Client
+quickstart.rb
+./quickstart.rb
+
 # bundler state
 /.bundle
 /vendor/bundle/

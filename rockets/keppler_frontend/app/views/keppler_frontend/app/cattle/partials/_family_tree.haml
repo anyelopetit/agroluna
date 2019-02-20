@@ -5,7 +5,7 @@
         - if @parent = @cow
           = link_to app_farm_cow_path(@farm, @cow) do
             .parent_img
-              = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_cow'
+              = image_tag (@cow.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'),style: "width: 48px;", class: 'avatar_cow'
             %dl
               %dt{:style => "font-weight: 700; color: #6f6f6f;"}
                 = @cow.serie_number
@@ -98,7 +98,7 @@
               %dt{:style => "font-weight:400; color: #6f6f6f;"} Abuela
         - else
           %h3 ABUELO 
-.col-12.col_family-tree
+.col-12.col_family-tree.level4
   .col
     .card_status_specific.block_four-left-one.family_tree
       .parent_card

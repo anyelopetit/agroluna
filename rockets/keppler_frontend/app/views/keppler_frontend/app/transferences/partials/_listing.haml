@@ -9,61 +9,77 @@
         %i.icofont-refresh
       %a{ href: '' }
         %i.icofont-download
-    = link_to({action: :index, format: :pdf}, {class: 'float-right mt-4 mb-4', target: '_blank'}) do
-      %button.btn.btn_custom.btn--filled.btn--medium
-        %i.icofont-clip-board
-        Reporte
-    %a.mt-4.mb-4.ml-1.open-status-history
-      %button.btn.btn_custom.btn--filled.btn--medium
-        %i.icofont-clock-time
-        Historial
-    %a.float-right.mt-4.mb-4.ml-1{ href: app_farm_transference_new_path(farm) }
-      %button.btn.btn_custom.btn--filled.btn--medium
-        %i.icofont-plus
-        Crear transferencia
+    .actions.d-none.d-sm-block
+      .float-right
+        = link_to({action: :index, format: :pdf}, { target: '_blank'}) do
+          %button.btn.btn_custom.btn--filled.btn--medium
+            %i.icofont-clip-board
+            Reporte
+        %a.ml-1.open-status-history
+          %button.btn.btn_custom.btn--filled.btn--medium
+            %i.icofont-clock-time
+            Historial
+        %a.float-right.ml-2{ href: app_farm_transference_new_path(farm) }
+          %button.btn.btn_custom.btn--filled.btn--medium
+            %i.icofont-plus
+            Crear transferencia
+    .actions_movil.d-sm-none.mt-4
+      .float-right
+        %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+          %button.btn.btn_custom.btn--filled.btn--medium
+            %i.icofont-simple-down
+            Acciones
+        .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
+          %a.float-right.dropdown-item{ href: app_farm_transference_new_path(farm), style: 'color: #000;' }
+            Crear transferencia
+          %a.open-status-history{class: "dropdown-item"}
+            Historial
+          = link_to({action: :index, format: :pdf},  {class: 'dropdown-item', target: '_blank'}) do
+            Reporte
   - if transferences.blank? && @farm.transferences.count > 0
     = link_to 'Mostrar todos', app_farm_transferences_path(farm)
-  %table
-    - if transferences.size.zero?
-      %thead
-        %tr
-          %th.not-records.center
-            %center No se han encontrado transferencias
-    - else
-      %thead
-        %tr
-          -# %th
-            %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
-            %label{for: "styled-checkbox-all"}
-          %th Cant. Series
-          -# %th Desde Finca
-          %th Finca destino
-          %th Motivo
-          %th Fecha
-          -# %th Controles
-      %tbody
-        - transferences.each do |transference|
-          %tr{ style: "border-bottom: 1px #eee solid;" }
-            %td
-              = link_to({action: :show, farm_id: farm.id, transference_id: transference.id}) do
-                = transference&.cows&.count
-            -# %td
-              = link_to({action: :show, farm_id: farm.id, transference_id: transference.id}) do
-                = transference&.from_farm&.title
-            %td
-              = link_to({action: :show, farm_id: farm.id, transference_id: transference.id}) do
-                = transference&.to_farm&.title
-            %td
-              = link_to({action: :show, farm_id: farm.id, transference_id: transference.id}) do
-                = transference&.try(:reason)
-            %td
-              = link_to({action: :show, farm_id: farm.id, transference_id: transference.id}) do
-                = transference&.created_at.strftime("%d-%m-%Y")
-            -# %td.actions
-              = link_to app_farm_transference_path(farm, transference), class: 'floating-btn' do
-                %span.icofont-eye
-              = link_to app_farm_transference_edit_path(farm, transference), class: 'floating-btn' do
-                %span.icofont-ui-edit
-              = link_to app_farm_transference_destroy_path(farm, transference), class: 'floating-btn' do
-                %span.icofont-trash
+  .content-table
+    %table
+      - if transferences.size.zero?
+        %thead
+          %tr
+            %th.not-records.center
+              %center No se han encontrado transferencias
+      - else
+        %thead
+          %tr
+            -# %th
+              %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
+              %label{for: "styled-checkbox-all"}
+            %th Cant. Series
+            -# %th Desde Finca
+            %th Finca destino
+            %th Motivo
+            %th Fecha
+            -# %th Controles
+        %tbody
+          - transferences.each do |transference|
+            %tr{ style: "border-bottom: 1px #eee solid;" }
+              %td
+                = link_to({action: :show, farm_id: farm.id, transference_id: transference.id}) do
+                  = transference&.cows&.count
+              -# %td
+                = link_to({action: :show, farm_id: farm.id, transference_id: transference.id}) do
+                  = transference&.from_farm&.title
+              %td
+                = link_to({action: :show, farm_id: farm.id, transference_id: transference.id}) do
+                  = transference&.to_farm&.title
+              %td
+                = link_to({action: :show, farm_id: farm.id, transference_id: transference.id}) do
+                  = transference&.try(:reason)
+              %td
+                = link_to({action: :show, farm_id: farm.id, transference_id: transference.id}) do
+                  = transference&.created_at.strftime("%d-%m-%Y")
+              -# %td.actions
+                = link_to app_farm_transference_path(farm, transference), class: 'floating-btn' do
+                  %span.icofont-eye
+                = link_to app_farm_transference_edit_path(farm, transference), class: 'floating-btn' do
+                  %span.icofont-ui-edit
+                = link_to app_farm_transference_destroy_path(farm, transference), class: 'floating-btn' do
+                  %span.icofont-trash
 = render 'keppler_frontend/app/layouts/public_activity/history'

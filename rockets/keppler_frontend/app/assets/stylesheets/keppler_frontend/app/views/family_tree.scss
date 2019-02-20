@@ -19,6 +19,15 @@
       display: none !important;
     }
   }
+  &.level4 {
+    @include respond-to(xs){
+      display: none !important;
+    }
+    @include respond-to(sm){
+      display: none !important;
+    }
+    
+  }
 }
 
 .content_family_tree {
@@ -34,17 +43,26 @@
 .family_tree{
   width: 140px !important;
   min-height: 185px; 
-  @media only screen and (max-width: 1280px) {
+   @media (min-width: 1200px) and (max-width: 1280px) {
     width: 130px !important;
     min-height: 185px;
   }
-  @media only screen and (max-width: 1440px) {
+  @media  (min-width: 1281px) and (max-width: 1366px) {
+    width: 140px !important;
+    min-height: 185px;
+  }
+  @media (min-width: 1367px) and (max-width: 1440px) {
     width: 150px !important;
     min-height: 185px;
   }
-  @media only screen and (max-width: 1366px) {
-    width: 140px !important;
+  
+  @media (min-width: 1441px) and (max-width: 1600px) {
+    width: 165px !important;
     min-height: 185px;
+  }
+  @media (min-width: 1601px) and (max-width: 2560px) {
+    width: 200px !important;
+    min-height: 200px;
   }
 
   @include respond-to(md){
@@ -248,7 +266,7 @@
     @include respond-to(sm){
       left: 50%;
       width: 2px;
-      height: 72%;
+      height: 52%;
       top: 100%;
     } 
     @include respond-to(xs){
@@ -359,7 +377,7 @@
     @include respond-to(sm){
       right: 50%;
       width: 2px;
-      height: 72%;
+      height: 52%;
       top: 100%;
     }
     @include respond-to(xs){
@@ -395,21 +413,21 @@
       left: 68%;
     }
     @include respond-to(sm){
-    height: 20%;
-    top: -20%;
-    left: 50%;
-    display: none;
+      height: 20%;
+      top: -20%;
+      left: 50%;
+      display: none;
     }
      
 
   }
   &:after {
     @include pseudo();
-    width: 160%;
-    height: 2px;
-    top: 50%;
-    left: -160%;
-    background-color: #28C76F;
+      width: 160%;
+      height: 2px;
+      top: 50%;
+      left: -160%;
+      background-color: #28C76F;
     @include respond-to(sm){
       left: 100%;
       width: 55%;
@@ -430,6 +448,10 @@
     @media (min-width: 1025px) and (max-width: 1130px) {
       width: 130%;
       left: -130%;
+    }
+    @media (min-width: 1600px) and (max-width: 2560px) {
+      width: 150%;
+      left: -150%;
     }
 
   }
@@ -473,6 +495,10 @@
       width: 23%;
       left: -23%;
     }
+    @media (min-width: 1600px) and (max-width: 2560px){
+      width: 14%;
+      left: -14%;
+    }
     
   }
 }
@@ -502,6 +528,10 @@
     @include respond-to(sm){
       width: 50%;
       right: -50%;
+    }
+    @media only screen and (max-width: 1600px) {
+      width: 30%;
+      right: -30%;
     }
 
   }
@@ -545,6 +575,10 @@
     @media (min-width: 1025px) and (max-width: 1130px) {
       width: 145%;
       right: -145%;
+    }
+    @media (min-width: 1600px) and (max-width: 2560px){
+      width: 152%;
+      right: -152%;
     }
 
   }

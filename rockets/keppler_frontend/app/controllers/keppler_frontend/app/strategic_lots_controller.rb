@@ -92,21 +92,25 @@ module KepplerFrontend
     end
       
     def delete_assignment
-      params[:multiple_ids].remove("[", "]").split(',').each do |id|
-        assignment = KepplerCattle::Assignment.find_by(
-          strategic_lot_id: params[:strategic_lot_id],
-          cow_id: id
-        )
+      if params[:multiple_ids].blank?
+        flash[:error] = 'No se pudo remover ninguna serie del lote'
+      else
+        params[:multiple_ids].remove("[", "]").split(',').each do |id|
+          assignment = KepplerCattle::Assignment.find_by(
+            strategic_lot_id: params[:strategic_lot_id],
+            cow_id: id
+          )
 
-        if assignment&.exists?
-          if assignment.destroy
-            flash[:notice] = 
-              t('keppler.messages.cattle.deleted', cattle: assignment.cow.serie_number) if assignment.destroy!
+          if assignment&.exists?
+            if assignment.destroy
+              flash[:notice] = 
+                t('keppler.messages.cattle.deleted', cattle: assignment.cow.serie_number) if assignment.destroy!
+            # else
+            #   flash[:error] = t('keppler.messages.cattle.not_deleted', cattle: assignment.cow.serie_number)
+            end
           # else
-          #   flash[:error] = t('keppler.messages.cattle.not_deleted', cattle: assignment.cow.serie_number)
+          #   flash[:error] = t('keppler.messages.cattle.doesnt_exist', cattle: assignment.cow.serie_number)
           end
-        # else
-        #   flash[:error] = t('keppler.messages.cattle.doesnt_exist', cattle: assignment.cow.serie_number)
         end
       end
       redirect_to action: :show, id: @farm.id, strategic_lot_id: @strategic_lot.id

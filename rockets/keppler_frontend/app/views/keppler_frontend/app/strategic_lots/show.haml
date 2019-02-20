@@ -14,7 +14,7 @@
         .toolbar-item
             %i.icofont-trash
       = link_to({action: :delete_assignment}, {class: 'destroy_multiple float-right mt-4 mb-4', method: :delete}) do
-        %button.btn.btn_custom.btn--filled.btn--medium
+        %button.btn.btn_custom.btn--filled.btn--medium#remove_from_lot{ disabled: true }
           %i.icofont-trash
           Remover de lote
       = link_to({action: action_name.to_sym, format: :pdf}, {class: 'float-right mt-4 mb-4 ml-1', target: '_blank'}) do
@@ -84,6 +84,11 @@
       });
     });
     $('.destroy_multiple').attr('href', (`${href}&multiple_ids=[${$final_array}]`))
+    if ($final_array.length === 0) {
+      document.getElementById('remove_from_lot').disabled = true
+    } else {
+      document.getElementById('remove_from_lot').disabled = false
+    }
   }
 
   $('#checkbox-all').click(function() {

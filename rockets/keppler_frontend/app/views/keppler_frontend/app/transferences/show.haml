@@ -7,7 +7,7 @@
         -# = link_to({action: :index}) do
           Transferencias >
         .badge.badge-secondary #{@transference.reason} (#{@transference.cows.size})
-      %p= @transference&.description
+      %p= @transference&.reason
     .d-flex.justify-content-end
       -# .toolbar
         .toolbar-item

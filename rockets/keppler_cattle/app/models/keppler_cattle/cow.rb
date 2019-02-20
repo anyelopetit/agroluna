@@ -102,7 +102,8 @@ module KepplerCattle
 
 
     def strategic_lot
-      KepplerFarm::StrategicLot.find_by(id: status.strategic_lot_id)
+      assigment_lot = KepplerCattle::Assignment.find_by(cow_id: id).strategic_lot_id
+      KepplerFarm::StrategicLot.find_by(id: assigment_lot)
     end
 
     def self.actives

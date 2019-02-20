@@ -129,7 +129,7 @@
                 .col-lg-4.col-sm-4
                   %dl
                     %dt Lote estrátegico
-                    %dd= @cow.status&.strategic_lot&.name unless @cow.status&.blank?
+                    %dd= @cow&.strategic_lot&.name
                    
                 .col-lg-4.col-sm-4
                   %dl
@@ -137,7 +137,7 @@
                     -# %dd= @cow.status.dead
                     %dt Cantidad de hijos
                     %a{ 'data-target': "#modalSons", 'data-toggle': 'modal', href: ""}
-                      %dd= @cow.sons.count
+                      %dd= @cow.sons&.count
                     
               
               

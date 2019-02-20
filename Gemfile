@@ -145,7 +145,7 @@ group :development, :test do
   gem 'dotenv-rails'
 end
 
-gem 'google-api-client', '~> 0.8'
+gem 'google-api-client', '~> 0.7.1'
 gem 'acts-as-taggable-on', '6.0'
 gem 'bootstrap-tagsinput-rails'
 gem 'social-share-button'

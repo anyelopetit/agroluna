@@ -22,14 +22,15 @@
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-clip-board
               Reporte
-          %a.mt-4.mb-4{ href: app_farm_cow_edit_path(@farm, @cow) }
-            %button.btn.btn_custom.btn--filled.btn--medium
-              %i.icofont-ui-edit
-              Editar
-          %a.mt-4.mb-4{ href: app_farm_cow_status_new_path(@farm, @cow) }
-            %button.btn.btn_custom.btn--filled.btn--medium
-              %i.icofont-plus
-              Actualizar
+          - if @cow.farm.id == @farm.id
+            %a.mt-4.mb-4{ href: app_farm_cow_edit_path(@farm, @cow) }
+              %button.btn.btn_custom.btn--filled.btn--medium
+                %i.icofont-ui-edit
+                Editar
+            %a.mt-4.mb-4{ href: app_farm_cow_status_new_path(@farm, @cow) }
+              %button.btn.btn_custom.btn--filled.btn--medium
+                %i.icofont-plus
+                Actualizar
           %a.mt-4.mb-4.open-status-history
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-clock-time

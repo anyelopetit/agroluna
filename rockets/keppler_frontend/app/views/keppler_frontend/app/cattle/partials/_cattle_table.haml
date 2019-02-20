@@ -91,7 +91,8 @@
                       = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
                         %i.icofont-eye
                         Ver ficha de ganado
-                    %li
-                      = link_to({controller: :status, action: :new, farm_id: @farm.id, cow_id: cow.id})do
-                        %i.icofont-refresh
-                        Actualizar estado
+                    - if cow.farm.id == @farm.id
+                      %li
+                        = link_to({controller: :status, action: :new, farm_id: @farm.id, cow_id: cow.id})do
+                          %i.icofont-refresh
+                          Actualizar estado

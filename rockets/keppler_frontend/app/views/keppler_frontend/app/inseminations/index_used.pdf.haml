@@ -8,12 +8,12 @@
   %body
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
-      %h2.report-title Catálogo de Pajuelas por orden de Serie
+      %h2.report-title Catálogo de Pajuelas Usadas por orden de Serie
     .header-right
       %p= Time.now.strftime('%d-%m-%Y')
       %p Pág. 1
     %table.insemination-table
-      - if @active_inseminations.size.zero?
+      - if @inactive_inseminations.size.zero?
         %thead
           %tr
             %th.not-records.center
@@ -29,7 +29,7 @@
             %th Raza
             %th Fecha de nacimiento
         %tbody
-          - @active_inseminations.each do |insemination|
+          - @inactive_inseminations.each do |insemination|
             %tr
               %td= insemination&.serie_number
               %td= insemination&.short_name

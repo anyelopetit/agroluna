@@ -6,7 +6,7 @@
         -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
         = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
           %i.icofont-trash
-    = link_to({action: :index_used, format: :pdf}, {class: 'float-right mt-4 mb-4', target: '_blank'}) do
+    = link_to({action: action_name.to_sym, format: :pdf}, {class: 'float-right mt-4 mb-4', target: '_blank'}) do
       %button.btn.btn_custom.btn--filled.btn--medium
         %i.icofont-clip-board
         Reporte

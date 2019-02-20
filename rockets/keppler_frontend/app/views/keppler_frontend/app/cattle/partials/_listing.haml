@@ -32,7 +32,7 @@
         .actions.d-none.d-sm-block
           .float-right.mb-4
             - unless cows.size.zero?
-              = link_to({action: :index, format: :pdf}, {class: ' mt-4 mb-4 mr-1', target: '_blank'}) do
+              = link_to({action: action_name.to_sym, format: :pdf}, {class: ' mt-4 mb-4 mr-1', target: '_blank'}) do
                 %button.btn.btn_custom.btn--filled.btn--medium
                   %i.icofont-clip-board
                   Reporte

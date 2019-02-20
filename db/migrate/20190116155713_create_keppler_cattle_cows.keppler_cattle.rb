@@ -5,7 +5,6 @@ class CreateKepplerCattleCows < ActiveRecord::Migration[5.2]
       t.string :serie_number
       t.string :image
       t.string :short_name
-      t.string :long_name
       t.string :gender
       t.date :birthdate
       t.string :coat_color

@@ -80,10 +80,9 @@ module KepplerFrontend
               strategic_lot_id: params[:strategic_lot_id],
               cow_id: id
             )
-            if assignment.validate_cow
-              assignment.save
-              flash[:notice] = "La series fueron asignada satisfactoriamente"
-            end
+            assignment.clean_other_cow_assignments
+            assignment.save
+            flash[:notice] = "La series fueron asignada satisfactoriamente"
           end
         end
         flash[:notice] = 'Series agregadas al lote estratégico'

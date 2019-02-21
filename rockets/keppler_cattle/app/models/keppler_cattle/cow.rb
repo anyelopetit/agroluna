@@ -82,8 +82,12 @@ module KepplerCattle
     end
 
     def self.posible_fathers
-      select { |x| x.gender?('male') }
-      .map { |x| [x.serie_number + (" (#{x&.short_name})" unless x&.short_name.blank?).to_s, x.id] }
+      select { |x| x.gender?('female') }
+        .map { |x| [x.serie_number + (" (#{x&.short_name})" unless x&.short_name.blank?).to_s, x.id] }
+        .concat(KepplerCattle::Insemination.all.map { 
+          |x| [x.serie_number + (" (#{x&.short_name})" unless x&.short_name.blank?).to_s, x.id] 
+        }) 
+
     end
 
     def mother

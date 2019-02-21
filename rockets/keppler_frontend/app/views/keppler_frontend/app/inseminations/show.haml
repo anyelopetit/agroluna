@@ -118,7 +118,11 @@
               .row
                 .col-lg-4.col-sm-4
                   %dl
-                    %p= @insemination.observations                   
+                    %dt Observación
+                    - unless @insemination.observations.blank?
+                      %p= @insemination.observations 
+                    - else
+                      %p Sin Observación                  
                 .col-lg-4.col-sm-4
                   %dl                    
                     %dt Cantidad de hijos

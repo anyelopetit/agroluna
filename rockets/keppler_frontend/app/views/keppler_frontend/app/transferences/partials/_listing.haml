@@ -37,7 +37,9 @@
           = link_to({action: :index, format: :pdf},  {class: 'dropdown-item', target: '_blank'}) do
             Reporte
   - if transferences.blank? && @farm.transferences.count > 0
-    = link_to 'Mostrar todos', app_farm_transferences_path(farm)
+    .toolbar
+      .toolbar-item
+        = link_to 'Mostrar todos', app_farm_transferences_path(farm)
   .content-table
     %table
       - if transferences.size.zero?

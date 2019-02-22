@@ -82,10 +82,10 @@ module KepplerCattle
     end
 
     def self.posible_fathers
-      select { |x| x.gender?('female') }
-        .map { |x| [x.serie_number + (" (#{x&.short_name})" unless x&.short_name.blank?).to_s, x.id] }
+      select { |x| x.gender?('male') }
+        .map { |x| [x.serie_number + (" (#{x&.short_name})" unless x&.short_name.blank?).to_s, [x.class.to_s, x.id]] }
         .concat(KepplerCattle::Insemination.active.map { 
-          |x| [x.serie_number + (" (#{x&.short_name})" unless x&.short_name.blank?).to_s, x.id] 
+          |x| [x.serie_number + (" (#{x&.short_name}) - Pajuela" unless x&.short_name.blank?).to_s, [x.class.to_s, x.id]] 
         }) 
 
     end

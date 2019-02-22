@@ -27,7 +27,7 @@ module KepplerFrontend
     end
 
     def show
-      @statuses = @cow.statuses.order(id: :desc)
+      @statuses = @cow.statuses
       # respond_to_formats(@cow)
     end
 
@@ -83,8 +83,8 @@ module KepplerFrontend
       @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
       @q = KepplerCattle::Cow.ransack(params[:q]) # @farm.cows.ransack(params[:q])
       @cows = @q.result(distinct: true)
-      @active_cows = @cows.actives.order(:serie_number)
-      @inactive_cows = @cows.inactives.order(:serie_number)
+      @active_cows = @cows.actives
+      @inactive_cows = @cows.inactives
       @attributes = KepplerCattle::Cow.index_attributes
       @typologies = KepplerCattle::Typology.all
     end

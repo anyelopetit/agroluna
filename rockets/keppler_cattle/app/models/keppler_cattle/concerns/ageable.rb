@@ -38,11 +38,20 @@ module KepplerCattle
             end
           end
           # Suma o resta de los días del mes actual con tu día de nacimiento
-          if birthdate.day > now.day
-            days_count -= (birthdate.day - now.day)
-          else
-            days_count += (now.day - birthdate.day)
+          if birthdate.month < now.month
+            days_count += Time.days_in_month(birthdate.month, now.year) - birthdate.day
+            days_count += now.day
+          elsif birthdate.month == now.month
+            if birthdate.day > now.day
+              days_count -= (birthdate.day - now.day)
+            else
+              days_count += (now.day - birthdate.day)
+            end
+          elsif birthdate.month > now.month
+            days_count -= Time.days_in_month(now.month, now.year) - now.day
+            days_count -= birthdate.day
           end
+          days_count
         end
 
         def next_day

@@ -43,22 +43,22 @@
                     %span.cr
                       %i.cr-icon.icofont-check
               %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id},{title: cow.observations}) do
                   = cow&.serie_number
               -# %td
                 = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
                   = image_tag cow&.image&.url if cow.image.url
               %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id},{title: cow.observations}) do
                   = cow&.short_name
               %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id},{title: cow.observations}) do
                   = cow&.race&.name
               %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id},{title: cow.observations}) do
                   = cow&.status&.typology&.name
               %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id},{title: cow.observations}) do
                   = cow&.status&.weight
                   KG
               %td.status

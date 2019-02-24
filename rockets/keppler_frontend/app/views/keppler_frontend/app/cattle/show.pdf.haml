@@ -72,13 +72,13 @@
                     %th Padre
                   %th Fecha Nac.
                   %th KG
-                  %th Pelaje
-                  %th Lote
+                  -# %th Pelaje
+                  -# %th Lote
               %tbody
                 - @cow.sons&.each do |cow|
                   %tr
                     %td= cow&.serie_number
-                    %td= cow&.race&.name
+                    %td= cow&.race&.abbreviation
                     %td
                       = cow&.status&.years
                       \-
@@ -90,11 +90,14 @@
                       %td= cow&.father&.serie_number
                     %td= cow&.birthdate&.strftime('%d-%m-%Y')
                     %td= cow&.status&.weight
-                    %td= cow&.coat_color
-                    %td= cow&.strategic_lot&.name
+                    -# %td= cow&.coat_color
+                    -# %td= cow&.strategic_lot&.name
+          %p
+            %b PROMEDIO DE PESOS:
+            %span #{@cow.sons_weight_average.round(2)} KG
 :scss
   body {
-    font-size: 12px;
+    font-size: 15px;
   }
   table {
     border-collapse: collapse;

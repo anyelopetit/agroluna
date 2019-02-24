@@ -154,6 +154,16 @@ module KepplerFrontend
       )
     end
 
+    def respond_to_formats
+      respond_to do |format|
+        format.html
+        format.csv { send_data KepplerFarm::StrategicLot.all.to_csv, filename: "lotes estratégicos.csv" }
+        format.xls { send_data KepplerFarm::StrategicLot.all.to_a.to_xls, filename: "lotes estratégicos.xls" }
+        format.json
+        format.pdf { render pdf_options }
+      end
+    end
+
     # Only allow a trusted parameter "white list" through.
     def strategic_lot_params
       params.require(:strategic_lot).permit(

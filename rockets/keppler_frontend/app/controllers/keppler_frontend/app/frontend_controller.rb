@@ -12,7 +12,6 @@ module KepplerFrontend
     before_action :attachments
     before_action :last_page
     before_action :user_authenticate
-    before_action :respond_to_formats
     
     include ObjectQuery
 
@@ -80,33 +79,6 @@ module KepplerFrontend
       @activities = PublicActivity::Activity.where(
         trackable_type: model.to_s
       ).order('created_at desc').limit(50)
-    end
-
-    def respond_to_formats
-      respond_to do |format|
-        format.html
-        # format.csv { send_format_data(objects.model.all, 'csv') }
-        # format.xls { send_format_data(objects.model.all, 'xls') }
-        format.json
-        format.pdf do
-          render pdf_options
-        end
-      end
-    end
-
-    protected
-
-    def send_format_data(objects, extension)
-      models = objects.model.to_s.downcase.pluralize
-      t_models = t("keppler.models.pluralize.#{models}").humanize
-      filename = "#{t_models} - #{I18n.l(Time.now, format: :short)}"
-      objects_array = objects.order(:created_at)
-      case extension
-      when 'csv'
-        send_data objects_array.to_csv, filename: "#{filename}.csv"
-      when 'xls'
-        send_data objects_array.to_a.to_xls, filename: "#{filename}.xls"
-      end
     end
   end
 end

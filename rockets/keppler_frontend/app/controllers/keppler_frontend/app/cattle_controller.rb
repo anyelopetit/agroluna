@@ -37,6 +37,8 @@ module KepplerFrontend
 
     def create
       @cow = KepplerCattle::Cow.new(cow_params)
+      @cow.father_type = params[:cow][:father_id].split(',').first
+      @cow.father_id = params[:cow][:father_id].split(',').last.to_i
 
       if @cow.save && @cow.statuses.blank?
         # redirect(@cow, params)
@@ -49,6 +51,8 @@ module KepplerFrontend
 
     def update
       if @cow.update(cow_params)
+        @cow.update(father_type: params[:cow][:father_id].split(',').first)
+        @cow.update(father_id: params[:cow][:father_id].split(',').last.to_i)
         if @cow.statuses.blank?
           redirect_to app_farm_cow_status_new_path(@farm, @cow)
         else 
@@ -143,6 +147,16 @@ module KepplerFrontend
           recipient_id: @cow&.id.to_s
         )
       ).order('created_at desc').limit(50)
+    end
+
+    def respond_to_formats
+      respond_to do |format|
+        format.html
+        format.csv { send_data KepplerCattle::Cow.all.to_csv, filename: "ganado.csv" }
+        format.xls { send_data KepplerCattle::Cow.all.to_a.to_xls, filename: "ganado.xls" }
+        format.json
+        format.pdf { render pdf_options }
+      end
     end
 
     # Only allow a trusted parameter "white list" through.

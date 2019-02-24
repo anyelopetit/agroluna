@@ -5,6 +5,7 @@
       .top_img
     .navbar_custom_content
       %a#navbarDropdown.nav-link.d-lg-none.mr-auto.mr-lg-0{ class: ('dropdown-toggle' if farms), "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+        = params
         = image_tag (farm&.logo&.url || @default_logo),class: "image_logo_company", style: 'width: 80px; z-index: 5;'
       - if farms.blank?
         .farms-menu.dropdown-menu.navbar_dropdown{"aria-labelledby" => "navbarDropdown"}

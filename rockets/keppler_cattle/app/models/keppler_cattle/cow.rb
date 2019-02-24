@@ -78,14 +78,14 @@ module KepplerCattle
 
     def self.posible_mothers
       select { |x| x.gender?('female') }
-      .map { |x| [x.serie_number + (" (#{x&.short_name})" unless x&.short_name.blank?).to_s, x.id] }
+        .map { |x| [x.serie_number + ("(#{x&.short_name})" unless x&.short_name.blank?).to_s, x.id] }
     end
 
     def self.posible_fathers
       select { |x| x.gender?('male') }
-        .map { |x| [x.serie_number + (" (#{x&.short_name})" unless x&.short_name.blank?).to_s, [x.class.to_s, x.id]] }
+        .map { |x| [x.serie_number + ("(#{x&.short_name})" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] }
         .concat(KepplerCattle::Insemination.active.map { 
-          |x| [x.serie_number + (" (#{x&.short_name}) - Pajuela" unless x&.short_name.blank?).to_s, [x.class.to_s, x.id]] 
+          |x| [x.serie_number + ("(#{x&.short_name}) - Pajuela" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] 
         }) 
 
     end
@@ -95,7 +95,8 @@ module KepplerCattle
     end
 
     def father
-      KepplerCattle::Cow.find_by(id: father_id) if father_id
+      ft = father_type&.classify.constantize if father_type
+      ft&.find_by(id: father_id)
     end
 
     def sons
@@ -104,6 +105,15 @@ module KepplerCattle
       )
     end
 
+    def sons_weight_average
+      pretotal = 0
+      counter = 0
+      sons&.each_with_index do |son, index|
+        pretotal += son&.status&.weight
+        counter += 1
+      end
+      pretotal / counter
+    end
 
     def strategic_lot
       assignment_lot = KepplerCattle::Assignment.find_by(cow_id: id)&.strategic_lot_id

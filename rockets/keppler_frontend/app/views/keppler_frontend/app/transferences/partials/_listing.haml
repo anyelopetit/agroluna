@@ -11,10 +11,19 @@
         %i.icofont-download
     .actions.d-none.d-sm-block
       .float-right
-        = link_to({action: :index, format: :pdf}, { target: '_blank'}) do
-          %button.btn.btn_custom.btn--filled.btn--medium
-            %i.icofont-clip-board
-            Reporte
+        - unless transferences.size.zero?
+          %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-clip-board
+              Reporte
+              %i.icofont-simple-down
+          .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
+            = link_to({action: action_name.to_sym, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+              PDF
+            = link_to({action: action_name.to_sym, format: :xls}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+              XLS
+            = link_to({action: action_name.to_sym, format: :csv}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+              CSV
         %a.ml-1.open-status-history
           %button.btn.btn_custom.btn--filled.btn--medium
             %i.icofont-clock-time

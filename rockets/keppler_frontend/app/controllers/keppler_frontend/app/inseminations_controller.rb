@@ -125,6 +125,16 @@ module KepplerFrontend
       ).order('created_at desc').limit(50)
     end
 
+    def respond_to_formats
+      respond_to do |format|
+        format.html
+        format.csv { send_data KepplerCattle::Insemination.all.to_csv, filename: "pajuelas.csv" }
+        format.xls { send_data KepplerCattle::Insemination.all.to_a.to_xls, filename: "pajuelas.xls" }
+        format.json
+        format.pdf { render pdf_options }
+      end
+    end
+
     # Only allow a trusted parameter "white list" through.
     def insemination_params
       params.require(:insemination).permit(

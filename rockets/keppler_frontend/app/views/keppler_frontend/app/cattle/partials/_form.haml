@@ -35,6 +35,7 @@
         = f.input :mother_id, collection: @posible_mothers, label: 'Madre', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-4
         = f.input :father_id, collection: @posible_fathers, label: 'Padre', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+        -# = f.references :father
       .col-sm-12
         = f.input :observations, label: 'Observaciones', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-12

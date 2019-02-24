@@ -227,7 +227,7 @@
                       - if @cow.father
                         = link_to app_farm_cow_path(@farm, @cow.father) do
                           .parent_img
-                            = image_tag (@cow.father&.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), class: 'avatar_cow', style: "width: 50px;" 
+                            = image_tag (@cow.father&.try(:image)&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), class: 'avatar_cow'
                           %dl
                             %dt{:style => "font-weight: 700; color: #6f6f6f;"}
                               = @cow.father&.serie_number

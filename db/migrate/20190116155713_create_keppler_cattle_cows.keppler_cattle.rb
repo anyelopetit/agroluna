@@ -18,6 +18,11 @@ class CreateKepplerCattleCows < ActiveRecord::Migration[5.2]
       t.integer :species_id
       t.integer :race_id
 
+      t.integer :mother_id
+
+      t.string :father_type
+      t.integer :father_id
+
       t.timestamps
     end
   end

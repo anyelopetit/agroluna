@@ -20,7 +20,7 @@ class CreateKepplerCattleCows < ActiveRecord::Migration[5.2]
 
       t.integer :mother_id
 
-      t.string :father_type
+      # t.string :father_type
       t.integer :father_id
 
       t.timestamps

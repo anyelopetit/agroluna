@@ -1,0 +1,35 @@
+<%= CSV.generate_line([
+  "Número de serie",
+  "Nombre corto",
+  "Género",
+  "Especie",
+  "Raza",
+  "Tipología",
+  "Madre",
+  "Padre",
+  "Fecha Nac.",
+  "Color de Pelaje",
+  "Color de Morro",
+  "Color de Borla",
+  "Procedencia",
+  "Observaciones"
+]).strip.html_safe %>
+
+<% @active_cows.each do |cow| %>
+  <%= CSV.generate_line([
+    cow.serie_number,
+    cow.short_name,
+    cow.gender,
+    cow.species&.name,
+    cow.race&.name,
+    cow.status&.typology&.name,
+    cow.mother&.serie_number,
+    cow.father&.serie_number,
+    cow.birthdate,
+    cow.coat_color,
+    cow.nose_color,
+    cow.tassel_color,
+    cow.provenance,
+    cow.observations
+  ]).strip.html_safe %>
+<% end %>

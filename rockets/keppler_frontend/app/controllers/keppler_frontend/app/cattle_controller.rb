@@ -153,7 +153,7 @@ module KepplerFrontend
       respond_to do |format|
         format.html
         format.csv { send_data KepplerCattle::Cow.all.to_csv, filename: "ganado.csv" }
-        format.xls { send_data KepplerCattle::Cow.all.to_a.to_xls, filename: "ganado.xls" }
+        format.xls #{ send_data KepplerCattle::Cow.all.to_a.to_xls, filename: "ganado.xls" }
         format.json
         format.pdf { render pdf_options }
       end

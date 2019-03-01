@@ -5,7 +5,7 @@ KepplerFrontend::Engine.routes.draw do
   get '/landing', to: 'app/frontend#landing', as: :landing
   get '/login', to: 'app/frontend#login', as: :login
 
-
+  get '/import-xls', to: 'app/frontend#import_xls', as: :import_xls
   
   #Farm
   get '/finca/:farm_id', to: 'app/frontend#farm', as: :app_farm

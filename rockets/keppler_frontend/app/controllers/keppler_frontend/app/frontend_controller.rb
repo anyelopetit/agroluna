@@ -23,7 +23,6 @@ module KepplerFrontend
       end
     end
 
-    # begin index
     def landing
       case current_user.role_ids[0]
       when 1
@@ -38,7 +37,9 @@ module KepplerFrontend
         end
       end
     end
-    # end index
+    
+    def import_xls
+    end
 
     private
 

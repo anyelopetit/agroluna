@@ -42,35 +42,3 @@
   font-weight: $weight;
 }
 
-// Medias querys
-$breakpoints: (
-  'xs': "(min-width: 0px) and (max-width: 767px)",
-  'sm': "(min-width: 768px) and (max-width: 991px)",
-  'md': "(min-width: 992px) and (max-width: 1199px)",
-  'lg': "(min-width: 1200px) and (max-width: 1600px)",
-  'xl': "(min-width: 1601px) and (max-width: 2048px)",
-) !default;
-
-// Fonts
-$putua: 'Patua One', cursive;
-$raleway: 'Raleway', sans-serif;
-
-// Fonts size
-$base-font-size: 10px;
-
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
-$lato: 'Lato', sans-serif;
-$light: 300;
-$regular: 400;
-$medium: 700;
-$bold: 900;
-
-// Colors
-$primary-color: #f44336;
-$white: #fff;
-$primary: #408A44;
-$secundary: #fa6d08;
-
-// Shadow
-$primary-shadow: rgba(0, 0, 0, .17);

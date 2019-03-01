@@ -13,7 +13,7 @@
   "Color de Borla",
   "Procedencia",
   "Observaciones"
-]).strip.html_safe %>
+]).strip %>
 
 <% @inactive_cows.each do |cow| %>
   <%= CSV.generate_line([

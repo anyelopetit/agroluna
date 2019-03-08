@@ -62,7 +62,7 @@ module KepplerFrontend
 
     # begin callback user_authenticate
     def user_authenticate
-      redirect_to '/users/sign_in' unless user_signed_in?
+      redirect_to main_app.new_user_session_path, locale: :es unless user_signed_in?
     end
     # end callback user_authenticate
 

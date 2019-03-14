@@ -27,7 +27,7 @@
 
         - else
           actualizó
-          = t("activerecord.attributes.#{activity.trackable_type.split('::').last.downcase}")
+          = t("public_activities.#{activity.trackable_type.split('::').last.downcase}")
           de ganado
           #{activity.recipient&.species&.name}
           #{activity.recipient&.race&.name}

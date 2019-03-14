@@ -1,6 +1,6 @@
 require_dependency "keppler_frontend/application_controller"
 module KepplerFrontend
-  class App::CattleController < App::FrontendController
+  class App::CattleController < App::FarmsController
     # Begin callbacks area (don't delete)
     # End callbacks area (don't delete)
     include FrontsHelper
@@ -12,14 +12,15 @@ module KepplerFrontend
     before_action :set_farms
     before_action :index_variables
     before_action :attachments
-    before_action :index_history, only: %i[index index_inactive]
+    before_action :index_history, only: %i[index index_inactives]
     before_action :show_history, only: %i[show]
     before_action :respond_to_formats
+    before_action :user_authenticate
     include ObjectQuery
 
     def index; end
 
-    def index_inactive; end
+    def index_inactives; end
 
     def search
       url = Rails.application.routes.recognize_path(request.referrer)
@@ -27,7 +28,6 @@ module KepplerFrontend
     end
 
     def show
-      @statuses = @cow.statuses.order(id: :desc)
       # respond_to_formats(@cow)
     end
 
@@ -37,10 +37,12 @@ module KepplerFrontend
 
     def create
       @cow = KepplerCattle::Cow.new(cow_params)
+      @cow.father_type = params[:cow][:father_id].split(',').first
+      @cow.father_id = params[:cow][:father_id].split(',').last.to_i
 
-      if @cow.save && @cow.statuses.blank?
-        # redirect(@cow, params)
-        redirect_to app_farm_cow_status_new_path(@farm, @cow)
+      if @cow.save && @cow.weights.blank?
+        @cow.mother.create_typology
+        redirect_to new_farm_cow_weight_path(@farm, @cow)
       else
         flash[:error] = 'Revisa los datos del formulario'
         render :new
@@ -49,10 +51,12 @@ module KepplerFrontend
 
     def update
       if @cow.update(cow_params)
-        if @cow.statuses.blank?
-          redirect_to app_farm_cow_status_new_path(@farm, @cow)
+        @cow.update(father_type: params[:cow][:father_id].split(',').first)
+        @cow.update(father_id: params[:cow][:father_id].split(',').last.to_i)
+        if @cow.weights.blank?
+          redirect_to new_farm_cow_weight_path(@farm, @cow)
         else 
-          redirect_to app_farm_cow_path(@farm, @cow)
+          redirect_to farm_cow_path(@farm, @cow)
         end
       else
         render :edit
@@ -65,26 +69,26 @@ module KepplerFrontend
     # DELETE /cattles/1
     def destroy
       @cow.destroy
-      redirect_to app_farm_cows_path(@farm)
+      redirect_to farm_cows_path(@farm)
     end
 
     def destroy_multiple
       Cow.destroy redefine_ids(params[:multiple_ids])
-      redirect_to app_farm_cows_path(@farm)
+      redirect_to farm_cows_path(@farm)
     end
 
     private
 
     def set_cow
-      @cow = KepplerCattle::Cow.find_by(id: params[:cow_id])
+      @cow = KepplerCattle::Cow.find_by(id: params[:id])
     end
 
     def index_variables
       @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
       @q = KepplerCattle::Cow.ransack(params[:q]) # @farm.cows.ransack(params[:q])
       @cows = @q.result(distinct: true)
-      @active_cows = @cows.actives.order(:serie_number)
-      @inactive_cows = @cows.inactives.order(:serie_number)
+      @active_cows = @cows.actives.page(params[:page]).per(10)
+      @inactive_cows = @cows.inactives.page(params[:page]).per(10)
       @attributes = KepplerCattle::Cow.index_attributes
       @typologies = KepplerCattle::Typology.all
     end
@@ -93,8 +97,8 @@ module KepplerFrontend
       @species = KepplerCattle::Species.all
       @genders = KepplerCattle::Cow.genders
       @races   = KepplerCattle::Race.all
-      @posible_mothers = KepplerCattle::Cow.posible_mothers
-      @posible_fathers = KepplerCattle::Cow.posible_fathers
+      @possible_mothers = KepplerCattle::Cow.possible_mothers_select2
+      @possible_fathers = KepplerCattle::Cow.possible_fathers_select2
       @colors = KepplerCattle::Cow.colors
     end
 
@@ -124,21 +128,21 @@ module KepplerFrontend
     end
 
     def index_history
-      @activities = @farm.activities.where(
+      @activities = PublicActivity::Activity.where(
         trackable_type: KepplerCattle::Cow.to_s
       ).or(
-        @farm.activities.where(
+        PublicActivity::Activity.where(
           recipient_type: KepplerCattle::Cow.to_s
         )
       ).order('created_at desc').limit(50)
     end
 
     def show_history
-      @activities = @farm.activities.where(
+      @activities = PublicActivity::Activity.where(
         trackable_type: 'KepplerCattle::Cow',
         trackable_id: @cow&.id.to_s
       ).or(
-        @farm.activities.where(
+        PublicActivity::Activity.where(
           recipient_type: 'KepplerCattle::Cow',
           recipient_id: @cow&.id.to_s
         )
@@ -148,12 +152,11 @@ module KepplerFrontend
     def respond_to_formats
       respond_to do |format|
         format.html
-        # format.csv { send_format_data(objects.model.all, 'csv') }
-        # format.xls { send_format_data(objects.model.all, 'xls') }
+        format.csv #{ send_data KepplerCattle::Cow.all.to_csv, filename: "ganado.csv" }
+        format.xls #{ send_data KepplerCattle::Cow.all.to_a.to_xls, filename: "ganado.xls" }
         format.json
-        format.pdf do
-          render pdf_options
-        end
+        format.pdf { render pdf_options }
+        format.js
       end
     end
 
@@ -176,21 +179,6 @@ module KepplerFrontend
         :mother_id,
         :father_id
       )
-    end
-
-    protected
-
-    def send_format_data(objects, extension)
-      models = objects.model.to_s.downcase.pluralize
-      t_models = t("keppler.models.pluralize.#{models}").humanize
-      filename = "#{t_models} - #{I18n.l(Time.now, format: :short)}"
-      objects_array = objects.order(:created_at)
-      case extension
-      when 'csv'
-        send_data objects_array.to_csv, filename: "#{filename}.csv"
-      when 'xls'
-        send_data objects_array.to_a.to_xls, filename: "#{filename}.xls"
-      end
     end
   end
 end

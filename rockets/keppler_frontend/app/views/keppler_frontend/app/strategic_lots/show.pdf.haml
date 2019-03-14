@@ -43,11 +43,11 @@
                 = cow&.status&.years
                 \-
                 = cow&.status&.months
-              %td= cow&.status&.typology.name
+              %td= cow&.typology.name
               %td= cow&.mother&.serie_number
               %td= cow&.father&.serie_number
               %td= cow&.status&.created_at&.strftime('%d-%m-%Y')
-              %td= cow&.status&.weight
+              %td= cow&.weight&.weight
               %td= cow&.coat_color
 :scss
   body {

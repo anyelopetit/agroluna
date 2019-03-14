@@ -8,6 +8,7 @@ class CreateKepplerCattleTypologies < ActiveRecord::Migration[5.2]
       t.integer :min_age
       t.float :min_weight
       t.text :description
+
       t.integer :position
       t.datetime :deleted_at
 
@@ -15,5 +16,6 @@ class CreateKepplerCattleTypologies < ActiveRecord::Migration[5.2]
 
       t.timestamps null: false
     end
+    add_index :keppler_cattle_typologies, :species_id
   end
 end

@@ -32,7 +32,7 @@
             %th Padre
             %th Fecha Nac.
             %th KG
-            %th Pelaje
+            -# %th Pelaje
             %th Lote
         %tbody
           - @active_cows.each do |cow|
@@ -43,12 +43,12 @@
                 = cow&.status&.years
                 \-
                 = cow&.status&.months
-              %td= cow&.status&.typology&.name
+              %td= cow&.typology_name
               %td= cow&.mother&.serie_number
               %td= cow&.father&.serie_number
               %td= cow&.birthdate&.strftime('%d-%m-%Y')
-              %td= cow&.status&.weight
-              %td= cow&.coat_color
+              %td= cow&.weight&.weight
+              -# %td= cow&.coat_color
               %td= cow&.strategic_lot&.name
 :scss
   body {

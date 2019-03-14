@@ -39,6 +39,10 @@
       = link_to({controller: :weighing_days, action: :index, species_id: object}, { style: "display: flex;" }) do
         .btn.btn-default
           = t('activerecord.attributes.weighing_days').humanize
+    %td
+      = link_to({controller: :corporal_conditions, action: :index, species_id: object}, { style: "display: flex;" }) do
+        .btn.btn-default
+          = t('activerecord.attributes.corporal_conditions').humanize
 
     %td.dropdown{ style: 'width: 15px;padding-right:15px;' }
       %a.action-btn.pull-right{:id => "menu-#{object.id}", 'aria-expanded': 'false', 'aria-haspopup': 'true', 'data-toggle': 'dropdown' }

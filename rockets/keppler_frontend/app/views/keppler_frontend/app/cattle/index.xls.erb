@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Número de serie</Data></Cell>
+        <Cell><Data ss:Type="String">Nombre corto</Data></Cell>
+        <Cell><Data ss:Type="String">Género</Data></Cell>
+        <Cell><Data ss:Type="String">Especie</Data></Cell>
+        <Cell><Data ss:Type="String">Raza</Data></Cell>
+        <Cell><Data ss:Type="String">Tipología</Data></Cell>
+        <Cell><Data ss:Type="String">Madre</Data></Cell>
+        <Cell><Data ss:Type="String">Padre</Data></Cell>
+        <Cell><Data ss:Type="String">Fecha Nac.</Data></Cell>
+        <Cell><Data ss:Type="String">Color de Pelaje</Data></Cell>
+        <Cell><Data ss:Type="String">Color de Morro</Data></Cell>
+        <Cell><Data ss:Type="String">Color de Borla</Data></Cell>
+        <Cell><Data ss:Type="String">Procedencia</Data></Cell>
+        <Cell><Data ss:Type="String">Observaciones</Data></Cell>
+      </Row>
+    <% @active_cows.each do |cow| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= cow.serie_number %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= cow.short_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= cow.gender %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= cow.species&.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= cow.race&.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= cow.typology_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= cow.mother&.serie_number %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= cow.father&.serie_number %></Data></Cell>
+        <Cell><Data ss:Type="Date"><%= cow.birthdate %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= cow.coat_color %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= cow.nose_color %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= cow.tassel_color %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= cow.provenance %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= cow.observations %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

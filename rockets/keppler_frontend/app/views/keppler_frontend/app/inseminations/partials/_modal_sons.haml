@@ -18,7 +18,7 @@
                   = link_to(action: :show, insemination_id: son.id) do
                     %dl
                       %dt
-                        = image_tag "/assets/keppler_cattle/#{son.gender}", class: 'svg-icon-md' unless son.gender.blank?
+                        = image_tag "/assets/keppler_cattle/#{son.gender}", class: 'svg-icon-md p-absolute r-0' unless son.gender.blank?
                         %span= son.serie_number
                         %small= "(#{@insemination.short_name})" unless @insemination.short_name.blank?
 :scss

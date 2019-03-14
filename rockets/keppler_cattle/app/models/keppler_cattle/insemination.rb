@@ -36,12 +36,12 @@ module KepplerCattle
       KepplerFarm::Farm.find_by(id: $request.params[:farm_id])
     end
     
-    def self.active
-      farm.inseminations.where(used: nil)
+    def self.actives
+      farm.inseminations.where(used_date: nil)
     end
     
-    def self.inactive
-      farm.inseminations.where.not(used: nil)
+    def self.inactives
+      farm.inseminations.where.not(used_date: nil)
     end
 
     def self.colors
@@ -66,12 +66,12 @@ module KepplerCattle
         )
     end
 
-    def self.posible_mothers
+    def self.possible_mothers
       KepplerCattle::Cow.select { |x| x.gender?('female') }
         .map { |x| [x.serie_number + (" (#{x&.short_name})" unless x&.short_name.blank?).to_s, x.id] }
     end
 
-    def self.posible_fathers
+    def self.possible_fathers
       KepplerCattle::Cow.select { |x| x.gender?('male') }
         .map { |x| [x.serie_number + (" (#{x&.short_name})" unless x&.short_name.blank?).to_s, x.id] }
     end

@@ -1,4 +1,4 @@
-= render 'keppler_frontend/app/frontend/components/navbar', farm: @farm, farms: @farms
+= render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
 .app_wrapper
   .container_custom
     -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
@@ -14,14 +14,14 @@
         .toolbar-item
             %i.icofont-trash
       = link_to({action: :delete_assignment}, {class: 'destroy_multiple float-right mt-4 mb-4', method: :delete}) do
-        %button.btn.btn_custom.btn--filled.btn--medium
+        %button.btn.btn_custom.btn--filled.btn--medium#remove_from_lot{ disabled: true }
           %i.icofont-trash
           Remover de lote
-      = link_to({action: :index, format: :pdf}, {class: 'float-right mt-4 mb-4 ml-1', target: '_blank'}) do
+      = link_to({action: action_name.to_sym, format: :pdf}, {class: 'float-right mt-4 mb-4 ml-1', target: '_blank'}) do
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-clip-board
           Reporte
-      -# %a.float-right.mt-4.mb-4.ml-3{ href: app_farm_strategic_lot_new_path(@farm) }
+      -# %a.float-right.mt-4.mb-4.ml-3{ href: farm_strategic_lot_new_path(@farm) }
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-plus
           Agregar
@@ -29,16 +29,17 @@
     .row
       .col-sm-8.mb-4
         -# = @assign.inspect
-        = simple_form_for [:app, :cattle, @assign], url: app_farm_strategic_lot_assign_cattle_path(@farm, @strategic_lot), html: { style: 'width: 100%' } do |f|
+        = simple_form_for [:app, :cattle, @assign], url:farm_strategic_lot_assign_cattle_path(@farm, @strategic_lot), html: { style: 'width: 100%' } do |f|
           .row.mb-4
             .col-sm-8
-              %select#strategic_lot_cattle{ name: 'strategic_lot[cattle][]', label: 'Ganado',placeholder: 'Agrega un o más series', class: 'form-control input_custom select2-multiple' }
+              %select#strategic_lot_cattle{ name: 'strategic_lot[cattle][]', label: 'Ganado', class: 'form-control input_custom select2-multiple', onchange: "validateCattle()" }
                 - @farm.cows.order(:serie_number).each do |cow|
                   %option{ value: cow.id } #{cow.serie_number}
             .col-sm-4
-              %button{ type: 'submit', class: 'btn btn_custom btn--filled btn--medium' } Agregar
+              %button{ type: 'submit', id: 'add-cattle', class: 'btn btn_custom btn--filled btn--medium', disabled: true }
+                Agregar
     - if @cows.blank? && @strategic_lot.cows.count > 0
-      = link_to 'Mostrar todos', app_farm_cows_path(@farm)
+      = link_to 'Mostrar todos', farm_cows_path(@farm)
     = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
 :javascript
   $('.select2').select2()
@@ -50,6 +51,10 @@
 
   $('.select2-selection__choice').remove()
   $('#strategic_lot_cattle').val('')
+  $('.select2-search__field').attr('placeholder', 'Agrega una o más series')
+  $('.select2-search__field').css({
+    'width': 'auto'
+  })
 
   $('#select-search').change(function() {
     $('.select-field').hide()
@@ -79,6 +84,11 @@
       });
     });
     $('.destroy_multiple').attr('href', (`${href}&multiple_ids=[${$final_array}]`))
+    if ($final_array.length === 0) {
+      document.getElementById('remove_from_lot').disabled = true
+    } else {
+      document.getElementById('remove_from_lot').disabled = false
+    }
   }
 
   $('#checkbox-all').click(function() {
@@ -108,3 +118,8 @@
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })
+
+  function validateCattle() {
+    var ar = $('#strategic_lot_cattle')
+    document.getElementById('add-cattle').disabled = ($('#strategic_lot_cattle').val() == "")
+  }

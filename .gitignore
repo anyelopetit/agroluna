@@ -10,6 +10,12 @@
 # http://github.com/RailsApps/rails-composer/issues
 #----------------------------------------------------------------------------
 
+# Google Api Client
+# quickstart.rb
+# ./quickstart.rb
+# credentials.json
+# ./credentials.json
+
 # bundler state
 /.bundle
 /vendor/bundle/

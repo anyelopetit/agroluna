@@ -24,6 +24,10 @@ gem 'select2-rails'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 
+# Infinite Scroll
+# gem 'bootstrap-will_paginate', '~> 0.0.10'
+# gem 'will_paginate_infinite'
+
 # Server
 gem 'puma', '~> 3.11', '>= 3.11.3'
 
@@ -110,7 +114,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 #javascript
 gem 'gon', '6.2.1'
 
-
 # Development
 group :development do
   gem 'better_errors', '2.4.0'
@@ -146,7 +149,7 @@ group :development, :test do
   gem 'dotenv-rails'
 end
 
-gem 'google-api-client', '~> 0.7.1'
+gem 'google-api-client', '0.8.2', require: 'google/api_client'
 gem 'acts-as-taggable-on', '6.0'
 gem 'bootstrap-tagsinput-rails'
 gem 'social-share-button'

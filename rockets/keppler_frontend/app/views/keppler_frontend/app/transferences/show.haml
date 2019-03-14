@@ -1,4 +1,4 @@
-= render 'keppler_frontend/app/frontend/components/navbar', farm: @farm, farms: @farms
+= render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
 .app_wrapper
   .container_custom
     -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
@@ -6,22 +6,22 @@
       %h1
         -# = link_to({action: :index}) do
           Transferencias >
-        .badge.badge-secondary #{@transference.reason} (#{@transference.cows.size})
-      %p= @transference&.description
+        .badge.badge-secondary Transferencia hacia #{@transference.to_farm&.title} (#{@transference.cows.size})
+      %p= @transference&.reason
     .d-flex.justify-content-end
       -# .toolbar
         .toolbar-item
           -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
-          = link_to app_farm_transference_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
+          = link_to farm_transference_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
             %i.icofont-trash
       = link_to({action: :show, format: :pdf}, {class: 'float-right mt-4 mb-4', target: '_blank'}) do
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-clip-board
           Reporte
-      -# %a.float-right.mt-4.mb-4.ml-3{ href: app_farm_cow_new_path(farm) }
+      -# %a.float-right.mt-4.mb-4.ml-3{ href: new_farm_cow_path(farm) }
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-plus
           Agregar
     - if @cows.blank? && @transference.cows.count > 0
-      = link_to 'Mostrar todos', app_farm_cows_path(farm)
+      = link_to 'Mostrar todos', farm_cows_path(farm)
     = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows

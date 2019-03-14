@@ -7,7 +7,7 @@ module KepplerFrontend
       extend ActiveSupport::Concern
 
       def create_action_html
-        file = "#{url_front}/app/controllers/keppler_frontend/app/frontend_controller.rb"
+        file = "#{url_front}/app/controllers/keppler_frontend/app/farms_controller.rb"
         index_html = File.readlines(file)
         head_idx = 0
         index_html.each do |i|
@@ -24,7 +24,7 @@ module KepplerFrontend
       end
 
       def delete_action_html
-        file = "#{url_front}/app/controllers/keppler_frontend/app/frontend_controller.rb"
+        file = "#{url_front}/app/controllers/keppler_frontend/app/farms_controller.rb"
         index_html = File.readlines(file)
         begin_idx = 0
         end_idx = 0
@@ -41,7 +41,7 @@ module KepplerFrontend
 
       def update_action(action)
         obj = View.find_by(id: id)
-        file = "#{url_front}/app/controllers/keppler_frontend/app/frontend_controller.rb"
+        file = "#{url_front}/app/controllers/keppler_frontend/app/farms_controller.rb"
         index_html = File.readlines(file)
         begin_idx = 0
         end_idx = 0
@@ -59,7 +59,7 @@ module KepplerFrontend
       end
 
       def action_code
-        file = "#{url_front}/app/controllers/keppler_frontend/app/frontend_controller.rb"
+        file = "#{url_front}/app/controllers/keppler_frontend/app/farms_controller.rb"
         index_html = File.readlines(file)
         begin_idx = 0
         end_idx = 0
@@ -74,7 +74,7 @@ module KepplerFrontend
       end
 
       def save_action(code)
-        file = "#{url_front}/app/controllers/keppler_frontend/app/frontend_controller.rb"
+        file = "#{url_front}/app/controllers/keppler_frontend/app/farms_controller.rb"
         code_ruby = File.readlines(file)
         begin_idx = 0
         end_idx = 0

@@ -36,15 +36,15 @@
               %tr
                 %td= @cow.species&.name
                 %td= @cow.race&.name
-                %td= @cow.status&.typology&.name
-                %td= @cow.status&.corporal_condition unless @cow.status&.blank?
+                %td= @cow.typology_name
+                %td= @cow.weight&.corporal_condition unless @cow.weight&.blank?
               %tr
                 %th Peso
                 %th Años
                 %th Meses
                 %th Días de nacido
               %tr
-                %td #{@cow.status&.weight} KG
+                %td #{@cow.weight&.weight} KG
                 %td= @cow.years
                 %td= @cow.months
                 %td= @cow.days
@@ -72,29 +72,32 @@
                     %th Padre
                   %th Fecha Nac.
                   %th KG
-                  %th Pelaje
-                  %th Lote
+                  -# %th Pelaje
+                  -# %th Lote
               %tbody
                 - @cow.sons&.each do |cow|
                   %tr
                     %td= cow&.serie_number
-                    %td= cow&.race&.name
+                    %td= cow&.race&.abbreviation
                     %td
                       = cow&.status&.years
                       \-
                       = cow&.status&.months
-                    %td= cow&.status&.typology&.name
+                    %td= cow&.typology_name
                     - if @cow.gender?('male')
                       %td= cow&.mother&.serie_number
                     - else
                       %td= cow&.father&.serie_number
                     %td= cow&.birthdate&.strftime('%d-%m-%Y')
-                    %td= cow&.status&.weight
-                    %td= cow&.coat_color
-                    %td= cow&.strategic_lot&.name
+                    %td= cow&.weight&.weight
+                    -# %td= cow&.coat_color
+                    -# %td= cow&.strategic_lot&.name
+          %p
+            %b PROMEDIO DE PESOS:
+            %span #{@cow.sons_weight_average.round(2)} KG
 :scss
   body {
-    font-size: 12px;
+    font-size: 15px;
   }
   table {
     border-collapse: collapse;

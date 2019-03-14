@@ -1,0 +1,73 @@
+!!!
+%html{ lang: 'en' }
+  %head
+    %meta{ charset: 'UTF-8' }
+    %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
+    %meta{ name: 'theme-color', content: '#fff' }
+    %title Pajuelas
+  %body
+    .header-left
+      %h1.farm-title= @farm.try(:title)&.upcase
+      %h2.report-title Catálogo de Pajuelas Usadas por orden de Serie
+    .header-right
+      %p= Time.now.strftime('%d-%m-%Y')
+      %p Pág. 1
+    %table.insemination-table
+      - if @inactive_inseminations.size.zero?
+        %thead
+          %tr
+            %th.not-records.center
+              %center No se encontraron pajuelas
+      - else
+        %thead
+          %tr
+            %th Serie
+            %th Nombre corto
+            %th Madre
+            %th Padre
+            %th Especie
+            %th Raza
+            %th Fecha de nacimiento
+        %tbody
+          - @inactive_inseminations.each do |insemination|
+            %tr
+              %td= insemination&.serie_number
+              %td= insemination&.short_name
+              %td= insemination&.mother&.serie_number
+              %td= insemination&.father&.serie_number
+              %td= insemination&.species&.name
+              %td= insemination&.race&.name
+              %td= insemination&.birthdate
+:scss
+  body {
+    font-size: 10px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr {
+    border-top: solid 1px #eee;
+  }
+  th {
+    text-align: left;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+  }
+  td {
+    margin: 0;
+    padding: 0;
+  }
+  .header-left {
+    float: left;
+  }
+  .header-right {
+    float: right;
+  }
+  .farm-title{
+    width: 150%
+  }
+  .report-title {
+    width: 150%
+  }

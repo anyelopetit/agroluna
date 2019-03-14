@@ -1,6 +1,6 @@
 require_dependency "keppler_frontend/application_controller"
 module KepplerFrontend
-  class App::StrategicLotsController < App::FrontendController
+  class App::StrategicLotsController < App::FarmsController
     # Begin callbacks area (don't delete)
     # End callbacks area (don't delete)
     include FrontsHelper
@@ -11,6 +11,7 @@ module KepplerFrontend
     before_action :set_farms
     before_action :index_variables
     before_action :attachments
+    before_action :respond_to_formats
     helper KepplerFarm::ApplicationHelper
     include ObjectQuery
 
@@ -18,13 +19,13 @@ module KepplerFrontend
       @strategic_lots = @farm.strategic_lots
       @assign = KepplerCattle::Assignment.new
       @cows = @farm.cows.map { |c| [c.serie_number, c.id] }
-      respond_to_formats(@farm.strategic_lots)
+      # respond_to_formats(@farm.strategic_lots)
     end
 
     def show
       @cows = @strategic_lot.cows.order(:serie_number)
       @assign = KepplerCattle::Assignment.new
-      respond_to_formats(@strategic_lot)
+      # respond_to_formats(@strategic_lot)
     end
 
     def new
@@ -69,38 +70,46 @@ module KepplerFrontend
     end
 
     def assign_cattle
-      params[:strategic_lot][:cattle].each do |id|
-        cow = KepplerCattle::Cow.find_by(id: id)
-        if cow
-          assignment = KepplerCattle::Assignment.new(
-            strategic_lot_id: params[:strategic_lot_id],
-            cow_id: id
-          )
-          if assignment.validate_cow
+      if params[:strategic_lot].blank?
+        flash[:error] = 'No se agregó ninguna serie al lote'
+      else
+        params[:strategic_lot][:cattle].each do |id|
+          cow = KepplerCattle::Cow.find_by(id: id)
+          if cow
+            assignment = KepplerCattle::Assignment.new(
+              strategic_lot_id: params[:id],
+              cow_id: id
+            )
+            assignment.clean_other_cow_assignments
             assignment.save
             flash[:notice] = "La series fueron asignada satisfactoriamente"
           end
         end
+        flash[:notice] = 'Series agregadas al lote estratégico'
       end
       redirect_to action: :show
     end
       
     def delete_assignment
-      params[:multiple_ids].remove("[", "]").split(',').each do |id|
-        assignment = KepplerCattle::Assignment.find_by(
-          strategic_lot_id: params[:strategic_lot_id],
-          cow_id: id
-        )
+      if params[:multiple_ids].blank?
+        flash[:error] = 'No se pudo remover ninguna serie del lote'
+      else
+        params[:multiple_ids].remove("[", "]").split(',').each do |id|
+          assignment = KepplerCattle::Assignment.find_by(
+            strategic_lot_id: params[:id],
+            cow_id: id
+          )
 
-        if assignment&.exists?
-          if assignment.destroy
-            flash[:notice] = 
-              t('keppler.messages.cattle.deleted', cattle: assignment.cow.serie_number) if assignment.destroy!
+          if assignment&.exists?
+            if assignment.destroy
+              flash[:notice] = 
+                t('keppler.messages.cattle.deleted', cattle: assignment.cow.serie_number) if assignment.destroy!
+            # else
+            #   flash[:error] = t('keppler.messages.cattle.not_deleted', cattle: assignment.cow.serie_number)
+            end
           # else
-          #   flash[:error] = t('keppler.messages.cattle.not_deleted', cattle: assignment.cow.serie_number)
+          #   flash[:error] = t('keppler.messages.cattle.doesnt_exist', cattle: assignment.cow.serie_number)
           end
-        # else
-        #   flash[:error] = t('keppler.messages.cattle.doesnt_exist', cattle: assignment.cow.serie_number)
         end
       end
       redirect_to action: :show, id: @farm.id, strategic_lot_id: @strategic_lot.id
@@ -109,7 +118,7 @@ module KepplerFrontend
     private
 
     def set_strategic_lot
-      @strategic_lot = KepplerFarm::StrategicLot.find_by(id: params[:strategic_lot_id])
+      @strategic_lot = KepplerFarm::StrategicLot.find_by(id: params[:id])
     end
 
     def index_variables
@@ -143,6 +152,16 @@ module KepplerFrontend
       @attachments = YAML.load_file(
         "#{Rails.root}/config/attachments.yml"
       )
+    end
+
+    def respond_to_formats
+      respond_to do |format|
+        format.html
+        format.csv { send_data KepplerFarm::StrategicLot.all.to_csv, filename: "lotes estratégicos.csv" }
+        format.xls { send_data KepplerFarm::StrategicLot.all.to_a.to_xls, filename: "lotes estratégicos.xls" }
+        format.json
+        format.pdf { render pdf_options }
+      end
     end
 
     # Only allow a trusted parameter "white list" through.

@@ -1,7 +1,7 @@
 require 'test_helper'
 
 module KepplerFrontend
-  class App::FrontendControllerTest < ActionDispatch::IntegrationTest
+  class App::FarmsControllerTest < ActionDispatch::IntegrationTest
     include Engine.routes.url_helpers
 
     # test "the truth" do

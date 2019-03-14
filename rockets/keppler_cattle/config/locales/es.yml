@@ -22,6 +22,7 @@ es:
       pluralize:
         inseminations: pajuela
         weighing_days: días de pesaje
+        corporal_conditions: condiciones corporales
         typologies: tipologías
         races: razas
         species: especies
@@ -63,6 +64,7 @@ es:
       birthdate: fecha de nacimiento
       race: raza
       race_id: raza
+      race_name: raza
       coat_color: color de pelaje
       nose_color: color de morro
       tassel_color: color de borla
@@ -83,6 +85,8 @@ es:
       dead: muerto
       deathdate: fecha de muerte
       typology: tipología
+      typology_id: tipología
+      typology_name: tipología
       strategic_lot_id: lote estratégico
       user_id: responsable
       comments: comentarios
@@ -93,6 +97,7 @@ es:
       races: razas
       typologies: tipologías
       weighing_days: pesajes
+      corporal_conditions: condiciones corporales
       counter: contador
       min_age: edad mínima (días)
       min_weight: peso mínimo (kg)

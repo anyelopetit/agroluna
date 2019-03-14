@@ -1,6 +1,6 @@
 require_dependency "keppler_frontend/application_controller"
 module KepplerFrontend
-  class App::TransferencesController < App::FrontendController
+  class App::TransferencesController < App::FarmsController
     # Begin callbacks area (don't delete)
     # End callbacks area (don't delete)
     include FrontsHelper
@@ -12,16 +12,17 @@ module KepplerFrontend
     before_action :index_variables
     before_action :attachments
     before_action :index_history
+    before_action :respond_to_formats
     include ObjectQuery
 
     def index
       @search_farms = @farms.map { |f| [f.title, f.id] }
-      respond_to_formats(KepplerCattle::Transference.all)
+      # respond_to_formats(KepplerCattle::Transference.all)
     end
 
     def show
       @cows = @transference.cows
-      respond_to_formats(@transference)
+      # respond_to_formats(@transference)
     end
 
     def new
@@ -40,7 +41,7 @@ module KepplerFrontend
             status = KepplerCattle::Status.new(
               c.status.as_json(except: :id)
             )
-            status.farm_id = @transference.to_farm_id
+            location&.farm_id = @transference.to_farm_id
             status.save!
           end
           redirect_to app_farm_transferences_path(@farm)
@@ -78,7 +79,7 @@ module KepplerFrontend
     private
 
     def set_transference
-      @transference = KepplerCattle::Transference.find_by(id: params[:transference_id])
+      @transference = KepplerCattle::Transference.find_by(id: params[:id])
     end
 
     def index_variables
@@ -137,6 +138,16 @@ module KepplerFrontend
           recipient_type: KepplerCattle::Transference.to_s
         )
       ).order('created_at desc').limit(50)
+    end
+
+    def respond_to_formats
+      respond_to do |format|
+        format.html
+        format.csv { send_data KepplerCattle::Transference.all.to_csv, filename: "transferencias.csv" }
+        format.xls { send_data KepplerCattle::Transference.all.to_a.to_xls, filename: "transferencias.xls" }
+        format.json
+        format.pdf { render pdf_options }
+      end
     end
   end
 end

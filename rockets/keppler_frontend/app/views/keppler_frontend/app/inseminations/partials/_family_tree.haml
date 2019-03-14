@@ -3,7 +3,7 @@
     .card_status_specific.block_one.family_tree
       .parent_card
         - if @parent = @insemination
-          = link_to app_farm_insemination_path(@farm, @insemination) do
+          = link_to farm_insemination_path(@farm, @insemination) do
             .parent_img
               = image_tag ('https://image.flaticon.com/icons/svg/523/523448.svg'),style: "width: 48px;", class: 'avatar_insemination'
             %dl
@@ -17,7 +17,7 @@
     .card_status_specific.block_two-left.family_tree  
       .parent_card
         - if @parent = @insemination.father
-          = link_to app_farm_insemination_path(@farm, @parent) do
+          = link_to farm_insemination_path(@farm, @parent) do
             .parent_img
               = image_tag ('https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_insemination' 
             %dl
@@ -32,7 +32,7 @@
     .card_status_specific.block_two-right.family_tree
       .parent_card
         - if @parent = @insemination.mother
-          = link_to app_farm_insemination_path(@farm, @parent) do
+          = link_to farm_insemination_path(@farm, @parent) do
             .parent_img
               = image_tag ('https://image.flaticon.com/icons/svg/523/523448.svg'), style: "width: 48px;", class: 'avatar_insemination' 
             %dl
@@ -46,7 +46,7 @@
     .card_status_specific.block_three-left-one.family_tree
       .parent_card
         - if @parent = @insemination.father&.father
-          = link_to app_farm_insemination_path(@farm, @parent) do
+          = link_to farm_insemination_path(@farm, @parent) do
             .parent_img
               = image_tag ('https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_insemination' 
             %dl
@@ -61,7 +61,7 @@
     .card_status_specific.block_three-left-two.family_tree
       .parent_card
         - if @parent = @insemination.father&.mother
-          = link_to app_farm_insemination_path(@farm, @parent) do
+          = link_to farm_insemination_path(@farm, @parent) do
             .parent_img
               = image_tag ('https://image.flaticon.com/icons/svg/523/523448.svg'), style: "width: 48px;", class: 'avatar_insemination' 
             %dl
@@ -74,7 +74,7 @@
     .card_status_specific.block_three-right-one.family_tree
       .parent_card
         - if @parent = @insemination.mother&.father
-          = link_to app_farm_insemination_path(@farm, @parent) do
+          = link_to farm_insemination_path(@farm, @parent) do
             .parent_img
               = image_tag ('https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_insemination' 
             %dl
@@ -89,7 +89,7 @@
     .card_status_specific.block_three-right-two.family_tree
       .parent_card
         - if @parent = @insemination.mother&.mother
-          = link_to app_farm_insemination_path(@farm, @parent) do
+          = link_to farm_insemination_path(@farm, @parent) do
             .parent_img
               = image_tag ('https://image.flaticon.com/icons/svg/523/523448.svg'), style: "width: 48px;", class: 'avatar_insemination' 
             %dl
@@ -103,7 +103,7 @@
     .card_status_specific.block_four-left-one.family_tree
       .parent_card
         - if @parent = @insemination.father&.father&.father
-          = link_to app_farm_insemination_path(@farm, @parent) do
+          = link_to farm_insemination_path(@farm, @parent) do
             .parent_img
               = image_tag ('https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_insemination' 
             %dl
@@ -118,7 +118,7 @@
     .card_status_specific.block_four-left-two.family_tree
       .parent_card
         - if @parent = @insemination.father&.father&.mother
-          = link_to app_farm_insemination_path(@farm, @parent) do
+          = link_to farm_insemination_path(@farm, @parent) do
             .parent_img
               = image_tag ('https://image.flaticon.com/icons/svg/523/523448.svg'), style: "width: 48px;", class: 'avatar_insemination' 
             %dl
@@ -131,7 +131,7 @@
     .card_status_specific.block_four-left-three.family_tree
       .parent_card
         - if @parent = @insemination.father&.mother&.father
-          = link_to app_farm_insemination_path(@farm, @parent) do
+          = link_to farm_insemination_path(@farm, @parent) do
             .parent_img
               = image_tag ('https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_insemination' 
             %dl
@@ -146,7 +146,7 @@
     .card_status_specific.block_four-left-four.family_tree
       .parent_card
         - if @parent = @insemination.father&.mother&.mother
-          = link_to app_farm_insemination_path(@farm, @parent) do
+          = link_to farm_insemination_path(@farm, @parent) do
             .parent_img
               = image_tag ('https://image.flaticon.com/icons/svg/523/523448.svg'), style: "width: 48px;", class: 'avatar_insemination' 
             %dl
@@ -160,7 +160,7 @@
     .card_status_specific.block_four-right-one.family_tree
       .parent_card
         - if @parent = @insemination.mother&.father&.father
-          = link_to app_farm_insemination_path(@farm, @parent) do
+          = link_to farm_insemination_path(@farm, @parent) do
             .parent_img
               = image_tag ('https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_insemination' 
             %dl
@@ -175,7 +175,7 @@
     .card_status_specific.block_four-right-two.family_tree
       .parent_card
         - if @parent = @insemination.mother&.father&.mother
-          = link_to app_farm_insemination_path(@farm, @parent) do
+          = link_to farm_insemination_path(@farm, @parent) do
             .parent_img
               = image_tag ('https://image.flaticon.com/icons/svg/523/523448.svg'), style: "width: 48px;", class: 'avatar_insemination' 
             %dl
@@ -188,7 +188,7 @@
     .card_status_specific.block_four-right-three.family_tree
       .parent_card
         - if @parent = @insemination.mother&.mother&.father
-          = link_to app_farm_insemination_path(@farm, @parent) do
+          = link_to farm_insemination_path(@farm, @parent) do
             .parent_img
               = image_tag ('https://image.flaticon.com/icons/svg/1495/1495074.svg'), style: "width: 48px;", class: 'avatar_insemination' 
             %dl
@@ -203,7 +203,7 @@
     .card_status_specific.block_four-right-four.family_tree
       .parent_card
         - if @parent = @insemination.mother&.mother&.mother
-          = link_to app_farm_insemination_path(@farm, @parent) do
+          = link_to farm_insemination_path(@farm, @parent) do
             .parent_img
               = image_tag ('https://image.flaticon.com/icons/svg/523/523448.svg'), style: "width: 48px;", class: 'avatar_insemination' 
             %dl

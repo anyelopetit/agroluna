@@ -57,9 +57,9 @@
                   .col-sm-12
                     = f.input :observations, label: t('activerecord.attributes.observations').humanize
                   -# .col-sm-6
-                  -#   = f.input :mother_id, collection: @posible_mothers, label: t('activerecord.attributes.mother_id').humanize
+                  -#   = f.input :mother_id, collection: @possible_mothers, label: t('activerecord.attributes.mother_id').humanize
                   -# .col-sm-6
-                    = f.input :father_id, collection: @posible_fathers, label: t('activerecord.attributes.father_id').humanize
+                    = f.input :father_id, collection: @possible_fathers, label: t('activerecord.attributes.father_id').humanize
                   .col-sm-12
                     .pull-right
                       = f.button :submit, t('keppler.actions.save'), name: '_save', class: 'btn-primary'

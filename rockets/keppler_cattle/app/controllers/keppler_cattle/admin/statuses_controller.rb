@@ -28,7 +28,7 @@ module KepplerCattle
       def new
         @status = Status.new
         # @ubications = Status.ubications
-        @corporal_conditions = Status.corporal_conditions
+        @corporal_conditions = weight&.corporal_conditions
         @strategic_lots = KepplerFarm::StrategicLot.all
         # @typologies = @cow.gender?('male') ? Status.male_typologies : Status.female_typologies
         @last_status = @cow.status

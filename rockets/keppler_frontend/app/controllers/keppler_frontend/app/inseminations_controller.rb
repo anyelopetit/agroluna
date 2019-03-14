@@ -1,6 +1,6 @@
 require_dependency "keppler_frontend/application_controller"
 module KepplerFrontend
-  class App::InseminationsController < App::FrontendController
+  class App::InseminationsController < App::FarmsController
     # Begin callbacks area (don't delete)
     # End callbacks area (don't delete)
     include FrontsHelper
@@ -10,9 +10,9 @@ module KepplerFrontend
     before_action :insemination_attributes, only: %i[new edit create]
     before_action :index_variables
     before_action :user_authenticate
-    before_action :respond_to_formats
-    before_action :index_history, only: %i[index index_inactive]
+    before_action :index_history, only: %i[index index_inactives]
     before_action :show_history, only: %i[show]
+    before_action :respond_to_formats
     include ObjectQuery
 
     def index
@@ -35,7 +35,7 @@ module KepplerFrontend
       @insemination = KepplerCattle::Insemination.new(insemination_params)
 
       if @insemination.save
-        redirect_to action: :show, insemination_id: @insemination.id
+        redirect_to action: :show, id: @insemination.id
       else
         flash[:error] = 'Revisa los datos del formulario'
         render :new
@@ -44,7 +44,7 @@ module KepplerFrontend
 
     def update
       if @insemination.update(insemination_params)
-        redirect_to action: :show, insemination_id: @insemination.id
+        redirect_to action: :show, id: @insemination.id
       else
         render :edit
       end
@@ -70,7 +70,7 @@ module KepplerFrontend
     private
 
     def set_insemination
-      @insemination = KepplerCattle::Insemination.find_by(id: params[:insemination_id])
+      @insemination = KepplerCattle::Insemination.find_by(id: params[:id])
     end
 
     def index_variables
@@ -86,8 +86,8 @@ module KepplerFrontend
     def insemination_attributes
       @species = KepplerCattle::Species.all
       @races   = KepplerCattle::Race.all
-      @posible_mothers = KepplerCattle::Insemination.posible_mothers
-      @posible_fathers = KepplerCattle::Insemination.posible_fathers
+      @possible_mothers = KepplerCattle::Insemination.possible_mothers
+      @possible_fathers = KepplerCattle::Insemination.possible_fathers
       @colors = KepplerCattle::Insemination.colors
     end
 
@@ -101,18 +101,6 @@ module KepplerFrontend
       @attachments = YAML.load_file(
         "#{Rails.root}/config/attachments.yml"
       )
-    end
-
-    def respond_to_formats
-      respond_to do |format|
-        format.html
-        # format.csv { send_format_data(objects.model.all, 'csv') }
-        # format.xls { send_format_data(objects.model.all, 'xls') }
-        format.json
-        format.pdf do
-          render pdf_options
-        end
-      end
     end
 
     def index_history
@@ -137,6 +125,16 @@ module KepplerFrontend
       ).order('created_at desc').limit(50)
     end
 
+    def respond_to_formats
+      respond_to do |format|
+        format.html
+        format.csv { send_data KepplerCattle::Insemination.all.to_csv, filename: "pajuelas.csv" }
+        format.xls { send_data KepplerCattle::Insemination.all.to_a.to_xls, filename: "pajuelas.xls" }
+        format.json
+        format.pdf { render pdf_options }
+      end
+    end
+
     # Only allow a trusted parameter "white list" through.
     def insemination_params
       params.require(:insemination).permit(
@@ -157,21 +155,6 @@ module KepplerFrontend
         :provenance,
         :observations
       )
-    end
-
-    protected
-
-    def send_format_data(objects, extension)
-      models = objects.model.to_s.downcase.pluralize
-      t_models = t("keppler.models.pluralize.#{models}").humanize
-      filename = "#{t_models} - #{I18n.l(Time.now, format: :short)}"
-      objects_array = objects.order(:created_at)
-      case extension
-      when 'csv'
-        send_data objects_array.to_csv, filename: "#{filename}.csv"
-      when 'xls'
-        send_data objects_array.to_a.to_xls, filename: "#{filename}.xls"
-      end
     end
   end
 end

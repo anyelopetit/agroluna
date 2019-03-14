@@ -32,33 +32,33 @@
                   %dt
                     %i.icofont-dumbbell
                     Peso
-                  %dd= status.weight
+                  %dd= weight&.weight
                   %dt
                     %i.icofont-baby-cloth
                     Edad (años - meses)
                   %dd
-                    = status.years
+                    = years
                     = "-"
-                    = status.months
+                    = months
                   %dt
                     %i.icofont-infant-nipple
                     Días de nacido
-                  %dd= status.days
+                  %dd= days
               .col-lg-6
                 %dl
                   %dt
                     %i.icofont-cow
                     Tipología
-                  %dd= status.typology
+                  %dd= typology
                   %dt
                     %i.icofont-muscle
                     Condición corporal
-                  %dd= status.corporal_condition
+                  %dd= weight&.corporal_condition
                   %dt
                     %i.icofont-home
                     Finca
                   %dd
-                    = status.farm_name
-                  - unless status.strategic_lot.blank?
+                    = status.farm.title
+                  - unless location&.strategic_lot.blank?
                     %dt Lote estratégico
-                    %dd= status.strategic_lot
+                    %dd= location&.strategic_lot

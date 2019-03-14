@@ -1,0 +1,22 @@
+$custom-file-text: (
+  en: "Browse",
+  es: "Elegir"
+);
+
+.form-control.is-valid, .was-validated .form-control:valid {
+  border-color: #28a745 !important;
+  padding-right: calc(1.5em + .75rem);
+  background-image: url("/assets/keppler_frontend/app/valid.svg");
+  background-repeat: no-repeat;
+  background-position: center right calc(.375em + .1875rem);
+  background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+
+.form-control.is-invalid, .was-validated .form-control:invalid {
+  border-color: #dc3545 !important;
+  padding-right: calc(1.5em + .75rem);
+  background-image: url("/assets/keppler_frontend/app/invalid.svg");
+  background-repeat: no-repeat;
+  background-position: center right calc(.375em + .1875rem);
+  background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}

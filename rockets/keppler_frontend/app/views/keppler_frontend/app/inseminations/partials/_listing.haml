@@ -4,18 +4,37 @@
     -# .toolbar
       .toolbar-item
         -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
-        = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
+        = link_to farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
           %i.icofont-trash
     .actions.d-none.d-sm-block
       .float-right
-        = link_to({action: :index, format: :pdf}, {class: '', target: '_blank'}) do
-          %button.btn.btn_custom.btn--filled.btn--medium
-            %i.icofont-clip-board
-            Reporte
-        %a.float-right.mb-3.ml-2{ href: app_farm_insemination_new_path(farm) }
+        - unless inseminations.size.zero?
+          %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-clip-board
+              Reporte
+              %i.icofont-simple-down
+          .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
+            = link_to({action: action_name.to_sym, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+              PDF
+            = link_to({action: action_name.to_sym, format: :xls}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+              XLS
+            = link_to({action: action_name.to_sym, format: :csv}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+              CSV
+        %a.float-right.mb-3.ml-2{ href: farm_insemination_new_path(farm) }
           %button.btn.btn_custom.btn--filled.btn--medium
             %i.icofont-plus
             Agregar
+    -# - if action_name.eql?('index')
+    -#   - if inseminations.size < @active_inseminations.size
+    -#     .toolbar
+    -#       .toolbar-item
+    -#         = link_to 'Mostrar todos', farm_inseminations_path(farm)
+    -# - else
+    -#   - if inseminations.size < @inactive_inseminations.size
+    -#     .toolbar
+    -#       .toolbar-item
+    -#         = link_to 'Mostrar todos', farm_inseminations_inactive_path(farm)
     .actions_movil.d-sm-none.mt-4.mb-4
       .float-right
         %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
@@ -23,14 +42,14 @@
             %i.icofont-simple-down
             Acciones
         .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
-          %a.dropdown-item{ href: app_farm_insemination_new_path(farm), style: "color: #000;" }
+          %a.dropdown-item{ href: farm_insemination_new_path(farm), style: "color: #000;" }
             Agregar
           = link_to({action: :index, format: :pdf},  {class: 'dropdown-item', target: '_blank'}) do
             Reporte
   - if inseminations.blank? && @farm.inseminations.count > 0
     .toolbar
       .toolbar-item
-        = link_to 'Mostrar todos', app_farm_inseminations_path(farm)
+        = link_to 'Mostrar todos', farm_inseminations_path(farm)
   .content-table
     %table.insemination-table
       - if inseminations.size.zero?
@@ -57,10 +76,10 @@
               = sort_link(@q, 'serie_number') do 
                 Serie
             %th 
-              = sort_link(@q, 'status.weight') do
+              = sort_link(@q, 'weight&.weight') do
                 Especie
             %th 
-              = sort_link(@q, 'status.days') do 
+              = sort_link(@q, 'days') do 
                 Raza
             - if action_name.eql?('index')
               %th

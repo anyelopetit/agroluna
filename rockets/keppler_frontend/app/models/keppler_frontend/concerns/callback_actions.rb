@@ -12,7 +12,7 @@ module KepplerFrontend
       end
 
       def add_callback_to(view, callback)
-        file = "#{url_front}/app/controllers/keppler_frontend/app/frontend_controller.rb"
+        file = "#{url_front}/app/controllers/keppler_frontend/app/farms_controller.rb"
         code = File.readlines(file)
         head_idx = 0
         code.each do |i|
@@ -37,14 +37,14 @@ module KepplerFrontend
       end
 
       def search_callback_line(view, callback)
-        file = "#{url_front}/app/controllers/keppler_frontend/app/frontend_controller.rb"
+        file = "#{url_front}/app/controllers/keppler_frontend/app/farms_controller.rb"
         code = File.readlines(file)
         line = "    #{callback_line(view, callback)}\n"
         result = code.include?(line) ? code.find_index(line) : 0
       end
 
       def delete_callback(view, callback)
-        file = "#{url_front}/app/controllers/keppler_frontend/app/frontend_controller.rb"
+        file = "#{url_front}/app/controllers/keppler_frontend/app/farms_controller.rb"
         callback_index = search_callback_line(view, callback)
         code = File.readlines(file)
         if callback_index > 0

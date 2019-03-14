@@ -69,11 +69,11 @@ thead {
 tbody {
   tr {
     border-bottom: 1px #eee solid;
-    transition: .5s ease-in-out;
+    transition: .2s ease-out;
     &:hover {
       // background-color: rgba(255,255,255,0.3);
-      box-shadow: 0 0 30px #d9e2e7;
-      transition: .5s ease-in-out;
+      box-shadow: 0 0 10px #d9e2e7;
+      transition: .2s ease-out;
     }
   }
   td {

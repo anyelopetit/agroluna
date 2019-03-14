@@ -1,8 +1,8 @@
-= render 'keppler_frontend/app/frontend/components/navbar', farm: @farm, farms: @farms
+= render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
 .app_wrapper
   .container_carousel
     .single-item
-      %a.mt-4.mb-4{ href: app_farm_cows_path(@farm) }
+      %a.mt-4.mb-4{ href: farm_cows_path(@farm) }
         %button.btn.btn_custom.btn--medium
           %i.icofont-circled-left
           Listado

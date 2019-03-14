@@ -31,68 +31,29 @@
               Raza
           %th Tipología
           %th Peso
-          %th Estado
+          -# %th Estado
           %th Controles
-        %tbody
-          - cows.each do |cow|
-            %tr{ style: "border-bottom: 1px #eee solid;" }
-              %td
-                .checkbox{ style: 'margin: 3px' }
-                  %label{ for: "checkbox-#{cow.id}" }
-                    %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
-                    %span.cr
-                      %i.cr-icon.icofont-check
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id},{title: cow.observations}) do
-                  = cow&.serie_number
-              -# %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                  = image_tag cow&.image&.url if cow.image.url
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id},{title: cow.observations}) do
-                  = cow&.short_name
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id},{title: cow.observations}) do
-                  = cow&.race&.name
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id},{title: cow.observations}) do
-                  = cow&.status&.typology&.name
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id},{title: cow.observations}) do
-                  = cow&.status&.weight
-                  KG
-              %td.status
-                .card_status--bar{ style: 'display:flex' }
-                  - if cow&.gender?('male')
-                    %a.status-tooltip{ title: 'Recelador' }
-                      %i.icofont-bull{ class: ('active' if cow&.status&.defiant) }
-                    %a.status-tooltip{ title: 'Reproductor' }
-                      %i.icofont-dna{ class: ('active' if cow&.status&.reproductive) }
-                  - else
-                    %a.status-tooltip{ title: 'Preñada' }
-                      %i.icofont-baby{ class: ('active' if cow&.status&.pregnant) }
-                    %a.status-tooltip{ title: 'Lactando' }
-                      %i.icofont-baby-milk-bottle{ class: ('active' if cow&.status&.lactating)  }
-                    %a.status-tooltip{ title: 'Criando' }
-                      %i.icofont-holding-hands{ class: ('active' if cow&.status&.breeding) }
-                  -# %a.status-tooltip{ title: 'Dado de baja' }
-                    %i.icofont-danger-zone{ class: ('active' if cow&.status&.dead) }
-              -# %td.actions
-                = link_to app_farm_cow_path(farm, cow), class: 'floating-btn' do
-                  %span.icofont-eye
-                = link_to app_farm_cow_status_new_path(farm, cow), class: 'floating-btn' do
-                  %span.icofont-ui-add
-              %td
-                .dropdown{ style: 'justify-content: center; cursor:pointer' }
-                  %a.action-btn.pull-right{:id => "menu-#{cow.id}", 'aria-expanded': 'false', 'aria-haspopup': 'true', 'data-toggle': 'dropdown' }
-                    %i.icofont-navigation-menu
-                  %ul.actions.dropdown-menu{ 'aria-labelledby': "menu-#{cow.id}" }
-                    %li
-                      = link_to({controller: :cattle, action: :show, farm_id: @farm.id, cow_id: cow.id}) do
-                        %i.icofont-eye
-                        Ver ficha de ganado
-                    - if cow.farm.id == @farm.id
-                      %li
-                        = link_to({controller: :status, action: :new, farm_id: @farm.id, cow_id: cow.id})do
-                          %i.icofont-refresh
-                          Actualizar estado
+        %tbody#cows
+          = render 'keppler_frontend/app/cattle/partials/cattle_item', cows: cows
+= paginate cows#, remote: true
+#loading
+:scss
+  .pagination {
+    visibility: hidden
+  }
+
+:coffee
+  $ ->
+    if $('.pagination').length && $('#cows').length
+      $(window).scroll ->
+        next_page = $('a[rel=next]').attr('href')
+        if $(window).scrollTop() > $(document).height() - $(window).height() - 5
+          $('.next_page').remove()
+          $('#loading').html('<center class="loading"><img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." /></center>')
+          if next_page
+            $.getScript(next_page)
+            console.log(next_page)
+        
+        checkboxes()
+
+      $(window).scroll()

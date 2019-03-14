@@ -1,6 +1,6 @@
 require_dependency "keppler_frontend/application_controller"
 module KepplerFrontend
-  class App::TransferencesController < App::FrontendController
+  class App::TransferencesController < App::FarmsController
     # Begin callbacks area (don't delete)
     # End callbacks area (don't delete)
     include FrontsHelper
@@ -41,7 +41,7 @@ module KepplerFrontend
             status = KepplerCattle::Status.new(
               c.status.as_json(except: :id)
             )
-            status.farm_id = @transference.to_farm_id
+            location&.farm_id = @transference.to_farm_id
             status.save!
           end
           redirect_to app_farm_transferences_path(@farm)
@@ -79,7 +79,7 @@ module KepplerFrontend
     private
 
     def set_transference
-      @transference = KepplerCattle::Transference.find_by(id: params[:transference_id])
+      @transference = KepplerCattle::Transference.find_by(id: params[:id])
     end
 
     def index_variables

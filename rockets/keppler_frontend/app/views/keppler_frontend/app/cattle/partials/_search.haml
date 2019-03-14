@@ -17,7 +17,7 @@
     -#     %select#min-typology{ name: 'search[typology]', class: 'btn btn--medium btn--select ml-2' }
     -#       %option Sin tipología
     -#       - @typologies.each do |typology|
-    -#         %option{ value: typology&.id } #{typology&.name}
+    -#         %option{ value: typology&.id } #{typology_name}
     -# .select-field#weight.ml-2
     -#   .search-weight
     -#     %select#min-weight.ml-2{ name: 'search[weight][min]', class: 'btn btn--medium btn--select' }
@@ -38,4 +38,5 @@
     -#       %option Max
     -#       - %w[1 2 5 10 15 20].each do |age|
     -#         %option{ value: age } #{age} años
-    = f.submit "Buscar", class: 'btn btn--small btn--select ml-3'
+    %button.btn.btn--small.btn--select.ml-3{ type: 'submit' }
+      %i.icofont-search

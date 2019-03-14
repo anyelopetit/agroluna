@@ -4,12 +4,14 @@ class CreateKepplerCattleRaces < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :abbreviation
       t.text :description
-      t.integer :position
-      t.datetime :deleted_at
 
       t.integer :species_id, foreign_key: true
 
+      t.integer :position
+      t.datetime :deleted_at
+
       t.timestamps null: false
     end
+    add_index :keppler_cattle_races, :species_id
   end
 end

@@ -18,7 +18,7 @@
     font-size: 20px;
     color: $primary;
     position: relative;
-    width: 50%;
+    // width: 50%;
     margin-bottom: 30px;
     @include respond-to(xs) {
       width: 100%;

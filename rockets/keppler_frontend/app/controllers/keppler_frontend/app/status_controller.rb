@@ -1,6 +1,6 @@
 require_dependency "keppler_frontend/application_controller"
 module KepplerFrontend
-  class App::StatusController < App::FrontendController
+  class App::StatusController < App::FarmsController
     # Begin callbacks area (don't delete)
     # End callbacks area (don't delete)
     include FrontsHelper
@@ -17,12 +17,13 @@ module KepplerFrontend
     end
 
     def new
-      @status = KepplerCattle::Status.new(farm_id: @farm.id, cow_id: @cow.id)
-      @corporal_conditions = KepplerCattle::Status.corporal_conditions
-      @strategic_lots = KepplerFarm::StrategicLot.all
-      @strategic_lot = @status.find_lot
+      @weight = KepplerCattle::Weight.new(user_id: current_user.id, cow_id: @cow.id)
+      @location = KepplerCattle::Location.new(user_id: current_user.id, cow_id: @cow.id, farm_id: @farm.id)
+      @corporal_conditions = @cow.species.corporal_conditions
+      @strategic_lots =  @cow.location&.farm&.strategic_lots
+      @strategic_lot = @cow.location&.strategic_lot
       @typologies = @cow.possible_typologies
-      @last_status = @cow.status
+      @last_status = @cow.weight
       @farms = KepplerFarm::Farm.order(title: :asc)
     end
 
@@ -30,7 +31,7 @@ module KepplerFrontend
       @status = KepplerCattle::Status.new(status_params)
 
       if @status.save!
-        redirect_to app_farm_cow_path(@farm, @cow)
+        redirect_to farm_cow_path(@farm, @cow)
       else
         render :new
       end

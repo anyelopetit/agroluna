@@ -8,7 +8,7 @@ module KepplerFrontend
         extend ActiveSupport::Concern
 
         def create_helper
-          file = "#{url_front}/app/helpers/keppler_frontend/app/frontend_helper.rb"
+          file = "#{url_front}/app/helpers/keppler_frontend/app/farms_helper.rb"
           index_html = File.readlines(file)
           head_idx = 0
           index_html.each do |i|
@@ -25,7 +25,7 @@ module KepplerFrontend
         end
 
         def delete_helper
-          file = "#{url_front}/app/helpers/keppler_frontend/app/frontend_helper.rb"
+          file = "#{url_front}/app/helpers/keppler_frontend/app/farms_helper.rb"
           index_html = File.readlines(file)
           begin_idx = 0
           end_idx = 0
@@ -41,7 +41,7 @@ module KepplerFrontend
         end
 
         def update_helper(helper)
-          file = "#{url_front}/app/helpers/keppler_frontend/app/frontend_helper.rb"
+          file = "#{url_front}/app/helpers/keppler_frontend/app/farms_helper.rb"
           index_html = File.readlines(file)
           begin_idx = 0
           end_idx = 0

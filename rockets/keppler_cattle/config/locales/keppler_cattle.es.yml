@@ -12,3 +12,8 @@ es:
       choose_gender: Elige un género
       choose_mother: Elige una madre
       choose_father: Elige un padre
+  public_activities:
+    weight: peso
+    location: ubicación
+    activity: actividad
+    cow_typology: tipología

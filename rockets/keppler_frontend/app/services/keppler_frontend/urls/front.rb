@@ -27,7 +27,7 @@ module KepplerFrontend
 
       def folder(folder_type)
         if folder_type.eql?('view')
-          "#{root.rocket_root}/app/views/keppler_frontend/app/frontend"
+          "#{root.rocket_root}/app/views/keppler_frontend/app/farms"
         else
           "#{root.rocket_root}/app/views/layouts/keppler_frontend/app/layouts"
         end

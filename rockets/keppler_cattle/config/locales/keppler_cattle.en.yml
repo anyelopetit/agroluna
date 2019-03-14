@@ -12,3 +12,8 @@ en:
       choose_gender: Choose a gender
       choose_mother: Choose a mother
       choose_father: Choose a father
+  public_activities:
+    weight: peso
+    location: ubicación
+    activity: actividad
+    cow_typology: tipología

@@ -7,23 +7,47 @@
       .modal-body{ style: "padding: 20px;"}
         .card_status
           %center.card_status--title   
-            %h1{style: "text-transform: uppercase;font-size: 25px;color: #28C76F;position: relative;margin-bottom: 5px;"} Hijos          
+            %h1.modal-title
+              Hijos          
           .box-body.no-padding
             .row
               - if @cow.sons.blank?
                 %center.col-lg-12
                   Aún no ha tenido crías
               - @cow.sons.each do |son|
-                .col-lg-12.son-item
-                  = link_to(action: :show, cow_id: son.id) do
-                    %dl
-                      %dt
-                        = image_tag "/assets/keppler_cattle/#{son.gender}", class: 'svg-icon-md' unless son.gender.blank?
-                        %span= son.serie_number
-                        %small= "(#{@cow.short_name})" unless @cow.short_name.blank?
+                .col-lg-12
+                  = link_to(action: :show, id: son.id) do
+                    .son-item.d-flex.p-3
+                      = image_tag "/assets/keppler_cattle/#{son.gender}", class: 'svg-icon-md p-absolute r-0' unless son.gender.blank?
+                      %strong #{son.serie_number} &nbsp;
+                      %span
+                        = "(#{son.short_name})" unless son.short_name.blank?
+                        \- #{son.typology_name} (#{son.weight&.weight} KG)
 :scss
   .son-item {
+    border-bottom: 1px solid #e9e9e9;
+
     &:hover {
       background: #fafafa;
     }
+  }
+
+  .modal a {
+    color: inherit;
+    transition: .2s;
+
+    &:hover {
+      color: #28C76F;
+      transition: .2s;
+    }
+  }
+
+  .modal-title {
+    text-transform: uppercase;
+    font-size: 25px;
+    color: #28C76F;
+    position: relative;
+    margin-bottom: 5px;
+    border-bottom: 2px solid #f98105;
+    width: 20%;
   }

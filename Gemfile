@@ -24,6 +24,10 @@ gem 'select2-rails'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 
+# Infinite Scroll
+# gem 'bootstrap-will_paginate', '~> 0.0.10'
+# gem 'will_paginate_infinite'
+
 # Server
 gem 'puma', '~> 3.11', '>= 3.11.3'
 

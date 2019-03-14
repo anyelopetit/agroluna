@@ -11,13 +11,13 @@ RSpec.describe KepplerFrontend::Urls::Front, type: :services do
     end
 
     context 'view url' do
-      let(:result) {"#{@root.rocket_root}/app/views/keppler_frontend/app/frontend/test_index.html.erb"} 
+      let(:result) {"#{@root.rocket_root}/app/views/keppler_frontend/app/farms/test_index.html.erb"} 
 
       it { expect(@front.view('test_index')).to eq(result) }
     end
 
     context 'view js' do
-      let(:result) {"#{@root.rocket_root}/app/views/keppler_frontend/app/frontend/test_index.js.erb"} 
+      let(:result) {"#{@root.rocket_root}/app/views/keppler_frontend/app/farms/test_index.js.erb"} 
 
       it { expect(@front.view_js('test_index')).to eq(result) }
     end
@@ -30,7 +30,7 @@ RSpec.describe KepplerFrontend::Urls::Front, type: :services do
     end
 
     context 'front controller' do
-      let(:result) {"#{@root.rocket_root}/app/controllers/keppler_frontend/app/frontend_controller.rb"}
+      let(:result) {"#{@root.rocket_root}/app/controllers/keppler_frontend/app/farms_controller.rb"}
 
       it { expect(@front.controller).to eq(result) }
     end

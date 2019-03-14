@@ -102,8 +102,8 @@ module KepplerCattle
         @species = Cow.species
         @genders = Cow.genders
         @races   = Cow.races
-        @posible_mothers = Cow.posible_mothers
-        @posible_fathers = Cow.posible_fathers
+        @possible_mothers = Cow.possible_mothers_select2
+        @possible_fathers = Cow.possible_fathers_select2
         @colors = Cow.colors
       end
 

@@ -73,13 +73,13 @@ module KepplerFrontend
 
     def code_save(code, type_code)
       if type_code.eql?('html')
-        save_html_code("#{url_front}/app/views/keppler_frontend/app/frontend/#{name}.html.erb", code, name)
+        save_html_code("#{url_front}/app/views/keppler_frontend/app/farms/#{name}.html.erb", code, name)
       elsif type_code.eql?('scss')
         save_code("#{url_front}/app/assets/stylesheets/keppler_frontend/app/views/#{name}.scss", code)
       elsif type_code.eql?('js')
         save_code("#{url_front}/app/assets/javascripts/keppler_frontend/app/views/#{name}.js", code)
       elsif type_code.eql?('js_erb')
-        save_code("#{url_front}/app/views/keppler_frontend/app/frontend/#{name}.js.erb", code)
+        save_code("#{url_front}/app/views/keppler_frontend/app/farms/#{name}.js.erb", code)
       elsif type_code.eql?('action')
         save_action(code)
       end

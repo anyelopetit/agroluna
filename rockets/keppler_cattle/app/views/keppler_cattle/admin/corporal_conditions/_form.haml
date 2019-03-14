@@ -1,0 +1,85 @@
+= simple_form_for [:admin, :cattle, @species, @weighing_day] do |f|
+  .container
+    .row
+      .col-lg-2
+        = link_to({action: :index}, {'data-position': 'bottom', 'data-tooltip': t('keppler.actions.back')}) do
+          .arrow-back.btn.btn-default
+            %i.fa.fa-angle-left
+            = t('keppler.actions.back')
+
+    .row
+      .col-lg-12
+        .box.slice-box
+          .box-header.with-border
+            %h3.box-title= t('keppler.models.pluralize.corporal_conditions').humanize
+            .box-tools.pull-right
+              %a.btn.btn-box-tool{'data-widget': 'collapse', type: 'button'}
+                %i.fa.fa-minus
+          .box-body
+            %table.table.table-bordered
+              %tbody
+                .form-padding
+                  = f.input :species_id, input_html: { value: @species.id }, as: :hidden
+                  .col-lg-12
+                    %label Nombre
+                    %small (La descripción del pesaje, por ejemplo "Destete", "1 año", "2 años")
+                    = f.input :name, as: :string, label: false
+                  .col-lg-4.col-sm-12
+                    = f.input :min_days, input_html: { min: 0, class: 'weighing_day' }
+                  .col-lg-4.col-sm-12
+                    = f.input :specific_day, input_html: { min: 0, class: 'weighing_day' }
+                  .col-lg-4.col-sm-12
+                    = f.input :max_days, input_html: { min: 0, class: 'weighing_day' }
+                  .col-lg-12
+                    %small Estos son los días en los que se dará la alerta para pesar al animal
+                    .pull-right
+                      = f.button :submit, t('keppler.actions.save'), name: '_save', class: 'btn-primary'
+                      = f.button :submit, t('keppler.actions.save_and_add_another'), name: '_add_other'
+:javascript
+
+  $(document).ready(function() {
+    $('.weighing_day').each(function(index, element) {
+      if ($(element).val() == '') $(element).val('0')
+    })
+  })
+
+  $('#weighing_day_min_days').keyup(function() {
+    var that = $(this)
+    $(".weighing_day").each(function(index, element){
+      if ($(element).val() < that.val()) {
+        if ($(element).val() == '') {
+          $(element).val('0')
+        } else {
+          $(element).val(that.val())
+        }
+      }
+    });
+  }) 
+
+  $('#weighing_day_max_days').keyup(function() {
+    var that = $(this)
+    $(".weighing_day").each(function(index, element){
+      if ($(element).val() == '') {
+        $(".weighing_day:not(#weighing_day_max_days)").val('0')
+      }
+      if ($(element).val() > that.val()) {
+        $(element).val(that.val())
+      }
+    });
+  }) 
+
+  $('#weighing_day_specific_day').keyup(function() {
+    var that = $(this)
+    if ($('#weighing_day_min_days').val() > that.val()) {
+      $('#weighing_day_min_days').val(that.val())
+    }
+    if ($('#weighing_day_max_days').val() < that.val()) {
+      $('#weighing_day_min_days').val(that.val())
+    }
+    $(".weighing_day").each(function(index, element){
+      if ($(element).val() == '') {
+        console.log('blank')
+        $(".weighing_day:not(#weighing_day_specific_day)").val('0')
+      }
+    });
+  }) 

@@ -21,6 +21,7 @@ en:
       pluralize:
         inseminations: inseminations
         weighing_days: weighing days
+        corporal_conditions: corporal conditions
         typologies: typologies
         races: races
         transferences: transferences

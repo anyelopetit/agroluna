@@ -1,6 +1,6 @@
 require_dependency "keppler_frontend/application_controller"
 module KepplerFrontend
-  class App::StrategicLotsController < App::FrontendController
+  class App::StrategicLotsController < App::FarmsController
     # Begin callbacks area (don't delete)
     # End callbacks area (don't delete)
     include FrontsHelper
@@ -77,7 +77,7 @@ module KepplerFrontend
           cow = KepplerCattle::Cow.find_by(id: id)
           if cow
             assignment = KepplerCattle::Assignment.new(
-              strategic_lot_id: params[:strategic_lot_id],
+              strategic_lot_id: params[:id],
               cow_id: id
             )
             assignment.clean_other_cow_assignments
@@ -96,7 +96,7 @@ module KepplerFrontend
       else
         params[:multiple_ids].remove("[", "]").split(',').each do |id|
           assignment = KepplerCattle::Assignment.find_by(
-            strategic_lot_id: params[:strategic_lot_id],
+            strategic_lot_id: params[:id],
             cow_id: id
           )
 
@@ -118,7 +118,7 @@ module KepplerFrontend
     private
 
     def set_strategic_lot
-      @strategic_lot = KepplerFarm::StrategicLot.find_by(id: params[:strategic_lot_id])
+      @strategic_lot = KepplerFarm::StrategicLot.find_by(id: params[:id])
     end
 
     def index_variables

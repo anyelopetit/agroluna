@@ -144,7 +144,7 @@ module KepplerFrontend
         @view = View.where(id: params[:view_id]).first
         theme_view=File.readlines("#{url_front}/app/assets/html/keppler_frontend/views/#{params[:theme_view]}.html")
         theme_view = theme_view.join
-        out_file = File.open("#{url_front}/app/views/keppler_frontend/app/frontend/#{@view.name}.html.erb", "w")
+        out_file = File.open("#{url_front}/app/views/keppler_frontend/app/farms/#{@view.name}.html.erb", "w")
         out_file.puts("<keppler-view id='#{@view.name}'>\n  #{theme_view}\n</keppler-view>");
         out_file.close
         redirect_to admin_frontend_view_editor_path(params[:view_id])

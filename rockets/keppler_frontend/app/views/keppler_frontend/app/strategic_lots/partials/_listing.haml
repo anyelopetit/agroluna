@@ -1,4 +1,4 @@
-= render 'keppler_frontend/app/frontend/components/navbar', farm: @farm, farms: @farms
+= render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
 .app_wrapper
   .container_custom
     .float-left
@@ -34,15 +34,15 @@
             %i.icon-cloud-upload
         .toolbar-item
           -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
-          = link_to app_farm_strategic_lot_destroy_multiple_path(@farm), class: 'destroy_multiple', method: :delete, data: { confirm: t('keppler.messages.data_confirm') }   do
+          = link_to farm_strategic_lot_destroy_multiple_path(@farm), class: 'destroy_multiple', method: :delete, data: { confirm: t('keppler.messages.data_confirm') }   do
             %i.icofont-trash
             Eliminar
-    %a.float-right.mt-4.mb-4{ href: app_farm_strategic_lot_new_path(farm) }
+    %a.float-right.mt-4.mb-4{ href: farm_strategic_lot_new_path(farm) }
       %button.btn.btn_custom.btn--filled.btn--medium
         %i.icofont-plus
         Agregar
     - if strategic_lots.blank? && @farm.strategic_lots.count > 0
-      = link_to 'Mostrar todos', app_farm_strategic_lots_path(farm)
+      = link_to 'Mostrar todos', farm_strategic_lots_path(farm)
     .content-table{ style: 'position:initial' }
       %table
         - if strategic_lots.size.zero?

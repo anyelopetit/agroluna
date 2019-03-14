@@ -1,6 +1,6 @@
 require_dependency "keppler_frontend/application_controller"
 module KepplerFrontend
-  class App::InseminationsController < App::FrontendController
+  class App::InseminationsController < App::FarmsController
     # Begin callbacks area (don't delete)
     # End callbacks area (don't delete)
     include FrontsHelper
@@ -10,7 +10,7 @@ module KepplerFrontend
     before_action :insemination_attributes, only: %i[new edit create]
     before_action :index_variables
     before_action :user_authenticate
-    before_action :index_history, only: %i[index index_inactive]
+    before_action :index_history, only: %i[index index_inactives]
     before_action :show_history, only: %i[show]
     before_action :respond_to_formats
     include ObjectQuery
@@ -35,7 +35,7 @@ module KepplerFrontend
       @insemination = KepplerCattle::Insemination.new(insemination_params)
 
       if @insemination.save
-        redirect_to action: :show, insemination_id: @insemination.id
+        redirect_to action: :show, id: @insemination.id
       else
         flash[:error] = 'Revisa los datos del formulario'
         render :new
@@ -44,7 +44,7 @@ module KepplerFrontend
 
     def update
       if @insemination.update(insemination_params)
-        redirect_to action: :show, insemination_id: @insemination.id
+        redirect_to action: :show, id: @insemination.id
       else
         render :edit
       end
@@ -70,7 +70,7 @@ module KepplerFrontend
     private
 
     def set_insemination
-      @insemination = KepplerCattle::Insemination.find_by(id: params[:insemination_id])
+      @insemination = KepplerCattle::Insemination.find_by(id: params[:id])
     end
 
     def index_variables
@@ -86,8 +86,8 @@ module KepplerFrontend
     def insemination_attributes
       @species = KepplerCattle::Species.all
       @races   = KepplerCattle::Race.all
-      @posible_mothers = KepplerCattle::Insemination.posible_mothers
-      @posible_fathers = KepplerCattle::Insemination.posible_fathers
+      @possible_mothers = KepplerCattle::Insemination.possible_mothers
+      @possible_fathers = KepplerCattle::Insemination.possible_fathers
       @colors = KepplerCattle::Insemination.colors
     end
 

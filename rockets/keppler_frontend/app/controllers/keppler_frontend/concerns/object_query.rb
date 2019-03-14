@@ -35,7 +35,7 @@ module ObjectQuery
   private
 
   def redirect_to_index(objects)
-    return if listing? && (objects.first_page? || !objects.size.zero?)
+    return if listing? && (!objects.size.zero? || objects.first_page?)
     redirect_to(
       {
         action: :index,

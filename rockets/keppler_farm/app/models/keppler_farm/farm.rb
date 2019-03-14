@@ -34,7 +34,7 @@ module KepplerFarm
     end
 
     def cows
-      cow_ids = KepplerCattle::Cow.all.select { |c| c&.status&.farm_id&.eql?(id) if c&.status&.farm_id }.pluck(:id)
+      cow_ids = KepplerCattle::Cow.all.select { |c| c&.location&.farm_id&.eql?(id) if c&.location&.farm_id }.pluck(:id)
       KepplerCattle::Cow.where(id: cow_ids)
     end
 

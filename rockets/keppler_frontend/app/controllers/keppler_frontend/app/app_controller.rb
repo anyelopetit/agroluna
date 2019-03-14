@@ -52,10 +52,10 @@ module KepplerFrontend
       end
     end
 
-    def default_url_options(options = {})
-      logger.debug "default_url_options is passed options: #{options.inspect}\n"
-      { locale: :es }
-    end
+    # def default_url_options(options = {})
+    #   logger.debug "default_url_options is passed options: #{options.inspect}\n"
+    #   { locale: :es }
+    # end
 
     def set_analytics
       @scripts = Script.select { |x| x.url == request.env['PATH_INFO'] }

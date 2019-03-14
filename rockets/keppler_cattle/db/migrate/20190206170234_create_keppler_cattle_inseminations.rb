@@ -11,12 +11,9 @@ class CreateKepplerCattleInseminations < ActiveRecord::Migration[5.2]
       t.string :provenance
 
       t.date :birthdate
-      t.date :used
+      t.date :used_date
 
       t.text :observations
-
-      t.integer :position
-      t.datetime :deleted_at
 
       t.integer :farm_id
       t.integer :species_id
@@ -26,7 +23,18 @@ class CreateKepplerCattleInseminations < ActiveRecord::Migration[5.2]
       t.integer :mother_id
       t.integer :father_id
 
+      t.integer :position
+      t.datetime :deleted_at
+
       t.timestamps null: false
     end
+    add_index :keppler_cattle_inseminations, :farm_id
+    add_index :keppler_cattle_inseminations, :species_id
+    add_index :keppler_cattle_inseminations, :race_id
+    add_index :keppler_cattle_inseminations, :typology_id
+    
+    add_index :keppler_cattle_inseminations, :mother_id
+    add_index :keppler_cattle_inseminations, :father_id
+
   end
 end

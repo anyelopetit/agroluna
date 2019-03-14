@@ -1,8 +1,8 @@
-= render 'keppler_frontend/app/frontend/components/navbar', farm: @farm, farms: @farms
+= render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
 .app_wrapper
   .container_custom
     .float-left
-      -# %a.mt-4.mb-4.ml-3{ href: app_farm_inseminations_path(@farm) }
+      -# %a.mt-4.mb-4.ml-3{ href: farm_inseminations_path(@farm) }
       =# request.env['HTTP_REFERER']
       = link_to({action: :index}, { class: 'mt-4 mb-4 ml-3' }) do
         %button.btn.btn_custom.btn--medium
@@ -31,7 +31,7 @@
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-clip-board
               Reporte
-          %a.mt-4.mb-4{ href: app_farm_insemination_edit_path(@farm, @insemination) }
+          %a.mt-4.mb-4{ href: farm_insemination_edit_path(@farm, @insemination) }
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-ui-edit
               Editar
@@ -56,7 +56,7 @@
                 %button.btn.btn_custom.btn--filled.btn--medium
                   %i.icofont-check
                   Marcar como usada
-            %a{ class: 'dropdown-item', href: app_farm_insemination_edit_path(@farm, @insemination) }
+            %a{ class: 'dropdown-item', href: farm_insemination_edit_path(@farm, @insemination) }
               Editar
             %a.open-status-history{class: "dropdown-item"}
               Historial
@@ -69,8 +69,8 @@
       .col-md-12
         .card_show.insemination_info.p-5
           .float-right
-            -# = image_tag "/assets/keppler_cattle/#{@insemination.species}", class: 'svg-icon-md' unless @insemination.species.blank?
-            = image_tag "/assets/keppler_cattle/male", class: 'svg-icon-md'
+            -# = image_tag "/assets/keppler_cattle/#{@insemination.species}", class: 'svg-icon-md p-absolute r-0' unless @insemination.species.blank?
+            = image_tag "/assets/keppler_cattle/male", class: 'svg-icon-md p-absolute r-0'
           .row.mt-5
             .col-lg-3{ :style =>"display: flex; justify-content: center;"}
               .card_insemination
@@ -172,7 +172,7 @@
                   .col-lg-6.col-md-6
                     .parent_card
                       - if @insemination.mother
-                        = link_to app_farm_insemination_path(@farm, @insemination.mother) do
+                        = link_to farm_insemination_path(@farm, @insemination.mother) do
                           .parent_img
                             = image_tag (@insemination.mother&.image&.url || 'https://image.flaticon.com/icons/svg/523/523448.svg'), class: 'avatar_insemination'
                           %dl
@@ -185,7 +185,7 @@
                   .col-lg-6.col-md-6
                     .parent_card
                       - if @insemination.father
-                        = link_to app_farm_insemination_path(@farm, @insemination.father) do
+                        = link_to farm_insemination_path(@farm, @insemination.father) do
                           .parent_img
                             = image_tag (@insemination.father&.image&.url || 'https://image.flaticon.com/icons/svg/1495/1495074.svg'), class: 'avatar_insemination', style: "width: 50px;" 
                           %dl
@@ -241,9 +241,6 @@
       max-height: 70px;
       max-width: 200px;
     }
-  }
-  .svg-icon-md {
-    height: 30px;
   }
   .close-status-history {
     z-index: 5;

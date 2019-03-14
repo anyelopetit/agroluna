@@ -2,8 +2,8 @@
 class CreateKepplerCattleCows < ActiveRecord::Migration[5.2]
   def change
     create_table :keppler_cattle_cows do |t|
-      t.string :serie_number
       t.string :image
+      t.string :serie_number
       t.string :short_name
       t.string :gender
       t.date :birthdate
@@ -12,18 +12,23 @@ class CreateKepplerCattleCows < ActiveRecord::Migration[5.2]
       t.string :tassel_color
       t.string :provenance
       t.text :observations
+
+      t.integer :species_id, foreign_key: true
+      t.integer :race_id, foreign_key: true
+
+      t.integer :mother_id, foreign_key: true
+
+      t.string :father_type
+      t.integer :father_id, foreign_key: true
+
       t.integer :position
       t.datetime :deleted_at
 
-      t.integer :species_id
-      t.integer :race_id
-
-      t.integer :mother_id
-
-      t.string :father_type
-      t.integer :father_id
-
-      t.timestamps
+      t.timestamps null: false
     end
+    add_index :keppler_cattle_cows, :species_id
+    add_index :keppler_cattle_cows, :race_id
+    add_index :keppler_cattle_cows, :mother_id
+    add_index :keppler_cattle_cows, :father_id
   end
 end

@@ -18,6 +18,15 @@ KepplerCattle::Engine.routes.draw do
         get '/reload', action: :reload, on: :collection
         delete '/destroy_multiple', action: :destroy_multiple, on: :collection
 
+        resources :corporal_conditions do
+          post '/sort', action: :sort, on: :collection
+          get '(page/:page)', action: :index, on: :collection, as: ''
+          get '/clone', action: 'clone'
+          post '/upload', action: 'upload', as: :upload
+          get '/reload', action: :reload, on: :collection
+          delete '/destroy_multiple', action: :destroy_multiple, on: :collection
+        end
+
         resources :weighing_days do
           post '/sort', action: :sort, on: :collection
           get '(page/:page)', action: :index, on: :collection, as: ''

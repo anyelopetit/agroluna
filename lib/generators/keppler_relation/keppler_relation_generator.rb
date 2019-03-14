@@ -139,11 +139,11 @@ module Rails
       end
 
       #
-      def redirect_path(father,son)
+      def redirect_path(father, son)
         "if params.key?('_add_other')\n          redirect_to new_admin_#{father.underscore}_#{son.underscore}_path, notice: actions_messages(@#{son})\n        else\n          redirect_to admin_#{father.underscore}_#{son.pluralize}_path\n        end"
       end
 
-      def singular_path(father,son,file)
+      def singular_path(father, son, file)
         inject_into_file(
           "app/views/admin/#{son.pluralize}/#{file}.html.haml",
           "_#{father.underscore}",
@@ -151,7 +151,7 @@ module Rails
         )
       end
 
-      def clone_path(father,son,file)
+      def clone_path(father, son, file)
         inject_into_file(
           "app/views/admin/#{son.pluralize}/#{file}.html.haml",
           "_#{father.underscore}",

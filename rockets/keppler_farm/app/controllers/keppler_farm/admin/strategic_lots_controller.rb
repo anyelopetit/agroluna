@@ -14,7 +14,7 @@ module KepplerFarm
       # GET /farms
       def index
         @assign = KepplerCattle::Assignment.new
-        statuses_ids = KepplerCattle::Status.where(farm_id: @farm.id).map(&:cow_id).uniq
+        statuses_ids = KepplerCattle::Status.where(farm_id: @farm&.id).map(&:cow_id).uniq
         @cows = KepplerCattle::Cow.find_by(id: statuses_ids)#.map { |c| [c.serie_number, c.id] }
         respond_to_formats(@strategic_lots)
         redirect_to_index(@objects)

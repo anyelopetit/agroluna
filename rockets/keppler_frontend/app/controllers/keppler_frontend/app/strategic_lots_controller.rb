@@ -56,7 +56,7 @@ module KepplerFrontend
     # DELETE /farms/1
     def destroy
       @strategic_lot.destroy
-      redirect_to action: :index, farm_id: @farm.id
+      redirect_to action: :index, farm_id: @farm&.id
     end
 
     def destroy_multiple
@@ -112,7 +112,7 @@ module KepplerFrontend
           end
         end
       end
-      redirect_to action: :show, id: @farm.id, strategic_lot_id: @strategic_lot.id
+      redirect_to action: :show, id: @farm&.id, strategic_lot_id: @strategic_lot.id
     end
 
     private

@@ -116,14 +116,14 @@ module KepplerCattle
     end
 
     def self.possible_mothers_select2
-      order(:serie_number).select { |x| x.gender?('female') }.select { |x| %w[1 2].include?(x.typology.counter.to_s) }
+      order(:serie_number).select { |x| x.gender?('female') }.select { |x| %w[1 2].include?(x.typology&.counter.to_s) }
         .map { |x| [x.serie_number + ("(#{x&.short_name}) - #{x&.typology_name}" unless x&.short_name.blank?).to_s, x.id] }
     end
 
     def self.possible_fathers_select2
       order(:serie_number).select { |x| x.gender?('male') }
         .map { |x| [x.serie_number + ("(#{x&.short_name})" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] }
-        .concat(KepplerCattle::Insemination.actives.order(:serie_number).map { 
+        .concat(KepplerCattle::Insemination.order(:serie_number).map { 
           |x| [x.serie_number + ("(#{x&.short_name}) - Pajuela" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] 
         }) 
     end
@@ -160,7 +160,7 @@ module KepplerCattle
 
     def self.actives
       cows = select do |cow|
-        # cow&.location&.farm_id == farm.id &&
+        # cow&.location&.farm_id == farm&.id &&
         cow&.activity&.active
       end
       active_ids = cows.pluck(:id).uniq
@@ -169,8 +169,8 @@ module KepplerCattle
 
     def self.inactives
       cows = select do |cow|
-        (cow&.locations.pluck(:farm_id).include?(farm.id) &&
-        cow&.location&.farm_id != farm.id) || 
+        (cow&.locations.pluck(:farm_id).include?(farm&.id) &&
+        cow&.location&.farm_id != farm&.id) || 
         !cow&.activity&.active
       end
       inactive_ids = cows.pluck(:id).uniq

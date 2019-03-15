@@ -9,7 +9,7 @@
             %h5.file-text Arrastra una imagen o haz click aquí
           %br
           %span (.JPG, .JPEG, .PNG)
-      = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
+      = f.input :farm_id, as: :hidden, input_html: { value: @farm&.id }
       .col-sm-4
         = f.input :serie_number, as: :string, label: 'Número de serie', required: true, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-4
@@ -36,7 +36,9 @@
         = f.input :mother_id, collection: @possible_mothers, label: 'Madre', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-4
         = f.input :father_id, collection: @possible_fathers, label: 'Padre', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
-      .col-sm-12
+      .col-sm-6
+        = f.input :quantity, label: 'Cantidad de cartuchos', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-6
         = f.input :observations, label: 'Observaciones', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-12
         .float-right

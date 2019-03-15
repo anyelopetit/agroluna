@@ -73,8 +73,15 @@ module KepplerFrontend
     end
 
     def destroy_multiple
-      Cow.destroy redefine_ids(params[:multiple_ids])
+      KepplerCattle::Cow.destroy redefine_ids(params[:multiple_ids])
       redirect_to farm_cows_path(@farm)
+    end
+
+    def get_races
+      @races = KepplerCattle::Species.find(params[:species_id]).races
+      respond_to do |format|
+        format.js
+      end
     end
 
     private
@@ -96,7 +103,7 @@ module KepplerFrontend
     def cow_attributes
       @species = KepplerCattle::Species.all
       @genders = KepplerCattle::Cow.genders
-      @races   = KepplerCattle::Race.all
+      @races   = @species.first.races
       @possible_mothers = KepplerCattle::Cow.possible_mothers_select2
       @possible_fathers = KepplerCattle::Cow.possible_fathers_select2
       @colors = KepplerCattle::Cow.colors
@@ -163,21 +170,7 @@ module KepplerFrontend
     # Only allow a trusted parameter "white list" through.
     def cow_params
       params.require(:cow).permit(
-        :serie_number,
-        :image,
-        :short_name,
-        :long_name,
-        :species_id,
-        :race_id,
-        :gender,
-        :birthdate,
-        :coat_color,
-        :nose_color,
-        :tassel_color,
-        :provenance, 
-        :observations,
-        :mother_id,
-        :father_id
+        KepplerCattle::Cow.attribute_names.map(&:to_sym)
       )
     end
   end

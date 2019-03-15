@@ -170,14 +170,14 @@ end
       name: Faker::Lorem.sentence(3, true, 3),
       function: Faker::Lorem.word,
       description: Faker::Lorem.paragraph,
-      farm_id: farm.id
+      farm_id: farm&.id
     )
   end
 end
 puts 'Fincas y lotes creados'
 
 # Especies
-%i[Vacuno].each do |species_name|
+%i[Vacuno Caprino].each do |species_name|
   species = KepplerCattle::Species.create(
     name: species_name,
     abbreviation: species_name.to_s.remove('a', 'e', 'i', 'o', 'u')
@@ -186,7 +186,7 @@ puts 'Fincas y lotes creados'
   # Razas
   30.times do |race_index|
     KepplerCattle::Race.create(
-      name: "Raza #{race_index}",
+      name: "Raza #{species_name} #{race_index}",
       abbreviation: "R#{race_index}",
       description: Faker::Lorem.paragraph,
       species_id: species.id
@@ -301,7 +301,7 @@ puts 'Especies, razas, tipologías y pesajes creados'
     KepplerCattle::Location.create(
       user_id: 1,
       cow_id: cow.id,
-      farm_id: farm.id,
+      farm_id: farm&.id,
       strategic_lot_id: farm.strategic_lots.sample.id 
     )
   end
@@ -327,6 +327,7 @@ puts 'Especies, razas, tipologías y pesajes creados'
     nose_color: Faker::Color.color_name,
     tassel_color: Faker::Color.color_name,
     provenance: Faker::LordOfTheRings.location,
+    quantity: Faker::Number.between(1,10),
     observations: Faker::Lorem.paragraph
   )
 end
@@ -351,7 +352,7 @@ species = KepplerCattle::Species.first
 8.times do |index|
   cow = KepplerCattle::Cow.create(
     serie_number: ((index+1)*11111111),
-    short_name: "Bisabuel#{index%2.zero? ? 'o' : 'a'}",
+    short_name: "Bisabuelo",#{(index % 2).zero? ? 'o' : 'a'}",
     # farm_id: [1,2].sample,
     gender: ['male', 'female'][index%2],
     species_id: species.id,
@@ -387,7 +388,7 @@ species = KepplerCattle::Species.first
   KepplerCattle::Location.create(
     user_id: 1,
     cow_id: cow.id,
-    farm_id: farm.id,
+    farm_id: farm&.id,
     strategic_lot_id: farm.strategic_lots.sample.id 
   )
 end
@@ -396,7 +397,7 @@ puts 'Bisabuelos creados'
 %w[11112222 33334444 55556666 77778888].each_with_index do |serie_number, index|
   cow = KepplerCattle::Cow.create(
     serie_number: serie_number,
-    short_name: "Abuel#{index%2.zero? ? 'o' : 'a'}",
+    short_name: "Abuelo",#{index%2.zero? ? 'o' : 'a'}",
     # farm_id: [1,2].sample,
     gender: ['male', 'female'][index%2],
     species_id: species.id,
@@ -432,7 +433,7 @@ puts 'Bisabuelos creados'
   KepplerCattle::Location.create(
     user_id: 1,
     cow_id: cow.id,
-    farm_id: farm.id,
+    farm_id: farm&.id,
     strategic_lot_id: farm.strategic_lots.sample.id 
   )
 end
@@ -477,7 +478,7 @@ puts 'Abuelos creados'
   KepplerCattle::Location.create(
     user_id: 1,
     cow_id: cow.id,
-    farm_id: farm.id,
+    farm_id: farm&.id,
     strategic_lot_id: farm.strategic_lots.sample.id 
   )
 end
@@ -522,7 +523,7 @@ farm = KepplerFarm::Farm.all.sample
 KepplerCattle::Location.create(
   user_id: 1,
   cow_id: cow.id,
-  farm_id: farm.id,
+  farm_id: farm&.id,
   strategic_lot_id: farm.strategic_lots.sample.id 
 )
 puts 'Hijo creado'

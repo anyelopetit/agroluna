@@ -1,0 +1,3 @@
+console.log(#{raw @races.map{|x| x.name}})
+
+$('#cow_race_id').replaceWith("#{j render 'keppler_frontend/app/cattle/partials/races', races: @races}")

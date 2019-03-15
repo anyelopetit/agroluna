@@ -6,6 +6,8 @@ KepplerFrontend::Engine.routes.draw do
   # get '/login', to: 'app/farm#login', as: :login
 
   get '/import-xls', to: 'app/farm#import_xls', as: :import_xls
+
+  get 'species/:species_id/races', to: 'app/cattle#get_races', as: :get_races
   
   #Farm
   # get '/finca/:farm_id', to: 'app/farm#show', as: :app_farm

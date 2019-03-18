@@ -12,6 +12,8 @@ module KepplerFrontend
     helper KepplerFarm::ApplicationHelper
     include ObjectQuery
 
+    def index; end
+
     def new
       @cicle = KepplerReproduction::Cicle.new
     end
@@ -40,7 +42,7 @@ module KepplerFrontend
     # DELETE /farms/1
     def destroy
       @cicle.destroy
-      redirect_to action: :index, farm_id: @farm&.id
+      redirect_to farm_season_path(@farm, @season)
     end
 
     def destroy_multiple

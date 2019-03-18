@@ -28,7 +28,10 @@
         .gantt__row-first
           Ciclo #{index + 1}
         %ul.gantt__row-bars{ style: "grid-template-columns: repeat(#{season.duration_days}, 1fr);" }
-          %li.stripes{style: "grid-column: #{last_cicle_days + 1}/#{last_cicle_days + cicle.days_count + 1}; background-color: #{season.cicle_colors[index % 3]};"}=# Even longer project
+          %li.stripes{style: "grid-column: #{last_cicle_days + 1}/#{last_cicle_days + cicle.days_count + 1}; background-color: #{season.cicle_colors[index % 3]};"}
+            .float-right
+              = link_to({ controller: :cicles, action: :destroy, farm_id: @farm.id, season_id: @season.id, id: cicle.id }, { method: :delete, data: { confirm: t('keppler.messages.data_confirm') } }) do
+                %i.icofont-trash.text-white
       - last_cicle_days += cicle.days_count
     -# - season.cicles.each_with_index do |cicle, index|
       .gantt__row

@@ -72,19 +72,19 @@
           - transferences.each do |transference|
             %tr{ style: "border-bottom: 1px #eee solid;" }
               %td
-                = link_to({action: :show, farm_id: farm&.id, transference_id: transference.id}) do
+                = link_to({action: :show, farm_id: farm&.id, id: transference.id}) do
                   = transference&.cows&.count
               -# %td
-                = link_to({action: :show, farm_id: farm&.id, transference_id: transference.id}) do
+                = link_to({action: :show, farm_id: farm&.id, id: transference.id}) do
                   = transference&.from_farm&.title
               %td
-                = link_to({action: :show, farm_id: farm&.id, transference_id: transference.id}) do
+                = link_to({action: :show, farm_id: farm&.id, id: transference.id}) do
                   = transference&.to_farm&.title
               %td
-                = link_to({action: :show, farm_id: farm&.id, transference_id: transference.id}) do
+                = link_to({action: :show, farm_id: farm&.id, id: transference.id}) do
                   = transference&.try(:reason)
               %td
-                = link_to({action: :show, farm_id: farm&.id, transference_id: transference.id}) do
+                = link_to({action: :show, farm_id: farm&.id, id: transference.id}) do
                   = transference&.created_at.strftime("%d-%m-%Y")
               -# %td.actions
                 = link_to farm_transference_path(farm, transference), class: 'floating-btn' do

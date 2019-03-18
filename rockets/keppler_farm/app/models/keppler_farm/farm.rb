@@ -18,8 +18,17 @@ module KepplerFarm
     has_many :users
     has_many :assignments, through: :users
 
-    has_many :strategic_lots
-    has_many :cows
+    # Farm
+    has_many :strategic_lots, class_name: 'KepplerFarm::StrategicLot'
+
+    # Cattle
+    # has_many :cow_locations, class_name: 'KepplerCattle::Location'
+    # has_many :cows, -> { distinct }, class_name: 'KepplerCattle::Cow', through: :cow_locations
+    has_many :inseminations, class_name: 'KepplerCattle::Insemination'
+    has_many :transferences, class_name: 'KepplerCattle::Transference', foreign_key: 'from_farm_id'
+
+    # Reproduction
+    has_many :seasons, class_name: 'KepplerReproduction::Season'
 
     def self.index_attributes
       %i[logo title photos strategic_lots]
@@ -38,18 +47,18 @@ module KepplerFarm
       KepplerCattle::Cow.where(id: cow_ids)
     end
 
-    def transferences
-      transference_ids = KepplerCattle::Transference.all.select { |t| t&.from_farm_id&.eql?(id) || t&.to_farm_id&.eql?(id) }.pluck(:id)
-      KepplerCattle::Transference.where(id: transference_ids)
-    end
+    # def transferences
+    #   transference_ids = KepplerCattle::Transference.all.select { |t| t&.from_farm_id&.eql?(id) || t&.to_farm_id&.eql?(id) }.pluck(:id)
+    #   KepplerCattle::Transference.where(id: transference_ids)
+    # end
 
-    def strategic_lots
-      KepplerFarm::StrategicLot.where(farm_id: id)
-    end
+    # def strategic_lots
+    #   KepplerFarm::StrategicLot.where(farm_id: id)
+    # end
 
-    def inseminations
-      KepplerCattle::Insemination.where(farm_id: id)
-    end
+    # def inseminations
+    #   KepplerCattle::Insemination.where(farm_id: id)
+    # end
 
     def activities
       ids = cows.pluck(:id)

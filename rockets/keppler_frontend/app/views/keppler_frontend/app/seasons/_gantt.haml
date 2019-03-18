@@ -1,0 +1,77 @@
+.gantt-wrapper
+  -# .gantt-header
+    %h2 Diagrama de Gantt
+    -# %p
+      Usa
+      %strong grid-column
+      para abarcar una nueva entrada a través de la red. (p.ej.
+      %strong grid-column: 5/#{season.duration_days};
+      se extiende una entrada de mayo a noviembre)
+  .gantt.mb-5
+    .gantt__row.gantt__row--months
+      .gantt__row-first
+      %ul.months{ style: "grid-template-columns: repeat(#{season.duration_days}, 1fr);" }
+        - start_day = 1
+        - season.months_on_season.each do |month|
+          %li.month{ style: "grid-column: #{start_day}/#{start_day + season.month_days_count(month)};" }= season.all_months[month.to_i - 1]
+          - start_day = start_day + season.month_days_count(month)
+    .gantt__row.gantt__row--months{ style: "grid-template-columns: 150px repeat(#{season.duration_days}, 1fr);" }
+      .gantt__row-first
+      - season.duration_days.times do |day|
+        %span= (season.start_date + day).strftime('%d')
+    .gantt__row.gantt__row--lines{"data-month" => "5", style: "grid-template-columns: 150px repeat(#{season.duration_days}, 1fr);"}
+      - season.duration_days.times do |day|
+        %span{ class: ('marker' if (season.start_date + day).strftime('%d%m%y').eql?((Date.today + 1).strftime('%d%m%y'))) }
+    - last_cicle_days = 0
+    - season.cicles.each_with_index do |cicle, index|
+      .gantt__row
+        .gantt__row-first
+          Ciclo #{index + 1}
+        %ul.gantt__row-bars{ style: "grid-template-columns: repeat(#{season.duration_days}, 1fr);" }
+          %li.stripes{style: "grid-column: #{last_cicle_days + 1}/#{last_cicle_days + cicle.days_count + 1}; background-color: #{season.cicle_colors[index % 3]};"}=# Even longer project
+      - last_cicle_days += cicle.days_count
+    -# - season.cicles.each_with_index do |cicle, index|
+      .gantt__row
+        .gantt__row-first
+          Ciclo #{index + 1}
+        %ul.gantt__row-bars{ style: "grid-template-columns: repeat(#{season.duration_days}, 1fr);" }
+          %li.stripes{style: "grid-column: #{last_cicle_days + 1}/#{last_cicle_days + (index + 1) + 1}; background-color: #{season.cicle_colors[(index) % 3]};"}=# Even longer project
+      - last_cicle_days += (index + 1)
+
+-# %table.table.mt-3.mb-5
+  - if season.project_type&.tasks.blank?
+    %tbody
+      %tr
+        %td{ style: 'padding: 15px' }
+          Aún no hay tareas registradas
+  - else
+    %thead.thead-dark
+      %tr
+        %th{scope: "col"}
+        - season.duration_days.times do |day|
+          %th{scope: "col"}= (season.start_date + day).strftime('%d')
+    %tbody
+      - last_cicle_days = 0
+      - season.project_type&.tasks.each_with_index do |task, index|
+        %tr
+          %th= task.name
+          %td
+            %ul.gantt__row-bars{ style: "grid-template-columns: repeat(#{season.duration_days}, 1fr);" }
+              %li.stripes{style: "grid-column: #{last_cicle_days + 1}/#{last_cicle_days + task.days + 1}; background-color: #{season.cicle_colors[index % 3]};"}=# Even longer project
+        - last_cicle_days += task.days
+
+:scss
+  .months {
+    display: grid;
+    padding: 0;
+    margin: 0;
+
+    .month {
+      font-size: 14px;
+      overflow: hidden;
+      padding: 9px 0;
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+      text-align: center;
+      font-weight: 700;
+    }
+  }

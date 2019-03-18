@@ -9,7 +9,7 @@
       .card_new
         .float-left
         %h1 Pajuela (#{@insemination.serie_number})
-        = simple_form_for [:app, @farm, @insemination] do |f|
+        = simple_form_for [@farm, @insemination] do |f|
           .form-padding
             .row
               .col-sm-6

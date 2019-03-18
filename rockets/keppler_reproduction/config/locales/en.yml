@@ -1,0 +1,30 @@
+en:
+  keppler:
+    sidebar-menu:
+      keppler-reproduction: Reproduction
+      keppler-reproduction-submenu:
+        cicle: Cicle
+        season-cow: Season cow
+        season: Season
+    permissions:
+    models:
+      singularize:
+        cicle: cicle
+        season_cow: season cow
+        season: season
+      pluralize:
+        cicles: cicles
+        season_cows: season cows
+        seasons: seasons
+    modules:
+      admin/cicle: Cicle
+      admin/season-cow: Season cow
+      admin/season: Season
+    messages:
+    actions:
+  activerecord:
+    attributes:
+    errors:
+      messages:
+  errors:
+  helpers:

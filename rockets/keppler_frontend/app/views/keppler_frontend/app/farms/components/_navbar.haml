@@ -45,12 +45,19 @@
               .farm_menu{ class: ('visibility' if %w[cattle strategic_lots transferences inseminations status].include?(controller_name))}
                 = link_to farm_cows_path(farm),style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item #{('active_sub' if %w[cattle status].include?(controller_name))}" do
                   Ganado
-                = link_to farm_strategic_lots_path(farm),style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item  #{('active_sub' if controller_name.eql?('strategic_lots'))}" do
+                = link_to farm_strategic_lots_path(farm),style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item  #{('active_sub' if %w[strategic_lots].include?(controller_name))}" do
                   Lotes estratégicos
-                = link_to farm_transferences_path(farm),style: "background-color: transparent !important; color: white;",  class: "modelOne dropdown-item  #{('active_sub' if controller_name.eql?('transferences'))}" do
+                = link_to farm_transferences_path(farm),style: "background-color: transparent !important; color: white;",  class: "modelOne dropdown-item  #{('active_sub' if %w[transferences].include?(controller_name))}" do
                   Transferencias
-                = link_to farm_inseminations_path(farm),style: "background-color: transparent !important; color: white;",  class: "modelOne dropdown-item  #{('active_sub' if controller_name.eql?('inseminations'))}" do
+                = link_to farm_inseminations_path(farm),style: "background-color: transparent !important; color: white;",  class: "modelOne dropdown-item  #{('active_sub' if %w[inseminations].include?(controller_name))}" do
                   Pajuelas
+            %li.nav-item{ style: "position: relative;"}
+              %a.click.nav-link{ class: "#{'active' if %w[seasons].include?(controller_name)} dropdown-toggle", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+                Reproducción
+                %i.icofont-simple-down
+              .farm_menu{ class: ('visibility' if %w[seasons].include?(controller_name))}
+                = link_to farm_seasons_path(farm),style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item #{('active_sub' if %w[seasons].include?(controller_name))}" do
+                  Temporadas de monta
            
           %li.nav-item.d-lg-none
             = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: "nav-link"
@@ -156,6 +163,10 @@
     align-items: center;
   }
 
+  .active {
+    color: #f28d23;
+  }
+
 - if farm_view
   :scss
     .navbar-collapse {
@@ -178,10 +189,6 @@
         $('.home_description').removeClass('home_description-hidden')
       }
     });
-
-    $('.click').click(function(){
-      $('.farm_menu').toggleClass('visibility');
-    })
     
     let modelOne = $('a.modelOne');
 
@@ -232,4 +239,10 @@
         $('.home_description').toggleClass('home_description-hidden')
       })
     })
+
+:javascript
+  $('.click').click(function(){
+    $('.farm_menu').removeClass('visibility');
+    $(this).parent('.nav-item').find('.farm_menu').addClass('visibility');
+  })
     

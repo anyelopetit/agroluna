@@ -23,7 +23,7 @@ module KepplerFrontend
     end
 
     def show
-      @cows = @strategic_lot.cows.order(:serie_number)
+      @cows = @strategic_lot.cows.order(:serie_number).page(params[:page])
       @assign = KepplerCattle::Assignment.new
       # respond_to_formats(@strategic_lot)
     end
@@ -36,7 +36,7 @@ module KepplerFrontend
       @strategic_lot = KepplerFarm::StrategicLot.new(strategic_lot_params)
 
       if @strategic_lot.save
-        redirect_to app_farm_strategic_lots_path(@farm)
+        redirect_to farm_strategic_lot_path(@farm, @strategic_lot)
       else
         flash[:error] = 'Revisa los datos del formulario'
         render :new
@@ -45,7 +45,7 @@ module KepplerFrontend
 
     def update
       if @strategic_lot.update(strategic_lot_params)
-        redirect_to app_farm_strategic_lots_path(@farm)
+        redirect_to farm_strategic_lots_path(@farm)
       else
         render :edit
       end
@@ -66,7 +66,7 @@ module KepplerFrontend
       else
         flash[:error] = 'No se pudieron eliminar'
       end
-      redirect_to app_farm_strategic_lots_path(@farm)
+      redirect_to farm_strategic_lots_path(@farm)
     end
 
     def assign_cattle

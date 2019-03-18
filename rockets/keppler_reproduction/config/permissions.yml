@@ -1,0 +1,21 @@
+modules:
+  cicles:
+    name: Cicle
+    model: KepplerReproductionCicle
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
+  season_cows:
+    name: SeasonCow
+    model: KepplerReproductionSeasonCow
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
+  seasons:
+    name: Season
+    model: KepplerReproductionSeason
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]

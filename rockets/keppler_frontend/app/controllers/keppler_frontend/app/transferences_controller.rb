@@ -21,13 +21,13 @@ module KepplerFrontend
     end
 
     def show
-      @cows = @transference.cows
+      @cows = @transference.cows.order(:serie_number).page(params[:page])
       # respond_to_formats(@transference)
     end
 
     def new
-      @cows = @farm.cows.actives.map { |c| [c.serie_number, c.id] }
-      @transference = KepplerCattle::Transference.new
+      @cows = @farm.cows.order(:serie_number)
+      @transference = @farm.transferences.new
       @farms = KepplerFarm::Farm.where.not(id: @farm&.id)
       # @reasons = KepplerCattle::Transference.reasons
     end
@@ -38,13 +38,13 @@ module KepplerFrontend
       unless @transference.from_farm_id == @transference.to_farm_id
         if @transference.save!
           @transference.cows.map do |c|
-            status = KepplerCattle::Status.new(
-              c.status.as_json(except: :id)
+            location = KepplerCattle::Location.new(
+              c.location.as_json(except: :id)
             )
             location&.farm_id = @transference.to_farm_id
-            status.save!
+            location.save!
           end
-          redirect_to app_farm_transferences_path(@farm)
+          redirect_to farm_transferences_path(@farm)
         else
           flash[:error] = 'Revisa los datos del formulario'
           render :new
@@ -55,26 +55,26 @@ module KepplerFrontend
       end
     end
 
-    def update
-      if @transference.update(transference_params)
-        redirect_to app_farm_transferences_path(@farm)
-      else
-        render :edit
-      end
-    end
+    # def update
+    #   if @transference.update(transference_params)
+    #     redirect_to farm_transferences_path(@farm)
+    #   else
+    #     render :edit
+    #   end
+    # end
 
-    def edit; end
+    # def edit; end
 
-    # DELETE /cattles/1
-    def destroy
-      @transference.destroy
-      redirect_to app_farm_transferences_path(@farm)
-    end
+    # # DELETE /cattles/1
+    # def destroy
+    #   @transference.destroy
+    #   redirect_to farm_transferences_path(@farm)
+    # end
 
-    def destroy_multiple
-      Transference.destroy redefine_ids(params[:multiple_ids])
-      redirect_to app_farm_transferences_path(@farm)
-    end
+    # def destroy_multiple
+    #   KepplerCattle::Transference.destroy redefine_ids(params[:multiple_ids])
+    #   redirect_to farm_transferences_path(@farm)
+    # end
 
     private
 
@@ -143,8 +143,8 @@ module KepplerFrontend
     def respond_to_formats
       respond_to do |format|
         format.html
-        format.csv { send_data KepplerCattle::Transference.all.to_csv, filename: "transferencias.csv" }
-        format.xls { send_data KepplerCattle::Transference.all.to_a.to_xls, filename: "transferencias.xls" }
+        format.csv # { send_data KepplerCattle::Transference.all.to_csv, filename: "transferencias.csv" }
+        format.xls # { send_data KepplerCattle::Transference.all.to_a.to_xls, filename: "transferencias.xls" }
         format.json
         format.pdf { render pdf_options }
       end

@@ -6,7 +6,8 @@
       %h1
         -# = link_to({action: :index}) do
           Transferencias >
-        .badge.badge-secondary Transferencia hacia #{@transference.to_farm&.title} (#{@transference.cows.size})
+        Transferencia hacia #{@transference.to_farm&.title}
+        .badge.badge-secondary (#{@transference.cows.size} ganados)
       %p= @transference&.reason
     .d-flex.justify-content-end
       -# .toolbar

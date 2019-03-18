@@ -14,7 +14,7 @@ module KepplerFarm
       # GET /farms
       def index
         respond_to_formats(@photos)
-        # redirect_to controller: :farms, action: :show, id: @farm.id
+        # redirect_to controller: :farms, action: :show, id: @farm&.id
       end
 
       # GET /farms/1
@@ -33,43 +33,43 @@ module KepplerFarm
         params[:photo][:photo].each do |photo|
           @photo = Photo.new(
             photo: photo,
-            farm_id: @farm.id
+            farm_id: @farm&.id
           )
           @photo.update(cover: true) if @farm.none_cover?
           @photo.save!
         end
-        redirect_to controller: :farms, action: :show, id: @farm.id
+        redirect_to controller: :farms, action: :show, id: @farm&.id
       end
 
       # PATCH/PUT /farms/1
       def update
         if @photo.update!(photo_params)
-          redirect_to controller: :farms, action: :show, id: @farm.id
+          redirect_to controller: :farms, action: :show, id: @farm&.id
         else
-          redirect_to controller: :farms, action: :show, id: @farm.id
+          redirect_to controller: :farms, action: :show, id: @farm&.id
         end
       end
 
       def clone
         @photo = Photo.clone_record params[:photo_id]
         @photo.save
-        redirect_to controller: :farms, action: :show, id: @farm.id
+        redirect_to controller: :farms, action: :show, id: @farm&.id
       end
 
       # DELETE /farms/1
       def destroy
         @photo.destroy
-        redirect_to controller: :farms, action: :show, id: @farm.id
+        redirect_to controller: :farms, action: :show, id: @farm&.id
       end
 
       def destroy_multiple
         Photo.destroy redefine_ids(params[:multiple_ids])
-        redirect_to controller: :farms, action: :show, id: @farm.id
+        redirect_to controller: :farms, action: :show, id: @farm&.id
       end
 
       def upload
         Photo.upload(params[:file])
-        redirect_to controller: :farms, action: :show, id: @farm.id
+        redirect_to controller: :farms, action: :show, id: @farm&.id
       end
 
       def reload; end
@@ -82,7 +82,7 @@ module KepplerFarm
         Photo.all.each { |x| x.update(cover: nil) }
         @photo = Photo.find_by(id: params[:photo_id])
         @photo.update(cover: true)
-        redirect_to controller: :farms, action: :show, id: @farm.id
+        redirect_to controller: :farms, action: :show, id: @farm&.id
       end
 
       private

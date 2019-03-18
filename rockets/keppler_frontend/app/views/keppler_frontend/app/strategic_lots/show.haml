@@ -21,7 +21,7 @@
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-clip-board
           Reporte
-      -# %a.float-right.mt-4.mb-4.ml-3{ href: farm_strategic_lot_new_path(@farm) }
+      -# %a.float-right.mt-4.mb-4.ml-3{ href: new_farm_strategic_lot_path(@farm) }
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-plus
           Agregar
@@ -29,7 +29,7 @@
     .row
       .col-sm-8.mb-4
         -# = @assign.inspect
-        = simple_form_for [:app, :cattle, @assign], url:farm_strategic_lot_assign_cattle_path(@farm, @strategic_lot), html: { style: 'width: 100%' } do |f|
+        = simple_form_for [:cattle, @assign], url: assign_cattle_farm_strategic_lot_path(@farm, @strategic_lot), html: { style: 'width: 100%' } do |f|
           .row.mb-4
             .col-sm-8
               %select#strategic_lot_cattle{ name: 'strategic_lot[cattle][]', label: 'Ganado', class: 'form-control input_custom select2-multiple', onchange: "validateCattle()" }

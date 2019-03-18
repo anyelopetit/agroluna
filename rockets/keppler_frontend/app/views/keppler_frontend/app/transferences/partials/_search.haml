@@ -1,4 +1,4 @@
-= search_form_for [:app, @farm, search] do |f|
+= search_form_for [@farm, search] do |f|
   .flex-search
     %select#from-farm{ name: 'search[from]' }
       %option Desde

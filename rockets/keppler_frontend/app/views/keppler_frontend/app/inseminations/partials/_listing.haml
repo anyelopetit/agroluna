@@ -4,7 +4,7 @@
     -# .toolbar
       .toolbar-item
         -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
-        = link_to farm_strategic_lot_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
+        = link_to destroy_multiple_farm_strategic_lots_path(@farm), method: :delete, class: 'destroy_multiple' do
           %i.icofont-trash
     .actions.d-none.d-sm-block
       .float-right
@@ -21,7 +21,7 @@
               XLS
             = link_to({action: action_name.to_sym, format: :csv}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
               CSV
-        %a.float-right.mb-3.ml-2{ href: farm_insemination_new_path(farm) }
+        %a.float-right.mb-3.ml-2{ href: new_farm_insemination_path(farm) }
           %button.btn.btn_custom.btn--filled.btn--medium
             %i.icofont-plus
             Agregar
@@ -42,7 +42,7 @@
             %i.icofont-simple-down
             Acciones
         .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
-          %a.dropdown-item{ href: farm_insemination_new_path(farm), style: "color: #000;" }
+          %a.dropdown-item{ href: new_farm_insemination_path(farm), style: "color: #000;" }
             Agregar
           = link_to({action: :index, format: :pdf},  {class: 'dropdown-item', target: '_blank'}) do
             Reporte
@@ -79,9 +79,12 @@
               = sort_link(@q, 'weight&.weight') do
                 Especie
             %th 
-              = sort_link(@q, 'days') do 
+              = sort_link(@q, 'race.name') do 
                 Raza
-            - if action_name.eql?('index')
+            %th 
+              = sort_link(@q, 'quantity') do 
+                Cantidad
+            -# - if action_name.eql?('index')
               %th
         %tbody
           - inseminations.each do |insemination|
@@ -93,20 +96,23 @@
                     %span.cr
                       %i.cr-icon.icofont-check
               -# %td
-                = link_to({controller: :inseminations, action: :show, farm_id: @farm.id, insemination_id: insemination.id}) do
+                = link_to({controller: :inseminations, action: :show, farm_id: @farm&.id, id: insemination.id}) do
                   = image_tag insemination&.image&.url if insemination.image.url
               %td
-                = link_to({controller: :inseminations, action: :show, farm_id: @farm.id, insemination_id: insemination.id}) do
+                = link_to({controller: :inseminations, action: :show, farm_id: @farm&.id, id: insemination.id}) do
                   = insemination&.serie_number
               %td
-                = link_to({controller: :inseminations, action: :show, farm_id: @farm.id, insemination_id: insemination.id}) do
+                = link_to({controller: :inseminations, action: :show, farm_id: @farm&.id, id: insemination.id}) do
                   = insemination&.species&.name
               %td
-                = link_to({controller: :inseminations, action: :show, farm_id: @farm.id, insemination_id: insemination.id}) do
+                = link_to({controller: :inseminations, action: :show, farm_id: @farm&.id, id: insemination.id}) do
                   = insemination&.race&.name
-              - if action_name.eql?('index')
+              %td
+                = link_to({controller: :inseminations, action: :show, farm_id: @farm&.id, id: insemination.id}) do
+                  = insemination&.quantity
+              -# - if action_name.eql?('index')
                 %td
-                  = link_to({controller: :inseminations, action: :mark_as_used, farm_id: @farm.id, insemination_id: insemination.id}) do
+                  = link_to({controller: :inseminations, action: :mark_as_used, farm_id: @farm&.id, id: insemination.id}) do
                     %button.btn.btn_custom.btn--filled.btn--medium
                       %i.icofont-check
                       Usar

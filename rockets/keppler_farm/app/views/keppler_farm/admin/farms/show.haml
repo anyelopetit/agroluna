@@ -46,7 +46,7 @@
             = simple_form_for [:admin, :farm, @assignment], url: admin_farm_farm_assign_operator_path(@farm) do |f|
               .col-sm-8
                 = f.input :user_id, collection: @users, label: false, placeholder: 'hola', input_html: { onchange: 'validateOperator()' }
-                = f.input :keppler_farm_farm_id, value: @farm.id, as: :hidden
+                = f.input :keppler_farm_farm_id, value: @farm&.id, as: :hidden
               .col-sm-4
                 = f.submit :add, value: t('keppler.actions.add'), id: 'add-operator', disabled: true
             .operators-list
@@ -54,7 +54,7 @@
                 .operator-item
                   .operator-avatar= image_tag a.user.avatar.url || '/assets/admin/avatar_keppler'
                   .operator-name= a.user.name
-                  = link_to({ action: :delete_assignment, farm_id: @farm.id, user_id: a.user.id }, { method: :delete, class: 'delete-operator', data: { confirm: t('keppler.messages.data_confirm') } }) do
+                  = link_to({ action: :delete_assignment, farm_id: @farm&.id, user_id: a.user.id }, { method: :delete, class: 'delete-operator', data: { confirm: t('keppler.messages.data_confirm') } }) do
                     %i.bx.bx-trash
 
       .col-lg-12
@@ -77,7 +77,7 @@
         %center.file-uploader
           .file-container
             = f.input :photo, input_html: { onchange: "validateFileInput()", multiple: true, type: 'file' }, label: false
-            = f.input :farm_id, input_html: { value: @farm.id }, as: :hidden
+            = f.input :farm_id, input_html: { value: @farm&.id }, as: :hidden
             %i.file-icon.bx.bx-file-image
             %h5.file-text Arrastra una imagen o haz click aquí
           %br

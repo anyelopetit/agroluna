@@ -1,0 +1,35 @@
+menu:
+  keppler_reproduction:
+    name: Keppler Reproduction
+    current: ['/']
+    url_path: /
+    icon: rocket
+    model: User
+    submenu:
+      - cicle:
+          name: cicle
+          url_path: /admin/reproduction/cicles
+          icon: layers
+          current: ['/admin/reproduction/cicles']
+          model: KepplerReproduction::Cicle
+
+      - season_cow:
+          name: season cow
+          url_path: /admin/reproduction/season_cows
+          icon: layers
+          current: ['/admin/reproduction/season_cows']
+          model: KepplerReproduction::SeasonCow
+
+      - season:
+          name: season
+          url_path: /admin/reproduction/seasons
+          icon: layers
+          current: ['/admin/reproduction/seasons']
+          model: KepplerReproduction::Season
+
+      # - new:
+      #     name: + Add new module
+      #     url_path: /url_path
+      #     current: ['/current_path']
+      #     environment: development
+      #     model: User

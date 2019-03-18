@@ -19,9 +19,9 @@ module KepplerFarm
       # GET /farms/1
       def show
         @photo = Photo.new
-        @assignment = Assignment.new(keppler_farm_farm_id: @farm.id)
+        @assignment = Assignment.new(keppler_farm_farm_id: @farm&.id)
         @users = User.all
-        @assignments = Assignment.where(keppler_farm_farm_id: @farm.id)
+        @assignments = Assignment.where(keppler_farm_farm_id: @farm&.id)
       end
 
       # GET /farms/new
@@ -60,7 +60,7 @@ module KepplerFarm
 
       # DELETE /farms/1
       def destroy
-        @assigments = Assignment.where(keppler_farm_farm_id: @farm.id)
+        @assigments = Assignment.where(keppler_farm_farm_id: @farm&.id)
         @assigments.destroy_all
         @farm.destroy
         redirect_to_index(@objects)

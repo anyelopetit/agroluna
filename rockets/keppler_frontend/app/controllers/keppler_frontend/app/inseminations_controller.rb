@@ -56,18 +56,22 @@ module KepplerFrontend
     # DELETE /cattles/1
     def destroy
       @insemination.destroy
-      redirect_to app_farm_inseminations_path(@farm)
+      redirect_to farm_inseminations_path(@farm)
     end
 
     def destroy_multiple
       KepplerCattle::Insemination.destroy redefine_ids(params[:multiple_ids])
-      redirect_to app_farm_inseminations_path(@farm)
+      redirect_to farm_inseminations_path(@farm)
     end
 
     def mark_as_used
     end
 
     private
+
+    def set_farm
+      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
+    end
 
     def set_insemination
       @insemination = KepplerCattle::Insemination.find_by(id: params[:id])
@@ -76,8 +80,8 @@ module KepplerFrontend
     def index_variables
       @q = KepplerCattle::Insemination.ransack(params[:q])
       @inseminations = @q.result(distinct: true)
-      @active_inseminations = @inseminations.active
-      @inactive_inseminations = @inseminations.inactive
+      @active_inseminations = @inseminations
+      @inactive_inseminations = @inseminations
       @total = @inseminations.size
       @attributes = KepplerCattle::Insemination.index_attributes
       @typologies = KepplerCattle::Typology.all

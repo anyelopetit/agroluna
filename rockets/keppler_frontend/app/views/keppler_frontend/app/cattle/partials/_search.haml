@@ -1,4 +1,4 @@
-= search_form_for [:app, @farm, search], url: request.path do |f|
+= search_form_for [@farm, search], url: request.path do |f|
   .flex-search.mt-4
     -# .select#select-search
       %select{ name: 'search[field]', class: 'btn btn--medium btn--select'}

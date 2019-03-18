@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   include AdminHelper
   include PublicActivity::StoreController
+  helper KepplerReproduction::ApplicationHelper
   helper KepplerCattle::ApplicationHelper
   helper KepplerFarm::ApplicationHelper
   helper KepplerLanguages::LanguagesHelper

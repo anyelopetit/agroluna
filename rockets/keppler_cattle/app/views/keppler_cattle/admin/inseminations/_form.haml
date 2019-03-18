@@ -45,7 +45,9 @@
                     = f.input :mother_id, collection: @possible_mothers
                   .col-sm-6
                     = f.input :father_id, collection: @possible_fathers
-                  .col-sm-12
+                  .col-sm-6
+                    = f.input :quantity, label: 'Cantidad de cartuchos'
+                  .col-sm-6
                     = f.input :observations
                   .col-sm-12
                     .pull-right

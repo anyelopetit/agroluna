@@ -29,7 +29,7 @@
                   .col-xs-12
                     = f.input :description
                   .col-xs-12
-                    = f.input :farm_id, input_html: { value: @farm.id }, as: :hidden #, collection: @farms
+                    = f.input :farm_id, input_html: { value: @farm&.id }, as: :hidden #, collection: @farms
                   .col-xs-12
                     .pull-right
                       = f.button :submit, t('keppler.actions.save'), name: '_save', class: 'btn-primary'

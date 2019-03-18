@@ -18,7 +18,7 @@ module KepplerFrontend
 
     def new
       @weight = KepplerCattle::Weight.new(user_id: current_user.id, cow_id: @cow.id)
-      @location = KepplerCattle::Location.new(user_id: current_user.id, cow_id: @cow.id, farm_id: @farm.id)
+      @location = KepplerCattle::Location.new(user_id: current_user.id, cow_id: @cow.id, farm_id: @farm&.id)
       @corporal_conditions = @cow.species.corporal_conditions
       @strategic_lots =  @cow.location&.farm&.strategic_lots
       @strategic_lot = @cow.location&.strategic_lot

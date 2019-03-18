@@ -29,7 +29,7 @@ module KepplerCattle
     end
 
     def self.include_this_farm(farm)
-      where(from_farm_id: farm.id).or(KepplerCattle::Transference.where(to_farm_id: farm.id)).order(created_at: :desc)
+      where(from_farm_id: farm&.id).or(KepplerCattle::Transference.where(to_farm_id: farm&.id)).order(created_at: :desc)
     end
     
     def self.where_from(params)

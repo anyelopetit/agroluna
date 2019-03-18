@@ -104,20 +104,7 @@ module KepplerCattle
       # Only allow a trusted parameter "white list" through.
       def insemination_params
         params.require(:insemination).permit(
-          :serie_number,
-          :short_name,
-          :species_id,
-          :race_id,
-          :farm_id,
-          :mother_id,
-          :father_id,
-          :corporal_condition,
-          :birthdate,
-          :coat_color,
-          :nose_color,
-          :tassel_color,
-          :provenance,
-          :observations
+          KepplerCattle::Insemination.attributes.map(&:to_sym)
         )
       end
     end

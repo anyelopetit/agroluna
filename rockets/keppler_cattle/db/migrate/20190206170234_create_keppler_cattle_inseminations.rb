@@ -9,9 +9,10 @@ class CreateKepplerCattleInseminations < ActiveRecord::Migration[5.2]
       t.string :nose_color
       t.string :tassel_color
       t.string :provenance
+      t.integer :quantity
 
       t.date :birthdate
-      t.date :used_date
+      # t.date :used_date
 
       t.text :observations
 

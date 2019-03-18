@@ -4,7 +4,7 @@
     %meta{ charset: 'UTF-8' }
     %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
     %meta{ name: 'theme-color', content: '#fff' }
-    %title #{@transference.reason} (#{@transference.cattle.size})
+    %title Transferencia (#{@transference.cattle.size})
   %body
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
@@ -35,7 +35,7 @@
             %th Tipología
             %th Madre
             %th Padre
-            %th Fecha
+            %th Fecha Nac
             %th KG
             %th Pelaje
         %tbody
@@ -44,13 +44,13 @@
               %td= cow&.serie_number
               %td= cow&.race&.name
               %td
-                = cow&.status&.years
+                = cow&.years
                 \-
-                = cow&.status&.months
+                = cow&.months
               %td= cow&.typology_name
               %td= cow&.mother&.serie_number
               %td= cow&.father&.serie_number
-              %td= cow&.status&.created_at&.strftime('%d-%m-%Y')
+              %td= cow&.birthdate&.strftime('%d-%m-%Y')
               %td= cow&.weight&.weight
               %td= cow&.coat_color
 :scss

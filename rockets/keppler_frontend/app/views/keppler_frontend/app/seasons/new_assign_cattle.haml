@@ -1,0 +1,25 @@
+.app_wrapper
+  .container_custom
+    .row
+      .col-lg-6.mt-4
+        .float-left
+          %h1 Lote
+      .col-lg-6
+        %form
+          .flex-search.mt-4
+            %input.form-control{"aria-label" => "Search", :placeholder => "Search", :type => "text", class: 'form-control search-bar btn btn--input ml-2'}/
+            %button.btn.btn--small.btn--select.ml-3{ type: 'submit' }
+              %i.icofont-search
+      .col-lg-6.mb-4.mt-4
+        .float-left
+          %h2 Toros
+        = render 'season_bulls_table', cows: @bulls
+      .col-lg-6.mb-4.mt-4
+        .float-left
+          %h2 Vacas            
+        = render 'season_cows_table', cows: @cows
+      .col-sm-12
+        .float-right
+          %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+            %i.icofont-save
+            Agregar

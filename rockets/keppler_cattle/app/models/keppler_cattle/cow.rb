@@ -20,12 +20,14 @@ module KepplerCattle
     belongs_to :race, class_name: 'KepplerCattle::Race', foreign_key: 'race_id'
     belongs_to :species, class_name: 'KepplerCattle::Species', foreign_key: 'species_id'
 
+    has_many :males, class_name: 'KepplerCattle::Male', dependent: :destroy
+
     has_many :locations, class_name: 'KepplerCattle::Location', dependent: :destroy
     has_many :weights, class_name: 'KepplerCattle::Weight', dependent: :destroy
     has_many :cow_activities, class_name: 'KepplerCattle::Activity', dependent: :destroy
     has_many :cow_typologies, class_name: 'KepplerCattle::CowTypology', dependent: :destroy
     has_many :typologies, class_name: 'KepplerCattle::Typology', through: :cow_typologies, dependent: :destroy
-    
+
     validates_presence_of :birthdate, :serie_number, :species_id, :race_id
     validates_uniqueness_of :serie_number
 
@@ -105,23 +107,32 @@ module KepplerCattle
       species.typologies.where(gender: gender)
     end
 
-    def possible_mothers
-      KepplerCattle::Cow.where(gender: 'female').where(species_id: species_id)
+    def self.possible_mothers
+      ids =
+        order(:serie_number)
+          .where(gender: 'female')
+          .select { |x| %w[1 2].include?(x.typology&.counter.to_s) }
+          .map(&:id)
+      where(id: ids)
     end
 
-    def possible_fathers
-      KepplerCattle::Cow.where(gender: 'male').where(species_id: species_id).or(
-        KepplerCattle::Insemination.where(gender: 'male').where(species_id: species_id)
-      ) 
+    def self.possible_fathers
+      ids =
+        order(:serie_number)
+          .where(gender: 'male')
+          .select { |x| x.males&.last&.reproductive }
+          .map(&:id)
+      where(id: ids)
     end
 
     def self.possible_mothers_select2
-      order(:serie_number).select { |x| x.gender?('female') }.select { |x| %w[1 2].include?(x.typology&.counter.to_s) }
-        .map { |x| [x.serie_number + ("(#{x&.short_name}) - #{x&.typology_name}" unless x&.short_name.blank?).to_s, x.id] }
+      possible_mothers.map do |x|
+        [x.serie_number + ("(#{x&.short_name}) - #{x&.typology_name}" unless x&.short_name.blank?).to_s, x.id]
+      end
     end
 
     def self.possible_fathers_select2
-      order(:serie_number).select { |x| x.gender?('male') }
+      possible_fathers
         .map { |x| [x.serie_number + ("(#{x&.short_name})" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] }
         .concat(KepplerCattle::Insemination.order(:serie_number).map { 
           |x| [x.serie_number + ("(#{x&.short_name}) - Pajuela" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] 

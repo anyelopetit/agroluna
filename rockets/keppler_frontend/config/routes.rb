@@ -16,6 +16,7 @@ KepplerFrontend::Engine.routes.draw do
     resources :cows, path: 'ganado', controller: 'app/cattle', path_names: { new: 'nuevo', edit: 'editar'} do
       member do
         match 'buscar-ganado' => 'search', via: %i[get post], as: :search
+        get :males
       end
       collection do
         get 'inactivos', to: 'app/cattle#index_inactives', as: :inactives
@@ -50,6 +51,10 @@ KepplerFrontend::Engine.routes.draw do
     end
 
     resources :seasons, path: 'temporadas', controller: 'app/seasons', path_names: { new: 'nuevo', edit: 'editar'} do
+      collection do
+        get 'asignar-ganado', to: 'app/seasons#new_assign_cattle', as: :new_assign_cattle
+        post :assign_cattle
+      end
       resources :cicles, controller: 'app/cicles', only: %i[new create destroy]
     end
   end

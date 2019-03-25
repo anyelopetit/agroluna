@@ -99,12 +99,13 @@ module KepplerCattle
       end
 
       def cow_attributes
-        @species = Cow.species
-        @genders = Cow.genders
-        @races   = Cow.races
-        @possible_mothers = Cow.possible_mothers_select2
-        @possible_fathers = Cow.possible_fathers_select2
-        @colors = Cow.colors
+        @species = KepplerCattle::Species.all
+        @genders = KepplerCattle::Cow.genders
+        @races   = @species.first.races
+        @possible_mothers = KepplerCattle::Cow.possible_mothers_select2
+        @possible_fathers = KepplerCattle::Cow.possible_fathers_select2
+        @colors = KepplerCattle::Cow.colors
+        
       end
 
       # Only allow a trusted parameter "white list" through.

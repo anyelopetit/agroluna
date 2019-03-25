@@ -66,6 +66,11 @@ module KepplerFrontend
       end
       redirect_to farm_seasons_path(@farm)
     end
+    
+    def new_assign_cattle
+      @bulls = @farm.cows.possible_fathers
+      @cows = @farm.cows.possible_mothers
+    end
 
     private
 

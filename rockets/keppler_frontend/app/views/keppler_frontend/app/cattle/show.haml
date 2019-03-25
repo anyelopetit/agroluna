@@ -53,7 +53,6 @@
               = link_to({action: :show, format: :pdf}, {class: 'mt-4 mb-4 dropdown-item', target: '_blank'}) do
                 Reporte
 
-  
   .container_custom
     .row
       .col-md-12
@@ -76,6 +75,7 @@
                         = @cow.typology_name unless @cow.typology&.blank?
                       %span= @cow.race&.name
                       -# %p= @cow.observations
+                      
             .col-lg-9
               .row
                 .col-lg-4.col-sm-4

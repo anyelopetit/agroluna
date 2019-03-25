@@ -18,11 +18,19 @@
     
     - if @cows.blank? && @season.cows.count > 0
       = link_to 'Mostrar todos', farm_cows_path(farm)
-    = render 'keppler_frontend/app/seasons/gantt', season: @season
+    - if @season.cicles.count.zero?
+      %table
+        %thead
+          %tr
+            %th.not-records.center
+              %center No se encontraron ciclos para la temporada
+    - else
+      = render 'keppler_frontend/app/seasons/gantt', season: @season
     .float-right.mt-4.mb-4
-      %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalCattle", 'data-toggle': 'modal'}
-        %i.icofont-plus
-        Agregar Ganado
+      = link_to new_assign_cattle_farm_seasons_path(@farm) do
+        %button.btn.btn_custom.btn--filled.btn--medium
+          %i.icofont-plus
+          Agregar Ganado
       %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
         %i.icofont-plus
         Agregar Lote
@@ -60,7 +68,7 @@
             %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
               %i.icofont-plus
               Agregar Servicios
-          = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+          = render 'season_cows_table', cows: @cows
         #servicio.tab-pane.fade
           .float-right.mt-4.mb-4
             %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalCattle", 'data-toggle': 'modal'}
@@ -69,7 +77,7 @@
             %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
               %i.icofont-plus
               Agregar Preñez
-          = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+          = render 'season_cows_table', cows: @cows
         #prenez.tab-pane.fade
           .float-right.mt-4.mb-4
             %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalCattle", 'data-toggle': 'modal'}
@@ -78,12 +86,12 @@
             %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
               %i.icofont-plus
               Agregar Parto
-          = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+          = render 'season_cows_table', cows: @cows
         #parto.tab-pane.fade
-          = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+          = render 'season_cows_table', cows: @cows
 
 
-    -# = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+    -# = render 'season_cows_table', cows: @cows
 
     -# .d-flex.justify-content-between.mt-5.mb-3.mt-4
     -#   .left
@@ -94,32 +102,10 @@
     -#         %input.form-control{"aria-label" => "Search", :placeholder => "Search", :type => "text", class: 'form-control search-bar btn btn--input ml-2'}/
     -#         %button.btn.btn--small.btn--select.ml-3{ type: 'submit' }
     -#           %i.icofont-search
-    .row
-      .col-lg-6.mt-4
-        .float-left
-          %h1 Lote
-      .col-lg-6
-        %form
-          .flex-search.mt-4
-            %input.form-control{"aria-label" => "Search", :placeholder => "Search", :type => "text", class: 'form-control search-bar btn btn--input ml-2'}/
-            %button.btn.btn--small.btn--select.ml-3{ type: 'submit' }
-              %i.icofont-search
-      .col-lg-6.mb-4.mt-4
-        .float-left
-          %h1 Toros
-        = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
-      .col-lg-6.mb-4.mt-4
-        .float-left
-          %h1 Vacas            
-        = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
-      .col-sm-12
-        .float-right
-          %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
-            %i.icofont-save
-            Agregar
+    
     
       
-    -# = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+    -# = render 'season_cows_table', cows: @cows
 = simple_form_for [@farm, @season, @cicle] do |f|
   = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
   = f.input :season_id, as: :hidden, input_html: { value: @season.id }

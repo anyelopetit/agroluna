@@ -2,6 +2,7 @@ class CreateKepplerReproductionSeasons < ActiveRecord::Migration[5.2]
   def change
     create_table :keppler_reproduction_seasons do |t|
       t.string :name
+      t.string :season_type
       t.date :start_date
 
       t.integer :farm_id, foreign_key: true

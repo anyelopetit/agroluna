@@ -48,5 +48,13 @@ module KepplerReproduction
     def cicle_colors
       ['#54c6f9', '#2ecaac', '#ff6252']
     end
+
+    def self.season_types
+      [
+        [I18n.t('activerecord.attributes.insemination'), 0],
+        [I18n.t('activerecord.attributes.unibull'), 1],
+        [I18n.t('activerecord.attributes.multibull'), 2]
+      ]
+    end
   end
 end

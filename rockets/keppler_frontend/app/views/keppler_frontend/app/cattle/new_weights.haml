@@ -1,0 +1,95 @@
+
+%script{src: "/assets/keppler_frontend/app/jquery.min.js"}
+-# = render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
+.app_wrapper
+  .container_carousel
+    .single-item
+      = link_to({controller: :cattle, action: :index}, { class: 'mt-4 mb-4 ml-3' }) do
+        %button.btn.btn_custom.btn--medium
+          %i.icofont-circled-left
+          Listado
+      .row
+        .col-sm-12
+          .card_new
+            %h1
+              Actualizar Pesos
+            .form-padding
+              = simple_form_for @farm, url: create_weights_farm_cows_path(@farm), action: :create_weights, method: :post do |f|
+                - @cows.each do |cow|
+                  .row
+                    .col-sm-12
+                      %h3
+                        Serie
+                        %b #{cow.serie_number}
+                        %small
+                          = "(#{cow.short_name})" unless cow.short_name.blank?
+                          \- #{cow.typology_name} (#{cow.weight&.weight.to_f} KG)
+                    = f.input :user_id, input_html: { name: "weight[#{cow.id}][user_id]", value: current_user.id }, as: :hidden
+                    = f.input :cow_id, input_html: { name: "weight[#{cow.id}][cow_id]", value: cow.id }, as: :hidden
+                    .col-sm-6.col-md-3
+                      -# = f.input :weight, autofocus: true, placeholder: '0.00 KG', label: 'Peso (KG)', input_html: { class: 'form-control input_custom', min: 0, value: (cow.weight&.weight unless cow.weight&.weight.blank?) }, label_html: { class: 'label_custom--strong' }
+                      .form-group
+                        %label.label_custom--strong Peso (KG)
+                        %input.form-control.input_custom.weight{ id: "weight_#{cow.id}_weight", name: "weight[#{cow.id}][weight]", type: 'number', min: 0, placeholder: '0.00 KG', value: (cow.weight&.weight.blank? ? 0 : cow.weight&.weight)}
+                    .col-sm-6.col-md-3
+                      -# = f.input :gained_weight, input_html: { class: 'form-control input_custom' }, readonly: true, placeholder: '0.00 KG', label: 'Peso ganado (KG)', label_html: { class: 'label_custom--strong' }
+                      .form-group
+                        %label.label_custom--strong Peso ganado (KG)
+                        %input.form-control.input_custom.gained_weight{ id: "weight_#{cow.id}_gained_weight", name: "weight[#{cow.id}][gained_weight]", type: 'number', min: 0, placeholder: '0.00 KG', value: (cow.weight&.gained_weight unless cow.weight&.gained_weight.blank?), readonly: true }
+                    .col-sm-6.col-md-3
+                      -# = f.input :average_weight, input_html: { class: 'form-control input_custom' }, readonly: true, placeholder: '0.00 KG', label: 'Peso promedio (KG)', label_html: { class: 'label_custom--strong' }
+                      %label.label_custom--strong Peso promedio por día (KG)
+                      %input.form-control.input_custom.average_weight{ id: "weight_#{cow.id}_average_weight", name: "weight[#{cow.id}][average_weight]", type: 'number', min: 0, placeholder: '0.00 KG', value: (cow.weight&.average_weight unless cow.weight&.average_weight.blank?), readonly: true }
+                    .col-sm-6.col-md-3
+                      -# = f.input :corporal_condition_id, collection: @corporal_conditions, selected: (cow.weight&.corporal_condition if cow.weight), include_blank: false, label: 'Condición corporal', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+                      %label.label_custom--strong Condición corporal
+                      %select.form-control.input_custom.corporal_condition_id{ id: "weight_#{cow.id}_corporal_condition_id", name: "weight[#{cow.id}][corporal_condition_id]" }
+                        - cow.species.corporal_conditions.each do |corporal_condition|
+                          %option{ value: corporal_condition.id }= corporal_condition.name
+                    -# .col-sm-6
+                      = f.input :observations, label: 'Observaciones', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+              
+                .col-sm-12
+                  .float-right
+                    %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                      %i.icofont-save
+                      Guardar
+
+// Plugins
+-# %link{href: "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css", rel: "stylesheet"}/
+-# %script{src: "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"}
+
+-# :javascript
+  $('.keppler-switch').click(function(event) {
+    event.preventDefault()
+    var input = $(this).find('input')
+    var label = $(this).find('.inline-label')
+    input
+      .toggleClass('active')
+      .val(input.hasClass('active'))
+    label
+      .toggleClass('active')
+      //.text(label.hasClass('active'))
+  })
+- @cows.each do |cow|
+  :javascript
+    var last_weight_#{cow.id} = #{cow.weight&.weight ? cow.weight&.weight : 0}
+    var born_days_#{cow.id} = #{cow.days}
+
+    $(document).ready(function() {
+      $('#weight_#{cow.id}_gained_weight').val(
+        $('#weight_#{cow.id}_weight').val() - last_weight_#{cow.id}
+      )
+      $('#weight_#{cow.id}_average_weight').val(
+        ($('#weight_#{cow.id}_weight').val() - last_weight_#{cow.id}) / born_days_#{cow.id} 
+      )
+    })
+
+    $('#weight_#{cow.id}_weight').keyup(function() {
+      $('#weight_#{cow.id}_gained_weight').val(
+        $('#weight_#{cow.id}_weight').val() - last_weight_#{cow.id}
+      )
+      $('#weight_#{cow.id}_average_weight').val(
+        ($('#weight_#{cow.id}_weight').val() - last_weight_#{cow.id}) / born_days_#{cow.id}
+      )
+    }) 

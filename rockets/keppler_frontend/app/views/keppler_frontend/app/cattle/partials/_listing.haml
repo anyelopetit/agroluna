@@ -5,11 +5,11 @@
         -# %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#mfg", role: "tab"}
         -# %a#mfg-tab.nav-link.active{ href: "#mfg", role: "tab" }
         = link_to(action_name.eql?('index') ? '#' : {action: :index}, { class: "nav-link #{'active' if action_name.eql?('index')}" }) do
-          Activos (#{@active_cows.size})
+          Activos (#{KepplerCattle::Cow.actives.count})
       %li.nav-item
         -# %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#ale", role: "tab"}
         = link_to(action_name.eql?('index_inactives') ? '#' : {action: :index_inactives}, { class: "nav-link #{'active' if action_name.eql?('index_inactives')}" }) do
-          Inactivos (#{@inactive_cows.size})
+          Inactivos (#{KepplerCattle::Cow.inactives.count})
     %hr{ :style => "margin-top: 0;width: 90%; margin-bottom: 20px;"}
     .container_custom
       = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
@@ -40,9 +40,21 @@
               %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
                 %button.btn.btn_custom.btn--filled.btn--medium
                   %i.icofont-clip-board
+                  Transferir a
+                  %i.icofont-simple-down
+              .dropdown-menu{"aria-labelledby" => "profileDropdown"}
+                = link_to '#', class: 'multiple_ids mt-4 mb-4 mr-1 dropdown-item', onclick: 'strategic_lots()' do
+                  Lote estratégico
+              = link_to new_weights_farm_cows_path(@farm, []), class: 'multiple_ids' do
+                %button.btn.btn_custom.btn--filled.btn--medium
+                  %i.icofont-plus
+                  Pesar
+              %a#reportDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+                %button.btn.btn_custom.btn--filled.btn--medium
+                  %i.icofont-clip-board
                   Reporte
                   %i.icofont-simple-down
-              .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
+              .dropdown-menu{"aria-labelledby" => "reportDropdown"}
                 = link_to({action: action_name.to_sym, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
                   PDF
                 = link_to({action: action_name.to_sym, format: :xls}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do

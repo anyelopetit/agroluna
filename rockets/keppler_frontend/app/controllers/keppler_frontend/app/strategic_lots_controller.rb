@@ -115,6 +115,26 @@ module KepplerFrontend
       redirect_to action: :show, id: @farm&.id, strategic_lot_id: @strategic_lot.id
     end
 
+    def transfer
+      @cows = @farm.cows.where(id: params[:multiple_ids].split(','))
+    end
+
+    def create_transfer
+      params.require(:weight).keys.each do |id|
+        weight = KepplerCattle::Weight.new(multiple_cows_params(id).values[0])
+        if weight.save!
+          flash[:notice] = "Pesos fueron guardados correctamente"
+        else
+          flash[:error] = "Error al guardar los pesos"
+        end
+      end
+      redirect_to weights_farm_cows_path(@farm, params[:weight].keys.join(','))
+    end
+
+    def transfered
+      @cows = @farm.cows.where(id: params[:multiple_ids].split(',')).order(:serie_number)
+    end
+
     private
 
     def set_strategic_lot

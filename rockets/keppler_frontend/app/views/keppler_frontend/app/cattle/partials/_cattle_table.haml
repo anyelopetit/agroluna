@@ -41,19 +41,3 @@
   .pagination {
     visibility: hidden
   }
-
-:coffee
-  $ ->
-    if $('.pagination').length && $('#cows').length
-      $(window).scroll ->
-        next_page = $('a[rel=next]').attr('href')
-        if $(window).scrollTop() > $(document).height() - $(window).height() - 5
-          $('.next_page').remove()
-          $('#loading').html('<center class="loading"><img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." /></center>')
-          if next_page
-            $.getScript(next_page)
-            console.log(next_page)
-        
-        checkboxes()
-
-      $(window).scroll()

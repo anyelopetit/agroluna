@@ -37,6 +37,9 @@ module KepplerFrontend
       end
     end
 
+    def create_multiple
+    end
+
     private
 
     def set_cow

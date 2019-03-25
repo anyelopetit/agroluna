@@ -21,6 +21,8 @@ module KepplerFrontend
     def show
       @cows = @season.cows.order(:serie_number)
       @cicle = KepplerReproduction::Cicle.new
+      @strategic_lot = KepplerFarm::StrategicLot.new
+      
     end
 
     def new

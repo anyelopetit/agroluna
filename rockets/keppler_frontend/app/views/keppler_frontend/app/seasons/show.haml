@@ -11,31 +11,122 @@
           = link_to farm_season_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
             %i.icofont-trash
       .float-right.mt-4.mb-4
-        -# = link_to({ action: :show, format: :pdf }, { target: '_blank' }) do
-          %button.btn.btn_custom.btn--filled.btn--medium
-            %i.icofont-clip-board
-            Reporte
         %a#add-cicle{ href: '#' }
           %button.btn.btn_custom.btn--filled.btn--medium
             +
             Agregar ciclo
-      -# %a.float-right.mt-4.mb-4.ml-3{ href: new_farm_cow_path(farm) }
-        %button.btn.btn_custom.btn--filled.btn--medium
-          %i.icofont-plus
-          Agregar
+    
     - if @cows.blank? && @season.cows.count > 0
       = link_to 'Mostrar todos', farm_cows_path(farm)
     = render 'keppler_frontend/app/seasons/gantt', season: @season
-    .d-flex.justify-content-between.mt-5.mb-3
+    .float-right.mt-4.mb-4
+      %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalCattle", 'data-toggle': 'modal'}
+        %i.icofont-plus
+        Agregar Ganado
+      %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
+        %i.icofont-plus
+        Agregar Lote
+    .d-flex.justify-content-between.mt-5.mb-3.mt-4
       .left
         %h1 Grupo de ganados
       .right
-    = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+    
+    #index-container
+      %ul#moduleTabs.nav.nav-tabs.mt-4{role: "tablist", style: "padding: 0;"}
+        %li.nav-item
+          %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#celos", role: "tab"} Celos
+          -# %a#mfg-tab.nav-link.active{ href: "#mfg", role: "tab" }
+          -# = link_to(action_name.eql?('index') ? '#' : {action: :index}, { class: "nav-link #{'active' if action_name.eql?('index')}" }) do
+          -#   Activos (#{@active_cows.size})
+        %li.nav-item
+          %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#servicio", role: "tab"} Servicio
+          -# = link_to(action_name.eql?('index_inactives') ? '#' : {action: :index_inactives}, { class: "nav-link #{'active' if action_name.eql?('index_inactives')}" }) do
+          -#   Inactivos (#{@inactive_cows.size})
+        %li.nav-item
+          %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#preez", role: "tab"} Preñez
+          -# = link_to(action_name.eql?('index_inactives') ? '#' : {action: :index_inactives}, { class: "nav-link #{'active' if action_name.eql?('index_inactives')}" }) do
+          -#   Inactivos (#{@inactive_cows.size})
+        %li.nav-item
+          %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#parto", role: "tab"} Parto
+          -# = link_to(action_name.eql?('index_inactives') ? '#' : {action: :index_inactives}, { class: "nav-link #{'active' if action_name.eql?('index_inactives')}" }) do
+          -#   Inactivos (#{@inactive_cows.size})
+      %hr{ :style => "margin-top: 0; margin-bottom: 20px;"}
+      .tab-content
+        #celos.tab-pane.active
+          .float-right.mt-4.mb-4
+            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalCattle", 'data-toggle': 'modal'}
+              %i.icofont-plus
+              Agregar Celos
+            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
+              %i.icofont-plus
+              Agregar Servicios
+          = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+        #servicio.tab-pane.fade
+          .float-right.mt-4.mb-4
+            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalCattle", 'data-toggle': 'modal'}
+              %i.icofont-plus
+              Agregar Servicio
+            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
+              %i.icofont-plus
+              Agregar Preñez
+          = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+        #prenez.tab-pane.fade
+          .float-right.mt-4.mb-4
+            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalCattle", 'data-toggle': 'modal'}
+              %i.icofont-plus
+              Agregar Preñez
+            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
+              %i.icofont-plus
+              Agregar Parto
+          = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+        #parto.tab-pane.fade
+          = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+
+
+    -# = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+
+    -# .d-flex.justify-content-between.mt-5.mb-3.mt-4
+    -#   .left
+    -#     %h1 Lote
+    -#   .right
+    -#     %form
+    -#       .flex-search.mt-4
+    -#         %input.form-control{"aria-label" => "Search", :placeholder => "Search", :type => "text", class: 'form-control search-bar btn btn--input ml-2'}/
+    -#         %button.btn.btn--small.btn--select.ml-3{ type: 'submit' }
+    -#           %i.icofont-search
+    .row
+      .col-lg-6.mt-4
+        .float-left
+          %h1 Lote
+      .col-lg-6
+        %form
+          .flex-search.mt-4
+            %input.form-control{"aria-label" => "Search", :placeholder => "Search", :type => "text", class: 'form-control search-bar btn btn--input ml-2'}/
+            %button.btn.btn--small.btn--select.ml-3{ type: 'submit' }
+              %i.icofont-search
+      .col-lg-6.mb-4.mt-4
+        .float-left
+          %h1 Toros
+        = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+      .col-lg-6.mb-4.mt-4
+        .float-left
+          %h1 Vacas            
+        = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+      .col-sm-12
+        .float-right
+          %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+            %i.icofont-save
+            Agregar
+    
+      
+    -# = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
 = simple_form_for [@farm, @season, @cicle] do |f|
   = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
   = f.input :season_id, as: :hidden, input_html: { value: @season.id }
   = f.input :days_count, as: :hidden
 
+= render 'keppler_frontend/app/seasons/modalLote', season: @season     
+= render 'keppler_frontend/app/seasons/modalCattle', season: @season         
 :javascript
   $('#add-cicle').click(function() {
     swal({

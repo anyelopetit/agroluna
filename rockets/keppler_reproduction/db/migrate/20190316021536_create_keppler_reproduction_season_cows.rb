@@ -10,7 +10,7 @@ class CreateKepplerReproductionSeasonCows < ActiveRecord::Migration[5.2]
 
       t.timestamps null: false
     end
-    add_index :keppler_reproduction_season_cows, :farm_id
-    add_index :keppler_reproduction_season_cows, :farm_id
+    add_index :keppler_reproduction_season_cows, :season_id
+    add_index :keppler_reproduction_season_cows, :cow_id
   end
 end

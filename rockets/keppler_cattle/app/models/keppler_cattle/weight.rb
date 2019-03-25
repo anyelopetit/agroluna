@@ -10,8 +10,10 @@ module KepplerCattle
     include Downloadable
     include Sortable
     include Searchable
+    include KepplerCattle::Concerns::Typologyable
     acts_as_list
     acts_as_paranoid
+    after_save :create_typology
 
     belongs_to :user
     belongs_to :cow, class_name: 'KepplerCattle::Cow'

@@ -25,6 +25,7 @@ module KepplerFrontend
 
     def new
       @season = KepplerReproduction::Season.new
+      @season_types = KepplerReproduction::Season.season_types
     end
 
     def create

@@ -3,27 +3,30 @@ es:
     sidebar-menu:
       keppler-reproduction: Reproducción
       keppler-reproduction-submenu:
-        cicle: Cicle
+        cicle: Ciclo
         season-cow: Season cow
         season: Temporada
     permissions:
     models:
       singularize:
-        cicle: cicle
+        cicle: ciclo
         season_cow: season cow
         season: temporada
       pluralize:
-        cicles: cicles
+        cicles: ciclos
         season_cows: season cows
         seasons: temporadas
     modules:
-      admin/cicle: Cicle
+      admin/cicle: Ciclo
       admin/season-cow: Season cow
       admin/season: Temporada
     messages:
     actions:
   activerecord:
     attributes:
+      insemination: Inseminación
+      unibull: Unitoro
+      multibull: Multitoro
     errors:
       messages:
   errors:

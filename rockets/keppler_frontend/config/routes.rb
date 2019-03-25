@@ -18,18 +18,28 @@ KepplerFrontend::Engine.routes.draw do
         match 'buscar-ganado' => 'search', via: %i[get post], as: :search
       end
       collection do
-        get 'inactivos' => 'app/cattle#index_inactives', as: :inactives
+        get 'inactivos', to: 'app/cattle#index_inactives', as: :inactives
         get :pagination
+        # Weights
+        get 'nuevos-pesajes/:multiple_ids', to: 'app/cattle#new_weights', as: :new_weights
+        post :create_weights
+        get 'pesajes/:multiple_ids', to: 'app/cattle#show_weights', as: :weights
       end
       resources :weights, path: 'pesos', controller: 'app/weights', path_names: { new: 'nuevo', edit: 'editar'}, only: %i[new create]
     end
 
-    resources :strategic_lots, path: 'lotes-estratégicos', controller: 'app/strategic_lots', path_names: { new: 'nuevo', edit: 'editar'} do
+    resources :strategic_lots, path: 'lotes-estrategicos', controller: 'app/strategic_lots', path_names: { new: 'nuevo', edit: 'editar'} do
       member do
         post :assign_cattle
         delete :delete_assignment
       end
-      delete :destroy_multiple, on: :collection, params: { multiple_ids: [] }
+      collection do
+        delete :destroy_multiple, params: { multiple_ids: [] }
+        # Transfer
+        get 'transferir/:multiple_ids', to: 'app/strategic_lots#transfer', as: :transfer
+        post :create_transfer
+        get 'transferidos/:multiple_ids', to: 'app/strategic_lots#transfered', as: :transfered
+      end
     end
 
     resources :transferences, path: 'transferencias', controller: 'app/transferences', path_names: { new: 'nuevo', edit: 'editar'}, only: %w[index show new create]
@@ -40,9 +50,7 @@ KepplerFrontend::Engine.routes.draw do
     end
 
     resources :seasons, path: 'temporadas', controller: 'app/seasons', path_names: { new: 'nuevo', edit: 'editar'} do
-      resources :cicles, controller: 'app/cicles' do
-        
-      end
+      resources :cicles, controller: 'app/cicles', only: %i[new create destroy]
     end
   end
   

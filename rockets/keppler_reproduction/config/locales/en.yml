@@ -24,6 +24,9 @@ en:
     actions:
   activerecord:
     attributes:
+      insemination: Inseminación
+      unibull: Unitoro
+      multibull: Multitoro
     errors:
       messages:
   errors:

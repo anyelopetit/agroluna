@@ -84,6 +84,26 @@ module KepplerFrontend
       end
     end
 
+    def new_weights
+      @cows = @farm.cows.where(id: params[:multiple_ids].split(','))
+    end
+
+    def create_weights
+      params.require(:weight).keys.each do |id|
+        weight = KepplerCattle::Weight.new(multiple_cows_params(id).values[0])
+        if weight.save!
+          flash[:notice] = "Pesos fueron guardados correctamente"
+        else
+          flash[:error] = "Error al guardar los pesos"
+        end
+      end
+      redirect_to weights_farm_cows_path(@farm, params[:weight].keys.join(','))
+    end
+
+    def show_weights
+      @cows = @farm.cows.where(id: params[:multiple_ids].split(',')).order(:serie_number)
+    end
+
     private
 
     def set_cow
@@ -98,6 +118,7 @@ module KepplerFrontend
       @inactive_cows = @cows.inactives.page(params[:page]).per(10)
       @attributes = KepplerCattle::Cow.index_attributes
       @typologies = KepplerCattle::Typology.all
+      @strategic_lots = @farm.strategic_lots.map { |x| "'#{x.id}': '#{x.name}'" }.join(', ')
     end
 
     def cow_attributes
@@ -171,6 +192,13 @@ module KepplerFrontend
     def cow_params
       params.require(:cow).permit(
         KepplerCattle::Cow.attribute_names.map(&:to_sym)
+      )
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def multiple_cows_params(id)
+      params.require(:weight).permit(
+        "#{id}": KepplerCattle::Weight.attribute_names.map(&:to_sym)
       )
     end
   end

@@ -1,9 +1,11 @@
 = simple_form_for [@farm, @season] do |f|
   .form-padding
     .row
-      .col-sm-12.col-md-6
+      .col-sm-12.col-md-4
         = f.input :name, label: 'Nombre', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
-      .col-sm-12.col-md-6
+      .col-sm-12.col-md-4
+        = f.input :season_type, collection: @season_types, include_blank: false, label: 'Tipo de temporada', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-12.col-md-4
         = f.input :start_date, as: :string, label: 'Fecha de inicio', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom datepicker' }
       .col-sm-12
         .float-right

@@ -1,4 +1,4 @@
-= render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
+-# = render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
 .app_wrapper
   .container_custom
     -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
@@ -30,7 +30,6 @@
       .left
         %h1 Grupo de ganados
       .right
-
     = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
 = simple_form_for [@farm, @season, @cicle] do |f|
   = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }

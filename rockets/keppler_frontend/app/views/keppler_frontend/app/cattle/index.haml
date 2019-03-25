@@ -1,4 +1,4 @@
-= render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
+-# = render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
 = render 'keppler_frontend/app/cattle/partials/listing', farm: @farm, cows: @active_cows, search: @q
 
 :javascript
@@ -10,11 +10,9 @@
 
   var $ids = #{@farm.cows.pluck(:id)}
   var $final_array = []
-  var href = $('.destroy_multiple').attr('href')
+  var href = $('.multiple_ids').attr('href')
 
   function checkboxes() {
-    console.log($ids.length)
-    console.log($final_array.length)
     function ids_loop() {
       $ids.forEach(function (id) {
         $('[checklist-model="check"]:checked').each(function( index ) {
@@ -32,7 +30,7 @@
           }
         });
       });
-      $('.destroy_multiple').attr('href', (`${href}&multiple_ids=[${$final_array}]`))
+      $('.multiple_ids').attr('href', (`${href}${$final_array}`))
     }
 
     $('#checkbox-all').click(function() {
@@ -47,10 +45,38 @@
         JSON.stringify($ids) === JSON.stringify($final_array)
       )
     })
-
-    $('.destroy_multiple').click(function(e) {
-      e.preventDefault()
-    })
   }
 
   checkboxes()
+
+  function strategic_lots() {
+    Swal.fire({
+      title: 'Selecciona un lote estratégico',
+      input: 'select',
+      inputOptions: {
+        #{raw @strategic_lots}
+      },
+      showCancelButton: true
+    }).then((result) => {
+      if (!result.dismiss) {
+        window.location = "#{transfer_farm_strategic_lots_path(@farm, [])}"
+      }
+    })
+  }
+
+
+:coffee
+  $ ->
+    if $('.pagination').length && $('#cows').length
+      $(window).scroll ->
+        next_page = $('a[rel=next]').attr('href')
+        if $(window).scrollTop() > $(document).height() - $(window).height() - 5
+          $('.next_page').remove()
+          $('#loading').html('<center class="loading"><img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." /></center>')
+          if next_page
+            $.getScript(next_page)
+            console.log(next_page)
+        
+        checkboxes()
+
+      $(window).scroll()

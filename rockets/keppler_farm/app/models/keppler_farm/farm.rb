@@ -30,6 +30,8 @@ module KepplerFarm
     # Reproduction
     has_many :seasons, class_name: 'KepplerReproduction::Season'
 
+    # accepts_nested_attributes_for :cows
+
     def self.index_attributes
       %i[logo title photos strategic_lots]
     end

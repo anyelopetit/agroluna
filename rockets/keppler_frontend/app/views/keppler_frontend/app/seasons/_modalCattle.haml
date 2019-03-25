@@ -1,0 +1,33 @@
+.modal.modal_status.fade{ id: "modalCattle", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+  .modal-dialog{role: "document", style: "max-width: 1000px;"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body{ style: "padding: 20px;"}
+        .container
+          .row
+            .col-lg-12            
+              .row
+                .col-lg-6
+                  .float-left
+                    %h1 Lote
+                .col-lg-6
+                  %form
+                    .flex-search.mt-4
+                      %input.form-control{"aria-label" => "Search", :placeholder => "Search", :type => "text", class: 'form-control search-bar btn btn--input ml-2'}/
+                      %button.btn.btn--small.btn--select.ml-3{ type: 'submit' }
+                        %i.icofont-search
+                .col-lg-4.mb-4
+                  .float-left
+                    %h1 Toros
+                  = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+                .col-lg-8.mb-4
+                  .float-left
+                    %h1 Vacas            
+                  = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows
+                .col-sm-12
+                  .float-right
+                    %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                      %i.icofont-save
+                      Agregar

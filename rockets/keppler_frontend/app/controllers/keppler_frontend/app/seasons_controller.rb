@@ -22,7 +22,8 @@ module KepplerFrontend
       @cows = @season.cows.order(:serie_number)
       @cicle = KepplerReproduction::Cicle.new
       @strategic_lot = KepplerFarm::StrategicLot.new
-      
+      @season_cow = KepplerReproduction::SeasonCow.new
+      @strategic_lots = @farm.strategic_lots
     end
 
     def new
@@ -68,8 +69,8 @@ module KepplerFrontend
     end
     
     def new_assign_cattle
-      @bulls = @farm.cows.possible_fathers
-      @cows = @farm.cows.possible_mothers
+      @bulls = @farm.possible_fathers
+      @cows = @farm.possible_mothers
     end
 
     private
@@ -79,7 +80,7 @@ module KepplerFrontend
     end
 
     def index_variables
-      @q = KepplerReproduction::Season.ransack(params[:q])
+      @q = @farm.seasons.ransack(params[:q])
       set_season = @q.result(distinct: true)
       @seasons = set_season.page(@current_page).order(position: :desc)
       @total = @seasons.size

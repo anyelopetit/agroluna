@@ -90,8 +90,8 @@ module KepplerFrontend
     def insemination_attributes
       @species = KepplerCattle::Species.all
       @races   = KepplerCattle::Race.all
-      @possible_mothers = KepplerCattle::Insemination.possible_mothers
-      @possible_fathers = KepplerCattle::Insemination.possible_fathers
+      @possible_mothers = @farm.possible_mothers
+      @possible_fathers = @farm.possible_fathers
       @colors = KepplerCattle::Insemination.colors
     end
 

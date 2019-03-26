@@ -36,7 +36,7 @@ class KepplerBooleanInput < SimpleForm::Inputs::Base
   private
 
   def try_boolean
-    object.try(attribute_name) ? true : false
+    input_options[:value] || object.try(attribute_name) ? true : false
   end
 
   protected

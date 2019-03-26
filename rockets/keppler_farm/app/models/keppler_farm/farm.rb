@@ -67,5 +67,39 @@ module KepplerFarm
       PublicActivity::Activity.where(trackable_id: ids)
         .or(PublicActivity::Activity.where(recipient_id: ids))
     end
+
+    def possible_mothers
+      ids =
+        cows
+          .order(:serie_number)
+          .where(gender: 'female')
+          .select { |x| %w[1 2].include?(x.typology&.counter.to_s) }
+          .map(&:id)
+      cows.where(id: ids)
+    end
+
+    def possible_fathers
+      ids =
+        cows
+          .order(:serie_number)
+          .where(gender: 'male')
+          .select { |x| x.males&.last&.reproductive }
+          .map(&:id)
+      cows.where(id: ids)
+    end
+
+    def possible_mothers_select2
+      possible_mothers.map do |x|
+        [x.serie_number + ("(#{x&.short_name}) - #{x&.typology_name}" unless x&.short_name.blank?).to_s, x.id]
+      end
+    end
+
+    def possible_fathers_select2
+      possible_fathers
+        .map { |x| [x.serie_number + ("(#{x&.short_name})" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] }
+        .concat(KepplerCattle::Insemination.order(:serie_number).map { 
+          |x| [x.serie_number + ("(#{x&.short_name}) - Pajuela" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] 
+        }) 
+    end
   end
 end

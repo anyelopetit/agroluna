@@ -7,7 +7,7 @@ module KepplerFrontend
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
     before_action :set_farm
-    before_action :set_cow, only: %i[show edit update destroy]
+    before_action :set_cow, only: %i[show edit update destroy males]
     before_action :cow_attributes, only: %i[new edit create]
     before_action :set_farms
     before_action :index_variables
@@ -104,6 +104,16 @@ module KepplerFrontend
       @cows = @farm.cows.where(id: params[:multiple_ids].split(',')).order(:serie_number)
     end
 
+    def males
+      @male = KepplerCattle::Male.new(male_params)
+      if @male.save!
+        flash[:notice] = 'Estado de ganado macho ha sido cambiado'
+      else
+        flash[:error] = 'No se ha podido guardar el estado del ganado'
+      end
+      redirect_to [@farm, @cow]
+    end
+
     private
 
     def set_cow
@@ -125,8 +135,8 @@ module KepplerFrontend
       @species = KepplerCattle::Species.all
       @genders = KepplerCattle::Cow.genders
       @races   = @species.first.races
-      @possible_mothers = KepplerCattle::Cow.possible_mothers_select2
-      @possible_fathers = KepplerCattle::Cow.possible_fathers_select2
+      @possible_mothers = @farm.possible_mothers_select2
+      @possible_fathers = @farm.possible_fathers_select2
       @colors = KepplerCattle::Cow.colors
     end
 
@@ -192,6 +202,13 @@ module KepplerFrontend
     def cow_params
       params.require(:cow).permit(
         KepplerCattle::Cow.attribute_names.map(&:to_sym)
+      )
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def male_params
+      params.require(:male).permit(
+        KepplerCattle::Male.attribute_names.map(&:to_sym)
       )
     end
 

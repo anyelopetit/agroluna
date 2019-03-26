@@ -92,8 +92,8 @@ module KepplerCattle
         @farms = KepplerFarm::Farm.all
         @corporal_conditions = KepplerCattle::Weight&.corporal_conditions
         @colors = KepplerCattle::Cow.colors
-        @possible_mothers = KepplerCattle::Insemination.possible_mothers
-        @possible_fathers = KepplerCattle::Insemination.possible_fathers
+        @possible_mothers = @farm.possible_mothers
+        @possible_fathers = @farm.possible_fathers
       end
 
       # Use callbacks to share common setup or constraints between actions.

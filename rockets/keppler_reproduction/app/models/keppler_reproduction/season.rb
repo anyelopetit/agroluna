@@ -17,6 +17,8 @@ module KepplerReproduction
 
     has_many :cicles, class_name: 'KepplerReproduction::Cicle'
 
+    validates_presence_of :farm_id, on: :create, message: "can't be blank"
+
     def self.index_attributes
       %i[name]
     end
@@ -49,12 +51,20 @@ module KepplerReproduction
       ['#54c6f9', '#2ecaac', '#ff6252']
     end
 
-    def self.season_types
+    def self.types
       [
         [I18n.t('activerecord.attributes.insemination'), 0],
         [I18n.t('activerecord.attributes.unibull'), 1],
         [I18n.t('activerecord.attributes.multibull'), 2]
       ]
+    end
+
+    def type_name
+      self.class.types[season_type.to_i].first
+    end
+
+    def type_id
+      self.class.types[season_type.to_i].last
     end
   end
 end

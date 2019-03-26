@@ -32,7 +32,7 @@
           %th Tipología
           -# %th Peso
           -# %th Estado
-          %th Menu
+          -# %th Menu
         %tbody#cows
           - cows.each do |cow|
             %tr.cow{ style: "border-bottom: 1px #eee solid;" }
@@ -83,7 +83,7 @@
                   %span.icofont-eye
                 = link_to new_farm_cow_weight_path(farm, cow), class: 'floating-btn' do
                   %span.icofont-ui-add
-              %td
+              -# %td
                 .dropdown{ style: 'justify-content: center; cursor:pointer' }
                   %a.action-btn.pull-right{:id => "menu-#{cow.id}", 'aria-expanded': 'false', 'aria-haspopup': 'true', 'data-toggle': 'dropdown' }
                     %i.icofont-navigation-menu

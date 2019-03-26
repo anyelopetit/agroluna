@@ -17,6 +17,8 @@ module KepplerCattle
     belongs_to :user
     belongs_to :cow, class_name: 'KepplerCattle::Cow'
 
+    validates_presence_of :cow_id, on: :create, message: "can't be blank"
+
     validates_presence_of :user_id, :cow_id
 
     def self.index_attributes

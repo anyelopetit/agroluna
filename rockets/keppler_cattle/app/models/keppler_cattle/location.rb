@@ -27,11 +27,11 @@ module KepplerCattle
     end
 
     def exists?
-      Location.where(cow_id: cow_id, strategic_lot_id: strategic_lot_id).count > 0
+      Location.where(cow_id: cow_id, strategic_lot_id: strategic_lot_id).exists?
     end
 
     def clean_other_cow_locations
-      Location.where(cow_id: cow_id).destroy_all if Location.where(cow_id: cow_id).count > 0
+      Location.where(cow_id: cow_id).destroy_all if Location.where(cow_id: cow_id).exists?
     end
   end
 end

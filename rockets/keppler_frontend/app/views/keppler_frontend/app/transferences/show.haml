@@ -23,6 +23,6 @@
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-plus
           Agregar
-    - if @cows.blank? && @transference.cows.count > 0
+    - if @cows.blank? && @transference.cows.exists?
       = link_to 'Mostrar todos', farm_cows_path(farm)
     = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: @cows

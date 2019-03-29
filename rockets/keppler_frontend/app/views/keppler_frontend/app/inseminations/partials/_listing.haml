@@ -46,7 +46,7 @@
             Agregar
           = link_to({action: :index, format: :pdf},  {class: 'dropdown-item', target: '_blank'}) do
             Reporte
-  - if inseminations.blank? && @farm.inseminations.count > 0
+  - if inseminations.blank? && @farm.inseminations.exists?
     .toolbar
       .toolbar-item
         = link_to 'Mostrar todos', farm_inseminations_path(farm)

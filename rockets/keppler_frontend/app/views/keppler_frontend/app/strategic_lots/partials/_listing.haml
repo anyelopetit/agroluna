@@ -41,7 +41,7 @@
       %button.btn.btn_custom.btn--filled.btn--medium
         %i.icofont-plus
         Agregar
-    - if strategic_lots.blank? && @farm.strategic_lots.count > 0
+    - if strategic_lots.blank? && @farm.strategic_lots.exists?
       = link_to 'Mostrar todos', farm_strategic_lots_path(farm)
     .content-table{ style: 'position:initial' }
       %table

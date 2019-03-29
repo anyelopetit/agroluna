@@ -45,7 +45,7 @@
             Historial
           = link_to({action: :index, format: :pdf},  {class: 'dropdown-item', target: '_blank'}) do
             Reporte
-  - if transferences.blank? && @farm.transferences.count > 0
+  - if transferences.blank? && @farm.transferences.exists?
     .toolbar
       .toolbar-item
         = link_to 'Mostrar todos', farm_transferences_path(farm)

@@ -26,7 +26,7 @@ module KepplerFrontend
     def landing
       case current_user.role_ids[0]
       when 1
-        redirect_to KepplerFarm::Farm.last if KepplerFarm::Farm.all.count > 0
+        redirect_to KepplerFarm::Farm.last if KepplerFarm::Farm.all.exists?
       else
         @assign = KepplerFarm::Assignment.where(user_id: current_user.id).first
         @farm = KepplerFarm::Farm.find_by(id: @assign.keppler_farm_farm_id) if @assign

@@ -41,7 +41,7 @@
       %button.btn.btn_custom.btn--filled.btn--medium
         %i.icofont-plus
         Agregar
-    - if @seasons.blank? && @farm.seasons.count > 0
+    - if @seasons.blank? && @farm.seasons.exists?
       = link_to 'Mostrar todos', farm_seasons_path(@farm)
     .content-table{ style: 'position:initial' }
       %table

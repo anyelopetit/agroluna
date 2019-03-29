@@ -24,7 +24,7 @@
             +
             Agregar ciclo
     
-    - if @cows.blank? && @season.cows.count > 0
+    - if @cows.blank? && @season.cows.exists?
       = link_to 'Mostrar todos', farm_cows_path(farm)
     - if @season.duration_days.zero?
       %table

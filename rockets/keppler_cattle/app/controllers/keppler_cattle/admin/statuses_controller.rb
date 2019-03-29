@@ -7,7 +7,6 @@ module KepplerCattle
     class StatusesController < ::Admin::AdminController
       layout 'keppler_cattle/admin/layouts/application'
       before_action :set_status, only: %i[show edit update destroy]
-      before_action :set_cow
       before_action :index_variables
       include ObjectQuery
 
@@ -18,21 +17,11 @@ module KepplerCattle
       end
 
       # GET /cattles/1
-      def show
-        respond_to do |format|
-          format.json { render json: @status }
-        end
-      end
+      def show; end
 
       # GET /cattles/new
       def new
         @status = Status.new
-        # @ubications = Status.ubications
-        @corporal_conditions = weight&.corporal_conditions
-        @strategic_lots = KepplerFarm::StrategicLot.all
-        # @typologies = @cow.gender?('male') ? Status.male_typologies : Status.female_typologies
-        @last_status = @cow.status
-        @farms = KepplerFarm::Farm.order(title: :asc)
       end
 
       # GET /cattles/1/edit
@@ -41,12 +30,10 @@ module KepplerCattle
       # POST /cattles
       def create
         @status = Status.new(status_params)
-        @last_status = Status.last
 
         if @status.save
-          redirect_to admin_cattle_cow_path(@cow)
+          redirect(@status, params)
         else
-          flash[:error] = 'Revisa los campos'
           render :new
         end
       end
@@ -90,10 +77,6 @@ module KepplerCattle
 
       private
 
-      def set_cow
-        @cow = Cow.find_by(id: params[:cow_id])
-      end
-
       def index_variables
         @q = Status.ransack(params[:q])
         @statuses = @q.result(distinct: true)
@@ -110,26 +93,7 @@ module KepplerCattle
       # Only allow a trusted parameter "white list" through.
       def status_params
         params.require(:status).permit(
-          :cow_id,
-          :farm_id,
-          :weight,
-          :gained_weight,
-          :years,
-          :months,
-          :days,
-          :ubication,
-          :corporal_condition,
-          :reproductive,
-          :defiant,
-          :pregnant,
-          :lactating,
-          :breeding,
-          :dead,
-          :deathdate,
-          :typology,
-          :strategic_lot_id,
-          :user_id,
-          :comments
+          :date, :months, :successfully, :twins, :observations, :bull_id, :user_id
         )
       end
     end

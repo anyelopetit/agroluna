@@ -1,7 +1,7 @@
 .container
   .row
     .col-lg-2
-      = link_to admin_cattle_cow_statuses_path(@cow), 'data-position': 'bottom', 'data-tooltip': t('keppler.actions.back') do
+      = link_to admin_cattle_statuses_path, 'data-position': 'bottom', 'data-tooltip': t('keppler.actions.back') do
         .arrow-back.btn.btn-default
           %i.icon-arrow-left
           = t('keppler.actions.back')
@@ -13,10 +13,10 @@
             %h3.box-title= t('keppler.models.singularize.status').humanize
             .box-tools.pull-right
               - if can?(model).update?
-                = link_to edit_admin_cattle_cow_status_path(@cow, @status), class: 'btn btn-box-tool', title: t('keppler.actions.edit') do
+                = link_to edit_admin_cattle_status_path(@status), class: 'btn btn-box-tool', title: t('keppler.actions.edit') do
                   %i.icon-pencil
               - if can?(model).destroy?
-                = link_to admin_cattle_cow_status_path(@cow, @status), class: 'btn btn-box-tool', title: t('keppler.actions.delete'), method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
+                = link_to admin_cattle_status_path(@status), class: 'btn btn-box-tool', title: t('keppler.actions.delete'), method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
                   %i.icon-trash
 
           .box-body.no-padding

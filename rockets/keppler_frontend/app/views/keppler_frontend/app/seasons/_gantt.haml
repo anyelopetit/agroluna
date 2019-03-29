@@ -1,4 +1,4 @@
-.gantt-wrapper
+-# .gantt-wrapper
   -# .gantt-header
     %h2 Diagrama de Gantt
     -# %p
@@ -59,42 +59,43 @@
       - season.duration_days.times do |day|
         %span{ class: ('marker' if (season.start_date + day).strftime('%d%m%y').eql?((Date.today + 1).strftime('%d%m%y'))) }
     - last_cicle_days = 0
-    - %w[Celos Montas Preñez Parto].each do |state|
-      - quant = (1..9).to_a.sample
+    - %w[Celos Montas Palpaciones Preñez Parto].each do |state|
       .gantt__row
         .gantt__row-first
           #{state}
         %ul.gantt__row-bars{ style: "grid-template-columns: repeat(#{season.duration_days}, 1fr);" }
           - (3..6).to_a.sample.times do |time|
             - position = (time+1)**2 + (1..2).to_a.sample
-            %li.stripes{style: "z-index: 2; padding: 0; grid-column: #{position}/#{position + 1}; background-color: #{season.cicle_colors[quant/3]};"}
+            - quant = (1..9).to_a.sample
+            %li.stripes{style: "z-index: 2; padding: 0; grid-column: #{position}/#{position + 1}; background-color: #{season.cicle_colors[(quant/3)-3]};"}
               %a{ style: 'display:block; width: 100%; height: 100%;', 'data-target': "#modal#{state}", 'data-toggle': 'modal', href: ""}
                 .text-white.text-center= quant
-      .modal.modal_status.fade{ id: "modal#{state}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
-        .modal-dialog{role: "document"}
-          .modal-content
-            .modal-header
-              %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
-                %span{"aria-hidden" => "true"} ×
-            .modal-body{ style: "padding: 20px;"}
-              .card_status
-                %center.card_status--title   
-                  %h1.modal-title
-                    #{state}          
-                .box-body.no-padding
-                  .row
-                    - if @farm.cows.take(quant).blank?
-                      %center.col-lg-12
-                        No existen ganados asignados
-                    - @farm.cows.take(quant).each do |cow|
-                      .col-lg-12
-                        = link_to(action: :show, id: cow.id) do
-                          .cow-item.d-flex.p-3
-                            = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-md p-absolute r-0' unless cow.gender.blank?
-                            %strong #{cow.serie_number} &nbsp;
-                            %span
-                              = "(#{cow.short_name})" unless cow.short_name.blank?
-                              \- #{cow.typology_name} (#{cow.weight&.weight} KG)
+            .modal.modal_status.fade{ id: "modal#{state}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+              .modal-dialog{role: "document"}
+                .modal-content
+                  .modal-header
+                    %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+                      %span{"aria-hidden" => "true"} ×
+                  .modal-body{ style: "padding: 20px;"}
+                    .card_status
+                      %center.card_status--title   
+                        %h1.modal-title
+                          #{state}
+                          %small (#{(season.start_date + position).strftime('%d/%m/%y')})      
+                      .box-body.no-padding
+                        .row
+                          - if @farm.cows.take(quant).blank?
+                            %center.col-lg-12
+                              No existen ganados asignados
+                          - @farm.cows.take(quant).each do |cow|
+                            .col-lg-12
+                              = link_to(action: :show, id: cow.id) do
+                                .cow-item.d-flex.p-3
+                                  = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-md p-absolute r-0' unless cow.gender.blank?
+                                  %strong #{cow.serie_number} &nbsp;
+                                  %span
+                                    = "(#{cow.short_name})" unless cow.short_name.blank?
+                                    \- #{cow.typology_name} (#{cow.weight&.weight} KG)
 :scss
   .months {
     display: grid;

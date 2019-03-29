@@ -4,6 +4,7 @@ class CreateKepplerReproductionSeasons < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :season_type
       t.date :start_date
+      t.date :finish_date
 
       t.integer :farm_id, foreign_key: true
 

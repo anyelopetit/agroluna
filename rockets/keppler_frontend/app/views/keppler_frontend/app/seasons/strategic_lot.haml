@@ -1,0 +1,81 @@
+.app_wrapper
+  .container_custom
+    %h1
+      = link_to farm_season_path(@farm, @season) do
+        = @season.name
+      > #{@strategic_lot.name}
+    %ul#moduleTabs.nav.nav-tabs.mt-4{role: "tablist", style: "padding: 0;"}
+      %li.nav-item
+        %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#celos", role: "tab"}
+          Disponibles
+        -# %a#mfg-tab.nav-link.active{ href: "#mfg", role: "tab" }
+        -# = link_to(action_name.eql?('index') ? '#' : {action: :index}, { class: "nav-link #{'active' if action_name.eql?('index')}" }) do
+        -#   Activos (#{@active_cows.size})
+      %li.nav-item
+        %a#mfg-tab.nav-link{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#celos", role: "tab"}
+          En celo
+        -# %a#mfg-tab.nav-link.active{ href: "#mfg", role: "tab" }
+        -# = link_to(action_name.eql?('index') ? '#' : {action: :index}, { class: "nav-link #{'active' if action_name.eql?('index')}" }) do
+        -#   Activos (#{@active_cows.size})
+      %li.nav-item
+        %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#servicio", role: "tab"}
+          - if @season.type_id.zero?
+            Inseminadas
+          - else
+            Montadas
+        -# = link_to(action_name.eql?('index_inactives') ? '#' : {action: :index_inactives}, { class: "nav-link #{'active' if action_name.eql?('index_inactives')}" }) do
+        -#   Inactivos (#{@inactive_cows.size})
+      %li.nav-item
+        %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#preez", role: "tab"}
+          Preñadas
+        -# = link_to(action_name.eql?('index_inactives') ? '#' : {action: :index_inactives}, { class: "nav-link #{'active' if action_name.eql?('index_inactives')}" }) do
+        -#   Inactivos (#{@inactive_cows.size})
+      %li.nav-item
+        %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#parto", role: "tab"}
+          Paridas
+        -# = link_to(action_name.eql?('index_inactives') ? '#' : {action: :index_inactives}, { class: "nav-link #{'active' if action_name.eql?('index_inactives')}" }) do
+        -#   Inactivos (#{@inactive_cows.size})
+    %hr{ :style => "margin-top: 0; margin-bottom: 20px;"}
+    .tab-content
+      #celos.tab-pane.active
+        .float-right.mt-4.mb-4
+          %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalCattle", 'data-toggle': 'modal'}
+            %i.icofont-plus
+            Marcar Celos
+          %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
+            %i.icofont-plus
+            Agregar Servicios
+        = render 'season_cows_table', cows: @cows
+      #servicio.tab-pane.fade
+        .float-right.mt-4.mb-4
+          %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalCattle", 'data-toggle': 'modal'}
+            %i.icofont-plus
+            Agregar Servicio
+          %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
+            %i.icofont-plus
+            Agregar Preñez
+        = render 'season_cows_table', cows: @cows
+      #prenez.tab-pane.fade
+        .float-right.mt-4.mb-4
+          %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalCattle", 'data-toggle': 'modal'}
+            %i.icofont-plus
+            Agregar Preñez
+          %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
+            %i.icofont-plus
+            Agregar Parto
+        = render 'season_cows_table', cows: @cows
+      #parto.tab-pane.fade
+        = render 'season_cows_table', cows: @cows
+
+
+  -# = render 'season_cows_table', cows: @cows
+
+  -# .d-flex.justify-content-between.mt-5.mb-3.mt-4
+  -#   .left
+  -#     %h1 Lote
+  -#   .right
+  -#     %form
+  -#       .flex-search.mt-4
+  -#         %input.form-control{"aria-label" => "Search", :placeholder => "Search", :type => "text", class: 'form-control search-bar btn btn--input ml-2'}/
+  -#         %button.btn.btn--small.btn--select.ml-3{ type: 'submit' }
+  -#           %i.icofont-search

@@ -5,7 +5,7 @@ class CreateKepplerReproductionCicles < ActiveRecord::Migration[5.2]
       t.string :name
       t.integer :days_count
       t.date :start_date
-      t.date :end_date
+      t.date :finish_date
 
       t.integer :season_id, foreign_key: true
       t.integer :position

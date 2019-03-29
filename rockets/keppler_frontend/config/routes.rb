@@ -54,6 +54,7 @@ KepplerFrontend::Engine.routes.draw do
       member do
         get 'asignar-ganado', to: 'app/seasons#new_assign_cattle', as: :new_assign_cattle
         post :assign_cattle
+        get 'lote-estrategico/:strategic_lot_id', to: 'app/seasons#strategic_lot', as: :strategic_lot
       end
       resources :cicles, controller: 'app/cicles', only: %i[new create destroy]
     end

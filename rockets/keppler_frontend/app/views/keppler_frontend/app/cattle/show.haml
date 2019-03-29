@@ -146,12 +146,12 @@
                     .col-md-4
                       %dl
                         %dt Reproductor
-                      = f.input :reproductive, as: :keppler_boolean, label: false, input_html: { class: 'keppler_boolean' }, value: @cow.males.last&.reproductive
+                      = f.input :reproductive, as: :keppler_boolean, label: false, input_html: { class: 'keppler_boolean' }, value: @cow.male&.reproductive
                   
                     .col-md-4
                       %dl
                         %dt Recelador
-                      = f.input :defiant, as: :keppler_boolean, label: false, input_html: { class: 'keppler_boolean' }, value: @cow.males.last&.defiant
+                      = f.input :defiant, as: :keppler_boolean, label: false, input_html: { class: 'keppler_boolean' }, value: @cow.male&.defiant
                   = f.input :user_id, as: :hidden, input_html: { value: current_user.id }
                   = f.input :cow_id, as: :hidden, input_html: { value: @cow.id }
                       

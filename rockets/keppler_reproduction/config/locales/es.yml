@@ -27,6 +27,8 @@ es:
       insemination: Inseminación
       unibull: Unitoro
       multibull: Multitoro
+      natural: Monta Natural General
+      controlled: Monta Natural Controlada
     errors:
       messages:
   errors:

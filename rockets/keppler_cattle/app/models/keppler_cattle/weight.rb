@@ -10,7 +10,7 @@ module KepplerCattle
     include Downloadable
     include Sortable
     include Searchable
-    include KepplerCattle::Concerns::Typologyable
+    include KepplerCattle::Concerns::CreateCowTypology
     acts_as_list
     acts_as_paranoid
     after_save :create_typology

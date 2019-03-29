@@ -60,6 +60,9 @@
                   = cow&.typology_name
               -# %td
                 = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                  = cow&.location.strategic_lot.name
+              -# %td
+                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
                   = cow&.weight&.weight
                   KG
               -# %td.status

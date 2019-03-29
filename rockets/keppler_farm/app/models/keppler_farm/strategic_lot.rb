@@ -12,7 +12,8 @@ module KepplerFarm
     acts_as_list
     acts_as_paranoid
 
-    has_many :assignments, class_name: 'KepplerCattle::Assignment', dependent: :destroy
+    has_many :locations, class_name: 'KepplerCattle::Location', dependent: :destroy
+    has_many :cows, class_name: 'KepplerCattle::Cow', through: :locations
 
     belongs_to :farm
 
@@ -25,8 +26,8 @@ module KepplerFarm
     end
 
     def cows
-      assignments = KepplerCattle::Assignment.where(strategic_lot_id: id).map(&:cow_id).uniq
-      KepplerCattle::Cow.where(id: assignments)
+      locations = KepplerCattle::Location.where(strategic_lot_id: id).map(&:cow_id).uniq
+      KepplerCattle::Cow.where(id: locations)
     end
   end
 end

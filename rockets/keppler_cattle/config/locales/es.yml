@@ -10,6 +10,7 @@ es:
     permissions:
     models:
       singularize:
+        status: status
         insemination: pajuela
         species: species
         weighing_day: día de pesaje
@@ -20,6 +21,7 @@ es:
         status: estado
         cow: ganado
       pluralize:
+        statuses: statuses
         inseminations: pajuela
         weighing_days: días de pesaje
         corporal_conditions: condiciones corporales
@@ -30,6 +32,7 @@ es:
         statuses: estados
         cows: ganados
     modules:
+      admin/status: Status
       admin/insemination: Pajuela
       admin/species: Species
       admin/weighing-days: días de pesaje

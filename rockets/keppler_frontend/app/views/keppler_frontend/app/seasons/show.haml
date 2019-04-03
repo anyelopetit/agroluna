@@ -8,13 +8,7 @@
           #{@season.name}
           %label.badge (#{@season.type_name})
           %small.badge.badge-secondary #{@season.start_date&.strftime("%d/%m/%Y")} - #{@season.finish_date&.strftime("%d/%m/%Y")}
-        
     .d-flex.justify-content-end
-      -# .toolbar
-        .toolbar-item
-          -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
-          = link_to farm_season_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
-            %i.icofont-trash
       .float-right.mt-4.mb-4
         = link_to edit_farm_season_path(@farm, @season) do
           %button.btn.btn_custom.btn--filled.btn--medium
@@ -24,7 +18,6 @@
           %button.btn.btn_custom.btn--filled.btn--medium
             +
             Agregar ciclo
-    
     - if @cows.blank? && @season.cows.exists?
       = link_to 'Mostrar todos', farm_cows_path(farm)
     - if @season.duration_days.zero?
@@ -48,7 +41,6 @@
         %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
           %i.icofont-plus
           Importar de lote
-    
     #index-container
       %table
         - if @cow_strategic_lots.size.zero?
@@ -70,18 +62,14 @@
                 %td
                   = link_to({ controller: :seasons, action: :strategic_lot, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
                     = @cows.where(keppler_cattle_locations: {strategic_lot_id: strategic_lot.id}).count
-
-    
-    
-      
     -# = render 'season_cows_table', cows: @cows
 -# = simple_form_for [@farm, @season, @cicle] do |f|
   = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
   = f.input :season_id, as: :hidden, input_html: { value: @season.id }
   = f.input :days_count, as: :hidden
 
-= render 'keppler_frontend/app/seasons/modalLote', season: @season     
--# = render 'keppler_frontend/app/seasons/modalCattle', season: @season         
+= render 'keppler_frontend/app/seasons/modalLote', season: @season
+-# = render 'keppler_frontend/app/seasons/modalCattle', season: @season
 -# :javascript
   $('#add-cicle').click(function() {
     swal({

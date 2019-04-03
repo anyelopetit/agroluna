@@ -10,81 +10,82 @@
         -# %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#ale", role: "tab"}
         = link_to(action_name.eql?('index_inactives') ? '#' : {action: :index_inactives}, { class: "nav-link #{'active' if action_name.eql?('index_inactives')}" }) do
           Inactivos (#{@farm.cows.inactives.count})
-    %hr{ :style => "margin-top: 0;width: 90%; margin-bottom: 20px;"}
+    -# %hr{ :style => "margin-top: 0;width: 90%; margin-bottom: 20px;"}
     .container_custom
-      = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
-      .d-flex.justify-content-end.content-btn
-        -# .toolbar
-          .toolbar-item
-            -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
-            = link_to destroy_multiple_farm_strategic_lots_path(@farm), method: :delete, class: 'destroy_multiple' do
-              %i.icofont-trash
-        - if action_name.eql?('index')
-          - if cows.size < @active_cows.size
-            .toolbar
-              .toolbar-item
-                = link_to 'Mostrar todos', farm_cows_path(farm)
-        - else
-          - if cows.size < @inactive_cows.size
-            .toolbar
-              .toolbar-item
-                = link_to 'Mostrar todos', inactives_farm_cows_path(farm)
-        .actions.d-none.d-sm-block
-          .float-right.mb-4
-            -# %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
-              %button.btn.btn_custom.btn--filled.btn--medium
-                %i.icofont-clip-board
-                Transferir a
-                %i.icofont-simple-down
-            - unless cows.size.zero?
-              %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+      .card_show
+        = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
+        .d-flex.justify-content-end.content-btn
+          -# .toolbar
+            .toolbar-item
+              -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+              = link_to destroy_multiple_farm_strategic_lots_path(@farm), method: :delete, class: 'destroy_multiple' do
+                %i.icofont-trash
+          - if action_name.eql?('index')
+            - if cows.size < @active_cows.size
+              .toolbar
+                .toolbar-item
+                  = link_to 'Mostrar todos', farm_cows_path(farm)
+          - else
+            - if cows.size < @inactive_cows.size
+              .toolbar
+                .toolbar-item
+                  = link_to 'Mostrar todos', inactives_farm_cows_path(farm)
+          .actions.d-none.d-sm-block
+            .float-right.mb-4
+              -# %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
                 %button.btn.btn_custom.btn--filled.btn--medium
                   %i.icofont-clip-board
                   Transferir a
                   %i.icofont-simple-down
-              .dropdown-menu{"aria-labelledby" => "profileDropdown"}
-                = link_to '#', class: 'multiple_ids mt-4 mb-4 mr-1 dropdown-item', onclick: 'strategic_lots()' do
-                  Lote estratégico
-              = link_to new_weights_farm_cows_path(@farm, []), class: 'multiple_ids' do
+              - unless cows.size.zero?
+                %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+                  %button.btn.btn_custom.btn--filled.btn--medium
+                    %i.icofont-clip-board
+                    Transferir a
+                    %i.icofont-simple-down
+                .dropdown-menu{"aria-labelledby" => "profileDropdown"}
+                  = link_to '#', class: 'multiple_ids mt-4 mb-4 mr-1 dropdown-item', onclick: 'strategic_lots()' do
+                    Lote estratégico
+                = link_to new_weights_farm_cows_path(@farm, []), class: 'multiple_ids' do
+                  %button.btn.btn_custom.btn--filled.btn--medium
+                    %i.icofont-plus
+                    Pesar
+                %a#reportDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+                  %button.btn.btn_custom.btn--filled.btn--medium
+                    %i.icofont-clip-board
+                    Reporte
+                    %i.icofont-simple-down
+                .dropdown-menu{"aria-labelledby" => "reportDropdown"}
+                  = link_to({action: action_name.to_sym, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    PDF
+                  = link_to({action: action_name.to_sym, format: :xls}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    XLS
+                  = link_to({action: action_name.to_sym, format: :csv}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    CSV
+              %a.mt-4.mb-4.open-status-history
+                %button.btn.btn_custom.btn--filled.btn--medium
+                  %i.icofont-clock-time
+                  Historial
+              %a.mt-4.mb-4.ml-1{ href: new_farm_cow_path(farm) }
                 %button.btn.btn_custom.btn--filled.btn--medium
                   %i.icofont-plus
-                  Pesar
-              %a#reportDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+                  Agregar
+          .actions_movil.d-sm-none.mt-4
+            .float-right
+              %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
                 %button.btn.btn_custom.btn--filled.btn--medium
-                  %i.icofont-clip-board
-                  Reporte
                   %i.icofont-simple-down
-              .dropdown-menu{"aria-labelledby" => "reportDropdown"}
-                = link_to({action: action_name.to_sym, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                  PDF
-                = link_to({action: action_name.to_sym, format: :xls}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                  XLS
-                = link_to({action: action_name.to_sym, format: :csv}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                  CSV
-            %a.mt-4.mb-4.open-status-history
-              %button.btn.btn_custom.btn--filled.btn--medium
-                %i.icofont-clock-time
-                Historial
-            %a.mt-4.mb-4.ml-1{ href: new_farm_cow_path(farm) }
-              %button.btn.btn_custom.btn--filled.btn--medium
-                %i.icofont-plus
-                Agregar
-        .actions_movil.d-sm-none.mt-4
-          .float-right
-            %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
-              %button.btn.btn_custom.btn--filled.btn--medium
-                %i.icofont-simple-down
-                Acciones
-            .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
-              %a.mt-4.mb-4.ml-1{ href: new_farm_cow_path(farm),class: "dropdown-item" }
-                Agregar
-              %a.open-status-history{class: "dropdown-item"}
-                Historial
-              = link_to({action: :index, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                Reporte
+                  Acciones
+              .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
+                %a.mt-4.mb-4.ml-1{ href: new_farm_cow_path(farm),class: "dropdown-item" }
+                  Agregar
+                %a.open-status-history{class: "dropdown-item"}
+                  Historial
+                = link_to({action: :index, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                  Reporte
               
       
-      = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: cows
+        = render 'keppler_frontend/app/cattle/partials/cattle_table', cows: cows
 
 = render 'keppler_frontend/app/layouts/public_activity/history'
 

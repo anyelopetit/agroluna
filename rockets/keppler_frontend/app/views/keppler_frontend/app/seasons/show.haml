@@ -2,11 +2,12 @@
 .app_wrapper
   .container_custom
     -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
-    .float-left.mb-4{ style: 'width: 80%' }
-      %h1
-        #{@season.name}
-        %label.badge (#{@season.type_name})
-        %small.badge.badge-secondary #{@season.start_date&.strftime("%d/%m/%Y")} - #{@season.finish_date&.strftime("%d/%m/%Y")}
+    .d-flex.justify-content-start
+      .float-left.mb-4{ style: 'width: 80%' }
+        %h1
+          #{@season.name}
+          %label.badge (#{@season.type_name})
+          %small.badge.badge-secondary #{@season.start_date&.strftime("%d/%m/%Y")} - #{@season.finish_date&.strftime("%d/%m/%Y")}
         
     .d-flex.justify-content-end
       -# .toolbar
@@ -34,18 +35,19 @@
               %center No se encontraron ciclos para la temporada
     - else
       = render 'keppler_frontend/app/seasons/gantt', season: @season
-    .float-right.mt-4.mb-4
-      -# = link_to new_assign_cattle_farm_season_path(@farm, @season) do
-        %button.btn.btn_custom.btn--filled.btn--medium
-          %i.icofont-plus
-          Agregar Serie
-      %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
-        %i.icofont-plus
-        Importar de lote
     .d-flex.justify-content-between.mt-5.mb-3.mt-4
       .left
         %h1 Lotes estratégicos
       .right
+    .d-flex.justify-content-end
+      .float-right.mt-4.mb-4
+        -# = link_to new_assign_cattle_farm_season_path(@farm, @season) do
+          %button.btn.btn_custom.btn--filled.btn--medium
+            %i.icofont-plus
+            Agregar Serie
+        %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
+          %i.icofont-plus
+          Importar de lote
     
     #index-container
       %table

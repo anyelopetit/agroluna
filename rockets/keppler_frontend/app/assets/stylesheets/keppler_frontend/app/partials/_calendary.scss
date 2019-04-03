@@ -1,0 +1,63 @@
+.ui-widget.ui-widget-content {
+  border: 1px solid $white !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) !important;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 0px;
+    background-color: $white !important;
+  }
+}
+
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+  width: 35% !important;
+  background-color: transparent !important;
+  border: 1px solid transparent !important;
+}
+.ui-widget-header {
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  color: transparent !important;
+  font-weight: transparent !important;
+}
+
+.ui-datepicker-calendar{
+  thead{
+    box-shadow: 0 0 10px $white !important;
+    background-color: #fff !important;
+  }
+  tbody{
+    tr{
+      border-bottom: 1px solid $white !important;
+
+      &:hover {
+        box-shadow: 0 0 10px $white !important;
+        transition: .2s ease-out !important; 
+      }
+    } 
+  }
+}
+
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+  border: 1px solid $white !important;
+  background: $white !important;
+  font-weight: normal;
+  color: #454545;
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+  border: 1px solid $secundary !important;
+  background: $secundary !important;
+  font-weight: normal !important;
+  color: $white !important;
+  border-radius: 20% !important;
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+  border: 1px solid $primary-color !important;
+  background: $primary-color !important;
+  color: $white !important;
+  border-radius: 20% !important;
+}

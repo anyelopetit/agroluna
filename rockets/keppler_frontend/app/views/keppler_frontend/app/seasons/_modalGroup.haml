@@ -1,4 +1,4 @@
-.modal.modal_status.fade{ id: "modalLote", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+.modal.modal_status.fade{ id: "modalGroup", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
   .modal-dialog{role: "document", style: "max-width: 800px;"}
     .modal-content
       .modal-header
@@ -7,18 +7,31 @@
       .modal-body{ style: "padding: 20px;"}
         .container_custom
           .row
-            .col-lg-12
-              .float-left
-                %h1.mb-4 Elegir un lote
-              = simple_form_for [@farm, @season, @season_cow], url: assign_cattle_farm_season_path(@farm, @season) do |f|
-                = f.input :season_id, as: :hidden, input_html: { value: @season.id }
-                %select#season_cow_strategic_lot.form-control.select.required.form-control.input_custom{"aria-hidden" => "true", name: "season_cow[strategic_lot]", tabindex: "-1" }
-                  - @strategic_lots.includes(:cows).each do |lot|
-                    %option{ value: lot.id } #{lot.name} (#{(@possible_mothers.ids&lot.cows.ids).count} series)
-                .float-right.mt-3
-                  %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
-                    %i.icofont-save
-                    Guardar
+            .col-lg-12        
+              %h1 Elegir Toros
+              = simple_form_for [:cattle, @assign], url: assign_cattle_farm_strategic_lot_path(@farm, @strategic_lot), html: { style: 'width: 100%' } do |f|
+                .row.mt-4
+                  .col-sm-10
+                    %select#strategic_lot_cattle{ name: 'strategic_lot[cattle][]', label: 'Ganado', class: 'form-control input_custom select2-multiple', onchange: "validateCattle()" }
+                      - @farm.cows.order(:serie_number).each do |cow|
+                        %option{ value: cow.id } #{cow.serie_number}
+                  .col-sm-2
+                    .float-right
+                      %button{ type: 'submit', id: 'add-cattle', class: 'btn btn_custom btn--filled btn--medium' }
+                        Agregar
+                -# %select#season_cow_strategic_lot.form-control.select.required.form-control.input_custom{"aria-hidden" => "true", name: "season_cow[strategic_lot]", tabindex: "-1" }
+                -#   %option 1
+                -# .float-right.mt-3
+                -#   %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                -#     %i.icofont-save
+                -#     Agregar
+            .col-lg-12.mt-4
+              %h1.mt-4.mb-4 Grupo de ganado
+              .d-flex.justify-content-end.mb-4
+                %button.btn.btn_custom.btn--filled.btn--medium#remove_from_lot{ disabled: true }
+                  %i.icofont-trash
+                  Remover ganado
+              = render 'season_bulls_table', cows: @cows
             -# .col-lg-12
               .float-left
                 %h1 Crear un lote

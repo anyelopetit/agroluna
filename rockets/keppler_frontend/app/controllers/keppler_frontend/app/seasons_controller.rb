@@ -109,6 +109,7 @@ module KepplerFrontend
       ).where(
         keppler_cattle_locations: {strategic_lot_id: @strategic_lot.id}
       )
+      @assign = KepplerCattle::Location.new
     end
 
     private

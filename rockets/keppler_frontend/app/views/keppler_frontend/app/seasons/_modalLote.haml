@@ -10,27 +10,16 @@
             .col-lg-12
               .float-left
                 %h1 Elegir un lote
-              .form-padding
-                %form
-                  .form-padding
-                    .row
-                     
-                      .col-lg-10
-                        .keppler-custom-field.form-group.select.required.cow_race_id  
-                          %select#cow_race_id.form-control.select.required.form-control.input_custom{"aria-hidden" => "true", name: "", tabindex: "-1", placeholder: 'hola'}
-                            -# %option{ selected: true, disabled: true } Selecciona una raza
-                            %option Lote 1
-                            %option Lote 2
-                            %option Lote 3
-                            %option Lote 4
-                            -# - races.each do |race|
-                            -#   %option{ value: race.id }= race.name
-                      .col-lg-2
-                        .float-right
-                          %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
-                            %i.icofont-save
-                            Guardar
-            .col-lg-12
+              = simple_form_for [@farm, @season, @season_cow], url: assign_cattle_farm_season_path(@farm, @season) do |f|
+                = f.input :season_id, as: :hidden, input_html: { value: @season.id }
+                %select#season_cow_strategic_lot.form-control.select.required.form-control.input_custom{"aria-hidden" => "true", name: "season_cow[strategic_lot]", tabindex: "-1" }
+                  - @strategic_lots.includes(:cows).each do |lot|
+                    %option{ value: lot.id } #{lot.name} (#{(@possible_mothers.ids&lot.cows.ids).count} series)
+                .float-right.mt-3
+                  %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                    %i.icofont-save
+                    Guardar
+            -# .col-lg-12
               .float-left
                 %h1 Crear un lote
               .form-padding

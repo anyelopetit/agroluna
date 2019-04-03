@@ -6,7 +6,9 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    before_action :set_season, only: %i[show edit update destroy]
+    season_actions = %i[show edit update destroy assign_cattle strategic_lot]
+    before_action :set_season, only: season_actions
+    before_action :season_types, only: %i[new edit]
     before_action :set_farm
     before_action :set_farms
     before_action :index_variables
@@ -19,19 +21,26 @@ module KepplerFrontend
     end
 
     def show
-      @cows = @season.cows.order(:serie_number)
-      @cicle = KepplerReproduction::Cicle.new
-      @strategic_lot = KepplerFarm::StrategicLot.new
-      
+      # @cicle = KepplerReproduction::Cicle.new
+      # @strategic_lot = KepplerFarm::StrategicLot.new
+      @cows = @season.cows.order(:serie_number).includes(
+        locations: [:strategic_lot]
+      )
+      @season_cow = KepplerReproduction::SeasonCow.new
+      @strategic_lots = @farm.strategic_lots.includes(:locations)
+      @cow_strategic_lots = @strategic_lots.where(
+        keppler_cattle_locations: {cow_id: @cows.ids}
+      ).distinct
+      @possible_mothers = @farm.cows.possible_mothers
     end
 
     def new
       @season = KepplerReproduction::Season.new
-      @season_types = KepplerReproduction::Season.season_types
     end
 
     def create
       @season = KepplerReproduction::Season.new(season_params)
+      @season.finish_date = params[:season][:finish_date]
 
       if @season.save
         redirect_to farm_season_path(@farm, @season)
@@ -66,15 +75,54 @@ module KepplerFrontend
       end
       redirect_to farm_seasons_path(@farm)
     end
+    
+    def new_assign_cattle
+      @bulls = @farm.possible_fathers
+      @cows = @farm.possible_mothers
+    end
+
+    def assign_cattle
+      if params[:season_cow][:strategic_lot]
+        counter = 0
+        strategic_lot = @farm.strategic_lots.find(
+          params[:season_cow][:strategic_lot]
+        )
+        strategic_lot.cows.possible_mothers.each do |cow|
+          season_cow = @season.season_cows.new(cow_id: cow.id)
+          counter += 1 if season_cow.save
+        end
+        if counter.zero?
+          flash[:error] = 'No se agregaron series a la temporada'
+        else
+          flash[:notice] = "Se agregaron #{counter} series a la temporada"
+        end
+      end
+      redirect_to farm_season_path(@farm, @season)
+    end
+
+    def strategic_lot
+      @strategic_lot = @farm.strategic_lots.find(
+        params[:strategic_lot_id]
+      ) if params[:strategic_lot_id]
+      @cows = @season.cows.includes(:locations).includes(
+        locations: [:strategic_lot]
+      ).where(
+        keppler_cattle_locations: {strategic_lot_id: @strategic_lot.id}
+      )
+    end
 
     private
+
+    def season_types
+      @season_types = KepplerReproduction::Season.types
+    end
 
     def set_season
       @season = KepplerReproduction::Season.find_by(id: params[:id])
     end
 
     def index_variables
-      @q = KepplerReproduction::Season.ransack(params[:q])
+      @q = @farm.seasons.ransack(params[:q])
       set_season = @q.result(distinct: true)
       @seasons = set_season.page(@current_page).order(position: :desc)
       @total = @seasons.size
@@ -82,15 +130,19 @@ module KepplerFrontend
     end
 
     def set_farm
-      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
+      @farm = KepplerFarm::Farm.includes(
+        cows: [:typologies, :weights, :locations]
+      ).find_by(id: params[:farm_id])
     end
 
     def set_farms
       if current_user&.has_role?('keppler_admin')
         @farms = KepplerFarm::Farm.all
       else
-        @assignments = KepplerFarm::Assignment.where(user_id: current_user&.id)
-        @farms = KepplerFarm::Farm.where(id: @assignments&.map(&:keppler_farm_farm_id)) unless @assignments.count.zero?
+        @locations = KepplerFarm::Assignment.where(user_id: current_user&.id)
+        @farms = KepplerFarm::Farm.where(
+          id: @locations&.map(&:keppler_farm_farm_id)
+        ) unless @locations.count.zero?
       end
     end
 
@@ -109,8 +161,8 @@ module KepplerFrontend
     def respond_to_formats
       respond_to do |format|
         format.html
-        format.csv { send_data KepplerReproduction::Season.all.to_csv, filename: "lotes estratégicos.csv" }
-        format.xls { send_data KepplerReproduction::Season.all.to_a.to_xls, filename: "lotes estratégicos.xls" }
+        format.csv # { send_data KepplerReproduction::Season.all.to_csv, filename: "lotes estratégicos.csv" }
+        format.xls # { send_data KepplerReproduction::Season.all.to_a.to_xls, filename: "lotes estratégicos.xls" }
         format.json
         format.pdf { render pdf_options }
       end

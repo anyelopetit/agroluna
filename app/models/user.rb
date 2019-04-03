@@ -16,7 +16,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :keppler_farm_farms, class_name: 'KepplerFarm::Farm'
-  has_many :assignments, through: :keppler_farm_farms
+  has_many :assignments, through: :keppler_farm_farms, dependent: :destroy
   has_many :statuses
 
   def assignments

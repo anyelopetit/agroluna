@@ -66,16 +66,6 @@ module KepplerCattle
         )
     end
 
-    def self.possible_mothers
-      KepplerCattle::Cow.select { |x| x.gender?('female') }
-        .map { |x| [x.serie_number + (" (#{x&.short_name})" unless x&.short_name.blank?).to_s, x.id] }
-    end
-
-    def self.possible_fathers
-      KepplerCattle::Cow.select { |x| x.gender?('male') }
-        .map { |x| [x.serie_number + (" (#{x&.short_name})" unless x&.short_name.blank?).to_s, x.id] }
-    end
-
     def mother
       KepplerCattle::Cow.find_by(id: mother_id) if mother_id
     end

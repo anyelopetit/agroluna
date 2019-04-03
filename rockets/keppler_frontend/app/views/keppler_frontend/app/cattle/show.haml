@@ -53,7 +53,6 @@
               = link_to({action: :show, format: :pdf}, {class: 'mt-4 mb-4 dropdown-item', target: '_blank'}) do
                 Reporte
 
-  
   .container_custom
     .row
       .col-md-12
@@ -76,6 +75,7 @@
                         = @cow.typology_name unless @cow.typology&.blank?
                       %span= @cow.race&.name
                       -# %p= @cow.observations
+                      
             .col-lg-9
               .row
                 .col-lg-4.col-sm-4
@@ -140,6 +140,21 @@
                     %dt Cantidad de hijos
                     %a{ 'data-target': "#modalSons", 'data-toggle': 'modal', href: ""}
                       %dd= @cow.sons&.count
+              - if @cow.gender?('male')
+                = simple_form_for [@farm, @cow, KepplerCattle::Male.new], url: males_farm_cow_path do |f|
+                  .row
+                    .col-md-4
+                      %dl
+                        %dt Reproductor
+                      = f.input :reproductive, as: :keppler_boolean, label: false, input_html: { class: 'keppler_boolean' }, value: @cow.male&.reproductive
+                  
+                    .col-md-4
+                      %dl
+                        %dt Recelador
+                      = f.input :defiant, as: :keppler_boolean, label: false, input_html: { class: 'keppler_boolean' }, value: @cow.male&.defiant
+                  = f.input :user_id, as: :hidden, input_html: { value: current_user.id }
+                  = f.input :cow_id, as: :hidden, input_html: { value: @cow.id }
+                      
                     
               
               
@@ -248,6 +263,19 @@
     = render 'keppler_frontend/app/cattle/partials/modal_sons'
   -# - @statuses.each do |status|
     = render 'keppler_frontend/app/cattle/partials/modal_status', cow: @cow, status: status
+:javascript
+  $('.keppler_boolean').click(function(event) {
+    event.preventDefault()
+    var input = $(this).find('input')
+    var label = $(this).find('.inline-label')
+    input
+      .toggleClass('active')
+      .val(input.hasClass('active'))
+    label
+      .toggleClass('active')
+    $('#new_male').submit()
+  })
+
 
 :scss
   #status-history {

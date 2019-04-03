@@ -11,6 +11,7 @@ module KepplerCattle
     include Sortable
     include Searchable
     include KepplerCattle::Concerns::Ageable
+    include KepplerCattle::Concerns::CreateCowTypology
     acts_as_list
     acts_as_paranoid
 

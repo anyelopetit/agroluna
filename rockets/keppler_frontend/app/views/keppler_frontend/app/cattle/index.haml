@@ -10,7 +10,6 @@
 
   var $ids = #{@farm.cows.pluck(:id)}
   var $final_array = []
-  var href = $('.multiple_ids').attr('href')
 
   function checkboxes() {
     function ids_loop() {
@@ -30,7 +29,10 @@
           }
         });
       });
-      $('.multiple_ids').attr('href', (`${href}${$final_array}`))
+      $('.multiple_ids').each(function(index, elem) {
+        console.log(elem.attr('href'))
+        //elem.attr('href', (`${elem.attr('href')}${$final_array}`))
+      })
     }
 
     $('#checkbox-all').click(function() {

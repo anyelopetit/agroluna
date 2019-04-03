@@ -93,7 +93,7 @@ module KepplerReproduction
       # Only allow a trusted parameter "white list" through.
       def cicle_params
         params.require(:cicle).permit(
-          :name, :days_count, :start_date, :end_date, :season_id
+          :name, :days_count, :start_date, :finish_date, :season_id
         )
       end
     end

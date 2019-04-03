@@ -6,6 +6,7 @@ gem 'rails', '5.2.0'
 # gem 'keppler'
 gem 'httparty'
 gem "sprockets", ">= 3.7.2"
+
 # Javascript
 gem 'ckeditor', '4.2.4'
 gem 'jquery-rails', '4.3' # jQuery library

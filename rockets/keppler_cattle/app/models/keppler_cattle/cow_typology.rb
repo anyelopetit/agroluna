@@ -46,7 +46,7 @@ module KepplerCattle
       if typology.counter.to_i == 1
         true # TOCHANGE
       elsif typology.counter.to_i == 2
-        cow.sons.count > 0
+        cow.sons.exists?
       else
         true
       end

@@ -177,7 +177,7 @@ end
 puts 'Fincas y lotes creados'
 
 # Especies
-%i[Vacuno Caprino].each do |species_name|
+%i[Vacuno].each do |species_name|
   species = KepplerCattle::Species.create(
     name: species_name,
     abbreviation: species_name.to_s.remove('a', 'e', 'i', 'o', 'u')
@@ -193,36 +193,10 @@ puts 'Fincas y lotes creados'
     )
   end
 
-  # Tipologías
-  ['BECERRO', 'MAUTE', 'NOVILLO', 'TORO'].each_with_index do |typology, index|
-    KepplerCattle::Typology.create(
-      name: "#{typology}",
-      abbreviation: typology.remove('a', 'e', 'i', 'o', 'u'),
-      gender: 'male',
-      min_age: (index * 365),
-      min_weight: (index * 50),
-      description: Faker::Lorem.paragraph,
-      species_id: 1
-    )
-  end
-
-  ['BECERRA', 'MAUTA', 'NOVILLA', 'VACA'].each_with_index do |typology, index|
-    KepplerCattle::Typology.create(
-      name: "#{typology}",
-      abbreviation: typology.remove('a', 'e', 'i', 'o', 'u'),
-      gender: 'female',
-      counter: index.zero? ? 0 : index - 1,
-      min_age: (index * 365),
-      min_weight: (index * 50),
-      description: Faker::Lorem.paragraph,
-      species_id: 1
-    )
-  end
-
   # Pesajes
   4.times do |weighing|
     KepplerCattle::WeighingDay.create(
-      name: Faker::Coffee.blend_name,
+      name: "Pesaje #{species_name} #{weighing}",
       min_days: (210..600).to_a.sample,
       specific_day: (210..600).to_a.sample,
       max_days: (210..600).to_a.sample,
@@ -233,7 +207,7 @@ puts 'Fincas y lotes creados'
   # Condiciones corporales
   4.times do |corporal_condition|
     KepplerCattle::CorporalCondition.create(
-      name: Faker::Coffee.blend_name,
+      name: "Condición Corporal #{species_name} #{corporal_condition}",
       number: corporal_condition,
       description: Faker::Lorem.paragraph,
       species_id: species.id
@@ -246,7 +220,7 @@ puts 'Fincas y lotes creados'
     short_name: 'Madre Sute',
     gender: 'female',
     race_id: species.races.sample.id,
-    birthdate: Faker::Date.backward(1000),
+    birthdate: Faker::Date.backward(3650),
     coat_color: KepplerCattle::Cow.colors.sample,
     nose_color: KepplerCattle::Cow.colors.sample,
     tassel_color: KepplerCattle::Cow.colors.sample,
@@ -255,10 +229,38 @@ puts 'Fincas y lotes creados'
   )
   puts "Madre sute de #{species.name} creada"
 end
-puts 'Especies, razas, tipologías y pesajes creados'
+puts 'Especies, razas y pesajes creados'
+
+
+# Tipologías
+['BECERRO', 'MAUTE', 'NOVILLO', 'TORO'].each_with_index do |typology, index|
+  KepplerCattle::Typology.create(
+    name: "#{typology}",
+    abbreviation: typology.remove('a', 'e', 'i', 'o', 'u'),
+    gender: 'male',
+    min_age: (index * 365),
+    min_weight: (index * 50),
+    description: Faker::Lorem.paragraph,
+    species_id: 1
+  )
+end
+
+['BECERRA', 'MAUTA', 'NOVILLA', 'VACA'].each_with_index do |typology, index|
+  KepplerCattle::Typology.create(
+    name: "#{typology}",
+    abbreviation: typology.remove('a', 'e', 'i', 'o', 'u'),
+    gender: 'female',
+    counter: index.zero? ? 0 : index - 1,
+    min_age: (index * 365),
+    min_weight: (index * 50),
+    description: Faker::Lorem.paragraph,
+    species_id: 1
+  )
+end
+puts 'Tipologías creadas'
 
 # Series
-20.times do |i|
+100.times do |i|
   species = KepplerCattle::Species.all.sample
   cow = KepplerCattle::Cow.create(
     serie_number: Faker::Number.between(111111, 999999),
@@ -267,7 +269,7 @@ puts 'Especies, razas, tipologías y pesajes creados'
     gender: ['male', 'female'].sample,
     species_id: species.id,
     race_id: species.races.sample.id,
-    birthdate: Faker::Date.backward(1000),
+    birthdate: Faker::Date.backward(3650),
     coat_color: Faker::Color.color_name,
     nose_color: Faker::Color.color_name,
     tassel_color: Faker::Color.color_name,
@@ -278,15 +280,38 @@ puts 'Especies, razas, tipologías y pesajes creados'
     father_id: KepplerCattle::Cow.where(gender: 'male')&.sample&.id
   )
 
+  farm = KepplerFarm::Farm.find([1,2].sample)
+  KepplerCattle::Location.create(
+    user_id: 1,
+    cow_id: cow.id,
+    farm_id: farm&.id,
+    strategic_lot_id: farm.strategic_lots.sample.id 
+  )
+  
+  if cow.gender?('male')
+    KepplerCattle::Male.create(
+      cow_id: cow.id,
+      reproductive: [true, false].sample,
+      defiant: [true, false].sample
+    )
+  else
+    KepplerCattle::Status.create(
+      status_type: 0,
+      date: Faker::Date.backward(40),
+      months: Faker::Number.between(1, 2),
+      user_id: User.all.sample
+    )
+  end
+
   # Pesaje
   5.times do |index|
-    actual_weight = Faker::Number.decimal(2)
+    actual_weight = Faker::Number.decimal(3)
     KepplerCattle::Weight.create(
       user_id: 1,
       cow_id: cow.id,
-      weight: (50.05 * index),
-      gained_weight: 26.04.nil? ? 0 : ((50.05 * index) - 24.50),
-      average_weight: 26.04.nil? ? 0 : (((50.05 * index) - 24.50) / cow.days),
+      weight: actual_weight.to_f,
+      gained_weight: 26.04.nil? ? 0 : (actual_weight.to_f - 24.50),
+      average_weight: 26.04.nil? ? 0 : ((actual_weight.to_f - 24.50) / cow.days),
       corporal_condition_id: KepplerCattle::CorporalCondition.all.sample.id,
       observations: Faker::Lorem.paragraph
     )
@@ -296,21 +321,7 @@ puts 'Especies, razas, tipologías y pesajes creados'
       cow_id: cow.id,
       observations: Faker::Lorem.paragraph
     )
-
-    farm = KepplerFarm::Farm.find([1,2].sample)
-    KepplerCattle::Location.create(
-      user_id: 1,
-      cow_id: cow.id,
-      farm_id: farm&.id,
-      strategic_lot_id: farm.strategic_lots.sample.id 
-    )
   end
-
-  # Asignación a lote
-  KepplerCattle::Assignment.create(
-    strategic_lot_id: (1..12).to_a.sample,
-    cow_id: cow.id
-  )
 
   # Pajuelas
   KepplerCattle::Insemination.create(
@@ -322,7 +333,7 @@ puts 'Especies, razas, tipologías y pesajes creados'
     mother_id: KepplerCattle::Cow.where(gender: 'female')&.sample&.id,
     # father_type: KepplerCattle::Cow.to_s,
     father_id: KepplerCattle::Cow.where(gender: 'male')&.sample&.id,
-    birthdate: Faker::Date.backward(1000),
+    birthdate: Faker::Date.backward(3650),
     coat_color: Faker::Color.color_name,
     nose_color: Faker::Color.color_name,
     tassel_color: Faker::Color.color_name,
@@ -357,7 +368,7 @@ species = KepplerCattle::Species.first
     gender: ['male', 'female'][index%2],
     species_id: species.id,
     race_id: species.races.sample&.id,
-    birthdate: Faker::Date.backward(1000),
+    birthdate: Faker::Date.backward(3650),
     coat_color: Faker::Color.color_name,
     nose_color: Faker::Color.color_name,
     tassel_color: Faker::Color.color_name,
@@ -367,13 +378,13 @@ species = KepplerCattle::Species.first
     father_type: KepplerCattle::Cow.to_s,
     father_id: KepplerCattle::Cow.where(gender: 'male')&.sample&.id
   )
-  actual_weight = Faker::Number.decimal(2)
+  actual_weight = Faker::Number.decimal(3)
   KepplerCattle::Weight.create(
     user_id: 1,
     cow_id: cow.id,
-    weight: (50.05 * index),
-    gained_weight: 26.04.nil? ? 0 : ((50.05 * index) - 24.50),
-    average_weight: 26.04.nil? ? 0 : (((50.05 * index) - 24.50) / cow.days),
+    weight: actual_weight.to_f,
+    gained_weight: 26.04.nil? ? 0 : (actual_weight.to_f - 24.50),
+    average_weight: 26.04.nil? ? 0 : ((actual_weight.to_f - 24.50) / cow.days),
     corporal_condition_id: KepplerCattle::CorporalCondition.all.sample.id,
     observations: Faker::Lorem.paragraph
   )
@@ -402,7 +413,7 @@ puts 'Bisabuelos creados'
     gender: ['male', 'female'][index%2],
     species_id: species.id,
     race_id: species.races.sample.id,
-    birthdate: Faker::Date.backward(1000),
+    birthdate: Faker::Date.backward(3650),
     coat_color: Faker::Color.color_name,
     nose_color: Faker::Color.color_name,
     tassel_color: Faker::Color.color_name,
@@ -416,9 +427,9 @@ puts 'Bisabuelos creados'
   KepplerCattle::Weight.create(
     user_id: 1,
     cow_id: cow.id,
-    weight: (50.05 * index),
-    gained_weight: 26.04.nil? ? 0 : ((50.05 * index) - 24.50),
-    average_weight: 26.04.nil? ? 0 : (((50.05 * index) - 24.50) / cow.days),
+    weight: actual_weight.to_f,
+    gained_weight: 26.04.nil? ? 0 : (actual_weight.to_f - 24.50),
+    average_weight: 26.04.nil? ? 0 : ((actual_weight.to_f - 24.50) / cow.days),
     corporal_condition_id: KepplerCattle::CorporalCondition.all.sample.id,
     observations: Faker::Lorem.paragraph
   )
@@ -447,7 +458,7 @@ puts 'Abuelos creados'
     gender: ['male', 'female'][index%2],
     species_id: species.id,
     race_id: species.races.sample.id,
-    birthdate: Faker::Date.backward(1000),
+    birthdate: Faker::Date.backward(3650),
     coat_color: Faker::Color.color_name,
     nose_color: Faker::Color.color_name,
     tassel_color: Faker::Color.color_name,
@@ -461,9 +472,9 @@ puts 'Abuelos creados'
   KepplerCattle::Weight.create(
     user_id: 1,
     cow_id: cow.id,
-    weight: (50.05 * index),
-    gained_weight: 26.04.nil? ? 0 : ((50.05 * index) - 24.50),
-    average_weight: 26.04.nil? ? 0 : (((50.05 * index) - 24.50) / cow.days),
+    weight: actual_weight.to_f,
+    gained_weight: 26.04.nil? ? 0 : (actual_weight.to_f - 24.50),
+    average_weight: 26.04.nil? ? 0 : ((actual_weight.to_f - 24.50) / cow.days),
     corporal_condition_id: KepplerCattle::CorporalCondition.all.sample.id,
     observations: Faker::Lorem.paragraph
   )
@@ -492,7 +503,7 @@ cow = KepplerCattle::Cow.create(
   gender: 'male',
   species_id: KepplerCattle::Species.all.sample.id,
   race_id: KepplerCattle::Species.first.races.sample&.id,
-  birthdate: Faker::Date.backward(1000),
+  birthdate: Faker::Date.backward(3650),
   coat_color: Faker::Color.color_name,
   nose_color: Faker::Color.color_name,
   tassel_color: Faker::Color.color_name,

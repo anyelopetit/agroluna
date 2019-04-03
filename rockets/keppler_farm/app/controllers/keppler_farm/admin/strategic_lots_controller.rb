@@ -13,7 +13,7 @@ module KepplerFarm
 
       # GET /farms
       def index
-        @assign = KepplerCattle::Assignment.new
+        @assign = KepplerCattle::Location.new
         statuses_ids = KepplerCattle::Status.where(farm_id: @farm&.id).map(&:cow_id).uniq
         @cows = KepplerCattle::Cow.find_by(id: statuses_ids)#.map { |c| [c.serie_number, c.id] }
         respond_to_formats(@strategic_lots)
@@ -83,7 +83,7 @@ module KepplerFarm
       end
       
       def delete_assignment
-        @assignment = KepplerCattle::Assignment.find_by(
+        @assignment = KepplerCattle::Location.find_by(
           strategic_lot_id: params[:strategic_lot_id],
           cow_id: params[:cow_id]
         )

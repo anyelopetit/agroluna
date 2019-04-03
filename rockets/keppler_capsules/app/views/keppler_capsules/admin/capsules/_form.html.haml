@@ -81,7 +81,7 @@
                     .row
                       .col-xs-12
                         = f.simple_fields_for :capsule_associations do |capsule_association|
-                          - if capsule_association.object.capsules_valids.count > 0
+                          - if capsule_association.object.capsules_valids.exists?
                             - if (action_name.eql?('edit') || action_name.eql?('update')) && !capsule_association.object.id.blank?
                               = render 'capsule_association_fields_edit', f: capsule_association
                             - else

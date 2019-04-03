@@ -15,17 +15,23 @@ module KepplerCattle
     acts_as_paranoid
     after_save :create_first_location
     after_save :create_first_activity
-    after_save :create_typology
+    # after_save :create_typology
 
     belongs_to :race, class_name: 'KepplerCattle::Race', foreign_key: 'race_id'
     belongs_to :species, class_name: 'KepplerCattle::Species', foreign_key: 'species_id'
 
+    has_one :male, class_name: 'KepplerCattle::Male', dependent: :destroy
+
     has_many :locations, class_name: 'KepplerCattle::Location', dependent: :destroy
+    has_many :strategic_lots, class_name: "KepplerFarm::StrategicLot", through: :locations
+
     has_many :weights, class_name: 'KepplerCattle::Weight', dependent: :destroy
     has_many :cow_activities, class_name: 'KepplerCattle::Activity', dependent: :destroy
     has_many :cow_typologies, class_name: 'KepplerCattle::CowTypology', dependent: :destroy
     has_many :typologies, class_name: 'KepplerCattle::Typology', through: :cow_typologies, dependent: :destroy
-    
+
+    has_many :statuses, class_name: 'KepplerCattle::Status', dependent: :destroy
+
     validates_presence_of :birthdate, :serie_number, :species_id, :race_id
     validates_uniqueness_of :serie_number
 
@@ -105,27 +111,19 @@ module KepplerCattle
       species.typologies.where(gender: gender)
     end
 
-    def possible_mothers
-      KepplerCattle::Cow.where(gender: 'female').where(species_id: species_id)
+    def self.possible_mothers
+      includes(:typologies)
+        .where(gender: 'female')
+        .where(keppler_cattle_typologies: {counter: ['1', '2']}).distinct
+        # .order(:serie_number)
     end
 
-    def possible_fathers
-      KepplerCattle::Cow.where(gender: 'male').where(species_id: species_id).or(
-        KepplerCattle::Insemination.where(gender: 'male').where(species_id: species_id)
-      ) 
-    end
-
-    def self.possible_mothers_select2
-      order(:serie_number).select { |x| x.gender?('female') }.select { |x| %w[1 2].include?(x.typology&.counter.to_s) }
-        .map { |x| [x.serie_number + ("(#{x&.short_name}) - #{x&.typology_name}" unless x&.short_name.blank?).to_s, x.id] }
-    end
-
-    def self.possible_fathers_select2
-      order(:serie_number).select { |x| x.gender?('male') }
-        .map { |x| [x.serie_number + ("(#{x&.short_name})" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] }
-        .concat(KepplerCattle::Insemination.order(:serie_number).map { 
-          |x| [x.serie_number + ("(#{x&.short_name}) - Pajuela" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] 
-        }) 
+    def self.possible_fathers
+      includes(:male)
+        .where(keppler_cattle_males: {reproductive: true})
+        .select { |x| x.males.last.reproductive }
+        # .order(:serie_number)
+      
     end
 
     def mother
@@ -154,8 +152,7 @@ module KepplerCattle
     end
 
     def strategic_lot
-      assignment_lot = KepplerCattle::Assignment.where(cow_id: id)&.last&.strategic_lot_id
-      KepplerFarm::StrategicLot.find_by(id: assignment_lot) if assignment_lot
+      strategic_lots.last
     end
 
     def self.actives
@@ -177,20 +174,6 @@ module KepplerCattle
       where(id: inactive_ids)
     end
 
-    def create_typology
-      typology_created = false
-      possible_typologies.order(min_age: :desc).each do |typology|
-        break if typology_created
-        if verify_existence(typology) && verify_counter(typology) && verify_min_age(typology)
-          new_typology = cow_typologies.new(
-            cow_id: id,
-            typology_id: typology.id
-          )
-          typology_created = new_typology.save
-        end
-      end
-    end
-
     private
 
     def create_first_location
@@ -207,32 +190,6 @@ module KepplerCattle
         cow_id: id,
         active: true
       )
-    end
-
-    def verify_existence(typology)
-      cow_typologies = KepplerCattle::CowTypology.where(
-        cow_id: id,
-        typology_id: typology.id
-      )
-      cow_typologies.count.zero?
-    end
-
-    def verify_counter(typology)
-      if typology.counter.to_i == 2
-        sons.count > 0
-      elsif typology.counter.to_i == 1
-        true # TOCHANGE
-      else
-        true
-      end
-    end
-
-    def verify_min_age(typology)
-      days.to_i > typology.min_age.to_i
-    end
-
-    def verify_min_weight(typology)
-      weight_is_more = weight&.weight.to_f > typology.min_weight.to_f
     end
   end
 end

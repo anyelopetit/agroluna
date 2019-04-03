@@ -1,4 +1,4 @@
-.gantt-wrapper
+-# .gantt-wrapper
   -# .gantt-header
     %h2 Diagrama de Gantt
     -# %p
@@ -33,36 +33,69 @@
               = link_to({ controller: :cicles, action: :destroy, farm_id: @farm.id, season_id: @season.id, id: cicle.id }, { method: :delete, data: { confirm: t('keppler.messages.data_confirm') } }) do
                 %i.icofont-trash.text-white
       - last_cicle_days += cicle.days_count
-    -# - season.cicles.each_with_index do |cicle, index|
+
+.gantt-wrapper
+  -# .gantt-header
+    %h2 Diagrama de Gantt
+    -# %p
+      Usa
+      %strong grid-column
+      para abarcar una nueva entrada a través de la red. (p.ej.
+      %strong grid-column: 5/#{season.duration_days};
+      se extiende una entrada de mayo a noviembre)
+  .gantt.mb-5
+    .gantt__row.gantt__row--months
+      .gantt__row-first
+      %ul.months{ style: "grid-template-columns: repeat(#{season.duration_days}, 1fr);" }
+        - start_day = 1
+        - season.months_on_season.each do |month|
+          %li.month{ style: "grid-column: #{start_day}/#{start_day + season.month_days_count(month)};" }= season.all_months[month.to_i - 1]
+          - start_day = start_day + season.month_days_count(month)
+    .gantt__row.gantt__row--months{ style: "grid-template-columns: 150px repeat(#{season.duration_days}, 1fr);" }
+      .gantt__row-first
+      - season.duration_days.times do |day|
+        %span= (season.start_date + day).strftime('%d')
+    .gantt__row.gantt__row--lines{"data-month" => "5", style: "grid-template-columns: 150px repeat(#{season.duration_days}, 1fr);"}
+      - season.duration_days.times do |day|
+        %span{ class: ('marker' if (season.start_date + day).strftime('%d%m%y').eql?((Date.today + 1).strftime('%d%m%y'))) }
+    - last_cicle_days = 0
+    - %w[Celos Montas Palpaciones Preñez Parto].each do |state|
       .gantt__row
         .gantt__row-first
-          Ciclo #{index + 1}
+          #{state}
         %ul.gantt__row-bars{ style: "grid-template-columns: repeat(#{season.duration_days}, 1fr);" }
-          %li.stripes{style: "grid-column: #{last_cicle_days + 1}/#{last_cicle_days + (index + 1) + 1}; background-color: #{season.cicle_colors[(index) % 3]};"}=# Even longer project
-      - last_cicle_days += (index + 1)
-
--# %table.table.mt-3.mb-5
-  - if season.project_type&.tasks.blank?
-    %tbody
-      %tr
-        %td{ style: 'padding: 15px' }
-          Aún no hay tareas registradas
-  - else
-    %thead.thead-dark
-      %tr
-        %th{scope: "col"}
-        - season.duration_days.times do |day|
-          %th{scope: "col"}= (season.start_date + day).strftime('%d')
-    %tbody
-      - last_cicle_days = 0
-      - season.project_type&.tasks.each_with_index do |task, index|
-        %tr
-          %th= task.name
-          %td
-            %ul.gantt__row-bars{ style: "grid-template-columns: repeat(#{season.duration_days}, 1fr);" }
-              %li.stripes{style: "grid-column: #{last_cicle_days + 1}/#{last_cicle_days + task.days + 1}; background-color: #{season.cicle_colors[index % 3]};"}=# Even longer project
-        - last_cicle_days += task.days
-
+          - (3..6).to_a.sample.times do |time|
+            - position = (time+1)**2 + (1..2).to_a.sample
+            - quant = (1..9).to_a.sample
+            %li.stripes{style: "z-index: 2; padding: 0; grid-column: #{position}/#{position + 1}; background-color: #{season.cicle_colors[(quant/3)-3]};"}
+              %a{ style: 'display:block; width: 100%; height: 100%;', 'data-target': "#modal#{state}", 'data-toggle': 'modal', href: ""}
+                .text-white.text-center= quant
+            .modal.modal_status.fade{ id: "modal#{state}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+              .modal-dialog{role: "document"}
+                .modal-content
+                  .modal-header
+                    %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+                      %span{"aria-hidden" => "true"} ×
+                  .modal-body{ style: "padding: 20px;"}
+                    .card_status
+                      %center.card_status--title   
+                        %h1.modal-title
+                          #{state}
+                          %small (#{(season.start_date + position).strftime('%d/%m/%y')})      
+                      .box-body.no-padding
+                        .row
+                          - if @farm.cows.take(quant).blank?
+                            %center.col-lg-12
+                              No existen ganados asignados
+                          - @farm.cows.take(quant).each do |cow|
+                            .col-lg-12
+                              = link_to(action: :show, id: cow.id) do
+                                .cow-item.d-flex.p-3
+                                  = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-md p-absolute r-0' unless cow.gender.blank?
+                                  %strong #{cow.serie_number} &nbsp;
+                                  %span
+                                    = "(#{cow.short_name})" unless cow.short_name.blank?
+                                    \- #{cow.typology_name} (#{cow.weight&.weight} KG)
 :scss
   .months {
     display: grid;
@@ -77,4 +110,34 @@
       text-align: center;
       font-weight: 700;
     }
+  }
+
+
+:scss
+  .son-item {
+    border-bottom: 1px solid #e9e9e9;
+
+    &:hover {
+      background: #fafafa;
+    }
+  }
+
+  .modal a {
+    color: inherit;
+    transition: .2s;
+
+    &:hover {
+      color: #28C76F;
+      transition: .2s;
+    }
+  }
+
+  .modal-title {
+    text-transform: uppercase;
+    font-size: 25px;
+    color: #28C76F;
+    position: relative;
+    margin-bottom: 5px;
+    border-bottom: 2px solid #f98105;
+    width: 20%;
   }

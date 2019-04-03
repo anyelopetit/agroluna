@@ -22,8 +22,8 @@ module KepplerFarm
     has_many :strategic_lots, class_name: 'KepplerFarm::StrategicLot'
 
     # Cattle
-    # has_many :cow_locations, class_name: 'KepplerCattle::Location'
-    # has_many :cows, -> { distinct }, class_name: 'KepplerCattle::Cow', through: :cow_locations
+    has_many :cow_locations, class_name: 'KepplerCattle::Location'
+    has_many :cows, -> { distinct }, class_name: 'KepplerCattle::Cow', through: :cow_locations
     has_many :inseminations, class_name: 'KepplerCattle::Insemination'
     has_many :transferences, class_name: 'KepplerCattle::Transference', foreign_key: 'from_farm_id'
 
@@ -44,10 +44,11 @@ module KepplerFarm
       photos.where(cover: true).count.zero?
     end
 
-    def cows
-      cow_ids = KepplerCattle::Cow.all.select { |c| c&.location&.farm_id&.eql?(id) if c&.location&.farm_id }.pluck(:id)
-      KepplerCattle::Cow.where(id: cow_ids)
-    end
+    # def cows
+    #   cow_ids = KepplerCattle::Cow.all.select { |c| c&.location&.farm_id&.eql?(id) if c&.location&.farm_id }.pluck(:id)
+
+    #   KepplerCattle::Cow.where(id: cow_ids)
+    # end
 
     # def transferences
     #   transference_ids = KepplerCattle::Transference.all.select { |t| t&.from_farm_id&.eql?(id) || t&.to_farm_id&.eql?(id) }.pluck(:id)
@@ -66,6 +67,38 @@ module KepplerFarm
       ids = cows.pluck(:id)
       PublicActivity::Activity.where(trackable_id: ids)
         .or(PublicActivity::Activity.where(recipient_id: ids))
+    end
+
+    def possible_mothers
+      ids =
+        cows
+          .where(gender: 'female')
+          .select { |x| %w[1 2].include?(x.typology&.counter.to_s) }
+          .map(&:id)
+      cows.where(id: ids).order(:serie_number)
+    end
+
+    def possible_fathers
+      ids =
+        cows
+          .where(gender: 'male')
+          .select { |x| x.males&.last&.reproductive }
+          .map(&:id)
+      cows.where(id: ids).order(:serie_number)
+    end
+
+    def possible_mothers_select2
+      possible_mothers.map do |x|
+        [x.serie_number + ("(#{x&.short_name}) - #{x&.typology_name}" unless x&.short_name.blank?).to_s, x.id]
+      end
+    end
+
+    def possible_fathers_select2
+      possible_fathers
+        .map { |x| [x.serie_number + ("(#{x&.short_name})" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] }
+        .concat(KepplerCattle::Insemination.order(:serie_number).map { 
+          |x| [x.serie_number + ("(#{x&.short_name}) - Pajuela" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] 
+        }) 
     end
   end
 end

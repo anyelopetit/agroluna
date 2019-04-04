@@ -44,7 +44,11 @@
                       = f.input :gender, collection: @genders, include_blank: false, label: t('activerecord.attributes.gender').humanize
                   .row
                     .col-sm-6
-                      = f.input :race_id, collection: @races, include_blank: false, label: t('activerecord.attributes.race').humanize
+                      .keppler-custom-field.form-group.select.required.cow_race_id
+                        %label.control-label.select.required.label_custom--strong{for: 'cow_race_id'}
+                          %abbr{title: 'required'} *
+                          = t('activerecord.attributes.race')
+                        = render 'keppler_cattle/admin/cows/races', f: f, races: @races
                     .col-sm-6
                       = f.input :birthdate, as: :string, input_html: { class: 'datepicker' }, label: t('activerecord.attributes.birthdate').humanize
                   .row
@@ -123,7 +127,9 @@
       templateSelection: noImageSelect
     });
   });
+
 = javascript_include_tag '/assets/plugins/jquery-ui/jquery-ui.min'
+
 :javascript
   $(document).ready(function() {
     $('.datepicker').datepicker({
@@ -138,6 +144,14 @@
 
     })
   })
+
+  $('#cow_species_id').change(function() {
+    var url = `/admin/cattle/species/${$(this).val()}/races`
+    var races = $.getScript(url)
+    console.log(url)
+    console.log(races)
+  })
+
 :scss
 
 

@@ -77,6 +77,13 @@ module KepplerCattle
         Species.sorter(params[:row])
       end
 
+      def get_races
+        @races = Species.find(params[:species_id]).races
+        respond_to do |format|
+          format.js
+        end
+      end
+
       private
 
       def index_variables

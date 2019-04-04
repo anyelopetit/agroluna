@@ -83,7 +83,7 @@ module KepplerCattle
       end
 
       def index_variables
-        @q = Race.ransack(params[:q])
+        @q = @species.races.ransack(params[:q])
         @races = @q.result(distinct: true)
         @objects = @races.page(@current_page).order(position: :desc)
         @total = @races.size

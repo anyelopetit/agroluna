@@ -17,3 +17,12 @@ es:
     location: ubicación
     activity: actividad
     cow_typology: tipología
+  activerecord:
+    errors:
+      models:
+        keppler_cattle/cow:
+          attributes:
+            species:
+              required: Requerido
+            race:
+              required: Requerido

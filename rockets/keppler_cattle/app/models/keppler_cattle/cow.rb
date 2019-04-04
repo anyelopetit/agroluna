@@ -126,6 +126,20 @@ module KepplerCattle
       
     end
 
+    def self.possible_mothers_select2
+      possible_mothers.map do |x|
+        [x.serie_number + ("(#{x&.short_name}) - #{x&.typology_name}" unless x&.short_name.blank?).to_s, x.id]
+      end
+    end
+
+    def self.possible_fathers_select2
+      possible_fathers
+        .map { |x| [x.serie_number + ("(#{x&.short_name})" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] }
+        .concat(KepplerCattle::Insemination.order(:serie_number).map { 
+          |x| [x.serie_number + ("(#{x&.short_name}) - Pajuela" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] 
+        }) 
+    end
+
     def mother
       KepplerCattle::Cow.find_by(id: mother_id) if mother_id
     end

@@ -166,21 +166,21 @@ module KepplerFrontend
     end
 
     def index_history
-      @activities = PublicActivity::Activity.where(
+      @activities = PublicActivity::Activity.includes(:trackable, :owner).where(
         trackable_type: KepplerCattle::Cow.to_s
       ).or(
-        PublicActivity::Activity.where(
+        PublicActivity::Activity.includes(:trackable, :owner).where(
           recipient_type: KepplerCattle::Cow.to_s
         )
       ).order('created_at desc').limit(50)
     end
 
     def show_history
-      @activities = PublicActivity::Activity.where(
+      @activities = PublicActivity::Activity.includes(:trackable, :owner).where(
         trackable_type: 'KepplerCattle::Cow',
         trackable_id: @cow&.id.to_s
       ).or(
-        PublicActivity::Activity.where(
+        PublicActivity::Activity.includes(:trackable, :owner).where(
           recipient_type: 'KepplerCattle::Cow',
           recipient_id: @cow&.id.to_s
         )

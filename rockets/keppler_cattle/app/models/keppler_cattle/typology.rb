@@ -12,7 +12,9 @@ module KepplerCattle
     acts_as_list
     acts_as_paranoid
 
-    validates_presence_of :name, :species_id
+    belongs_to :species
+
+    validates_presence_of :name
 
     def self.index_attributes
       %i[name abbreviation gender counter min_age min_weight]

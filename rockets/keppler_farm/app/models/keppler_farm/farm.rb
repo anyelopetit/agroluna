@@ -65,8 +65,8 @@ module KepplerFarm
 
     def activities
       ids = cows.pluck(:id)
-      PublicActivity::Activity.where(trackable_id: ids)
-        .or(PublicActivity::Activity.where(recipient_id: ids))
+      PublicActivity::Activity.includes(:trackable, :owner).where(trackable_id: ids)
+        .or(PublicActivity::Activity.includes(:trackable, :owner).where(recipient_id: ids))
     end
 
     def possible_mothers

@@ -12,12 +12,10 @@ module KepplerCattle
     acts_as_list
     acts_as_paranoid
 
+    belongs_to :species
+
     def self.index_attributes
       %i[name min_days specific_day max_days]
-    end
-
-    def species
-      KepplerCattle::Species.find_by(id: species_id)
     end
   end
 end

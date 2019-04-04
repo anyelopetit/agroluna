@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
   end
 
   def appearance
-    @setting = Setting.includes(:appearance, :social_account).first
+    @setting = Setting.includes(:appearance).first
     @appearance = @setting.appearance
   end
 

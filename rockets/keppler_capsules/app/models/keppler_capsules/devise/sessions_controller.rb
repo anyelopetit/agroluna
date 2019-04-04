@@ -87,7 +87,7 @@ module Devise
 
     # Create history to session
     def session_history
-      PublicActivity::Activity.create(
+      PublicActivity::Activity.includes(:trackable, :owner).create(
         trackable_type: controller_name.singularize.humanize,
         key: "#{controller_name.singularize.downcase}.#{action_name}",
         owner: current_user

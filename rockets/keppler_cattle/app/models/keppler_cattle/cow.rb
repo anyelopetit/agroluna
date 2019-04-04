@@ -10,6 +10,7 @@ module KepplerCattle
     include Sortable
     include Searchable
     include KepplerCattle::Concerns::Ageable
+    include KepplerCattle::Concerns::CreateCowTypology
     mount_uploader :image, AttachmentUploader
     acts_as_list
     acts_as_paranoid
@@ -85,7 +86,7 @@ module KepplerCattle
     end
 
     def typology
-      cow_typologies.last&.typology
+      cow_typologies.includes(:typology).last&.typology
     end
 
     def typology_counter_count
@@ -108,7 +109,7 @@ module KepplerCattle
     end
 
     def possible_typologies
-      species.typologies.where(gender: gender)
+      species.includes(:typologies).typologies.where(gender: gender)
     end
 
     def self.possible_mothers
@@ -170,36 +171,38 @@ module KepplerCattle
     end
 
     def self.actives
-      cows = select do |cow|
+      cows = includes(:activities).select do |cow|
         # cow&.location&.farm_id == farm&.id &&
         cow&.activity&.active
       end
       active_ids = cows.pluck(:id).uniq
-      where(id: active_ids)
+      includes(:activities).where(id: active_ids)
     end
 
     def self.inactives
-      cows = select do |cow|
+      cows = includes(:locations).select do |cow|
         (cow&.locations.pluck(:farm_id).include?(farm&.id) &&
         cow&.location&.farm_id != farm&.id) || 
         !cow&.activity&.active
       end
       inactive_ids = cows.pluck(:id).uniq
-      where(id: inactive_ids)
+      includes(:locations).where(id: inactive_ids)
     end
 
     private
 
     def create_first_location
-      locations.create(
-        # user_id: current_user,
-        cow_id: id,
-        farm_id: $request.blank? ? [1,2].sample : $request.params[:farm_id]
-      )
+      includes(:location)
+        .locations.create(
+          # user_id: current_user,
+          cow_id: id,
+          farm_id: $request.blank? ? [1,2].sample : $request.params[:farm_id]
+        )
     end
 
     def create_first_activity
-      cow_activities.create(
+      includes(:cow_activities)
+        .cow_activities.create(
         # user_id: current_user,
         cow_id: id,
         active: true

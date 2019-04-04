@@ -83,9 +83,9 @@ module KepplerCattle
       end
 
       def index_variables
-        @q = @species.typologies.ransack(params[:q])
+        @q = @species.includes(:typologies).typologies.ransack(params[:q])
         @typologies = @q.result(distinct: true)
-        @objects = @typologies.page(@current_page).order(position: :desc).where(species_id: params[:species_id])
+        @objects = @typologies.page(@current_page).order(position: :desc)
         @total = @typologies.size
         @attributes = Typology.index_attributes
       end
@@ -98,14 +98,7 @@ module KepplerCattle
       # Only allow a trusted parameter "white list" through.
       def typology_params
         params.require(:typology).permit(
-          :name,
-          :abbreviation,
-          :gender,
-          :counter,
-          :min_age,
-          :min_weight,
-          :description,
-          :species_id
+          Typology.attribute_names.map(&:to_sym)
         )
       end
     end

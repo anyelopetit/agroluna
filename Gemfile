@@ -115,6 +115,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 #javascript
 gem 'gon', '6.2.1'
 
+gem 'faker', '1.8.7'
 # Development
 group :development do
   gem 'better_errors', '2.4.0'
@@ -137,7 +138,6 @@ end
 group :development, :test do
   gem 'database_cleaner', '~> 1.5'
   gem 'factory_bot_rails'
-  gem 'faker', '1.8.7'
   gem 'haml_lint', '~> 0.27.0', require: false
   gem 'jshint' # JavaScripts Linter
   gem 'rspec-rails', '~> 3.7'

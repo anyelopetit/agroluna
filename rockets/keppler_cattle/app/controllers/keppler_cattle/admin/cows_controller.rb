@@ -33,11 +33,14 @@ module KepplerCattle
       # POST /cattles
       def create
         @cow = Cow.new(cow_params)
+        @cow.father_type = params[:cow][:father_id].split(',').first
+        @cow.father_id = params[:cow][:father_id].split(',').last.to_i
 
-        if @cow.save && @cow.statuses.blank?
-          # redirect(@cow, params)
-          redirect_to new_admin_cattle_cow_status_path(@cow)
+        if @cow.save && @cow.weights.blank?
+          @cow.mother.create_typology
+          redirect_to new_farm_cow_weight_path(@farm, @cow)
         else
+          flash[:error] = 'Revisa los datos del formulario'
           render :new
         end
       end
@@ -102,8 +105,8 @@ module KepplerCattle
         @species = KepplerCattle::Species.all
         @genders = KepplerCattle::Cow.genders
         @races   = @species.first.races
-        @possible_mothers = @farm.possible_mothers_select2
-        @possible_fathers = @farm.possible_fathers_select2
+        @possible_mothers = KepplerCattle::Cow.possible_mothers_select2
+        @possible_fathers = KepplerCattle::Cow.possible_fathers_select2
         @colors = KepplerCattle::Cow.colors
         
       end
@@ -111,21 +114,7 @@ module KepplerCattle
       # Only allow a trusted parameter "white list" through.
       def cow_params
         params.require(:cow).permit(
-          :image,
-          :serie_number,
-          :short_name,
-          :long_name,
-          :species_id,
-          :race_id,
-          :gender,
-          :birthdate,
-          :coat_color,
-          :nose_color,
-          :tassel_color,
-          :provenance, 
-          :observations,
-          :mother_id,
-          :father_id
+          KepplerCattle::Cow.attribute_names.map(&:to_sym)
         )
       end
     end

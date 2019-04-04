@@ -20,6 +20,7 @@ es:
         transference: transferencia
         status: estado
         cow: ganado
+        weight: peso
       pluralize:
         statuses: statuses
         inseminations: pajuela
@@ -31,6 +32,7 @@ es:
         transferences: transferencias
         statuses: estados
         cows: ganados
+        weights: pesos
     modules:
       admin/status: Status
       admin/insemination: Pajuela

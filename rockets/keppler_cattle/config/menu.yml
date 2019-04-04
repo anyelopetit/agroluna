@@ -6,12 +6,6 @@ menu:
     icon: rocket
     model: KepplerCattle::Cow
     submenu:
-      - status:
-          name: status
-          url_path: /admin/cattle/statuses
-          icon: layers
-          current: ['/admin/cattle/statuses']
-          model: KepplerCattle::Status
 
       - cow:
           name: cow

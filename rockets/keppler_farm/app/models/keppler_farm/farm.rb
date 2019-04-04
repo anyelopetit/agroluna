@@ -71,7 +71,7 @@ module KepplerFarm
 
     def possible_mothers
       ids =
-        cows
+        cows.includes(:typologies)
           .where(gender: 'female')
           .select { |x| %w[1 2].include?(x.typology&.counter.to_s) }
           .map(&:id)
@@ -80,9 +80,9 @@ module KepplerFarm
 
     def possible_fathers
       ids =
-        cows
+        cows.includes(:male)
           .where(gender: 'male')
-          .select { |x| x.males&.last&.reproductive }
+          .select { |x| x.male&.reproductive }
           .map(&:id)
       cows.where(id: ids).order(:serie_number)
     end

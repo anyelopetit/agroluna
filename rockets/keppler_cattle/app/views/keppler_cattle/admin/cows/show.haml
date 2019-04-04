@@ -7,11 +7,11 @@
           = t('keppler.actions.back')
     .col-lg-6
       .pull-right
-        = link_to new_admin_cattle_cow_status_path(@cow), 'data-position': 'bottom', 'data-tooltip': 'Update status' do
-          .update-status.btn.btn-primary
+        = link_to new_admin_cattle_cow_weight_path(@cow), 'data-position': 'bottom', 'data-tooltip': 'Update weight' do
+          .update-weight.btn.btn-primary
             %i.icon-pencil
             = t('keppler.actions.update')
-            = t('keppler.models.singularize.status')
+            = t('keppler.models.singularize.weight')
 
   .row
     // Cattle
@@ -56,11 +56,11 @@
     .col-md-4.col-sm-12
       .box.slice-box
         .box-header.with-border
-          %h3.box-title= t('keppler.models.singularize.status').humanize
+          %h3.box-title= t('keppler.models.singularize.weight').humanize
         .box-body.no-padding
           %table.table
             %tbody
-              - @cow.status&.as_json(except: %w[id cow_id position deleted_at]).each do |attribute, value|
+              - @cow.weights&.as_json(except: %w[id cow_id position deleted_at]).each do |attribute, value|
                 - unless value.nil?
                   %tr.list-row
                     %th.display-label= t("activerecord.attributes.#{attribute}").humanize
@@ -73,36 +73,36 @@
                       - elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
                         = value ? 'Sí' : 'No'
                       - elsif attribute.include?('_id')
-                        = object_name(@cow.status, attribute) #|| model_name('keppler_cattle', attribute, value)
+                        = object_name(@cow.weight, attribute) #|| model_name('keppler_cattle', attribute, value)
                       - else 
                         = sanitize raw value
     // Statuses
     .col-md-4.col-sm-12
       .box.slice-box
         .box-header.with-border
-          %h3.box-title= @cow.statuses.empty? ? t('keppler.messages.no_events') : t("keppler.titles.history")
+          %h3.box-title= @cow.weights.empty? ? t('keppler.messages.no_events') : t("keppler.titles.history")
         .box-body.no-padding
           %ul.timeline
-            - @statuses.each_with_index.each do |status, index|
+            - @cow.weights.each_with_index.each do |weight, index|
               %li
-                %a.timeline-item{ onclick: "statusPreview(#{status.id})", style: 'display: inline-block' }
+                %a.timeline-item{ onclick: "weightPreview(#{weight.id})", style: 'display: inline-block' }
                   %h6.timeline-header.no-border
                     %small
-                      %b= status.user&.name
+                      %b= weight.user&.name
                       = t('keppler.messages.has')
-                      - if status.eql?(@cow.statuses.first)
+                      - if weight.eql?(@cow.weights.first)
                         = t("keppler.actions.created").downcase
                         = t('keppler.messages.series')
                         = @cow.serie_number
                       - else
                         = t("keppler.actions.updated").downcase
-                        = t("keppler.models.singularize.status").humanize
+                        = t("keppler.models.singularize.weight").humanize
                   %span.time
                     %i.icon-clock
                     = t('keppler.messages.at')
-                    = status.created_at.to_formatted_s(:time)
+                    = weight.created_at.to_formatted_s(:time)
                     = t('keppler.messages.to')
-                    = status.created_at.to_formatted_s(:day)
+                    = weight.created_at.to_formatted_s(:day)
 :scss
   .svg-icon {
     height: 30px;
@@ -135,8 +135,8 @@
     }
   }
 
-  function statusList(json) {
-    var $statusList = []
+  function weightList(json) {
+    var $weightList = []
     // console.log(json)
     for (var key in json) {
       // Controlando que json realmente tenga esa propiedad
@@ -144,7 +144,7 @@
         // Mostrando en pantalla la clave junto a su valor
         if (#{@cow.gender?('male')}) {
           if (!['id', 'cow_id', 'pregnant', 'lactating', 'deleted_at', 'updated_at', 'position'].includes(key)) {
-            $statusList.push(
+            $weightList.push(
               '<tr class="list-row">' +
                 '<th class="display-label">' + (I18n.activerecord.attributes[key] || key).capitalize() + '</th>' +
                 '<td class="display-value fs-body-1 tc-black-2" style="display: flex">' +
@@ -155,7 +155,7 @@
           } 
         } else {
           if (!['id', 'cow_id', 'reproductive', 'defiant', 'deleted_at', 'updated_at', 'position'].includes(key)) {
-            $statusList.push(
+            $weightList.push(
               '<tr class="list-row">' +
                 '<th class="display-label">' + (I18n.activerecord.attributes[key] || key).capitalize() + '</th>' +
                 '<td class="display-value fs-body-1 tc-black-2" style="display: flex">' +
@@ -167,15 +167,15 @@
         }
       }
     }
-    // console.log($statusList)
-    return $statusList.join(' ')
+    // console.log($weightList)
+    return $weightList.join(' ')
   }
 
-  function statusPreview(status_id) {
+  function weightPreview(weight_id) {
     $.ajax(
         {
           type: "get",
-          url: `/admin/cattle/cows/#{@cow.id}/statuses/${status_id}.json`,
+          url: `/admin/cattle/cows/#{@cow.id}/weights/${weight_id}.json`,
           success: function(data){
           }
         }
@@ -183,14 +183,14 @@
     .done(function(data) {
       // console.log(data)
       Swal({
-        title: '#{t("keppler.models.singularize.status").humanize}',
+        title: '#{t("keppler.models.singularize.weight").humanize}',
         // type: 'info',
         html:
           `<div class="box slice-box">
             <div class="box-body no-padding">
               <table class="table">
                 <tbody>` + 
-                  statusList(data)
+                  weightList(data)
                 + `</tbody>
               </table>
             </div>
@@ -203,13 +203,13 @@
   }
 
 -# 
-  function statusPreview(status_id) {
+  function weightPreview(weight_id) {
     Swal({
       preConfirm: (login) => {
-        return fetch(`/admin/cattle/cows/#{@cow.id}/statuses/${status_id}.json`)
+        return fetch(`/admin/cattle/cows/#{@cow.id}/weights/${weight_id}.json`)
           .then(response => {
             if (!response.ok) {
-              throw new Error(response.statusText)
+              throw new Error(response.weightText)
             }
             return response.json()
           })

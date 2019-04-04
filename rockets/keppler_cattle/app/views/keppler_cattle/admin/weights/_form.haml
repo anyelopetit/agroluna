@@ -1,0 +1,59 @@
+= simple_form_for [:admin, :cattle, @cow, @weight] do |f|
+  .container
+    .row
+      .col-lg-2
+        = link_to :back, 'data-position': 'bottom', 'data-tooltip': t('keppler.actions.back') do
+          .arrow-back.btn.btn-default
+            %i.fa.fa-angle-left
+            = t('keppler.actions.back')
+
+    .row
+      .col-lg-12
+        .box.slice-box
+          .box-header.with-border
+            %h3.box-title= t('keppler.models.pluralize.weights').humanize
+            .box-tools.pull-right
+              %a.btn.btn-box-tool{'data-widget': 'collapse', type: 'button'}
+                %i.fa.fa-minus
+          .box-body
+            %table.table.table-bordered
+              %tbody
+                .form-padding
+                  .row
+                    = f.input :user_id, include_blank: false, input_html: { value: current_user.id }, as: :hidden
+                    = f.input :cow_id, include_blank: false, input_html: { value: @cow.id }, as: :hidden
+                    .col-sm-12.col-md-6
+                      = f.input :weight, autofocus: true, placeholder: '0.00 KG', label: 'Peso (KG)', input_html: { min: 0, value: (@last_weight&.weight.blank? ? 0 : @last_weight&.weight) }
+                    .col-sm-12.col-md-6
+                      = f.input :gained_weight, input_html: { class: 'form-control input_custom' }, readonly: true, placeholder: '0.00 KG', label: 'Peso ganado (KG)'
+                    .col-sm-12.col-md-6
+                      = f.input :average_weight, input_html: { class: 'form-control input_custom' }, readonly: true, placeholder: '0.00 KG', label: 'Peso promedio (KG)'
+                    .col-sm-12.col-md-6
+                      = f.input :corporal_condition_id, collection: @corporal_conditions, selected: (@last_weight&.corporal_condition if @last_status), include_blank: false, label: 'Condición corporal', input_html: {}
+                    .col-sm-12
+                      = f.input :observations, label: 'Observaciones'
+                  .col-xs-12
+                    .pull-right
+                      = f.button :submit, t('keppler.actions.save'), name: '_save', class: 'btn-primary'
+                      = f.button :submit, t('keppler.actions.save_and_add_another'), name: '_add_other'
+:javascript
+  var last_weight = #{@cow.weight&.weight ? @cow.weight&.weight : 0}
+  var born_days = #{@cow.days}
+
+  $(document).ready(function() {
+    $('#weight_gained_weight').val(
+       $('#weight_weight').val() - last_weight
+    )
+    $('#weight_average_weight').val(
+      ($('#weight_weight').val() - last_weight) / born_days 
+    )
+  })
+
+  $('#weight_weight').keyup(function() {
+    $('#weight_gained_weight').val(
+       $('#weight_weight').val() - last_weight
+    )
+    $('#weight_average_weight').val(
+      ($('#weight_weight').val() - last_weight) / born_days
+    )
+  }) 

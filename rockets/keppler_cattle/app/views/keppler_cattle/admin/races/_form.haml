@@ -22,8 +22,8 @@
                   .col-xs-6
                     = f.input :name, as: :string
                   .col-xs-6
-                    -# %label 
-                    -# %small (Para ser reconocido en los reportes)
+                    %label= t('activerecord.attributes.abbreviation')
+                    %small (Para ser reconocido en los reportes)
                     = f.input :abbreviation, as: :string, label: false
                   .col-xs-12
                     = f.input :description

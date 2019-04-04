@@ -83,7 +83,7 @@ module KepplerCattle
       end
 
       def index_variables
-        @q = CorporalCondition.ransack(params[:q])
+        @q = @species.corporal_conditions.ransack(params[:q])
         @weighing_days = @q.result(distinct: true)
         @objects = @weighing_days.page(@current_page).order(position: :desc)
         @total = @weighing_days.size

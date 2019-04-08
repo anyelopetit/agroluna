@@ -21,6 +21,7 @@ es:
         status: estado
         cow: ganado
         weight: peso
+        corporal_condition: condición corporal
       pluralize:
         statuses: statuses
         inseminations: pajuela

@@ -6,14 +6,14 @@ module KepplerCattle
     # CorporalConditionsController
     class CorporalConditionsController < ::Admin::AdminController
       layout 'keppler_cattle/admin/layouts/application'
-      before_action :set_weighing_day, only: %i[show edit update destroy]
+      before_action :set_corporal_condition, only: %i[show edit update destroy]
       before_action :set_species
       before_action :index_variables
       include ObjectQuery
 
       # GET /cattles
       def index
-        respond_to_formats(@weighing_days)
+        respond_to_formats(@corporal_conditions)
         redirect_to_index(@objects)
       end
 
@@ -22,7 +22,7 @@ module KepplerCattle
 
       # GET /cattles/new
       def new
-        @weighing_day = CorporalCondition.new
+        @corporal_condition = CorporalCondition.new
       end
 
       # GET /cattles/1/edit
@@ -30,10 +30,10 @@ module KepplerCattle
 
       # POST /cattles
       def create
-        @weighing_day = CorporalCondition.new(weighing_day_params)
+        @corporal_condition = CorporalCondition.new(corporal_condition_params)
 
-        if @weighing_day.save
-          redirect(@weighing_day, params)
+        if @corporal_condition.save
+          redirect(@corporal_condition, params)
         else
           render :new
         end
@@ -41,22 +41,22 @@ module KepplerCattle
 
       # PATCH/PUT /cattles/1
       def update
-        if @weighing_day.update(weighing_day_params)
-          redirect(@weighing_day, params)
+        if @corporal_condition.update(corporal_condition_params)
+          redirect(@corporal_condition, params)
         else
           render :edit
         end
       end
 
       def clone
-        @weighing_day = CorporalCondition.clone_record params[:weighing_day_id]
-        @weighing_day.save
+        @corporal_condition = CorporalCondition.clone_record params[:corporal_condition_id]
+        @corporal_condition.save
         redirect_to_index(@objects)
       end
 
       # DELETE /cattles/1
       def destroy
-        @weighing_day.destroy
+        @corporal_condition.destroy
         redirect_to_index(@objects)
       end
 
@@ -84,21 +84,21 @@ module KepplerCattle
 
       def index_variables
         @q = @species.corporal_conditions.ransack(params[:q])
-        @weighing_days = @q.result(distinct: true)
-        @objects = @weighing_days.page(@current_page).order(position: :desc)
-        @total = @weighing_days.size
+        @corporal_conditions = @q.result(distinct: true)
+        @objects = @corporal_conditions.page(@current_page).order(position: :desc)
+        @total = @corporal_conditions.size
         @attributes = CorporalCondition.index_attributes
       end
 
       # Use callbacks to share common setup or constraints between actions.
-      def set_weighing_day
-        @weighing_day = CorporalCondition.find(params[:id])
+      def set_corporal_condition
+        @corporal_condition = CorporalCondition.find(params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.
-      def weighing_day_params
-        params.require(:weighing_day).permit(
-          :name, :min_days, :specific_day, :max_days, :species_id
+      def corporal_condition_params
+        params.require(:corporal_condition).permit(
+          CorporalCondition.attribute_names.map(&:to_sym)
         )
       end
     end

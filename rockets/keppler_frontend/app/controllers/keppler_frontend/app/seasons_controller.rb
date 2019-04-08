@@ -29,7 +29,7 @@ module KepplerFrontend
       @cow_strategic_lots = @strategic_lots.includes(:locations).where(
         keppler_cattle_locations: {cow_id: @cows.ids}
       ).distinct
-      @possible_mothers = @farm.cows.includes(:typologies).possible_mothers
+      @possible_mothers = @farm.cows.possible_mothers
       # @insemined_cows = @cows.where()
     end
 

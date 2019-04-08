@@ -18,8 +18,8 @@ module KepplerCattle
     after_save :create_first_activity
     # after_save :create_typology
 
-    belongs_to :race, class_name: 'KepplerCattle::Race', foreign_key: 'race_id'
-    belongs_to :species, class_name: 'KepplerCattle::Species', foreign_key: 'species_id'
+    belongs_to :race, class_name: 'KepplerCattle::Race'
+    belongs_to :species, class_name: 'KepplerCattle::Species'
 
     has_one :male, class_name: 'KepplerCattle::Male', dependent: :destroy
 
@@ -89,7 +89,7 @@ module KepplerCattle
     end
 
     def typology
-      cow_typologies.includes(:typology).last&.typology
+      cow_typologies.last&.typology
     end
 
     def typology_counter_count
@@ -116,8 +116,7 @@ module KepplerCattle
     end
 
     def self.possible_mothers
-      includes(:typologies)
-        .where(gender: 'female')
+      where(gender: 'female')
         .where(keppler_cattle_typologies: {counter: ['1', '2']}).distinct
         # .order(:serie_number)
     end

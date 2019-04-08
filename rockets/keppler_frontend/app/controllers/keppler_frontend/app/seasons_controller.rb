@@ -116,6 +116,9 @@ module KepplerFrontend
       @season_cow = KepplerReproduction::SeasonCow.new
     end
 
+    def assign_bulls
+    end
+
     private
 
     def season_types

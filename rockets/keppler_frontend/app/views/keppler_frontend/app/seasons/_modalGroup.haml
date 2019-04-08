@@ -9,7 +9,7 @@
           .row
             .col-lg-12        
               %h1 Elegir Padrotes
-              = simple_form_for [@farm, @season, @season_cow], url: assign_cattle_farm_season_path(@farm, @season) do |f|
+              = simple_form_for [@farm, @season, @season_cow], url: assign_bulls_farm_season_path(@farm, @season) do |f|
                 = f.input :season_id, as: :hidden, input_html: { value: @season.id }
                 .form-padding
                   .row
@@ -17,7 +17,7 @@
                     .col-sm-6.col-md-8
                       -# = f.input :cattle, collection: @cows, label: 'Ganado', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom select2-multiple' }
                       -# %label.control-label.select.optional.label_custom--strong Series
-                      %select.form-control.select.optional.form-control.input_custom.select2-multiple.select2-hidden-accessible#season_cow_bulls{ name: 'transference[cattle][]' }
+                      %select.form-control.select.optional.form-control.input_custom.select2-multiple.select2-hidden-accessible#season_cow_bulls{ name: 'season_cow[bulls][]' }
                         -# - @farm.cows.includes(:season_cows, :locations).where.not(keppler_reproduction_season_cows: { id: @season.id }).each do |cow|
                         - @farm.cows.reproductive_males(@season).each do |cow|
                           %option{ value: cow.id } #{cow&.serie_number} #{'(' + cow&.short_name + ')' if cow&.short_name}

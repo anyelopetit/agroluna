@@ -33,8 +33,10 @@ module KepplerCattle
       # POST /cattles
       def create
         @cow = Cow.new(cow_params)
-        @cow.father_type = params[:cow][:father_id].split(',').first
-        @cow.father_id = params[:cow][:father_id].split(',').last.to_i
+        if params[:cow][:father_id]
+          @cow.father_type = params[:cow][:father_id].split(',').first
+          @cow.father_id = params[:cow][:father_id].split(',').last.to_i
+        end
 
         if @cow.save && @cow.weights.blank?
           @cow.mother.create_typology

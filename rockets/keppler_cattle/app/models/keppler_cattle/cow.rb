@@ -174,12 +174,12 @@ module KepplerCattle
     end
 
     def self.actives
-      cows = includes(:activities).select do |cow|
+      cows = select do |cow|
         # cow&.location&.farm_id == farm&.id &&
         cow&.activity&.active
       end
       active_ids = cows.pluck(:id).uniq
-      includes(:activities).where(id: active_ids)
+      where(id: active_ids)
     end
 
     def self.inactives

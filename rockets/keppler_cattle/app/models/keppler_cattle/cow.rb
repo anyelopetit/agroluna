@@ -33,6 +33,9 @@ module KepplerCattle
 
     has_many :statuses, class_name: 'KepplerCattle::Status', dependent: :destroy
 
+    has_many :season_cows, class_name: 'KepplerReproduction::SeasonCow', dependent: :destroy
+    has_many :seasons, class_name: 'KepplerReproduction::Season', through: :season_cows
+
     validates_presence_of :birthdate, :serie_number, :species_id, :race_id
     validates_uniqueness_of :serie_number
 
@@ -187,6 +190,20 @@ module KepplerCattle
       end
       inactive_ids = cows.pluck(:id).uniq
       includes(:locations).where(id: inactive_ids)
+    end
+
+    def self.total_season_cows(strategic_lot)
+      includes(:locations).where(keppler_cattle_locations: {
+        strategic_lot_id: strategic_lot.id
+      })
+    end
+
+    def self.reproductive_males(season)
+      where(gender: 'male')
+        .select do |c|
+          !c.season_cows.pluck(:season_id).include?(season.id) ||
+          c.season_cows.blank?
+        end
     end
 
     private

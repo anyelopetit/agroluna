@@ -121,7 +121,7 @@ group :development do
   gem 'better_errors', '2.4.0'
   gem 'binding_of_caller', '~> 0.8.0'
   gem 'byebug', '10.0.2'
-  gem 'bullet' # It will watch your queries while you develop your application and notify you when you should add eager loading (N+1 queries), when you're using eager loading that isn't necessary and when you should use counter cache.
+  gem 'bullet' # otify you when you should add eager loading (N+1 queries)
   gem 'commands', '0.2.1'
   gem 'brakeman', '4.3.0'
   gem 'htmlbeautifier', '1.3.1'

@@ -7,13 +7,12 @@ class CreateKepplerReproductionSeasons < ActiveRecord::Migration[5.2]
       t.date :start_date
       t.date :finish_date
 
-      t.integer :farm_id, foreign_key: true
+      t.integer :farm_id, foreign_key: true, index: true
 
       t.integer :position
       t.datetime :deleted_at
 
       t.timestamps null: false
     end
-    add_index :keppler_reproduction_seasons, :farm_id
   end
 end

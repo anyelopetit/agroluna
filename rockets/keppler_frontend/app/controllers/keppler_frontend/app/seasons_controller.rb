@@ -23,15 +23,14 @@ module KepplerFrontend
     def show
       # @cicle = KepplerReproduction::Cicle.new
       # @strategic_lot = KepplerFarm::StrategicLot.new
-      @cows = @season.cows.order(:serie_number).includes(
-        locations: [:strategic_lot]
-      )
+      @cows = @season.cows.order(:serie_number)
       @season_cow = KepplerReproduction::SeasonCow.new
-      @strategic_lots = @farm.strategic_lots.includes(:locations)
-      @cow_strategic_lots = @strategic_lots.where(
+      @strategic_lots = @farm.strategic_lots
+      @cow_strategic_lots = @strategic_lots.includes(:locations).where(
         keppler_cattle_locations: {cow_id: @cows.ids}
       ).distinct
-      @possible_mothers = @farm.cows.possible_mothers
+      @possible_mothers = @farm.cows.includes(:typologies).possible_mothers
+      # @insemined_cows = @cows.where()
     end
 
     def new
@@ -41,6 +40,18 @@ module KepplerFrontend
     def create
       @season = KepplerReproduction::Season.new(season_params)
       @season.finish_date = params[:season][:finish_date]
+
+      if @season.type_id.zero?
+        counter = 0
+        @farm.strategic_lots.each do |strategic_lot|
+          counter += assign_cattle_each_lot(strategic_lot.id)
+          if counter.zero?
+            flash[:error] = 'No se agregaron series a la temporada'
+          else
+            flash[:notice] = "Se agregaron #{counter} series a la temporada"
+          end
+        end
+      end
 
       if @season.save
         redirect_to farm_season_path(@farm, @season)
@@ -82,15 +93,9 @@ module KepplerFrontend
     end
 
     def assign_cattle
-      if params[:season_cow][:strategic_lot]
+      if strategic_lot_id = params[:season_cow][:strategic_lot]
         counter = 0
-        strategic_lot = @farm.strategic_lots.find(
-          params[:season_cow][:strategic_lot]
-        )
-        strategic_lot.cows.possible_mothers.each do |cow|
-          season_cow = @season.season_cows.new(cow_id: cow.id)
-          counter += 1 if season_cow.save
-        end
+        counter += assign_cattle_each_lot(strategic_lot_id)
         if counter.zero?
           flash[:error] = 'No se agregaron series a la temporada'
         else
@@ -101,15 +106,14 @@ module KepplerFrontend
     end
 
     def strategic_lot
-      @strategic_lot = @farm.strategic_lots.find(
-        params[:strategic_lot_id]
-      ) if params[:strategic_lot_id]
-      @cows = @season.cows.includes(:locations).includes(
-        locations: [:strategic_lot]
+      strategic_lot_id = params[:strategic_lot_id]
+      @strategic_lot = @farm.strategic_lots.find(strategic_lot_id) if strategic_lot_id
+      @cows = @season.cows.includes(
+        :race, locations: [:strategic_lot]
       ).where(
-        keppler_cattle_locations: {strategic_lot_id: @strategic_lot.id}
+        keppler_cattle_locations: { strategic_lot_id: @strategic_lot.id }
       )
-      @assign = KepplerCattle::Location.new
+      @season_cow = KepplerReproduction::SeasonCow.new
     end
 
     private
@@ -131,9 +135,7 @@ module KepplerFrontend
     end
 
     def set_farm
-      @farm = KepplerFarm::Farm.includes(
-        cows: [:typologies, :weights, :locations]
-      ).find_by(id: params[:farm_id])
+      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
     end
 
     def set_farms
@@ -145,6 +147,19 @@ module KepplerFrontend
           id: @locations&.map(&:keppler_farm_farm_id)
         ) unless @locations.count.zero?
       end
+    end
+
+    def assign_cattle_each_lot(strategic_lot_id)
+      return unless strategic_lot_id
+      counter = 0
+      strategic_lot = @farm.strategic_lots.find(
+        strategic_lot_id
+      )
+      strategic_lot.cows.possible_mothers.each do |cow|
+        season_cow = @season.season_cows.new(cow_id: cow.id)
+        counter += 1 if season_cow.save
+      end
+      counter
     end
 
     # begin callback user_authenticate

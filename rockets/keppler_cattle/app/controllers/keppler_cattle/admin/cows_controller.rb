@@ -34,13 +34,13 @@ module KepplerCattle
       def create
         @cow = Cow.new(cow_params)
         
-        unless params[:cow][:father_id].blank?
-          @cow.father_type = params[:cow][:father_id].split(',').first
-          @cow.father_id = params[:cow][:father_id].split(',').last.to_i
-        end
+        # unless params[:cow][:father_id].blank?
+        #   @cow.father_type = params[:cow][:father_id].split(',').first
+        #   @cow.father_id = params[:cow][:father_id].split(',').last.to_i
+        # end
 
         if @cow.save && @cow.weights.blank?
-          @cow.mother.create_typology
+          # @cow.mother.create_typology
           redirect_to new_farm_cow_weight_path(@farm, @cow)
         else
           flash[:error] = 'Revisa los datos del formulario'

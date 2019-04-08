@@ -112,6 +112,10 @@ es:
       max_days: Máximo de días
       used: usado
       status: estado
+      gained_weight: Peso ganado
+      average_weight: Peso promedio / día
+      corporal_condition_id: Condición corporal
+      weight_date: Fecha de pesaje
     errors:
       messages:
   errors:

@@ -35,7 +35,7 @@
                   %center
                     = image_tag @cow.image&.url || '/assets/keppler_cattle/cow_shadow', style: 'max-width: 100%;'
                     %h5= "SIN FOTO" if @cow.image&.url.blank?
-              - @cow.as_json(except: %w[id image position deleted_at]).each do |attribute, value|
+              - @cow.as_json(except: %w[id image father_type position deleted_at]).each do |attribute, value|
                 %tr.list-row
                   %th.display-label= t("activerecord.attributes.#{attribute}").humanize
                   %td.display-value.fs-body-1.tc-black-2
@@ -58,24 +58,31 @@
         .box-header.with-border
           %h3.box-title= t('keppler.models.singularize.weight').humanize
         .box-body.no-padding
-          %table.table
-            %tbody
-              - @cow.weights&.as_json(except: %w[id cow_id position deleted_at]).each do |attribute, value|
-                - unless value.nil?
-                  %tr.list-row
-                    %th.display-label= t("activerecord.attributes.#{attribute}").humanize
-                    %td.display-value.fs-body-1.tc-black-2
-                      - if @attachments.dig('images', 'names').include?(attribute)
-                        = image_tag value.url if value.url
-                      - elsif @attachments.dig('images', 'names').map(&:pluralize).include?(attribute)
-                        - value.each do |image|
-                          = image_tag image.url if image.url
-                      - elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
-                        = value ? 'Sí' : 'No'
-                      - elsif attribute.include?('_id')
-                        = object_name(@cow.weight, attribute) #|| model_name('keppler_cattle', attribute, value)
-                      - else 
-                        = sanitize raw value
+          %ul.timeline
+            - @cow.weights&.includes(:user)&.each do |weight|
+              %li
+                %a.timeline-item{ onclick: "weightPreview(#{weight.id})", style: 'display: inline-block' }
+                  %h6.timeline-header.no-border
+                    - weight.as_json(except: %w[id cow_id position deleted_at]).each do |attribute, value|
+                      %small
+                        %b= t("activerecord.attributes.#{attribute}").humanize + ':'
+                        %span
+                          - unless value.nil?
+                            - if [TrueClass, FalseClass].include?(value)
+                              = value ? 'Sí' : 'No'
+                            - elsif [ActiveSupport::TimeWithZone].include?(value.class)
+                              = value.strftime('%d/%b/%Y %H:%M')
+                            - elsif attribute.include?('_id')
+                              = object_name(@cow.weight, attribute) #|| model_name('keppler_cattle', attribute, value)
+                            - else 
+                              = sanitize raw value.to_s + "#{' KG' if attribute.include?('weight')}"
+                      %br
+                  %span.time
+                    %i.icon-clock
+                    = t('keppler.messages.at')
+                    = weight.created_at.to_formatted_s(:time)
+                    = t('keppler.messages.to')
+                    = weight.created_at.to_formatted_s(:day)
     // Statuses
     .col-md-4.col-sm-12
       .box.slice-box

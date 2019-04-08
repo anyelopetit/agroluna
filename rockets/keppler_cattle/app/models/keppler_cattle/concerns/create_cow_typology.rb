@@ -13,7 +13,8 @@ module KepplerCattle
           typology_created = false
           # puts "*** Posibles tipologías para #{cow.serie_number}: ***"
           # puts "*** #{cow.possible_typologies.map {|x| [x.name, x.min_age]}} ***"
-          cow.possible_typologies.order(min_age: :asc).each do |typology|
+          polymorphic_cow ||= self.class.eql?(KepplerCattle::Cow) ? self : self.cow
+          polymorphic_cow.possible_typologies.order(min_age: :asc).each do |typology|
             break if typology_created
             if verify_existence(typology) && verify_counter(typology) && verify_min_age(typology) && verify_min_weight(typology)
               new_typology = cow.cow_typologies.new(
@@ -29,16 +30,18 @@ module KepplerCattle
         private
 
         def verify_existence(typology)
+          polymorphic_cow ||= self.class.eql?(KepplerCattle::Cow) ? self : self.cow
           cow_typologies = KepplerCattle::CowTypology.where(
-            cow_id: cow.id,
+            cow_id: polymorphic_cow.id,
             typology_id: typology.id
           )
           cow_typologies.count.zero?
         end
 
         def verify_counter(typology)
+          polymorphic_cow ||= self.class.eql?(KepplerCattle::Cow) ? self : self.cow
           if typology.counter.to_i == 2
-            cow.sons.exists?
+            polymorphic_cow.sons.exists?
           elsif typology.counter.to_i == 1
             true # TOCHANGE
           else
@@ -47,11 +50,13 @@ module KepplerCattle
         end
 
         def verify_min_age(typology)
-          cow.days.to_i > typology.min_age.to_i
+          polymorphic_cow ||= self.class.eql?(KepplerCattle::Cow) ? self : self.cow
+          polymorphic_cow.days.to_i > typology.min_age.to_i
         end
 
         def verify_min_weight(typology)
-          cow.weight&.weight.to_f > typology.min_weight.to_f
+          polymorphic_cow ||= self.class.eql?(KepplerCattle::Cow) ? self : self.cow
+          polymorphic_cow.weight&.weight.to_f > typology.min_weight.to_f
         end
       end
     end

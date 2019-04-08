@@ -112,7 +112,7 @@ module KepplerCattle
     end
 
     def possible_typologies
-      species.includes(:typologies).typologies.where(gender: gender)
+      species.typologies.where(gender: gender)
     end
 
     def self.possible_mothers
@@ -209,17 +209,15 @@ module KepplerCattle
     private
 
     def create_first_location
-      includes(:location)
-        .locations.create(
-          # user_id: current_user,
-          cow_id: id,
-          farm_id: $request.blank? ? [1,2].sample : $request.params[:farm_id]
-        )
+      locations.create(
+        # user_id: current_user,
+        cow_id: id,
+        farm_id: $request.blank? ? [1,2].sample : $request.params[:farm_id]
+      )
     end
 
     def create_first_activity
-      includes(:cow_activities)
-        .cow_activities.create(
+      cow_activities.create(
         # user_id: current_user,
         cow_id: id,
         active: true

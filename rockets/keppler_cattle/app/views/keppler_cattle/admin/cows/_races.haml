@@ -2,6 +2,5 @@
 
 %select#cow_race_id.form-control.select.required.form-control.input_custom{"aria-hidden" => "true", name: "cow[race_id]", tabindex: "-1", placeholder: 'hola'}
   -# %option{ selected: true, disabled: true } Selecciona una raza
-  %option No Registrada
   - races.each do |race|
     %option{ value: race.id }= race.name

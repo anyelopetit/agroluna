@@ -39,6 +39,7 @@ module KepplerCattle
           redirect_to admin_cattle_cow_path(@cow)
         else
           render :new
+          @corporal_conditions = @cow.species.corporal_conditions
         end
       end
 
@@ -101,7 +102,7 @@ module KepplerCattle
       # Only allow a trusted parameter "white list" through.
       def weight_params
         params.require(:weight).permit(
-          :date, :months, :successfully, :twins, :observations, :bull_id, :user_id
+          Weight.attribute_names.map(&:to_sym)
         )
       end
     end

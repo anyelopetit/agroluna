@@ -53,12 +53,12 @@
                       = f.input :birthdate, as: :string, input_html: { class: 'datepicker' }, label: t('activerecord.attributes.birthdate').humanize
                   .row
                     .col-sm-6
-                      = f.input :coat_color, as: :string, label: t('activerecord.attributes.coat_color').humanize
+                      = f.input :coat_color, collection: @colors, as: :string, label: t('activerecord.attributes.coat_color').humanize
                     .col-sm-6
-                      = f.input :nose_color, as: :string, label: t('activerecord.attributes.nose_color').humanize
+                      = f.input :nose_color, collection: @colors, as: :string, label: t('activerecord.attributes.nose_color').humanize
                   .row
                     .col-sm-6
-                      = f.input :tassel_color, as: :string, label: t('activerecord.attributes.tassel_color').humanize
+                      = f.input :tassel_color, collection: @colors, as: :string, label: t('activerecord.attributes.tassel_color').humanize
                     .col-sm-6
                       = f.input :provenance, as: :string, label: t('activerecord.attributes.provenance').humanize
                   .row

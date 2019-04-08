@@ -143,6 +143,9 @@ GEM
       thor (~> 0.19)
     brakeman (4.3.0)
     builder (3.2.3)
+    bullet (5.9.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     byebug (10.0.2)
     carrierwave (1.2.2)
       activemodel (>= 4.0.0)
@@ -569,6 +572,7 @@ GEM
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.4.1)
     unicode_utils (1.4.0)
+    uniform_notifier (1.12.1)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -601,6 +605,7 @@ DEPENDENCIES
   bootstrap-tagsinput-rails
   bourbon (= 5.0.0)
   brakeman (= 4.3.0)
+  bullet
   byebug (= 10.0.2)
   carrierwave (= 1.2.2)
   carrierwave-imageoptimizer (~> 1.4)

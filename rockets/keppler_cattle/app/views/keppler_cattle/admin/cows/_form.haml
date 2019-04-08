@@ -146,7 +146,7 @@
   })
 
   $('#cow_species_id').change(function() {
-    var url = `/admin/cattle/species/${$(this).val()}/races`
+    var url = `/admin/cattle/species/${$(this).val()}/races_js`
     var races = $.getScript(url)
     console.log(url)
     console.log(races)

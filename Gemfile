@@ -115,11 +115,13 @@ gem 'bootsnap', '>= 1.1.0', require: false
 #javascript
 gem 'gon', '6.2.1'
 
+gem 'faker', '1.8.7'
 # Development
 group :development do
   gem 'better_errors', '2.4.0'
   gem 'binding_of_caller', '~> 0.8.0'
   gem 'byebug', '10.0.2'
+  gem 'bullet' # otify you when you should add eager loading (N+1 queries)
   gem 'commands', '0.2.1'
   gem 'brakeman', '4.3.0'
   gem 'htmlbeautifier', '1.3.1'
@@ -137,7 +139,6 @@ end
 group :development, :test do
   gem 'database_cleaner', '~> 1.5'
   gem 'factory_bot_rails'
-  gem 'faker', '1.8.7'
   gem 'haml_lint', '~> 0.27.0', require: false
   gem 'jshint' # JavaScripts Linter
   gem 'rspec-rails', '~> 3.7'

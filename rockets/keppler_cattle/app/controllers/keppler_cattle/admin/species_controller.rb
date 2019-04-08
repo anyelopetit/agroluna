@@ -80,6 +80,7 @@ module KepplerCattle
       def get_races
         @races = Species.find(params[:species_id]).races
         respond_to do |format|
+          format.html
           format.js
         end
       end

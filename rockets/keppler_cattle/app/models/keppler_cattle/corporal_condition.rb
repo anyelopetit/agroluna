@@ -12,8 +12,10 @@ module KepplerCattle
     acts_as_list
     acts_as_paranoid
 
+    belongs_to :species
+
     belongs_to :species, class_name: 'KepplerCattle::Species'
-    validates_presence_of :name, :species_id
+    validates_presence_of :name
 
     def self.index_attributes
       %i[name number description]

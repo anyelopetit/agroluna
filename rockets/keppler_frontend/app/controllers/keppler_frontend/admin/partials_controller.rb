@@ -166,7 +166,7 @@ module KepplerFrontend
       end
 
       def get_history(model)
-        @activities = PublicActivity::Activity.where(
+        @activities = PublicActivity::Activity.includes(:trackable, :owner).where(
           trackable_type: model.to_s
         ).order('created_at desc').limit(50)
       end

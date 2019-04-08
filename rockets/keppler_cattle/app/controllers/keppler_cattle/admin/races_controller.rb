@@ -98,7 +98,7 @@ module KepplerCattle
       # Only allow a trusted parameter "white list" through.
       def race_params
         params.require(:race).permit(
-          :name, :abbreviation, :description
+          Race.attribute_names.map(&:to_sym)
         )
       end
     end

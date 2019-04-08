@@ -58,4 +58,14 @@ Rails.application.configure do
     keppler_frontend/app/grapes/grapes-editor.js keppler_frontend/app/grapes/font-awesome.css 
     keppler_frontend/app/grapes/grapes-editor.js keppler_frontend/app/grapes/grapes-custom.scss
   )
+
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = true
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+    # Bullet.add_footer = true
+  end
 end

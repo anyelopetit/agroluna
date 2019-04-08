@@ -2,54 +2,53 @@
 .app_wrapper
   .container_custom
     -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
-    .d-flex.justify-content-start
+    .d-flex.justify-content-between
       .float-left.mb-4{ style: 'width: 80%' }
         %h1
           #{@season.name}
           %label.badge (#{@season.type_name})
           %small.badge.badge-secondary #{@season.start_date&.strftime("%d/%m/%Y")} - #{@season.finish_date&.strftime("%d/%m/%Y")}
-        
-    .d-flex.justify-content-end
-      -# .toolbar
-        .toolbar-item
-          -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
-          = link_to farm_season_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
-            %i.icofont-trash
       .float-right.mt-4.mb-4
         = link_to edit_farm_season_path(@farm, @season) do
           %button.btn.btn_custom.btn--filled.btn--medium
             %i.icofont-pencil
             Editar
-        %a#add-cicle{ href: '#' }
+        -# %a#add-cicle{ href: '#' }
           %button.btn.btn_custom.btn--filled.btn--medium
             +
             Agregar ciclo
-    
-    - if @cows.blank? && @season.cows.exists?
-      = link_to 'Mostrar todos', farm_cows_path(farm)
-    - if @season.duration_days.zero?
-      %table
-        %thead
-          %tr
-            %th.not-records.center
-              %center No se encontraron ciclos para la temporada
-    - else
-      = render 'keppler_frontend/app/seasons/gantt', season: @season
+    - unless @season.type_id.zero?
+      - if @cows.blank? && @season.cows.exists?
+        = link_to 'Mostrar todos', farm_cows_path(farm)
+      - if @season.duration_days.zero?
+        %table
+          %thead
+            %tr
+              %th.not-records.center
+                %center No se encontraron ciclos para la temporada
+      - else
+        = render 'keppler_frontend/app/seasons/gantt', season: @season
     .d-flex.justify-content-between.mt-5.mb-3.mt-4
       .left
-        %h1 Lotes estratégicos
-      .right
-    .d-flex.justify-content-end
-      .float-right.mt-4.mb-4
-        -# = link_to new_assign_cattle_farm_season_path(@farm, @season) do
-          %button.btn.btn_custom.btn--filled.btn--medium
-            %i.icofont-plus
-            Agregar Serie
-        %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
-          %i.icofont-plus
-          Importar de lote
-    
+        %h1 Ganados por lotes
+      - unless @season.type_id.zero?
+        .right
+          .d-flex.justify-content-end
+            .float-right.mt-4.mb-4
+              -# = link_to new_assign_cattle_farm_season_path(@farm, @season) do
+                %button.btn.btn_custom.btn--filled.btn--medium
+                  %i.icofont-plus
+                  Agregar Serie
+              %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
+                %i.icofont-plus
+                Importar de lote
     #index-container
+      -# %table
+        - if @inseminated_cows.size.zero?
+          %thead
+            %tr
+              %th.not-records.center
+                %center No se encontraron lotes estratégicos asociados a ganados
       %table
         - if @cow_strategic_lots.size.zero?
           %thead
@@ -60,7 +59,11 @@
           %thead
             %tr
               %th Nombre
-              %th Cant. Series
+              %th Disponibles
+              %th En celo
+              %th Preñadas
+              %th Paridas
+              %th Total
           %tbody
             - @cow_strategic_lots.each do |strategic_lot|
               %tr
@@ -69,19 +72,27 @@
                     = strategic_lot.name
                 %td
                   = link_to({ controller: :seasons, action: :strategic_lot, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
-                    = @cows.where(keppler_cattle_locations: {strategic_lot_id: strategic_lot.id}).count
-
-    
-    
-      
+                    = @cows.total_season_cows(strategic_lot).count
+                %td
+                  = link_to({ controller: :seasons, action: :strategic_lot, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
+                    = @cows.total_season_cows(strategic_lot).count
+                %td
+                  = link_to({ controller: :seasons, action: :strategic_lot, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
+                    = @cows.total_season_cows(strategic_lot).count
+                %td
+                  = link_to({ controller: :seasons, action: :strategic_lot, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
+                    = @cows.total_season_cows(strategic_lot).count
+                %td
+                  = link_to({ controller: :seasons, action: :strategic_lot, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
+                    = @cows.total_season_cows(strategic_lot).count
     -# = render 'season_cows_table', cows: @cows
 -# = simple_form_for [@farm, @season, @cicle] do |f|
   = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
   = f.input :season_id, as: :hidden, input_html: { value: @season.id }
   = f.input :days_count, as: :hidden
 
-= render 'keppler_frontend/app/seasons/modalLote', season: @season     
--# = render 'keppler_frontend/app/seasons/modalCattle', season: @season         
+= render 'keppler_frontend/app/seasons/modalLote', season: @season
+-# = render 'keppler_frontend/app/seasons/modalCattle', season: @season
 -# :javascript
   $('#add-cicle').click(function() {
     swal({

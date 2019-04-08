@@ -8,12 +8,27 @@
         .container_custom
           .row
             .col-lg-12        
-              %h1 Elegir Toros
-              = simple_form_for [:cattle, @assign], url: assign_cattle_farm_strategic_lot_path(@farm, @strategic_lot), html: { style: 'width: 100%' } do |f|
+              %h1 Elegir Padrotes
+              = simple_form_for [@farm, @season, @season_cow], url: assign_cattle_farm_season_path(@farm, @season) do |f|
+                = f.input :season_id, as: :hidden, input_html: { value: @season.id }
+                .form-padding
+                  .row
+                    -# = f.input :cow_id, input_html: { value: @farm&.id, class: 'form-control input_custom' }, as: :hidden
+                    .col-sm-6.col-md-8
+                      -# = f.input :cattle, collection: @cows, label: 'Ganado', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom select2-multiple' }
+                      -# %label.control-label.select.optional.label_custom--strong Series
+                      %select.form-control.select.optional.form-control.input_custom.select2-multiple.select2-hidden-accessible#season_cow_bulls{ name: 'transference[cattle][]' }
+                        -# - @farm.cows.includes(:season_cows, :locations).where.not(keppler_reproduction_season_cows: { id: @season.id }).each do |cow|
+                        - @farm.cows.reproductive_males(@season).each do |cow|
+                          %option{ value: cow.id } #{cow&.serie_number} #{'(' + cow&.short_name + ')' if cow&.short_name}
+                    .col-sm-6.col-md-4
+                      %button{ type: 'submit', id: 'add-cattle', class: 'btn btn_custom btn--filled btn--medium', disabled: true }
+                        Agregar
+              -# = simple_form_for [:cattle, @assign], url: assign_cattle_farm_strategic_lot_path(@farm, @strategic_lot), html: { style: 'width: 100%' } do |f|
                 .row.mt-4
                   .col-sm-10
                     %select#strategic_lot_cattle{ name: 'strategic_lot[cattle][]', label: 'Ganado', class: 'form-control input_custom select2-multiple', onchange: "validateCattle()" }
-                      - @farm.cows.order(:serie_number).each do |cow|
+                      - @farm.cows.where(gender: 'male').order(:serie_number).each do |cow|
                         %option{ value: cow.id } #{cow.serie_number}
                   .col-sm-2
                     .float-right
@@ -31,7 +46,7 @@
                 %button.btn.btn_custom.btn--filled.btn--medium#remove_from_lot{ disabled: true }
                   %i.icofont-trash
                   Remover ganado
-              = render 'season_bulls_table', cows: @cows
+              = render 'season_bulls_table', cows: @cows.total_season_cows(@strategic_lot).where(gender: 'male')
             -# .col-lg-12
               .float-left
                 %h1 Crear un lote
@@ -68,3 +83,89 @@
                           %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
                             %i.icofont-save
                             Crear
+
+:javascript
+  $('.select2').select2()
+  $('.select2-multiple').select2({
+    multiple: true,
+    placeholder: 'Agrega una o más series',
+    allowClear: true
+  })
+
+  $('.select2-selection__choice').remove()
+  $('#strategic_lot_cattle').val('')
+  $('.select2-search__field').attr('placeholder', 'Agrega una o más series')
+  $('.select2-search__field').css({
+    'width': 'auto'
+  })
+
+  $('#select-search').change(function() {
+    $('.select-field').hide()
+    var $id = $(this).find('option:selected').val()
+    $("#" + $id).show()
+  })
+
+  var $bull_ids = #{@cows.pluck(:id)}
+  var $final_array = []
+  var href = $('.destroy_multiple').attr('href')
+
+  function ids_loop() {
+    $bull_ids.forEach(function (id) {
+      $('[checklist-model="check"]:checked').each(function( index ) {
+        if ($(this).prop('id').includes(id)) {
+          if ( !$final_array.includes(id) ) {
+            $final_array.push(id)
+          }
+        }
+      });
+      $('[checklist-model="check"]:not(:checked)').each(function( index ) {
+        if ($(this).prop('id').includes(id)) {
+          if ($final_array.includes(id)) {
+            $final_array.splice($final_array.indexOf(id), 1);
+          }
+        }
+      });
+    });
+    $('.destroy_multiple').attr('href', (`${href}&multiple_ids=[${$final_array}]`))
+    if ($final_array.length === 0) {
+      document.getElementById('remove_from_lot').disabled = true
+    } else {
+      document.getElementById('remove_from_lot').disabled = false
+    }
+  }
+
+  $('#checkbox-all').click(function() {
+    $('[checklist-model="check"]').prop( "checked", $(this).prop( "checked" ) )
+    ids_loop()
+  })
+
+  $('[checklist-model="check"]').click(function() {
+    ids_loop()
+    $('#checkbox-all').prop(
+      'checked',
+      JSON.stringify($bull_ids) === JSON.stringify($final_array)
+    )
+  })
+
+  $('#open-status-history').click(function() {
+    $('#status-history').css({
+      right: '0'
+    })
+  })
+  $('#close-status-history').click(function() {
+    $('#status-history').css({
+      right: '-300px'
+    })
+  })
+
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+
+  function validateBulls(select) {
+    document.getElementById('add-cattle').disabled = (select.val() == "")
+  }
+  
+  $('#season_cow_bulls').change(function() {
+    validateBulls($(this))
+  })

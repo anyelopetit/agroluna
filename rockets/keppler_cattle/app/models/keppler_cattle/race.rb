@@ -11,6 +11,8 @@ module KepplerCattle
     include Searchable
     acts_as_list
     acts_as_paranoid
+    
+    belongs_to :species
 
     validates_length_of :abbreviation, maximum: 6, message: 'Las abreviaciones no pueden exceder de 6 caracteres'
 

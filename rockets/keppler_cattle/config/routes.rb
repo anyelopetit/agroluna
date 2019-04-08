@@ -26,7 +26,7 @@ KepplerCattle::Engine.routes.draw do
         post '/upload', action: 'upload', as: :upload
         get '/reload', action: :reload, on: :collection
         delete '/destroy_multiple', action: :destroy_multiple, on: :collection
-        get 'races', action: :get_races, as: :get_races
+        get 'races_js', action: :get_races, as: :get_races
 
         resources :corporal_conditions do
           post '/sort', action: :sort, on: :collection

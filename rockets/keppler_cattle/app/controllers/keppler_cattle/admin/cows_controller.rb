@@ -33,7 +33,8 @@ module KepplerCattle
       # POST /cattles
       def create
         @cow = Cow.new(cow_params)
-        if params[:cow][:father_id]
+        
+        unless params[:cow][:father_id].blank?
           @cow.father_type = params[:cow][:father_id].split(',').first
           @cow.father_id = params[:cow][:father_id].split(',').last.to_i
         end

@@ -40,7 +40,7 @@ module KepplerCattle
     validates_uniqueness_of :serie_number
 
     def self.index_attributes
-      %i[serie_number short_name race_name typology_name gender]
+      %i[serie_number short_name race_id typology_name gender]
     end
 
     def farm

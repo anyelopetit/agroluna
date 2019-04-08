@@ -30,7 +30,7 @@ module KepplerFrontend
     def create
       @weight = KepplerCattle::Weight.new(weight_params)
 
-      if @weight.save!
+      if @weight.save
         redirect_to farm_cow_path(@farm, @cow)
       else
         render :new

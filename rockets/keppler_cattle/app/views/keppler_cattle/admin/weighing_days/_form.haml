@@ -39,19 +39,17 @@
 
   $(document).ready(function() {
     $('.weighing_day').each(function(index, element) {
-      if ($(element).val() == '') $(element).val('0')
+      if (parseInt($(element).val()) == '') $(element).val('0')
     })
   })
 
   $('#weighing_day_min_days').keyup(function() {
     var that = $(this)
     $(".weighing_day").each(function(index, element){
-      if ($(element).val() < that.val()) {
-        if ($(element).val() == '') {
-          $(element).val('0')
-        } else {
-          $(element).val(that.val())
-        }
+      if (parseInt($(element).val()) == '') {
+        $(element).val('0')
+      } else if (parseInt($(element).val()) < that.val()) {
+        $(element).val(that.val())
       }
     });
   }) 
@@ -59,10 +57,10 @@
   $('#weighing_day_max_days').keyup(function() {
     var that = $(this)
     $(".weighing_day").each(function(index, element){
-      if ($(element).val() == '') {
+      if (parseInt($(element).val()) == '') {
         $(".weighing_day:not(#weighing_day_max_days)").val('0')
       }
-      if ($(element).val() > that.val()) {
+      if (parseInt($(element).val()) > that.val()) {
         $(element).val(that.val())
       }
     });
@@ -74,10 +72,10 @@
       $('#weighing_day_min_days').val(that.val())
     }
     if ($('#weighing_day_max_days').val() < that.val()) {
-      $('#weighing_day_min_days').val(that.val())
+      $('#weighing_day_max_days').val(that.val())
     }
     $(".weighing_day").each(function(index, element){
-      if ($(element).val() == '') {
+      if (parseInt($(element).val()) == '') {
         console.log('blank')
         $(".weighing_day:not(#weighing_day_specific_day)").val('0')
       }

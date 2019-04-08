@@ -20,6 +20,7 @@ module KepplerCattle
     belongs_to :corporal_condition, class_name: 'KepplerCattle::CorporalCondition'
 
     validates_presence_of :user_id, :cow_id, :corporal_condition_id
+    # validates_presence_of :weight, :gained_weight, :average_weight
 
     def self.index_attributes
       %i[weight gained_weight average_weight]

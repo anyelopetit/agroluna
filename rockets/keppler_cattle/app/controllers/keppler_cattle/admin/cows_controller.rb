@@ -94,7 +94,7 @@ module KepplerCattle
       def index_variables
         @q = Cow.ransack(params[:q])
         @cows = @q.result(distinct: true)
-        @objects = @cows.page(@current_page).order(:serie_number)
+        @objects = @cows.includes(:race).page(@current_page).order(:serie_number)
         @total = @cows.size
         @attributes = Cow.index_attributes
       end
@@ -111,7 +111,6 @@ module KepplerCattle
         @possible_mothers = KepplerCattle::Cow.possible_mothers_select2
         @possible_fathers = KepplerCattle::Cow.possible_fathers_select2
         @colors = KepplerCattle::Cow.colors
-        
       end
 
       # Only allow a trusted parameter "white list" through.

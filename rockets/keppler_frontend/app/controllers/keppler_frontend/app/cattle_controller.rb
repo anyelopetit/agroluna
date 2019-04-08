@@ -41,7 +41,7 @@ module KepplerFrontend
       @cow.father_id = params[:cow][:father_id].split(',').last.to_i
 
       if @cow.save && @cow.weights.blank?
-        @cow.mother.create_typology
+        @cow.mother.create_typology unless @cow.mother.blank?
         redirect_to new_farm_cow_weight_path(@farm, @cow)
       else
         flash[:error] = 'Revisa los datos del formulario'

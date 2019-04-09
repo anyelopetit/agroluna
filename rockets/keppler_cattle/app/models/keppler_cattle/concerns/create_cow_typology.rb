@@ -9,11 +9,11 @@ module KepplerCattle
         after_save :create_typology
 
         def create_typology
-          # puts "*** Creando tipología para #{polymorphic_cow(self).serie_number} ***"
+          puts "*** Creando tipología para #{polymorphic_cow(self).serie_number} ***"
           typology_created = false
-          # puts "*** Posibles tipologías para #{polymorphic_cow(self).serie_number}: ***"
-          # puts "*** #{polymorphic_cow(self).possible_typologies.map {|x| [x.name, x.min_age]}} ***"
-          polymorphic_cow(self).possible_typologies.order(min_age: :asc).each do |typology|
+          puts "*** Posibles tipologías para #{polymorphic_cow(self).serie_number}: ***"
+          puts "*** #{polymorphic_cow(self).possible_typologies.map {|x| [x.name, x.min_age]}} ***"
+          polymorphic_cow(self).possible_typologies.order(min_age: :desc).each do |typology|
             break if typology_created
             if verify_existence(typology) && verify_counter(typology) && verify_min_age(typology) && verify_min_weight(typology)
               new_typology = polymorphic_cow(self).cow_typologies.new(

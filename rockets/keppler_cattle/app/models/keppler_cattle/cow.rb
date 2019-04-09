@@ -205,6 +205,13 @@ module KepplerCattle
         end
     end
 
+    def self.out_of_lot(strategic_lot_id)
+      ids =
+        select { |c| !c.location.strategic_lot_id.eql?(strategic_lot_id) }
+          .pluck(:id)
+      where(id: ids)
+    end
+
     private
 
     def create_first_location

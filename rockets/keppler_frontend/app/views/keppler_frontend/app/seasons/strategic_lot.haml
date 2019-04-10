@@ -46,7 +46,7 @@
       .tab-content
         #celos.tab-pane.active
           .float-right.mt-4.mb-4
-            = link_to '#' do
+            = link_to mark_zeals_farm_season_path(@farm.id, @season.id, @strategic_lot.id, []), class: 'multiple_ids' do
               %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalCattle", 'data-toggle': 'modal'}
                 %i.icofont-plus
                 Marcar Celos
@@ -92,3 +92,44 @@
   -#         %button.btn.btn--small.btn--select.ml-3{ type: 'submit' }
   -#           %i.icofont-search
 
+:javascript
+
+  var $ids = #{@cows.pluck(:id)}
+  var $final_array = []
+
+  function ids_loop() {
+    $ids.forEach(function (id) {
+      $('[checklist-model="check"]:checked').each(function( index ) {
+        if ($(this).prop('id').includes(id)) {
+          if ( !$final_array.includes(id) ) {
+            $final_array.push(id)
+          }
+        }
+      });
+      $('[checklist-model="check"]:not(:checked)').each(function( index ) {
+        if ($(this).prop('id').includes(id)) {
+          if ($final_array.includes(id)) {
+            $final_array.splice($final_array.indexOf(id), 1);
+          }
+        }
+      });
+    });
+    $('.multiple_ids').each(function(index, elem) {
+      href = $(elem).attr('href')
+      console.log(href)
+      $(elem).attr('href', (`${$(elem).attr('href')}${$final_array}`))
+    })
+  }
+
+  $('#checkbox-all').click(function() {
+    $('[checklist-model="check"]').prop( "checked", $(this).prop( "checked" ) )
+    ids_loop()
+  })
+
+  $('[checklist-model="check"]').click(function() {
+    ids_loop()
+    $('#checkbox-all').prop(
+      'checked',
+      JSON.stringify($ids) === JSON.stringify($final_array)
+    )
+  })

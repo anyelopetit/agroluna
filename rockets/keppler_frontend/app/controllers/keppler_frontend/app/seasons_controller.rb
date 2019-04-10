@@ -6,9 +6,7 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    season_actions =
-      %i[show edit update destroy assign_cattle strategic_lot assign_bulls]
-    before_action :set_season, only: season_actions
+    before_action :set_season, except: %i[index new destroy_multiple]
     before_action :season_types, only: %i[new edit]
     before_action :set_farm
     before_action :set_farms
@@ -110,28 +108,27 @@ module KepplerFrontend
       strategic_lot_id = params[:strategic_lot_id]
       @strategic_lot = @farm.strategic_lots.find(strategic_lot_id) if strategic_lot_id
       @bulls = @season.cows.includes(:race).where(gender: 'male')
-      cows_ids = @season.cows.where(gender: 'female').select do |cow|
-        cow.location.strategic_lot_id.eql?(strategic_lot_id.to_i)
-      end.pluck(:id)
-      @cows = @season.cows.includes(:race).where(id: cows_ids)
+      @cows = @season.cows.total_season_cows(@strategic_lot)
       @season_cow = KepplerReproduction::SeasonCow.new
     end
 
     def assign_bulls
       return unless params[:season_cow][:bulls]
       counter = 0
+      strategic_lot_id = params[:strategic_lot_id]
       @strategic_lot = @farm.strategic_lots.find(strategic_lot_id) if strategic_lot_id
       params[:season_cow][:bulls].each do |bull_id|
-        bull = @farm.cows.find(bull_id).season_cows.new(
-          # user_id: current_user.id,
-          # farm_id: @farm.id,
+        season_bull = @farm.cows.find(bull_id).season_cows.new(
           season_id: @season.id,
           cow_id: bull_id
         )
-        counter += 1 if bull.save
+        counter += 1 if season_bull.save!
       end
       flash[:notice] = "Se han agregado #{counter} toros a este lote"
       redirect_to strategic_lot_farm_season_path(@farm.id, @season.id, @strategic_lot.id)
+    end
+
+    def mark_zeals
     end
 
     private

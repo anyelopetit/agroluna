@@ -125,9 +125,8 @@ module KepplerCattle
     def self.possible_fathers
       includes(:male)
         .where(keppler_cattle_males: {reproductive: true})
-        .select { |x| x.males.last.reproductive }
+        # .select { |x| x.male.reproductive }
         # .order(:serie_number)
-      
     end
 
     def self.possible_mothers_select2

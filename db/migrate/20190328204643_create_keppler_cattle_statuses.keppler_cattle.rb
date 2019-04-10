@@ -2,6 +2,7 @@
 class CreateKepplerCattleStatuses < ActiveRecord::Migration[5.2]
   def change
     create_table :keppler_cattle_statuses do |t|
+      # Could be Nil, Zeal, Service, Pregnant o Birth
       t.integer :status_type
 
       t.date :date

@@ -18,6 +18,7 @@
           if ($(this).prop('id').includes(id)) {
             if ( !$final_array.includes(id) ) {
               $final_array.push(id)
+              return true
             }
           }
         });
@@ -25,13 +26,15 @@
           if ($(this).prop('id').includes(id)) {
             if ($final_array.includes(id)) {
               $final_array.splice($final_array.indexOf(id), 1);
+              return false
             }
           }
         });
       });
       $('.multiple_ids').each(function(index, elem) {
-        console.log(elem.attr('href'))
-        //elem.attr('href', (`${elem.attr('href')}${$final_array}`))
+        href = $(elem).attr('href')
+        console.log(href)
+        $(elem).attr('href', (`${href}${$final_array}`))
       })
     }
 

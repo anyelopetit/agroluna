@@ -211,13 +211,13 @@ module KepplerCattle
       locations.create!(
         user_id: current_user.id,
         cow_id: id,
-        farm_id: $request.blank? ? [1,2].sample : $request.params[:farm_id]
+        farm_id: ($request.blank? ? KepplerFarm::Farm.all.sample.id : $request.params[:farm_id])
       )
     end
 
     def create_first_activity(current_user)
       cow_activities.create!(
-        user_id: current_user,
+        user_id: current_user.id,
         cow_id: id,
         active: true
       )

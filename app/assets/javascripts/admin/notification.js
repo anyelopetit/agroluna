@@ -1,4 +1,4 @@
-function notify(notice, state) {
+function notice(notice, state) {
   const toast = swal.mixin({
     toast: true,
     position: 'top',

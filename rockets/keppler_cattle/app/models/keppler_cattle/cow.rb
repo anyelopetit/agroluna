@@ -116,7 +116,8 @@ module KepplerCattle
     end
 
     def self.possible_mothers
-      where(gender: 'female')
+      includes(:typologies)
+        .where(gender: 'female')
         .where(keppler_cattle_typologies: {counter: ['1', '2']}).distinct
         # .order(:serie_number)
     end

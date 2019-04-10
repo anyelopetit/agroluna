@@ -135,8 +135,8 @@ module KepplerFrontend
       @species = KepplerCattle::Species.all
       @genders = KepplerCattle::Cow.genders
       @races   = @species.first.races
-      @possible_mothers = @farm.possible_mothers_select2
-      @possible_fathers = @farm.possible_fathers_select2
+      @possible_mothers = @farm.cows.possible_mothers_select2
+      @possible_fathers = @farm.cows.possible_fathers_select2
       @colors = KepplerCattle::Cow.colors
     end
 

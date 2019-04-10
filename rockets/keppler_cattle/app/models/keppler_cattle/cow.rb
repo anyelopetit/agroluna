@@ -207,6 +207,11 @@ module KepplerCattle
       where(id: ids)
     end
 
+    def self.total_season_cows(strategic_lot)
+      includes(:locations)
+        .where(keppler_cattle_locations: { strategic_lot_id: strategic_lot.id })
+    end
+
     def create_first_location(current_user)
       locations.create!(
         user_id: current_user.id,

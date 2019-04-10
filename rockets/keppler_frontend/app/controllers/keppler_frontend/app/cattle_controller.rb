@@ -128,6 +128,10 @@ module KepplerFrontend
       @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
       @q = KepplerCattle::Cow.ransack(params[:q]) # @farm.cows.ransack(params[:q])
       @cows = @q.result(distinct: true)
+      @cows.each do |cow|
+        cow.create_first_location(current_user)
+        cow.create_first_activity(current_user)
+      end
       @active_cows = @cows.actives.page(params[:page]).per(10)
       @inactive_cows = @cows.inactives.page(params[:page]).per(10)
       @attributes = KepplerCattle::Cow.index_attributes

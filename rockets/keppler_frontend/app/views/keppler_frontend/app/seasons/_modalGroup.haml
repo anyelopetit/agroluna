@@ -47,7 +47,7 @@
                 %button.btn.btn_custom.btn--filled.btn--medium#remove_from_lot{ disabled: true }
                   %i.icofont-trash
                   Remover ganado
-              = render 'season_bulls_table', cows: @cows.total_season_cows(@strategic_lot).where(gender: 'male')
+              = render 'season_bulls_table', bulls: @bulls
             -# .col-lg-12
               .float-left
                 %h1 Crear un lote

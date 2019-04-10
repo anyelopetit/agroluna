@@ -1,6 +1,6 @@
 .content-table
   %table.cow-table
-    - if cows.size.zero?
+    - if bulls.size.zero?
       %thead
         %tr
           %th.not-records.center
@@ -33,8 +33,8 @@
           -# %th Peso
           -# %th Estado
           -# %th Menu
-        %tbody#cows
-          - cows.each do |cow|
+        %tbody#bulls
+          - bulls.each do |cow|
             %tr.cow{ style: "border-bottom: 1px #eee solid;" }
               %td
                 .checkbox{ style: 'margin: 3px' }
@@ -79,7 +79,7 @@
                   -# %a.status-tooltip{ title: 'Dado de baja' }
                     %i.icofont-danger-zone{ class: ('active' if cow&.status&.dead) }
               -# %td.actions
-                = link_to farm_cows_path(farm, cow), class: 'floating-btn' do
+                = link_to farm_bulls_path(farm, cow), class: 'floating-btn' do
                   %span.icofont-eye
                 = link_to new_farm_cow_weight_path(farm, cow), class: 'floating-btn' do
                   %span.icofont-ui-add

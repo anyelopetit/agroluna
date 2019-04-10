@@ -40,7 +40,11 @@ module KepplerFrontend
       @cow.father_type = params[:cow][:father_id].split(',').first
       @cow.father_id = params[:cow][:father_id].split(',').last.to_i
 
-      if @cow.save && @cow.weights.blank?
+      byebug
+
+      if @cow.save! && @cow.weights.blank?
+        @cow.create_first_location(current_user)
+        @cow.create_first_activity(current_user)
         @cow.mother.create_typology unless @cow.mother.blank?
         redirect_to new_farm_cow_weight_path(@farm, @cow)
       else

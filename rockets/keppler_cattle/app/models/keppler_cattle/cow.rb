@@ -14,8 +14,8 @@ module KepplerCattle
     mount_uploader :image, AttachmentUploader
     acts_as_list
     acts_as_paranoid
-    after_save :create_first_location
-    after_save :create_first_activity
+    # after_save :create_first_location
+    # after_save :create_first_activity
     # after_save :create_typology
 
     belongs_to :race, class_name: 'KepplerCattle::Race'
@@ -192,12 +192,6 @@ module KepplerCattle
       includes(:locations).where(id: inactive_ids)
     end
 
-    def self.total_season_cows(strategic_lot)
-      includes(:locations).where(keppler_cattle_locations: {
-        strategic_lot_id: strategic_lot.id
-      })
-    end
-
     def self.reproductive_males(season)
       where(gender: 'male')
         .select do |c|
@@ -213,19 +207,17 @@ module KepplerCattle
       where(id: ids)
     end
 
-    private
-
-    def create_first_location
-      locations.create(
-        # user_id: current_user,
+    def create_first_location(current_user)
+      locations.create!(
+        user_id: current_user.id,
         cow_id: id,
         farm_id: $request.blank? ? [1,2].sample : $request.params[:farm_id]
       )
     end
 
-    def create_first_activity
-      cow_activities.create(
-        # user_id: current_user,
+    def create_first_activity(current_user)
+      cow_activities.create!(
+        user_id: current_user,
         cow_id: id,
         active: true
       )

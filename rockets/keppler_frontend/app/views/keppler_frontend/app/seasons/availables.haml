@@ -1,0 +1,122 @@
+.app_wrapper
+  .container_custom
+    %h1
+      = link_to farm_season_path(@farm, @season) do
+        = @season.name
+      > #{@strategic_lot.name}
+    .d-flex.justify-content-end
+      .float-rigth
+        %button.btn.btn_custom.bg-white.btn--medium{'data-target': "#modalGroup", 'data-toggle': 'modal'}
+          = image_tag '/assets/keppler_cattle/male', class: 'svg-icon-xs ml-2', style: 'height: 12px'
+          = @bulls.count
+          %span Padrotes
+        -# %button.btn.btn_custom.bg-white.btn--medium{'data-target': "#modalC", 'data-toggle': 'modal'}
+          = image_tag '/assets/keppler_cattle/male', class: 'svg-icon-xs ml-2', style: 'height: 12px'
+          = @cows.count
+          %span Padrotes
+    = render 'status'
+    .card_show
+      .tab-content
+        #disponibles.tab-pane.active
+          .float-right.mt-4.mb-4{style: "z-index: 2;"}
+            %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalZeals", 'data-toggle': 'modal', disabled: true }
+              %i.icofont-plus
+              Marcar Celos
+            = link_to new_services_farm_season_path(@farm.id, @season.id, @strategic_lot.id, []), class: 'multiple_ids disable', disabled: true do
+              %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalServices", 'data-toggle': 'modal', disabled: true }
+                %i.icofont-plus
+                Agregar Servicios
+            %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalPregnancy", 'data-toggle': 'modal', disabled: true }
+              %i.icofont-plus
+              Añadir Preñez
+          = render 'season_cows_table', cows: @cows
+  = render 'keppler_frontend/app/seasons/modalGroup', season: @season
+  = render 'keppler_frontend/app/seasons/modalZeals', season: @season
+  -# = render 'keppler_frontend/app/seasons/modalServices', season: @season
+  = render 'keppler_frontend/app/seasons/modalPregnancy', season: @season
+
+:javascript
+
+  var $ids = #{@cows.pluck(:id)}
+  var $final_array = []
+
+  function ids_loop(ids) {
+    $ids.forEach(function (id) {
+      $('[checklist-model="check"]:not(:checked)').each(function( index ) {
+        if ($(this).prop('id').includes(id)) {
+          if ($final_array.includes(id)) {
+            $final_array.splice($final_array.indexOf(id), 1);
+          }
+        }
+      });
+      $('[checklist-model="check"]:checked').each(function( index ) {
+        if ($(this).prop('id').includes(id)) {
+          if ( !$final_array.includes(id) ) {
+            $final_array.push(id)
+          }
+        }
+      });
+    });
+
+    $('.multiple_ids').each(function(index, elem) {
+      href = $(elem).attr('href')
+      if (href != undefined) {
+        var result = href.split(',').filter(function(e) {
+          return $final_array.indexOf(parseInt(e)) != -1
+        });
+      }
+      console.log(result)
+      $(elem).attr('href', (`${href}${$final_array}`))
+      $(elem).attr('value', (`${$final_array}`))
+    })
+
+    $('.disable').each(function(index) {
+      $(this).attr("disabled", $final_array == '');
+    })
+  }
+
+  $('#checkbox-all').click(function() {
+    $('[checklist-model="check"]').prop( "checked", $(this).prop( "checked" ) )
+    ids_loop($ids)
+  })
+
+  $('[checklist-model="check"]').click(function() {
+    ids_loop($ids)
+    $('#checkbox-all').prop(
+      'checked',
+      JSON.stringify($ids) === JSON.stringify($final_array)
+    )
+  })
+
+:javascript
+
+  $.datepicker.regional['es'] = {
+    closeText: 'Cerrar',
+    prevText: '< Ant',
+    nextText: 'Sig >',
+    currentText: 'Hoy',
+    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+    weekHeader: 'Sm',
+    dateFormat: 'yy-mm-dd',
+    firstDay: 1,
+    isRTL: false,
+    showMonthAfterYear: false,
+    yearSuffix: ''
+  };
+
+  $.datepicker.setDefaults($.datepicker.regional['es']);
+
+  $('.datepicker').datepicker({
+    dateFormat: 'yy-mm-dd',
+    showOtherMonths: true,
+    selectOtherMonths: true,
+    changeMonth: true,
+    changeYear: true,
+    maxDate: 0,
+    setDate: 0,
+    yearRange: "c-1:c+1",
+  }, $.datepicker.regional[ "es" ])

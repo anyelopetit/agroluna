@@ -11,6 +11,8 @@ module KepplerFrontend
     before_action :set_farm
     before_action :set_farms
     before_action :index_variables
+    strategic_lot_states = %i[availables zeals services pregnants births]
+    before_action :strategic_lot_variables, only: strategic_lot_states
     before_action :attachments
     before_action :respond_to_formats
     helper KepplerFarm::ApplicationHelper
@@ -109,8 +111,27 @@ module KepplerFrontend
       strategic_lot_id = params[:strategic_lot_id]
       @strategic_lot = @farm.strategic_lots.find(strategic_lot_id) if strategic_lot_id
       @bulls = @season.cows.total_season_bulls(@strategic_lot)
-      @cows = @season.cows.total_season_cows(@strategic_lot)
       @season_cow = KepplerReproduction::SeasonCow.new
+    end
+
+    def availables
+      @cows = @season.cows.total_season_cows(@strategic_lot).type_is(['Nil', nil])
+    end
+
+    def zeals
+      @cows = @season.cows.total_season_cows(@strategic_lot).type_is(['Zeal'])
+    end
+
+    def services
+      @cows = @season.cows.total_season_cows(@strategic_lot).type_is(['Service'])
+    end
+
+    def pregnants
+      @cows = @season.cows.total_season_cows(@strategic_lot)
+    end
+
+    def births
+      @cows = @season.cows.total_season_cows(@strategic_lot)
     end
 
     def assign_bulls
@@ -127,10 +148,39 @@ module KepplerFrontend
         counter += 1 if season_bull.save!
       end
       flash[:notice] = "Se han agregado #{counter} toros a este lote"
-      redirect_to strategic_lot_farm_season_path(@farm.id, @season.id, @strategic_lot.id)
+      redirect_to strategic_lot_farm_season_path(@farm.id, @season.id, params[:strategic_lot_id])
     end
 
-    def mark_zeals
+    def statuses
+      if params[:status]
+        status = params[:status]
+        counter = 0
+        status[:multiple_ids].split(',').each do |cow_id|
+          cow = @season.cows.find(cow_id)
+          status = KepplerCattle::Status.new(
+            status_type: status[:type],
+            cow_id: cow_id,
+            date: status[:date],
+            user_id: status[:user_id],
+            observations: status[:observations]
+          )
+          counter += 1 if status.save
+        end
+        byebug
+        if counter.zero?
+          flash[:error] = 'No se cambió el estado de ninguna serie'
+        else
+          flash[:notice] = "Se cambió el estado de #{counter} series"
+        end
+      end
+      redirect_back fallback_location: availables_farm_season_path(
+        @farm.id,
+        @season.id,
+        params[:strategic_lot_id]
+      )
+    end
+
+    def new_services
     end
 
     private
@@ -149,6 +199,14 @@ module KepplerFrontend
       @seasons = set_season.page(@current_page).order(position: :desc)
       @total = @seasons.size
       @attributes = KepplerReproduction::Season.index_attributes
+    end
+
+    def strategic_lot_variables
+      strategic_lot_id = params[:strategic_lot_id]
+      @strategic_lot = @farm.strategic_lots.find(strategic_lot_id) if strategic_lot_id
+      @bulls = @season.cows.total_season_bulls(@strategic_lot)
+      @cows = @season.cows.total_season_cows(@strategic_lot)
+      @season_cow = KepplerReproduction::SeasonCow.new
     end
 
     def set_farm

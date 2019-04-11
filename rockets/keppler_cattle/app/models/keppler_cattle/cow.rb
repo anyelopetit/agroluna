@@ -92,6 +92,10 @@ module KepplerCattle
       cow_typologies.last&.typology
     end
 
+    def status
+      statuses.last
+    end
+
     def typology_counter_count
       case typology&.counter&.to_i
       when 1
@@ -207,7 +211,7 @@ module KepplerCattle
     end
 
     def self.total_season_cows(strategic_lot)
-      includes(:locations)
+      includes(:race).includes(:locations)
         .where(gender: 'female')
         .where(keppler_cattle_locations: { strategic_lot_id: strategic_lot.id })
     end
@@ -218,6 +222,12 @@ module KepplerCattle
         .where(keppler_reproduction_season_cows: {
           strategic_lot_id: strategic_lot.id
         })
+    end
+
+    def self.type_is(types_array)
+      select do |c|
+        types_array.include?(c.status&.status_type)
+      end
     end
 
     def create_first_location(current_user)

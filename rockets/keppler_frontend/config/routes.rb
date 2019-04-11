@@ -54,9 +54,18 @@ KepplerFrontend::Engine.routes.draw do
       member do
         get 'asignar-ganado', to: 'app/seasons#new_assign_cattle', as: :new_assign_cattle
         post :assign_cattle
-        get 'lote-estrategico/:strategic_lot_id', to: 'app/seasons#strategic_lot', as: :strategic_lot
         post 'lote-estrategico/:strategic_lot_id/assign_bulls', to: 'app/seasons#assign_bulls', as: :assign_bulls
-        post 'lote-estrategico/:strategic_lot_id/mark_zeals/:multiple_ids', to: 'app/seasons#mark_zeals', as: :mark_zeals
+
+        get 'lote-estrategico/:strategic_lot_id/disponibles', to: 'app/seasons#availables', as: :availables
+        get 'lote-estrategico/:strategic_lot_id/celos', to: 'app/seasons#zeals', as: :zeals
+        get 'lote-estrategico/:strategic_lot_id/servicios', to: 'app/seasons#services', as: :services
+        get 'lote-estrategico/:strategic_lot_id/preñadas', to: 'app/seasons#pregnants', as: :pregnants
+        get 'lote-estrategico/:strategic_lot_id/paridas', to: 'app/seasons#births', as: :births
+
+        get 'lote-estrategico/:strategic_lot_id/new_services/:multiple_ids', to: 'app/seasons#new_services', as: :new_services
+        post :create_services
+        
+        post 'lote-estrategico/:strategic_lot_id/statuses', to: 'app/seasons#statuses', as: :statuses
       end
       resources :cicles, controller: 'app/cicles', only: %i[new create destroy]
     end

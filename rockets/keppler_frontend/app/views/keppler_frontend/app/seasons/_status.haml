@@ -1,0 +1,16 @@
+%ul#moduleTabs.nav.nav-tabs.mt-4{role: "tablist", style: "padding: 0;"}
+  %li.nav-item
+    = link_to_if action_name.eql?('availables'), 'Disponibles', '#', class: 'nav-link active' do
+      = link_to 'Disponibles', availables_farm_season_path(@farm, @season, @strategic_lot), class: 'nav-link'
+  %li.nav-item
+    = link_to_if action_name.eql?('zeals'), 'Celos', '#', class: 'nav-link active' do
+      = link_to 'Celos', zeals_farm_season_path(@farm, @season, @strategic_lot), class: 'nav-link'
+  %li.nav-item
+    = link_to_if action_name.eql?('services'), 'Servicios', '#', class: 'nav-link active' do
+      = link_to 'Servicios', services_farm_season_path(@farm, @season, @strategic_lot), class: 'nav-link'
+  %li.nav-item
+    = link_to_if action_name.eql?('pregnants'), 'Preñadas', '#', class: 'nav-link active' do
+      = link_to 'Preñadas', pregnants_farm_season_path(@farm, @season, @strategic_lot), class: 'nav-link'
+  %li.nav-item
+    = link_to_if action_name.eql?('births'), 'Paridas', '#', class: 'nav-link active' do
+      = link_to 'Paridas', births_farm_season_path(@farm, @season, @strategic_lot), class: 'nav-link'

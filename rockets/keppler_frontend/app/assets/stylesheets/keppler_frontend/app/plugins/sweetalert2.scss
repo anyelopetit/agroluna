@@ -9,3 +9,8 @@
 .swal2-popup .swal2-styled:focus {
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px tint($keppler-color, 40%) !important;
 }
+
+.swal2-popup .swal2-select{
+  background-color: transparent !important;
+  outline: none !important;
+}

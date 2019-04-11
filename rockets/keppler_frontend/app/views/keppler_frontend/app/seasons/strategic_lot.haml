@@ -10,9 +10,13 @@
           = image_tag '/assets/keppler_cattle/male', class: 'svg-icon-xs ml-2', style: 'height: 12px'
           = @bulls.count
           %span Padrotes
+        %button.btn.btn_custom.bg-white.btn--medium{'data-target': "#modalC", 'data-toggle': 'modal'}
+          = image_tag '/assets/keppler_cattle/male', class: 'svg-icon-xs ml-2', style: 'height: 12px'
+          = @cows.count
+          %span Padrotes
     %ul#moduleTabs.nav.nav-tabs.mt-4{role: "tablist", style: "padding: 0;"}
       %li.nav-item
-        %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#celos", role: "tab"}
+        %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#disponibles", role: "tab"}
           Disponibles
         -# %a#mfg-tab.nav-link.active{ href: "#mfg", role: "tab" }
         -# = link_to(action_name.eql?('index') ? '#' : {action: :index}, { class: "nav-link #{'active' if action_name.eql?('index')}" }) do
@@ -44,42 +48,58 @@
     -# %hr{ :style => "margin-top: 0; margin-bottom: 20px;"}
     .card_show
       .tab-content
-        #celos.tab-pane.active
-          .float-right.mt-4.mb-4
-            = link_to '#' do
-              %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalCattle", 'data-toggle': 'modal'}
+        #disponibles.tab-pane.active
+          .float-right.mt-4.mb-4{style: "z-index: 2;"}
+            = link_to '#1' do
+              %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalC", 'data-toggle': 'modal'}
                 %i.icofont-plus
                 Marcar Celos
+            -# = link_to '#' do
+            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalServices", 'data-toggle': 'modal'}
+              %i.icofont-plus
+              Agregar Servicios
             = link_to '#' do
-              %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
+              %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalPregnancy", 'data-toggle': 'modal'}
                 %i.icofont-plus
-                Agregar Servicios
+                Añadir Preñez
+          = render 'season_cows_table', cows: @cows
+        #celos.tab-pane
+          .float-right.mt-4.mb-4
+            -# = link_to '#' do
+            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalServices", 'data-toggle': 'modal'}
+              %i.icofont-plus
+              Agregar Servicios
             = link_to '#' do
-              %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
+              %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalPregnancy", 'data-toggle': 'modal'}
                 %i.icofont-plus
                 Añadir Preñez
           = render 'season_cows_table', cows: @cows
         #servicio.tab-pane.fade
           .float-right.mt-4.mb-4
-            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalCattle", 'data-toggle': 'modal'}
+            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalServices", 'data-toggle': 'modal'}
               %i.icofont-plus
               Agregar Servicio
-            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
+            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalPregnancy", 'data-toggle': 'modal'}
               %i.icofont-plus
               Agregar Preñez
           = render 'season_cows_table', cows: @cows
         #prenez.tab-pane.fade
           .float-right.mt-4.mb-4
-            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalCattle", 'data-toggle': 'modal'}
+            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalPregnancy", 'data-toggle': 'modal'}
               %i.icofont-plus
               Agregar Preñez
-            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
+            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modal", 'data-toggle': 'modal'}
               %i.icofont-plus
               Agregar Parto
           = render 'season_cows_table', cows: @cows
         #parto.tab-pane.fade
           = render 'season_cows_table', cows: @cows
   = render 'keppler_frontend/app/seasons/modalGroup', season: @season
+  = render 'keppler_frontend/app/seasons/modalC', season: @season
+  = render 'keppler_frontend/app/seasons/modalServices', season: @season
+  = render 'keppler_frontend/app/seasons/modalPregnancy', season: @season
+  -# = render 'keppler_frontend/app/seasons/seasonFinish', season: @season
+  
   -# = render 'season_cows_table', cows: @cows
 
   -# .d-flex.justify-content-between.mt-5.mb-3.mt-4

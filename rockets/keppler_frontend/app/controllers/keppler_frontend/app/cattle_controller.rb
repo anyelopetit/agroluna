@@ -40,8 +40,12 @@ module KepplerFrontend
       @cow.father_type = params[:cow][:father_id].split(',').first
       @cow.father_id = params[:cow][:father_id].split(',').last.to_i
 
-      if @cow.save && @cow.weights.blank?
-        @cow.mother.create_typology
+      byebug
+
+      if @cow.save! && @cow.weights.blank?
+        @cow.create_first_location(current_user)
+        @cow.create_first_activity(current_user)
+        @cow.mother.create_typology unless @cow.mother.blank?
         redirect_to new_farm_cow_weight_path(@farm, @cow)
       else
         flash[:error] = 'Revisa los datos del formulario'
@@ -105,8 +109,8 @@ module KepplerFrontend
     end
 
     def males
-      @male = KepplerCattle::Male.new(male_params)
-      if @male.save!
+      @male = KepplerCattle::Male.find_or_create_by(cow_id: @cow.id)
+      if @male.update!(male_params)
         flash[:notice] = 'Estado de ganado macho ha sido cambiado'
       else
         flash[:error] = 'No se ha podido guardar el estado del ganado'
@@ -135,8 +139,8 @@ module KepplerFrontend
       @species = KepplerCattle::Species.all
       @genders = KepplerCattle::Cow.genders
       @races   = @species.first.races
-      @possible_mothers = @farm.possible_mothers_select2
-      @possible_fathers = @farm.possible_fathers_select2
+      @possible_mothers = @farm.cows.possible_mothers_select2
+      @possible_fathers = @farm.cows.possible_fathers_select2
       @colors = KepplerCattle::Cow.colors
     end
 
@@ -166,21 +170,21 @@ module KepplerFrontend
     end
 
     def index_history
-      @activities = PublicActivity::Activity.includes(:trackable, :owner).where(
+      @activities = PublicActivity::Activity.includes(:trackable, :owner, recipient: [:species, :race]).where(
         trackable_type: KepplerCattle::Cow.to_s
       ).or(
-        PublicActivity::Activity.includes(:trackable, :owner).where(
+        PublicActivity::Activity.includes(:trackable, :owner, recipient: [:species, :race]).where(
           recipient_type: KepplerCattle::Cow.to_s
         )
       ).order('created_at desc').limit(50)
     end
 
     def show_history
-      @activities = PublicActivity::Activity.includes(:trackable, :owner).where(
+      @activities = PublicActivity::Activity.includes(:trackable, :owner, recipient: [:species, :race]).where(
         trackable_type: 'KepplerCattle::Cow',
         trackable_id: @cow&.id.to_s
       ).or(
-        PublicActivity::Activity.includes(:trackable, :owner).where(
+        PublicActivity::Activity.includes(:trackable, :owner, recipient: [:species, :race]).where(
           recipient_type: 'KepplerCattle::Cow',
           recipient_id: @cow&.id.to_s
         )

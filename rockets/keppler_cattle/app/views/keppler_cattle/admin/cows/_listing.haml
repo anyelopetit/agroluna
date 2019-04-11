@@ -19,6 +19,14 @@
             %span
               - object.try(attribute).each do |image|
                 = image_tag image.try(:url)
+      - elsif attribute.eql?('gender')
+        %td
+          = link_to({ action: :show, id: object.id, search: @query }, { class: 'show-row' }) do
+            %span= value.eql?('male') ? 'Macho' : 'Hembra'
+      - elsif attribute.to_s.include?('_id')
+        %td
+          = link_to({ action: :show, id: object.id, search: @query }, { class: 'show-row' }) do
+            %span= object_name(object, attribute)
       - elsif object.try(attribute).is_a?(Integer)
         %td
           = link_to({ action: :show, id: object.id, search: @query }, { class: 'show-row' }) do

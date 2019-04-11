@@ -170,7 +170,7 @@
                 .counter
                   %dl
                     %dd
-                      = @cow.weight&.weight.round(2)
+                      = @cow.weight&.weight&.round(2)
                       %small KG 
                 .row
                   .col-lg-6
@@ -192,7 +192,7 @@
                       %dt.card_status_details
                         -# %i.icofont-muscle
                         Peso ganado por día
-                      %dd.card_status_details #{@cow.weight&.average_weight.round(2)} KG
+                      %dd.card_status_details #{@cow.weight&.average_weight&.round(2)} KG
       .col-lg-4.col-md-6
         .card_status_specific
           .card_status--title.card_status_title

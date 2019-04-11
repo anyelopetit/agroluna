@@ -83,7 +83,7 @@ module KepplerCattle
       end
 
       def index_variables
-        @q = @species.includes(:typologies).typologies.ransack(params[:q])
+        @q = @species.typologies.ransack(params[:q])
         @typologies = @q.result(distinct: true)
         @objects = @typologies.page(@current_page).order(position: :desc)
         @total = @typologies.size

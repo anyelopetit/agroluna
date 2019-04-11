@@ -14,11 +14,11 @@ module KepplerCattle
     acts_as_list
     acts_as_paranoid
 
-    belongs_to :user
+    belongs_to :user, optional: true
     belongs_to :cow, class_name: 'KepplerCattle::Cow'
     belongs_to :farm, class_name: 'KepplerFarm::Farm'
 
-    belongs_to :strategic_lot, class_name: "KepplerFarm::StrategicLot", foreign_key: "strategic_lot_id"
+    belongs_to :strategic_lot, class_name: "KepplerFarm::StrategicLot", foreign_key: "strategic_lot_id", optional: true
 
     validates_presence_of :cow_id, :farm_id
 

@@ -14,12 +14,12 @@ module KepplerCattle
     mount_uploader :image, AttachmentUploader
     acts_as_list
     acts_as_paranoid
-    after_save :create_first_location
-    after_save :create_first_activity
+    # after_save :create_first_location
+    # after_save :create_first_activity
     # after_save :create_typology
 
-    belongs_to :race, class_name: 'KepplerCattle::Race', foreign_key: 'race_id'
-    belongs_to :species, class_name: 'KepplerCattle::Species', foreign_key: 'species_id'
+    belongs_to :race, class_name: 'KepplerCattle::Race'
+    belongs_to :species, class_name: 'KepplerCattle::Species'
 
     has_one :male, class_name: 'KepplerCattle::Male', dependent: :destroy
 
@@ -40,7 +40,7 @@ module KepplerCattle
     validates_uniqueness_of :serie_number
 
     def self.index_attributes
-      %i[serie_number short_name race_name typology_name gender]
+      %i[serie_number short_name race_id typology_name gender]
     end
 
     def farm
@@ -89,7 +89,7 @@ module KepplerCattle
     end
 
     def typology
-      cow_typologies.includes(:typology).last&.typology
+      cow_typologies.last&.typology
     end
 
     def typology_counter_count
@@ -112,7 +112,7 @@ module KepplerCattle
     end
 
     def possible_typologies
-      species.includes(:typologies).typologies.where(gender: gender)
+      species.typologies.where(gender: gender)
     end
 
     def self.possible_mothers
@@ -174,12 +174,12 @@ module KepplerCattle
     end
 
     def self.actives
-      cows = includes(:activities).select do |cow|
+      cows = select do |cow|
         # cow&.location&.farm_id == farm&.id &&
         cow&.activity&.active
       end
       active_ids = cows.pluck(:id).uniq
-      includes(:activities).where(id: active_ids)
+      where(id: active_ids)
     end
 
     def self.inactives
@@ -192,12 +192,6 @@ module KepplerCattle
       includes(:locations).where(id: inactive_ids)
     end
 
-    def self.total_season_cows(strategic_lot)
-      includes(:locations).where(keppler_cattle_locations: {
-        strategic_lot_id: strategic_lot.id
-      })
-    end
-
     def self.reproductive_males(season)
       where(gender: 'male')
         .select do |c|
@@ -206,21 +200,24 @@ module KepplerCattle
         end
     end
 
-    private
-
-    def create_first_location
-      includes(:location)
-        .locations.create(
-          # user_id: current_user,
-          cow_id: id,
-          farm_id: $request.blank? ? [1,2].sample : $request.params[:farm_id]
-        )
+    def self.out_of_lot(strategic_lot_id)
+      ids =
+        select { |c| !c.location.strategic_lot_id.eql?(strategic_lot_id) }
+          .pluck(:id)
+      where(id: ids)
     end
 
-    def create_first_activity
-      includes(:cow_activities)
-        .cow_activities.create(
-        # user_id: current_user,
+    def create_first_location(current_user)
+      locations.create!(
+        user_id: current_user.id,
+        cow_id: id,
+        farm_id: $request.blank? ? [1,2].sample : $request.params[:farm_id]
+      )
+    end
+
+    def create_first_activity(current_user)
+      cow_activities.create!(
+        user_id: current_user,
         cow_id: id,
         active: true
       )

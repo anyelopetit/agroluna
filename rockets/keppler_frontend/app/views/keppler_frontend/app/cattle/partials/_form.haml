@@ -1,4 +1,5 @@
 = simple_form_for [@farm, @cow], html: { class: 'needs-validation', novalidate: '' } do |f|
+  = f.input :farm_id, input_html: { value: @farm.id }, as: (Rails.env.eql?('development') ? :string : :hidden)
   .form-padding
     .row
       .col-sm-12

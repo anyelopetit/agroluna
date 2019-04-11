@@ -7,7 +7,7 @@ module KepplerCattle
     class CowsController < ::Admin::AdminController
       layout 'keppler_cattle/admin/layouts/application'
       before_action :set_cow, only: %i[show edit update destroy]
-      before_action :cow_attributes, only: %i[new edit]
+      before_action :cow_attributes, only: %i[new edit create]
       before_action :index_variables
       include ObjectQuery
 
@@ -34,14 +34,14 @@ module KepplerCattle
       def create
         @cow = Cow.new(cow_params)
         
-        # unless params[:cow][:father_id].blank?
-        #   @cow.father_type = params[:cow][:father_id].split(',').first
-        #   @cow.father_id = params[:cow][:father_id].split(',').last.to_i
-        # end
+        unless params[:cow][:father_id].blank?
+          @cow.father_type = params[:cow][:father_id].split(',').first
+          @cow.father_id = params[:cow][:father_id].split(',').last.to_i
+        end
 
-        if @cow.save && @cow.weights.blank?
-          # @cow.mother.create_typology
-          redirect_to new_farm_cow_weight_path(@farm, @cow)
+        if @cow.save! && @cow.weights.blank?
+          @cow.mother.create_typology unless @cow.mother.blank?
+          redirect_to new_admin_cattle_cow_weight_path(@cow.id)
         else
           flash[:error] = 'Revisa los datos del formulario'
           render :new
@@ -94,17 +94,14 @@ module KepplerCattle
       def index_variables
         @q = Cow.ransack(params[:q])
         @cows = @q.result(distinct: true)
-        @objects = @cows.page(@current_page).order(:serie_number)
+        @objects = @cows.includes(:race).page(@current_page).order(:serie_number)
         @total = @cows.size
         @attributes = Cow.index_attributes
       end
 
       # Use callbacks to share common setup or constraints between actions.
       def set_cow
-        @cow = Cow.includes(
-          :species, :race, :locations, :typologies, :strategic_lots, :weights,
-          :cow_typologies, :cow_activities, :male, :statuses
-        ).find_by(id: params[:id])
+        @cow = Cow.find_by(id: params[:id])
       end
 
       def cow_attributes
@@ -114,7 +111,6 @@ module KepplerCattle
         @possible_mothers = KepplerCattle::Cow.possible_mothers_select2
         @possible_fathers = KepplerCattle::Cow.possible_fathers_select2
         @colors = KepplerCattle::Cow.colors
-        
       end
 
       # Only allow a trusted parameter "white list" through.

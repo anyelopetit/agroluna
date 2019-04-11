@@ -77,11 +77,13 @@ module KepplerFrontend
           cow = KepplerCattle::Cow.find_by(id: id)
           if cow
             location = KepplerCattle::Location.new(
+              user_id: current_user.id,
+              farm_id: @farm.id,
               strategic_lot_id: params[:id],
               cow_id: id
             )
             location.clean_other_cow_locations
-            location.save
+            location.save!
             flash[:notice] = "La series fueron asignada satisfactoriamente"
           end
         end

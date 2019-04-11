@@ -19,7 +19,7 @@
             %span
               - object.try(attribute).each do |image|
                 = image_tag image.try(:url)
-      - elsif object.try(attribute).is_a?(Integer)
+      - elsif object.try(attribute).is_a?(Integer) || object.try(attribute).is_a?(Float)
         %td
           = link_to({ action: :show, id: object.id, search: @query }, { class: 'show-row' }) do
             %span= object.try(attribute)

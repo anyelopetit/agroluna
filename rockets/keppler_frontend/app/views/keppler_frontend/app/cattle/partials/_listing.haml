@@ -4,7 +4,7 @@
       %li.nav-item
         -# %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#mfg", role: "tab"}
         -# %a#mfg-tab.nav-link.active{ href: "#mfg", role: "tab" }
-        = link_to(action_name.eql?('index') ? '#' : {action: :index}, { class: "nav-link #{'active' if action_name.eql?('index')}" }) do
+        = link_to(action_name.eql?('index') ? '#' : { action: :index }, { class: "nav-link #{'active' if action_name.eql?('index')}" }) do
           Activos (#{@farm.cows.actives.count})
       %li.nav-item
         -# %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#ale", role: "tab"}
@@ -38,7 +38,7 @@
                   Transferir a
                   %i.icofont-simple-down
               - unless cows.size.zero?
-                %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+                -# %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
                   %button.btn.btn_custom.btn--filled.btn--medium
                     %i.icofont-clip-board
                     Transferir a

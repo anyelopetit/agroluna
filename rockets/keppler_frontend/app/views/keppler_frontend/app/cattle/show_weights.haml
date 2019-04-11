@@ -46,13 +46,13 @@
                         = cow.typology_name
                     %td
                       = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
-                        #{cow.weight&.weight.round(2)} KG
+                        #{cow.weight&.weight&.round(2)} KG
                     %td
                       = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
-                        #{cow.weight&.gained_weight.round(2)} KG
+                        #{cow.weight&.gained_weight&.round(2)} KG
                     %td
                       = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
-                        #{cow.weight&.average_weight.round(2)} KG
+                        #{cow.weight&.average_weight&.round(2)} KG
 :scss
   .cow-table {
     a {

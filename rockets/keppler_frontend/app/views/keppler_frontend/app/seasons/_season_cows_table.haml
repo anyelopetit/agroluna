@@ -22,7 +22,7 @@
           %th
             = sort_link(@q, :serie_number) do 
               Serie
-          -# %th
+          %th
             = sort_link(@q, :short_name) do 
               Nombre
           -# %th Imagen
@@ -48,7 +48,7 @@
               -# %td
                 = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id}) do
                   = image_tag cow&.image&.url if cow.image.url
-              -# %td
+              %td
                 = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
                   = cow&.short_name
                   = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-xs ml-2', style: ('height: 12px' if cow.gender?('male')) unless cow.gender.blank?
@@ -96,8 +96,14 @@
                         %i.icofont-eye
                         Ver ficha de ganado
                     - if cow.farm&.id == @farm&.id
+
                       %li
-                        -# = link_to([{ controller: :weights, action: :new, farm_id: @farm&.id, id: cow.id }]) do
-                        = link_to new_farm_cow_weight_path(@farm, cow) do
-                          %i.icofont-refresh
-                          Actualizar peso
+                        = link_to({ controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id}) do
+                          %i.icofont-eye
+                          Ver ficha de ganado
+                      - if cow.farm&.id == @farm&.id
+                        %li
+                          -# = link_to([{ controller: :weights, action: :new, farm_id: @farm&.id, id: cow.id }]) do
+                          = link_to new_farm_cow_weight_path(@farm, cow) do
+                            %i.icofont-refresh
+                            Actualizar peso

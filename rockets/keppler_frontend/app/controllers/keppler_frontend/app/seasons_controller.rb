@@ -6,7 +6,8 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    season_actions = %i[show edit update destroy assign_cattle strategic_lot]
+    season_actions =
+      %i[show edit update destroy assign_cattle strategic_lot assign_bulls]
     before_action :set_season, only: season_actions
     before_action :season_types, only: %i[new edit]
     before_action :set_farm
@@ -29,7 +30,7 @@ module KepplerFrontend
       @cow_strategic_lots = @strategic_lots.includes(:locations).where(
         keppler_cattle_locations: {cow_id: @cows.ids}
       ).distinct
-      @possible_mothers = @farm.cows.includes(:typologies).possible_mothers
+      @possible_mothers = @farm.cows.possible_mothers
       # @insemined_cows = @cows.where()
     end
 
@@ -108,15 +109,29 @@ module KepplerFrontend
     def strategic_lot
       strategic_lot_id = params[:strategic_lot_id]
       @strategic_lot = @farm.strategic_lots.find(strategic_lot_id) if strategic_lot_id
-      @cows = @season.cows.includes(
-        :race, locations: [:strategic_lot]
-      ).where(
-        keppler_cattle_locations: { strategic_lot_id: @strategic_lot.id }
-      )
+      @bulls = @season.cows.includes(:race).where(gender: 'male')
+      cows_ids = @season.cows.where(gender: 'female').select do |cow|
+        cow.location.strategic_lot_id.eql?(strategic_lot_id.to_i)
+      end.pluck(:id)
+      @cows = @season.cows.includes(:race).where(id: cows_ids)
       @season_cow = KepplerReproduction::SeasonCow.new
     end
 
     def assign_bulls
+      return unless params[:season_cow][:bulls]
+      counter = 0
+      @strategic_lot = @farm.strategic_lots.find(strategic_lot_id) if strategic_lot_id
+      params[:season_cow][:bulls].each do |bull_id|
+        bull = @farm.cows.find(bull_id).season_cows.new(
+          # user_id: current_user.id,
+          # farm_id: @farm.id,
+          season_id: @season.id,
+          cow_id: bull_id
+        )
+        counter += 1 if bull.save
+      end
+      flash[:notice] = "Se han agregado #{counter} toros a este lote"
+      redirect_to strategic_lot_farm_season_path(@farm.id, @season.id, @strategic_lot.id)
     end
 
     private

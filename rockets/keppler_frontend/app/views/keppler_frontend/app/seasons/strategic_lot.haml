@@ -113,6 +113,10 @@
 
   var $ids = #{@cows.pluck(:id)}
   var $final_array = []
+  var $hrefs = []
+  $('.multiple_ids').each(function(index, elem) {
+    $hrefs.push($(this).attr('href'))
+  })
 
   function ids_loop(ids) {
     ids.forEach(function (id) {

@@ -23,6 +23,7 @@ module KepplerFrontend
       # @cicle = KepplerReproduction::Cicle.new
       # @strategic_lot = KepplerFarm::StrategicLot.new
       @cows = @season.cows.order(:serie_number)
+      @bulls = @season.cows.where(gender: 'male')
       @season_cow = KepplerReproduction::SeasonCow.new
       @strategic_lots = @farm.strategic_lots
       @cow_strategic_lots = @strategic_lots.includes(:locations).where(
@@ -107,7 +108,7 @@ module KepplerFrontend
     def strategic_lot
       strategic_lot_id = params[:strategic_lot_id]
       @strategic_lot = @farm.strategic_lots.find(strategic_lot_id) if strategic_lot_id
-      @bulls = @season.cows.includes(:race).where(gender: 'male')
+      @bulls = @season.cows.total_season_bulls(@strategic_lot)
       @cows = @season.cows.total_season_cows(@strategic_lot)
       @season_cow = KepplerReproduction::SeasonCow.new
     end
@@ -119,8 +120,9 @@ module KepplerFrontend
       @strategic_lot = @farm.strategic_lots.find(strategic_lot_id) if strategic_lot_id
       params[:season_cow][:bulls].each do |bull_id|
         season_bull = @farm.cows.find(bull_id).season_cows.new(
+          cow_id: bull_id,
           season_id: @season.id,
-          cow_id: bull_id
+          strategic_lot_id: strategic_lot_id
         )
         counter += 1 if season_bull.save!
       end
@@ -171,7 +173,10 @@ module KepplerFrontend
         strategic_lot_id
       )
       strategic_lot.cows.possible_mothers.each do |cow|
-        season_cow = @season.season_cows.new(cow_id: cow.id)
+        season_cow = @season.season_cows.new(
+          cow_id: cow.id,
+          strategic_lot_id: strategic_lot_id
+        )
         counter += 1 if season_cow.save
       end
       counter

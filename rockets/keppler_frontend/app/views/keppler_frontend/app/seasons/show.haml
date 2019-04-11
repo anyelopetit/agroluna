@@ -64,6 +64,7 @@
               %th Preñadas
               %th Paridas
               %th Total
+              %th Toros
           %tbody
             - @cow_strategic_lots.each do |strategic_lot|
               %tr
@@ -85,6 +86,9 @@
                 %td
                   = link_to({ controller: :seasons, action: :strategic_lot, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
                     = @cows.total_season_cows(strategic_lot).count
+                %td
+                  = link_to({ controller: :seasons, action: :strategic_lot, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
+                    = @bulls.total_season_bulls(strategic_lot).count
     -# = render 'season_cows_table', cows: @cows
 -# = simple_form_for [@farm, @season, @cicle] do |f|
   = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }

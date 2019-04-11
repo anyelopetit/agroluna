@@ -46,7 +46,8 @@
       .tab-content
         #celos.tab-pane.active
           .float-right.mt-4.mb-4
-            = link_to mark_zeals_farm_season_path(@farm.id, @season.id, @strategic_lot.id, []), class: 'multiple_ids' do
+            = link_to '#' do
+              -# mark_zeals_farm_season_path(@farm.id, @season.id, @strategic_lot.id, []), class: 'multiple_ids' do
               %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalCattle", 'data-toggle': 'modal'}
                 %i.icofont-plus
                 Marcar Celos

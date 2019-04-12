@@ -59,43 +59,43 @@
       - season.duration_days.times do |day|
         %span{ class: ('marker' if (season.start_date + day).strftime('%d%m%y').eql?((Date.today + 1).strftime('%d%m%y'))) }
     - last_cicle_days = 0
-    - %w[Celos Montas Palpaciones Preñez Parto].each do |state|
+    - [['Celos', 'Zeal'], ['Servicios', 'Service'], ['Palpaciones', 'Palpation'], ['Preñez', 'Pregnant'], ['Parto', 'Birth']].each do |status|
       .gantt__row
         .gantt__row-first
-          #{state}
+          #{status.first}
         %ul.gantt__row-bars{ style: "grid-template-columns: repeat(#{season.duration_days}, 1fr);" }
-          - (3..6).to_a.sample.times do |time|
-            - position = (time+1)**2 + (1..2).to_a.sample
-            - quant = (1..9).to_a.sample
-            %li.stripes{style: "z-index: 2; padding: 0; grid-column: #{position}/#{position + 1}; background-color: #{season.cicle_colors[(quant/3)-3]};"}
-              %a{ style: 'display:block; width: 100%; height: 100%;', 'data-target': "#modal#{state}", 'data-toggle': 'modal', href: ""}
-                .text-white.text-center= quant
-            .modal.modal_status.fade{ id: "modal#{state}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
-              .modal-dialog{role: "document"}
-                .modal-content
-                  .modal-header
-                    %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
-                      %span{"aria-hidden" => "true"} ×
-                  .modal-body{ style: "padding: 20px;"}
-                    .card_status
-                      %center.card_status--title   
-                        %h1.modal-title
-                          #{state}
-                          %small (#{(season.start_date + position).strftime('%d/%m/%y')})      
-                      .box-body.no-padding
-                        .row
-                          - if @farm.cows.take(quant).blank?
-                            %center.col-lg-12
-                              No existen ganados asignados
-                          - @farm.cows.take(quant).each do |cow|
-                            .col-lg-12
-                              = link_to(action: :show, id: cow.id) do
-                                .cow-item.d-flex.p-3
-                                  = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-md p-absolute r-0' unless cow.gender.blank?
-                                  %strong #{cow.serie_number} &nbsp;
-                                  %span
-                                    = "(#{cow.short_name})" unless cow.short_name.blank?
-                                    \- #{cow.typology_name} (#{cow.weight&.weight} KG)
+          - season.duration_days.times do |day|
+            - statuses = @season.statuses.where(status_type: status.last, date: @season.start_date + day)
+            - if !statuses.size.zero?
+              %li.stripes{ style: "z-index: 2; padding: 0; grid-column: #{day + 1}/#{day + 2}; background-color: #{season.cicle_colors[(statuses.count/3)-3]};" }
+                %a{ style: 'display:block; width: 100%; height: 100%;', 'data-target': "#modal#{status.first}#{day}", 'data-toggle': 'modal', href: ""}
+                  .text-white.text-center= statuses.count
+              .modal.modal_status.fade{ id: "modal#{status.first}#{day}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+                .modal-dialog{role: "document"}
+                  .modal-content
+                    .modal-header
+                      %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+                        %span{"aria-hidden" => "true"} ×
+                    .modal-body{ style: "padding: 20px;"}
+                      .card_status
+                        %center.card_status--title   
+                          %h1.modal-title
+                            #{status.first}
+                            %small (#{(season.start_date + day).strftime('%d/%m/%y')})      
+                        .box-body.no-padding
+                          .row
+                            - if @season.cows.take(statuses.count).blank?
+                              %center.col-lg-12
+                                No existen ganados asignados
+                            - statuses.each do |status|
+                              .col-lg-12
+                                = link_to(action: :show, id: status.cow.id) do
+                                  .cow-item.d-flex.p-3
+                                    = image_tag "/assets/keppler_cattle/#{status.cow.gender}", class: 'svg-icon-md p-absolute r-0' unless status.cow.gender.blank?
+                                    %strong #{status.cow.serie_number} &nbsp;
+                                    %span
+                                      = "(#{status.cow.short_name})" unless status.cow.short_name.blank?
+                                      \- #{status.cow.typology_name} (#{status.cow.weight&.weight} KG)
 :scss
   .months {
     display: grid;

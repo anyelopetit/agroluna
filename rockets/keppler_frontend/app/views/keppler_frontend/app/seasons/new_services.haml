@@ -1,0 +1,99 @@
+
+.app_wrapper
+  .container_carousel
+    .single-item
+      = link_to({ controller: :seasons, action: :show, id: @season.id }, { class: 'mt-4 mb-4 ml-3' }) do
+        %button.btn.btn_custom.btn--medium
+          %i.icofont-circled-left
+          Listado
+      .row
+        .col-sm-12
+          .card_new
+            %h1
+              Nuevos servicios
+            .form-padding
+              = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: create_services_farm_season_path(@farm, @season, @strategic_lot), action: :create_weights, method: :post do |f|
+                -# %input{ name: 'status[multiple_ids]', value: params[:multiple_ids], type: (Rails.env.eql?('development') ? :string : :hidden) }
+                - @cows.each do |cow|
+                  .row
+                    .col-sm-12
+                      %h3
+                        Serie
+                        %b #{cow.serie_number}
+                        %small
+                          = "(#{cow.short_name})" unless cow.short_name.blank?
+                          \- #{cow.typology_name} (#{cow.weight&.weight.to_f} KG)
+                        \-
+                        %small
+                        - if cow.statuses.where(status_type: 'Service').exists?
+                          %b Último servicio:
+                          %span= cow.statuses.where(status_type: 'Service').last&.date&.strftime('%d/%m/%y')
+                        - else
+                          %b Sin servicios realizados
+                    = f.input :user_id, input_html: { name: "status[#{cow.id}][user_id]", value: current_user.id }, as: :hidden
+                    = f.input :cow_id, input_html: { name: "status[#{cow.id}][cow_id]", value: cow.id }, as: :hidden
+                    = f.input :status_type, input_html: { name: "status[#{cow.id}][type]", value: 'Service' }, as: :hidden
+                    .col-sm-6.col-md-3
+                      .form-group
+                        %label.label_custom--strong Fecha de servicio
+                        %input.form-control.input_custom.datepicker{ name: "status[#{cow.id}][date]", value: Date.today }
+                    .col-sm-6.col-md-3
+                      .form-group
+                        %label.label_custom--strong Pajuela a colocar
+                        %select.form-control.input_custom.select2{ name: "status[#{cow.id}][insemination_id]" }
+                          - @farm.inseminations.all.each do |insemination|
+                            %option{ value: insemination.id } #{insemination.serie_number} #{' - ' + insemination.short_name} (#{insemination.quantity})
+                    .col-sm-6.col-md-3
+                      .form-group
+                        %label.label_custom--strong Cantidad de cartuchos
+                        %input.form-control.input_custom{ name: "status[#{cow.id}][insemination_quant]", type: 'number', value: 0, min: 0 }
+                    .col-sm-6.col-md-3
+                      .form-group
+                        %label.label_custom--strong Nombre del responsable
+                        %select.form-control.input_custom.select2{ name: "status[#{cow.id}][user_id]" }
+                          - User.all.drop(1).each do |user|
+                            %option{ value: user.id }= user.name
+                    -# .col-sm-6
+                      = f.input :observations, label: 'Observaciones', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+              
+                .col-sm-12
+                  .float-right
+                    %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                      %i.icofont-save
+                      Guardar
+
+
+:javascript
+
+  $('.select2').select2(  )
+
+  $.datepicker.regional['es'] = {
+    closeText: 'Cerrar',
+    prevText: '< Ant',
+    nextText: 'Sig >',
+    currentText: 'Hoy',
+    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+    weekHeader: 'Sm',
+    dateFormat: 'yy-mm-dd',
+    firstDay: 1,
+    isRTL: false,
+    showMonthAfterYear: false,
+    yearSuffix: ''
+  };
+
+  $.datepicker.setDefaults($.datepicker.regional['es']);
+
+  $('.datepicker').datepicker({
+    dateFormat: 'yy-mm-dd',
+    showOtherMonths: true,
+    selectOtherMonths: true,
+    changeMonth: true,
+    changeYear: true,
+    maxDate: 0,
+    setDate: 0,
+    yearRange: "c-1:c+1",
+  }, $.datepicker.regional[ "es" ])

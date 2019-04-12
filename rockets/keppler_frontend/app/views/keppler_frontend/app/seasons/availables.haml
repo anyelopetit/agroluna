@@ -39,6 +39,10 @@
 
   var $ids = #{@cows.pluck(:id)}
   var $final_array = []
+  var $hrefs = []
+  $('.multiple_ids').each(function(index, elem) {
+    $hrefs.push($(this).attr('href'))
+  })
 
   function ids_loop(ids) {
     $ids.forEach(function (id) {
@@ -59,18 +63,15 @@
     });
 
     $('.multiple_ids').each(function(index, elem) {
-      href = $(elem).attr('href')
-      if (href != undefined) {
-        var result = href.split(',').filter(function(e) {
-          return $final_array.indexOf(parseInt(e)) != -1
-        });
+      href = `${$hrefs[index] + $final_array}`
+      if ($(this)[0].localName == 'a') {
+        $(this).attr('href', `${href}`)
+      } else if ($(this)[0].localName == 'input') {
+        $(this).attr('value', `${$final_array}`)        
       }
-      console.log(result)
-      $(elem).attr('href', (`${href}${$final_array}`))
-      $(elem).attr('value', (`${$final_array}`))
     })
 
-    $('.disable').each(function(index) {
+    $(".disable").each(function(index) {
       $(this).attr("disabled", $final_array == '');
     })
   }

@@ -63,7 +63,7 @@ KepplerFrontend::Engine.routes.draw do
         get 'lote-estrategico/:strategic_lot_id/paridas', to: 'app/seasons#births', as: :births
 
         get 'lote-estrategico/:strategic_lot_id/new_services/:multiple_ids', to: 'app/seasons#new_services', as: :new_services
-        post :create_services
+        post 'lote-estrategico/:strategic_lot_id/create_services/:multiple_ids', to: 'app/seasons#create_services', as: :create_services
         
         post 'lote-estrategico/:strategic_lot_id/statuses', to: 'app/seasons#statuses', as: :statuses
       end

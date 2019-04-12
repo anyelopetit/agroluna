@@ -20,7 +20,7 @@
                         -# = f.input :start_date, as: :string, label: 'Fecha del celo', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom', autocomplete: 'off' }
                         .form-group
                           %label.label_custom--strong Fecha de disponibilidad
-                          %input.form-control.input_custom.datepicker{ name: "status[date]", autocomplete: 'off' }
+                          %input.form-control.input_custom.datepicker{ name: "status[date]", autocomplete: 'off', value: Date.today }
                       .col-sm-12.col-md-6
                         -# = f.input :name, label: 'Nombre del Responsable', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
                         .form-group

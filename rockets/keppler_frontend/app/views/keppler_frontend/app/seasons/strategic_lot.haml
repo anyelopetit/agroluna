@@ -136,9 +136,8 @@
       });
     });
     $('.multiple_ids').each(function(index, elem) {
-      href = $(elem).attr('href')
-      $(elem).attr('href', (`${href}${$final_array}`))
-      $(elem).attr('value', (`${$final_array}`))
+      href = `${$hrefs[index] + $final_array}`
+      $(this).attr('href', `${href}`)
     })
     $(".disable").each(function(index) {
       $(this).attr("disabled", $final_array == '');

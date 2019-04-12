@@ -11,7 +11,9 @@ module KepplerFrontend
     before_action :set_farm
     before_action :set_farms
     before_action :index_variables
-    strategic_lot_states = %i[availables zeals services pregnants births]
+    strategic_lot_states = %i[
+      availables zeals services pregnants births new_services create_services
+    ]
     before_action :strategic_lot_variables, only: strategic_lot_states
     before_action :attachments
     before_action :respond_to_formats
@@ -32,7 +34,9 @@ module KepplerFrontend
         keppler_cattle_locations: {cow_id: @cows.ids}
       ).distinct
       @possible_mothers = @farm.cows.possible_mothers
-      # @insemined_cows = @cows.where()
+      @inseminated_cows = @season.cows.select do |c|
+        c.status&.status_type&.eql?('Service')
+      end
     end
 
     def new
@@ -152,27 +156,7 @@ module KepplerFrontend
     end
 
     def statuses
-      if params[:status]
-        status = params[:status]
-        counter = 0
-        status[:multiple_ids].split(',').each do |cow_id|
-          cow = @season.cows.find(cow_id)
-          status = KepplerCattle::Status.new(
-            status_type: status[:type],
-            cow_id: cow_id,
-            date: status[:date],
-            user_id: status[:user_id],
-            observations: status[:observations]
-          )
-          counter += 1 if status.save
-        end
-        byebug
-        if counter.zero?
-          flash[:error] = 'No se cambió el estado de ninguna serie'
-        else
-          flash[:notice] = "Se cambió el estado de #{counter} series"
-        end
-      end
+      change_status(params)
       redirect_back fallback_location: availables_farm_season_path(
         @farm.id,
         @season.id,
@@ -181,6 +165,40 @@ module KepplerFrontend
     end
 
     def new_services
+      @cows = @season.cows.where(id: params[:multiple_ids].split(','))
+    end
+
+    def create_services
+      if params[:status]
+        status_params = params[:status]
+        counter = 0
+        params[:multiple_ids].split(',').each do |cow_id|
+          cow = @season.cows.find(cow_id)
+          status = KepplerCattle::Status.new(
+            status_type: status_params[cow_id][:type] || action_name.singularize.humanize,
+            cow_id: cow_id,
+            date: status_params[cow_id][:date] || Date.today,
+            user_id: status_params[cow_id][:user_id],
+            observations: status_params[cow_id][:observations] || '',
+            insemination_id: status_params[cow_id][:insemination_id] || nil
+          )
+          insemination = @farm.inseminations.find_by(
+            id: status_params[cow_id][:insemination_id]
+          )
+          if insemination
+            unless insemination.quantity.zero?
+              insemination.update(quantity: insemination.quantity - 1)
+            end
+          end
+          counter += 1 if status.save
+        end
+        if counter.zero?
+          flash[:error] = 'No se cambió el estado de ninguna serie'
+        else
+          flash[:notice] = "Se cambió el estado de #{counter} series"
+        end
+      end
+      redirect_to farm_season_path(@farm.id,@season.id)
     end
 
     private
@@ -191,6 +209,38 @@ module KepplerFrontend
 
     def set_season
       @season = KepplerReproduction::Season.find_by(id: params[:id])
+    end
+
+    def change_status(params)
+      if params[:status]
+        status_params = params[:status]
+        counter = 0
+        params[:multiple_ids].split(',').each do |cow_id|
+          cow = @season.cows.find(cow_id)
+          status = KepplerCattle::Status.new(
+            status_type: status_params[:type] || action_name.singularize.humanize,
+            cow_id: cow_id,
+            date: status_params[:date] || Date.today,
+            user_id: status_params[:user_id],
+            observations: status_params[:observations] || '',
+            insemination_id: status_params[:insemination_id] || nil
+          )
+          insemination = @farm.inseminations.find_by(
+            id: status[:insemination_id]
+          )
+          if insemination
+            unless insemination.quantity.zero?
+              insemination.update(quantity: insemination.quantity - 1)
+            end
+          end
+          counter += 1 if status.save
+        end
+        if counter.zero?
+          flash[:error] = 'No se cambió el estado de ninguna serie'
+        else
+          flash[:notice] = "Se cambió el estado de #{counter} series"
+        end
+      end
     end
 
     def index_variables

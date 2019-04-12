@@ -19,9 +19,10 @@
       .tab-content
         #disponibles.tab-pane.active
           .float-right.mt-4.mb-4{style: "z-index: 2;"}
-            %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalServices", 'data-toggle': 'modal', disabled: true }
-              %i.icofont-plus
-              Agregar Servicios
+            = link_to new_services_farm_season_path(@farm.id, @season.id, @strategic_lot.id, []), class: 'multiple_ids disable', disabled: true do
+              %button.btn.btn_custom.btn--filled.btn--medium.disable{ disabled: true }
+                %i.icofont-plus
+                Agregar Servicios
             %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalPregnancy", 'data-toggle': 'modal', disabled: true }
               %i.icofont-plus
               Añadir Preñez
@@ -38,6 +39,10 @@
 
   var $ids = #{@cows.pluck(:id)}
   var $final_array = []
+  var $hrefs = []
+  $('.multiple_ids').each(function(index, elem) {
+    $hrefs.push($(this).attr('href'))
+  })
 
   function ids_loop(ids) {
     $ids.forEach(function (id) {
@@ -56,11 +61,16 @@
         }
       });
     });
+
     $('.multiple_ids').each(function(index, elem) {
-      href = $(elem).attr('href')
-      $(elem).attr('href', (`${href}${$final_array}`))
-      $(elem).attr('value', (`${$final_array}`))
+      href = `${$hrefs[index] + $final_array}`
+      if ($(this)[0].localName == 'a') {
+        $(this).attr('href', `${href}`)
+      } else if ($(this)[0].localName == 'input') {
+        $(this).attr('value', `${$final_array}`)        
+      }
     })
+
     $(".disable").each(function(index) {
       $(this).attr("disabled", $final_array == '');
     })
@@ -111,40 +121,3 @@
     setDate: 0,
     yearRange: "c-1:c+1",
   }, $.datepicker.regional[ "es" ])
-
-  $( function() {
-    var dateFormat = 'yy-mm-dd';
-    var from = $( "#season_start_date" )
-      .datepicker({
-        dateFormat: dateFormat,
-        defaultDate: "+1w",
-        yearRange: "c-1:c+1",
-        changeMonth: true,
-        changeYear: true
-      })
-      .on( "change", function() {
-        to.datepicker( "option", "minDate", getDate( this ) );
-      });
-    var to = $( "#season_finish_date" )
-      .datepicker({
-        dateFormat: dateFormat,
-        defaultDate: "+1w",
-        yearRange: "c-1:c+1",
-        changeMonth: true,
-        changeYear: true
-      })
-      .on( "change", function() {
-        from.datepicker( "option", "maxDate", getDate( this ) );
-      });
- 
-    function getDate( element ) {
-      var date;
-      try {
-        date = $.datepicker.parseDate( dateFormat, element.value );
-      } catch( error ) {
-        date = null;
-      }
- 
-      return date;
-    }
-  } );

@@ -27,36 +27,36 @@
           .col-lg-12
             %h1.mb-4{style:"text-transform: uppercase"} Procesos
             .row
-              .col-lg-3
+              .col-lg-4
                 .card_show
                   .text-center
                     %h3{style: "font-weight: 600;"} Celos
                     %h4 Cantidad de vacas
                   %canvas#celo-chart{:height => "150", :width => "250"}
-              .col-lg-3
+              .col-lg-4
                 .card_show
                   .text-center
                     %h3{style: "font-weight: 600;"} Servicios
                     %h4 Cantidad vacas
                   %canvas#services-chart{:height => "150", :width => "250"}
-              .col-lg-3
+              .col-lg-4
                 .card_show
                   .text-center
                     %h3{style: "font-weight: 600;"} Preñadas
                     %h4 Cantidad vacas
                   %canvas#pregnancy-chart{:height => "150", :width => "250"}
-              .col-lg-3
-                .card_show
-                  .text-center
-                    %h3{style: "font-weight: 600;"} Parto
-                    %h4 Cantidad vacas
-                  %canvas#parto-chart{:height => "150", :width => "250"}
-              .col-lg-4
-                .card_show
-                  .text-center
-                    %h3{style: "font-weight: 600;"} Abortos
-                    %h4 Cantidad vacas
-                  %canvas#aborto-chart{:height => "150", :width => "250"}
+              // .col-lg-3
+              //   .card_show
+              //     .text-center
+              //       %h3{style: "font-weight: 600;"} Parto
+              //       %h4 Cantidad vacas
+              //     %canvas#parto-chart{:height => "150", :width => "250"}
+              // .col-lg-4
+              //   .card_show
+              //     .text-center
+              //       %h3{style: "font-weight: 600;"} Abortos
+              //       %h4 Cantidad vacas
+              //     %canvas#aborto-chart{:height => "150", :width => "250"}
               .col-lg-4
                 .card_show{style:"min-height: 254px;"}
                   .container-profile.mt-4
@@ -68,7 +68,7 @@
                       .content-profile.ml-4{style: "width:100%"}
                         %strong Jon Snow
                         .count-cow.d-flex.justify-content-around
-                          %div.d-flex.flex-column{style: "width:35%"}
+                          %div.d-flex.flex-column{style: "width:50%%"}
                             %span
                               Preñadas
                             %span
@@ -78,11 +78,11 @@
                               Vacias
                             %span
                               10
-                          %div.d-flex.flex-column{style: "width:33%"}
-                            %span
-                              Efectividad
-                            %span
-                              90%
+                          // %div.d-flex.flex-column{style: "width:33%"}
+                          //   %span
+                          //     Efectividad
+                          //   %span
+                          //     90%
                   %canvas#doctor-chart{:height => "95", :width => "250"}
               .col-lg-4
                 .card_show{style:"min-height: 254px;"}
@@ -95,21 +95,21 @@
                       .content-profile.ml-4{style: "width:100%"}
                         %strong Jon Snow
                         .count-cow.d-flex.justify-content-center
-                          %div.d-flex.flex-column{style: "width:35%"}
+                          %div.d-flex.flex-column{style: "width:50%"}
                             %span
                               Inseminadas
                             %span
                               20
-                          %div.d-flex.flex-column{style: "width:31%"}
+                          %div.d-flex.flex-column{style: "width:50%"}
                             %span
                               Vacias
                             %span
                               10
-                          %div.d-flex.flex-column{style: "width:33%"}
-                            %span
-                              Efectividad
-                            %span
-                              90%
+                          // %div.d-flex.flex-column{style: "width:33%"}
+                          //   %span
+                          //     Efectividad
+                          //   %span
+                          //     90%
                   %canvas#inseminations-chart{:height => "95", :width => "250"}
 
 
@@ -121,18 +121,30 @@
       // Efectividad
       var bar_ctx = document.getElementById('line-chart').getContext('2d');
       var one_two_gradient = bar_ctx.createLinearGradient(0, 0, 0, 800);
-      one_two_gradient.addColorStop(0, '#28C76F');
+      one_two_gradient.addColorStop(0, ' #4AC29A');
+      one_two_gradient.addColorStop(1, '#3CD3AD');
       // one_two_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
-      one_two_gradient.addColorStop(1, 'rgba(248, 248, 248, 0.56)');
+      // one_two_gradient.addColorStop(1, '#BDFFF3');
 
+      var three_four_gradient = bar_ctx.createLinearGradient(0, 0, 0, 800);
+      three_four_gradient.addColorStop(0, '#f28d23');
+      // three_four_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
+      three_four_gradient.addColorStop(1, '#f83600');
+    
       var line_chart = new Chart(bar_ctx, {
-          type: 'line',
+          type: 'pie',
           data: {
-              labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
+              labels: ["Preñadas en toda la temporada", " "],
               datasets: [{
-                  data: [12, 19, 3, 8, 14, 5],
-                  backgroundColor: one_two_gradient,
-                  hoverBackgroundColor: one_two_gradient,
+                  data: [12, 3],
+                  backgroundColor: [
+                    one_two_gradient,
+                    three_four_gradient,
+                  ],
+                  hoverBackgroundColor: [
+                    one_two_gradient,
+                    three_four_gradient,
+                  ],
                   hoverBorderWidth: 2
               }]
           },
@@ -151,8 +163,9 @@
       // celos
       var celos_ctx = document.getElementById('celo-chart').getContext('2d');
       var one_two_gradient = celos_ctx.createLinearGradient(0, 0, 0, 450);
-      one_two_gradient.addColorStop(0, '#28C76F');
-      one_two_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
+      one_two_gradient.addColorStop(0, ' #4AC29A');
+      one_two_gradient.addColorStop(1, '#3CD3AD');
+      // one_two_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
 
       var celo_chart = new Chart(celos_ctx, {
           type: 'line',
@@ -180,8 +193,8 @@
       // Servicio
       var service_ctx = document.getElementById('services-chart').getContext('2d');
       var one_two_gradient = service_ctx.createLinearGradient(0, 0, 0, 450);
-      one_two_gradient.addColorStop(0, '#28C76F');
-      one_two_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
+      one_two_gradient.addColorStop(0, ' #4AC29A');
+      one_two_gradient.addColorStop(1, '#3CD3AD');
 
       var service_chart = new Chart(service_ctx, {
           type: 'line',
@@ -190,7 +203,10 @@
               datasets: [{
                   data: [12, 19, 3, 8, 14, 5],
                   backgroundColor: one_two_gradient,
-                  hoverBackgroundColor: one_two_gradient,
+                  hoverBackgroundColor: [
+                    one_two_gradient,
+                    three_four_gradient,
+                  ],
                   hoverBorderWidth: 2
               }]
           },
@@ -209,17 +225,32 @@
       // Preñez
       var pregnancy_ctx = document.getElementById('pregnancy-chart').getContext('2d');
       var one_two_gradient = pregnancy_ctx.createLinearGradient(0, 0, 0, 450);
-      one_two_gradient.addColorStop(0, '#28C76F');
-      one_two_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
+      one_two_gradient.addColorStop(0, ' #4AC29A');
+      one_two_gradient.addColorStop(1, '#3CD3AD');
+      var three_four_gradient = bar_ctx.createLinearGradient(0, 0, 0, 800);
+      three_four_gradient.addColorStop(0, '#f28d23');
+      // three_four_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
+      three_four_gradient.addColorStop(1, '#f83600');
 
+      var five_gradient = pregnancy_ctx.createLinearGradient(0, 0, 0, 450);
+      five_gradient.addColorStop(0, '#eef2f3');
+      five_gradient.addColorStop(1, '#8e9eab');
       var pregnancy_chart = new Chart(pregnancy_ctx, {
-          type: 'line',
+          type: 'pie',
           data: {
-              labels: ["Enero", "Febrero", "Marzo", "Abril"],
+              labels: ["Preñadas", "Partos", "Abortos"],
               datasets: [{
-                  data: [12, 9, 3, 8, 19, 15],
-                  backgroundColor: one_two_gradient,
-                  hoverBackgroundColor: one_two_gradient,
+                  data: [12, 9, 3],
+                  backgroundColor:[ 
+                    one_two_gradient,
+                    three_four_gradient,
+                    five_gradient,
+                  ],
+                  hoverBackgroundColor: [
+                    one_two_gradient,
+                    three_four_gradient,
+                    five_gradient,
+                  ],
                   hoverBorderWidth: 2
               }]
           },
@@ -234,78 +265,30 @@
           }
       });
 
-
-      // Parto
-      var parto_ctx = document.getElementById('parto-chart').getContext('2d');
-      var one_two_gradient = parto_ctx.createLinearGradient(0, 0, 0, 450);
-      one_two_gradient.addColorStop(0, '#28C76F');
-      one_two_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
-
-      var parto_chart = new Chart(parto_ctx, {
-          type: 'line',
-          data: {
-              labels: ["Enero", "Febrero", "Marzo", "Abril"],
-              datasets: [{
-                  data: [15, 20, 38, 18, 38, 5],
-                  backgroundColor: one_two_gradient,
-                  hoverBackgroundColor: one_two_gradient,
-                  hoverBorderWidth: 2
-              }]
-          },
-          options: {
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                          beginAtZero:true
-                      }
-                  }]
-              }
-          }
-      });
-
-      // Aborto
-      var aborto_ctx = document.getElementById('aborto-chart').getContext('2d');
-      var one_two_gradient = aborto_ctx.createLinearGradient(0, 0, 0, 450);
-      one_two_gradient.addColorStop(0, '#28C76F');
-      one_two_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
-
-      var aborto_chart = new Chart(aborto_ctx, {
-          type: 'line',
-          data: {
-              labels: ["Enero", "Febrero", "Marzo", "Abril"],
-              datasets: [{
-                  data: [15, 20, 38, 18, 38, 5],
-                  backgroundColor: one_two_gradient,
-                  hoverBackgroundColor: one_two_gradient,
-                  hoverBorderWidth: 2
-              }]
-          },
-          options: {
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                          beginAtZero:true
-                      }
-                  }]
-              }
-          }
-      });
-
-
-      // Aborto
+       // Doctor
       var doctor_ctx = document.getElementById('doctor-chart').getContext('2d');
       var one_two_gradient = doctor_ctx.createLinearGradient(0, 0, 0, 450);
-      one_two_gradient.addColorStop(0, '#28C76F');
-      one_two_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
+      one_two_gradient.addColorStop(0, ' #4AC29A');
+      one_two_gradient.addColorStop(1, '#3CD3AD');
+      var three_four_gradient = bar_ctx.createLinearGradient(0, 0, 0, 800);
+      three_four_gradient.addColorStop(0, '#f28d23');
+      // three_four_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
+      three_four_gradient.addColorStop(1, '#f83600');
 
       var doctor_chart = new Chart(doctor_ctx, {
-          type: 'line',
+          type: 'pie',
           data: {
-              labels: ["Enero", "Febrero", "Marzo", "Abril"],
+              labels: ["Efectividad", "No se"],
               datasets: [{
-                  data: [15, 20, 38, 18, 38, 5],
-                  backgroundColor: one_two_gradient,
-                  hoverBackgroundColor: one_two_gradient,
+                  data: [15, 5],
+                  backgroundColor:[ 
+                    one_two_gradient,
+                    three_four_gradient,
+                  ],
+                  hoverBackgroundColor: [
+                    one_two_gradient,
+                    three_four_gradient,
+                  ],
                   hoverBorderWidth: 2
               }]
           },
@@ -324,17 +307,27 @@
       // Inseminación
       var inseminations_ctx = document.getElementById('inseminations-chart').getContext('2d');
       var one_two_gradient = inseminations_ctx.createLinearGradient(0, 0, 0, 450);
-      one_two_gradient.addColorStop(0, '#28C76F');
-      one_two_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
+      one_two_gradient.addColorStop(0, ' #4AC29A');
+      one_two_gradient.addColorStop(1, '#3CD3AD');
+      var three_four_gradient = bar_ctx.createLinearGradient(0, 0, 0, 800);
+      three_four_gradient.addColorStop(0, '#f28d23');
+      // three_four_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
+      three_four_gradient.addColorStop(1, '#f83600');
 
       var inseminations_chart = new Chart(inseminations_ctx, {
-          type: 'line',
+          type: 'pie',
           data: {
-              labels: ["Enero", "Febrero", "Marzo", "Abril"],
+              labels: ["Efectividad", "No se"],
               datasets: [{
-                  data: [12, 19, 3, 8, 14, 5],
-                  backgroundColor: one_two_gradient,
-                  hoverBackgroundColor: one_two_gradient,
+                  data: [12, 19],
+                  backgroundColor:[ 
+                    one_two_gradient,
+                    three_four_gradient,
+                  ],
+                  hoverBackgroundColor: [
+                    one_two_gradient,
+                    three_four_gradient,
+                  ],
                   hoverBorderWidth: 2
               }]
           },
@@ -349,81 +342,61 @@
           }
       });
 
+      // Parto
+    //   var parto_ctx = document.getElementById('parto-chart').getContext('2d');
+    //   var one_two_gradient = parto_ctx.createLinearGradient(0, 0, 0, 450);
+    //   one_two_gradient.addColorStop(0, '#28C76F');
+    //   one_two_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
+
+    //   var parto_chart = new Chart(parto_ctx, {
+    //       type: 'line',
+    //       data: {
+    //           labels: ["Enero", "Febrero", "Marzo", "Abril"],
+    //           datasets: [{
+    //               data: [15, 20, 38, 18, 38, 5],
+    //               backgroundColor: one_two_gradient,
+    //               hoverBackgroundColor: one_two_gradient,
+    //               hoverBorderWidth: 2
+    //           }]
+    //       },
+    //       options: {
+    //           scales: {
+    //               yAxes: [{
+    //                   ticks: {
+    //                       beginAtZero:true
+    //                   }
+    //               }]
+    //           }
+    //       }
+    //   });
+
+    //   // Aborto
+    //   var aborto_ctx = document.getElementById('aborto-chart').getContext('2d');
+    //   var one_two_gradient = aborto_ctx.createLinearGradient(0, 0, 0, 450);
+    //   one_two_gradient.addColorStop(0, '#28C76F');
+    //   one_two_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
+
+    //   var aborto_chart = new Chart(aborto_ctx, {
+    //       type: 'line',
+    //       data: {
+    //           labels: ["Enero", "Febrero", "Marzo", "Abril"],
+    //           datasets: [{
+    //               data: [15, 20, 38, 18, 38, 5],
+    //               backgroundColor: one_two_gradient,
+    //               hoverBackgroundColor: one_two_gradient,
+    //               hoverBorderWidth: 2
+    //           }]
+    //       },
+    //       options: {
+    //           scales: {
+    //               yAxes: [{
+    //                   ticks: {
+    //                       beginAtZero:true
+    //                   }
+    //               }]
+    //           }
+    //       }
+    //   });
 
 
-      // var buyerData = {
-      //     labels : ["January","February","March","April"],
-      //     datasets : [
-      //     {
-      //         fillColor : "rgba(75, 192, 192, 0.2)",
-      //         strokeColor : "rgba(40, 199, 111, 0.54)",
-      //         pointColor : "#fff",
-      //         pointStrokeColor : "#9DB86D",
-      //         data : [203,156,99,251,305,247]
-      //     }
-      // ]
-      // }
-
-      // var servicesData = {
-      //     labels : ["January","February","March","April"],
-      //     datasets : [
-      //     {
-      //         fillColor : "rgba(75, 192, 192, 0.2)",
-      //         strokeColor : "rgba(40, 199, 111, 0.54)",
-      //         pointColor : "#fff",
-      //         pointStrokeColor : "#9DB86D",
-      //         data : [203,156,99,251]
-      //     }
-      // ]
-      // }
-
-      // var pregnancyData = {
-      //     labels : ["January","February","March","April"],
-      //     datasets : [
-      //     {
-      //         fillColor : "rgba(75, 192, 192, 0.2)",
-      //         strokeColor : "rgba(40, 199, 111, 0.54)",
-      //         pointColor : "#fff",
-      //         pointStrokeColor : "#9DB86D",
-      //         data : [203,156,99,251]
-      //     }
-      // ]
-      // }
-
-      // var celoData = {
-      //     labels : ["January","February","March","April"],
-      //     datasets : [
-      //     {
-      //         fillColor : "rgba(75, 192, 192, 0.2)",
-      //         strokeColor : "rgba(40, 199, 111, 0.54)",
-      //         pointColor : "#fff",
-      //         pointStrokeColor : "#9DB86D",
-      //         data : [203,156,99,251]
-      //     }
-      // ]
-      // }
-      // var partoData = {
-      //     labels : ["January","February","March","April"],
-      //     datasets : [
-      //     {
-      //         fillColor : "rgba(75, 192, 192, 0.2)",
-      //         strokeColor : "rgba(40, 199, 111, 0.54)",
-      //         pointColor : "#fff",
-      //         pointStrokeColor : "#9DB86D",
-      //         data : [203,156,99,251]
-      //     }
-      // ]
-      // }
-      // // get line chart canvas
-      // var buyers = document.getElementById('buyers').getContext('2d');
-      // new Chart(buyers).Line(buyerData);
-      // var services= document.getElementById("services").getContext("2d");
-      // new Chart(services).Line(servicesData);
-      // var celos= document.getElementById("celo").getContext("2d");
-      // new Chart(celos).Line(celoData);
-      // var pregnancy= document.getElementById("pregnancy").getContext("2d");
-      // new Chart(pregnancy).Line(pregnancyData);
-      // var partos= document.getElementById("partos").getContext("2d");
-      // new Chart(partos).Line(partoData);
-      
-   
+     

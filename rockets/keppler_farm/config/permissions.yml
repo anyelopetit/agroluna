@@ -1,4 +1,11 @@
 modules:
+  responsables:
+    name: Responsable
+    model: KepplerFarmResponsable
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
   strategic_lots:
     name: StrategicLot
     model: KepplerFarmStrategicLot

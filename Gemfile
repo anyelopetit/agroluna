@@ -24,6 +24,8 @@ gem 'select2-rails'
 # gem 'activerecord_any_of'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
+gem 'autocomplete_rails'
+gem 'rails-autocomplete'
 
 # Infinite Scroll
 # gem 'bootstrap-will_paginate', '~> 0.0.10'

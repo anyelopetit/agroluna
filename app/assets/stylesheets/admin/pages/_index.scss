@@ -3,6 +3,9 @@ $git-shadow: rgba(0, 0, 0, .12);
 
 .btn {
   border-radius: 15px;
+  :disabled {
+    cursor: not-allowed;
+  }
 }
 
 .content-header.index-header {

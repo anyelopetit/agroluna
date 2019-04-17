@@ -1,4 +1,4 @@
-.modal.modal_status.fade{ id: "modalPregnancy", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+.modal.modal_status.fade{ id: "modalPregnancy", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog" }
   .modal-dialog{role: "document", style: "max-width: 800px;"}
     .modal-content
       .modal-header
@@ -10,87 +10,28 @@
             .col-lg-12
               .float-left
                 %h1.mb-4 Agregar Preñez
-                = simple_form_for [@farm, @season] do |f|
-                  = f.input :farm_id, input_html: { value: @farm.id }, as: :hidden
+                -# %form.multiple_ids{ action: "finca/#{@farm.id}/temporadas/#{@season.id}/marcar-celos/" }
+                = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: statuses_farm_season_path(@farm, @season) do |f|
+                  %input{ name: 'status[type]', value: 'Pregnancy', type: (Rails.env.eql?('development') ? :string : :hidden) }
+                  %input.multiple_ids{ name: 'status[multiple_ids]', value: '', type: (Rails.env.eql?('development') ? :string : :hidden) }
                   .form-padding
                     .row
                       .col-sm-12.col-md-6
-                        = f.input :start_date, as: :string, label: 'Fecha del Preñez', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom', autocomplete: 'off' }
+                        .form-group
+                          %label.label_custom--strong Fecha de la preñez
+                          %input.form-control.input_custom.datepicker{ name: "status[date]", autocomplete: 'off', value: Date.today }
                       .col-sm-12.col-md-6
-                        = f.input :name, label: 'Nombre del Responsable', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+                        .form-group.ui-widget
+                          %label.label_custom--strong Nombre del responsable
+                          %select.form-control.input_custom#status_user_name{ type: 'string', name: "status[user_name]", autocomplete: 'off' }
+                            - KepplerFarm::Responsable.all.each do |user|
+                              %option{ value: user.id }= user.name
                       .col-sm-12
-                        = f.input :name, label: 'Observaciones', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+                        .form-group
+                          %label.label_custom--strong Observaciones
+                          %input.form-control.input_custom{ name: "status[observations]" }
                       .col-sm-12
                         .float-right
                           %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
                             %i.icofont-save
                             Guardar
-:javascript
-
-  $.datepicker.regional['es'] = {
-    closeText: 'Cerrar',
-    prevText: '< Ant',
-    nextText: 'Sig >',
-    currentText: 'Hoy',
-    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-    monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
-    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-    dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
-    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
-    weekHeader: 'Sm',
-    dateFormat: 'yy-mm-dd',
-    firstDay: 1,
-    isRTL: false,
-    showMonthAfterYear: false,
-    yearSuffix: ''
-  };
-
-  $.datepicker.setDefaults($.datepicker.regional['es']);
-
-  $('.datepicker').datepicker({
-    dateFormat: 'yy-mm-dd',
-    showOtherMonths: true,
-    selectOtherMonths: true,
-    changeMonth: true,
-    changeYear: true,
-    // maxDate: 0,
-    setDate: 0,
-    yearRange: "c-1:c+1",
-  }, $.datepicker.regional[ "es" ])
-
-  $( function() {
-    var dateFormat = 'yy-mm-dd';
-    var from = $( "#season_start_date" )
-      .datepicker({
-        dateFormat: dateFormat,
-        defaultDate: "+1w",
-        yearRange: "c-1:c+1",
-        changeMonth: true,
-        changeYear: true
-      })
-      .on( "change", function() {
-        to.datepicker( "option", "minDate", getDate( this ) );
-      });
-    var to = $( "#season_finish_date" )
-      .datepicker({
-        dateFormat: dateFormat,
-        defaultDate: "+1w",
-        yearRange: "c-1:c+1",
-        changeMonth: true,
-        changeYear: true
-      })
-      .on( "change", function() {
-        from.datepicker( "option", "maxDate", getDate( this ) );
-      });
- 
-    function getDate( element ) {
-      var date;
-      try {
-        date = $.datepicker.parseDate( dateFormat, element.value );
-      } catch( error ) {
-        date = null;
-      }
- 
-      return date;
-    }
-  } );

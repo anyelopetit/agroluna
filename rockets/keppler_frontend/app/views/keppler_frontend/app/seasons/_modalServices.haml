@@ -1,4 +1,4 @@
-.modal.modal_status.fade{ id: "modalServices", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+.modal.modal_status.fade{ id: "modalServices", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog" }
   .modal-dialog{role: "document", style: "max-width: 800px;"}
     .modal-content
       .modal-header
@@ -18,12 +18,12 @@
                       .col-sm-12.col-md-6
                         .form-group
                           %label.label_custom--strong Fecha del servicio
-                          %input.form-control.input_custom.datepicker{ name: "status[date]", autocomplete: 'off' }
+                          %input.form-control.input_custom.datepicker{ name: "status[date]", autocomplete: 'off', value: Date.today }
                       .col-sm-12.col-md-6
                         .form-group
                           %label.label_custom--strong Nombre del responsable
-                          %select.form-control.input_custom.datepicker{ name: "status[user_id]", autocomplete: 'off' }
-                            - User.all.drop(1).each do |user|
+                          %select.form-control.input_custom.datepicker{ name: "status[user_name]", autocomplete: 'off' }
+                            - KepplerFarm::Responsable.all.each do |user|
                               %option{ value: user.id }= user.name
                       .col-sm-12.col-md-6
                         .form-group

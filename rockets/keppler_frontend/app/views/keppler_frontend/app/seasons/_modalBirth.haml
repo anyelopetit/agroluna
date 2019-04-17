@@ -1,4 +1,4 @@
-.modal.modal_status.fade{ id: "modalAvailables", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+.modal.modal_status.fade{ id: "modalBirth", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog" }
   .modal-dialog{role: "document", style: "max-width: 800px;"}
     .modal-content
       .modal-header
@@ -9,24 +9,24 @@
           .row
             .col-lg-12
               .float-left
-                %h1.mb-4 Agregar Celos
+                %h1.mb-4 Realizar Parto
                 -# %form.multiple_ids{ action: "finca/#{@farm.id}/temporadas/#{@season.id}/marcar-celos/" }
                 = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: statuses_farm_season_path(@farm, @season) do |f|
-                  %input{ name: 'status[type]', value: 'Nil', type: (Rails.env.eql?('development') ? :string : :hidden) }
+                  %input{ name: 'status[type]', value: 'Birth', type: (Rails.env.eql?('development') ? :string : :hidden) }
                   %input.multiple_ids{ name: 'status[multiple_ids]', value: '', type: (Rails.env.eql?('development') ? :string : :hidden) }
                   .form-padding
                     .row
                       .col-sm-12.col-md-6
                         -# = f.input :start_date, as: :string, label: 'Fecha del celo', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom', autocomplete: 'off' }
                         .form-group
-                          %label.label_custom--strong Fecha de disponibilidad
+                          %label.label_custom--strong Fecha del parto
                           %input.form-control.input_custom.datepicker{ name: "status[date]", autocomplete: 'off', value: Date.today }
                       .col-sm-12.col-md-6
                         -# = f.input :name, label: 'Nombre del Responsable', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
                         .form-group
                           %label.label_custom--strong Nombre del responsable
-                          %select.form-control.input_custom.datepicker{ name: "status[user_name]", autocomplete: 'off' }
-                            - User.all.drop(1).each do |user|
+                          %select.form-control.input_custom#status_user_name{ name: "status[user_name]", autocomplete: 'off' }
+                            - KepplerFarm::Responsable.all.each do |user|
                               %option{ value: user.id }= user.name
                       .col-sm-12
                         -# = f.input :name, label: 'Observaciones', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
@@ -38,36 +38,3 @@
                           %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
                             %i.icofont-save
                             Guardar
-
-:javascript
-
-  $.datepicker.regional['es'] = {
-    closeText: 'Cerrar',
-    prevText: '< Ant',
-    nextText: 'Sig >',
-    currentText: 'Hoy',
-    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-    monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
-    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-    dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
-    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
-    weekHeader: 'Sm',
-    dateFormat: 'yy-mm-dd',
-    firstDay: 1,
-    isRTL: false,
-    showMonthAfterYear: false,
-    yearSuffix: ''
-  };
-
-  $.datepicker.setDefaults($.datepicker.regional['es']);
-
-  $('.datepicker').datepicker({
-    dateFormat: 'yy-mm-dd',
-    showOtherMonths: true,
-    selectOtherMonths: true,
-    changeMonth: true,
-    changeYear: true,
-    maxDate: 0,
-    setDate: 0,
-    yearRange: "c-1:c+1",
-  }, $.datepicker.regional[ "es" ])

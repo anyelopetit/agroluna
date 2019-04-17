@@ -16,7 +16,7 @@
               .item-check
                 .checkbox
                   %label{ for: 'checkbox-all' }
-                    %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+                    %input{ type: 'checkbox', id: 'checkbox-all-bulls' }
                     %span.cr
                       %i.cr-icon.icofont-check
           %th
@@ -39,7 +39,7 @@
               %td
                 .checkbox{ style: 'margin: 3px' }
                   %label{ for: "checkbox-#{cow.id}" }
-                    %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
+                    %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model-bull' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
                     %span.cr
                       %i.cr-icon.icofont-check
               %td

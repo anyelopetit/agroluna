@@ -30,7 +30,7 @@
         .left
           %h1
             Ganados por lotes
-            %small (#{@season.cows.count})
+            %small (#{@season.cows.where(gender: 'female').count})
         - unless @season.type_id.zero?
           .right
             .d-flex.justify-content-end

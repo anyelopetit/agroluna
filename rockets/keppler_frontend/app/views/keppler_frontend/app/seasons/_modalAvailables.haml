@@ -9,7 +9,7 @@
           .row
             .col-lg-12
               .float-left
-                %h1.mb-4 Agregar Celos
+                %h1.mb-4 Marcar como disponibles
                 -# %form.multiple_ids{ action: "finca/#{@farm.id}/temporadas/#{@season.id}/marcar-celos/" }
                 = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: statuses_farm_season_path(@farm, @season) do |f|
                   %input{ name: 'status[type]', value: 'Nil', type: (Rails.env.eql?('development') ? :string : :hidden) }
@@ -25,9 +25,10 @@
                         -# = f.input :name, label: 'Nombre del Responsable', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
                         .form-group
                           %label.label_custom--strong Nombre del responsable
-                          %select.form-control.input_custom.datepicker{ name: "status[user_name]", autocomplete: 'off' }
-                            - User.all.drop(1).each do |user|
-                              %option{ value: user.id }= user.name
+                          %input.form-control.input_custom{ name: "status[user_name]", autocomplete: 'off', list: 'responsables' }
+                          %datalist#responsables
+                            - KepplerFarm::Responsable.all.each do |responsable|
+                              %option{ value: responsable.name }
                       .col-sm-12
                         -# = f.input :name, label: 'Observaciones', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
                         .form-group

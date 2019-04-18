@@ -22,9 +22,10 @@
                       .col-sm-12.col-md-6
                         .form-group
                           %label.label_custom--strong Nombre del responsable
-                          %select.form-control.input_custom.datepicker{ name: "status[user_name]", autocomplete: 'off' }
-                            - KepplerFarm::Responsable.all.each do |user|
-                              %option{ value: user.id }= user.name
+                          %input.form-control.input_custom{ name: "status[user_name]", autocomplete: 'off', list: 'responsables' }
+                          %datalist#responsables
+                            - KepplerFarm::Responsable.all.each do |responsable|
+                              %option{ value: responsable.name }
                       .col-sm-12.col-md-6
                         .form-group
                           %label.label_custom--strong Pajuela a usar

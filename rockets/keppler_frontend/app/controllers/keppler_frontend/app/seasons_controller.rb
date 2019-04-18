@@ -191,37 +191,36 @@ module KepplerFrontend
     end
       
     def create_services
-      byebug
-      # if params[:status]
-      #   status_params = params[:status]
-      #   counter = 0
-      #   params[:multiple_ids].split(',').each do |cow_id|
-      #     cow = @season.cows.find(cow_id)
-      #     status = KepplerCattle::Status.new(
-      #       status_type: status_params[cow_id][:type] || action_name.singularize.humanize,
-      #       cow_id: cow_id,
-      #       date: status_params[cow_id][:date] || Date.today,
-      #       user_id: status_params[cow_id][:user_id],
-      #       observations: status_params[cow_id][:observations] || '',
-      #       insemination_id: status_params[cow_id][:insemination_id] || nil
-      #     )
-      #     insemination = @farm.inseminations.find_by(
-      #       id: status_params[cow_id][:insemination_id]
-      #     )
-      #     if insemination
-      #       unless insemination.quantity.zero?
-      #         insemination.update(quantity: insemination.quantity - 1)
-      #       end
-      #     end
-      #     counter += 1 if status.save
-      #   end
-      #   if counter.zero?
-      #     flash[:error] = 'No se cambió el estado de ninguna serie'
-      #   else
-      #     flash[:notice] = "Se cambió el estado de #{counter} series"
-      #   end
-      # end
-      redirect_to farm_season_path(@farm.id,@season.id)
+      cow = @season.cows.find(params[:status][:cow_id])
+      insemination = @farm.inseminations.find(params[:status][:insemination_id])
+      if params[:status][:insemination_quant].to_i > insemination.quantity
+        flash[:error] = 'La cantidad de cartuchos no puede ser mayor a la existente'
+      else
+        if params[:status][:insemination_quant].to_i < 1
+          flash[:error] = 'La cantidad de cartuchos debe ser superior a cero'
+        else
+          status = KepplerCattle::Status.new(
+            status_type: params[:status][:type],
+            cow_id: params[:status][:cow_id].to_i,
+            date: params[:status][:date] || Date.today,
+            user_id: params[:status][:user_id],
+            observations: params[:status][:observations] || '',
+            insemination_id: params[:status][:insemination_id] || nil,
+            insemination_quantity: params[:status][:insemination_quant].to_i
+          )
+          unless insemination.quantity.zero?
+            insemination.update(
+              quantity: insemination.quantity - params[:status][:insemination_quant].to_i
+            )
+          end
+          flash[:notice] = 'Servicio guardado' if status.save!
+        end
+      end
+      redirect_back fallback_location: availables_farm_season_path(
+        @farm.id,
+        @season.id,
+        params[:strategic_lot_id]
+      )
     end
 
     def finish

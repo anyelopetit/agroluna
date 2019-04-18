@@ -55,7 +55,7 @@
             = link_to(admin_farm_farm_clone_path(object), {title: t('keppler.actions.clone')}) do
               %i.icon-docs
               = t('keppler.actions.clone')
-        - if can?(model).destroy?
+        - if object.strategic_lots.blank? && object.cows.blank?
           %li
             = link_to({action: :destroy, id: object}, {title: t('keppler.actions.delete'), method: :delete, data: { confirm: t('keppler.messages.data_confirm') }}) do
               %i.icon-trash

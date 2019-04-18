@@ -126,8 +126,8 @@ module KepplerFrontend
       @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
       @q = KepplerCattle::Cow.ransack(params[:q]) # @farm.cows.ransack(params[:q])
       @cows = @q.result(distinct: true)
-      @active_cows = @cows.actives.page(params[:page]).per(50)
-      @inactive_cows = @cows.inactives.page(params[:page]).per(50)
+      @active_cows = @farm.cows.actives.page(params[:page]).per(50)
+      @inactive_cows = @farm.cows.inactives.page(params[:page]).per(50)
       @attributes = KepplerCattle::Cow.index_attributes
       @typologies = KepplerCattle::Typology.all
       @strategic_lots = @farm.strategic_lots.map { |x| "'#{x.id}': '#{x.name}'" }.join(', ')

@@ -79,9 +79,12 @@ module KepplerFarm
       end
 
       def toggle
-        Photo.all.each { |x| x.update(cover: nil) }
-        @photo = Photo.find_by(id: params[:photo_id])
-        @photo.update(cover: true)
+        @farm.photos.each { |x| x.update(cover: nil) }
+        @photo = @farm.photos.find_by(id: params[:photo_id])
+        puts "**************#{@photo.id}***********"
+        puts "**************#{@photo.cover}***********"
+        @photo.update!(cover: true)
+        puts "**************#{@photo.cover}***********"
         redirect_to controller: :farms, action: :show, id: @farm&.id
       end
 

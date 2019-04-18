@@ -151,6 +151,9 @@ en:
         updated: "%{model} has been updated successfully"
         deleted: "%{model} has been deleted successfully"
         removed: "%{model} have been removed successfully"
+      photo:
+        cannot_unselect: You cannot unselect a cover
+        please_select_anyone_else: Please select anyone else
     header_information:
       setting:
         basic_information: Basic Information

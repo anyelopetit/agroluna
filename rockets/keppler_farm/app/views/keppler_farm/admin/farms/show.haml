@@ -100,7 +100,7 @@
 
 
   .row{ style: 'margin-top: 10px' }
-    - @farm.photos.each do |photo|
+    - @farm.photos.order(:id).each do |photo|
       .col-md-4
         .box.slice-box
           .box-header.with-border
@@ -108,7 +108,7 @@
               = render 'switch', farm: @farm, photo: photo
             .pull-right
               .item-toolbar
-                .item
+                -# .item
                   = link_to edit_admin_farm_farm_photo_path(@farm, photo), class: 'new-menu', title: t('keppler.actions.edit') do
                     %i.icon-pencil
                 .item

@@ -11,12 +11,12 @@
       %label.switch
         %input{name: "photo[cover]", type: "hidden", value: "true"}
         %input{id: "switch-#{photo.id}", :type => "checkbox"}
-        %span.slider.round{onclick: "sendPermission('#{photo.id}')"}
+        %span.slider.round{onclick: "changeCover('#{photo.id}')"}
       .switch-label.disabled= t('activerecord.attributes.cover')
     
 
 :javascript
-  function sendPermission(id) {
+  function changeCover(id) {
     $("#edit_photo_"+id).submit()
   }
 

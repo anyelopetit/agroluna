@@ -7,5 +7,9 @@ module KepplerFarm
       @user = user
       @objects = objects
     end
+    
+    def destroy?
+      false
+    end
   end
 end

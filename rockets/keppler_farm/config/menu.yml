@@ -6,6 +6,13 @@ menu:
     icon: rocket
     model: User
     submenu:
+      - responsable:
+          name: responsable
+          url_path: /admin/farm/responsables
+          icon: layers
+          current: ['/admin/farm/responsables']
+          model: KepplerFarm::Responsable
+
 
       - farm:
           name: farm

@@ -1,4 +1,4 @@
-.modal.modal_status.fade{ id: "modalGroup", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+.modal.modal_status.fade{ id: "modalGroup", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog" }
   .modal-dialog{role: "document", style: "max-width: 800px;"}
     .modal-content
       .modal-header
@@ -36,7 +36,7 @@
                     .float-right
                       %button{ type: 'submit', id: 'add-cattle', class: 'btn btn_custom btn--filled btn--medium' }
                         Agregar
-                -# %select#season_cow_strategic_lot.form-control.select.required.form-control.input_custom{"aria-hidden" => "true", name: "season_cow[strategic_lot]", tabindex: "-1" }
+                -# %select#season_cow_strategic_lot.form-control.select.required.form-control.input_custom{"aria-hidden" => "true", name: "season_cow[strategic_lot]"  }
                 -#   %option 1
                 -# .float-right.mt-3
                 -#   %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
@@ -45,9 +45,10 @@
             .col-lg-12.mt-4
               %h1.mt-4.mb-4 Grupo de ganado
               .d-flex.justify-content-end.mb-4
-                %button.btn.btn_custom.btn--filled.btn--medium#remove_from_lot{ disabled: true }
-                  %i.icofont-trash
-                  Remover ganado
+                = link_to destroy_season_cows_farm_season_path(@farm, @season, @strategic_lot, []), class: 'multiple_bulls_ids disable', disabled: true, method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
+                  %button.btn.btn_custom.btn--medium.btn--filled.disable#remove_from_lot{ disabled: true }
+                    %i.icofont-trash
+                    Sacar de la temporada
               = render 'season_bulls_table', bulls: @bulls
             -# .col-lg-12
               .float-left
@@ -107,45 +108,53 @@
     $("#" + $id).show()
   })
 
-  var $bull_ids = #{@cows.pluck(:id)}
-  var $final_array = []
-  var href = $('.destroy_multiple').attr('href')
+  var $bull_ids = #{@bulls.pluck(:id)}
+  var $bulls_final_array = []
+  var $bulls_hrefs = []
+  $('.multiple_bulls_ids').each(function(index, elem) {
+    $bulls_hrefs.push($(this).attr('href'))
+  })
 
-  function ids_loop() {
+  function ids_loop_bulls() {
     $bull_ids.forEach(function (id) {
       $('[checklist-model="check"]:checked').each(function( index ) {
         if ($(this).prop('id').includes(id)) {
-          if ( !$final_array.includes(id) ) {
-            $final_array.push(id)
+          if ( !$bulls_final_array.includes(id) ) {
+            $bulls_final_array.push(id)
           }
         }
       });
       $('[checklist-model="check"]:not(:checked)').each(function( index ) {
         if ($(this).prop('id').includes(id)) {
-          if ($final_array.includes(id)) {
-            $final_array.splice($final_array.indexOf(id), 1);
+          if ($bulls_final_array.includes(id)) {
+            $bulls_final_array.splice($bulls_final_array.indexOf(id), 1);
           }
         }
       });
     });
-    $('.destroy_multiple').attr('href', (`${href}&multiple_ids=[${$final_array}]`))
-    if ($final_array.length === 0) {
-      document.getElementById('remove_from_lot').disabled = true
-    } else {
-      document.getElementById('remove_from_lot').disabled = false
-    }
+
+    $('.multiple_bulls_ids').each(function(index, elem) {
+      href = `${$bulls_hrefs[index] + $bulls_final_array}`
+      if ($(this)[0].localName == 'a') {
+        $(this).attr('href', `${href}`)
+      } else if ($(this)[0].localName == 'input') {
+        $(this).attr('value', `${$bulls_final_array}`)        
+      }
+    })
+
+    $('#remove_from_lot').prop('disabled', !$bulls_final_array.length == 0)
   }
 
-  $('#checkbox-all').click(function() {
-    $('[checklist-model="check"]').prop( "checked", $(this).prop( "checked" ) )
-    ids_loop()
+  $('#checkbox-all-bulls').click(function() {
+    $('[checklist-model-bull="check"]').prop( "checked", $(this).prop( "checked" ) )
+    ids_loop_bulls()
   })
 
-  $('[checklist-model="check"]').click(function() {
-    ids_loop()
-    $('#checkbox-all').prop(
+  $('[checklist-model-bull="check"]').click(function() {
+    ids_loop_bulls()
+    $('#checkbox-all-bulls').prop(
       'checked',
-      JSON.stringify($bull_ids) === JSON.stringify($final_array)
+      JSON.stringify($bull_ids) === JSON.stringify($bulls_final_array)
     )
   })
 

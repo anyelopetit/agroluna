@@ -3,22 +3,26 @@ en:
     sidebar-menu:
       keppler-farm: Farms
       keppler-farm-submenu:
+        responsable: Responsable
         strategic-lot: Strategic lots
         process: Processes
         farm: Farms
     permissions:
     models:
       singularize:
+        responsable: responsable
         strategic_lot: strategic lot
         photo: photo
         process: process
         farm: farm
       pluralize:
+        responsables: responsables
         strategic_lots: strategic lots
         photos: photos
         processes: processes
         farms: farms
     modules:
+      admin/responsable: Responsable
       admin/strategic-lot: Strategic lot
       admin/photo: Photo
       admin/process: Process

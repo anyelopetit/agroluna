@@ -3,22 +3,26 @@ es:
     sidebar-menu:
       keppler-farm: Fincas
       keppler-farm-submenu:
+        responsable: Responsable
         strategic-lot: Lotes Estratégicos
         process: Procesos
         farm: Fincas
     permissions:
     models:
       singularize:
+        responsable: responsable
         strategic_lot: lote estratégico
         photo: foto
         process: proceso
         farm: finca
       pluralize:
+        responsables: responsables
         strategic_lots: lotes estratégicos
         photos: fotos
         processes: procesos
         farms: fincas
     modules:
+      admin/responsable: Responsable
       admin/strategic-lot: Lote estratégico
       admin/photo: Fotos
       admin/process: Procesos

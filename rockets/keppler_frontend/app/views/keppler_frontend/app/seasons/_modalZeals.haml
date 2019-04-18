@@ -1,4 +1,4 @@
-.modal.modal_status.fade{ id: "modalZeals", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+.modal.modal_status.fade{ id: "modalZeals", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog" }
   .modal-dialog{role: "document", style: "max-width: 800px;"}
     .modal-content
       .modal-header
@@ -20,13 +20,13 @@
                         -# = f.input :start_date, as: :string, label: 'Fecha del celo', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom', autocomplete: 'off' }
                         .form-group
                           %label.label_custom--strong Fecha del celo
-                          %input.form-control.input_custom.datepicker{ name: "status[date]", autocomplete: 'off' }
+                          %input.form-control.input_custom.datepicker{ name: "status[date]", autocomplete: 'off', value: Date.today }
                       .col-sm-12.col-md-6
                         -# = f.input :name, label: 'Nombre del Responsable', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
                         .form-group
                           %label.label_custom--strong Nombre del responsable
-                          %select.form-control.input_custom.datepicker{ name: "status[user_id]", autocomplete: 'off' }
-                            - User.all.drop(1).each do |user|
+                          %select.form-control.input_custom#status_user_name{ name: "status[user_name]", autocomplete: 'off' }
+                            - KepplerFarm::Responsable.all.each do |user|
                               %option{ value: user.id }= user.name
                       .col-sm-12
                         -# = f.input :name, label: 'Observaciones', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }

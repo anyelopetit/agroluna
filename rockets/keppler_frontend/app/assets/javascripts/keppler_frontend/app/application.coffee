@@ -1,7 +1,7 @@
 #= require jquery
-#= require jquery-ui/widgets/datepicker
-#= require jquery-ui/widgets/sortable
 #= require jquery_ujs
+#= require jquery-ui
+#= require autocomplete-rails
 # require rails-ujs
 # require turbolinks
 #= require jquery.remotipart

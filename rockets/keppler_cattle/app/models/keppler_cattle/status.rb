@@ -13,6 +13,7 @@ module KepplerCattle
     acts_as_paranoid
 
     belongs_to :cow, class_name: 'KepplerCattle::Cow', foreign_key: 'cow_id'
+    belongs_to :user, class_name: 'KepplerFarm::Responsable', foreign_key: 'user_id'
 
     belongs_to :insemination, class_name: 'KepplerCattle::Insemination', optional: true
 
@@ -20,6 +21,14 @@ module KepplerCattle
 
     def self.index_attributes
       %i[]
+    end
+
+    def user_name
+      user.try(:name)
+    end
+
+    def user_name=(name)
+      self.user = KepplerFarm::Responsable.find_or_create_by_name(name) if name.present?
     end
 
     private

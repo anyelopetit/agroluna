@@ -6,10 +6,6 @@
       > #{@strategic_lot.name}
     .d-flex.justify-content-end
       .float-rigth
-        = link_to destroy_season_cows_farm_season_path(@farm, @season, @strategic_lot, []), class: 'multiple_ids disable', disabled: true, method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
-          %button.btn.btn_custom.btn--medium.btn--filled.disable{ disabled: true }
-            %i.icofont-trash
-            Sacar de la temporada
         %button.btn.btn_custom.bg-white.btn--medium{'data-target': "#modalGroup", 'data-toggle': 'modal'}
           = image_tag '/assets/keppler_cattle/male', class: 'svg-icon-xs ml-2', style: 'height: 12px'
           = @bulls.count
@@ -21,23 +17,8 @@
     = render 'status'
     .card_show
       .tab-content
-        #disponibles.tab-pane.active
-          .float-right.mt-4.mb-4{style: "z-index: 2;"}
-            %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalZeals", 'data-toggle': 'modal', disabled: true }
-              %i.icofont-plus
-              Marcar Celos
-            = link_to new_services_farm_season_path(@farm.id, @season.id, @strategic_lot.id, []), class: 'multiple_ids disable', disabled: true do
-              %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalServices", 'data-toggle': 'modal', disabled: true }
-                %i.icofont-plus
-                Agregar Servicios
-            %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalPregnancy", 'data-toggle': 'modal', disabled: true }
-              %i.icofont-plus
-              Añadir Preñez
-          = render 'season_cows_table', cows: @cows
-= render 'keppler_frontend/app/seasons/modalGroup', season: @season
-= render 'keppler_frontend/app/seasons/modalZeals', season: @season
--# = render 'keppler_frontend/app/seasons/modalServices', season: @season
-= render 'keppler_frontend/app/seasons/modalPregnancy', season: @season
+        = render 'season_cows_table', cows: @cows
+  = render 'keppler_frontend/app/seasons/modalGroup', season: @season
 
 :javascript
 
@@ -121,11 +102,11 @@
     selectOtherMonths: true,
     changeMonth: true,
     changeYear: true,
-    minDate: -#{(Date.today - @season.start_date).to_i},
     maxDate: 0,
     setDate: 0,
     yearRange: "c-1:c+1",
   }, $.datepicker.regional[ "es" ])
+
 
 :javascript
 

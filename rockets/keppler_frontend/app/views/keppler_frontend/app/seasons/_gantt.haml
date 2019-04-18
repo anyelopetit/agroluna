@@ -59,7 +59,7 @@
       - season.duration_days.times do |day|
         %span{ class: ('marker' if (season.start_date + day).strftime('%d%m%y').eql?((Date.today + 1).strftime('%d%m%y'))) }
     - last_cicle_days = 0
-    - [['Celos', 'Zeal'], ['Servicios', 'Service'], ['Palpaciones', 'Palpation'], ['Preñez', 'Pregnant'], ['Parto', 'Birth']].each do |status|
+    - [['Celos', 'Zeal'], ['Servicios', 'Service'], ['Preñez', 'Pregnancy'], ['Parto', 'Birth']].each do |status|
       .gantt__row
         .gantt__row-first
           #{status.first}

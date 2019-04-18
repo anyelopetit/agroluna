@@ -45,10 +45,10 @@
             .col-lg-12.mt-4
               %h1.mt-4.mb-4 Grupo de ganado
               .d-flex.justify-content-end.mb-4
-                = link_to destroy_assign_bulls_farm_season_path(@farm, @season, @strategic_lot, []), class: 'multiple_bulls_ids', method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
-                  %button.btn.btn_custom.btn--filled.btn--medium#remove_from_lot{ disabled: true }
+                = link_to destroy_season_cows_farm_season_path(@farm, @season, @strategic_lot, []), class: 'multiple_bulls_ids disable', disabled: true, method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
+                  %button.btn.btn_custom.btn--medium.btn--filled.disable#remove_from_lot{ disabled: true }
                     %i.icofont-trash
-                    Remover ganado
+                    Sacar de la temporada
               = render 'season_bulls_table', bulls: @bulls
             -# .col-lg-12
               .float-left
@@ -108,29 +108,41 @@
     $("#" + $id).show()
   })
 
-  var $bull_ids = #{@cows.pluck(:id)}
-  var $final_array = []
-  var href = $('.multiple_bulls_ids').attr('href')
+  var $bull_ids = #{@bulls.pluck(:id)}
+  var $bulls_final_array = []
+  var $bulls_hrefs = []
+  $('.multiple_bulls_ids').each(function(index, elem) {
+    $bulls_hrefs.push($(this).attr('href'))
+  })
 
   function ids_loop_bulls() {
     $bull_ids.forEach(function (id) {
       $('[checklist-model="check"]:checked').each(function( index ) {
         if ($(this).prop('id').includes(id)) {
-          if ( !$final_array.includes(id) ) {
-            $final_array.push(id)
+          if ( !$bulls_final_array.includes(id) ) {
+            $bulls_final_array.push(id)
           }
         }
       });
       $('[checklist-model="check"]:not(:checked)').each(function( index ) {
         if ($(this).prop('id').includes(id)) {
-          if ($final_array.includes(id)) {
-            $final_array.splice($final_array.indexOf(id), 1);
+          if ($bulls_final_array.includes(id)) {
+            $bulls_final_array.splice($bulls_final_array.indexOf(id), 1);
           }
         }
       });
     });
-    $('.multiple_bulls_ids').attr('href', (`${href}&multiple_ids=[${$final_array}]`))
-    $('#remove_from_lot').prop('disabled', !$final_array.length == 0)
+
+    $('.multiple_bulls_ids').each(function(index, elem) {
+      href = `${$bulls_hrefs[index] + $bulls_final_array}`
+      if ($(this)[0].localName == 'a') {
+        $(this).attr('href', `${href}`)
+      } else if ($(this)[0].localName == 'input') {
+        $(this).attr('value', `${$bulls_final_array}`)        
+      }
+    })
+
+    $('#remove_from_lot').prop('disabled', !$bulls_final_array.length == 0)
   }
 
   $('#checkbox-all-bulls').click(function() {
@@ -142,7 +154,7 @@
     ids_loop_bulls()
     $('#checkbox-all-bulls').prop(
       'checked',
-      JSON.stringify($bull_ids) === JSON.stringify($final_array)
+      JSON.stringify($bull_ids) === JSON.stringify($bulls_final_array)
     )
   })
 

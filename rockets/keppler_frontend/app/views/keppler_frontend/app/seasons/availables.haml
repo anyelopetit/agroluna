@@ -6,6 +6,10 @@
       > #{@strategic_lot.name}
     .d-flex.justify-content-end
       .float-rigth
+        = link_to destroy_season_cows_farm_season_path(@farm, @season, @strategic_lot, []), class: 'multiple_ids disable', disabled: true, method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
+          %button.btn.btn_custom.btn--medium.btn--filled.disable{ disabled: true }
+            %i.icofont-trash
+            Sacar de la temporada
         %button.btn.btn_custom.bg-white.btn--medium{'data-target': "#modalGroup", 'data-toggle': 'modal'}
           = image_tag '/assets/keppler_cattle/male', class: 'svg-icon-xs ml-2', style: 'height: 12px'
           = @bulls.count

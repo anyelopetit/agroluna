@@ -159,11 +159,21 @@ module KepplerFrontend
       )
     end
 
-    def destroy_assign_bulls
-      params[:multiple_ids].each do |bull_id|
-        season_cow = SeasonCow.find_by(id: bull_id)
+    def destroy_season_cows
+      params[:multiple_ids].split(',').each do |cow_id|
+        puts "///////////#{cow_id}"
+        season_cow = KepplerReproduction::SeasonCow.find_by(
+          season_id: @season.id,
+          cow_id: cow_id
+        )
+        puts "///////////#{season_cow}"
         season_cow.destroy! if season_cow
       end
+      redirect_back fallback_location: availables_farm_season_path(
+        @farm.id,
+        @season.id,
+        params[:strategic_lot_id]
+      )
     end
 
     def statuses
@@ -212,6 +222,11 @@ module KepplerFrontend
       #   end
       # end
       redirect_to farm_season_path(@farm.id,@season.id)
+    end
+
+    def finish
+      @season.update(finished: true)
+      redirect_to farm_season_path(@farm, @season)
     end
 
     private

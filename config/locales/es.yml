@@ -160,6 +160,15 @@ es:
         updated: "%{model} se ha actualizado satisfactoriamente"
         deleted: "%{model} se ha eliminado satisfactoriamente"
         removed: "%{model} se han eliminado satisfactoriamente"
+      operator:
+        assigned: El usuario %{operator} ha sido asignado como operador
+        not_assigned: El usuario %{operator} no pudo ser asignado como operador
+        deleted: El operador %{operator} ha sido eliminado
+        not_deleted: No se pudo eliminar operador %{operator}
+        doesnt_exist: El operador %{operator} no existe
+      photo:
+        cannot_unselect: No puedes deseleccionar una portada
+        please_select_anyone_else: Por favor selecciona alguna otra foto
     header_information:
       setting:
         basic_information: Información básica

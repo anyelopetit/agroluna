@@ -2,11 +2,11 @@
   .form-padding
     .row
       .col-sm-12.col-md-6
-        = f.input :name, as: :string, label: 'Nombre', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+        = f.input :name, as: :string, label: 'Nombre', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-12.col-md-6
         = f.input :function, as: :string, label: 'Función', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-12
-        = f.input :description, label: 'Descripción', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+        = f.input :description, label: 'Descripción', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
       .col-sm-12
         = f.input :farm_id, input_html: { value: @farm&.id }, as: :hidden #, collection: @farms
       .col-sm-12

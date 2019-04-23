@@ -223,6 +223,33 @@ module KepplerFrontend
       )
     end
 
+    def new_pregnancies
+      @cows = @season.cows.where(id: params[:multiple_ids].split(','))
+      @possible_fathers = @farm.cows.possible_fathers_select2
+      @found = false
+    end
+
+    def create_pregnancies
+      cow = @season.cows.find(params[:status][:cow_id])
+      insemination = @farm.inseminations.find(params[:status][:insemination_id])
+      status = KepplerCattle::Status.new(
+        status_type: params[:status][:type],
+        cow_id: params[:status][:cow_id].to_i,
+        date: params[:status][:date] || Date.today,
+        months: params[:status][:months] || 0,
+        user_id: params[:status][:user_id],
+        observations: params[:status][:observations] || '',
+        insemination_id: params[:status][:insemination_id] || nil
+      )
+      flash[:notice] = 
+        status.save! ? 'Servicio guardado' : 'No se pudo guardar el servicio'
+      redirect_back fallback_location: availables_farm_season_path(
+        @farm.id,
+        @season.id,
+        params[:strategic_lot_id]
+      )
+    end
+
     def finish
       @season.update(finished: true)
       redirect_to farm_season_path(@farm, @season)
@@ -248,7 +275,7 @@ module KepplerFrontend
         status_params[:multiple_ids].split(',').each do |cow_id|
           cow = @season.cows.find(cow_id)
           status = KepplerCattle::Status.new(
-            status_type: status_params[:type] || action_name.singularize.humanize,
+            status_type: status_params[:type],
             user: responsable,
             cow_id: cow_id,
             date: status_params[:date] || Date.today,

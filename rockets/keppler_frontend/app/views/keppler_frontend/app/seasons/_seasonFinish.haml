@@ -22,8 +22,8 @@
           .col-lg-12
             .card_show
               %h1.text-center Efectividad de la temporada
-              %canvas#line-chart{:height => "150", :width => "400"}
-              // %canvas#buyers{:height => "400", :width => "1150"}
+              %canvas#line-chart{ height: "150", width: "400"}
+              // %canvas#buyers{ height: "400", width: "1150"}
           .col-lg-12
             %h1.mb-4{style:"text-transform: uppercase"} Procesos
             .row
@@ -32,31 +32,31 @@
                   .text-center
                     %h3{style: "font-weight: 600;"} Celos
                     %h4 Cantidad de vacas
-                  %canvas#celo-chart{:height => "150", :width => "250"}
+                  %canvas#celo-chart{ height: "150", width: "250"}
               .col-lg-4
                 .card_show
                   .text-center
                     %h3{style: "font-weight: 600;"} Servicios
                     %h4 Cantidad vacas
-                  %canvas#services-chart{:height => "150", :width => "250"}
+                  %canvas#services-chart{ height: "150", width: "250"}
               .col-lg-4
                 .card_show
                   .text-center
                     %h3{style: "font-weight: 600;"} Preñadas
                     %h4 Cantidad vacas
-                  %canvas#pregnancy-chart{:height => "150", :width => "250"}
+                  %canvas#pregnancy-chart{ height: "150", width: "250"}
               // .col-lg-3
               //   .card_show
               //     .text-center
               //       %h3{style: "font-weight: 600;"} Parto
               //       %h4 Cantidad vacas
-              //     %canvas#parto-chart{:height => "150", :width => "250"}
+              //     %canvas#parto-chart{ height: "150", width: "250"}
               // .col-lg-4
               //   .card_show
               //     .text-center
               //       %h3{style: "font-weight: 600;"} Abortos
               //       %h4 Cantidad vacas
-              //     %canvas#aborto-chart{:height => "150", :width => "250"}
+              //     %canvas#aborto-chart{ height: "150", width: "250"}
               .col-lg-4
                 .card_show{style:"min-height: 254px;"}
                   .container-profile.mt-4
@@ -83,7 +83,7 @@
                           //     Efectividad
                           //   %span
                           //     90%
-                  %canvas#doctor-chart{:height => "95", :width => "250"}
+                  %canvas#doctor-chart{ height: "95", width: "250"}
               .col-lg-4
                 .card_show{style:"min-height: 254px;"}
                   .container-profile.mt-4
@@ -110,7 +110,7 @@
                           //     Efectividad
                           //   %span
                           //     90%
-                  %canvas#inseminations-chart{:height => "95", :width => "250"}
+                  %canvas#inseminations-chart{ height: "95", width: "250"}
 
 
 
@@ -127,16 +127,17 @@
       // one_two_gradient.addColorStop(1, '#BDFFF3');
 
       var three_four_gradient = bar_ctx.createLinearGradient(0, 0, 0, 800);
-      three_four_gradient.addColorStop(0, '#f28d23');
+      three_four_gradient.addColorStop(0, '#e0e6e9');
       // three_four_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
-      three_four_gradient.addColorStop(1, '#f83600');
+      three_four_gradient.addColorStop(1, '#e0e6e9');
     
       var line_chart = new Chart(bar_ctx, {
           type: 'pie',
           data: {
-              labels: ["Preñadas en toda la temporada", " "],
+              labels: ["Preñadas en toda la temporada", "Sin preñar"],
               datasets: [{
-                  data: [12, 3],
+                  label: 'Vacas en celo',
+                  data: [#{@season.cows.select { |x| x.status&.status_type == 'Birth' }.count}, #{@season.cows.reject { |x| x.status&.status_type == 'Birth' }.count }],
                   backgroundColor: [
                     one_two_gradient,
                     three_four_gradient,

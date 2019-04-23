@@ -67,6 +67,7 @@
               %th Tipo
               %th Fecha de Inicio
               %th Fecha de Fin
+              %th Estado
               %th Menu
           %tbody
             - @seasons.each do |season|
@@ -89,6 +90,10 @@
                 %td
                   = link_to({action: :show, farm_id: @farm&.id, id: season.id}, {title: season.name}) do
                     = season&.finish_date&.strftime('%d/%m/%y')
+                %td
+                  = link_to({action: :show, farm_id: @farm&.id, id: season.id}, {title: season.name}) do
+                    %div{ style: "color: #{season&.finished ? 'red' : 'green'}" }
+                      = season&.finished ? 'Cerrada' : 'Abierta'
                 
                 %td
                   .dropdown{ style: 'justify-content: center; cursor:pointer' }

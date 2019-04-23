@@ -77,10 +77,10 @@
                       = @cows.total_season_cows(strategic_lot).type_is(['Service']).count
                   %td
                     = link_to({ controller: :seasons, action: :pregnants, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
-                      = @cows.total_season_cows(strategic_lot).type_is(['Pregnant']).count
+                      = @cows.total_season_cows(strategic_lot).type_is(['Pregnancy']).count
                   %td
                     = link_to({ controller: :seasons, action: :births, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
-                      = @cows.total_season_cows(strategic_lot).type_is(['Births']).count
+                      = @cows.total_season_cows(strategic_lot).type_is(['Birth']).count
                   %td
                     = link_to({ controller: :seasons, action: :births, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
                       = @cows.total_season_cows(strategic_lot).count

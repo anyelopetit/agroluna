@@ -13,6 +13,7 @@ module KepplerFrontend
     before_action :index_variables
     strategic_lot_states = %i[
       availables zeals services pregnants births new_services create_services
+      new_pregnancies create_pregnancies
     ]
     before_action :strategic_lot_variables, only: strategic_lot_states
     before_action :attachments

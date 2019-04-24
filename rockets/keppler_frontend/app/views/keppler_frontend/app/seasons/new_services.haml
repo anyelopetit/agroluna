@@ -29,8 +29,8 @@
                             %span= cow.statuses.where(status_type: 'Service').last&.date&.strftime('%d/%m/%y')
                             \-
                             Pajuela
-                            %b= @farm.inseminations.find(cow.statuses.where(status_type: 'Service').last.insemination_id).serie_number
-                            (#{cow.statuses.where(status_type: 'Service').last.insemination_quantity.to_i} cartuchos)
+                            %b= @farm.inseminations.find(cow.statuses.where(status_type: 'Service').last&.insemination_id).serie_number
+                            (#{cow.statuses.where(status_type: 'Service').last&.insemination_quantity.to_i} cartuchos)
                           - else
                             %b Sin servicios realizados
                   - unless @found

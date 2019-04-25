@@ -211,6 +211,8 @@ en:
         xls: Download XLS
   activerecord:
     attributes:
+      female: Female
+      male: Male
       public: Public
       id: Id
       title: Title

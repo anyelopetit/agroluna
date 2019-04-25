@@ -65,7 +65,7 @@
                   = cow&.status&.status_type
               - if action_name.eql?('pregnants')
                 %td
-                  %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalBirth", 'data-toggle': 'modal', disabled: true }
+                  %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
                     %i.icofont-plus
                     Regristrar parto
                   = render 'keppler_frontend/app/seasons/modalBirth', season: @season, cow: cow

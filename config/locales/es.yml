@@ -224,6 +224,8 @@ es:
         xls: Descargar XLS
   activerecord:
     attributes:
+      female: Hembra
+      male: Macho
       public: Publico
       id: Identificador
       title: Título

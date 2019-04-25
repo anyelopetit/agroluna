@@ -8,116 +8,108 @@
     %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.0/Chart.min.js"}
   %body
     .app_wrapper
-      .container_custom
-        -# .d-flex.justify-content-between
-          .float-left.mb-4{ style: 'width: 80%' }
-            %h1
-              #{@season.name}
-              %label.badge (#{@season.type_name})
-          .right.mt-4.mb-4
-            %button.btn.btn_custom.btn--filled.btn--medium
-              %i.icofont-clip-board
-              Reporte
-        .row
-          .col-lg-12
-            .card_show
-              %h1.text-center Efectividad de la temporada
-              %canvas#line-chart{ height: "150", width: "400"}
-              // %canvas#buyers{ height: "400", width: "1150"}
-          .col-lg-12
-            %h1.mb-4{style:"text-transform: uppercase"} Procesos
-            .row
-              .col-lg-4
-                .card_show
+
+      -# .d-flex.justify-content-between
+        .float-left.mb-4{ style: 'width: 80%' }
+          %h1
+            #{@season.name}
+            %label.badge (#{@season.type_name})
+        .right.mt-4.mb-4
+          %button.btn.btn_custom.btn--filled.btn--medium
+            %i.icofont-clip-board
+            Reporte
+      .row
+        .col-lg-12
+          .card_show
+            %h1.text-center Efectividad de la temporada
+            %canvas#line-chart{ height: "150", width: "400"}
+            // %canvas#buyers{ height: "400", width: "1150"}
+        .col-lg-12
+          %h1.mb-4{style:"text-transform: uppercase"} Procesos
+          .row
+            .col-lg-4
+              .card_show
+                .text-center
+                  %h3{style: "font-weight: 600;"} Celos
+                  %h4 Cantidad de vacas
+                %canvas#celo-chart{ height: "150", width: "250"}
+            .col-lg-4
+              .card_show
+                .text-center
+                  %h3{style: "font-weight: 600;"} Servicios
+                  %h4 Cantidad vacas
+                %canvas#services-chart{ height: "150", width: "250"}
+            .col-lg-4
+              .card_show
+                .text-center
+                  %h3{style: "font-weight: 600;"} Preñadas
+                  %h4 Cantidad vacas
+                %canvas#pregnancy-chart{ height: "150", width: "250"}
+            // .col-lg-3
+            //   .card_show
+            //     .text-center
+            //       %h3{style: "font-weight: 600;"} Parto
+            //       %h4 Cantidad vacas
+            //     %canvas#parto-chart{ height: "150", width: "250"}
+            // .col-lg-4
+            //   .card_show
+            //     .text-center
+            //       %h3{style: "font-weight: 600;"} Abortos
+            //       %h4 Cantidad vacas
+            //     %canvas#aborto-chart{ height: "150", width: "250"}
+            .col-lg-4
+              .card_show{style:"min-height: 254px;"}
+                .container-profile.mt-4
                   .text-center
-                    %h3{style: "font-weight: 600;"} Celos
-                    %h4 Cantidad de vacas
-                  %canvas#celo-chart{ height: "150", width: "250"}
-              .col-lg-4
-                .card_show
+                    %h3.mb-4{style: "font-weight: 600;"} Veterinario
+                  .profile.d-flex
+                    .profile-img
+                      %img{style: "width:70px;height:70px; border-radius: 50%;object-fit: cover;",src:"https://images.pexels.com/photos/433635/pexels-photo-433635.jpeg?cs=srgb&dl=adult-care-cure-433635.jpg&fm=jpg", alt:""}
+                    .content-profile.ml-4{style: "width:100%"}
+                      %strong Jon Snow
+                      .count-cow.d-flex.justify-content-around
+                        %div.d-flex.flex-column{style: "width:50%%"}
+                          %span
+                            Preñadas
+                          %span
+                            20
+                        %div.d-flex.flex-column{style: "width:31%"}
+                          %span
+                            Vacias
+                          %span
+                            10
+                        // %div.d-flex.flex-column{style: "width:33%"}
+                        //   %span
+                        //     Efectividad
+                        //   %span
+                        //     90%
+                %canvas#doctor-chart{ height: "95", width: "250"}
+            .col-lg-4
+              .card_show{style:"min-height: 254px;"}
+                .container-profile.mt-4
                   .text-center
-                    %h3{style: "font-weight: 600;"} Servicios
-                    %h4 Cantidad vacas
-                  %canvas#services-chart{ height: "150", width: "250"}
-              .col-lg-4
-                .card_show
-                  .text-center
-                    %h3{style: "font-weight: 600;"} Preñadas
-                    %h4 Cantidad vacas
-                  %canvas#pregnancy-chart{ height: "150", width: "250"}
-              // .col-lg-3
-              //   .card_show
-              //     .text-center
-              //       %h3{style: "font-weight: 600;"} Parto
-              //       %h4 Cantidad vacas
-              //     %canvas#parto-chart{ height: "150", width: "250"}
-              // .col-lg-4
-              //   .card_show
-              //     .text-center
-              //       %h3{style: "font-weight: 600;"} Abortos
-              //       %h4 Cantidad vacas
-              //     %canvas#aborto-chart{ height: "150", width: "250"}
-              .col-lg-4
-                .card_show{style:"min-height: 254px;"}
-                  .container-profile.mt-4
-                    .text-center
-                      %h3.mb-4{style: "font-weight: 600;"} Veterinario
-                    .profile.d-flex
-                      .profile-img
-                        %img{style: "width:70px;height:70px; border-radius: 50%;object-fit: cover;",src:"https://images.pexels.com/photos/433635/pexels-photo-433635.jpeg?cs=srgb&dl=adult-care-cure-433635.jpg&fm=jpg", alt:""}
-                      .content-profile.ml-4{style: "width:100%"}
-                        %strong Jon Snow
-                        .count-cow.d-flex.justify-content-around
-                          %div.d-flex.flex-column{style: "width:50%%"}
-                            %span
-                              Preñadas
-                            %span
-                              20
-                          %div.d-flex.flex-column{style: "width:31%"}
-                            %span
-                              Vacias
-                            %span
-                              10
-                          // %div.d-flex.flex-column{style: "width:33%"}
-                          //   %span
-                          //     Efectividad
-                          //   %span
-                          //     90%
-                  %canvas#doctor-chart{ height: "95", width: "250"}
-              .col-lg-4
-                .card_show{style:"min-height: 254px;"}
-                  .container-profile.mt-4
-                    .text-center
-                      %h3.mb-4{style: "font-weight: 600;"} Inseminador 
-                    .profile.d-flex
-                      .profile-img
-                        %img{style: "width:70px;height:70px; border-radius: 50%;object-fit: cover;",src:"https://images.pexels.com/photos/433635/pexels-photo-433635.jpeg?cs=srgb&dl=adult-care-cure-433635.jpg&fm=jpg", alt:""}
-                      .content-profile.ml-4{style: "width:100%"}
-                        %strong Jon Snow
-                        .count-cow.d-flex.justify-content-center
-                          %div.d-flex.flex-column{style: "width:50%"}
-                            %span
-                              Inseminadas
-                            %span
-                              20
-                          %div.d-flex.flex-column{style: "width:50%"}
-                            %span
-                              Vacias
-                            %span
-                              10
-                          // %div.d-flex.flex-column{style: "width:33%"}
-                          //   %span
-                          //     Efectividad
-                          //   %span
-                          //     90%
-                  %canvas#inseminations-chart{ height: "95", width: "250"}
+                    %h3.mb-4{style: "font-weight: 600;"} Inseminador 
+                  .profile.d-flex
+                    .profile-img
+                      %img{style: "width:70px;height:70px; border-radius: 50%;object-fit: cover;",src:"https://images.pexels.com/photos/433635/pexels-photo-433635.jpeg?cs=srgb&dl=adult-care-cure-433635.jpg&fm=jpg", alt:""}
+                    .content-profile.ml-4{style: "width:100%"}
+                      %strong Jon Snow
+                      .count-cow.d-flex.justify-content-center
+                        %div.d-flex.flex-column{style: "width:50%"}
+                          %span
+                            Inseminadas
+                          %span
+                            20
+                        %div.d-flex.flex-column{style: "width:50%"}
+                          %span
+                            Vacias
+                          %span
+                            10
+                %canvas#inseminations-chart{ height: "95", width: "250"}
 
 
 
     :javascript
-      // Chart.defaults.global.elements.rectangle.backgroundColor = '#FF0000';
-
-
       // Efectividad
       var bar_ctx = document.getElementById('line-chart').getContext('2d');
       var one_two_gradient = bar_ctx.createLinearGradient(0, 0, 0, 800);
@@ -161,7 +153,7 @@
       });
 
 
-      // celos
+      // zeals
       var celos_ctx = document.getElementById('celo-chart').getContext('2d');
       var one_two_gradient = celos_ctx.createLinearGradient(0, 0, 0, 450);
       one_two_gradient.addColorStop(0, ' #4AC29A');
@@ -191,7 +183,7 @@
           }
       });
 
-      // Servicio
+      // Service
       var service_ctx = document.getElementById('services-chart').getContext('2d');
       var one_two_gradient = service_ctx.createLinearGradient(0, 0, 0, 450);
       one_two_gradient.addColorStop(0, ' #4AC29A');
@@ -223,7 +215,7 @@
       });
 
 
-      // Preñez
+      // Pregnancy
       var pregnancy_ctx = document.getElementById('pregnancy-chart').getContext('2d');
       var one_two_gradient = pregnancy_ctx.createLinearGradient(0, 0, 0, 450);
       one_two_gradient.addColorStop(0, ' #4AC29A');

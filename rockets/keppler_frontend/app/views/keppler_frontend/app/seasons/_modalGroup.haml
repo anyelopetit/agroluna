@@ -45,7 +45,7 @@
             .col-lg-12.mt-4
               %h1.mt-4.mb-4 Grupo de ganado
               .d-flex.justify-content-end.mb-4
-                = link_to destroy_season_cows_farm_season_path(@farm, @season, @strategic_lot, []), class: 'multiple_bulls_ids disable', disabled: true, method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
+                = link_to destroy_season_cows_farm_season_path(@farm, @season, @strategic_lot, []), class: 'multiple_bulls_ids disable', disabled: true, method: :delete, data: { confirm: '¿Estás seguro?' } do
                   %button.btn.btn_custom.btn--medium.btn--filled.disable#remove_from_lot{ disabled: true }
                     %i.icofont-trash
                     Sacar de la temporada

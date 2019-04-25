@@ -17,57 +17,63 @@
                     %a.btn.btn-active.btn-circle{ href: "#cow-#{cow.id}-step-1", type: "button"} 1
                     %p Paso 1
                   .stepwizard-step
-                    %a.btn.btn-inactive.btn-circle{ disabled: "disabled", href: "#cow-#{cow.id}-step-2", type: "button", style: "border-radius: 50% !important;"} 2
+                    %a.btn.btn-inactive.btn-circle.disabled{ disabled: "disabled", id: "cow-#{cow.id}-step-2-btn", href: "#cow-#{cow.id}-step-2", type: "button", style: "border-radius: 50% !important;"} 2
                     %p Paso 2
                   .stepwizard-step
-                    %a.btn.btn-inactive.btn-circle{ disabled: "disabled", href: "#cow-#{cow.id}-step-3", type: "button", style: "border-radius: 50% !important;"} 3
+                    %a.btn.btn-inactive.btn-circle{ disabled: "disabled", id: "cow-#{cow.id}-step-3-btn", href: "#cow-#{cow.id}-step-3", type: "button", style: "border-radius: 50% !important;"} 3
                     %p Paso 3
                   .stepwizard-step
-                    %a.btn.btn-inactive.btn-circle{ disabled: "disabled", href: "#cow-#{cow.id}-step-4", type: "button", style: "border-radius: 50% !important;"} 4
+                    %a.btn.btn-inactive.btn-circle.disabled{ disabled: "disabled", id: "cow-#{cow.id}-step-4-btn", href: "#cow-#{cow.id}-step-4", type: "button", style: "border-radius: 50% !important;"} 4
                     %p Paso 4
-              = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: statuses_farm_season_path(@farm, @season) do |f|
+              = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: make_birth_farm_season_path(@farm, @season) do |f|
+                %input{ type: 'hidden', name: "status[type]", value: 'Birth' }
+                %input{ type: 'hidden', name: "status[cow_id]", value: cow.id }
                 #form-total
+                  
                   .row.setup-content{ id: "cow-#{cow.id}-step-1" }
                     .col-md-12
                       -# %h3 Step 1
                       .row
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Parto Exitoso
-                          %select.form-control.select.required.input_custom{"aria-hidden" => "true", name: "birth[success]"  }
-                            %option Si
-                            %option No
+                          %select.form-control.select.required.input_custom{ id: "status_#{cow.id}_successfully", "aria-hidden" => "true", name: "status[successfully]"  }
+                            %option{ value: 1 } Si
+                            %option{ value: 0 } No
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Parto de Morochos
-                          %select.form-control.select.required.input_custom{"aria-hidden" => "true", name: "birth[twins]"  }
-                            %option Si
-                            %option No
+                          %select.form-control.select.required.input_custom{ id: "status_#{cow.id}_twins", "aria-hidden" => "true", name: "status[twins]"  }
+                            %option{ value: 0 } No
+                            %option{ value: 1 } Si
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Fecha del parto
-                          %input.form-control.input_custom.datepicker{ name: "birth[date]", autocomplete: 'off', value: Date.today }
+                          %input.form-control.input_custom.datepicker{ id: "status_#{cow.id}_date", name: "status[date]", autocomplete: 'off', value: Date.today }
                         .col-sm-12.col-md-6
                           -# = f.input :name, label: 'Nombre del Responsable', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
                           %label.label_custom--strong Nombre del responsable
-                          %input.form-control.input_custom{ name: "birth[user_name]", autocomplete: 'off', list: 'responsables' }
+                          %input.form-control.input_custom{ name: "status[user_name]", autocomplete: 'off', list: 'responsables' }
                           %datalist#responsables
                             - KepplerFarm::Responsable.all.each do |responsable|
                               %option{ value: responsable.name }
                         .col-sm-12
                           %label.label_custom--strong Observaciones
-                          %input.form-control.input_custom{ name: "birth[observations]" }
+                          %input.form-control.input_custom{ name: "status[observations]" }
                       .float-right.mt-4
                         %button.btn.btn_custom.btn--filled.btn--medium.nextBtn{type: "button"} Siguente
+                  
                   .row.setup-content{ id: "cow-#{cow.id}-step-2" }
                     .col-md-12
                       .row
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Número de serie
-                          %input.form-control.input_custom#username{ name: 'new_cow[serie_number]' }
+                          %input.form-control.input_custom{ id: "new_cow_#{cow.id}_serie_number", name: 'new_cow[serie_number]', required: true }
+                          .invalid-feedback
+                            El número de serie es requerido
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Nombre corto
-                          %input.form-control.input_custom{ name: 'new_cow[short_name]' }
+                          %input.form-control.input_custom{ id: "new_cow_#{cow.id}_short_name", name: 'new_cow[short_name]' }
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Género
-                          %select#birth_strategic_lot.form-control.select.required.input_custom{"aria-hidden" => "true", name: "new_cow[gender]"  }
+                          %select.form-control.select.required.input_custom{"aria-hidden" => "true", name: "new_cow[gender]"  }
                             %option{ value: 'female' } Hembra
                             %option{ value: 'male' } Macho
                         -# .col-sm-12.col-md-6
@@ -76,7 +82,7 @@
                             %option Vacuno
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Raza
-                          %select#new_cow_strategic_lot.form-control.select.required.input_custom{"aria-hidden" => "true", name: "new_cow[race]"  }
+                          %select#new_cow_strategic_lot.form-control.select.required.input_custom{"aria-hidden" => "true", name: "new_cow[race_id]"  }
                             - [cow.race, @farm.inseminations.find_by(id: cow.statuses.where(status_type: 'Pregnancy')&.last&.insemination_id).race].each_with_index do |race, index|
                               %option{ value: race.id } #{race.name} (#{index.zero? ? 'Raza de la madre' : 'Raza del padre'})
                         .col-sm-12.col-md-6
@@ -94,44 +100,57 @@
                           %select#new_cow_strategic_lot.form-control.select.required.input_custom{"aria-hidden" => "true", name: "new_cow[tassel_color]"  }
                             - @colors.each do |color|
                               %option{ value: color }= color
-                        .col-sm-12.col-md-6
+                        -# .col-sm-12.col-md-6
                           %label.label_custom--strong Padre
                           %select.new_cow_father_id.form-control.select.required.input_custom{ id: "new_cow_#{cow.id}_father_id", "aria-hidden" => "true", name: "new_cow[father_id]"  }
                             - @farm.cows.reproductive_males(@season).each do |bull|
                               %option{ value: bull.id, selected: bull.id == @farm.inseminations.find_by(id: cow.statuses.where(status_type: 'Pregnancy')&.last&.insemination_id).id } #{bull&.serie_number} #{'(' + bull&.short_name + ')' if bull&.short_name}
+                        .col-sm-12.col-md-6
+                          %label.label_custom--strong Observaciones
+                          %input.form-control.input_custom{ name: "new_cow[observations]" }
                       .col-sm-12.mt-4
                         .form-group
                           .float-left
-                            %button.btn.btn_custom.btn--medium.prevBtn{type: "button"} Regresar
+                            %button.btn.btn_custom.btn--medium.prevBtn{ type: "button"} Regresar
                           .float-right
-                            %button.btn.btn_custom.btn--filled.btn--medium.nextBtn{type: "button"} Siguente
+                            %button.btn.btn_custom.btn--filled.btn--medium.nextBtn{ type: "button", disabled: true } Siguente
+                  
                   .row.setup-content{ id: "cow-#{cow.id}-step-3" }
                     .col-md-12
-                      = simple_form_for [@farm, cow, KepplerCattle::Weight.new], url: statuses_farm_season_path(@farm, @season) do |f|
-                        .row
-                          = f.input :user_id, include_blank: false, input_html: { class: 'form-control input_custom', value: current_user.id }, as: :hidden, label_html: { class: 'label_custom--strong' }
-                          = f.input :cow_id, include_blank: false, input_html: { class: 'form-control input_custom', value: cow.id }, as: :hidden, label_html: { class: 'label_custom--strong' }
-                          .col-sm-12.col-md-6
-                            = f.input :weight, autofocus: true, placeholder: '0.00 KG', label: 'Peso (KG)', input_html: { class: 'form-control input_custom', min: 0, value: (@last_weight&.weight.blank? ? 0 : @last_weight&.weight) }, label_html: { class: 'label_custom--strong' }
-                          .col-sm-12.col-md-6
-                            = f.input :gained_weight, input_html: { class: 'form-control input_custom status_gainded_weight' }, disabled: true, placeholder: '0.00 KG', label: 'Peso ganado (KG)', label_html: { class: 'label_custom--strong' }
-                            = f.input :gained_weight, input_html: { class: 'form-control input_custom status_gainded_weight' }, as: :hidden, label_html: { class: 'label_custom--strong' }
-                          .col-sm-12.col-md-6
-                            = f.input :average_weight, input_html: { class: 'form-control input_custom status_average_weight' }, disabled: true, placeholder: '0.00 KG', label: 'Peso promedio (KG)', label_html: { class: 'label_custom--strong' }
-                            = f.input :average_weight, input_html: { class: 'form-control input_custom status_average_weight' }, as: :hidden, label_html: { class: 'label_custom--strong' }
-                          .col-sm-12.col-md-6
-                            = f.input :corporal_condition, collection: @corporal_conditions, selected: (@last_weight&.corporal_condition if @last_status), include_blank: false, label: 'Condición corporal', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
-                          .col-sm-12.mt-4
-                            .float-left
-                              %button.btn.btn_custom.btn--medium.prevBtn{type: "button"} Regresar
-                            .float-right
-                              %button.btn.btn_custom.btn--filled.btn--medium.nextBtn{type: "button"} Siguente
+                      -# = simple_form_for [@farm, cow, KepplerCattle::Weight.new], url: statuses_farm_season_path(@farm, @season) do |f|
+                      .row
+                        .col-sm-12.col-md-6
+                          -# = f.input :weight, autofocus: true, placeholder: '0.00 KG', label: 'Peso (KG)', input_html: { class: 'form-control input_custom', min: 0, value: (@last_weight&.weight.blank? ? 0 : @last_weight&.weight) }, label_html: { class: 'label_custom--strong' }
+                          %label.label_custom--strong Peso (KG)
+                          %input.form-control.input_custom{ id: "new_cow_weight_#{cow.id}_weight", name: 'new_cow_weight[weight]', placeholder: '0.00 KG', type: 'number', min: 0 }
+                        -# .col-sm-12.col-md-6
+                          -# = f.input :gained_weight, input_html: { class: 'form-control input_custom new_cow_weight_gainded_weight' }, disabled: true, placeholder: '0.00 KG', label: 'Peso ganado (KG)', label_html: { class: 'label_custom--strong' }
+                          %label.label_custom--strong Peso ganado (KG)
+                          %input.form-control.input_custom{ id: "new_cow_weight_#{cow.id}_gained_weight", name: 'new_cow_weight[gained_weight]', placeholder: '0.00 KG', min: 0, readonly: true }
+                        -# .col-sm-12.col-md-6
+                          -# = f.input :average_weight, input_html: { class: 'form-control input_custom new_cow_weight_average_weight' }, disabled: true, placeholder: '0.00 KG', label: 'Peso promedio (KG)', label_html: { class: 'label_custom--strong' }
+                          %label.label_custom--strong Peso promedio (KG)
+                          %input.form-control.input_custom{ id: "new_cow_weight_#{cow.id}_average_weight", name: 'new_cow_weight[average_weight]', placeholder: '0.00 KG', min: 0, readonly: true }
+                        .col-sm-12.col-md-6
+                          -# = f.input :corporal_condition, collection: @corporal_conditions, selected: (@last_weight&.corporal_condition if @last_status), include_blank: false, label: 'Condición corporal', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+                          %label.label_custom--strong Condición corporal
+                          %select.form-control.input_custom{  id: "new_cow_weight_#{cow.id}_corporal_condition", name: 'new_cow_weight[corporal_condition_id]' }
+                            - cow.species.corporal_conditions.each do |corporal_condition|
+                              %option{ value: corporal_condition.id }= corporal_condition.name
+                        .col-sm-12.mt-4
+                          .float-left
+                            %button.btn.btn_custom.btn--medium.prevBtn{ type: "button" } Regresar
+                          .float-right
+                            %button.btn.btn_custom.btn--filled.btn--medium.nextBtn{ type: "button", disabled: true } Siguente
+                  
                   .row.setup-content{ id: "cow-#{cow.id}-step-4" }
                     .col-md-12
                       .inner
                         %h3.title-modal Detalles del parto
    
                     .col-sm-12.mt-4
+                      .float-left
+                        %button.btn.btn_custom.btn--medium.prevBtn{ type: "button"} Regresar
                       .float-right
                         %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
                           %i.icofont-save
@@ -289,6 +308,11 @@
 
         if (isValid)
             nextStepWizard.removeAttr('disabled').trigger('click');
+        
+
+        if ($('#status_#{cow.id}_twins').val() == 1) {
+          $('#cow-#{cow.id}-step-3 .nextBtn').click()
+        }
     });
 
     $('#modalBirth-#{cow.id} .setup-panel a.btn-active').trigger('click');
@@ -333,3 +357,37 @@
   }
 
   
+:javascript
+
+  $('#new_cow_weight_#{cow.id}_weight').keyup(function() {
+    $('#new_cow_weight_#{cow.id}_gained_weight').val(
+      $('#new_cow_weight_#{cow.id}_weight').val()
+    )
+    $('#new_cow_weight_#{cow.id}_average_weight').val(
+      $('#new_cow_weight_#{cow.id}_weight').val()
+    )
+  }) 
+
+  $('#cow-#{cow.id}-step-2 #new_cow_#{cow.id}_serie_number').keyup(function() {
+    $('#cow-#{cow.id}-step-2 .nextBtn').prop(
+      'disabled',
+      $('#cow-#{cow.id}-step-2 #new_cow_#{cow.id}_serie_number').val() == ''
+    )
+  })
+
+  $('#cow-#{cow.id}-step-3 #new_cow_weight_#{cow.id}_weight').keyup(function() {
+    $('#cow-#{cow.id}-step-3 .nextBtn').prop(
+      'disabled',
+      $('#cow-#{cow.id}-step-3 #new_cow_weight_#{cow.id}_weight').val() == ''
+    )
+  })
+
+  $('#cow-#{cow.id}-step-1 #status_#{cow.id}_successfully').change(function() {
+    if ($('#status_#{cow.id}_successfully').val() == 1) {
+      $('#cow-#{cow.id}-step-2-btn').removeClass('disabled')
+      console.log('add')
+    } else {
+      $('#cow-#{cow.id}-step-2-btn').addClass('disabled')
+      console.log('remove')
+    }
+  })

@@ -29,7 +29,7 @@
                             %span= cow.statuses.where(status_type: 'Service').last&.date&.strftime('%d/%m/%y')
                             \-
                             Pajuela
-                            %b= @farm.inseminations.find(cow.statuses.where(status_type: 'Service').last&.insemination_id).serie_number
+                            %b= @farm.inseminations.find_by_id(cow.statuses.where(status_type: 'Service').last&.insemination_id)&.serie_number
                             (#{cow.statuses.where(status_type: 'Service').last&.insemination_quantity.to_i} cartuchos)
                           - else
                             %b Sin servicios realizados
@@ -49,7 +49,7 @@
                             .col-sm-12.col-md-6
                               .form-group
                                 %label.label_custom--strong Meses de preñez
-                                %input.form-control.input_custom#status_months{ name: "status[months]", type: 'number', autocomplete: 'off', value: 0 }
+                                %input.form-control.input_custom#status_months{ name: "status[months]", type: 'number', autocomplete: 'off', value: 0, min: 0 }
                             .col-sm-12.col-md-6
                               .form-group
                                 %label.label_custom--strong Padrote o Pajuela

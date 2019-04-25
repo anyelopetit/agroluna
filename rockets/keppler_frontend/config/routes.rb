@@ -32,7 +32,7 @@ KepplerFrontend::Engine.routes.draw do
     resources :strategic_lots, path: 'lotes-estrategicos', controller: 'app/strategic_lots', path_names: { new: 'nuevo', edit: 'editar'} do
       member do
         post :assign_cattle
-        delete :delete_assignment
+        delete 'delete_assignment/:multiple_ids', to: 'app/strategic_lots#delete_assignment', as: :destroy_season_cows
       end
       collection do
         delete :destroy_multiple, params: { multiple_ids: [] }
@@ -70,6 +70,7 @@ KepplerFrontend::Engine.routes.draw do
         post 'lote-estrategico/:strategic_lot_id/create_pregnancies/:multiple_ids', to: 'app/seasons#create_pregnancies', as: :create_pregnancies
 
         post 'lote-estrategico/:strategic_lot_id/statuses', to: 'app/seasons#statuses', as: :statuses
+        post 'lote-estrategico/:strategic_lot_id/make_birth', to: 'app/seasons#make_birth', as: :make_birth
 
         post :finish
       end

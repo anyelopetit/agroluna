@@ -31,7 +31,7 @@
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-clip-board
               Reporte
-          %a.mt-4.mb-4{ href: farm_insemination_edit_path(@farm, @insemination) }
+          %a.mt-4.mb-4{ href: edit_farm_insemination_path(@farm, @insemination) }
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-ui-edit
               Editar
@@ -56,7 +56,7 @@
                 %button.btn.btn_custom.btn--filled.btn--medium
                   %i.icofont-check
                   Marcar como usada
-            %a{ class: 'dropdown-item', href: farm_insemination_edit_path(@farm, @insemination) }
+            %a{ class: 'dropdown-item', href: edit_farm_insemination_path(@farm, @insemination) }
               Editar
             %a.open-status-history{class: "dropdown-item"}
               Historial

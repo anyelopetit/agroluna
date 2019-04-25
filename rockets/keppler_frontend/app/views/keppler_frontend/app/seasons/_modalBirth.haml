@@ -14,16 +14,16 @@
               .stepwizard.mb-4
                 .stepwizard-row.setup-panel
                   .stepwizard-step
-                    %a.btn.btn-active.btn-circle{ href: "#cow-#{cow.id}-step-1", type: "button"} 1
+                    %a.btn.btn-active.btn-circle{ href: "#cow-#{cow.id}-step-1", id: "cow-#{cow.id}-step-1-circle", type: "button"} 1
                     %p Paso 1
                   .stepwizard-step
-                    %a.btn.btn-inactive.btn-circle{ disabled: "disabled", id: "cow-#{cow.id}-step-2-btn", href: "#cow-#{cow.id}-step-2", type: "button", style: "border-radius: 50% !important;"} 2
+                    %a.btn.btn-inactive.btn-circle{ disabled: "disabled", id: "cow-#{cow.id}-step-2-circle", href: "#cow-#{cow.id}-step-2", type: "button" } 2
                     %p Paso 2
                   .stepwizard-step
-                    %a.btn.btn-inactive.btn-circle.disabled{ disabled: "disabled", id: "cow-#{cow.id}-step-3-btn", href: "#cow-#{cow.id}-step-3", type: "button", style: "border-radius: 50% !important;"} 3
+                    %a.btn.btn-inactive.btn-circle.disabled{ disabled: "disabled", id: "cow-#{cow.id}-step-3-circle", href: "#cow-#{cow.id}-step-3", type: "button" } 3
                     %p Paso 3
                   .stepwizard-step
-                    %a.btn.btn-inactive.btn-circle.disabled{ disabled: "disabled", id: "cow-#{cow.id}-step-4-btn", href: "#cow-#{cow.id}-step-4", type: "button", style: "border-radius: 50% !important;"} 4
+                    %a.btn.btn-inactive.btn-circle.disabled{ disabled: "disabled", id: "cow-#{cow.id}-step-4-circle", href: "#cow-#{cow.id}-step-4", type: "button" } 4
                     %p Paso 4
               = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: make_birth_farm_season_path(@farm, @season) do |f|
                 %input{ type: 'hidden', name: "status[type]", value: 'Birth' }
@@ -108,6 +108,56 @@
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Observaciones
                           %input.form-control.input_custom{ name: "new_cow[observations]" }
+              
+                    .col-md-12{ id: "other_new_cow_#{cow.id}", style: 'display: none' }
+                      .row
+                        .col-sm-12.mt-4
+                          %h1 Morocho
+                        .col-sm-12
+                          %label.label_custom--strong Número de serie
+                          %input.form-control.input_custom{ id: "other_new_cow_#{cow.id}_serie_number", name: 'other_new_cow[serie_number]', required: true }
+                          .invalid-feedback
+                            El número de serie es requerido
+                        .col-sm-12.col-md-6
+                          %label.label_custom--strong Nombre corto
+                          %input.form-control.input_custom{ id: "other_new_cow_#{cow.id}_short_name", name: 'other_new_cow[short_name]' }
+                        .col-sm-12.col-md-6
+                          %label.label_custom--strong Género
+                          %select.form-control.select.required.input_custom{"aria-hidden" => "true", name: "other_new_cow[gender]"  }
+                            %option{ value: 'female' } Hembra
+                            %option{ value: 'male' } Macho
+                        -# .col-sm-12.col-md-6
+                          %label.label_custom--strong Especie
+                          %select.form-control.select.required.input_custom{"aria-hidden" => "true", name: "other_new_cow[strategic_lot]"  }
+                            %option Vacuno
+                        .col-sm-12.col-md-6
+                          %label.label_custom--strong Raza
+                          %select.form-control.select.required.input_custom{"aria-hidden" => "true", name: "other_new_cow[race_id]"  }
+                            - [cow.race, @farm.inseminations.find_by(id: cow.statuses.where(status_type: 'Pregnancy')&.last&.insemination_id).race].each_with_index do |race, index|
+                              %option{ value: race.id } #{race.name} (#{index.zero? ? 'Raza de la madre' : 'Raza del padre'})
+                        .col-sm-12.col-md-6
+                          %label.label_custom--strong Color de pelaje
+                          %select.form-control.select.required.input_custom{"aria-hidden" => "true", name: "other_new_cow[coat_color]"  }
+                            - @colors.each do |color|
+                              %option{ value: color }= color
+                        .col-sm-12.col-md-6
+                          %label.label_custom--strong Color de morro
+                          %select.form-control.select.required.input_custom{"aria-hidden" => "true", name: "other_new_cow[nose_color]"  }
+                            - @colors.each do |color|
+                              %option{ value: color }= color
+                        .col-sm-12.col-md-6
+                          %label.label_custom--strong Color de borla
+                          %select.form-control.select.required.input_custom{"aria-hidden" => "true", name: "other_new_cow[tassel_color]"  }
+                            - @colors.each do |color|
+                              %option{ value: color }= color
+                        -# .col-sm-12.col-md-6
+                          %label.label_custom--strong Padre
+                          %select.other_new_cow_father_id.form-control.select.required.input_custom{ id: "other_new_cow_#{cow.id}_father_id", "aria-hidden" => "true", name: "other_new_cow[father_id]"  }
+                            - @farm.cows.reproductive_males(@season).each do |bull|
+                              %option{ value: bull.id, selected: bull.id == @farm.inseminations.find_by(id: cow.statuses.where(status_type: 'Pregnancy')&.last&.insemination_id).id } #{bull&.serie_number} #{'(' + bull&.short_name + ')' if bull&.short_name}
+                        .col-sm-12.col-md-6
+                          %label.label_custom--strong Observaciones
+                          %input.form-control.input_custom{ name: "other_new_cow[observations]" }
                       .col-sm-12.mt-4
                         .form-group
                           .float-left
@@ -288,7 +338,11 @@
             curStepBtn = curStep.attr("id"),
             prevStepWizard = $('#modalBirth-#{cow.id} div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a");
 
-            prevStepWizard.removeAttr('disabled').trigger('click');
+        if ($('#cow-#{cow.id}-step-1 #status_#{cow.id}_successfully').val() == 0) {
+          $('#cow-#{cow.id}-step-1-circle').trigger('click');
+        } else {
+          prevStepWizard.removeAttr('disabled').trigger('click');
+        }
     });
 
     allNextBtn.click(function(){
@@ -306,13 +360,14 @@
             }
         }
 
-        if (isValid)
+        if (isValid) {
+          if ($('#cow-#{cow.id}-step-1 #status_#{cow.id}_successfully').val() == 0) {
+            $('#cow-#{cow.id}-step-4-circle').trigger('click');
+          } else {
             nextStepWizard.removeAttr('disabled').trigger('click');
-        
-
-        if ($('#status_#{cow.id}_twins').val() == 1) {
-          $('#cow-#{cow.id}-step-3 .nextBtn').click()
+          }
         }
+      
     });
 
     $('#modalBirth-#{cow.id} .setup-panel a.btn-active').trigger('click');
@@ -369,30 +424,42 @@
   }) 
 
   $('#cow-#{cow.id}-step-2 #new_cow_#{cow.id}_serie_number').keyup(function() {
-    $('#cow-#{cow.id}-step-2 .nextBtn').prop(
-      'disabled',
-      $('#cow-#{cow.id}-step-2 #new_cow_#{cow.id}_serie_number').val() == ''
-    )
+    if ( $('#cow-#{cow.id}-step-2 #new_cow_#{cow.id}_serie_number').val() == '') {
+      $('#cow-#{cow.id}-step-3-circle').addClass('disabled')
+      $('#cow-#{cow.id}-step-2 .nextBtn').prop('disabled', true)
+    } else {
+      $('#cow-#{cow.id}-step-3-circle').removeClass('disabled')
+      $('#cow-#{cow.id}-step-2 .nextBtn').prop('disabled', false)
+    }
   })
 
   $('#cow-#{cow.id}-step-3 #new_cow_weight_#{cow.id}_weight').keyup(function() {
     if ($('#cow-#{cow.id}-step-3 #new_cow_weight_#{cow.id}_weight').val() == '') {
-      $('#cow-#{cow.id}-step-3-btn').addClass('disabled')
-      $('#cow-#{cow.id}-step-3-btn').prop('disabled', true)
+      $('#cow-#{cow.id}-step-4-circle').addClass('disabled')
       $('#cow-#{cow.id}-step-3 .nextBtn').prop('disabled', true)
     } else {
-      $('#cow-#{cow.id}-step-3-btn').removeClass('disabled')
-      $('#cow-#{cow.id}-step-3-btn').prop('disabled', false)
+      $('#cow-#{cow.id}-step-4-circle').removeClass('disabled')
       $('#cow-#{cow.id}-step-3 .nextBtn').prop('disabled', false)
     }
   })
 
   $('#cow-#{cow.id}-step-1 #status_#{cow.id}_successfully').change(function() {
     if ($('#status_#{cow.id}_successfully').val() == 1) {
-      $('#cow-#{cow.id}-step-2-btn').removeClass('disabled')
-      console.log('add')
+      $('#cow-#{cow.id}-step-2-circle').removeClass('disabled')
+      $('#cow-#{cow.id}-step-4-circle').addClass('disabled')
     } else {
-      $('#cow-#{cow.id}-step-2-btn').addClass('disabled')
-      console.log('remove')
+      $('#cow-#{cow.id}-step-2-circle').addClass('disabled')
+      $('#cow-#{cow.id}-step-3-circle').addClass('disabled')
+      $('#cow-#{cow.id}-step-4-circle').removeClass('disabled')
+    }
+  })
+
+  $('#cow-#{cow.id}-step-1 #status_#{cow.id}_twins').change(function() {
+    if ($('#status_#{cow.id}_successfully').val() == 1) {
+      $('#other_new_cow_#{cow.id}').removeClass('disabled')
+    } else {
+      $('#cow-#{cow.id}-step-2-circle').addClass('disabled')
+      $('#cow-#{cow.id}-step-3-circle').addClass('disabled')
+      $('#cow-#{cow.id}-step-4-circle').removeClass('disabled')
     }
   })

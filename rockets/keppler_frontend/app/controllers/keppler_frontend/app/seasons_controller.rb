@@ -199,16 +199,16 @@ module KepplerFrontend
     def create_services
       cow = @season.cows.find(params[:status][:cow_id])
       insemination = @farm.inseminations.find(params[:status][:insemination_id])
-      if params[:status][:insemination_quant].to_i > insemination.quantity
+      if params[:status][:insemination_quant].to_i > insemination.quantity.to_i
         flash[:error] = 'La cantidad de cartuchos no puede ser mayor a la existente'
       else
         if params[:status][:insemination_quant].to_i < 1
           flash[:error] = 'La cantidad de cartuchos debe ser superior a cero'
         else
           status = KepplerCattle::Status.new_status(params)
-          unless insemination.quantity.zero?
+          unless insemination.quantity.to_i.zero?
             insemination.update(
-              quantity: insemination.quantity - params[:status][:insemination_quant].to_i
+              quantity: insemination.quantity.to_i - params[:status][:insemination_quant].to_i
             )
           end
           flash[:notice] = 'Servicio guardado' if status.save!

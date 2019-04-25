@@ -17,10 +17,10 @@
                     %a.btn.btn-active.btn-circle{ href: "#cow-#{cow.id}-step-1", type: "button"} 1
                     %p Paso 1
                   .stepwizard-step
-                    %a.btn.btn-inactive.btn-circle.disabled{ disabled: "disabled", id: "cow-#{cow.id}-step-2-btn", href: "#cow-#{cow.id}-step-2", type: "button", style: "border-radius: 50% !important;"} 2
+                    %a.btn.btn-inactive.btn-circle{ disabled: "disabled", id: "cow-#{cow.id}-step-2-btn", href: "#cow-#{cow.id}-step-2", type: "button", style: "border-radius: 50% !important;"} 2
                     %p Paso 2
                   .stepwizard-step
-                    %a.btn.btn-inactive.btn-circle{ disabled: "disabled", id: "cow-#{cow.id}-step-3-btn", href: "#cow-#{cow.id}-step-3", type: "button", style: "border-radius: 50% !important;"} 3
+                    %a.btn.btn-inactive.btn-circle.disabled{ disabled: "disabled", id: "cow-#{cow.id}-step-3-btn", href: "#cow-#{cow.id}-step-3", type: "button", style: "border-radius: 50% !important;"} 3
                     %p Paso 3
                   .stepwizard-step
                     %a.btn.btn-inactive.btn-circle.disabled{ disabled: "disabled", id: "cow-#{cow.id}-step-4-btn", href: "#cow-#{cow.id}-step-4", type: "button", style: "border-radius: 50% !important;"} 4
@@ -376,10 +376,15 @@
   })
 
   $('#cow-#{cow.id}-step-3 #new_cow_weight_#{cow.id}_weight').keyup(function() {
-    $('#cow-#{cow.id}-step-3 .nextBtn').prop(
-      'disabled',
-      $('#cow-#{cow.id}-step-3 #new_cow_weight_#{cow.id}_weight').val() == ''
-    )
+    if ($('#cow-#{cow.id}-step-3 #new_cow_weight_#{cow.id}_weight').val() == '') {
+      $('#cow-#{cow.id}-step-3-btn').addClass('disabled')
+      $('#cow-#{cow.id}-step-3-btn').prop('disabled', true)
+      $('#cow-#{cow.id}-step-3 .nextBtn').prop('disabled', true)
+    } else {
+      $('#cow-#{cow.id}-step-3-btn').removeClass('disabled')
+      $('#cow-#{cow.id}-step-3-btn').prop('disabled', false)
+      $('#cow-#{cow.id}-step-3 .nextBtn').prop('disabled', false)
+    }
   })
 
   $('#cow-#{cow.id}-step-1 #status_#{cow.id}_successfully').change(function() {

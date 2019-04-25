@@ -128,9 +128,45 @@
                               %button.btn.btn_custom.btn--filled.btn--medium.nextBtn{type: "button"} Siguente
                   .row.setup-content{ id: "cow-#{cow.id}-step-4" }
                     .col-md-12
-                      .inner
-                        %h3.title-modal Detalles del parto
-   
+                      %h3.title-modal Detalles del parto
+                      .row
+                        .col-md-6
+                          .list-data
+                            %dl
+                              %dt Parto Exitoso
+                              %dd Si
+                              %dt Parto de Morochos
+                              %dd No
+                              %dt Fecha del parto
+                              %dd 24/04/19
+                              %dt Número de serie
+                              %dd 45678
+                              %dt Nombre corto
+                              %dd Strella
+                              %dt Género
+                              %dd Hembra
+                              %dt Especie
+                              %dd Vacuno
+                              
+                        .col-md-6
+                          .list-data
+                            %dl
+                              %dt Raza
+                              %dd Vacuno 0
+                              %dt Color de pelaje
+                              %dd pardo
+                              %dt Color de morro
+                              %dd pardo
+                              %dt Color de borla
+                              %dd Pardo
+                              %dt Padre
+                              %dd Serie o pajuela
+                              %dt Peso
+                              %dd 20k
+                              %dt Condición corporal
+                              %dd Condición Corporal Vacuno 0
+                            
+
                     .col-sm-12.mt-4
                       .float-right
                         %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
@@ -167,6 +203,28 @@
                   -#           Guardar
 
 :css
+  .list-data {
+    margin-top: 20px;
+  }
+  dt {
+    float: left;
+    margin-right: 10%;
+    max-width: 40%;
+    font-weight: bold;
+  }
+  
+  dd {
+    color: grey;
+    margin-left: 50%;
+    margin-bottom: .5em;
+  }
+  
+  dd::after {
+    content: " ";
+    display: block;
+    clear: left;
+  }  
+  
   .title-modal{
     text-align: left !important;
     text-transform: unset !important;
@@ -190,6 +248,7 @@
     display: table;
     width: 100%;
     position: relative;
+    margin-top: 20px;
   }
   .stepwizard-step button[disabled] {
     opacity: 1 !important;

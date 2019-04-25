@@ -122,14 +122,23 @@
       three_four_gradient.addColorStop(0, '#e0e6e9');
       // three_four_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
       three_four_gradient.addColorStop(1, '#e0e6e9');
+
+      var five_six_gradient = bar_ctx.createLinearGradient(0, 0, 0, 800);
+      five_six_gradient.addColorStop(0, '#f28d23');
+      // five_six_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
+      five_six_gradient.addColorStop(1, '#f83600');
     
       var line_chart = new Chart(bar_ctx, {
           type: 'pie',
           data: {
-              labels: ["Preñadas en toda la temporada", "Sin preñar"],
+              labels: ["Sin preñar", "Partos", "Abortos"],
               datasets: [{
                   label: 'Vacas en celo',
-                  data: [#{@season.cows.select { |x| x.status&.status_type == 'Birth' }.count}, #{@season.cows.reject { |x| x.status&.status_type == 'Birth' }.count }],
+                  data: [
+                    #{@season.cows.reject { |x| x.status&.status_type == 'Birth' }.count},
+                    #{@season.cows.select { |x| x.status&.status_type == 'Birth' }.count},
+                    #{@season.cows.select { |x| x.status&.status_type == 'Birth' }.count }
+                  ],
                   backgroundColor: [
                     one_two_gradient,
                     three_four_gradient,

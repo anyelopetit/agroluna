@@ -13,6 +13,7 @@ module KepplerFrontend
     before_action :index_variables
     strategic_lot_states = %i[
       availables zeals services pregnants births new_services create_services
+      new_pregnancies create_pregnancies
     ]
     before_action :strategic_lot_variables, only: strategic_lot_states
     before_action :attachments
@@ -132,6 +133,11 @@ module KepplerFrontend
 
     def pregnants
       @cows = @season.cows.total_season_cows(@strategic_lot).type_is(['Pregnancy'])
+      # @species = KepplerCattle::Species.all
+      @genders = KepplerCattle::Cow.genders
+      # @possible_mothers = @farm.cows.possible_mothers_select2
+      @possible_fathers = @farm.cows.possible_fathers_select2
+      @colors = KepplerCattle::Cow.colors
     end
 
     def births

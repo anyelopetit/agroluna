@@ -16,9 +16,6 @@
                   - unless @found
                     - unless cow.status&.status_type&.eql?('Service')
                       - @found = true
-                      :javascript
-                        var id = #{cow.id}
-                        $('#cow-'+id).remove()
                       .col-sm-12
                         %h3
                           Número de Serie
@@ -62,7 +59,7 @@
                       %button.btn.btn_custom.btn--filled.btn--medium
                         %i.icofont-external-link
                         Ver en el inicio
-            .hello
+            .d-flex
               .toolbar
                 .toolbar-item
                   -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }

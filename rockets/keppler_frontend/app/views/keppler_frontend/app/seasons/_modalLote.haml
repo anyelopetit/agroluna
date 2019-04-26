@@ -13,7 +13,7 @@
               = simple_form_for [@farm, @season, @season_cow], url: assign_cattle_farm_season_path(@farm, @season) do |f|
                 = f.input :season_id, as: :hidden, input_html: { value: @season.id }
                 %select#season_cow_strategic_lot.form-control.select.required.form-control.input_custom{"aria-hidden" => "true", name: "season_cow[strategic_lot]", tabindex: "-1" }
-                  - @farm.strategic_lots.select { |x| x.cows.map { |c| c.season_cows.map { |sc| sc.season_id } }.flatten.include?(@season.id) }.each do |lot|
+                  - @strategic_lots.each do |lot|
                     %option{ value: lot.id } #{lot.name} (#{(@possible_mothers.ids&lot.cows.ids).count} hembras reproductivas)
                 .float-right.mt-3
                   %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }

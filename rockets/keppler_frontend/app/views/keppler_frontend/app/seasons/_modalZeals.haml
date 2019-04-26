@@ -12,8 +12,8 @@
                 %h1.mb-4 Agregar Celos
                 -# %form.multiple_ids{ action: "finca/#{@farm.id}/temporadas/#{@season.id}/marcar-celos/" }
                 = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: statuses_farm_season_path(@farm, @season) do |f|
-                  %input{ name: 'status[type]', value: 'Zeal', type: (Rails.env.eql?('development') ? :string : :hidden) }
-                  %input.multiple_ids{ name: 'status[multiple_ids]', value: '', type: (Rails.env.eql?('development') ? :string : :hidden) }
+                  %input{ name: 'status[type]', value: 'Zeal', type: (Rails.env.eql?('development') ? :hidden : :hidden) }
+                  %input.multiple_ids{ name: 'status[multiple_ids]', value: '', type: (Rails.env.eql?('development') ? :hidden : :hidden) }
                   .form-padding
                     .row
                       .col-sm-12.col-md-6

@@ -243,10 +243,17 @@ module KepplerFrontend
 
     def make_birth
       new_birth(params) if params
-      if @new_cow.save! && @new_cow_weight.save! && @new_cow_location.save!
-        if @status.save!
-          flash[:notice] = 'Parto realizado y becerro guardado'
-        end
+      if @status.save!
+        flash[:notice] =
+          if @baby_saved
+            if @other_baby_saved
+              'Parto realizado y morochos guardados'
+            else
+              'Parto realizado y becerro/a guardado'
+            end
+          else
+            'Aborto realizado satisfactoriamente'
+          end
       else
         flash[:error] = 'No se pudo realizar el parto'
       end
@@ -259,6 +266,11 @@ module KepplerFrontend
 
     def finish
       @season.update(finished: true)
+      redirect_to farm_season_path(@farm, @season)
+    end
+
+    def reopen
+      @season.update(finished: false)
       redirect_to farm_season_path(@farm, @season)
     end
 
@@ -277,7 +289,7 @@ module KepplerFrontend
         counter = 0
         if params[:status][:multiple_ids]
           params[:status][:multiple_ids].split(',').each do |cow_id|
-            status = KepplerCattle::Status.new_status(params, cow_id)
+            status = KepplerCattle::Status.new_status(params, {cow_id: cow_id})
             insem = @farm.inseminations.find_by(id: status[:insemination_id])
             if insem && !insem&.quantity&.zero?
               insem.update(quantity: insem.quantity - 1)
@@ -335,6 +347,8 @@ module KepplerFrontend
           cow_id: cow.id,
           strategic_lot_id: strategic_lot_id
         )
+        status_nil = cow.statuses.new_status(params, {status_type: 'Nil'})
+        status_nil.save!
         counter += 1 if season_cow.save
       end
       counter
@@ -343,16 +357,26 @@ module KepplerFrontend
     def new_birth(params)
       @status = KepplerCattle::Status.new_status(params)
       @mother = @season.cows.find_by_id(params[:status][:cow_id])
-      if params[:new_cow]
-        @new_cow = new_cow(@mother, @status, new_cow_params)
+      if params[:status][:successfully] == '1'
+        @baby_saved = create_cow(
+          @mother,
+          @status,
+          new_cow_params,
+          new_cow_weight_params
+        )
       end
-      if params[:other_new_cow]
-        @other_new_cow = new_cow(@mother, @status, other_new_cow_params)
+      unless params[:other_new_cow][:serie_number].blank?
+        @other_baby_saved = create_cow(
+          @mother,
+          @status,
+          other_new_cow_params,
+          other_new_cow_weight_params
+        )
       end
     end
 
-    def new_cow(mother, new_status, params)
-      baby = @farm.cows.new(params) if params[:new_cow]
+    def create_cow(mother, new_status, params, weight_params)
+      baby = @farm.cows.new(params)
       baby.species_id = mother.species_id
       baby.mother_id = mother.id
       baby.birthdate = new_status.date
@@ -361,16 +385,24 @@ module KepplerFrontend
         insem = @farm.inseminations.find_by_id(last_pregnancy&.insemination_id)
         baby.father_id = insem.id
       end
-      baby_weight = baby.weights.new(new_cow_weight_params)
-      baby_weight.user = new_status.user
-      baby_weight.user_id = new_status.user_id
-      baby_weight.cow_id = new_status.cow_id
-      baby_location = baby.locations.new(
-        user_id: status.user_id,
-        cow_id: status.cow_id,
-        farm_id: mother.location.farm_id,
-        strategic_lot_id: mother.location.strategic_lot_id
-      )
+      
+      if baby.save
+        baby_weight = baby.create_first_weight(
+          weight_params,
+          {
+            user_id: new_status.user.id,
+            cow_id: new_status.cow_id
+          }
+        )
+        baby.create_first_location(
+          {
+            user_id: new_status.user,
+            farm_id: @farm.id,
+            strategic_lot_id: mother.location.strategic_lot_id
+          }
+        )
+        baby.create_first_activity({user_id: current_user.id})
+      end
     end
 
     # begin callback user_authenticate
@@ -416,6 +448,12 @@ module KepplerFrontend
 
     def new_cow_weight_params
       params.require(:new_cow_weight).permit(
+        KepplerCattle::Weight.attribute_names.map(&:to_sym)
+      )
+    end
+
+    def other_new_cow_weight_params
+      params.require(:other_new_cow_weight).permit(
         KepplerCattle::Weight.attribute_names.map(&:to_sym)
       )
     end

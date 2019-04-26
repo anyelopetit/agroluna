@@ -8,9 +8,15 @@
           #{@season.name}
           %label.badge (#{@season.type_name})
           %small.badge.badge-secondary #{@season.start_date&.strftime("%d/%m/%Y")} - #{@season.finish_date&.strftime("%d/%m/%Y")}
-      - unless @season.finished
+      - if @season.finished
         .float-right.mt-4.mb-4
-          = link_to finish_farm_season_path(@farm, @season), method: :post, data: { confirm: t('keppler.messages.data_confirm') } do
+          = link_to reopen_farm_season_path(@farm, @season), method: :post, data: { confirm: '¿Estás seguro?' } do
+            %button.btn.btn_custom.btn--medium.float-right.m-1
+              %i.icofont-close-circled
+              Reabrir temporada
+      - else
+        .float-right.mt-4.mb-4
+          = link_to finish_farm_season_path(@farm, @season), method: :post, data: { confirm: '¿Estás seguro?' } do
             %button.btn.btn_custom.btn--medium.float-right.m-1
               %i.icofont-close-circled
               Finalizar

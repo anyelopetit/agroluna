@@ -12,6 +12,8 @@ module KepplerFarm
     acts_as_list
     acts_as_paranoid
 
+    validates_uniqueness_of :name
+
     def self.index_attributes
       %i[name]
     end

@@ -14,7 +14,7 @@ module KepplerCattle
     acts_as_list
     acts_as_paranoid
 
-    # belongs_to :user
+    belongs_to :user, optional: true
     belongs_to :cow, class_name: 'KepplerCattle::Cow'
 
     validates_presence_of :cow_id

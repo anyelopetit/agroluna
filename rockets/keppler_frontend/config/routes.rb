@@ -73,6 +73,7 @@ KepplerFrontend::Engine.routes.draw do
         post 'lote-estrategico/:strategic_lot_id/make_birth', to: 'app/seasons#make_birth', as: :make_birth
 
         post :finish
+        post :reopen
       end
       resources :cicles, controller: 'app/cicles', only: %i[new create destroy]
     end

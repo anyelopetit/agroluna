@@ -30,7 +30,7 @@
             = sort_link(@q, :race_id) do 
               Raza
           %th Tipología
-          %th Estado
+          %th= 'Estado' if Rails.env.eql?('development')
           %th= 'Preñada' if action_name.eql?('pregnants')
           -# %th Peso
           -# %th Estado
@@ -60,14 +60,15 @@
               %td
                 = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
                   = cow&.typology_name
-              %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
-                  = cow&.status&.status_type
+              - if Rails.env.eql?('development')
+                %td
+                  = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                    = cow&.status&.status_type
               - if action_name.eql?('pregnants')
                 %td
                   %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
                     %i.icofont-plus
-                    Regristrar parto
+                    Realizar parto
                   = render 'keppler_frontend/app/seasons/modalBirth', season: @season, cow: cow
               -# %td
                 = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do

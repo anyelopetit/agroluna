@@ -26,27 +26,6 @@
       = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
         = cow&.weight&.weight
         KG
-    -# %td.status
-      .card_status--bar{ style: 'display:flex' }
-        - if cow&.gender?('male')
-          %a.status-tooltip{ title: 'Recelador' }
-            %i.icofont-bull{ class: ('active' if cow&.male&.defiant) }
-          %a.status-tooltip{ title: 'Reproductor' }
-            %i.icofont-dna{ class: ('active' if cow&.male&.reproductive) }
-        - else
-          %a.status-tooltip{ title: 'Preñada' }
-            %i.icofont-baby{ class: ('active' if cow&.status&.pregnant) }
-          %a.status-tooltip{ title: 'Lactando' }
-            %i.icofont-baby-milk-bottle{ class: ('active' if cow&.status&.lactating)  }
-          %a.status-tooltip{ title: 'Criando' }
-            %i.icofont-holding-hands{ class: ('active' if cow&.status&.breeding) }
-        -# %a.status-tooltip{ title: 'Dado de baja' }
-          %i.icofont-danger-zone{ class: ('active' if cow&.status&.dead) }
-    -# %td.actions
-      = link_to farm_cows_path(farm, cow), class: 'floating-btn' do
-        %span.icofont-eye
-      = link_to new_farm_cow_weight_path(farm, cow), class: 'floating-btn' do
-        %span.icofont-ui-add
     %td
       .dropdown{ style: 'justify-content: center; cursor:pointer' }
         %a.action-btn.pull-right{:id => "menu-#{cow.id}", 'aria-expanded': 'false', 'aria-haspopup': 'true', 'data-toggle': 'dropdown' }

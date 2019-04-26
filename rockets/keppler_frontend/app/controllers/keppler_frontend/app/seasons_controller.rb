@@ -398,7 +398,7 @@ module KepplerFrontend
           {
             user_id: new_status.user,
             farm_id: @farm.id,
-            strategic_lot_id: mother.location.strategic_lot_id
+            strategic_lot_id: mother.strategic_lot&.id
           }
         )
         baby.create_first_activity({user_id: current_user.id})

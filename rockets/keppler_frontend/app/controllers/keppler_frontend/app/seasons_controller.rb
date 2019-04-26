@@ -347,9 +347,11 @@ module KepplerFrontend
           cow_id: cow.id,
           strategic_lot_id: strategic_lot_id
         )
-        status_nil = cow.statuses.new_status(params, {status_type: 'Nil'})
-        status_nil.save!
-        counter += 1 if season_cow.save
+        if season_cow.save
+          status_nil = cow.statuses.new_status(params, {status_type: 'Nil'})
+          status_nil.save!
+          counter += 1
+        end
       end
       counter
     end

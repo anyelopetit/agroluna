@@ -13,6 +13,25 @@
             .form-padding
               - @cows.each do |cow|
                 .row
+                  -# .col-sm-12
+                    %h3
+                      %li
+                        Serie
+                        %b #{cow.serie_number}
+                        %small
+                          = "(#{cow.short_name})" unless cow.short_name.blank?
+                          \- #{cow.typology_name} (#{cow.weight&.weight.to_f} KG)
+                        \-
+                        %small
+                          - if cow.statuses.where(status_type: 'Service').exists?
+                            %b Último servicio:
+                            %span= cow.statuses.where(status_type: 'Service').last&.date&.strftime('%d/%m/%y')
+                            \-
+                            Pajuela
+                            %b= @farm.inseminations.find_by_id(cow.statuses.where(status_type: 'Service').last&.insemination_id)&.serie_number
+                            (#{cow.statuses.where(status_type: 'Service').last&.insemination_quantity.to_i} cartuchos)
+                          - else
+                            %b Sin servicios realizados
                   - unless @found
                     - unless cow.status&.status_type&.eql?('Service')
                       - @found = true
@@ -25,7 +44,7 @@
                             = f.input :user_id, input_html: { name: "status[user_id]", value: current_user.id }, as: :hidden
                             = f.input :cow_id, input_html: { name: "status[cow_id]", value: cow.id }, as: :hidden
                             = f.input :status_type, input_html: { name: "status[type]", value: 'Service' }, as: :hidden
-                            .col-sm-6.col-md-3.mt-4
+                            .col-sm-6.col-md-3
                               .form-group
                                 %label.label_custom--strong Fecha de servicio
                                 %input.form-control.input_custom.datepicker{ name: "status[date]", value: Date.today }
@@ -105,11 +124,11 @@
                           #{cow.typology_name}
                         %td
                           #{cow.weight&.weight.to_f} KG
-                        - if cow.statuses.where(status_type: 'Service').exists?
-                          %td= cow.statuses.where(status_type: 'Service').last&.date&.strftime('%d/%m/%y')  
+                        - if cow.status.status_type.eql?('Service')
+                          %td= cow.status&.date&.strftime('%d/%m/%y')  
                           %td
-                            = @farm.inseminations.find(cow.statuses.where(status_type: 'Service').last.insemination_id).serie_number
-                            #{cow.statuses.where(status_type: 'Service').last.insemination_quantity.to_i} cartuchos
+                            = @farm.inseminations.find(cow.status.insemination_id).serie_number
+                            #{cow.status.insemination_quantity.to_i} cartuchos
                           %td.d-flex.justify-content-center
                             .service.service-active
                         - else

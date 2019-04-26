@@ -402,6 +402,7 @@ module KepplerFrontend
           }
         )
         baby.create_first_activity({user_id: current_user.id})
+        baby.create_typology
       end
     end
 

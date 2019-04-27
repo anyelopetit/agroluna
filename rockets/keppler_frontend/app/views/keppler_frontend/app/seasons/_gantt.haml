@@ -1,55 +1,12 @@
--# .gantt-wrapper
-  -# .gantt-header
-    %h2 Diagrama de Gantt
-    -# %p
-      Usa
-      %strong grid-column
-      para abarcar una nueva entrada a través de la red. (p.ej.
-      %strong grid-column: 5/#{season.duration_days};
-      se extiende una entrada de mayo a noviembre)
-  .gantt.mb-5
-    .gantt__row.gantt__row--months
-      .gantt__row-first
-      %ul.months{ style: "grid-template-columns: repeat(#{season.duration_days}, 1fr);" }
-        - start_day = 1
-        - season.months_on_season.each do |month|
-          %li.month{ style: "grid-column: #{start_day}/#{start_day + season.month_days_count(month)};" }= season.all_months[month.to_i - 1]
-          - start_day = start_day + season.month_days_count(month)
-    .gantt__row.gantt__row--months{ style: "grid-template-columns: 150px repeat(#{season.duration_days}, 1fr);" }
-      .gantt__row-first
-      - season.duration_days.times do |day|
-        %span= (season.start_date + day).strftime('%d')
-    .gantt__row.gantt__row--lines{"data-month" => "5", style: "grid-template-columns: 150px repeat(#{season.duration_days}, 1fr);"}
-      - season.duration_days.times do |day|
-        %span{ class: ('marker' if (season.start_date + day).strftime('%d%m%y').eql?((Date.today + 1).strftime('%d%m%y'))) }
-    - last_cicle_days = 0
-    - season.cicles.each_with_index do |cicle, index|
-      .gantt__row
-        .gantt__row-first
-          Ciclo #{index + 1}
-        %ul.gantt__row-bars{ style: "grid-template-columns: repeat(#{season.duration_days}, 1fr);" }
-          %li.stripes{style: "grid-column: #{last_cicle_days + 1}/#{last_cicle_days + cicle.days_count + 1}; background-color: #{season.cicle_colors[index % 3]};"}
-            .float-right
-              = link_to({ controller: :cicles, action: :destroy, farm_id: @farm.id, season_id: @season.id, id: cicle.id }, { method: :delete, data: { confirm: '¿Estás seguro?' } }) do
-                %i.icofont-trash.text-white
-      - last_cicle_days += cicle.days_count
-
 .gantt-wrapper
-  -# .gantt-header
-    %h2 Diagrama de Gantt
-    -# %p
-      Usa
-      %strong grid-column
-      para abarcar una nueva entrada a través de la red. (p.ej.
-      %strong grid-column: 5/#{season.duration_days};
-      se extiende una entrada de mayo a noviembre)
   .gantt.mb-5
     .gantt__row.gantt__row--months
       .gantt__row-first
       %ul.months{ style: "grid-template-columns: repeat(#{season.duration_days}, 1fr);" }
         - start_day = 1
         - season.months_on_season.each do |month|
-          %li.month{ style: "grid-column: #{start_day}/#{start_day + season.month_days_count(month)};" }= season.all_months[month.to_i - 1]
+          %li.month{ style: "grid-column: #{start_day}/#{start_day + season.month_days_count(month)};" }
+            = season.all_months[month.to_i - 1]
           - start_day = start_day + season.month_days_count(month)
     .gantt__row.gantt__row--months{ style: "grid-template-columns: 150px repeat(#{season.duration_days}, 1fr);" }
       .gantt__row-first

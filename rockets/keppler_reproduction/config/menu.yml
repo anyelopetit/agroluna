@@ -6,6 +6,13 @@ menu:
     icon: rocket
     model: User
     submenu:
+      - inefectivity:
+          name: inefectivity
+          url_path: /admin/reproduction/inefectivities
+          icon: layers
+          current: ['/admin/reproduction/inefectivities']
+          model: KepplerReproduction::Inefectivity
+
       - cicle:
           name: cicle
           url_path: /admin/reproduction/cicles

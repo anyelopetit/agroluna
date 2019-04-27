@@ -15,6 +15,7 @@ module KepplerReproduction
     has_many :season_cows, class_name: 'KepplerReproduction::SeasonCow'
     has_many :cows, class_name: 'KepplerCattle::Cow', through: :season_cows
     has_many :statuses, class_name: 'KepplerCattle::Status', through: :cows
+    has_many :users, -> { distinct }, class_name: 'KepplerFarm::Responsable', through: :statuses
 
     has_many :cicles, class_name: 'KepplerReproduction::Cicle'
 

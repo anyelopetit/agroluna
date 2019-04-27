@@ -18,8 +18,17 @@
     .card_show
       .tab-content
         #disponibles.tab-pane.active
+          .float-right.mt-4.mb-4{style: "z-index: 2;"}
+            %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalAvailables", 'data-toggle': 'modal', disabled: true }
+              %i.icofont-plus
+              Marcar Disponibles
+            %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalZeals", 'data-toggle': 'modal', disabled: true }
+              %i.icofont-plus
+              Marcar Celos
           = render 'season_cows_table', cows: @cows
   = render 'keppler_frontend/app/seasons/modalGroup', season: @season
+  = render 'keppler_frontend/app/seasons/modalAvailables', season: @season
+  = render 'keppler_frontend/app/seasons/modalZeals', season: @season
 
 
 :javascript

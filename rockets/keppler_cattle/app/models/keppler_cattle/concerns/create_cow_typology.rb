@@ -47,12 +47,12 @@ module KepplerCattle
         end
 
         def verify_min_age(typology)
-          polymorphic_cow(self).days.to_i > typology.min_age.to_i
+          polymorphic_cow(self).days.to_i >= typology.min_age.to_i
         end
 
         def verify_min_weight(typology)
           
-          polymorphic_cow(self).weight&.weight.to_f > typology.min_weight.to_f
+          polymorphic_cow(self).weight&.weight.to_f >= typology.min_weight.to_f
         end
 
         protected

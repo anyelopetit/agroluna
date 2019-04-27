@@ -1,4 +1,11 @@
 modules:
+  inefectivities:
+    name: Inefectivity
+    model: KepplerReproductionInefectivity
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
   cicles:
     name: Cicle
     model: KepplerReproductionCicle

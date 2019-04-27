@@ -45,36 +45,36 @@
                     %span.cr
                       %i.cr-icon.icofont-check
               %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.status&.observations}) do
                   = cow&.serie_number
               -# %td
                 = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id}) do
                   = image_tag cow&.image&.url if cow.image.url
               %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.status&.observations}) do
                   = cow&.short_name
                   = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-xs ml-2', style: ('height: 12px' if cow.gender?('male')) unless cow.gender.blank?
               %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.status&.observations}) do
                   = cow&.race&.name
               %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.status&.observations}) do
                   = cow&.typology_name
               - if Rails.env.eql?('development')
                 %td
-                  = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                  = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.status&.observations}) do
                     = cow&.status&.status_type
               - if action_name.eql?('pregnants')
                 %td
-                  %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
+                  %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
                     %i.icofont-plus
-                    Realizar parto
+                    Registrar parto
                   = render 'keppler_frontend/app/seasons/modalBirth', season: @season, cow: cow
               -# %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.status&.observations}) do
                   = cow&.location.strategic_lot.name
               -# %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.status&.observations}) do
                   = cow&.weight&.weight
                   KG
               -# %td.status

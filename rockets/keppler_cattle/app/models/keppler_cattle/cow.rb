@@ -99,7 +99,7 @@ module KepplerCattle
     def typology_counter_count
       case typology&.counter&.to_i
       when 1
-        0 # TOCHANGE
+        statuses.where(status_type: 'Service').count
       when 2
         sons.count
       else

@@ -8,7 +8,7 @@
         .container_custom
           .row
             .col-lg-12
-              %h1.title-modal Realizar Parto
+              %h1.title-modal Registrar Parto
               -# %form.multiple_ids{ action: "finca/#{@farm.id}/temporadas/#{@season.id}/marcar-celos/" }
             .col-lg-12
               .stepwizard.mb-4
@@ -28,6 +28,8 @@
               = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: make_birth_farm_season_path(@farm, @season), html: { onkeypress: "if(event.keyCode == 13) event.returnValue = false;" } do |f|
                 %input{ type: 'hidden', name: "status[type]", value: 'Birth' }
                 %input{ type: 'hidden', name: "status[cow_id]", value: cow.id }
+                %input{ name: 'status[farm_id]', value: @farm.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
+                %input{ name: 'status[season_id]', value: @season.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
                 #form-total
                   
                   .row.setup-content{ id: "cow-#{cow.id}-step-1" }

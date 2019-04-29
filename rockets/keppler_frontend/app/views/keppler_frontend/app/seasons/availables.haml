@@ -6,7 +6,7 @@
       > #{@strategic_lot.name}
     .d-flex.justify-content-end
       .float-rigth
-        = link_to destroy_season_cows_farm_season_path(@farm, @season, @strategic_lot, []), class: 'multiple_ids disable', disabled: true, method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
+        = link_to destroy_season_cows_farm_season_path(@farm, @season, @strategic_lot, []), class: 'multiple_ids disable', disabled: true, method: :delete, data: { confirm: '¿Estás seguro?' } do
           %button.btn.btn_custom.btn--medium.btn--filled.disable{ disabled: true }
             %i.icofont-trash
             Sacar de la temporada
@@ -42,7 +42,7 @@
 = render 'keppler_frontend/app/seasons/modalGroup', season: @season
 = render 'keppler_frontend/app/seasons/modalZeals', season: @season
 -# = render 'keppler_frontend/app/seasons/modalServices', season: @season
-= render 'keppler_frontend/app/seasons/modalPregnancy', season: @season
+-# = render 'keppler_frontend/app/seasons/modalPregnancy', season: @season
 
 :javascript
 

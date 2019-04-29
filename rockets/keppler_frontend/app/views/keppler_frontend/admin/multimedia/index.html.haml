@@ -63,7 +63,7 @@
                                 %i.fa.fa-image
                                 = truncate(file[:name], length: 40, omission: '...')
                             .col-lg-2
-                              = link_to admin_frontend_destroy_multimedia_path(file[:search], file[:format]), method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
+                              = link_to admin_frontend_destroy_multimedia_path(file[:search], file[:format]), method: :delete, data: { confirm: '¿Estás seguro?' } do
                                 %i.fa.fa-trash
                         .box-body.no-padding
                           .back-file
@@ -88,7 +88,7 @@
                                 %i.fa.fa-film
                                 = truncate(file[:name], length: 40, omission: '...')
                             .col-lg-2
-                              = link_to admin_frontend_destroy_multimedia_path(file[:search], file[:format]), method: :delete , data: { confirm: t('keppler.messages.data_confirm') } do
+                              = link_to admin_frontend_destroy_multimedia_path(file[:search], file[:format]), method: :delete , data: { confirm: '¿Estás seguro?' } do
                                 %i.fa.fa-trash
                         .box-body.no-padding
                           .back-file
@@ -116,7 +116,7 @@
                                 %i.fa.fa-music
                                 = truncate(file[:name], length: 40, omission: '...')
                             .col-lg-2
-                              = link_to admin_frontend_destroy_multimedia_path(file[:search], file[:format]), method: :delete , data: { confirm: t('keppler.messages.data_confirm') } do
+                              = link_to admin_frontend_destroy_multimedia_path(file[:search], file[:format]), method: :delete , data: { confirm: '¿Estás seguro?' } do
                                 %i.fa.fa-trash
                         .box-body.no-padding
                           .back-file
@@ -144,7 +144,7 @@
                                 %i.fa.fa-text-height
                                 = truncate(file[:name], length: 35, omission: '...')
                             .col-lg-2
-                              = link_to admin_frontend_destroy_multimedia_path(file[:search], file[:format]), method: :delete, data: { confirm: t('keppler.messages.data_confirm') }  do
+                              = link_to admin_frontend_destroy_multimedia_path(file[:search], file[:format]), method: :delete, data: { confirm: '¿Estás seguro?' }  do
                                 %i.fa.fa-trash
                         .box-body.no-padding
                           .back-file
@@ -171,7 +171,7 @@
                                 %i.fa.fa-code
                                 = truncate(file[:name], length: 25, omission: '...')
                             .col-lg-2
-                              = link_to admin_frontend_destroy_multimedia_path(file[:search], file[:format]), method: :delete, data: { confirm: t('keppler.messages.data_confirm') }  do
+                              = link_to admin_frontend_destroy_multimedia_path(file[:search], file[:format]), method: :delete, data: { confirm: '¿Estás seguro?' }  do
                                 %i.fa.fa-trash
                         .box-body.no-padding
                           .back-file
@@ -201,7 +201,7 @@
                                 %i.fa.fa-magic
                                 = truncate(file[:name], length: 35, omission: '...')
                             .col-lg-2
-                              = link_to admin_frontend_destroy_multimedia_path(file[:search], file[:format]), method: :delete, data: { confirm: t('keppler.messages.data_confirm') }  do
+                              = link_to admin_frontend_destroy_multimedia_path(file[:search], file[:format]), method: :delete, data: { confirm: '¿Estás seguro?' }  do
                                 %i.fa.fa-trash
                         .box-body.no-padding
                           .back-file
@@ -227,7 +227,7 @@
                                 %i.fa.fa-paint-brush
                                 = truncate(file[:name], length: 35, omission: '...')
                             .col-lg-2
-                              = link_to admin_frontend_destroy_multimedia_path(file[:search], file[:format]), method: :delete, data: { confirm: t('keppler.messages.data_confirm') }  do
+                              = link_to admin_frontend_destroy_multimedia_path(file[:search], file[:format]), method: :delete, data: { confirm: '¿Estás seguro?' }  do
                                 %i.fa.fa-trash
                         .box-body.no-padding
                           .back-file

@@ -154,6 +154,8 @@ en:
       photo:
         cannot_unselect: You cannot unselect a cover
         please_select_anyone_else: Please select anyone else
+      cattle:
+        deleted: Serie removida
     header_information:
       setting:
         basic_information: Basic Information

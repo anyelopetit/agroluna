@@ -13,7 +13,7 @@
       -# .toolbar
         .toolbar-item
             %i.icofont-trash
-      = link_to({action: :delete_assignment}, {class: 'destroy_multiple float-right mt-4 mb-4', method: :delete}) do
+      = link_to destroy_season_cows_farm_strategic_lot_path(@farm, @strategic_lot, []), {class: 'destroy_multiple float-right mt-4 mb-4', method: :delete, data: { confirm: '¿Estás seguro?' }} do
         %button.btn.btn_custom.btn--filled.btn--medium#remove_from_lot{ disabled: true }
           %i.icofont-trash
           Remover de lote
@@ -83,7 +83,7 @@
         }
       });
     });
-    $('.destroy_multiple').attr('href', (`${href}&multiple_ids=[${$final_array}]`))
+    $('.destroy_multiple').attr('href', (`${href}${$final_array}`))
     if ($final_array.length === 0) {
       document.getElementById('remove_from_lot').disabled = true
     } else {

@@ -99,7 +99,7 @@ module KepplerCattle
     def typology_counter_count
       case typology&.counter&.to_i
       when 1
-        0 # TOCHANGE
+        statuses.where(status_type: 'Service').count
       when 2
         sons.count
       else
@@ -230,19 +230,31 @@ module KepplerCattle
       end
     end
 
-    def create_first_location(current_user)
+    def create_first_location(hash)
       locations.create!(
-        user_id: current_user.id,
         cow_id: id,
-        farm_id: ($request.blank? ? KepplerFarm::Farm.all.sample.id : $request.params[:farm_id])
+        user_id: hash[:user_id],
+        farm_id: hash[:farm_id],
+        strategic_lot_id: hash[:strategic_lot_id]
       )
     end
 
-    def create_first_activity(current_user)
+    def create_first_activity(hash)
       cow_activities.create!(
-        user_id: current_user.id,
         cow_id: id,
+        user_id: hash[:user_id],
         active: true
+      )
+    end
+
+    def create_first_weight(params, hash)
+      weights.create!(
+        weight: params.dig(:weight) || hash.dig(:weight),
+        gained_weight: params.dig(:gained_weight) || hash.dig(:gained_weight),
+        average_weight: params.dig(:average_weight) || hash.dig(:average_weight),
+        corporal_condition_id: params.dig(:corporal_condition_id) || hash.dig(:corporal_condition_id),
+        cow_id: id,
+        user_id: hash.dig(:user_id)
       )
     end
   end

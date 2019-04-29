@@ -12,7 +12,7 @@
     .d-flex.justify-content-end
       -# .toolbar
         .toolbar-item
-          -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+          -# %a.tool-btn{ 'data-confirm': '¿Estás seguro?', 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
           = link_to farm_transference_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
             %i.icofont-trash
       = link_to({action: :show, format: :pdf}, {class: 'float-right mt-4 mb-4', target: '_blank'}) do

@@ -3,20 +3,24 @@ es:
     sidebar-menu:
       keppler-reproduction: Reproducción
       keppler-reproduction-submenu:
+        inefectivity: Inefectivity
         cicle: Ciclo
         season-cow: Season cow
         season: Temporada
     permissions:
     models:
       singularize:
+        inefectivity: inefectivity
         cicle: ciclo
         season_cow: season cow
         season: temporada
       pluralize:
+        inefectivities: inefectivities
         cicles: ciclos
         season_cows: season cows
         seasons: temporadas
     modules:
+      admin/inefectivity: Inefectivity
       admin/cicle: Ciclo
       admin/season-cow: Season cow
       admin/season: Temporada

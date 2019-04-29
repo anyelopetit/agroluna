@@ -41,8 +41,9 @@ module KepplerFrontend
       @cow.father_id = params[:cow][:father_id].split(',').last.to_i
 
       if @cow.save! && @cow.weights.blank?
-        @cow.create_first_location(current_user)
-        @cow.create_first_activity(current_user)
+        @cow.create_first_location({farm_id: @farm.id})
+        @cow.create_first_activity({user_id: current_user.id})
+        @cow.create_typology
         @cow.mother.create_typology unless @cow.mother.blank?
         redirect_to new_farm_cow_weight_path(@farm, @cow)
       else
@@ -124,10 +125,10 @@ module KepplerFrontend
 
     def index_variables
       @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
-      @q = KepplerCattle::Cow.ransack(params[:q]) # @farm.cows.ransack(params[:q])
+      @q = @farm.cows.ransack(params[:q])
       @cows = @q.result(distinct: true)
-      @active_cows = @farm.cows.actives.page(params[:page]).per(50)
-      @inactive_cows = @farm.cows.inactives.page(params[:page]).per(50)
+      @active_cows = @cows.actives.page(params[:page]).per(50)
+      @inactive_cows = @cows.inactives.page(params[:page]).per(50)
       @attributes = KepplerCattle::Cow.index_attributes
       @typologies = KepplerCattle::Typology.all
       @strategic_lots = @farm.strategic_lots.map { |x| "'#{x.id}': '#{x.name}'" }.join(', ')

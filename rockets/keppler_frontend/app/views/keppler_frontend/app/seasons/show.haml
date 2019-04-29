@@ -115,13 +115,16 @@
                   %td
                     = link_to '#' do
                       = cow.status.insemination&.serie_number
+  
       -# = render 'season_cows_table', cows: @cows
 -# = simple_form_for [@farm, @season, @cicle] do |f|
   = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
   = f.input :season_id, as: :hidden, input_html: { value: @season.id }
   = f.input :days_count, as: :hidden
+  
 
 = render 'keppler_frontend/app/seasons/modalLote', season: @season
+
 -# = render 'keppler_frontend/app/seasons/modalCattle', season: @season
 -# :javascript
   $('#add-cicle').click(function() {

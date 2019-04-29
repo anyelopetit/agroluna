@@ -30,8 +30,10 @@
             = sort_link(@q, :race_id) do 
               Raza
           %th Tipología
-          %th= 'Estado' if Rails.env.eql?('development')
-          %th= 'Preñada' if action_name.eql?('pregnants')
+          - if Rails.env.eql?('development')
+            %th Estado
+          - if action_name.eql?('pregnants')
+            %th Preñada
           -# %th Peso
           -# %th Estado
           -# %th Menu

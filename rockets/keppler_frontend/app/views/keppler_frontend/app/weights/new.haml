@@ -22,7 +22,7 @@
                   = f.input :cow_id, include_blank: false, input_html: { class: 'form-control input_custom', value: @cow.id }, as: :hidden, label_html: { class: 'label_custom--strong' }
                   .col-sm-12.col-md-6
                     = f.input :weight, autofocus: true, placeholder: '0.00 KG', label: 'Peso (KG)', input_html: { class: 'form-control input_custom', min: 0, value: (@last_weight&.weight.blank? ? 0 : @last_weight&.weight) }, label_html: { class: 'label_custom--strong' }
-                  .col-sm-12.col-md-6
+                  .col-sm-12.col-md-6 
                     = f.input :gained_weight, input_html: { class: 'form-control input_custom' }, readonly: true, placeholder: '0.00 KG', label: 'Peso ganado (KG)', label_html: { class: 'label_custom--strong' }
                   .col-sm-12.col-md-6
                     = f.input :average_weight, input_html: { class: 'form-control input_custom' }, readonly: true, placeholder: '0.00 KG', label: 'Peso promedio (KG)', label_html: { class: 'label_custom--strong' }
@@ -70,11 +70,13 @@
                             %dt.card_status_details
                               Días de nacido
                             %dd.card_status_details= @cow.days
+    = render 'keppler_frontend/app/weights/medical_history'
+    
+            
 
 // Plugins
 %link{href: "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css", rel: "stylesheet"}/
 %script{src: "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"}
-
 :javascript
   $('.keppler-switch').click(function(event) {
     event.preventDefault()

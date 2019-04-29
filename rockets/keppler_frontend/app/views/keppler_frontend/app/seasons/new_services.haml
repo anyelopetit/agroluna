@@ -44,8 +44,6 @@
                             = f.input :user_id, input_html: { name: "status[user_id]", value: current_user.id }, as: :hidden
                             = f.input :cow_id, input_html: { name: "status[cow_id]", value: cow.id }, as: :hidden
                             = f.input :status_type, input_html: { name: "status[type]", value: 'Service' }, as: :hidden
-                            %input{ name: 'status[farm_id]', value: @farm.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
-                            %input{ name: 'status[season_id]', value: @season.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
                             .col-sm-6.col-md-3
                               .form-group
                                 %label.label_custom--strong Fecha de servicio

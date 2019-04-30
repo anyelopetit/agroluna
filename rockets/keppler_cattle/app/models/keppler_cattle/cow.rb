@@ -120,10 +120,9 @@ module KepplerCattle
     end
 
     def self.possible_mothers
-      includes(:typologies)
-        .where(gender: 'female')
-        .where(keppler_cattle_typologies: {counter: ['1', '2']}).distinct
-        # .order(:serie_number)
+      mother_typologies_ids = KepplerCattle::Typology.where(counter: ['1', '2']).pluck(:id)
+      cows_ids = select { |x| mother_typologies_ids.include?(x.typology.id) }.pluck(:id)
+      where(id: cows_ids)
     end
 
     def self.possible_fathers

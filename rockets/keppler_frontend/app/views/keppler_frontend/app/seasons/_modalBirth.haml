@@ -88,8 +88,9 @@
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Raza
                           %select#new_cow_strategic_lot.form-control.select.input_custom{"aria-hidden" => "true", name: "new_cow[race_id]"  }
-                            - [cow&.race, @farm.inseminations.find_by(id: cow.statuses.where(status_type: 'Pregnancy')&.last&.insemination_id).race].each_with_index do |race, index|
-                              %option{ value: race.id } #{race.name} (#{index.zero? ? 'Raza de la madre' : 'Raza del padre'})
+                            - [cow&.race, @farm.inseminations.find_by(id: cow.statuses.where(status_type: 'Pregnancy')&.last&.insemination_id)&.race].each_with_index do |race, index|
+                              - if race
+                                %option{ value: race.id } #{race.name} (#{index.zero? ? 'Raza de la madre' : 'Raza del padre'})
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Color de pelaje
                           %select#new_cow_strategic_lot.form-control.select.input_custom{"aria-hidden" => "true", name: "new_cow[coat_color]"  }
@@ -137,8 +138,9 @@
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Raza
                           %select.form-control.select.input_custom{"aria-hidden" => "true", name: "other_new_cow[race_id]"  }
-                            - [cow&.race, @farm.inseminations.find_by(id: cow.statuses.where(status_type: 'Pregnancy')&.last&.insemination_id).race].each_with_index do |race, index|
-                              %option{ value: race.id } #{race.name} (#{index.zero? ? 'Raza de la madre' : 'Raza del padre'})
+                            - [cow&.race, @farm.inseminations.find_by(id: cow.statuses.where(status_type: 'Pregnancy')&.last&.insemination_id)&.race].each_with_index do |race, index|
+                              - if race
+                                %option{ value: race.id } #{race.name} (#{index.zero? ? 'Raza de la madre' : 'Raza del padre'})
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Color de pelaje
                           %select.form-control.select.input_custom{"aria-hidden" => "true", name: "other_new_cow[coat_color]"  }

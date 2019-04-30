@@ -121,7 +121,7 @@ module KepplerCattle
 
     def self.possible_mothers
       mother_typologies_ids = KepplerCattle::Typology.where(counter: ['1', '2']).pluck(:id)
-      cows_ids = select { |x| mother_typologies_ids.include?(x.typology.id) }.pluck(:id)
+      cows_ids = select { |x| mother_typologies_ids.include?(x.typology&.id) }.pluck(:id)
       where(id: cows_ids)
     end
 

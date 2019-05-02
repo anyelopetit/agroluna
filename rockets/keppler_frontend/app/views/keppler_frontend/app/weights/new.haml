@@ -10,7 +10,7 @@
             %i.icofont-circled-left
             Listado
       .row
-        .col-lg-9.col-md-8.col-sm-12
+        .col-lg-9.col-md-12
           .card_new
             %h1 
               Crear status inicial 
@@ -35,7 +35,7 @@
                       %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
                         %i.icofont-save
                         Guardar
-        .col-lg-3.col-md-4.col-sm-12
+        .col-lg-3.d-md-none.d-lg-block
           .card_new
             .float-right
               -# = image_tag "/assets/keppler_cattle/#{@cow.species}", class: 'svg-icon-md p-absolute r-0' unless @cow.species.blank?

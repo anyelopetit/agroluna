@@ -31,6 +31,9 @@ b, strong {
 	min-width: 700px;
 	margin: 0 auto;
 	// padding: 40px;
+	@include respond-to(xs) {
+		min-width: 100%;
+	}
 }
 
 .gantt {

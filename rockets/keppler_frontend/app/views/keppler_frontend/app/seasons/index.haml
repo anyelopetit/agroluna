@@ -3,41 +3,8 @@
   .container_custom
     .float-left
       -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
-    .d-flex.justify-content-between
-      // .toolbar
-      //   %a{ href: '' }
-      //     %i.icofont-trash
-      //   %a{ href: '' }
-      //     %i.icofont-refresh
-      //   %a{ href: '' }
-      //     %i.icofont-download
-      -# .toolbar
-        -# .toolbar-item
-          .item-check
-            .checkbox
-              %label{ for: 'checkbox-all' }
-                %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
-                %span.cr
-                  %i.cr-icon.icofont-check
-        
-        -# .toolbar-item
-          -# = link_to reload_admin_farm_farm_seasons_path(@farm), class: 'tool-btn', remote: true, title: t('keppler.actions.reload_page') do
-            %i.icofont-refresh
-        -# %li.toolbar-item.dropdown
-          %a.dropdown-toggle{ 'data-toggle': 'dropdown', href: '#', title: t('keppler.actions.download_records') }
-            %i.icon-cloud-download
-          %ul.dropdown-menu
-            %li= link_to t('keppler.actions.download.csv'), admin_farm_farm_seasons_path(@farm, format: :csv), class: 'tool-btn'
-            %li= link_to t('keppler.actions.download.xls'), admin_farm_farm_seasons_path(@farm, format: :xls), class: 'tool-btn'
-        -# .toolbar-item
-          = link_to '#', class: 'tool-btn', title: t('keppler.actions.upload_records'), id: 'upload' do
-            %i.icon-cloud-upload
-        -# .toolbar-item
-          %a.tool-btn{ 'data-confirm': '¿Estás seguro?', 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
-          = link_to destroy_multiple_farm_seasons_path(@farm), class: 'destroy_multiple', method: :delete, data: { confirm: '¿Estás seguro?' }   do
-            %i.icofont-trash
-            Eliminar
-      .float-left
+    .d
+      .float-left.mt-4.mb-4{ style: 'width: 80%' }
         %h1 Temporadas de monta
       %a.float-right.mt-4.mb-4{ href: new_farm_season_path(@farm) }
         %button.btn.btn_custom.btn--filled.btn--medium

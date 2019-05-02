@@ -91,7 +91,7 @@
     @include respond-to(sm){
       left: 50%;
       width: 2px;
-      height: 72%;
+      height: 53%;
       top: 100%;
       // display: none;
     }
@@ -99,19 +99,19 @@
     @media (min-width: 0px) and (max-width: 340px){
       left: 50%;
       width: 2px;
-      height: 73%;
+      height: 53%;
       top: 100%;
     }
     @media (min-width: 341px) and (max-width: 350px){
       left: 50%;
       width: 2px;
-      height: 73%;
+      height: 53%;
       top: 100%;
     }
     @media (min-width: 351px) and (max-width: 375px){
       left: 50% !important;
       width: 2px !important;
-      height: 73% !important;
+      height: 53% !important;
       top: 100% !important;
     }
      @media (min-width: 376px) and (max-width: 450px) {
@@ -266,7 +266,7 @@
     @include respond-to(sm){
       left: 50%;
       width: 2px;
-      height: 52%;
+      height: 88%;
       top: 100%;
     } 
     @include respond-to(xs){
@@ -377,7 +377,7 @@
     @include respond-to(sm){
       right: 50%;
       width: 2px;
-      height: 52%;
+      height: 88%;
       top: 100%;
     }
     @include respond-to(xs){

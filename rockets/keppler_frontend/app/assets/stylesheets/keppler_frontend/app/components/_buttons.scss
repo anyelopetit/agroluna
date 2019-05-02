@@ -75,3 +75,23 @@
     
   }
 }
+
+
+
+.btn-active {
+  background-color: $primary !important;
+  border-radius: 50%;
+  color: white;
+  font-weight: 400;
+  padding: 7px 21px;
+  transition: .4s;
+}
+
+.btn-inactive {
+  background-color: #c0c0c0;
+  border-radius: 50%;
+  color: white;
+  font-weight: 400;
+  padding: 7px 21px;
+  transition: .4s;
+}

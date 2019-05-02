@@ -1,16 +1,32 @@
-%ul#moduleTabs.nav.nav-tabs.mt-4{role: "tablist", style: "padding: 0;"}
-  %li.nav-item
+%ul#moduleTabs.nav.nav-tabs.d-none.d-md-flex{role: "tablist", style: "padding: 0;"}
+  %li.nav-item.tabs-season
     = link_to_if action_name.eql?('availables'), 'Disponibles', '#', class: 'nav-link active' do
       = link_to 'Disponibles', availables_farm_season_path(@farm, @season, @strategic_lot), class: 'nav-link'
-  %li.nav-item
+  %li.nav-item.tabs-season
     = link_to_if action_name.eql?('zeals'), 'Celos', '#', class: 'nav-link active' do
       = link_to 'Celos', zeals_farm_season_path(@farm, @season, @strategic_lot), class: 'nav-link'
-  %li.nav-item
+  %li.nav-item.tabs-season
     = link_to_if action_name.eql?('services'), 'Servicios', '#', class: 'nav-link active' do
       = link_to 'Servicios', services_farm_season_path(@farm, @season, @strategic_lot), class: 'nav-link'
-  %li.nav-item
+  %li.nav-item.tabs-season
     = link_to_if action_name.eql?('pregnants'), 'Preñadas', '#', class: 'nav-link active' do
       = link_to 'Preñadas', pregnants_farm_season_path(@farm, @season, @strategic_lot), class: 'nav-link'
-  %li.nav-item
+  %li.nav-item.tabs-season
     = link_to_if action_name.eql?('births'), 'Paridas', '#', class: 'nav-link active' do
       = link_to 'Paridas', births_farm_season_path(@farm, @season, @strategic_lot), class: 'nav-link'
+%ul#moduleTabs.nav.nav-tabs.d-md-none{role: "tablist", style: "padding: 0;"}
+  %li.nav-item.tabs-season
+    = link_to_if action_name.eql?('availables'), 'Disponibles', '#', class: 'nav-link active' do
+      = link_to 'D', availables_farm_season_path(@farm, @season, @strategic_lot), class: 'nav-link', style:"width:40px;height:40px;background-color:#28C76F;border-top-left-radius: 5px;border-top-right-radius: 5px;margin: 0 2px;display: flex;justify-content: center;align-items: center;color:white;opacity: 0.6;"
+  %li.nav-item.tabs-season
+    = link_to_if action_name.eql?('zeals'), 'Celos', '#', class: 'nav-link active' do
+      = link_to 'C', zeals_farm_season_path(@farm, @season, @strategic_lot), class: 'nav-link',style:"width:40px;height:40px;background-color:#ff0000c7;border-top-left-radius: 5px;border-top-right-radius: 5px;margin: 0 2px;display: flex;justify-content: center;align-items: center;color:white;opacity: 0.6;"
+  %li.nav-item.tabs-season
+    = link_to_if action_name.eql?('services'), 'Servicios', '#', class: 'nav-link active' do
+      = link_to 'S', services_farm_season_path(@farm, @season, @strategic_lot), class: 'nav-link',style:"width:40px;height:40px;background-color:#f28d23;border-top-left-radius: 5px;border-top-right-radius: 5px;margin: 0 2px;display: flex;justify-content: center;align-items: center;color:white;opacity: 0.6;"
+  %li.nav-item.tabs-season
+    = link_to_if action_name.eql?('pregnants'), 'Preñadas', '#', class: 'nav-link active' do
+      = link_to 'P', pregnants_farm_season_path(@farm, @season, @strategic_lot), class: 'nav-link',style:"width:40px;height:40px;background-color:#4a525a;border-top-left-radius: 5px;border-top-right-radius: 5px;margin: 0 2px;display: flex;justify-content: center;align-items: center;color:white;opacity: 0.6;"
+  %li.nav-item.tabs-season
+    = link_to_if action_name.eql?('births'), 'Paridas', '#', class: 'nav-link active' do
+      = link_to 'P', births_farm_season_path(@farm, @season, @strategic_lot), class: 'nav-link',style:"width:40px;height:40px;background-color:#006df0;border-top-left-radius: 5px;border-top-right-radius: 5px;margin: 0 2px;display: flex;justify-content: center;align-items: center;color:white;opacity: 0.6;"

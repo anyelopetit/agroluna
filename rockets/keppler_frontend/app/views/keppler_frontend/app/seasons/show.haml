@@ -2,7 +2,7 @@
 .app_wrapper
   .container_custom
     -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
-    .d-flex.justify-content-between
+    .d-flex.justify-content-between.content-float
       .float-left.mb-4{ style: 'width: 80%' }
         %h1
           #{@season.name}
@@ -54,78 +54,80 @@
                   %i.icofont-plus
                   Importar de lote
       #index-container
-        %table
-          - if @cow_strategic_lots.size.zero?
-            %thead
-              %tr
-                %th.not-records.center
-                  %center No se encontraron lotes estratégicos asociados a ganados
-          - else
-            %thead
-              %tr
-                %th Nombre
-                %th Disponibles
-                %th En celo
-                %th Inseminadas
-                %th Preñadas
-                %th Paridas
-                %th Total
-                %th Toros
-            %tbody
-              - @cow_strategic_lots.each do |strategic_lot|
+        .content-table
+          %table
+            - if @cow_strategic_lots.size.zero?
+              %thead
                 %tr
-                  %td
-                    = link_to({ controller: :seasons, action: :availables, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
-                      = strategic_lot.name
-                  %td
-                    = link_to({ controller: :seasons, action: :availables, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
-                      = @cows.total_season_cows(strategic_lot).type_is(['Nil', nil]).count
-                  %td
-                    = link_to({ controller: :seasons, action: :zeals, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
-                      = @cows.total_season_cows(strategic_lot).type_is(['Zeal']).count
-                  %td
-                    = link_to({ controller: :seasons, action: :services, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
-                      = @cows.total_season_cows(strategic_lot).type_is(['Service']).count
-                  %td
-                    = link_to({ controller: :seasons, action: :pregnants, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
-                      = @cows.total_season_cows(strategic_lot).type_is(['Pregnancy']).count
-                  %td
-                    = link_to({ controller: :seasons, action: :births, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
-                      = @cows.total_season_cows(strategic_lot).type_is(['Birth']).count
-                  %td
-                    = link_to({ controller: :seasons, action: :births, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
-                      = @cows.total_season_cows(strategic_lot).count
-                  %td
-                    = link_to({ controller: :seasons, action: :availables, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
-                      = @bulls.total_season_bulls(strategic_lot).count
+                  %th.not-records.center
+                    %center No se encontraron lotes estratégicos asociados a ganados
+            - else
+              %thead
+                %tr
+                  %th Nombre
+                  %th Disponibles
+                  %th En celo
+                  %th Inseminadas
+                  %th Preñadas
+                  %th Paridas
+                  %th Total
+                  %th Toros
+              %tbody
+                - @cow_strategic_lots.each do |strategic_lot|
+                  %tr
+                    %td
+                      = link_to({ controller: :seasons, action: :availables, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
+                        = strategic_lot.name
+                    %td
+                      = link_to({ controller: :seasons, action: :availables, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
+                        = @cows.total_season_cows(strategic_lot).type_is(['Nil', nil]).count
+                    %td
+                      = link_to({ controller: :seasons, action: :zeals, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
+                        = @cows.total_season_cows(strategic_lot).type_is(['Zeal']).count
+                    %td
+                      = link_to({ controller: :seasons, action: :services, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
+                        = @cows.total_season_cows(strategic_lot).type_is(['Service']).count
+                    %td
+                      = link_to({ controller: :seasons, action: :pregnants, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
+                        = @cows.total_season_cows(strategic_lot).type_is(['Pregnancy']).count
+                    %td
+                      = link_to({ controller: :seasons, action: :births, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
+                        = @cows.total_season_cows(strategic_lot).type_is(['Birth']).count
+                    %td
+                      = link_to({ controller: :seasons, action: :births, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
+                        = @cows.total_season_cows(strategic_lot).count
+                    %td
+                      = link_to({ controller: :seasons, action: :availables, farm_id: @farm&.id, id: @season.id, strategic_lot_id: strategic_lot.id },{ title: strategic_lot.function }) do
+                        = @bulls.total_season_bulls(strategic_lot).count
       - unless @season.type_id.zero?
         - unless @cows.type_is(['Service']).blank?
           .d-flex.justify-content-between.mt-5.mb-3.mt-4
             .left
               %h1 Inseminadas
-          %table
-            %thead
-              %tr
-                %th Número de serie
-                %th Nombre corto
-                %th Fecha de Servicio
-                %th Pajuela Usada
-            %tbody
-              - @inseminated_cows.each do |cow|
+          .content-table
+            %table
+              %thead
                 %tr
-                  %td
-                    = link_to '#' do
-                      = cow.serie_number
-                  %td
-                    = link_to '#' do
-                      = cow.short_name
-                      = image_tag "/assets/keppler_cattle/female", class: 'svg-icon-xs ml-2'
-                  %td
-                    = link_to '#' do
-                      = cow.status.date
-                  %td
-                    = link_to '#' do
-                      = cow.status.insemination&.serie_number
+                  %th Número de serie
+                  %th Nombre corto
+                  %th Fecha de Servicio
+                  %th Pajuela Usada
+              %tbody
+                - @inseminated_cows.each do |cow|
+                  %tr
+                    %td
+                      = link_to '#' do
+                        = cow.serie_number
+                    %td
+                      = link_to '#' do
+                        = cow.short_name
+                        = image_tag "/assets/keppler_cattle/female", class: 'svg-icon-xs ml-2'
+                    %td
+                      = link_to '#' do
+                        = cow.status.date
+                    %td
+                      = link_to '#' do
+                        = cow.status.insemination&.serie_number
   
       -# = render 'season_cows_table', cows: @cows
 -# = simple_form_for [@farm, @season, @cicle] do |f|

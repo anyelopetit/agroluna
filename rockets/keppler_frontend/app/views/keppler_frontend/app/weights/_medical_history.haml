@@ -3,11 +3,11 @@
     %i.icofont-circled-left
     Listado
   .row
-    .col-lg-9
+    .col-lg-9.col-md-12
       .card_new
         %h1 
           Crear Historial Medico
-          %span.ml-3{style: "color:#797979 !important;"}
+          %span.ml-3{style: "color:#797979 !important;"} (#{@cow.serie_number})
         %form.form-padding{action:""}
           .row  
             .col-sm-12.col-md-6
@@ -34,9 +34,8 @@
                 %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
                   %i.icofont-save
                   Guardar
-    .col-lg-3.col-md-4.col-sm-12
+    .col-lg-3.d-md-none.d-lg-block
       .card_new
-        
         .float-right
           -# = image_tag "/assets/keppler_cattle/#{@cow.species}", class: 'svg-icon-md p-absolute r-0' unless @cow.species.blank?
           = image_tag "/assets/keppler_cattle/#{@cow.gender}", class: 'svg-icon-md p-absolute r-0' unless @cow.gender.blank?
@@ -63,42 +62,48 @@
                       %dl
                         %dt.card_status_details Fecha de Nacimiento
                         %dd.card_status_details= @cow.birthdate
-    
-    .card_show.cow_info.p-5
-      .row.mt-5.mb-5
-        .col-lg-3{ :style =>"display: flex; justify-content: center;"}
-          .card_cow
+                
+    .col-lg-12
+      .card_new
+        %h1 
+          Ficha medica
+          %span.ml-3{style: "color:#797979 !important;"} (#{@cow.serie_number})
+        -# .cow_info
+        -#   .row.mt-5.mb-5
+        -#     .col-lg-3.col-md-12.d-none{ :style =>"display: flex; justify-content: center;"}
+        -#       .card_cow
+        -#         .row
+        -#           .col-lg-12
+        -#             .card_cow_content{ :style => "text-align: center;"}
+        -#               %center
+        -#                 = image_tag (@cow.image&.url || (@cow.gender?('male') ? 'https://image.flaticon.com/icons/svg/1495/1495074.svg' : 'https://image.flaticon.com/icons/svg/523/523448.svg')), class: 'avatar_cow'
+        -#               %h1
+        -#                 = @cow.serie_number
+        -#               %small= "(#{@cow.short_name})" unless @cow.short_name.blank?
+        -#               %strong
+        -#                 = @cow.typology_name unless @cow.typology&.blank?
+        -#               %span= @cow.race&.name
+        .row       
+          .col-lg-12.col-sm-12.col-md-12
             .row
-              %center.col-lg-12
-                = image_tag (@cow.image&.url || (@cow.gender?('male') ? 'https://image.flaticon.com/icons/svg/1495/1495074.svg' : 'https://image.flaticon.com/icons/svg/523/523448.svg')), class: 'avatar_cow'
-              .col-lg-12
-                .card_cow_content{ :style => "text-align: center;"}
-                  %h1
-                    = @cow.serie_number
-                  %small= "(#{@cow.short_name})" unless @cow.short_name.blank?
-                  %strong
-                    = @cow.typology_name unless @cow.typology&.blank?
-                  %span= @cow.race&.name  
-        .col-lg-9
-          .row
-            .col-lg-4.col-sm-4
-              %dl
-                %dt Fecha de evalución
-                %dd= @cow.birthdate
-                %dt Responsable
-                %dd Gladibeth Franco
-                %dt Evaluación
-                %dd Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-            .col-lg-4.col-sm-4
-              %dl
-                %dt Diagnóstico
-                %dd Lorem Ipsum es un texto de marcador de posición comúnmente utilizado en las industrias gráficas, gráficas y editoriales para previsualizar diseños y maquetas visuales
-                %dt Faltan
-                %dd 
-                  %strong 10 
-                  %span días para su proxima cita                    
-            .col-lg-4.col-sm-4
-              #datepicker
+              .col-lg-4.col-md-6.col-sm-6
+                %dl
+                  %dt Fecha de evalución
+                  %dd= @cow.birthdate
+                  %dt.mt-3 Responsable
+                  %dd Gladibeth Franco
+                  %dt.mt-3 Evaluación
+                  %dd Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+              .col-lg-4.col-md-6.col-sm-6
+                %dl
+                  %dt Diagnóstico
+                  %dd Lorem Ipsum es un texto de marcador de posición comúnmente utilizado en las industrias gráficas, gráficas y editoriales para previsualizar diseños y maquetas visuales
+                  %dt.mt-3 Faltan
+                  %dd 
+                    %strong 10 
+                    %span días para su proxima cita                    
+              %center.col-lg-4.col-md-12.col-sm-12.mt-2
+                #datepicker
 :css
   .ui-datepicker-month{
     color: #4d5663 !important;

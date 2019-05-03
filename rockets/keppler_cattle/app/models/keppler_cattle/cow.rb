@@ -185,7 +185,7 @@ module KepplerCattle
     end
 
     def self.inactives
-      cows = includes(:locations).select do |cow|
+      cows = select do |cow|
         (cow&.locations.pluck(:farm_id).include?(farm&.id) &&
         cow&.location&.farm_id != farm&.id) || 
         !cow&.activity&.active

@@ -44,21 +44,21 @@
                             = f.input :user_id, input_html: { name: "status[user_id]", value: current_user.id }, as: :hidden
                             = f.input :cow_id, input_html: { name: "status[cow_id]", value: cow.id }, as: :hidden
                             = f.input :status_type, input_html: { name: "status[type]", value: 'Service' }, as: :hidden
-                            .col-sm-6.col-md-3
+                            .col-sm-6.col-md-6
                               .form-group
                                 %label.label_custom--strong Fecha de servicio
                                 %input.form-control.input_custom.datepicker{ name: "status[date]", value: Date.today }
-                            .col-sm-6.col-md-3
+                            .col-sm-6.col-md-6
                               .form-group
                                 %label.label_custom--strong Pajuela a colocar
                                 %select.form-control.input_custom.select2{ name: "status[insemination_id]" }
                                   - @farm.inseminations.all.each do |insemination|
                                     %option{ value: insemination.id } #{insemination.serie_number} #{' - ' + insemination.short_name} (#{insemination.quantity})
-                            .col-sm-6.col-md-3
+                            .col-sm-6.col-md-6
                               .form-group
                                 %label.label_custom--strong Cantidad de cartuchos
                                 %input.form-control.input_custom{ name: "status[insemination_quant]", type: 'number', value: 0, min: 0 }
-                            .col-sm-6.col-md-3
+                            .col-sm-6.col-md-6
                               .form-group
                                 %label.label_custom--strong Nombre del responsable
                                 %input.form-control.input_custom{ name: "status[user_name]", autocomplete: 'off', list: 'responsables' }

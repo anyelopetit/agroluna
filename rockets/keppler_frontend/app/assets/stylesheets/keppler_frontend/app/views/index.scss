@@ -102,14 +102,25 @@
   left: auto !important;
   min-width: 130px;
   right: 100px !important;
-  // top: 15px !important;
-
   a {
     justify-content: flex-start;
     
     i {
       padding: 0 10px;
     }
+  }
+}
+
+.actions-dropdown {
+  transform: translate3d(-7px, 35px, 0px);
+  @include respond-to(md){
+    transform: translate3d(30px, 35px, 0px) !important;
+  }
+  @include respond-to(sm){
+    transform: translate3d(35px, 35px, 0px) !important;
+  }
+  @include respond-to(xs){
+    transform: translate3d(45px, 35px, 0px) !important;
   }
 }
 
@@ -150,6 +161,9 @@ table img {
 
 .flex-search {
   display: flex;
+  @include respond-to(sm){
+    margin: 20px 0;
+  }
 }
 
 #serie_number {

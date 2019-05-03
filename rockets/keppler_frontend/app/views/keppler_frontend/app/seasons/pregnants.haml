@@ -4,7 +4,7 @@
       = link_to farm_season_path(@farm, @season) do
         = @season.name
       > #{@strategic_lot.name}
-    .d-flex.justify-content-end
+    .d-flex.justify-content-end.mt-4.mb-4
       .float-rigth
         %button.btn.btn_custom.bg-white.btn--medium{'data-target': "#modalGroup", 'data-toggle': 'modal'}
           = image_tag '/assets/keppler_cattle/male', class: 'svg-icon-xs ml-2', style: 'height: 12px'
@@ -18,13 +18,27 @@
     .card_show
       .tab-content
         #disponibles.tab-pane.active
-          .float-right.mt-4.mb-4{style: "z-index: 2;"}
-            %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalAvailables", 'data-toggle': 'modal', disabled: true }
-              %i.icofont-plus
-              Marcar Disponibles
-            %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalZeals", 'data-toggle': 'modal', disabled: true }
-              %i.icofont-plus
-              Marcar Celos
+          .actions.d-none.d-sm-block
+            .float-right.mt-4.mb-4{style: "z-index: 2;"}
+              %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalAvailables", 'data-toggle': 'modal', disabled: true }
+                %i.icofont-plus
+                Marcar Disponibles
+              %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalZeals", 'data-toggle': 'modal', disabled: true }
+                %i.icofont-plus
+                Marcar Celos
+          .actions_movil.d-sm-none
+            .float-right
+              %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+                %button.btn.btn_custom.btn--filled.btn--medium.mb-4
+                  %i.icofont-simple-down
+                  Acciones
+              .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
+                %a.dropdown-item.mt-4.mb-4.ml-1.disable{'data-target': "#modalAvailables", 'data-toggle': 'modal', disabled: true }
+                  %i.icofont-plus
+                  Marcar Disponibles
+                %a.dropdown-item.mt-4.mb-4.ml-1.disable{'data-target': "#modalZeals", 'data-toggle': 'modal', disabled: true }
+                  %i.icofont-plus
+                  Marcar Celos
           = render 'season_cows_table', cows: @cows
   = render 'keppler_frontend/app/seasons/modalGroup', season: @season
   = render 'keppler_frontend/app/seasons/modalAvailables', season: @season

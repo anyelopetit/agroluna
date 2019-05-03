@@ -4,40 +4,67 @@
       = link_to farm_season_path(@farm, @season) do
         = @season.name
       > #{@strategic_lot.name}
-    .d-flex.justify-content-end
-      .float-rigth
-        = link_to destroy_season_cows_farm_season_path(@farm, @season, @strategic_lot, []), class: 'multiple_ids disable', disabled: true, method: :delete, data: { confirm: '¿Estás seguro?' } do
+    .d-flex.justify-content-end.mt-4.mb-4
+      .float-rigth.d-flex
+        = link_to destroy_season_cows_farm_season_path(@farm, @season, @strategic_lot, []), class: 'multiple_ids disable d-none d-sm-block', disabled: true, method: :delete, data: { confirm: '¿Estás seguro?' } do
           %button.btn.btn_custom.btn--medium.btn--filled.disable{ disabled: true }
             %i.icofont-trash
             Sacar de la temporada
-        %button.btn.btn_custom.bg-white.btn--medium{'data-target': "#modalGroup", 'data-toggle': 'modal'}
+        %button.btn.btn_custom.bg-white.btn--medium.d-none.d-sm-block.ml-2{'data-target': "#modalGroup", 'data-toggle': 'modal'}
           = image_tag '/assets/keppler_cattle/male', class: 'svg-icon-xs ml-2', style: 'height: 12px'
           = @bulls.count
           %span Padrotes
-        -# %button.btn.btn_custom.bg-white.btn--medium{'data-target': "#modalC", 'data-toggle': 'modal'}
+        = link_to destroy_season_cows_farm_season_path(@farm, @season, @strategic_lot, []), class: 'multiple_ids disable d-sm-none', disabled: true, method: :delete, data: { confirm: '¿Estás seguro?' } do
+          %button.btn.btn_custom.btn--medium.btn--filled.disable{ disabled: true }
+            %i.icofont-trash
+        %button.btn.btn_custom.bg-white.btn--medium.d-sm-none.ml-2{'data-target': "#modalGroup", 'data-toggle': 'modal'}
           = image_tag '/assets/keppler_cattle/male', class: 'svg-icon-xs ml-2', style: 'height: 12px'
-          = @cows.count
-          %span Padrotes
+          = @bulls.count
+
     = render 'status'
     .card_show
       .tab-content
         #disponibles.tab-pane.active
-          .float-right.mt-4.mb-4{style: "z-index: 2;"}
-            %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalZeals", 'data-toggle': 'modal', disabled: true }
-              %i.icofont-plus
-              Marcar Celos
-            = link_to new_services_farm_season_path(@farm.id, @season.id, @strategic_lot.id, []), class: 'multiple_ids disable', disabled: true do
-              %button.btn.btn_custom.btn--filled.btn--medium.disable{ disabled: true }
+          .actions.d-none.d-sm-block
+            .float-right.mt-4.mb-4{style: "z-index: 2;"}
+              %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalZeals", 'data-toggle': 'modal', disabled: true }
                 %i.icofont-plus
-                Agregar Servicios
-            -# %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalPregnancy", 'data-toggle': 'modal', disabled: true }
-              %i.icofont-plus
-              Añadir Preñez
-            
-            = link_to new_pregnancies_farm_season_path(@farm.id, @season.id, @strategic_lot.id, []), class: 'multiple_ids disable', disabled: true do
-              %button.btn.btn_custom.btn--filled.btn--medium.disable{ disabled: true }
+                Marcar Celos
+              = link_to new_services_farm_season_path(@farm.id, @season.id, @strategic_lot.id, []), class: 'multiple_ids disable', disabled: true do
+                %button.btn.btn_custom.btn--filled.btn--medium.disable{ disabled: true }
+                  %i.icofont-plus
+                  Agregar Servicios
+              -# %button.btn.btn_custom.btn--filled.btn--medium.disable{'data-target': "#modalPregnancy", 'data-toggle': 'modal', disabled: true }
                 %i.icofont-plus
                 Añadir Preñez
+              
+              = link_to new_pregnancies_farm_season_path(@farm.id, @season.id, @strategic_lot.id, []), class: 'multiple_ids disable', disabled: true do
+                %button.btn.btn_custom.btn--filled.btn--medium.disable{ disabled: true }
+                  %i.icofont-plus
+                  Añadir Preñez
+          .actions_movil.d-sm-none
+            .float-right
+              %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+                %button.btn.btn_custom.btn--filled.btn--medium.mb-4
+                  %i.icofont-simple-down
+                  Acciones
+              .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
+                %a.dropdown-item.mt-4.mb-4.ml-1.disable{'data-target': "#modalZeals", 'data-toggle': 'modal', disabled: true }
+                  %i.icofont-plus
+                  Marcar Celos
+                = link_to new_services_farm_season_path(@farm.id, @season.id, @strategic_lot.id, []), class: 'multiple_ids disable', disabled: true do
+                  %a.dropdown-item.mt-4.mb-4.ml-1.disable{ disabled: true }
+                    %i.icofont-plus
+                    Agregar Servicios
+                -# %a.dropdown-item.mt-4.mb-4.ml-1.disable{'data-target': "#modalPregnancy", 'data-toggle': 'modal', disabled: true }
+                  %i.icofont-plus
+                  Añadir Preñez
+                
+                = link_to new_pregnancies_farm_season_path(@farm.id, @season.id, @strategic_lot.id, []), class: 'multiple_ids disable', disabled: true do
+                  %a.dropdown-item.mt-4.mb-4.ml-1.disable{ disabled: true }
+                    %i.icofont-plus
+                    Añadir Preñez
+              
           = render 'season_cows_table', cows: @cows
 = render 'keppler_frontend/app/seasons/modalGroup', season: @season
 = render 'keppler_frontend/app/seasons/modalZeals', season: @season

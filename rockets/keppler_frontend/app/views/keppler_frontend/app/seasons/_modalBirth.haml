@@ -1,5 +1,5 @@
 .modal.modal_status.fade{ id: "modalBirth-#{cow.id}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog" }
-  .modal-dialog{role: "document", style: "max-width: 800px;"}
+  .modal-dialog{role: "document"}
     .modal-content
       .modal-header
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
@@ -362,7 +362,7 @@
     bottom: 0;
     position: absolute;
     content: " ";
-    width: 70%;
+    width: 66%;
     height: 2px;
     background-color: #ccc;
     z-order: 0;
@@ -373,35 +373,12 @@
     text-align: center;
     position: relative;
   }
-  .btn-circle {
-    width: 30px !important;
-    height: 30px !important;
-    text-align: center !important;
-    padding: 6px 0 !important;
-    font-size: 12px !important;
-    line-height: 1.428571429 !important;
-    border-radius: 50%;
-  }
-  .btn-active {
-    background-color: #28C76F !important;
-    border-radius: 50%;
-    color: white;
-    font-weight: 400;
-    padding: 7px 21px;
-    transition: .4s;
-  }
+  
   a.btn {
     color: white !important;
     border-radius: 50%;
   }
-  .btn-inactive {
-    background-color: #c0c0c0;
-    border-radius: 50%;
-    color: white;
-    font-weight: 400;
-    padding: 7px 21px;
-    transition: .4s;
-  }
+
 
 :javascript
   $(document).ready(function () {

@@ -1,3 +1,8 @@
+.ui-datepicker {
+  @include respond-to(xs){
+    width: 270px !important;
+  }
+}
 .ui-widget.ui-widget-content {
   border: 1px solid $white !important;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) !important;

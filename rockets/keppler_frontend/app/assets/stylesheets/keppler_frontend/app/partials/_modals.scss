@@ -1,0 +1,6 @@
+.modal-dialog {
+  max-width: 800px;
+  @include respond-to(sm) {
+      max-width: 600px;
+  }
+}

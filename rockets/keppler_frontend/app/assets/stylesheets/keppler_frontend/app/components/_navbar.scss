@@ -345,9 +345,9 @@ a.modelOne {
 }
 .dropdown-item {
   color: $gray;
-  &.hover, &:link {
+  &.hover {
     color: $black;
-    background-color: $white !important;
+    background-color: #111 !important;
   }
   &.active {
     color: $secundary;
@@ -379,9 +379,9 @@ a.modelOne {
   .dropdown-item {
     color: $white;
     background-color: $almost-black;
-    &.hover, &:link {
+    &.hover {
       color: $white;
-      // background-color: $white !important;
+    background-color: #111 !important;
     }
     &.active {
       color: $white;

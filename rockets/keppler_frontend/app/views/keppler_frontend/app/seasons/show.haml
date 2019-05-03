@@ -36,7 +36,8 @@
     - if @season.finished || Date.today > @season.finish_date
       = render 'keppler_frontend/app/seasons/seasonFinish', season: @season
     - else
-      = render 'keppler_frontend/app/seasons/gantt', season: @season
+      - unless @season.season_type.to_i.eql?(0)
+        = render 'keppler_frontend/app/seasons/gantt', season: @season
       .d-flex.justify-content-between.mt-5.mb-3.mt-4
         .left
           %h1

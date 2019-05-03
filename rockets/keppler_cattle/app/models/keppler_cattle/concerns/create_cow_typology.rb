@@ -21,7 +21,7 @@ module KepplerCattle
                 typology_id: typology.id
               )
               typology_created = new_typology.save ? true : false
-              puts "*** Tipología #{typology.name} creada para #{polymorphic_cow(self).serie_number} (#{polymorphic_cow(self).short_name}) ***" if typology_created
+              puts "*** Tipología #{typology&.name} creada para #{polymorphic_cow(self).serie_number} (#{polymorphic_cow(self).short_name}) ***" if typology_created
             end
           end
         end

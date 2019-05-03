@@ -42,13 +42,12 @@ module KepplerCattle
       )
       this_status = new(
         status_type: params.dig(:status, :type) || hash[:status_type],
-        farm_id: params.dig(:status, :farm_id).to_i || hash[:farm_id],
-        season_id: params.dig(:status, :season_id).to_i || hash[:season_id],
+        season_id: hash[:season_id] || params.dig(:status, :season_id).to_i,
         date: params.dig(:status, :date) || Date.today,
         months: params.dig(:status, :months),
         user: responsable,
         user_id: responsable&.id,
-        observations: params.dig(:status, :observations) || '',
+        observations: params.dig(:status, :observations),
         insemination_id: params.dig(:status, :insemination_id),
         insemination_quantity: params.dig(:status, :insemination_quant),
 
@@ -59,6 +58,9 @@ module KepplerCattle
       cow = KepplerCattle::Cow.find_by_id(
         params.dig(:status, :cow_id) || hash[:cow_id]
       )
+      if this_status.try(:farm_id)
+        this_status.farm_id = hash[:farm_id] || params.dig(:farm_id).to_i
+      end
       this_status.season_id ||= season.id
       this_status.cow_id ||= cow.id
       puts "************* season #{this_status.season_id} *************"

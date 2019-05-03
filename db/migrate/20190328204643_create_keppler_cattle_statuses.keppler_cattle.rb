@@ -14,7 +14,7 @@ class CreateKepplerCattleStatuses < ActiveRecord::Migration[5.2]
       t.integer :cow_id, foreign_key: true
       t.integer :user_id, foreign_key: true
       t.integer :insemination_id, foreign_key: true
-      # t.integer :insemination_quantity
+      t.integer :insemination_quantity
 
       t.integer :position
       t.datetime :deleted_at

@@ -12,8 +12,8 @@ module KepplerFarm
     acts_as_list
     acts_as_paranoid
 
-    belongs_to :farm, class_name: 'KepplerFarm::Farm'
-    belongs_to :season, class_name: 'KepplerReproduction::Season'
+    belongs_to :farm, class_name: 'KepplerFarm::Farm', optional: true
+    belongs_to :season, class_name: 'KepplerReproduction::Season', optional: true
     
     has_many :inefectivities, class_name: 'KepplerReproduction::Inefectivity', foreign_key: 'responsable_id', dependent: :destroy
     has_many :cow_statuses, ->(resp){ where(season_id: resp.try(:season_id)) }, class_name: 'KepplerCattle::Status', foreign_key: 'user_id'

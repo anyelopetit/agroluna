@@ -205,7 +205,7 @@ module KepplerFrontend
         if params[:status][:insemination_quant].to_i < 1
           flash[:error] = 'La cantidad de cartuchos debe ser superior a cero'
         else
-          status = KepplerCattle::Status.new_status(params, {season_id: @season.id})
+          status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id})
           unless insemination.quantity.to_i.zero?
             insemination.update(
               quantity: insemination.quantity.to_i - params[:status][:insemination_quant].to_i
@@ -228,7 +228,7 @@ module KepplerFrontend
     end
 
     def create_pregnancies
-      status = KepplerCattle::Status.new_status(params, {season_id: @season.id})
+      status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id})
       if status.save!
         flash[:notice] = 'Servicio guardado'
       else
@@ -289,7 +289,7 @@ module KepplerFrontend
         counter = 0
         if params[:status][:multiple_ids]
           params[:status][:multiple_ids].split(',').each do |cow_id|
-            status = KepplerCattle::Status.new_status(params, {cow_id: cow_id, season_id: @season.id})
+            status = KepplerCattle::Status.new_status(params, {cow_id: cow_id, season_id: @season.id, farm_id: @farm.id})
             insem = @farm.inseminations.find_by(id: status[:insemination_id])
             if insem && !insem&.quantity&.zero?
               insem.update(quantity: insem.quantity - 1)
@@ -348,7 +348,7 @@ module KepplerFrontend
           strategic_lot_id: strategic_lot_id
         )
         if season_cow.save
-          status_nil = cow.statuses.new_status(params, {status_type: 'Nil', season_id: @season.id})
+          status_nil = cow.statuses.new_status(params, {status_type: 'Nil', season_id: @season.id, farm_id: @farm.id})
           status_nil.save!
           counter += 1
         end
@@ -357,7 +357,7 @@ module KepplerFrontend
     end
     
     def new_birth(params)
-      @status = KepplerCattle::Status.new_status(params, {season_id: @season.id})
+      @status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id})
       @mother = @season.cows.find_by_id(params[:status][:cow_id])
       if params[:status][:successfully] == '1'
         @baby_saved = create_cow(
@@ -377,11 +377,11 @@ module KepplerFrontend
       end
     end
 
-    def create_cow(mother, new_status, params, weight_params)
+    def create_cow(mother, this_status, params, weight_params)
       baby = @farm.cows.new(params)
       baby.species_id = mother.species_id
       baby.mother_id = mother.id
-      baby.birthdate = new_status.date
+      baby.birthdate = this_status.date
       baby.provenance = mother.farm.title
       if mother.statuses.where(status_type: 'Service')&.last&.insemination_id
         last_pregnancy = mother.statuses.where(status_type: 'Service')&.last
@@ -394,13 +394,13 @@ module KepplerFrontend
         baby_weight = baby.create_first_weight(
           weight_params,
           {
-            user_id: new_status.user.id,
-            cow_id: new_status.cow_id
+            user_id: this_status.user.id,
+            cow_id: this_status.cow_id
           }
         )
         baby.create_first_location(
           {
-            user_id: new_status.user,
+            user_id: this_status.user,
             farm_id: @farm.id,
             strategic_lot_id: mother.strategic_lot&.id
           }

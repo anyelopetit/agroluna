@@ -379,15 +379,15 @@ module KepplerFrontend
 
     def create_cow(mother, this_status, params, weight_params)
       baby = @farm.cows.new(params)
-      baby.species_id = mother.species_id
-      baby.mother_id = mother.id
-      baby.birthdate = this_status.date
-      baby.provenance = mother.farm.title
+      baby.species_id = mother&.species_id
+      baby.mother_id = mother&.id
+      baby.birthdate = this_status&.date
+      baby.provenance = mother&.farm.title
       if mother.statuses.where(status_type: 'Service')&.last&.insemination_id
         last_pregnancy = mother.statuses.where(status_type: 'Service')&.last
         father = @farm.inseminations.find_by_id(last_pregnancy&.insemination_id)
         baby.father_type = father.class.to_s
-        baby.father_id = father.id
+        baby.father_id = father&.id
       end
       
       if baby.save

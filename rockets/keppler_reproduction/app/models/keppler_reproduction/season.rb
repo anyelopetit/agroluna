@@ -85,7 +85,7 @@ module KepplerReproduction
     end
 
     def pregnants
-      cows.select {|c| c.status&.status_type&.eql?('Pregnancy') }
+      statuses.where(status_type: 'Pregnancy')
     end
   end
 end

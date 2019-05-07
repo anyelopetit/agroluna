@@ -16,7 +16,7 @@ module KepplerFarm
     belongs_to :season, class_name: 'KepplerReproduction::Season', optional: true
     
     has_many :inefectivities, class_name: 'KepplerReproduction::Inefectivity', foreign_key: 'responsable_id', dependent: :destroy
-    has_many :cow_statuses, ->(resp){ where(season_id: resp.try(:season_id)) }, class_name: 'KepplerCattle::Status', foreign_key: 'user_id'
+    has_many :cow_statuses, ->(resp){ where(farm_id: resp.try(:farm_id)) }, class_name: 'KepplerCattle::Status', foreign_key: 'user_id'
 
     validates_uniqueness_of :name
 

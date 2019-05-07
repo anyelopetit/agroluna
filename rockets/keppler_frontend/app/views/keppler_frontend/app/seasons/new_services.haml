@@ -75,10 +75,14 @@
                 .col-sm-12
                   .float-right
                     = link_to farm_season_path(@farm, @season) do
-                      %button.btn.btn_custom.btn--filled.btn--medium
-                        %i.icofont-external-link
+                      %button.btn.btn_custom.btn--medium
+                        %i.icofont-circled-left
                         Ver en el inicio
-            .d-flex
+                    = link_to services_farm_season_path(@farm.id, @season.id, @strategic_lot.id), class: 'mt-4 mb-4 ml-3' do
+                      %button.btn.btn_custom.btn--medium.btn--filled
+                        %i.icofont-external-link
+                        Ver hembras inseminadas
+            -# .d-flex
               .toolbar
                 .toolbar-item
                   -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
@@ -89,7 +93,7 @@
               %table.cow-table
                 %thead
                   %tr
-                    %th
+                    -# %th
                       .toolbar-item
                         .item-check
                           .checkbox
@@ -110,7 +114,7 @@
                   %tbody#cows
                     - @cows.each do |cow|
                       %tr.cow{ style: "border-bottom: 1px #eee solid;", id: "cow-#{cow.id}" }
-                        %td
+                        -# %td
                           .checkbox{ style: 'margin: 3px' }
                             %label{ for: "checkbox-#{cow.id}" }
                               %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}

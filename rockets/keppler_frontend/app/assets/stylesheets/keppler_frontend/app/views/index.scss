@@ -89,6 +89,10 @@
       justify-content: center;
       align-items: center;
       width: 100%;
+
+      &.btn-circle {
+        width: 35px !important;
+      }
     }
   }
 

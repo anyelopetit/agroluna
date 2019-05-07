@@ -14,8 +14,9 @@ module KepplerReproduction
 
     has_many :season_cows, class_name: 'KepplerReproduction::SeasonCow'
     has_many :cows, class_name: 'KepplerCattle::Cow', through: :season_cows
-    has_many :statuses, class_name: 'KepplerCattle::Status', through: :cows
+    has_many :statuses, ->(season){ where(season_id: season.id) }, class_name: 'KepplerCattle::Status', through: :cows
     has_many :users, -> { distinct }, class_name: 'KepplerFarm::Responsable', through: :statuses
+    has_many :inefectivities, -> { distinct }, class_name: 'KepplerReproduction::Inefectivity', through: :users
 
     has_many :cicles, class_name: 'KepplerReproduction::Cicle'
 
@@ -81,6 +82,10 @@ module KepplerReproduction
     def strategic_lots
       ids = cows.map { |c| c.location.strategic_lot_id }
       farm.strategic_lots.where(id: ids)
+    end
+
+    def pregnants
+      cows.select {|c| c.status&.status_type&.eql?('Pregnancy') }
     end
   end
 end

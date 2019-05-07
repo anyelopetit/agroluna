@@ -32,13 +32,31 @@ module KepplerCattle
     end
 
     def user_name=(name)
-      self.user =
-        KepplerFarm::Responsable.find_or_create_by_name(name) if name.present?
+      self.user = KepplerFarm::Responsable.find_or_create_by(
+        name: name,
+        farm_id: farm_id
+      ) if name.present?
+    end
+
+    def status_type_name
+      case status_type
+      when 'Nil' || nil
+        'Vacía'
+      when 'Zeal'
+        'En celo'
+      when 'Service'
+        'Inseminada'
+      when 'Pregnancy'
+        'Preñada'
+      when 'Birth'
+        'Parida'
+      end
     end
 
     def self.new_status(params, hash = {})
       responsable = KepplerFarm::Responsable.find_or_create_by(
-        name: params.dig(:status, :user_name)
+        name: params.dig(:status, :user_name),
+        farm_id: params.dig(:status, :farm_id) || params.dig(:farm_id)
       )
       this_status = new(
         status_type: params.dig(:status, :type) || hash[:status_type],
@@ -58,9 +76,7 @@ module KepplerCattle
       cow = KepplerCattle::Cow.find_by_id(
         params.dig(:status, :cow_id) || hash[:cow_id]
       )
-      if this_status.try(:farm_id)
-        this_status.farm_id = hash[:farm_id] || params.dig(:farm_id).to_i
-      end
+      this_status.update(farm_id: hash[:farm_id] || params.dig(:farm_id).to_i)
       this_status.season_id ||= season.id
       this_status.cow_id ||= cow.id
       puts "************* season #{this_status.season_id} *************"

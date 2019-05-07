@@ -8,12 +8,19 @@
           #{@season.name}
           %label.badge (#{@season.type_name})
           %small.badge.badge-secondary #{@season.start_date&.strftime("%d/%m/%Y")} - #{@season.finish_date&.strftime("%d/%m/%Y")}
-      - if @season.finished
-        .float-right.mt-4.mb-4
-          = link_to reopen_farm_season_path(@farm, @season), method: :post, data: { confirm: '¿Estás seguro?' } do
-            %button.btn.btn_custom.btn--medium.float-right.m-1
-              %i.icofont-close-circled
-              Reabrir temporada
+      - if @season.finished && Date.today < @season.finish_date
+        .float-right.mt-4.mb-4.d-flex
+          .ml-2
+            = link_to farm_season_path(@farm, @season, format: :pdf), target: '_blank' do
+              %button.btn.btn_custom.btn--filled.btn--medium.m-1
+                %i.icofont-clip-board
+                Reporte
+
+          .ml-2
+            = link_to reopen_farm_season_path(@farm, @season), method: :post, data: { confirm: '¿Estás seguro?' } do
+              %button.btn.btn_custom.btn--medium.float-right.m-1
+                %i.icofont-close-circled
+                Reabrir temporada
       - else
         .float-right.mt-4.mb-4
           - if @season.cows.select { |x| x.status&.status_type&.eql?('Pregnancy') }.count > 0

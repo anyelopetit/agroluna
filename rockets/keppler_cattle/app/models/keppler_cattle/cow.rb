@@ -253,7 +253,8 @@ module KepplerCattle
         average_weight: params.dig(:average_weight) || hash.dig(:average_weight),
         corporal_condition_id: params.dig(:corporal_condition_id) || hash.dig(:corporal_condition_id),
         cow_id: id,
-        user_id: hash.dig(:user_id)
+        user_id: hash.dig(:user_id),
+        user: hash.dig(:user)
       )
     end
   end

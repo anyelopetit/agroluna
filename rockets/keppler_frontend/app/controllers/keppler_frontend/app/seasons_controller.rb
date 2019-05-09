@@ -394,8 +394,10 @@ module KepplerFrontend
         baby_weight = baby.create_first_weight(
           weight_params,
           {
-            user_id: this_status.user.id,
-            cow_id: this_status.cow_id
+            user: KepplerFarm::Responsable.find_or_create_by(name: this_status.user.name),
+            user_id: KepplerFarm::Responsable.find_or_create_by(name: this_status.user.name).id,
+            cow_id: this_status.cow_id,
+            user: KepplerFarm::Responsable.find_or_create_by(name: this_status.user.name)
           }
         )
         baby.create_first_location(

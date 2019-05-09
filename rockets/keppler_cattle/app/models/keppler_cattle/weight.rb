@@ -15,12 +15,11 @@ module KepplerCattle
     acts_as_paranoid
     after_save :create_typology
 
-    belongs_to :user, class_name: 'KepplerFarm::Responsable'
+    belongs_to :user, class_name: 'KepplerFarm::Responsable', optional: true
     belongs_to :cow, class_name: 'KepplerCattle::Cow'
     belongs_to :corporal_condition, class_name: 'KepplerCattle::CorporalCondition'
 
-    validates_presence_of :user_id, :cow_id, :corporal_condition_id
-    validates_presence_of :weight, :gained_weight, :average_weight
+    validates_presence_of :cow_id, :weight, :gained_weight, :average_weight
 
     def self.index_attributes
       %i[weight gained_weight average_weight]

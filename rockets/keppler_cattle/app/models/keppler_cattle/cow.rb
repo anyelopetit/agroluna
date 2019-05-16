@@ -164,7 +164,7 @@ module KepplerCattle
 
     def self.weight_average(cows)
       cows.map { |cow| cow.weight&.weight&.to_f }
-        .inject { |sum, weight| sum + weight }
+        .inject { |sum, weight| sum + weight } / cows.count
     end
 
     def sons_weight_average

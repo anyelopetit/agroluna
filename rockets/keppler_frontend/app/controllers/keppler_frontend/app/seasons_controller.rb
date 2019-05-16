@@ -17,7 +17,7 @@ module KepplerFrontend
     ]
     before_action :strategic_lot_variables, only: strategic_lot_states
     before_action :attachments
-    before_action :respond_to_formats, except: %i[reproduction_cows]
+    before_action :respond_to_formats, except: %i[reproduction_cows zeals_report]
     helper KepplerFarm::ApplicationHelper
     include ObjectQuery
 
@@ -275,6 +275,17 @@ module KepplerFrontend
     end
 
     def reproduction_cows
+      @strategic_lots = @farm.strategic_lots
+      @cows = @season.cows.order(:serie_number)
+      @cow_strategic_lots = @strategic_lots.includes(:locations).where(
+        keppler_cattle_locations: {cow_id: @cows.ids}
+      ).distinct
+      @possible_mothers = @farm.cows.possible_mothers
+      @weight_average = @possible_mothers.weight_average(@possible_mothers)
+      respond_to_formats
+    end
+
+    def zeals_report
       @strategic_lots = @farm.strategic_lots
       @cows = @season.cows.order(:serie_number)
       @cow_strategic_lots = @strategic_lots.includes(:locations).where(

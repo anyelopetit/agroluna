@@ -53,8 +53,6 @@ KepplerFrontend::Engine.routes.draw do
     resources :seasons, path: 'temporadas', controller: 'app/seasons', path_names: { new: 'nuevo', edit: 'editar'} do
       member do
 
-        get :reproduction_cows, action: :reproduction_cows, as: :reproduction_cows
-
         get 'asignar-ganado', action: :new_assign_cattle, as: :new_assign_cattle
         post :assign_cattle
 
@@ -78,6 +76,10 @@ KepplerFrontend::Engine.routes.draw do
 
         post :finish
         post :reopen
+
+        # Reportes
+        get :reproduction_cows, action: :reproduction_cows, as: :reproduction_cows
+        get :zeals_report, action: :zeals_report, as: :zeals_report
       end
       resources :cicles, controller: 'app/cicles', only: %i[new create destroy]
     end

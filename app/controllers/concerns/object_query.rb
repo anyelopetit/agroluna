@@ -111,18 +111,22 @@ module ObjectQuery
         left:              5,
         right:             5 
       },
-      # header:  {   html: {            template: 'users/header',          # use :template OR :url
-      #                                 layout:   'pdf_plain',             # optional, use 'pdf_plain' for a pdf_plain.html.pdf.erb file, defaults to main layout
-      #                                 url:      'www.example.com',
-      #                                 locals:   { foo: @bar }},
-      #             center:            'TEXT',
-      #             font_name:         'NAME',
-      #             font_size:         SIZE,
-      #             left:              'TEXT',
-      #             right:             'TEXT',
-      #             spacing:           REAL,
-      #             line:              true,
-      #             content:           'HTML CONTENT ALREADY RENDERED'}, # optionally you can pass plain html already rendered (useful if using pdf_from_string)
+      header: {
+        # html: {
+        #   template: 'users/header',          # use :template OR :url
+        #   layout:   'pdf_plain',             # optional, use 'pdf_plain' for a pdf_plain.html.pdf.erb file, defaults to main layout
+        #   url:      'www.example.com',
+        #   locals:   { foo: @bar }
+        # },
+        # center:            'TEXT',
+        # font_name:         'NAME',
+        # font_size:         SIZE,
+        # left:              'TEXT',
+        # right:             '[page] of [topage]',
+        # spacing:           REAL,
+        # line:              true,
+        # content:           'HTML CONTENT ALREADY RENDERED'
+      }, # optionally you can pass plain html already rendered (useful if using pdf_from_string)
       # footer:  {   html: {   template:'shared/footer',         # use :template OR :url
       #                       layout:  'pdf_plain.html',        # optional, use 'pdf_plain' for a pdf_plain.html.pdf.erb file, defaults to main layout
       #                       url:     'www.example.com',

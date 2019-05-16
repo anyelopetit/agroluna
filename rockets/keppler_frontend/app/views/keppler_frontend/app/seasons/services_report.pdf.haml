@@ -53,7 +53,7 @@
                     %center No se encontraron lotes estratégicos asociados a ganados
           - else
             - @strategic_lots.each do |strategic_lot|
-              - unless @possible_mothers.total_season_cows(strategic_lot).size.zero?
+              - unless @services_cows.total_season_cows(strategic_lot).size.zero?
                 .strategic_lot_name= strategic_lot.name
                 %table.mt-none.mb-4
                   %thead
@@ -92,7 +92,7 @@
           %hr.my-1
           %b
             Cantidad de series:
-          #{@possible_mothers.count}
+          #{@services_cows.count}
 :scss
   body {
     font-size: 15px;

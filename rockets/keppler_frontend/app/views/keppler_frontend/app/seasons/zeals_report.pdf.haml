@@ -53,7 +53,7 @@
                     %center No se encontraron lotes estratégicos asociados a ganados
           - else
             - @strategic_lots.each do |strategic_lot|
-              - unless @possible_mothers.total_season_cows(strategic_lot).size.zero?
+              - unless @zeals_cows.total_season_cows(strategic_lot).size.zero?
                 .strategic_lot_name= strategic_lot.name
                 %table.mt-none.mb-4
                   %thead
@@ -68,7 +68,7 @@
                       %th Próximo celo
                       %th Intérvalo entre celos
                   %tbody
-                    - @cows.each do |cow|
+                    - @zeals_cows.each do |cow|
                       %tr
                         %td= cow&.serie_number
                         %td
@@ -89,7 +89,7 @@
           %hr.my-1
           %b
             Cantidad de series:
-          #{@possible_mothers.count}
+          #{@zeals_cows.count}
 :scss
   body {
     font-size: 15px;

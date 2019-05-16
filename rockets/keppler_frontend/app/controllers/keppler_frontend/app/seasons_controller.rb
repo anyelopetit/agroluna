@@ -278,7 +278,7 @@ module KepplerFrontend
       @strategic_lots = @farm.strategic_lots
       @cows = @season.cows.order(:serie_number)
       @cow_strategic_lots = @strategic_lots.includes(:locations).where(
-        keppler_cattle_locations: {cow_id: @cows.ids}
+        keppler_cattle_locations: { cow_id: @cows.ids }
       ).distinct
       @possible_mothers = @farm.cows.possible_mothers
       @weight_average = @possible_mothers.weight_average(@possible_mothers)
@@ -289,10 +289,9 @@ module KepplerFrontend
       @strategic_lots = @farm.strategic_lots
       @cows = @season.cows.order(:serie_number)
       @cow_strategic_lots = @strategic_lots.includes(:locations).where(
-        keppler_cattle_locations: {cow_id: @cows.ids}
+        keppler_cattle_locations: { cow_id: @cows.ids }
       ).distinct
-      @possible_mothers = @farm.cows.possible_mothers
-      @weight_average = @possible_mothers.weight_average(@possible_mothers)
+      @zeals_cows = @season.cows.includes(:statuses).where(keppler_cattle_statuses: { status_type: 'Zeal' })
       respond_to_formats
     end
 
@@ -300,10 +299,9 @@ module KepplerFrontend
       @strategic_lots = @farm.strategic_lots
       @cows = @season.cows.order(:serie_number)
       @cow_strategic_lots = @strategic_lots.includes(:locations).where(
-        keppler_cattle_locations: {cow_id: @cows.ids}
+        keppler_cattle_locations: { cow_id: @cows.ids }
       ).distinct
-      @possible_mothers = @farm.cows.possible_mothers
-      @weight_average = @possible_mothers.weight_average(@possible_mothers)
+      @services_cows = @season.cows.includes(:statuses).where(keppler_cattle_statuses: { status_type: 'Service' })
       respond_to_formats
     end
 

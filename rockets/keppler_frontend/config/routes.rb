@@ -52,25 +52,29 @@ KepplerFrontend::Engine.routes.draw do
 
     resources :seasons, path: 'temporadas', controller: 'app/seasons', path_names: { new: 'nuevo', edit: 'editar'} do
       member do
-        get 'asignar-ganado', to: 'app/seasons#new_assign_cattle', as: :new_assign_cattle
+
+        get :reproduction_cows, action: :reproduction_cows, as: :reproduction_cows
+
+        get 'asignar-ganado', action: :new_assign_cattle, as: :new_assign_cattle
         post :assign_cattle
-        post 'lote-estrategico/:strategic_lot_id/assign_bulls', to: 'app/seasons#assign_bulls', as: :assign_bulls
-        delete 'lote-estrategico/:strategic_lot_id/destroy_season_cows/:multiple_ids', to: 'app/seasons#destroy_season_cows', as: :destroy_season_cows
+
+        post 'lote-estrategico/:strategic_lot_id/assign_bulls', action: :assign_bulls, as: :assign_bulls
+        delete 'lote-estrategico/:strategic_lot_id/destroy_season_cows/:multiple_ids', action: :destroy_season_cows, as: :destroy_season_cows
         
-        get 'lote-estrategico/:strategic_lot_id/disponibles', to: 'app/seasons#availables', as: :availables
-        get 'lote-estrategico/:strategic_lot_id/celos', to: 'app/seasons#zeals', as: :zeals
-        get 'lote-estrategico/:strategic_lot_id/servicios', to: 'app/seasons#services', as: :services
-        get 'lote-estrategico/:strategic_lot_id/preñadas', to: 'app/seasons#pregnants', as: :pregnants
-        get 'lote-estrategico/:strategic_lot_id/paridas', to: 'app/seasons#births', as: :births
+        get 'lote-estrategico/:strategic_lot_id/disponibles', action: :availables, as: :availables
+        get 'lote-estrategico/:strategic_lot_id/celos', action: :zeals, as: :zeals
+        get 'lote-estrategico/:strategic_lot_id/servicios', action: :services, as: :services
+        get 'lote-estrategico/:strategic_lot_id/preñadas', action: :pregnants, as: :pregnants
+        get 'lote-estrategico/:strategic_lot_id/paridas', action: :births, as: :births
 
-        get 'lote-estrategico/:strategic_lot_id/new_services/:multiple_ids', to: 'app/seasons#new_services', as: :new_services
-        post 'lote-estrategico/:strategic_lot_id/create_services/:multiple_ids', to: 'app/seasons#create_services', as: :create_services
+        get 'lote-estrategico/:strategic_lot_id/new_services/:multiple_ids', action: :new_services, as: :new_services
+        post 'lote-estrategico/:strategic_lot_id/create_services/:multiple_ids', action: :create_services, as: :create_services
 
-        get 'lote-estrategico/:strategic_lot_id/new_pregnancies/:multiple_ids', to: 'app/seasons#new_pregnancies', as: :new_pregnancies
-        post 'lote-estrategico/:strategic_lot_id/create_pregnancies/:multiple_ids', to: 'app/seasons#create_pregnancies', as: :create_pregnancies
+        get 'lote-estrategico/:strategic_lot_id/new_pregnancies/:multiple_ids', action: :new_pregnancies, as: :new_pregnancies
+        post 'lote-estrategico/:strategic_lot_id/create_pregnancies/:multiple_ids', action: :create_pregnancies, as: :create_pregnancies
 
-        post 'lote-estrategico/:strategic_lot_id/statuses', to: 'app/seasons#statuses', as: :statuses
-        post 'lote-estrategico/:strategic_lot_id/make_birth', to: 'app/seasons#make_birth', as: :make_birth
+        post 'lote-estrategico/:strategic_lot_id/statuses', action: :statuses, as: :statuses
+        post 'lote-estrategico/:strategic_lot_id/make_birth', action: :make_birth, as: :make_birth
 
         post :finish
         post :reopen

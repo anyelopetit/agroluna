@@ -22,7 +22,7 @@
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
       %h3.report-title Temporada de monta (#{@season.name})
-      %h5 Reporte de celos
+      %h5 Reporte de servicios
     .header-right
       %p= Time.now.strftime('%d-%m-%Y')
       -# %p 
@@ -64,9 +64,9 @@
                         %br
                         A - M
                       %th Tipología
-                      %th Último celo
+                      %th Último servicio
+                      %th Pajuela (cant.)
                       %th Próximo celo
-                      %th Intérvalo entre celos
                   %tbody
                     - @cows.each do |cow|
                       %tr
@@ -76,8 +76,11 @@
                           \-
                           = cow&.months
                         %td= cow&.typology_name
-                        %td= cow.statuses.where(status_type: 'Zeal').last.date.strftime('%d-%m-%Y')
-                        %td= (cow.statuses.where(status_type: 'Zeal').last.date + 21.days).strftime('%d-%m-%Y')
+                        %td= cow.statuses.where(status_type: 'Service').last.date.strftime('%d-%m-%Y')
+                        %td
+                          - if cow.statuses.where(status_type: 'Service').exists?
+                            = @farm.inseminations.find(cow.statuses.where(status_type: 'Service')&.last&.insemination_id)&.serie_number || 'Sin pajuela'
+                            (#{cow.statuses.where(status_type: 'Service')&.last&.insemination_quantity})
                         %td
                           - if cow.statuses.where(status_type: 'Zeal').count > 2
                             = ((cow.statuses.where(status_type: 'Zeal')[-1].date) - cow.statuses.where(status_type: 'Zeal')[-2].date).to_s.split('/').first.to_i

@@ -281,6 +281,7 @@ module KepplerFrontend
         keppler_cattle_locations: {cow_id: @cows.ids}
       ).distinct
       @possible_mothers = @farm.cows.possible_mothers
+      @weight_average = @possible_mothers.weight_average(@possible_mothers)
       respond_to_formats
     end
 

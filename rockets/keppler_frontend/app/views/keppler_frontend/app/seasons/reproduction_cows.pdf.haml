@@ -49,6 +49,16 @@
                         %td= cow&.typology_name
                         %td= cow&.status&.status_type_name
                         %td #{cow&.weight&.weight} KG
+        .row
+          %hr.my-1
+          %hr.my-1
+          %b
+            Cantidad de series:
+          #{@possible_mothers.count}
+          %br
+          %b
+            Promedio de pesos:
+          #{@weight_average.round(2)} KG
 :scss
   body {
     font-size: 15px;

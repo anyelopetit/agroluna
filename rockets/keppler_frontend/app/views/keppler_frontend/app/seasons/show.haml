@@ -72,6 +72,10 @@
                     Hembras inseminadas
                   = link_to({action: :next_palpation_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
                     Próx. Palpaciones
+                  = link_to({action: :pregnants_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    Hembras preñadas
+                  = link_to({action: :births_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    Partos registrados
                 %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
                   %i.icofont-plus
                   Importar de lote

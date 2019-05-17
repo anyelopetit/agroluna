@@ -22,7 +22,7 @@
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
       %h3.report-title Temporada de monta (#{@season.name})
-      %h5 Reporte de servicios
+      %h5 Partos registrados
     .header-right
       %p= Time.now.strftime('%d-%m-%Y')
       -# %p 
@@ -51,16 +51,15 @@
                 %tr
                   %th.not-records.center
                     %center No se encontraron lotes estratégicos asociados a ganados
-          - elsif @services_cows&.blank?
+          - elsif @births_cows&.blank?
             %table.mt-none.mb-4
               %thead
                 %tr
                   %th.not-records.center
-                    %center No se encontraron hembras inseminadas en esta temporada de monta
-          - else
+                    %center No se encontraron partos registrados en esta temporada de monta
           - else
             - @strategic_lots.each do |strategic_lot|
-              - unless @services_cows&.total_season_cows(strategic_lot)&.size.zero?
+              - unless @births_cows&.total_season_cows(strategic_lot)&.size.zero?
                 .strategic_lot_name= strategic_lot.name
                 %table.mt-none.mb-4
                   %thead
@@ -72,10 +71,11 @@
                         A - M
                       %th Tipología
                       %th Último servicio
-                      %th Pajuela (cant.)
-                      %th Próximo celo
+                      %th Tiempo de preñez
+                      %th Fecha de parto
+                      %th Tipo de parto
                   %tbody
-                    - @services_cows.each do |cow|
+                    - @births_cows.each do |cow|
                       %tr
                         %td= cow&.serie_number
                         %td
@@ -85,21 +85,25 @@
                         %td= cow&.typology_name
                         %td= cow.statuses.where(status_type: 'Service').last.date.strftime('%d-%m-%Y')
                         %td
-                          - if cow.statuses.where(status_type: 'Service').count > 0
-                            = @farm.inseminations.find(cow.statuses.where(status_type: 'Service')&.last&.insemination_id)&.serie_number || 'Sin pajuela'
-                            (#{cow.statuses.where(status_type: 'Service')&.last&.insemination_quantity})
-                        %td
-                          - if cow.statuses.where(status_type: 'Zeal').count > 2
-                            = ((cow.statuses.where(status_type: 'Zeal')[-1].date) - cow.statuses.where(status_type: 'Zeal')[-2].date).to_s.split('/').first.to_i
-                          - else
-                            21
+                          = (Date.today - cow.statuses.where(status_type: 'Pregnancy').last.date).to_s.split('/').first.to_i
                           días
+                        %td= cow.statuses.where(status_type: 'Birth').last.date.strftime('%d-%m-%Y')
+                        %td
+                          - status = cow.statuses.where(status_type: 'Birth').last
+                          - if status.successfully && status.twins
+                            Exitoso Morochos
+                          - if status.successfully && !status.twins
+                            Exitoso Único
+                          - if !status.successfully && status.twins
+                            No Exitoso Morochos
+                          - if !status.successfully && !status.twins
+                            No Exitoso Único
         .row
           %hr.my-1
           %hr.my-1
           %b
             Cantidad de series:
-          #{@services_cows.count}
+          #{@births_cows.count}
 :scss
   body {
     font-size: 15px;

@@ -83,6 +83,7 @@ KepplerFrontend::Engine.routes.draw do
         get :services_report, action: :services_report, as: :services_report
         get :next_palpation_report, action: :next_palpation_report, as: :next_palpation_report
         get :pregnants_report, action: :pregnants_report, as: :pregnants_report
+        get :births_report, action: :births_report, as: :births_report
       end
       resources :cicles, controller: 'app/cicles', only: %i[new create destroy]
     end

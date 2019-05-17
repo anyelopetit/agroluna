@@ -29,5 +29,11 @@ module KepplerFarm
       locations = KepplerCattle::Location.where(strategic_lot_id: id).map(&:cow_id).uniq
       KepplerCattle::Cow.where(id: locations)
     end
+
+    def self.cows_strategic_lots(cows_ids)
+      includes(:locations).where(
+        keppler_cattle_locations: { cow_id: cows_ids }
+      ).distinct
+    end
   end
 end

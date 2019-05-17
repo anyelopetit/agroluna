@@ -17,7 +17,8 @@ module KepplerFrontend
     ]
     before_action :strategic_lot_variables, only: strategic_lot_states
     before_action :attachments
-    before_action :respond_to_formats, except: %i[reproduction_cows zeals_report services_report next_palpation_report]
+    before_action :respond_to_formats, except: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report]
+    before_action :report_variables, only: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report]
     helper KepplerFarm::ApplicationHelper
     include ObjectQuery
 
@@ -275,43 +276,28 @@ module KepplerFrontend
     end
 
     def reproduction_cows
-      @strategic_lots = @farm.strategic_lots
-      @cows = @season.cows.order(:serie_number)
-      @cow_strategic_lots = @strategic_lots.includes(:locations).where(
-        keppler_cattle_locations: { cow_id: @cows.ids }
-      ).distinct
       @possible_mothers = @farm.cows.possible_mothers
       @weight_average = @possible_mothers.weight_average(@possible_mothers)
       respond_to_formats
     end
 
     def zeals_report
-      @strategic_lots = @farm.strategic_lots
-      @cows = @season.cows.order(:serie_number)
-      @cow_strategic_lots = @strategic_lots.includes(:locations).where(
-        keppler_cattle_locations: { cow_id: @cows.ids }
-      ).distinct
-      @zeals_cows = @season.cows.where_status('Zeal')
+      @zeals_cows = @season.cows.where_status('Zeal', @season.id)
       respond_to_formats
     end
 
     def services_report
-      @strategic_lots = @farm.strategic_lots
-      @cows = @season.cows.order(:serie_number)
-      @cow_strategic_lots = @strategic_lots.includes(:locations).where(
-        keppler_cattle_locations: { cow_id: @cows.ids }
-      ).distinct
-      @services_cows = @season.cows.where_status('Service')
+      @services_cows = @season.cows.where_status('Service', @season.id)
       respond_to_formats
     end
 
     def next_palpation_report
-      @strategic_lots = @farm.strategic_lots
-      @cows = @season.cows.order(:serie_number)
-      @cow_strategic_lots = @strategic_lots.includes(:locations).where(
-        keppler_cattle_locations: { cow_id: @cows.ids }
-      ).distinct
-      @next_palpation_cows = @season.cows.to_next_palpation
+      @next_palpation_cows = @season.cows.to_next_palpation(@season.id)
+      respond_to_formats
+    end
+
+    def pregnants_report
+      @pregnants_cows = @season.cows.where_status('Pregnancy', @season.id)
       respond_to_formats
     end
 
@@ -323,6 +309,12 @@ module KepplerFrontend
 
     def set_season
       @season = KepplerReproduction::Season.find_by(id: params[:id])
+    end
+
+    def report_variables
+      @strategic_lots = @farm.strategic_lots
+      @cows = @season.cows.order(:serie_number)
+      @cow_strategic_lots = @strategic_lots.cows_strategic_lots(@cows.ids)
     end
 
     def change_status(params)

@@ -51,6 +51,12 @@
                 %tr
                   %th.not-records.center
                     %center No se encontraron lotes estratégicos asociados a ganados
+          - elsif @zeals_cows&.blank?
+            %table.mt-none.mb-4
+              %thead
+                %tr
+                  %th.not-records.center
+                    %center No se encontraron hembras en celo en esta temporada de monta
           - else
             - @strategic_lots.each do |strategic_lot|
               - unless @zeals_cows.total_season_cows(strategic_lot).size.zero?

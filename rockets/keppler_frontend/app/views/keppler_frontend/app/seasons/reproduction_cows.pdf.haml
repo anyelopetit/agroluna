@@ -22,6 +22,12 @@
               %tr
                 %th.not-records.center
                   %center No se encontraron lotes estratégicos asociados a ganados
+          - elsif @possible_mothers&.blank?
+            %table.mt-none.mb-4
+              %thead
+                %tr
+                  %th.not-records.center
+                    %center No se encontraron hembras aptas para reproducción en esta finca
           - else
             - @strategic_lots.each do |strategic_lot|
               - unless @possible_mothers.total_season_cows(strategic_lot).size.zero?

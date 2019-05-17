@@ -70,6 +70,8 @@
                     Hembras en celo
                   = link_to({action: :services_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
                     Hembras inseminadas
+                  = link_to({action: :next_palpation_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    Próx. Palpaciones
                 %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
                   %i.icofont-plus
                   Importar de lote

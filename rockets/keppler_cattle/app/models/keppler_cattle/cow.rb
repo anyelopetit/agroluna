@@ -167,6 +167,19 @@ module KepplerCattle
         .inject { |sum, weight| sum + weight } / cows.count
     end
 
+    def self.where_status(status_name)
+      ids = select { |cow| cow.status&.status_type == status_name }.pluck(:id)
+      where(id: ids)
+    end
+
+    def self.to_next_palpation
+      ids = 
+        select { |cow| cow.status&.status_type == 'Service' }
+        .select { |cow| Date.today > (cow.status.date + 45.days) }
+        .pluck(:id)
+      where(id: ids)
+    end
+
     def sons_weight_average
       total_weights = 0
       sons_count = 0

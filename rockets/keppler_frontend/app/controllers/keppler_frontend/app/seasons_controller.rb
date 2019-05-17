@@ -17,7 +17,7 @@ module KepplerFrontend
     ]
     before_action :strategic_lot_variables, only: strategic_lot_states
     before_action :attachments
-    before_action :respond_to_formats, except: %i[reproduction_cows zeals_report services_report]
+    before_action :respond_to_formats, except: %i[reproduction_cows zeals_report services_report next_palpation_report]
     helper KepplerFarm::ApplicationHelper
     include ObjectQuery
 
@@ -205,7 +205,7 @@ module KepplerFrontend
         if params[:status][:insemination_quant].to_i < 1
           flash[:error] = 'La cantidad de cartuchos debe ser superior a cero'
         else
-          status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id})
+          status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id, user: params[:status][:user_name]})
           unless insemination.quantity.to_i.zero?
             insemination.update(
               quantity: insemination.quantity.to_i - params[:status][:insemination_quant].to_i
@@ -291,7 +291,7 @@ module KepplerFrontend
       @cow_strategic_lots = @strategic_lots.includes(:locations).where(
         keppler_cattle_locations: { cow_id: @cows.ids }
       ).distinct
-      @zeals_cows = @season.cows.includes(:statuses).where(keppler_cattle_statuses: { status_type: 'Zeal' })
+      @zeals_cows = @season.cows.where_status('Zeal')
       respond_to_formats
     end
 
@@ -301,7 +301,17 @@ module KepplerFrontend
       @cow_strategic_lots = @strategic_lots.includes(:locations).where(
         keppler_cattle_locations: { cow_id: @cows.ids }
       ).distinct
-      @services_cows = @season.cows.includes(:statuses).where(keppler_cattle_statuses: { status_type: 'Service' })
+      @services_cows = @season.cows.where_status('Service')
+      respond_to_formats
+    end
+
+    def next_palpation_report
+      @strategic_lots = @farm.strategic_lots
+      @cows = @season.cows.order(:serie_number)
+      @cow_strategic_lots = @strategic_lots.includes(:locations).where(
+        keppler_cattle_locations: { cow_id: @cows.ids }
+      ).distinct
+      @next_palpation_cows = @season.cows.to_next_palpation
       respond_to_formats
     end
 

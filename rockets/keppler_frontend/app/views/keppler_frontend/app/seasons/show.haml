@@ -76,6 +76,8 @@
                     Hembras preñadas
                   = link_to({action: :births_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
                     Partos registrados
+                  = link_to({action: :efectivity_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    Efectividad de servicios
                 %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
                   %i.icofont-plus
                   Importar de lote

@@ -58,7 +58,6 @@
                   %th.not-records.center
                     %center No se encontraron hembras inseminadas en esta temporada de monta
           - else
-          - else
             - @strategic_lots.each do |strategic_lot|
               - unless @services_cows&.total_season_cows(strategic_lot)&.size.zero?
                 .strategic_lot_name= strategic_lot.name

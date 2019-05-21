@@ -22,7 +22,7 @@
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
       %h3.report-title Temporada de monta (#{@season.name})
-      %h5 Hembras preñadas
+      %h5 Reporte de efectividad de servicios
     .header-right
       %p= Time.now.strftime('%d-%m-%Y')
       -# %p 
@@ -45,59 +45,53 @@
           %hr.my-1
           %hr.my-1
         .row
-          - if @strategic_lots.size.zero?
+          - if @responsables.size.zero?
             %table.mt-none.mb-4
               %thead
                 %tr
                   %th.not-records.center
-                    %center No se encontraron lotes estratégicos asociados a ganados
-          - elsif @pregnants_cows&.blank?
+                    %center No se encontraron responsables asignados a esta temporada de monta
+          - elsif @services&.blank?
             %table.mt-none.mb-4
               %thead
                 %tr
                   %th.not-records.center
-                    %center No se encontraron hembras preñadas en esta temporada de monta
+                    %center No se encontraron hembras inseminadas en esta temporada de monta
           - else
-            - @strategic_lots.each do |strategic_lot|
-              - unless @pregnants_cows&.total_season_cows(strategic_lot)&.size.zero?
-                .strategic_lot_name= strategic_lot.name
+            - @responsables.each do |responsable|
+              - unless responsable.cow_statuses.where(status_type: 'Service', season_id: @season.id).size.zero?
+                .responsable_name
+                  = responsable.name
+                  %small.mt-1.float-right.w-50.text-right
+                    %span
+                      %b Preñadas:
+                      #{responsable.pregnants(@season.id).count}
+                      %b Vacías:
+                      #{responsable.inefectivities.count}
+                      \/
+                      %b Efectividad:
+                      #{responsable.pregnants(@season.id).count.zero? ? 0 : (((responsable.pregnants(@season.id).count.to_f) / (responsable.pregnants(@season.id).count.to_f + responsable.inefectivities.count.to_f)) * 100).round(2)}%
+                %hr
                 %table.mt-none.mb-4
                   %thead
                     %tr
                       %th Nro. Serie
-                      %th
-                        Edad
-                        %br
-                        A - M
                       %th Tipología
-                      %th Último servicio
-                      %th Tiempo de preñez
-                      %th Tiempo restante
-                      %th Parto tentativo
+                      %th Fecha de servicio
+                      %th Estado actual
                   %tbody
-                    - @pregnants_cows.each do |cow|
+                    - responsable.cow_statuses.where(status_type: 'Service', season_id: @season.id).each do |cow_status|
                       %tr
-                        %td= cow&.serie_number
-                        %td
-                          = cow&.years
-                          \-
-                          = cow&.months
-                        %td= cow&.typology_name
-                        %td= cow.statuses.where(status_type: 'Service').last.date.strftime('%d-%m-%Y')
-
-                        %td
-                          = (Date.today - cow.statuses.where(status_type: 'Pregnancy').last.date).to_s.split('/').first.to_i
-                          días
-                        %td
-                          = ((cow.statuses.where(status_type: 'Pregnancy').last.date + 280.days) - Date.today).to_s.split('/').first.to_i
-                          días
-                        %td= (cow.statuses.where(status_type: 'Pregnancy').last.date + 9.months).strftime('%d-%m-%Y')
+                        %td= cow_status.cow&.serie_number
+                        %td= cow_status.cow&.typology_name
+                        %td= cow_status.cow.statuses.where(status_type: 'Service', season_id: @season.id).last.date.strftime('%d-%m-%Y')
+                        %td= cow_status.cow.status.status_type_name
         .row
           %hr.my-1
           %hr.my-1
           %b
             Cantidad de series:
-          #{@pregnants_cows.count}
+          #{@services.count}
 :scss
   body {
     font-size: 15px;
@@ -149,7 +143,7 @@
     margin-top: 40px;
   }
 
-  .strategic_lot_name {
+  .responsable_name {
     font-weight: bold;
     font-size: 1.2rem;
   }

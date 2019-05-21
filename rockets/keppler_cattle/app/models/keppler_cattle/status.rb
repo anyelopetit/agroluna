@@ -54,8 +54,12 @@ module KepplerCattle
     end
 
     def self.new_status(params, hash = {})
-      responsable = KepplerFarm::Responsable.find_or_create_by(
-        name: params.dig(:status, :user_name),
+      KepplerFarm::Responsable.find_by(
+        name: params.dig(:status, :user_name) || hash.dig(:user_name),
+        farm_id: nil
+      ).update(farm_id: params.dig(:status, :farm_id) || params.dig(:farm_id))
+      responsable = KepplerFarm::Responsable.find_or_create_by!(
+        name: params.dig(:status, :user_name) || hash.dig(:user_name),
         farm_id: params.dig(:status, :farm_id) || params.dig(:farm_id)
       )
       this_status = new(
@@ -76,9 +80,10 @@ module KepplerCattle
       cow = KepplerCattle::Cow.find_by_id(
         params.dig(:status, :cow_id) || hash[:cow_id]
       )
-      this_status.update(farm_id: hash[:farm_id] || params.dig(:farm_id).to_i)
+      this_status.cow_id = cow&.id
       this_status.season_id ||= season.id
       this_status.cow_id ||= cow.id
+      this_status.update!(farm_id: hash[:farm_id] || params.dig(:farm_id).to_i)
       puts "************* season #{this_status.season_id} *************"
       self.create_inefectivity(cow, this_status, season)
       this_status

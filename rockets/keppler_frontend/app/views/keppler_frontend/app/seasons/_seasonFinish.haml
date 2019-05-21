@@ -60,7 +60,7 @@
           %h1.mb-4{style:"text-transform: uppercase"} Responsables
           .row
             - @season.users.each do |responsable|
-              - unless responsable.pregnants.count.zero? || responsable.name.blank?
+              - unless responsable.pregnants(@season.id).count.zero? || responsable.name.blank?
                 .col-lg-6.col-md-6
                   .card_show{style:"min-height: 254px;"}
                     .container-profile.mt-4
@@ -74,7 +74,7 @@
                               %span
                                 Preñadas
                               %span
-                                #{responsable.pregnants.count}
+                                #{responsable.pregnants(@season.id).count}
                             %div.d-flex.flex-column{style: "width:31%"}
                               %span
                                 Vacias
@@ -84,7 +84,7 @@
                               %span
                                 Efectividad
                               %span
-                                #{(((responsable.pregnants.count.to_f) / (responsable.pregnants.count.to_f + responsable.inefectivities.count.to_f)) * 100).round(2)}%
+                                #{(((responsable.pregnants(@season.id).count.to_f) / (responsable.pregnants(@season.id).count.to_f + responsable.inefectivities.count.to_f)) * 100).round(2)}%
                     %canvas{ id: "responsable-#{responsable.id}-chart", height: "95", width: "250"}
 :scss
   .profile-img {
@@ -220,7 +220,7 @@
   });
 
 - @season.users.each do |responsable|
-  - unless responsable.pregnants.count.zero? || responsable.name.blank?
+  - unless responsable.pregnants(@season.id).count.zero? || responsable.name.blank?
     :javascript
       // responsable
       var responsable_ctx = document.getElementById('responsable-#{responsable.id}-chart').getContext('2d');
@@ -238,7 +238,7 @@
           data: {
               labels: ["Acertados", "Errados"],
               datasets: [{
-                  data: [#{responsable.pregnants.count}, #{responsable.inefectivities.count}],
+                  data: [#{responsable.pregnants(@season.id).count}, #{responsable.inefectivities.count}],
                   backgroundColor:[ 
                     green_gradient,
                     gray_gradient,

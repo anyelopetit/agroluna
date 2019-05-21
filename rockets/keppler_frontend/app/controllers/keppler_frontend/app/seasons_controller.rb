@@ -17,8 +17,8 @@ module KepplerFrontend
     ]
     before_action :strategic_lot_variables, only: strategic_lot_states
     before_action :attachments
-    before_action :respond_to_formats, except: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report births_report]
-    before_action :report_variables, only: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report births_report]
+    before_action :respond_to_formats, except: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report births_report efectivity_report]
+    before_action :report_variables, only: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report births_report efectivity_report]
     helper KepplerFarm::ApplicationHelper
     include ObjectQuery
 
@@ -303,6 +303,12 @@ module KepplerFrontend
 
     def births_report
       @births_cows = @season.cows.where_status('Birth', @season.id)
+      respond_to_formats
+    end
+
+    def efectivity_report
+      @responsables = KepplerFarm::Responsable.where(farm_id: @farm.id)
+      @services = @season.statuses.where(status_type: 'Service', season_id: @season.id)
       respond_to_formats
     end
 

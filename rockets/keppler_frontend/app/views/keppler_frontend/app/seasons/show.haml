@@ -11,10 +11,7 @@
       - if @season.finished && Date.today < @season.finish_date
         .float-right.mt-4.mb-4.d-flex
           .ml-2
-            = link_to farm_season_path(@farm, @season, format: :pdf), target: '_blank' do
-              %button.btn.btn_custom.btn--filled.btn--medium.m-1
-                %i.icofont-clip-board
-                Reporte
+            = render 'season_reports'
 
           .ml-2
             = link_to reopen_farm_season_path(@farm, @season), method: :post, data: { confirm: '¿Estás seguro?' } do
@@ -63,21 +60,7 @@
                     %i.icofont-clip-board
                     Reportes
                     %i.icofont-simple-down
-                .dropdown-menu{"aria-labelledby" => "reportDropdown"}
-                  = link_to({action: :reproduction_cows, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                    Hembras reproductivas
-                  = link_to({action: :zeals_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                    Hembras en celo
-                  = link_to({action: :services_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                    Hembras inseminadas
-                  = link_to({action: :next_palpation_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                    Próx. Palpaciones
-                  = link_to({action: :pregnants_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                    Hembras preñadas
-                  = link_to({action: :births_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                    Partos registrados
-                  = link_to({action: :efectivity_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                    Efectividad de servicios
+                = render 'season_reports'
                 %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
                   %i.icofont-plus
                   Importar de lote

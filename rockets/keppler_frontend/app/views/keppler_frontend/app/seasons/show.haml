@@ -5,7 +5,7 @@
     .d-flex.justify-content-between.content-float
       .float-left.mb-4{ style: 'width: 80%' }
         %h1
-          #{@season.name}
+          #{@season.name} //
           %label.badge (#{@season.type_name})
           %small.badge.badge-secondary #{@season.start_date&.strftime("%d/%m/%Y")} - #{@season.finish_date&.strftime("%d/%m/%Y")}
       - if @season.finished && Date.today < @season.finish_date

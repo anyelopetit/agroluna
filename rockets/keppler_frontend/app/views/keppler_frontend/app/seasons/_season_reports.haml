@@ -1,6 +1,6 @@
 .dropdown-menu{"aria-labelledby" => "reportDropdown"}
   = link_to farm_season_path(@farm, @season, format: :pdf), {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'} do
-    Reporte General
+    Efectividad de la temporada
   = link_to({action: :reproduction_cows, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
     Hembras reproductivas
   = link_to({action: :zeals_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do

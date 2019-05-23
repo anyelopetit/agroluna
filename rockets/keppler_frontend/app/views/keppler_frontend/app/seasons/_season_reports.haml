@@ -1,3 +1,8 @@
+%a#reportDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+  %button.btn.btn_custom.btn--filled.btn--medium
+    %i.icofont-clip-board
+    Reportes
+    %i.icofont-simple-down
 .dropdown-menu{"aria-labelledby" => "reportDropdown"}
   = link_to farm_season_path(@farm, @season, format: :pdf), {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'} do
     Efectividad de la temporada

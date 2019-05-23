@@ -12,7 +12,6 @@
         .float-right.mt-4.mb-4.d-flex
           .ml-2
             = render 'season_reports'
-
           .ml-2
             = link_to reopen_farm_season_path(@farm, @season), method: :post, data: { confirm: '¿Estás seguro?' } do
               %button.btn.btn_custom.btn--medium.float-right.m-1
@@ -45,7 +44,7 @@
       .d-flex.justify-content-between.mt-5.mb-3.mt-4
         .left
           %h1
-            Ganados por lotes
+            Ganados por lote
             %small (#{@season.cows.where(gender: 'female').count})
         - unless @season.type_id.zero?
           .right
@@ -55,11 +54,6 @@
                   %button.btn.btn_custom.btn--filled.btn--medium
                     %i.icofont-plus
                     Agregar Serie
-                %a#reportDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
-                  %button.btn.btn_custom.btn--filled.btn--medium
-                    %i.icofont-clip-board
-                    Reportes
-                    %i.icofont-simple-down
                 = render 'season_reports'
                 %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
                   %i.icofont-plus

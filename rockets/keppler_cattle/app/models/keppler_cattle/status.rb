@@ -80,9 +80,8 @@ module KepplerCattle
       cow = KepplerCattle::Cow.find_by_id(
         params.dig(:status, :cow_id) || hash[:cow_id]
       )
-      this_status.cow_id = cow&.id
+      this_status.cow_id ||= cow&.id
       this_status.season_id ||= season.id
-      this_status.cow_id ||= cow.id
       this_status.update!(farm_id: hash[:farm_id] || params.dig(:farm_id).to_i)
       puts "************* season #{this_status.season_id} *************"
       self.create_inefectivity(cow, this_status, season)

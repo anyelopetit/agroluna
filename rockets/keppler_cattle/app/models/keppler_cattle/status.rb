@@ -54,14 +54,18 @@ module KepplerCattle
     end
 
     def self.new_status(params, hash = {})
-      KepplerFarm::Responsable.find_by(
+      responsable = KepplerFarm::Responsable.find_by(
         name: params.dig(:status, :user_name) || hash.dig(:user_name),
         farm_id: nil
-      ).update(farm_id: params.dig(:status, :farm_id) || params.dig(:farm_id))
-      responsable = KepplerFarm::Responsable.find_or_create_by!(
-        name: params.dig(:status, :user_name) || hash.dig(:user_name),
-        farm_id: params.dig(:status, :farm_id) || params.dig(:farm_id)
       )
+      if responsable
+        responsable.update(farm_id: params.dig(:status, :farm_id) || params.dig(:farm_id))
+      else
+        responsable ||= KepplerFarm::Responsable.find_or_create_by!(
+          name: params.dig(:status, :user_name) || hash.dig(:user_name),
+          farm_id: params.dig(:status, :farm_id) || params.dig(:farm_id)
+        )
+      end
       this_status = new(
         status_type: params.dig(:status, :type) || hash[:status_type],
         season_id: hash[:season_id] || params.dig(:status, :season_id).to_i,

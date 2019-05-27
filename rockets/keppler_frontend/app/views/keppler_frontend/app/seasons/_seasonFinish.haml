@@ -57,7 +57,7 @@
                   %h3{style: "font-weight: 600;"} Abortos
                   %h4 Cantidad vacas
                 %canvas#aborto-chart{ height: "150", width: "250"}
-          %h1.mb-4{style:"text-transform: uppercase"} Inseminadores
+          %h1.mb-4{style:"text-transform: uppercase"} Inseminadores - Pajuelas Aplicadas
           .row
             - @season.users.each do |inseminador|
               - unless inseminador.status_where('Pregnancy', @season.id).count.zero? || inseminador.name.blank?
@@ -89,7 +89,7 @@
 
 
 
-          %h1.mb-4{style:"text-transform: uppercase"} Veterinarios
+          %h1.mb-4{style:"text-transform: uppercase"} Veterinarios - Palpaciones Realizadas
           .row
             - @season.users.each do |veterinario|
               - unless veterinario.status_where('Birth', @season.id).count.zero? || veterinario.name.blank?

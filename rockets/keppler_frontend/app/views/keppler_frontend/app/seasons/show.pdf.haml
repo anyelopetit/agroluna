@@ -59,7 +59,7 @@
                   -# %th Pelaje
                   %th Lote
               %tbody
-                - @season.cows.each do |cow|
+                - @season.cows.where(gender: 'female').each do |cow|
                   %tr
                     %td= cow&.serie_number
                     %td= cow&.race&.name

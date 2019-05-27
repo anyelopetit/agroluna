@@ -25,8 +25,8 @@ module KepplerFarm
       %i[name]
     end
 
-    def pregnants(season_id)
-      cow_statuses.where(status_type: 'Pregnancy', season_id: season_id)
+    def status_where(status_type, season_id)
+      cow_statuses.where(status_type: status_type, season_id: season_id)
     end
   end
 end

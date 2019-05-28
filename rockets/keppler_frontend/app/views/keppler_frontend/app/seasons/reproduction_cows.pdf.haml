@@ -29,32 +29,29 @@
                   %th.not-records.center
                     %center No se encontraron hembras aptas para reproducción en esta finca
           - else
-            - @strategic_lots.each do |strategic_lot|
-              - unless @possible_mothers.total_season_cows(strategic_lot).size.zero?
-                .strategic_lot_name= strategic_lot.name
-                %hr.my-1
-                %table.mt-none.mb-4
-                  %thead
-                    %tr
-                      %th Nro. Serie
-                      %th
-                        Edad
-                        %br
-                        A - M
-                      %th Tipología
-                      %th Estado
-                      %th Peso
-                  %tbody
-                    - @possible_mothers.total_season_cows(strategic_lot).each do |cow|
-                      %tr
-                        %td= cow&.serie_number
-                        %td
-                          = cow&.years
-                          \-
-                          = cow&.months
-                        %td= cow&.typology_name
-                        %td= cow&.status&.status_type_name
-                        %td #{cow&.weight&.weight} KG
+            %hr.my-1
+            %table.mt-none.mb-4
+              %thead
+                %tr
+                  %th Nro. Serie
+                  %th
+                    Edad
+                    %br
+                    A - M
+                  %th Tipología
+                  %th Estado
+                  %th Peso
+              %tbody
+                - @possible_mothers.total_season_cows(strategic_lot).each do |cow|
+                  %tr
+                    %td= cow&.serie_number
+                    %td
+                      = cow&.years
+                      \-
+                      = cow&.months
+                    %td= cow&.typology_name
+                    %td= cow&.status&.status_type_name
+                    %td #{cow&.weight&.weight} KG
         .row
           %hr.my-1
           %hr.my-1

@@ -83,11 +83,11 @@
                           \-
                           = cow&.months
                         %td= cow&.typology_name
-                        %td= cow.statuses.where(status_type: 'Service').last.date.strftime('%d-%m-%Y')
+                        %td= cow.statuses.where(status_type: 'Service').last&.date&.strftime('%d-%m-%Y')
                         %td
-                          = (Date.today - cow.statuses.where(status_type: 'Pregnancy').last.date).to_s.split('/').first.to_i
+                          = (Date.today - cow.statuses.where(status_type: 'Pregnancy').last&.date).to_s.split('/').first.to_i
                           días
-                        %td= cow.statuses.where(status_type: 'Birth').last.date.strftime('%d-%m-%Y')
+                        %td= cow.statuses.where(status_type: 'Birth').last&.date&.strftime('%d-%m-%Y')
                         %td
                           - status = cow.statuses.where(status_type: 'Birth').last
                           - if status.successfully && status.twins

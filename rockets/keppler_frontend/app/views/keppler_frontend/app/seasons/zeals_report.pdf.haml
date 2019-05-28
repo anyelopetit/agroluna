@@ -82,8 +82,8 @@
                           \-
                           = cow&.months
                         %td= cow&.typology_name
-                        %td= cow.statuses.where(status_type: 'Zeal').last.date.strftime('%d-%m-%Y')
-                        %td= (cow.statuses.where(status_type: 'Zeal').last.date + 21.days).strftime('%d-%m-%Y')
+                        %td= cow.statuses.where(status_type: 'Zeal').last&.date&.strftime('%d-%m-%Y')
+                        %td= (cow.statuses.where(status_type: 'Zeal').last&.date + 21.days).strftime('%d-%m-%Y')
                         %td
                           - if cow.statuses.where(status_type: 'Zeal').count > 2
                             = ((cow.statuses.where(status_type: 'Zeal')[-1].date) - cow.statuses.where(status_type: 'Zeal')[-2].date).to_s.split('/').first.to_i

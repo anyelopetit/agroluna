@@ -72,7 +72,7 @@
                     - @next_palpation_cows.each do |cow|
                       %tr
                         %td= cow&.serie_number
-                        %td= cow.statuses.where(status_type: 'Service').last.date.strftime('%d-%m-%Y')
+                        %td= cow.statuses.where(status_type: 'Service').last&.date&.strftime('%d-%m-%Y')
                         %td= cow.statuses.where(status_type: 'Service').last.user&.name || 'Desconocido'
                         %td
                           - if cow.statuses.where(status_type: 'Service').count > 0

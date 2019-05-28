@@ -84,7 +84,7 @@
                       %tr
                         %td= cow_status.cow&.serie_number
                         %td= cow_status.cow&.typology_name
-                        %td= cow_status.cow.statuses.where(status_type: 'Service', season_id: @season.id).last.date.strftime('%d-%m-%Y')
+                        %td= cow_status.cow.statuses.where(status_type: 'Service', season_id: @season.id).last&.date&.strftime('%d-%m-%Y')
                         %td= cow_status.cow.status.status_type_name
         .row
           %hr.my-1

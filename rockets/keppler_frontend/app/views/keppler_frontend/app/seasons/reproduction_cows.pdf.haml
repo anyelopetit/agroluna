@@ -42,7 +42,7 @@
                   %th Estado
                   %th Peso
               %tbody
-                - @possible_mothers.total_season_cows(strategic_lot).each do |cow|
+                - @possible_mothers.each do |cow|
                   %tr
                     %td= cow&.serie_number
                     %td

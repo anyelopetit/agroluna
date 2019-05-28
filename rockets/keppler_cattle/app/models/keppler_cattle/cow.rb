@@ -151,8 +151,10 @@ module KepplerCattle
     end
 
     def father
-      ft = father_type&.classify.constantize if father_type
-      ft&.find_by(id: father_id)
+      if father_type
+        ft = father_type&.classify.constantize
+        ft&.find_by(id: father_id)
+      end
     end
 
     def sons

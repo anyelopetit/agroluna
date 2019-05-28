@@ -20,7 +20,8 @@
       - else
         .float-right.mt-4.mb-4
           - if @season.cows.select { |x| x.status&.status_type&.eql?('Pregnancy') }.count > 0
-            %button.btn.btn_custom.btn--medium.float-right.m-1{ onclick: "Swal.fire({title: 'Aún tiene hembras en estado de preñez', text: 'Por favor revise o cambie su estado', type: 'warning'})" }
+            %button.btn.btn_custom.btn--medium.float-right.m-1
+              -# { onclick: "Swal.fire({title: 'Aún tiene hembras en estado de preñez', text: 'Por favor revise o cambie su estado', type: 'warning'})" }
               %i.icofont-close-circled
               Cierre
           - else

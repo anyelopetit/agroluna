@@ -34,6 +34,8 @@
           -# %th Estado
           -# %th Menu
         %tbody#bulls
+          - if @season.season_type.to_i.eql?(0)
+            - bulls = @farm.cows.where(gender: 'male')
           - bulls.each do |cow|
             %tr.cow{ style: "border-bottom: 1px #eee solid;" }
               %td

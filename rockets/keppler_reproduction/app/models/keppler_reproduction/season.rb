@@ -12,7 +12,7 @@ module KepplerReproduction
     acts_as_list
     acts_as_paranoid
 
-    has_many :season_cows, class_name: 'KepplerReproduction::SeasonCow'
+    has_many :season_cows, class_name: 'KepplerReproduction::SeasonCow', inverse_of: :season
     has_many :cows, class_name: 'KepplerCattle::Cow', through: :season_cows
     has_many :statuses, ->(season){ where(season_id: season.id) }, class_name: 'KepplerCattle::Status', through: :cows
     has_many :users, -> { distinct }, class_name: 'KepplerFarm::Responsable', through: :statuses
@@ -20,31 +20,35 @@ module KepplerReproduction
 
     has_many :cicles, class_name: 'KepplerReproduction::Cicle'
 
-    validates_presence_of :farm_id, :start_date, :finish_date, on: :create, message: "can't be blank"
+    validates_presence_of :farm_id, :start_date, :duration_days, on: :create, message: "can't be blank"
 
     def self.index_attributes
       %i[name]
     end
 
-    def duration_days
-      if finish_date.blank? && !cicles.blank?
-        days = 0
-        cicles.map { |x| days += x.days_count }
-        days
-      else
-        distance_of_time_in_days(start_date, finish_date, include_seconds = false)
-      end
-    end
+    # def duration_days
+    #   if finish_date.blank? && !cicles.blank?
+    #     days = 0
+    #     cicles.map { |x| days += x.days_count }
+    #     days
+    #   else
+    #     distance_of_time_in_days(start_date, finish_date, include_seconds = false)
+    #   end
+    # end
 
-    def distance_of_time_in_days(from_time, to_time = 0, include_seconds = false)
-      from_time = from_time.to_time if from_time.respond_to?(:to_time)
-      to_time = to_time.to_time if to_time.respond_to?(:to_time)
-      (((to_time - from_time).abs)/86400).round + 1
+    # def distance_of_time_in_days(from_time, to_time = 0, include_seconds = false)
+    #   from_time = from_time.to_time if from_time.respond_to?(:to_time)
+    #   to_time = to_time.to_time if to_time.respond_to?(:to_time)
+    #   (((to_time - from_time).abs)/86400).round + 1
+    # end
+
+    def finish_date
+      start_date + duration_days.to_i.days
     end
 
     def duration_dates
       days = []
-      duration_days.times { |time| days.push(start_date + time) }
+      duration_days.to_i.times { |time| days.push(start_date + time) }
       days
     end
 

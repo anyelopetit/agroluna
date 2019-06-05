@@ -88,8 +88,8 @@
                             = @farm.inseminations.find(cow.statuses.where(status_type: 'Service')&.last&.insemination_id)&.serie_number || 'Sin pajuela'
                             (#{cow.statuses.where(status_type: 'Service')&.last&.insemination_quantity})
                         %td
-                          - if cow.statuses.where(status_type: 'Zeal').count > 2
-                            = ((cow.statuses.where(status_type: 'Zeal')[-1].date) - cow.statuses.where(status_type: 'Zeal')[-2].date).to_s.split('/').first.to_i
+                          - if cow.statuses.where(status_type: 'Service').count > 2
+                            = ((cow.statuses.where(status_type: 'Service')[-1].date) - cow.statuses.where(status_type: 'Service')[-2].date).to_s.split('/').first.to_i
                           - else
                             21
                           días

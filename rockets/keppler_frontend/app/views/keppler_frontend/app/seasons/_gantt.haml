@@ -2,26 +2,26 @@
   .gantt.mb-5.mt-5
     .gantt__row.gantt__row--months
       .gantt__row-first
-      %ul.months{ style: "grid-template-columns: repeat(#{season.duration_days}, 1fr);" }
+      %ul.months{ style: "grid-template-columns: repeat(#{(season.duration_days.to_i + 1)}, 1fr);" }
         - start_day = 1
         - season.months_on_season.each do |month|
           %li.month{ style: "grid-column: #{start_day}/#{start_day + season.month_days_count(month)};" }
             = season.all_months[month.to_i - 1]
           - start_day = start_day + season.month_days_count(month)
-    .gantt__row.gantt__row--months{ style: "grid-template-columns: 150px repeat(#{season.duration_days}, 1fr);" }
+    .gantt__row.gantt__row--months{ style: "grid-template-columns: 150px repeat(#{(season.duration_days.to_i + 1)}, 1fr);" }
       .gantt__row-first
-      - season.duration_days.times do |day|
+      - (season.duration_days.to_i + 1).times do |day|
         %span= (season.start_date + day).strftime('%d')
-    .gantt__row.gantt__row--lines{"data-month" => "5", style: "grid-template-columns: 150px repeat(#{season.duration_days}, 1fr);"}
-      - season.duration_days.times do |day|
+    .gantt__row.gantt__row--lines{"data-month" => "5", style: "grid-template-columns: 150px repeat(#{(season.duration_days.to_i + 1)}, 1fr);"}
+      - (season.duration_days.to_i + 1).times do |day|
         %span{ class: ('marker' if (season.start_date + day).strftime('%d%m%y').eql?((Date.today + 1).strftime('%d%m%y'))) }
     - last_cicle_days = 0
     - [['Celos', 'Zeal'], ['Servicios', 'Service'], ['Preñez', 'Pregnancy'], ['Parto', 'Birth']].each do |status|
       .gantt__row
         .gantt__row-first
           #{status.first}
-        %ul.gantt__row-bars{ style: "grid-template-columns: repeat(#{season.duration_days}, 1fr);" }
-          - season.duration_days.times do |day|
+        %ul.gantt__row-bars{ style: "grid-template-columns: repeat(#{(season.duration_days.to_i + 1)}, 1fr);" }
+          - (season.duration_days.to_i + 1).times do |day|
             - statuses = @season.statuses.where(status_type: status.last, date: @season.start_date + day)
             - if !statuses.size.zero?
               %li.stripes{ style: "z-index: 2; padding: 0; grid-column: #{day + 1}/#{day + 2}; background-color: #{statuses.count > 8 ? season.cicle_colors.last : season.cicle_colors[(statuses.count/3)-3]};" }

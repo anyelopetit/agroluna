@@ -7,7 +7,7 @@ module KepplerFrontend
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
     before_action :set_season, except: %i[index new destroy_multiple]
-    before_action :season_types, only: %i[new edit]
+    before_action :season_types, only: %i[new edit create update]
     before_action :set_farm
     before_action :set_farms
     before_action :index_variables
@@ -28,17 +28,18 @@ module KepplerFrontend
     def show
       # @cicle = KepplerReproduction::Cicle.new
       # @strategic_lot = KepplerFarm::StrategicLot.new
-      @cows = @season.cows.order(:serie_number)
+      @cows = @season.cows.where(gender: 'female').order(:serie_number)
       @bulls = @season.cows.where(gender: 'male')
       @season_cow = KepplerReproduction::SeasonCow.new
       @strategic_lots = @farm.strategic_lots
       @cow_strategic_lots = @strategic_lots.includes(:locations).where(
-        keppler_cattle_locations: {cow_id: @cows.ids}
+        keppler_cattle_locations: { cow_id: @cows.ids }
       ).distinct
       @possible_mothers = @farm.cows.possible_mothers
       @inseminated_cows = @season.cows.select do |c|
         c.status&.status_type&.eql?('Service')
       end
+      @pregnants = @cows.where_status('Pregnancy', @season.id)
     end
 
     def new
@@ -47,7 +48,7 @@ module KepplerFrontend
 
     def create
       @season = KepplerReproduction::Season.new(season_params)
-      @season.finish_date = params[:season][:finish_date]
+      # @season.finish_date = params[:season][:finish_date]
 
       if @season.type_id.zero?
         counter = 0
@@ -61,7 +62,7 @@ module KepplerFrontend
         end
       end
 
-      if @season.save
+      if @season.save!
         redirect_to farm_season_path(@farm, @season)
       else
         flash[:error] = 'Revisa los datos del formulario'
@@ -265,8 +266,36 @@ module KepplerFrontend
       )
     end
 
+    def make_abort
+      @status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id})
+      if @status.save!
+        flash[:notice] =
+          if @baby_saved
+            if @other_baby_saved
+              'Parto realizado y morochos guardados'
+            else
+              'Parto realizado y becerro/a guardado'
+            end
+          else
+            'Aborto realizado satisfactoriamente'
+          end
+      else
+        flash[:error] = 'No se pudo realizar el parto'
+      end
+      redirect_back fallback_location: births_farm_season_path(
+        @farm, 
+        @season, 
+        @strategic_lot
+      )
+    end
+
     def finish
       @season.update(finished: true)
+      redirect_to farm_season_path(@farm, @season)
+    end
+
+    def change_phase
+      @season.update(phase: @season.phase.to_i + 1)
       redirect_to farm_season_path(@farm, @season)
     end
 

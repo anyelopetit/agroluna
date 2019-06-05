@@ -73,7 +73,9 @@ KepplerFrontend::Engine.routes.draw do
 
         post 'lote-estrategico/:strategic_lot_id/statuses', action: :statuses, as: :statuses
         post 'lote-estrategico/:strategic_lot_id/make_birth', action: :make_birth, as: :make_birth
+        post 'lote-estrategico/:strategic_lot_id/make_abort', action: :make_abort, as: :make_abort
 
+        post :change_phase
         post :finish
         post :reopen
 

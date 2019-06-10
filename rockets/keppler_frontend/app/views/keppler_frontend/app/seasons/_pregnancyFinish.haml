@@ -3,104 +3,41 @@
 .row
   .col-lg-12
     .card_show
-      %h1.text-center Efectividad de la temporada
-      %canvas#efectivity-chart{ height: "150", width: "400"}
-      // %canvas#buyers{ height: "400", width: "1150"}
-  .col-lg-12
-    %h1.mb-4{style:"text-transform: uppercase"} Procesos
-    .row
-      .col-lg-6.col-md-6
-        .card_show
-          .text-center
-            %h3{style: "font-weight: 600;"} Celos
-            %h4 Cantidad de vacas
-          %canvas#celo-chart{ height: "150", width: "250"}
-      .col-lg-6.col-md-6
-        .card_show
-          .text-center
-            %h3{style: "font-weight: 600;"} Servicios
-            %h4 Cantidad vacas
-          %canvas#services-chart{ height: "150", width: "250"}
-      -# .col-lg-4
-        .card_show
-          .text-center
-            %h3{style: "font-weight: 600;"} Preñadas
-            %h4 Cantidad vacas
-          %canvas#pregnancy-chart{ height: "150", width: "250"}
-      -# .col-lg-3
-        .card_show
-          .text-center
-            %h3{style: "font-weight: 600;"} Parto
-            %h4 Cantidad vacas
-          %canvas#parto-chart{ height: "150", width: "250"}
-      -# .col-lg-4
-        .card_show
-          .text-center
-            %h3{style: "font-weight: 600;"} Abortos
-            %h4 Cantidad vacas
-          %canvas#aborto-chart{ height: "150", width: "250"}
-    - unless @season.users.select { |inseminador| inseminador.status_where('Service', @season.id).exists? && !inseminador.name.blank? }
+      %h1.text-center Efectividad de preñez
+      %canvas#pregnants-chart{ height: "150", width: "400"}
+
+    - if @season.users.select { |inseminador| inseminador.status_where('Service', @season.id).exists? && !inseminador.name.blank? }
       %h1.mb-4{style:"text-transform: uppercase"} Inseminadores - Pajuelas Aplicadas
-    .row
-      - @season.users.each do |inseminador|
-        - unless inseminador.status_where('Pregnancy', @season.id).count.zero? || inseminador.name.blank?
-          .col-lg-6.col-md-6
-            .card_show{style:"min-height: 254px;"}
-              .container-profile.mt-4
-                .profile.d-flex
-                  .profile-img.d-none.d-sm-block
-                    %img{src:"https://images.pexels.com/photos/433635/pexels-photo-433635.jpeg?cs=srgb&dl=adult-care-cure-433635.jpg&fm=jpg", alt:""}
-                  .content-profile.ml-4{style: "width:100%"}
-                    %strong.name= inseminador.name
-                    .count-cow.d-flex.justify-content-around
-                      %div.d-flex.flex-column{style: "width:50%"}
-                        %span
-                          Preñadas
-                        %span
-                          #{inseminador.status_where('Pregnancy', @season.id).count}
-                      %div.d-flex.flex-column{style: "width:31%"}
-                        %span
-                          Vacias
-                        %span
-                          #{inseminador.inefectivities.count}
-                      %div.d-flex.flex-column{style: "width:33%"}
-                        %span
-                          Efectividad
-                        %span
-                          #{(((inseminador.status_where('Pregnancy', @season.id).count.to_f) / (inseminador.status_where('Pregnancy', @season.id).count.to_f + inseminador.inefectivities.count.to_f)) * 100).round(2)}%
-              %canvas{ id: "inseminador-#{inseminador.id}-chart", height: "95", width: "250"}
+      .row
+        - @season.users.each do |inseminador|
+          - if inseminador.status_where('Service', @season.id).exists? && !inseminador.name.blank?
+            .col-lg-6.col-md-6
+              .card_show{style:"min-height: 254px;"}
+                .container-profile.mt-4
+                  .profile.d-flex
+                    .profile-img.d-none.d-sm-block
+                      %img{src:"https://images.pexels.com/photos/433635/pexels-photo-433635.jpeg?cs=srgb&dl=adult-care-cure-433635.jpg&fm=jpg", alt:""}
+                    .content-profile.ml-4{style: "width:100%"}
+                      %strong.name= inseminador.name
+                      .count-cow.d-flex.justify-content-around
+                        %div.d-flex.flex-column{style: "width:50%"}
+                          %span
+                            Preñadas
+                          %span
+                            #{inseminador.status_where('Pregnancy', @season.id).count}
+                        %div.d-flex.flex-column{style: "width:31%"}
+                          %span
+                            Vacias
+                          %span
+                            #{inseminador.inefectivities.count}
+                        %div.d-flex.flex-column{style: "width:33%"}
+                          %span
+                            Efectividad
+                          %span
+                            #{(((inseminador.status_where('Pregnancy', @season.id).count.to_f) / (inseminador.status_where('Pregnancy', @season.id).count.to_f + inseminador.inefectivities.count.to_f)) * 100).round(2)}%
+                %canvas{ id: "inseminador-#{inseminador.id}-chart", height: "95", width: "250"}
 
 
-
-    %h1.mb-4{style:"text-transform: uppercase"} Veterinarios - Palpaciones Realizadas
-    .row
-      - @season.users.each do |veterinario|
-        - unless veterinario.status_where('Birth', @season.id).count.zero? || veterinario.name.blank?
-          .col-lg-6.col-md-6
-            .card_show{style:"min-height: 254px;"}
-              .container-profile.mt-4
-                .profile.d-flex
-                  .profile-img.d-none.d-sm-block
-                    %img{src:"https://images.pexels.com/photos/433635/pexels-photo-433635.jpeg?cs=srgb&dl=adult-care-cure-433635.jpg&fm=jpg", alt:""}
-                  .content-profile.ml-4{style: "width:100%"}
-                    %strong.name= veterinario.name
-                    .count-cow.d-flex.justify-content-around
-                      %div.d-flex.flex-column{style: "width:50%"}
-                        %span
-                          Preñadas
-                        %span
-                          #{veterinario.status_where('Birth', @season.id).count}
-                      %div.d-flex.flex-column{style: "width:31%"}
-                        %span
-                          Vacías
-                        %span
-                          #{veterinario.inefectivities.count}
-                      %div.d-flex.flex-column{style: "width:33%"}
-                        %span
-                          Efectividad
-                        %span
-                          #{(((veterinario.status_where('Birth', @season.id).count.to_f) / (veterinario.status_where('Birth', @season.id).count.to_f + veterinario.inefectivities.count.to_f)) * 100).round(2)}%
-              %canvas{ id: "veterinario-#{veterinario.id}-chart", height: "95", width: "250"}
 :scss
   .profile-img {
     img{
@@ -120,7 +57,7 @@
   }
 :javascript
   // Efectividad
-  var bar_ctx = document.getElementById('efectivity-chart').getContext('2d');
+  var bar_ctx = document.getElementById('pregnants-chart').getContext('2d');
   var green_gradient = bar_ctx.createLinearGradient(0, 0, 0, 800);
   green_gradient.addColorStop(0, ' #4AC29A');
   green_gradient.addColorStop(1, '#3CD3AD');
@@ -130,95 +67,27 @@
   orange_gradient.addColorStop(1, '#f83600');
 
   var gray_gradient = bar_ctx.createLinearGradient(0, 0, 0, 800);
-  gray_gradient.addColorStop(0, '#eef2f3');
+  gray_gradient.addColorStop(0, '#c1c2c3');
   // gray_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
   gray_gradient.addColorStop(1, '#8e9eab');
 
   var line_chart = new Chart(bar_ctx, {
       type: 'pie',
       data: {
-          labels: ["Partos", "Abortos", "Sin preñar"],
+          labels: ["Preñadas", "Sin preñar"],
           datasets: [{
               label: 'Vacas en celo',
               data: [
-                #{@season.cows.select { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) && x.status.successfully }.count},
-                #{@season.cows.select { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) && !x.status.successfully }.count },
-                #{@season.cows.reject { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) }.count}
+                #{@season.cows.select { |x| x.status&.status_type == 'Pregnancy' && x.status.farm_id.eql?(@farm.id) }.count},
+                #{@season.cows.reject { |x| x.status&.status_type == 'Pregnancy' && x.status.farm_id.eql?(@farm.id) }.count}
               ],
               backgroundColor: [
                 green_gradient,
-                orange_gradient,
                 gray_gradient
               ],
               hoverBackgroundColor: [
                 green_gradient,
-                orange_gradient,
                 gray_gradient
-              ],
-              hoverBorderWidth: 2
-          }]
-      },
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero:true
-                  }
-              }]
-          }
-      }
-  });
-
-- zeals = @season.statuses.where(status_type: 'Zeal')
-:javascript
-  // zeals
-  var celos_ctx = document.getElementById('celo-chart').getContext('2d');
-  var green_gradient = celos_ctx.createLinearGradient(0, 0, 0, 450);
-  green_gradient.addColorStop(0, ' #4AC29A');
-  green_gradient.addColorStop(1, '#3CD3AD');
-  // green_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
-
-  var celo_chart = new Chart(celos_ctx, {
-      type: 'line',
-      data: {
-          labelString: '20',
-          labels: #{raw @season.months_on_season.map { |month| @season.all_months[month.to_i - 1] }},
-          datasets: [{
-              data: #{raw @season.months_on_season.map { |month| zeals.select { |x| x.date&.month&.eql?(month.to_i)}.count }},
-              backgroundColor: green_gradient,
-              hoverBackgroundColor: green_gradient,
-              hoverBorderWidth: 2
-          }]
-      },
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero:true
-                  }
-              }]
-          }
-      }
-  });
-
-- services = @season.statuses.where(status_type: 'Service')
-:javascript
-  // Service
-  var service_ctx = document.getElementById('services-chart').getContext('2d');
-  var green_gradient = service_ctx.createLinearGradient(0, 0, 0, 450);
-  green_gradient.addColorStop(0, ' #4AC29A');
-  green_gradient.addColorStop(1, '#3CD3AD');
-
-  var service_chart = new Chart(service_ctx, {
-      type: 'line',
-      data: {
-          labels: #{raw @season.months_on_season.map { |month| @season.all_months[month.to_i - 1] }},
-          datasets: [{
-              data: #{raw @season.months_on_season.map { |month| services.select { |x| x.date&.month&.eql?(month.to_i)}.count }},
-              backgroundColor: green_gradient,
-              hoverBackgroundColor: [
-                green_gradient,
-                orange_gradient,
               ],
               hoverBorderWidth: 2
           }]
@@ -254,48 +123,6 @@
               labels: ["Acertados", "Errados"],
               datasets: [{
                   data: [#{inseminador.status_where('Pregnancy', @season.id).count}, #{inseminador.inefectivities.count}],
-                  backgroundColor:[ 
-                    green_gradient,
-                    gray_gradient,
-                  ],
-                  hoverBackgroundColor: [
-                    green_gradient,
-                    gray_gradient,
-                  ],
-                  hoverBorderWidth: 2
-              }]
-          },
-          options: {
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                          beginAtZero:true
-                      }
-                  }]
-              }
-          }
-      });
-
-- @season.users.each do |veterinario|
-  - unless veterinario.status_where('Birth', @season.id).count.zero? || veterinario.name.blank?
-    :javascript
-      // veterinario
-      var veterinario_ctx = document.getElementById('veterinario-#{veterinario.id}-chart').getContext('2d');
-      var green_gradient = veterinario_ctx.createLinearGradient(0, 0, 0, 450);
-      green_gradient.addColorStop(0, ' #4AC29A');
-      green_gradient.addColorStop(1, '#3CD3AD');
-
-      var gray_gradient = bar_ctx.createLinearGradient(0, 0, 0, 800);
-      gray_gradient.addColorStop(0, '#eef2f3');
-      // gray_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
-      gray_gradient.addColorStop(1, '#8e9eab');
-
-      var veterinario_chart = new Chart(veterinario_ctx, {
-          type: 'pie',
-          data: {
-              labels: ["Acertados", "Errados"],
-              datasets: [{
-                  data: [#{veterinario.status_where('Birth', @season.id).count}, #{veterinario.inefectivities.count}],
                   backgroundColor:[ 
                     green_gradient,
                     gray_gradient,

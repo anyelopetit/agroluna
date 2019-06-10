@@ -57,10 +57,7 @@
                     %button.btn.btn_custom.btn--filled.btn--medium.m-1{'data-target': "#modalLote", 'data-toggle': 'modal'}
                       %i.icofont-plus
                       Importar de lote
-                    = link_to change_phase_farm_season_path(@farm, @season), method: :post, data: { confirm: '¿Estás seguro?' } do
-                      %button.btn.btn_custom.btn--medium.m-1
-                        %i.icofont-close-circled
-                        Cerrar fase
+                    = render 'close_phase'
           #index-container
             .content-table
               %table
@@ -111,6 +108,7 @@
             .d-flex.justify-content-between.mt-5.mb-3.mt-4
               .left
                 %h1 Inseminadas
+                
             .content-table
               %table
                 %thead
@@ -138,34 +136,120 @@
         - else
           = render 'keppler_frontend/app/seasons/mountFinish', season: @season
       #pregnancy.tab-pane
+        - if @season.phase.to_i.eql?(1)
+          #index-container
+            .d-flex.justify-content-between.mt-5.mb-3.mt-4
+              .left
+                %h1 Inseminadas
+              .right
+                .d-flex.justify-content-end
+                  .d-flex.mt-4.mb-4
+                    = render 'close_phase'
+            .content-table
+              %table
+                - if @inseminated_cows.blank?
+                  %thead
+                    %tr
+                      %th No se encontraron hembras inseminadas
+                - else
+                  %thead
+                    %tr
+                      %th
+                      %th Número de serie
+                      %th Nombre corto
+                      %th Fecha de Servicio
+                      %th Pajuela Usada
+                      %th
+                %tbody
+                  - @inseminated_cows.each do |cow|
+                    %tr
+                      %td
+                        .checkbox{ style: 'margin: 3px' }
+                          %label{ for: "checkbox-#{cow.id}" }
+                            %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
+                            %span.cr
+                              %i.cr-icon.icofont-check
+                      %td
+                        = link_to '#' do
+                          = cow.serie_number
+                      %td
+                        = link_to '#' do
+                          = cow.short_name
+                          = image_tag "/assets/keppler_cattle/female", class: 'svg-icon-xs ml-2'
+                      %td
+                        = link_to '#' do
+                          = cow.status.date
+                      %td
+                        = link_to '#' do
+                          = cow.status.insemination&.serie_number
+                      %td
+                        %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalPregnant-#{cow.id}", 'data-toggle': 'modal' }
+                          %i.icofont-plus
+                          Registrar preñez
+                        = render 'keppler_frontend/app/seasons/modalPregnant', season: @season, cow: cow
+              - unless @season.type_id.zero? || @pregnants.blank?
+                .d-flex.justify-content-between.mt-5.mb-3.mt-4
+                  .left
+                    %h1 Preñadas
+                .content-table
+                  %table
+                    %thead
+                      %tr
+                        %th Número de serie
+                        %th Nombre corto
+                        %th Fecha de Servicio
+                        %th Pajuela Usada
+                        %th{ colspan: 2 }
+                    %tbody
+                      - @pregnants.each do |cow|
+                        %tr
+                          %td
+                            = link_to '#' do
+                              = cow.serie_number
+                          %td
+                            = link_to '#' do
+                              = cow.short_name
+                              = image_tag "/assets/keppler_cattle/female", class: 'svg-icon-xs ml-2'
+                          %td
+                            = link_to '#' do
+                              = cow.status.date
+                          %td
+                            = link_to '#' do
+                              = cow.status.insemination&.serie_number
+                          - if action_name.eql?('pregnants')
+                            %td
+                              %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
+                                %i.icofont-plus
+                                Registrar parto
+                              = render 'keppler_frontend/app/seasons/modalBirth', season: @season, cow: cow
+                            %td
+                              %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
+                                %i.icofont-plus
+                                Registrar aborto
+                              = render 'keppler_frontend/app/seasons/modalAbort', season: @season, cow: cow
+        - else
+          = render 'keppler_frontend/app/seasons/pregnancyFinish', season: @season
+      #reproduction.tab-pane
         #index-container
           .d-flex.justify-content-between.mt-5.mb-3.mt-4
             .left
-              %h1 Inseminadas
+              %h1 Preñadas
+            .right
+              .d-flex.justify-content-end
+                .d-flex.mt-4.mb-4
+                  = render 'close_phase'
           .content-table
             %table
-              - if @inseminated_cows.blank?
-                %thead
-                  %tr
-                    %th No se encontraron hembras inseminadas
-              - else
-                %thead
-                  %tr
-                    %th
-                    %th Número de serie
-                    %th Nombre corto
-                    %th Fecha de Servicio
-                    %th Pajuela Usada
-                    %th
+              %thead
+                %tr
+                  %th Número de serie
+                  %th Nombre corto
+                  %th Fecha de Servicio
+                  %th Pajuela Usada
+                  %th{ colspan: 2 }
               %tbody
-                - @inseminated_cows.each do |cow|
+                - @pregnants.each do |cow|
                   %tr
-                    %td
-                      .checkbox{ style: 'margin: 3px' }
-                        %label{ for: "checkbox-#{cow.id}" }
-                          %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
-                          %span.cr
-                            %i.cr-icon.icofont-check
                     %td
                       = link_to '#' do
                         = cow.serie_number
@@ -179,53 +263,17 @@
                     %td
                       = link_to '#' do
                         = cow.status.insemination&.serie_number
-                    %td
-                      %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalPregnant-#{cow.id}", 'data-toggle': 'modal' }
-                        %i.icofont-plus
-                        Registrar preñez
-                      = render 'keppler_frontend/app/seasons/modalPregnant', season: @season, cow: cow
-            - unless @season.type_id.zero? || @pregnants.blank?
-              .d-flex.justify-content-between.mt-5.mb-3.mt-4
-                .left
-                  %h1 Preñadas
-              .content-table
-                %table
-                  %thead
-                    %tr
-                      %th Número de serie
-                      %th Nombre corto
-                      %th Fecha de Servicio
-                      %th Pajuela Usada
-                      %th{ colspan: 2 }
-                  %tbody
-                    - @pregnants.each do |cow|
-                      %tr
-                        %td
-                          = link_to '#' do
-                            = cow.serie_number
-                        %td
-                          = link_to '#' do
-                            = cow.short_name
-                            = image_tag "/assets/keppler_cattle/female", class: 'svg-icon-xs ml-2'
-                        %td
-                          = link_to '#' do
-                            = cow.status.date
-                        %td
-                          = link_to '#' do
-                            = cow.status.insemination&.serie_number
-                        - if action_name.eql?('pregnants')
-                          %td
-                            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
-                              %i.icofont-plus
-                              Registrar parto
-                            = render 'keppler_frontend/app/seasons/modalBirth', season: @season, cow: cow
-                          %td
-                            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
-                              %i.icofont-plus
-                              Registrar aborto
-                            = render 'keppler_frontend/app/seasons/modalAbort', season: @season, cow: cow
-      #reproduction.tab-pane
-      -# = render 'season_cows_table', cows: @cows
+                    - if action_name.eql?('pregnants')
+                      %td
+                        %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
+                          %i.icofont-plus
+                          Registrar parto
+                        = render 'keppler_frontend/app/seasons/modalBirth', season: @season, cow: cow
+                      %td
+                        %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
+                          %i.icofont-plus
+                          Registrar aborto
+                        = render 'keppler_frontend/app/seasons/modalAbort', season: @season, cow: cow
 -# = simple_form_for [@farm, @season, @cicle] do |f|
   = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
   = f.input :season_id, as: :hidden, input_html: { value: @season.id }

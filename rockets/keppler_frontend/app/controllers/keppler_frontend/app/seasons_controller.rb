@@ -231,6 +231,9 @@ module KepplerFrontend
 
     def create_pregnancies
       status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id})
+      cow = KepplerCattle::Cow.find_by_id(
+        params.dig(:status, :cow_id) || hash[:cow_id]
+      )
       if status.save!
         flash[:notice] = 'Servicio guardado'
       else
@@ -239,7 +242,7 @@ module KepplerFrontend
       redirect_back fallback_location: pregnants_farm_season_path(
         @farm, 
         @season, 
-        @strategic_lot
+        @strategic_lot || cow.strategic_lot.id
       )
     end
 
@@ -268,6 +271,7 @@ module KepplerFrontend
 
     def make_abort
       @status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id})
+
       if @status.save!
         flash[:notice] =
           if @baby_saved
@@ -387,11 +391,12 @@ module KepplerFrontend
     end
 
     def strategic_lot_variables
+      @season_cow = KepplerReproduction::SeasonCow.new
       strategic_lot_id = params[:strategic_lot_id]
-      @strategic_lot = @farm.strategic_lots.find(strategic_lot_id) if strategic_lot_id
+      @strategic_lot = @farm.strategic_lots.find_by(id: strategic_lot_id)
+      return false unless @strategic_lot
       @bulls = @season.cows.total_season_bulls(@strategic_lot)
       @cows = @season.cows.total_season_cows(@strategic_lot)
-      @season_cow = KepplerReproduction::SeasonCow.new
     end
 
     def set_farm

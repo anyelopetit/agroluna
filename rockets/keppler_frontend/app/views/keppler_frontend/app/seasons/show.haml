@@ -216,6 +216,45 @@
                           %td
                             = link_to '#' do
                               = cow.status.insemination&.serie_number
+                          %td
+                            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
+                              %i.icofont-plus
+                              Registrar parto
+                            = render 'keppler_frontend/app/seasons/modalBirth', season: @season, cow: cow
+                          %td
+                            %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
+                              %i.icofont-plus
+                              Registrar aborto
+                            = render 'keppler_frontend/app/seasons/modalAbort', season: @season, cow: cow
+              - unless @season.type_id.zero? || @pregnants.blank?
+                .d-flex.justify-content-between.mt-5.mb-3.mt-4
+                  .left
+                    %h1 Preñadas
+                .content-table
+                  %table
+                    %thead
+                      %tr
+                        %th Número de serie
+                        %th Nombre corto
+                        %th Fecha de Servicio
+                        %th Pajuela Usada
+                        %th{ colspan: 2 }
+                    %tbody
+                      - @pregnants.each do |cow|
+                        %tr
+                          %td
+                            = link_to '#' do
+                              = cow.serie_number
+                          %td
+                            = link_to '#' do
+                              = cow.short_name
+                              = image_tag "/assets/keppler_cattle/female", class: 'svg-icon-xs ml-2'
+                          %td
+                            = link_to '#' do
+                              = cow.status.date
+                          %td
+                            = link_to '#' do
+                              = cow.status.insemination&.serie_number
                           - if action_name.eql?('pregnants')
                             %td
                               %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }

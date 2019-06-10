@@ -30,11 +30,11 @@
 - if @meta
   %meta{ name: 'description', content: (content_for?(:description) ? yield(:description) : @meta.description) }
   %meta{ name: 'keywords', content: @meta.meta_tags }
-  %title= content_for?(:title) ? yield(:title) : @meta.title
+  %title= 'Agropecuaria' # content_for?(:title) ? yield(:title) : @meta.title
 - else
   %meta{ name: 'description', content: (content_for?(:description) ? yield(:description) : @setting.description) }
   %meta{ name: 'keywords', content: 'keppler, diseño web, desarrollo web, desarrollo de software, ecommerce, development, cms, web develpment, web design, Punto Fijo, slice, slicegroup, Venezuela, keppler, keppler cms'}
-  %title= content_for?(:title) ? yield(:title) : @setting.name
+  %title= 'Agropecuaria' # content_for?(:title) ? yield(:title) : @setting.name
 
 - @scripts.each do |script|
   = raw script.script

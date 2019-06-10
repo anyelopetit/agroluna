@@ -26,21 +26,20 @@ module KepplerReproduction
       %i[name]
     end
 
-    # def duration_days
-    #   if finish_date.blank? && !cicles.blank?
-    #     days = 0
-    #     cicles.map { |x| days += x.days_count }
-    #     days
-    #   else
-    #     distance_of_time_in_days(start_date, finish_date, include_seconds = false)
-    #   end
-    # end
+    def duration_days
+      if attribute_names.include?('duration_days')
+        super
+        # '6'
+      else
+        distance_of_time_in_days(start_date, finish_date, include_seconds = false)
+      end
+    end
 
-    # def distance_of_time_in_days(from_time, to_time = 0, include_seconds = false)
-    #   from_time = from_time.to_time if from_time.respond_to?(:to_time)
-    #   to_time = to_time.to_time if to_time.respond_to?(:to_time)
-    #   (((to_time - from_time).abs)/86400).round + 1
-    # end
+    def distance_of_time_in_days(from_time, to_time = 0, include_seconds = false)
+      from_time = from_time.to_time if from_time.respond_to?(:to_time)
+      to_time = to_time.to_time if to_time.respond_to?(:to_time)
+      (((to_time - from_time).abs)/86400).round + 1
+    end
 
     def finish_date
       start_date + duration_days.to_i.days
@@ -51,6 +50,10 @@ module KepplerReproduction
       duration_days.to_i.times { |time| days.push(start_date + time) }
       days
     end
+
+    # def total_days
+    #   duration_days.to_i.zero? || (finish_date.days - start_date.days)
+    # end
 
     def month_days_count(month)
       duration_dates.select { |x| x.strftime("%m").eql?(month) }.count

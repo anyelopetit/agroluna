@@ -1,123 +1,105 @@
-!!!
-%html{:lang => "en"}
-  %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %meta{:charset => "utf-8"}/
-    %title 
-    // %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"}
-    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.0/Chart.min.js"}
-  %body
-    .app_wrapper
 
-      -# .d-flex.justify-content-between
-        .float-left.mb-4{ style: 'width: 80%' }
-          %h1
-            #{@season.name}
-            %label.badge (#{@season.type_name})
-        .right.mt-4.mb-4
-          %button.btn.btn_custom.btn--filled.btn--medium
-            %i.icofont-clip-board
-            Reporte
-      .row
-        .col-lg-12
-          .card_show
-            %h1.text-center Efectividad de la temporada
-            %canvas#efectivity-chart{ height: "150", width: "400"}
-            // %canvas#buyers{ height: "400", width: "1150"}
-        .col-lg-12
-          %h1.mb-4{style:"text-transform: uppercase"} Procesos
-          .row
-            .col-lg-6.col-md-6
-              .card_show
-                .text-center
-                  %h3{style: "font-weight: 600;"} Celos
-                  %h4 Cantidad de vacas
-                %canvas#celo-chart{ height: "150", width: "250"}
-            .col-lg-6.col-md-6
-              .card_show
-                .text-center
-                  %h3{style: "font-weight: 600;"} Servicios
-                  %h4 Cantidad vacas
-                %canvas#services-chart{ height: "150", width: "250"}
-            -# .col-lg-4
-              .card_show
-                .text-center
-                  %h3{style: "font-weight: 600;"} Preñadas
-                  %h4 Cantidad vacas
-                %canvas#pregnancy-chart{ height: "150", width: "250"}
-            -# .col-lg-3
-              .card_show
-                .text-center
-                  %h3{style: "font-weight: 600;"} Parto
-                  %h4 Cantidad vacas
-                %canvas#parto-chart{ height: "150", width: "250"}
-            -# .col-lg-4
-              .card_show
-                .text-center
-                  %h3{style: "font-weight: 600;"} Abortos
-                  %h4 Cantidad vacas
-                %canvas#aborto-chart{ height: "150", width: "250"}
-          %h1.mb-4{style:"text-transform: uppercase"} Inseminadores - Pajuelas Aplicadas
-          .row
-            - @season.users.each do |inseminador|
-              - unless inseminador.status_where('Pregnancy', @season.id).count.zero? || inseminador.name.blank?
-                .col-lg-6.col-md-6
-                  .card_show{style:"min-height: 254px;"}
-                    .container-profile.mt-4
-                      .profile.d-flex
-                        .profile-img.d-none.d-sm-block
-                          %img{src:"https://images.pexels.com/photos/433635/pexels-photo-433635.jpeg?cs=srgb&dl=adult-care-cure-433635.jpg&fm=jpg", alt:""}
-                        .content-profile.ml-4{style: "width:100%"}
-                          %strong.name= inseminador.name
-                          .count-cow.d-flex.justify-content-around
-                            %div.d-flex.flex-column{style: "width:50%"}
-                              %span
-                                Preñadas
-                              %span
-                                #{inseminador.status_where('Pregnancy', @season.id).count}
-                            %div.d-flex.flex-column{style: "width:31%"}
-                              %span
-                                Vacias
-                              %span
-                                #{inseminador.inefectivities.count}
-                            %div.d-flex.flex-column{style: "width:33%"}
-                              %span
-                                Efectividad
-                              %span
-                                #{(((inseminador.status_where('Pregnancy', @season.id).count.to_f) / (inseminador.status_where('Pregnancy', @season.id).count.to_f + inseminador.inefectivities.count.to_f)) * 100).round(2)}%
-                    %canvas{ id: "inseminador-#{inseminador.id}-chart", height: "95", width: "250"}
+%script{:src => "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.0/Chart.min.js"}
+.row
+  .col-lg-12
+    .card_show
+      %h1.text-center Efectividad de la temporada
+      %canvas#efectivity-chart{ height: "150", width: "400"}
+      // %canvas#buyers{ height: "400", width: "1150"}
+  .col-lg-12
+    %h1.mb-4{style:"text-transform: uppercase"} Procesos
+    .row
+      .col-lg-6.col-md-6
+        .card_show
+          .text-center
+            %h3{style: "font-weight: 600;"} Celos
+            %h4 Cantidad de vacas
+          %canvas#celo-chart{ height: "150", width: "250"}
+      .col-lg-6.col-md-6
+        .card_show
+          .text-center
+            %h3{style: "font-weight: 600;"} Servicios
+            %h4 Cantidad vacas
+          %canvas#services-chart{ height: "150", width: "250"}
+      -# .col-lg-4
+        .card_show
+          .text-center
+            %h3{style: "font-weight: 600;"} Preñadas
+            %h4 Cantidad vacas
+          %canvas#pregnancy-chart{ height: "150", width: "250"}
+      -# .col-lg-3
+        .card_show
+          .text-center
+            %h3{style: "font-weight: 600;"} Parto
+            %h4 Cantidad vacas
+          %canvas#parto-chart{ height: "150", width: "250"}
+      -# .col-lg-4
+        .card_show
+          .text-center
+            %h3{style: "font-weight: 600;"} Abortos
+            %h4 Cantidad vacas
+          %canvas#aborto-chart{ height: "150", width: "250"}
+    %h1.mb-4{style:"text-transform: uppercase"} Inseminadores - Pajuelas Aplicadas
+    .row
+      - @season.users.each do |inseminador|
+        - unless inseminador.status_where('Pregnancy', @season.id).count.zero? || inseminador.name.blank?
+          .col-lg-6.col-md-6
+            .card_show{style:"min-height: 254px;"}
+              .container-profile.mt-4
+                .profile.d-flex
+                  .profile-img.d-none.d-sm-block
+                    %img{src:"https://images.pexels.com/photos/433635/pexels-photo-433635.jpeg?cs=srgb&dl=adult-care-cure-433635.jpg&fm=jpg", alt:""}
+                  .content-profile.ml-4{style: "width:100%"}
+                    %strong.name= inseminador.name
+                    .count-cow.d-flex.justify-content-around
+                      %div.d-flex.flex-column{style: "width:50%"}
+                        %span
+                          Preñadas
+                        %span
+                          #{inseminador.status_where('Pregnancy', @season.id).count}
+                      %div.d-flex.flex-column{style: "width:31%"}
+                        %span
+                          Vacias
+                        %span
+                          #{inseminador.inefectivities.count}
+                      %div.d-flex.flex-column{style: "width:33%"}
+                        %span
+                          Efectividad
+                        %span
+                          #{(((inseminador.status_where('Pregnancy', @season.id).count.to_f) / (inseminador.status_where('Pregnancy', @season.id).count.to_f + inseminador.inefectivities.count.to_f)) * 100).round(2)}%
+              %canvas{ id: "inseminador-#{inseminador.id}-chart", height: "95", width: "250"}
 
 
 
-          %h1.mb-4{style:"text-transform: uppercase"} Veterinarios - Palpaciones Realizadas
-          .row
-            - @season.users.each do |veterinario|
-              - unless veterinario.status_where('Birth', @season.id).count.zero? || veterinario.name.blank?
-                .col-lg-6.col-md-6
-                  .card_show{style:"min-height: 254px;"}
-                    .container-profile.mt-4
-                      .profile.d-flex
-                        .profile-img.d-none.d-sm-block
-                          %img{src:"https://images.pexels.com/photos/433635/pexels-photo-433635.jpeg?cs=srgb&dl=adult-care-cure-433635.jpg&fm=jpg", alt:""}
-                        .content-profile.ml-4{style: "width:100%"}
-                          %strong.name= veterinario.name
-                          .count-cow.d-flex.justify-content-around
-                            %div.d-flex.flex-column{style: "width:50%"}
-                              %span
-                                Preñadas
-                              %span
-                                #{veterinario.status_where('Birth', @season.id).count}
-                            %div.d-flex.flex-column{style: "width:31%"}
-                              %span
-                                Vacías
-                              %span
-                                #{veterinario.inefectivities.count}
-                            %div.d-flex.flex-column{style: "width:33%"}
-                              %span
-                                Efectividad
-                              %span
-                                #{(((veterinario.status_where('Birth', @season.id).count.to_f) / (veterinario.status_where('Birth', @season.id).count.to_f + veterinario.inefectivities.count.to_f)) * 100).round(2)}%
-                    %canvas{ id: "veterinario-#{veterinario.id}-chart", height: "95", width: "250"}
+    %h1.mb-4{style:"text-transform: uppercase"} Veterinarios - Palpaciones Realizadas
+    .row
+      - @season.users.each do |veterinario|
+        - unless veterinario.status_where('Birth', @season.id).count.zero? || veterinario.name.blank?
+          .col-lg-6.col-md-6
+            .card_show{style:"min-height: 254px;"}
+              .container-profile.mt-4
+                .profile.d-flex
+                  .profile-img.d-none.d-sm-block
+                    %img{src:"https://images.pexels.com/photos/433635/pexels-photo-433635.jpeg?cs=srgb&dl=adult-care-cure-433635.jpg&fm=jpg", alt:""}
+                  .content-profile.ml-4{style: "width:100%"}
+                    %strong.name= veterinario.name
+                    .count-cow.d-flex.justify-content-around
+                      %div.d-flex.flex-column{style: "width:50%"}
+                        %span
+                          Preñadas
+                        %span
+                          #{veterinario.status_where('Birth', @season.id).count}
+                      %div.d-flex.flex-column{style: "width:31%"}
+                        %span
+                          Vacías
+                        %span
+                          #{veterinario.inefectivities.count}
+                      %div.d-flex.flex-column{style: "width:33%"}
+                        %span
+                          Efectividad
+                        %span
+                          #{(((veterinario.status_where('Birth', @season.id).count.to_f) / (veterinario.status_where('Birth', @season.id).count.to_f + veterinario.inefectivities.count.to_f)) * 100).round(2)}%
+              %canvas{ id: "veterinario-#{veterinario.id}-chart", height: "95", width: "250"}
 :scss
   .profile-img {
     img{

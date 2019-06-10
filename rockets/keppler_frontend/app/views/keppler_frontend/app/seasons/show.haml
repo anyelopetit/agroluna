@@ -3,16 +3,13 @@
   .container_custom
     -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
     .d-flex.justify-content-between
-      .mb-4
-        %h1
-          #{@season.name}
-          %label.badge (#{@season.type_name})
-        %small.badge.badge-secondary #{@season.start_date&.strftime("%d/%m/%Y")} - #{@season.finish_date&.strftime("%d/%m/%Y")}
-      .mt-4.mb-4
-        = link_to change_phase_farm_season_path(@farm, @season), method: :post, data: { confirm: '¿Estás seguro?' } do
-          %button.btn.btn_custom.btn--medium.float-right.m-1
-            %i.icofont-close-circled
-            Cerrar fase
+      .left
+        .mb-4
+          %h1
+            #{@season.name}
+            %label.badge (#{@season.type_name})
+          %small.badge.badge-secondary #{@season.start_date&.strftime("%d/%m/%Y")} - #{@season.finish_date&.strftime("%d/%m/%Y")}
+      .right
         = link_to edit_farm_season_path(@farm, @season) do
           %button.btn.btn_custom.btn--filled.btn--medium.float-right.m-1
             %i.icofont-pencil
@@ -27,16 +24,20 @@
     -# - when 0
     - unless @season.season_type.to_i.eql?(0)
       = render 'keppler_frontend/app/seasons/gantt', season: @season
-    %ul.nav.nav-tabs.mt-4{role: "tablist", style: "padding: 0;"}
-      %li.nav-item
-        %a.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#mount", role: "tab"}
-          Monta
-      %li.nav-item
-        %a.nav-link{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#pregnancy", role: "tab"}
-          Preñez
-      %li.nav-item
-        %a.nav-link{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#reproduction", role: "tab"}
-          Reproducción
+    .d-flex.justify-content-end
+      = render 'season_reports'
+    - unless @season.phase.to_i.eql?(0)
+      %ul.nav.nav-tabs.mt-4{role: "tablist", style: "padding: 0;"}
+        %li.nav-item
+          %a.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#mount", role: "tab"}
+            Monta
+        %li.nav-item
+          %a.nav-link{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#pregnancy", role: "tab"}
+            Preñez
+        - if @season.phase.to_i > 1
+          %li.nav-item
+            %a.nav-link{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#reproduction", role: "tab"}
+              Reproducción
     .tab-content
       #mount.tab-pane.active
         - if @season.phase.to_i.eql?(0)
@@ -48,15 +49,18 @@
             - unless @season.type_id.zero?
               .right
                 .d-flex.justify-content-end
-                  .float-right.mt-4.mb-4
+                  .d-flex.mt-4.mb-4
                     -# = link_to new_assign_cattle_farm_season_path(@farm, @season) do
                       %button.btn.btn_custom.btn--filled.btn--medium
                         %i.icofont-plus
                         Agregar Serie
-                    = render 'season_reports'
-                    %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalLote", 'data-toggle': 'modal'}
+                    %button.btn.btn_custom.btn--filled.btn--medium.m-1{'data-target': "#modalLote", 'data-toggle': 'modal'}
                       %i.icofont-plus
                       Importar de lote
+                    = link_to change_phase_farm_season_path(@farm, @season), method: :post, data: { confirm: '¿Estás seguro?' } do
+                      %button.btn.btn_custom.btn--medium.m-1
+                        %i.icofont-close-circled
+                        Cerrar fase
           #index-container
             .content-table
               %table
@@ -132,7 +136,7 @@
                         = link_to '#' do
                           = cow.status.insemination&.serie_number
         - else
-          = render 'keppler_frontend/app/seasons/seasonFinish', season: @season
+          = render 'keppler_frontend/app/seasons/mountFinish', season: @season
       #pregnancy.tab-pane
         #index-container
           .d-flex.justify-content-between.mt-5.mb-3.mt-4
@@ -147,13 +151,21 @@
               - else
                 %thead
                   %tr
+                    %th
                     %th Número de serie
                     %th Nombre corto
                     %th Fecha de Servicio
                     %th Pajuela Usada
+                    %th
               %tbody
                 - @inseminated_cows.each do |cow|
                   %tr
+                    %td
+                      .checkbox{ style: 'margin: 3px' }
+                        %label{ for: "checkbox-#{cow.id}" }
+                          %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
+                          %span.cr
+                            %i.cr-icon.icofont-check
                     %td
                       = link_to '#' do
                         = cow.serie_number
@@ -167,6 +179,11 @@
                     %td
                       = link_to '#' do
                         = cow.status.insemination&.serie_number
+                    %td
+                      %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalPregnant-#{cow.id}", 'data-toggle': 'modal' }
+                        %i.icofont-plus
+                        Registrar preñez
+                      = render 'keppler_frontend/app/seasons/modalPregnant', season: @season, cow: cow
             - unless @season.type_id.zero? || @pregnants.blank?
               .d-flex.justify-content-between.mt-5.mb-3.mt-4
                 .left

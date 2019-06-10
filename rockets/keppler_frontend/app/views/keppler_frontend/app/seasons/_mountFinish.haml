@@ -1,0 +1,108 @@
+
+%script{:src => "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.0/Chart.min.js"}
+.row
+  .col-lg-12
+    .card_show
+      %h1.text-center Estadísticas de la monta
+      -# %canvas#efectivity-chart{ height: "150", width: "400"}
+      // %canvas#buyers{ height: "400", width: "1150"}
+  .col-lg-12
+    %h1.mb-4{style:"text-transform: uppercase"} Procesos
+    .row
+      .col-lg-6.col-md-6
+        .card_show
+          .text-center
+            %h3{style: "font-weight: 600;"} Celos
+            %h4 Cantidad de vacas
+          %canvas#celo-chart{ height: "150", width: "250"}
+      .col-lg-6.col-md-6
+        .card_show
+          .text-center
+            %h3{style: "font-weight: 600;"} Servicios
+            %h4 Cantidad vacas
+          %canvas#services-chart{ height: "150", width: "250"}
+:scss
+  .profile-img {
+    img{
+      width:70px;
+      height:70px; 
+      border-radius: 50%;
+      object-fit: cover;
+    }  
+  }
+  .content-profile {
+    .name {
+      font-size: 17px
+    }
+    .count-cow{
+      font-size: 15px;
+    }
+  }
+
+- zeals = @season.statuses.where(status_type: 'Zeal')
+:javascript
+  // zeals
+  var celos_ctx = document.getElementById('celo-chart').getContext('2d');
+  var green_gradient = celos_ctx.createLinearGradient(0, 0, 0, 450);
+  green_gradient.addColorStop(0, ' #4AC29A');
+  green_gradient.addColorStop(1, '#3CD3AD');
+  // green_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
+
+  var celo_chart = new Chart(celos_ctx, {
+      type: 'line',
+      data: {
+          labelString: '20',
+          labels: #{raw @season.months_on_season.map { |month| @season.all_months[month.to_i - 1] }},
+          datasets: [{
+              data: #{raw @season.months_on_season.map { |month| zeals.select { |x| x.date&.month&.eql?(month.to_i)}.count }},
+              backgroundColor: green_gradient,
+              hoverBackgroundColor: green_gradient,
+              hoverBorderWidth: 2
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+  });
+
+- services = @season.statuses.where(status_type: 'Service')
+:javascript
+  var service_ctx = document.getElementById('services-chart').getContext('2d');
+  var green_gradient = service_ctx.createLinearGradient(0, 0, 0, 450);
+  green_gradient.addColorStop(0, ' #4AC29A');
+  green_gradient.addColorStop(1, '#3CD3AD');
+
+  var orange_gradient = service_ctx.createLinearGradient(0, 0, 0, 800);
+  orange_gradient.addColorStop(0, '#f28d23');
+  orange_gradient.addColorStop(1, '#f83600');
+
+  var service_chart = new Chart(service_ctx, {
+      type: 'line',
+      data: {
+          labels: #{raw @season.months_on_season.map { |month| @season.all_months[month.to_i - 1] }},
+          datasets: [{
+              data: #{raw @season.months_on_season.map { |month| services.select { |x| x.date&.month&.eql?(month.to_i)}.count }},
+              backgroundColor: green_gradient,
+              hoverBackgroundColor: [
+                green_gradient,
+                orange_gradient,
+              ],
+              hoverBorderWidth: 2
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+  });

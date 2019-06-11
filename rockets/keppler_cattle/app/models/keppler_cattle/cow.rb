@@ -163,6 +163,9 @@ module KepplerCattle
       )
     end
 
+    def self.babies
+      all.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten
+    end
 
     def self.weight_average(cows)
       cows.map { |cow| cow.weight&.weight&.to_f }
@@ -174,11 +177,12 @@ module KepplerCattle
       if status_name.is_a?(Array)
         select { |c| status_name.include?(c.status&.status_type) }
       else
-        includes(:statuses).where(
-          keppler_cattle_statuses: {
-            status_type: status_name, season_id: season_id
-          }
-        ).distinct
+        # includes(:statuses).where(
+        #   keppler_cattle_statuses: {
+        #     status_type: status_name, season_id: season_id
+        #   }
+        # ).distinct
+        select { |c| status_name.eql?(c.status&.status_type) }
       end
     end
 

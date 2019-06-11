@@ -29,7 +29,6 @@ module KepplerReproduction
     def duration_days
       if attribute_names.include?('duration_days')
         super
-        # '6'
       else
         distance_of_time_in_days(start_date, finish_date, include_seconds = false)
       end

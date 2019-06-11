@@ -40,6 +40,8 @@ module KepplerFrontend
         c.status&.status_type&.eql?('Service')
       end
       @pregnants = @cows.where_status('Pregnancy', @season.id)
+      # @colors = KepplerCattle::Cow.colors
+      @babies = @cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten
     end
 
     def new
@@ -248,16 +250,12 @@ module KepplerFrontend
 
     def make_birth
       new_birth(params) if params
-      if @status.save!
+      if @status.save! && @baby_saved
         flash[:notice] =
-          if @baby_saved
-            if @other_baby_saved
-              'Parto realizado y morochos guardados'
-            else
-              'Parto realizado y becerro/a guardado'
-            end
+          if @other_baby_saved
+            'Parto realizado y morochos guardados'
           else
-            'Aborto realizado satisfactoriamente'
+            'Parto realizado y becerro/a guardado'
           end
       else
         flash[:error] = 'No se pudo realizar el parto'
@@ -265,7 +263,7 @@ module KepplerFrontend
       redirect_back fallback_location: births_farm_season_path(
         @farm, 
         @season, 
-        @strategic_lot
+        @strategic_lot || @mother.strategic_lot.id
       )
     end
 
@@ -435,8 +433,8 @@ module KepplerFrontend
     end
     
     def new_birth(params)
-      @status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id})
       @mother = @season.cows.find_by_id(params[:status][:cow_id])
+      @status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id})
       if params[:status][:successfully] == '1'
         @baby_saved = create_cow(
           @mother,
@@ -459,7 +457,7 @@ module KepplerFrontend
       baby = @farm.cows.new(params)
       baby.species_id = mother&.species_id
       baby.mother_id = mother&.id
-      baby.birthdate = this_status&.date
+      baby.birthdate = this_status&.date || Date.today
       baby.provenance = mother&.farm.title
       if mother.statuses.where(status_type: 'Service')&.last&.insemination_id
         last_pregnancy = mother.statuses.where(status_type: 'Service')&.last
@@ -468,14 +466,13 @@ module KepplerFrontend
         baby.father_id = father&.id
       end
       
-      if baby.save
+      if baby.save!
         baby_weight = baby.create_first_weight(
           weight_params,
           {
             user: KepplerFarm::Responsable.find_or_create_by(name: this_status.user.name),
             user_id: KepplerFarm::Responsable.find_or_create_by(name: this_status.user.name).id,
-            cow_id: this_status.cow_id,
-            user: KepplerFarm::Responsable.find_or_create_by(name: this_status.user.name)
+            cow_id: this_status.cow_id
           }
         )
         baby.create_first_location(

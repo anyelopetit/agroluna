@@ -118,90 +118,6 @@
     border-radius: 50%;
   }
 
-
--# :javascript
-  $(document).ready(function () {
-    var navListItems = $('#modalBirth-#{cow.id} .setup-panel a'),
-            allWells = $('#modalBirth-#{cow.id} .setup-content'),
-            allNextBtn = $('#modalBirth-#{cow.id} .nextBtn'),
-          allPrevBtn = $('#modalBirth-#{cow.id} .prevBtn');
-
-    allWells.hide();
-
-    navListItems.click(function (e) {
-      e.preventDefault();
-      var $target = $($(this).attr('href')),
-          $item = $(this);
-
-      if (!$item.hasClass('disabled')) {
-        navListItems.removeClass('btn-active').addClass('btn-inactive');
-        $item.addClass('btn-active');
-        allWells.hide();
-        $target.show();
-        $target.find('input:eq(0)').focus();
-      }
-    });
-    
-    allPrevBtn.click(function(){
-        var curStep = $(this).closest(".setup-content"),
-            curStepBtn = curStep.attr("id"),
-            prevStepWizard = $('#modalBirth-#{cow.id} div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a");
-
-        if ($('#cow-#{cow.id}-step-1 #status_#{cow.id}_successfully').val() == 0) {
-          $('#cow-#{cow.id}-step-1-circle').trigger('click');
-        } else {
-          prevStepWizard.removeAttr('disabled').trigger('click');
-        }
-    });
-
-    allNextBtn.click(function(){
-        var curStep = $(this).closest(".setup-content"),
-            curStepBtn = curStep.attr("id"),
-            nextStepWizard = $('#modalBirth-#{cow.id} div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
-            curInputs = curStep.find("input[type='text'],input[type='url']"),
-            isValid = true;
-
-        $(".form-group").removeClass("has-error");
-        for(var i=0; i<curInputs.length; i++){
-            if (!curInputs[i].validity.valid){
-                isValid = false;
-                $(curInputs[i]).closest(".form-group").addClass("has-error");
-            }
-        }
-
-        if (isValid) {
-          if ($('#cow-#{cow.id}-step-1 #status_#{cow.id}_successfully').val() == 0) {
-            $('#cow-#{cow.id}-step-4-circle').trigger('click');
-          } else {
-            nextStepWizard.removeAttr('disabled').trigger('click');
-          }
-        }
-      
-    });
-
-    $('#modalBirth-#{cow.id} .setup-panel a.btn-active').trigger('click');
-  });
-
-
-
-
-  window.I18n = #{es_translations.to_json.html_safe}
-
-  
-  function fatherSelect (option) {
-    var optionTxt = option.text
-    if (!option.id) return optionTxt;
-    var $option = $(
-      '<span class="cattle-option">' +
-        `<div style="background-image: url(/assets/keppler_cattle/male)" class="img-cattle-list"></div>` + 
-        (I18n.keppler_cattle[optionTxt] || optionTxt) +
-      '</span>'
-    );
-    return $option;
-  };
-
-  $('#new_cow_#{cow.id}_father_id').select2();
-
 :scss
   .select2.select2-container.select2-container--default.select2-hidden-accessible {
     height: 50px !important;
@@ -223,149 +139,70 @@
   
 :javascript
 
-  $('#new_cow_weight_#{cow.id}_weight').keyup(function() {
-    $('#new_cow_weight_#{cow.id}_gained_weight').val(
-      $('#new_cow_weight_#{cow.id}_weight').val()
-    )
-    $('#new_cow_weight_#{cow.id}_average_weight').val(
-      $('#new_cow_weight_#{cow.id}_weight').val()
-    )
-  }) 
+  $.datepicker.regional['es'] = {
+    closeText: 'Cerrar',
+    prevText: '< Ant',
+    nextText: 'Sig >',
+    currentText: 'Hoy',
+    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+    weekHeader: 'Sm',
+    dateFormat: 'yy-mm-dd',
+    firstDay: 1,
+    isRTL: false,
+    showMonthAfterYear: false,
+    yearSuffix: ''
+  };
 
-  $('#other_new_cow_weight_#{cow.id}_weight').keyup(function() {
-    $('#other_new_cow_weight_#{cow.id}_gained_weight').val(
-      $('#other_new_cow_weight_#{cow.id}_weight').val()
-    )
-    $('#other_new_cow_weight_#{cow.id}_average_weight').val(
-      $('#other_new_cow_weight_#{cow.id}_weight').val()
-    )
-  }) 
+  $.datepicker.setDefaults($.datepicker.regional['es']);
 
-  $('#cow-#{cow.id}-step-2 .serie_number').keyup(function() {
-    if ( $('#cow-#{cow.id}-step-2 #new_cow_#{cow.id}_serie_number').val() == '') {
-      $('#cow-#{cow.id}-step-3-circle').addClass('disabled')
-      $('#cow-#{cow.id}-step-2 .nextBtn').prop('disabled', true)
-    } else {
-      if ($('#status_#{cow.id}_twins').val() == 1) {
-        if ( $('#cow-#{cow.id}-step-2 #other_new_cow_#{cow.id}_serie_number').val() == '') {
-          $('#cow-#{cow.id}-step-3-circle').addClass('disabled')
-          $('#cow-#{cow.id}-step-2 .nextBtn').prop('disabled', true)
-        } else {
-          $('#cow-#{cow.id}-step-3-circle').removeClass('disabled')
-          $('#cow-#{cow.id}-step-2 .nextBtn').prop('disabled', false)
-        }
-      } else {
-        $('#cow-#{cow.id}-step-3-circle').removeClass('disabled')
-        $('#cow-#{cow.id}-step-2 .nextBtn').prop('disabled', false)
+  $('.datepicker').datepicker({
+    dateFormat: 'yy-mm-dd',
+    showOtherMonths: true,
+    selectOtherMonths: true,
+    changeMonth: true,
+    changeYear: true,
+    // maxDate: 0,
+    setDate: 0,
+    yearRange: "c-1:c+1",
+  }, $.datepicker.regional[ "es" ])
+
+  $( function() {
+    var dateFormat = 'yy-mm-dd';
+    var from = $( "#season_start_date" )
+      .datepicker({
+        dateFormat: dateFormat,
+        defaultDate: "+1w",
+        yearRange: "c-1:c+1",
+        changeMonth: true,
+        changeYear: true
+      })
+      .on( "change", function() {
+        to.datepicker( "option", "minDate", getDate( this ) );
+      });
+    var to = $( "#season_finish_date" )
+      .datepicker({
+        dateFormat: dateFormat,
+        defaultDate: "+1w",
+        yearRange: "c-1:c+1",
+        changeMonth: true,
+        changeYear: true
+      })
+      .on( "change", function() {
+        from.datepicker( "option", "maxDate", getDate( this ) );
+      });
+ 
+    function getDate( element ) {
+      var date;
+      try {
+        date = $.datepicker.parseDate( dateFormat, element.value );
+      } catch( error ) {
+        date = null;
       }
+ 
+      return date;
     }
-  })
-
-  $('#cow-#{cow.id}-step-3 .new_cow_weight').keyup(function() {
-    $('#cow-#{cow.id}-step-3 [type=submit]').prop('disabled', false)
-  
-    var weight_is_empty = false
-    if ($('#cow-#{cow.id}-step-3 #new_cow_weight_#{cow.id}_weight').val() == '') {
-      weight_is_empty = true
-    } else {
-      if ($('#status_#{cow.id}_twins').val() == 1) {
-        if ($('#cow-#{cow.id}-step-3 #other_new_cow_weight_#{cow.id}_weight').val() == '') {
-          weight_is_empty = true
-        }
-      }
-    }
-    if (weight_is_empty) {
-      $('#cow-#{cow.id}-step-4-circle').addClass('disabled')
-      $('#cow-#{cow.id}-step-3 .nextBtn').prop('disabled', true)
-    }
-  })
-
-  $('#cow-#{cow.id}-step-1 #status_#{cow.id}_successfully').change(function() {
-    if ($('#status_#{cow.id}_successfully').val() == 1) {
-      $('#cow-#{cow.id}-step-2-circle').removeClass('disabled')
-      $('#cow-#{cow.id}-step-1 [type=submit]').hide()
-      $('#cow-#{cow.id}-step-1 .nextBtn').show()
-    } else {
-      $('#cow-#{cow.id}-step-2-circle').addClass('disabled')
-      $('#cow-#{cow.id}-step-3-circle').addClass('disabled')
-      $('#cow-#{cow.id}-step-1 .nextBtn').hide()
-      $('#cow-#{cow.id}-step-1 [type=submit]').show()
-    }
-  })
-
-  $('#cow-#{cow.id}-step-1 #status_#{cow.id}_twins').change(function() {
-    if ($('#status_#{cow.id}_twins').val() == 1) {
-      $('.other_new_cow_#{cow.id}').show()
-    } else {
-      $('.other_new_cow_#{cow.id}').hide()
-    }
-  })
-
--# :javascript
-  // Detalles de verificación
-
-  // Status
-  function change_status_successfully() {
-    $('#value_#{cow.id}_successfully').text($('#status_#{cow.id}_successfully').val() == 1 ? 'Sí' : 'No')
-  }
-  function change_twins() {
-    $('#value_#{cow.id}_twins').text($('#status_#{cow.id}_twins').val() == 1 ? 'Sí' : 'No')
-  }
-  function change_twins() {
-    $('#value_#{cow.id}_twins').text($('#status_#{cow.id}_twins').val() == 1 ? 'Sí' : 'No')
-  }
-  function change_user_name() {
-    $('#value_#{cow.id}_user_name').text($('#status_#{cow.id}_user_name').val() == 1 ? 'Sí' : 'No')
-  }
-  function change_date() {
-    $('#value_#{cow.id}_date').text($('#status_#{cow.id}_date').val() == 1 ? 'Sí' : 'No')
-  }
-
-  function change_status_successfully() {
-    $('#value_#{cow.id}_successfully').text($('#status_#{cow.id}_successfully').val() == 1 ? 'Sí' : 'No')
-  }
-  function change_twins() {
-    $('#value_#{cow.id}_twins').text($('#status_#{cow.id}_twins').val() == 1 ? 'Sí' : 'No')
-  }
-  function change_twins() {
-    $('#value_#{cow.id}_twins').text($('#status_#{cow.id}_twins').val() == 1 ? 'Sí' : 'No')
-  }
-  function change_user_name() {
-    $('#value_#{cow.id}_user_name').text($('#status_#{cow.id}_user_name').val() == 1 ? 'Sí' : 'No')
-  }
-  function change_date() {
-    $('#value_#{cow.id}_date').text($('#status_#{cow.id}_date').val() == 1 ? 'Sí' : 'No')
-  }
-
-  // New_cow
-
-  $(function() {
-    // Status
-    change_status_successfully()
-    change_twins()
-    change_user_name()
-    change_date()
-    // New cow
-  })
-
-  // Status (Paso 1)
-  $('#status_#{cow.id}_successfully').change(function() {
-    change_status_successfully()
-  })
-
-  $('#status_#{cow.id}_twins').change(function() {
-    $('#value_#{cow.id}_twins').text($('#status_#{cow.id}_twins').val() == 1 ? 'Sí' : 'No')
-  })
-
-  $('#status_#{cow.id}_user_name').change(function() {
-    $('#value_#{cow.id}_user_name').text($('#status_#{cow.id}_user_name').val())
-  })
-
-  $('#status_#{cow.id}_date').change(function() {
-    $('#value_#{cow.id}_date').text($('#status_#{cow.id}_date').val())
-  })
-
-  // Becerro (Paso 2)
-  $('#new_cow_#{cow.id}_serie_number').change(function() {
-    $('#value_#{cow.id}_serie_number')
-  })
+  } );

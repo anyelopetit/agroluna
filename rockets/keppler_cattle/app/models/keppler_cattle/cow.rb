@@ -32,6 +32,7 @@ module KepplerCattle
     has_many :typologies, class_name: 'KepplerCattle::Typology', through: :cow_typologies, dependent: :destroy
 
     has_many :statuses, class_name: 'KepplerCattle::Status', dependent: :destroy
+    has_many :aborts, class_name: 'KepplerCattle::Abort', dependent: :destroy
 
     has_many :season_cows, class_name: 'KepplerReproduction::SeasonCow', dependent: :destroy
     has_many :seasons, class_name: 'KepplerReproduction::Season', through: :season_cows

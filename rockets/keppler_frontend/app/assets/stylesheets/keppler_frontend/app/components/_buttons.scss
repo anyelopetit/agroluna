@@ -28,6 +28,7 @@
 
 .btn--filled {
   background-color: $primary;
+  border: 1px solid $primary;
   // background: #0bc5b7; 
   // background: -moz-linear-gradient(70deg,  #0bc5b7 0%,#28C76F 100%); 
   // background: -webkit-linear-gradient(70deg,  #0bc5b7 0%,#28C76F 100%); 
@@ -39,6 +40,24 @@
     background-color: transparent;
     border: 1px solid $primary;
     color: $primary;
+    transition: all ease-in-out .3s;
+  }
+}
+
+.btn--filled-secundary {
+  background-color: $secundary;
+  border: 1px solid $secundary;
+  // background: #0bc5b7; 
+  // background: -moz-linear-gradient(70deg,  #0bc5b7 0%,#28C76F 100%); 
+  // background: -webkit-linear-gradient(70deg,  #0bc5b7 0%,#28C76F 100%); 
+  // background: linear-gradient(70deg,  #0bc5b7 0%,#28C76F 100%);
+  color: white;
+  transition: all ease-in-out .3s;
+
+  &:hover {
+    background-color: transparent;
+    border: 1px solid $secundary;
+    color: $secundary;
     transition: all ease-in-out .3s;
   }
 }

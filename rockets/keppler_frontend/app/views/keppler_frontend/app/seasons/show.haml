@@ -33,10 +33,10 @@
             Monta
         %li.nav-item
           %a.nav-link{ class: ('active' if @season.phase.to_i.eql?(1)), "aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#pregnancy", role: "tab"}
-            Preñez
+            Gestación
         - if @season.phase.to_i > 1
           %li.nav-item
-            %a.nav-link{ class: ('active' if @season.phase.to_i.eql?(2)), "aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#reproduction", role: "tab"}
+            %a.nav-link{ class: ('active' if @season.phase.to_i > 1), "aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#reproduction", role: "tab"}
               Reproducción
     .tab-content
       #mount.tab-pane{ class: ('active' if @season.phase.to_i.eql?(0))}
@@ -116,7 +116,7 @@
                     %th Número de serie
                     %th Nombre corto
                     %th Fecha de Servicio
-                    %th Pajuela Usada
+                    %th Pajuela / Padrote
                 %tbody
                   - @inseminated_cows.each do |cow|
                     %tr
@@ -126,13 +126,13 @@
                       %td
                         = link_to farm_cow_path(@farm, cow) do
                           = cow.short_name
-                          = image_tag "/assets/keppler_cattle/female", class: 'svg-icon-xs ml-2'
+                          = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-xs ml-2'
                       %td
                         = link_to farm_cow_path(@farm, cow) do
                           = cow.status.date
                       %td
                         = link_to farm_cow_path(@farm, cow) do
-                          = cow.status.insemination&.serie_number
+                          = cow.status.insemination&.serie_number.blank? ? 'Toro Desconocido' : cow.status.insemination&.serie_number
         - else
           = render 'keppler_frontend/app/seasons/mountFinish', season: @season
       #pregnancy.tab-pane{ class: ('active' if @season.phase.to_i.eql?(1))}
@@ -154,16 +154,16 @@
                 - else
                   %thead
                     %tr
-                      %th
+                      -# %th  
                       %th Número de serie
                       %th Nombre corto
                       %th Fecha de Servicio
-                      %th Pajuela Usada
+                      %th Pajuela / Padrote
                       %th
                 %tbody
                   - @inseminated_cows.each do |cow|
                     %tr
-                      %td
+                      -# %td
                         .checkbox{ style: 'margin: 3px' }
                           %label{ for: "checkbox-#{cow.id}" }
                             %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
@@ -175,7 +175,7 @@
                       %td
                         = link_to farm_cow_path(@farm, cow) do
                           = cow.short_name
-                          = image_tag "/assets/keppler_cattle/female", class: 'svg-icon-xs ml-2'
+                          = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-xs ml-2'
                       %td
                         = link_to farm_cow_path(@farm, cow) do
                           = cow.status.date
@@ -183,11 +183,11 @@
                         = link_to farm_cow_path(@farm, cow) do
                           = cow.status.insemination&.serie_number
                       %td
-                        - if Date.today > cow.status.date + 60.days
-                          %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalPregnant-#{cow.id}", 'data-toggle': 'modal' }
-                            %i.icofont-plus
-                            Registrar preñez
-                          = render 'keppler_frontend/app/seasons/modalPregnant', season: @season, cow: cow
+                        -# - if Date.today > cow.status.date + 30.days
+                        %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalPregnant-#{cow.id}", 'data-toggle': 'modal' }
+                          %i.icofont-plus
+                          Preñez
+                        = render 'keppler_frontend/app/seasons/modalPregnant', season: @season, cow: cow
             - unless @season.type_id.zero? || @pregnants.blank?
               .d-flex.justify-content-between.mt-5.mb-3.mt-4
                 .left
@@ -196,11 +196,15 @@
                 %table
                   %thead
                     %tr
-                      %th Número de serie
-                      %th Nombre corto
-                      %th Fecha de Servicio
-                      %th Pajuela Usada
-                      %th{ colspan: 2 }
+                      - if @pregnants.size.zero?
+                        %th.not-records.center
+                          %center No se encontraron hembras preñadas en esta temporada
+                      - else
+                        %th Número de serie
+                        %th Nombre corto
+                        %th Fecha de Servicio
+                        %th Pajuela / Padrote
+                        %th{ colspan: 2 }
                   %tbody
                     - @pregnants.each do |cow|
                       %tr
@@ -210,76 +214,40 @@
                         %td
                           = link_to farm_cow_path(@farm, cow) do
                             = cow.short_name
-                            = image_tag "/assets/keppler_cattle/female", class: 'svg-icon-xs ml-2'
+                            = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-xs ml-2'
                         %td
                           = link_to farm_cow_path(@farm, cow) do
                             = cow.status.date
                         %td
                           = link_to farm_cow_path(@farm, cow) do
-                            = cow.status.insemination&.serie_number
+                            = cow.status.insemination&.serie_number.blank? ? 'Toro Desconocido' : cow.status.insemination&.serie_number
         - else
           = render 'keppler_frontend/app/seasons/pregnancyFinish', season: @season
-      #reproduction.tab-pane{ class: ('active' if @season.phase.to_i.eql?(2))}
-        #index-container
-          .d-flex.justify-content-between.mt-5.mb-3.mt-4
-            .left
-              %h1 Preñadas
-            .right
-              .d-flex.justify-content-end
-                .d-flex.mt-4.mb-4
-                  = render 'close_phase'
-          .content-table
-            %table
-              %thead
-                %tr
-                  %th Número de serie
-                  %th Nombre corto
-                  %th Fecha de Servicio
-                  %th Pajuela Usada
-                  %th{ colspan: 2 }
-              %tbody
-                - @pregnants.each do |cow|
-                  %tr
-                    %td
-                      = link_to farm_cow_path(@farm, cow) do
-                        = cow.serie_number
-                    %td
-                      = link_to farm_cow_path(@farm, cow) do
-                        = cow.short_name
-                        = image_tag "/assets/keppler_cattle/female", class: 'svg-icon-xs ml-2'
-                    %td
-                      = link_to farm_cow_path(@farm, cow) do
-                        = cow.status.date
-                    %td
-                      = link_to farm_cow_path(@farm, cow) do
-                        = cow.status.insemination&.serie_number
-                    %td
-                      - if Date.today > cow.status.date + 270.days
-                        %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
-                          %i.icofont-plus
-                          Registrar parto
-                        = render 'keppler_frontend/app/seasons/modalBirth', season: @season, cow: cow
-                    %td
-                      %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
-                        %i.icofont-plus
-                        Registrar aborto
-                      = render 'keppler_frontend/app/seasons/modalAbort', season: @season, cow: cow
-          - unless @season.type_id.zero? || @pregnants.blank?
+      #reproduction.tab-pane{ class: ('active' if @season.phase.to_i > 1)}
+        - if @season.phase.to_i > 1
+          #index-container
             .d-flex.justify-content-between.mt-5.mb-3.mt-4
               .left
-                %h1 Crías
+                %h1 Preñadas
+              .right
+                .d-flex.justify-content-end
+                  .d-flex.mt-4.mb-4
+                    = render 'close_phase'
             .content-table
               %table
                 %thead
                   %tr
-                    %th Número de serie
-                    %th Nombre corto
-                    %th Fecha de Nacimiento
-                    %th Días de nacido
-                    %th Serie de la Madre
-                    %th
+                    - if @pregnants.size.zero?
+                      %th.not-records.center
+                        %center No se encontraron hembras preñadas en esta temporada
+                    - else
+                      %th Número de serie
+                      %th Nombre corto
+                      %th Fecha de Servicio
+                      %th Pajuela / Padrote
+                      %th{ colspan: 2 }
                 %tbody
-                  - @babies.each do |cow|
+                  - @pregnants.each do |cow|
                     %tr
                       %td
                         = link_to farm_cow_path(@farm, cow) do
@@ -287,22 +255,65 @@
                       %td
                         = link_to farm_cow_path(@farm, cow) do
                           = cow.short_name
-                          = image_tag "/assets/keppler_cattle/female", class: 'svg-icon-xs ml-2'
+                          = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-xs ml-2'
                       %td
                         = link_to farm_cow_path(@farm, cow) do
-                          = cow.birthdate
+                          = cow.status.date
                       %td
                         = link_to farm_cow_path(@farm, cow) do
-                          = cow.days
+                          = cow.status.insemination&.serie_number.blank? ? 'Toro Desconocido' : cow.status.insemination&.serie_number
                       %td
-                        = link_to farm_cow_path(@farm, cow) do
-                          = cow.mother.serie_number
+                        -# - if Date.today > cow.status.date + 270.days
+                        %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
+                          %i.icofont-plus
+                          Parto
+                        = render 'keppler_frontend/app/seasons/modalBirth', season: @season, cow: cow
                       %td
-                        - if cow.days > 190
+                        %button.btn.btn_custom.btn--filled-secundary.btn--medium{'data-target': "#modalAbort-#{cow.id}", 'data-toggle': 'modal' }
+                          %i.icofont-plus
+                          Aborto
+                        = render 'keppler_frontend/app/seasons/modalAbort', season: @season, cow: cow
+            - unless @season.type_id.zero? || @babies.blank?
+              .d-flex.justify-content-between.mt-5.mb-3.mt-4
+                .left
+                  %h1 Crías
+              .content-table
+                %table
+                  %thead
+                    %tr
+                      %th Número de serie
+                      %th Nombre corto
+                      %th Fecha de Nacimiento
+                      %th Días de nacido
+                      %th Serie de la Madre
+                      %th
+                  %tbody
+                    - @babies.each do |cow|
+                      %tr
+                        %td
+                          = link_to farm_cow_path(@farm, cow) do
+                            = cow.serie_number
+                        %td
+                          = link_to farm_cow_path(@farm, cow) do
+                            = cow.short_name
+                            = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-xs ml-2'
+                        %td
+                          = link_to farm_cow_path(@farm, cow) do
+                            = cow.birthdate
+                        %td
+                          = link_to farm_cow_path(@farm, cow) do
+                            = cow.days
+                        %td
+                          = link_to farm_cow_path(@farm, cow) do
+                            = cow.mother.serie_number
+                        %td
+                          -# - if cow.days > 190
                           %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
                             %i.icofont-plus
-                            Registrar destete
+                            Destete
                           = render 'keppler_frontend/app/seasons/modalDestete', season: @season, cow: cow
+        - else
+          = render 'keppler_frontend/app/seasons/birthFinish', season: @season
 -# = simple_form_for [@farm, @season, @cicle] do |f|
   = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
   = f.input :season_id, as: :hidden, input_html: { value: @season.id }

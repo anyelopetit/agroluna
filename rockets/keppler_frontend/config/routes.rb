@@ -17,6 +17,7 @@ KepplerFrontend::Engine.routes.draw do
       member do
         match 'buscar-ganado' => 'search', via: %i[get post], as: :search
         post :males
+        post :wean, to: 'app/seasons#wean', as: :wean
       end
       collection do
         get 'inactivos', to: 'app/cattle#index_inactives', as: :inactives

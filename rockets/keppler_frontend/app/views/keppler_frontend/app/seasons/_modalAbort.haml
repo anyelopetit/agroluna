@@ -1,4 +1,4 @@
-.modal.modal_status.fade{ id: "modalBirth-#{cow.id}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog" }
+.modal.modal_status.fade{ id: "modalAbort-#{cow.id}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog" }
   .modal-dialog{role: "document"}
     .modal-content
       .modal-header
@@ -11,33 +11,27 @@
               %h1.title-modal Registrar Aborto
               -# %form.multiple_ids{ action: "finca/#{@farm.id}/temporadas/#{@season.id}/marcar-celos/" }
             .col-lg-12
-              = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: make_abort_farm_season_path(@farm, @season), html: { onkeypress: "if(event.keyCode == 13) event.returnValue = false;" } do |f|
-                %input{ type: 'hidden', name: "status[type]", value: 'Birth' }
-                %input{ type: 'hidden', name: "status[cow_id]", value: cow.id }
-                %input{ name: 'status[farm_id]', value: @farm.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
-                %input{ name: 'status[season_id]', value: @season.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
+              = simple_form_for [@farm, @season, cow.aborts.new], url: make_abort_farm_season_path(@farm, @season), html: { onkeypress: "if(event.keyCode == 13) event.returnValue = false;" } do |f|
+                %input{ type: 'hidden', name: "abort[cow_id]", value: cow.id }
+                %input{ name: 'abort[season_id]', value: @season.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
                 #form-total
                   
                   .row.setup-content{ id: "cow-#{cow.id}-step-1" }
                     .col-md-12
-                      -# %h3 Step 1
                       .row
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Fecha del aborto
-                          %input.form-control.input_custom.datepicker{ id: "status_#{cow.id}_date", name: "status[date]", autocomplete: 'off', value: Date.today }
+                          %input.form-control.input_custom.datepicker{ id: "abort_#{cow.id}_date", name: "abort[date]", autocomplete: 'off', value: Date.today }
                         .col-sm-12.col-md-6
                           -# = f.input :name, label: 'Nombre del Responsable', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
-                          %label.label_custom--strong Nombre del responsable
-                          %input.form-control.input_custom{ id: "status_#{cow.id}_user_name", name: "status[user_name]", autocomplete: 'off', list: 'responsables' }
-                          %datalist#responsables
-                            - KepplerFarm::Responsable.all.each do |responsable|
-                              %option{ value: responsable.name }
+                          %label.label_custom--strong Razón o motivo
+                          %input.form-control.input_custom{ id: "abort_#{cow.id}_reason", name: "abort[reason]" }
+                            
                         .col-sm-12
-                          %label.label_custom--strong Motivo
-                          %input.form-control.input_custom{ name: "status[observations]" }
+                          %label.label_custom--strong Observaciones
+                          %input.form-control.input_custom{ name: "abort[observations]" }
                       .float-right.mt-4
-                        %button.btn.btn_custom.btn--filled.btn--medium.nextBtn{type: "button"} Siguente
-                        %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit', style: 'display: none' }
+                        %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
                           %i.icofont-save
                           Guardar
 
@@ -137,74 +131,3 @@
     position: absolute !important;
     width: 1px !important;
   }
-
-  
-:javascript
-
-  $.datepicker.regional['es'] = {
-    closeText: 'Cerrar',
-    prevText: '< Ant',
-    nextText: 'Sig >',
-    currentText: 'Hoy',
-    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-    monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
-    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-    dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
-    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
-    weekHeader: 'Sm',
-    dateFormat: 'yy-mm-dd',
-    firstDay: 1,
-    isRTL: false,
-    showMonthAfterYear: false,
-    yearSuffix: ''
-  };
-
-  $.datepicker.setDefaults($.datepicker.regional['es']);
-
-  $('.datepicker').datepicker({
-    dateFormat: 'yy-mm-dd',
-    showOtherMonths: true,
-    selectOtherMonths: true,
-    changeMonth: true,
-    changeYear: true,
-    // maxDate: 0,
-    setDate: 0,
-    yearRange: "c-1:c+1",
-  }, $.datepicker.regional[ "es" ])
-
-  $( function() {
-    var dateFormat = 'yy-mm-dd';
-    var from = $( "#season_start_date" )
-      .datepicker({
-        dateFormat: dateFormat,
-        defaultDate: "+1w",
-        yearRange: "c-1:c+1",
-        changeMonth: true,
-        changeYear: true
-      })
-      .on( "change", function() {
-        to.datepicker( "option", "minDate", getDate( this ) );
-      });
-    var to = $( "#season_finish_date" )
-      .datepicker({
-        dateFormat: dateFormat,
-        defaultDate: "+1w",
-        yearRange: "c-1:c+1",
-        changeMonth: true,
-        changeYear: true
-      })
-      .on( "change", function() {
-        from.datepicker( "option", "maxDate", getDate( this ) );
-      });
- 
-    function getDate( element ) {
-      var date;
-      try {
-        date = $.datepicker.parseDate( dateFormat, element.value );
-      } catch( error ) {
-        date = null;
-      }
- 
-      return date;
-    }
-  } );

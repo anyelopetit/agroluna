@@ -24,21 +24,21 @@
                       %input{ name: 'status[season_id]', value: @season.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
                       .col-sm-12.col-md-6
                         .form-group
-                          %label.label_custom--strong Fecha de la preñez
+                          %label.label_custom--strong Fecha de registro
                           %input.form-control.input_custom.datepicker#status_date{ name: "status[date]", autocomplete: 'off', value: Date.today }
                       .col-sm-12.col-md-6
                         .form-group
                           %label.label_custom--strong Meses de preñez
-                          %input.form-control.input_custom#status_months{ name: "status[months]", type: 'number', autocomplete: 'off', value: 0, min: 0, max: 9 }
+                          %input.form-control.input_custom#status_months{ name: "status[months]", type: 'number', autocomplete: 'off', value: 0, min: 0, max: 9, step: 0.5 }
                       .col-sm-12.col-md-6
                         .form-group
-                          %label.label_custom--strong Pajuela
+                          %label.label_custom--strong Pajuela / Padrote
                           %select.form-control.input_custom.selexct2{ name: "status[insemination_id]"  }
-                            - @farm.inseminations.each do |father|
-                              - if cow.status.status_type.eql?('Service')
-                                - insemination_used = father&.id == cow.statuses.where(status_type: 'Service').last&.insemination_id
-                                %option{ value: father&.id, selected: insemination_used, disabled: !insemination_used } #{father&.serie_number} #{'(' + father&.short_name + ')' if father&.short_name}
-                              - else
+                            %option{ value: 0 } Toro Desconocido
+                            - if insemination_used = @farm.inseminations.find(cow.statuses.where(status_type: 'Service').last&.insemination_id)
+                              %option{ value: insemination_used&.id, selected: insemination_used.id, disabled: !insemination_used.id } #{insemination_used&.serie_number} #{'(' + insemination_used&.short_name + ')' if insemination_used&.short_name}
+                            - else
+                              - @farm.inseminations.each do |father|
                                 %option{ value: father&.id } #{father&.serie_number} #{'(' + father&.short_name + ')' if father&.short_name}
                       .col-sm-12.col-md-6
                         .form-group.ui-widget
@@ -135,25 +135,25 @@
     return `${anio}${separador}${mes}${separador}${dia}`;
   }
 
-  $('#status_date').change(function() {
-    status_date = new Date($('#status_date').val())
-    today = new Date()
-    $('#status_months').val(parseInt((today.getTime() - status_date.getTime()) / (1000*60*60*24*30)))
-  })
+  // $('#status_date').change(function() {
+  //   status_date = new Date($('#status_date').val())
+  //   today = new Date()
+  //   $('#status_months').val(parseInt((today.getTime() - status_date.getTime()) / (1000*60*60*24*30)))
+  // })
 
-  $('#status_months').keyup(function() {
-    s_months = $('#status_months').val()
-    today = new Date()
-    year = today.getFullYear();
-    month = today.getMonth() + 1;
-    day = today.getDate();
-    full_date = `${year}-${month}-${day}`
-    $('#status_date').val(
-      editar_fecha(full_date, `-${s_months}`, 'm') == 'NaN-NaN-NaN' ?
-       editar_fecha(full_date, '0', 'm') :
-       editar_fecha(full_date, `-${s_months}`, 'm')
-    )
-  })
+  // $('#status_months').keyup(function() {
+  //   s_months = $('#status_months').val()
+  //   today = new Date()
+  //   year = today.getFullYear();
+  //   month = today.getMonth() + 1;
+  //   day = today.getDate();
+  //   full_date = `${year}-${month}-${day}`
+  //   $('#status_date').val(
+  //     editar_fecha(full_date, `-${s_months}`, 'm') == 'NaN-NaN-NaN' ?
+  //      editar_fecha(full_date, '0', 'm') :
+  //      editar_fecha(full_date, `-${s_months}`, 'm')
+  //   )
+  // })
 - @cows.each do |cow|            
   - unless cow.status&.status_type&.eql?('Pregnancy')  
     :javascript

@@ -64,7 +64,7 @@ module KepplerFrontend
         end
       end
 
-      if @season.save!
+      if @season.save
         redirect_to farm_season_path(@farm, @season)
       else
         flash[:error] = 'Revisa los datos del formulario'
@@ -268,27 +268,39 @@ module KepplerFrontend
     end
 
     def make_abort
-      @status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id})
+      @cow = @season.cows.find(params[:abort][:cow_id])
+      @abort = @cow.aborts.new(
+        abort_date: params[:abort][:date],
+        reason: params[:abort][:reason],
+        observations: params[:abort][:observations],
+        season_id: @season.id
+      )
 
-      if @status.save!
-        flash[:notice] =
-          if @baby_saved
-            if @other_baby_saved
-              'Parto realizado y morochos guardados'
-            else
-              'Parto realizado y becerro/a guardado'
-            end
-          else
-            'Aborto realizado satisfactoriamente'
-          end
+      if @abort.save!
+        @cow.statuses.new_status(params, status_type: 'Nil')
+        flash[:notice] = 'Aborto realizado satisfactoriamente'
       else
         flash[:error] = 'No se pudo realizar el parto'
       end
-      redirect_back fallback_location: births_farm_season_path(
+
+      redirect_back fallback_location: farm_season_path(
         @farm, 
-        @season, 
-        @strategic_lot
+        @season
       )
+    end
+    
+    def wean
+      @cow = KepplerCattle::Cow.find(params[:wean][:cow_id])
+      @cow.weights.create(
+        weight_date: params[:wean][:date],
+        weight: params[:wean][:weight]
+      )
+      @strategic_lot = @farm.strategic_lots.find(params[:wean][:strategic_lot])
+      @cow.locations.create(farm_id: @farm.id, strategic_lot_id: @strategic_lot.id)
+      @cow.create_typology
+
+      flash[:notice] = 'Becerro destetado satisfactoriamente'
+      redirect_back fallback_location: farm_seasons_path
     end
 
     def finish

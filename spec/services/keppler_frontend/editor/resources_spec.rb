@@ -20,7 +20,7 @@ RSpec.describe KepplerFrontend::Editor::Resources, type: :services do
 
       it { expect(@resources.list).not_to eq(false) }
       it { expect(@resources.list).not_to eq(nil) }
-      it { expect(@resources.list.count).not_to eq(0) }
+      it { expect(@resources.list.size).not_to eq(0) }
       it { expect(@resources.list.last[:name]).to eq("test.png") }
       it { expect(@resources.list).to be_a(Array) }
       it { expect(@resources.list.first).to be_a(Hash) }

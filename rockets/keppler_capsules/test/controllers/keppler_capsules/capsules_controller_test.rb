@@ -19,7 +19,7 @@ module KepplerCapsules
     end
 
     test "should create capsule" do
-      assert_difference('Capsule.count') do
+      assert_difference('Capsule.size') do
         post capsules_url, params: { capsule: { deleted_at: @capsule.deleted_at, name: @capsule.name, position: @capsule.position } }
       end
 
@@ -42,7 +42,7 @@ module KepplerCapsules
     end
 
     test "should destroy capsule" do
-      assert_difference('Capsule.count', -1) do
+      assert_difference('Capsule.size', -1) do
         delete capsule_url(@capsule)
       end
 

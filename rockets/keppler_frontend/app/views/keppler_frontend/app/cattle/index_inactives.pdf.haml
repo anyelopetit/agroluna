@@ -11,7 +11,7 @@
     .header-right
       %p= Time.now.strftime('%d-%m-%Y')
       %p Pág. 1
-      %p #{@inactive_cows.count} / #{@inactive_cows.count}
+      %p #{@inactive_cows.size} / #{@inactive_cows.size}
     %table.cow-table
       - if @inactive_cows.size.zero?
         %thead

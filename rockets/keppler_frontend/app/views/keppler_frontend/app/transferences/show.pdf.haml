@@ -15,8 +15,8 @@
     .header-right
       %p= Time.now.strftime('%d-%m-%Y')
       %p Pág. 1
-      -# %p #{@transference.cows.count} / #{@transference.cows.count}
-      %p Total de series: #{@transference.cows.count}
+      -# %p #{@transference.cows.size} / #{@transference.cows.size}
+      %p Total de series: #{@transference.cows.size}
     %table.cow-table
       - if @transference.cows.size.zero?
         %thead

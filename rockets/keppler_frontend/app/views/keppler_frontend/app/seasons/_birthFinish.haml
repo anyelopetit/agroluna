@@ -10,7 +10,7 @@
     %h1.mb-4{style:"text-transform: uppercase"} Veterinarios - Palpaciones Realizadas
     .row
       - @season.users.each do |veterinario|
-        - unless veterinario.status_where('Birth', @season.id).count.zero? || veterinario.name.blank?
+        - unless veterinario.status_where('Birth', @season.id).size.zero? || veterinario.name.blank?
           .col-lg-6.col-md-6
             .card_show{style:"min-height: 254px;"}
               .container-profile.mt-4
@@ -19,22 +19,22 @@
                     %img{src:"https://images.pexels.com/photos/433635/pexels-photo-433635.jpeg?cs=srgb&dl=adult-care-cure-433635.jpg&fm=jpg", alt:""}
                   .content-profile.ml-4{style: "width:100%"}
                     %strong.name= veterinario.name
-                    .count-cow.d-flex.justify-content-around
+                    .size-cow.d-flex.justify-content-around
                       %div.d-flex.flex-column{style: "width:50%"}
                         %span
                           Preñadas
                         %span
-                          #{veterinario.status_where('Birth', @season.id).count}
+                          #{veterinario.status_where('Birth', @season.id).size}
                       %div.d-flex.flex-column{style: "width:31%"}
                         %span
                           Vacías
                         %span
-                          #{veterinario.inefectivities.count}
+                          #{veterinario.inefectivities.size}
                       %div.d-flex.flex-column{style: "width:33%"}
                         %span
                           Efectividad
                         %span
-                          #{(((veterinario.status_where('Birth', @season.id).count.to_f) / (veterinario.status_where('Birth', @season.id).count.to_f + veterinario.inefectivities.count.to_f)) * 100).round(2)}%
+                          #{(((veterinario.status_where('Birth', @season.id).size.to_f) / (veterinario.status_where('Birth', @season.id).size.to_f + veterinario.inefectivities.size.to_f)) * 100).round(2)}%
               %canvas{ id: "veterinario-#{veterinario.id}-chart", height: "95", width: "250"}
 :scss
   .profile-img {
@@ -49,7 +49,7 @@
     .name {
       font-size: 17px
     }
-    .count-cow{
+    .size-cow{
       font-size: 15px;
     }
   }
@@ -76,9 +76,9 @@
           datasets: [{
               label: 'Vacas en celo',
               data: [
-                #{@season.cows.select { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) && x.status.successfully }.count },
-                #{@season.cows.select { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) && !x.status.successfully }.count },
-                #{@season.cows.reject { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) }.count}
+                #{@season.cows.select { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) && x.status.successfully }.size },
+                #{@season.cows.select { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) && !x.status.successfully }.size },
+                #{@season.cows.reject { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) }.size}
               ],
               backgroundColor: [
                 green_gradient,
@@ -105,7 +105,7 @@
   });
 
 - @season.users.each do |veterinario|
-  - unless veterinario.status_where('Birth', @season.id).count.zero? || veterinario.name.blank?
+  - unless veterinario.status_where('Birth', @season.id).size.zero? || veterinario.name.blank?
     :javascript
       // veterinario
       var veterinario_ctx = document.getElementById('veterinario-#{veterinario.id}-chart').getContext('2d');
@@ -123,7 +123,7 @@
           data: {
               labels: ["Acertados", "Errados"],
               datasets: [{
-                  data: [#{veterinario.status_where('Birth', @season.id).count}, #{veterinario.inefectivities.count}],
+                  data: [#{veterinario.status_where('Birth', @season.id).size}, #{veterinario.inefectivities.size}],
                   backgroundColor:[ 
                     green_gradient,
                     gray_gradient,

@@ -21,6 +21,8 @@
       Hembras preñadas
     = link_to({action: :efectivity_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
       Efectividad de servicios
+    = link_to({action: :vet_efectivity_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+      Efectividad de veterinarios
   - when 2, 3
     = link_to({action: :next_palpation_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
       Próx. Palpaciones

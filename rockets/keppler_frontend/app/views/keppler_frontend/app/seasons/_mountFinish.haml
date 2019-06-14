@@ -34,7 +34,7 @@
     .name {
       font-size: 17px
     }
-    .count-cow{
+    .size-cow{
       font-size: 15px;
     }
   }
@@ -54,7 +54,7 @@
           labelString: '20',
           labels: #{raw @season.months_on_season.map { |month| @season.all_months[month.to_i - 1] }},
           datasets: [{
-              data: #{raw @season.months_on_season.map { |month| zeals.select { |x| x.date&.month&.eql?(month.to_i)}.count }},
+              data: #{raw @season.months_on_season.map { |month| zeals.select { |x| x.date&.month&.eql?(month.to_i)}.size }},
               backgroundColor: green_gradient,
               hoverBackgroundColor: green_gradient,
               hoverBorderWidth: 2
@@ -87,7 +87,7 @@
       data: {
           labels: #{raw @season.months_on_season.map { |month| @season.all_months[month.to_i - 1] }},
           datasets: [{
-              data: #{raw @season.months_on_season.map { |month| services.select { |x| x.date&.month&.eql?(month.to_i)}.count }},
+              data: #{raw @season.months_on_season.map { |month| services.select { |x| x.date&.month&.eql?(month.to_i)}.size }},
               backgroundColor: green_gradient,
               hoverBackgroundColor: [
                 green_gradient,

@@ -55,7 +55,7 @@ module KepplerReproduction
     # end
 
     def month_days_count(month)
-      duration_dates.select { |x| x.strftime("%m").eql?(month) }.count
+      duration_dates.select { |x| x.strftime("%m").eql?(month) }.size
     end
 
     def months_on_season

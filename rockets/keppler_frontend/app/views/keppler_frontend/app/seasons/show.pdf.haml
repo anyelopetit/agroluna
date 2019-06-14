@@ -27,12 +27,12 @@
                 %th Efectividad
             %tbody
               %tr
-                %td #{@season.statuses.where(status_type: 'Zeal').count }
-                %td #{@season.statuses.where(status_type: 'Service').count }
-                %td #{@season.cows.select { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) && x.status.successfully }.count}
-                %td #{@season.cows.select { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) && !x.status.successfully }.count }
-                %td #{@season.cows.reject { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) }.count}
-                - percent = (((@season.pregnants.count.to_f) / (@season.pregnants.count.to_f + @season.inefectivities.count.to_f)) * 100).round(2)
+                %td #{@season.statuses.where(status_type: 'Zeal').size }
+                %td #{@season.statuses.where(status_type: 'Service').size }
+                %td #{@season.cows.select { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) && x.status.successfully }.size}
+                %td #{@season.cows.select { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) && !x.status.successfully }.size }
+                %td #{@season.cows.reject { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) }.size}
+                - percent = (((@season.pregnants.size.to_f) / (@season.pregnants.size.to_f + @season.inefectivities.size.to_f)) * 100).round(2)
                 %td #{percent.nan? ? 0 : percent}%
 
           %table.cow-table

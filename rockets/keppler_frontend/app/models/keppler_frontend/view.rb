@@ -104,7 +104,7 @@ module KepplerFrontend
       callbacks.each do |key, value|
         if value[:name]
           callback = ViewCallback.where(name: value[:name], function_type: value[:function_type])
-          add_callback_to(view, value) if callback.count == 1
+          add_callback_to(view, value) if callback.size == 1
         end
       end
     end

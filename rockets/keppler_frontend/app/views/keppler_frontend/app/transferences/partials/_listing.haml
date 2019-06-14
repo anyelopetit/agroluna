@@ -73,7 +73,7 @@
             %tr{ style: "border-bottom: 1px #eee solid;" }
               %td
                 = link_to({action: :show, farm_id: farm&.id, id: transference.id}) do
-                  = transference&.cows&.count
+                  = transference&.cows&.size
               -# %td
                 = link_to({action: :show, farm_id: farm&.id, id: transference.id}) do
                   = transference&.from_farm&.title

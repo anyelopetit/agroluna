@@ -19,7 +19,7 @@ module KepplerFrontend
     end
 
     test "should create theme" do
-      assert_difference('Theme.count') do
+      assert_difference('Theme.size') do
         post themes_url, params: { theme: { active: @theme.active, deleted_at: @theme.deleted_at, name: @theme.name, position: @theme.position } }
       end
 
@@ -42,7 +42,7 @@ module KepplerFrontend
     end
 
     test "should destroy theme" do
-      assert_difference('Theme.count', -1) do
+      assert_difference('Theme.size', -1) do
         delete theme_url(@theme)
       end
 

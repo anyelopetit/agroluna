@@ -12,14 +12,14 @@
             Sacar de la temporada
         %button.btn.btn_custom.bg-white.btn--medium.d-none.d-sm-block.ml-2{'data-target': "#modalGroup", 'data-toggle': 'modal'}
           = image_tag '/assets/keppler_cattle/male', class: 'svg-icon-xs ml-2', style: 'height: 12px'
-          = @bulls.count
+          = @bulls.size
           %span Padrotes
         = link_to destroy_season_cows_farm_season_path(@farm, @season, @strategic_lot, []), class: 'multiple_ids disable d-sm-none', disabled: true, method: :delete, data: { confirm: '¿Estás seguro?' } do
           %button.btn.btn_custom.btn--medium.btn--filled.disable{ disabled: true }
             %i.icofont-trash
         %button.btn.btn_custom.bg-white.btn--medium.d-sm-none.ml-2{'data-target': "#modalGroup", 'data-toggle': 'modal'}
           = image_tag '/assets/keppler_cattle/male', class: 'svg-icon-xs ml-2', style: 'height: 12px'
-          = @bulls.count
+          = @bulls.size
 
     = render 'status'
     .card_show

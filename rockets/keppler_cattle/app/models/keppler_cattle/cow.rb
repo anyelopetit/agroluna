@@ -23,6 +23,8 @@ module KepplerCattle
 
     has_one :male, class_name: 'KepplerCattle::Male', dependent: :destroy
 
+    # belongs_to :mother, class_name: 'KepplerCattle::Cow', foreign_key: :mother_id, optional: true
+
     has_many :locations, class_name: 'KepplerCattle::Location', dependent: :destroy
     has_many :strategic_lots, class_name: "KepplerFarm::StrategicLot", through: :locations
 
@@ -100,9 +102,9 @@ module KepplerCattle
     def typology_counter_count
       case typology&.counter&.to_i
       when 1
-        statuses.where(status_type: 'Service').count
+        statuses.where(status_type: 'Service').size
       when 2
-        sons.count
+        sons.size
       else
         nil
       end
@@ -170,7 +172,7 @@ module KepplerCattle
 
     def self.weight_average(cows)
       cows.map { |cow| cow.weight&.weight&.to_f }
-        .inject { |sum, weight| sum + weight } / cows.count
+        .inject { |sum, weight| sum + weight } / cows.size
     end
 
     def self.where_status(status_name, season_id)

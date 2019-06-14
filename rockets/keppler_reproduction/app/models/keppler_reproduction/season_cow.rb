@@ -25,8 +25,8 @@ module KepplerReproduction
 
     def verify_existence
       season_cows = KepplerReproduction::SeasonCow.where(season_id: season_id, cow_id: cow_id)
-      errors.add(:season_cow, 'is created.') unless season_cows.count.zero?
-      season_cows.count.zero?
+      errors.add(:season_cow, 'is created.') unless season_cows.size.zero?
+      season_cows.size.zero?
     end
   end
 end

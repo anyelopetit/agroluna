@@ -16,7 +16,7 @@ RSpec.describe KepplerFrontend::Utils::CodeSearch, type: :services do
       let(:find_section) { @find.search_section('    <keppler-header>', '    </keppler-header>') }
 
       it { expect(find_section).to be_a(Array) }
-      it { expect(find_section.count).to eq(2) }
+      it { expect(find_section.size).to eq(2) }
       it { expect(find_section[0]).to be < (find_section[1]) }
     end
 

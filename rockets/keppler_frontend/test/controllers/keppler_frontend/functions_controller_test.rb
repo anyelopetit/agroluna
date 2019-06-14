@@ -19,7 +19,7 @@ module KepplerFrontend
     end
 
     test "should create function" do
-      assert_difference('Function.count') do
+      assert_difference('Function.size') do
         post functions_url, params: { function: { deleted_at: @function.deleted_at, description: @function.description, name: @function.name, parameters: @function.parameters, position: @function.position } }
       end
 
@@ -42,7 +42,7 @@ module KepplerFrontend
     end
 
     test "should destroy function" do
-      assert_difference('Function.count', -1) do
+      assert_difference('Function.size', -1) do
         delete function_url(@function)
       end
 

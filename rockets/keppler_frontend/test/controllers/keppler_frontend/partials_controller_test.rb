@@ -19,7 +19,7 @@ module KepplerFrontend
     end
 
     test "should create partial" do
-      assert_difference('Partial.count') do
+      assert_difference('Partial.size') do
         post partials_url, params: { partial: { deleted_at: @partial.deleted_at, name: @partial.name, position: @partial.position } }
       end
 
@@ -42,7 +42,7 @@ module KepplerFrontend
     end
 
     test "should destroy partial" do
-      assert_difference('Partial.count', -1) do
+      assert_difference('Partial.size', -1) do
         delete partial_url(@partial)
       end
 

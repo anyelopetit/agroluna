@@ -24,9 +24,9 @@
           - (season.duration_days.to_i + 1).times do |day|
             - statuses = @season.statuses.where(status_type: status.last, date: @season.start_date + day)
             - if !statuses.size.zero?
-              %li.stripes{ style: "z-index: 2; padding: 0; grid-column: #{day + 1}/#{day + 2}; background-color: #{statuses.count > 8 ? season.cicle_colors.last : season.cicle_colors[(statuses.count/3)-3]};" }
+              %li.stripes{ style: "z-index: 2; padding: 0; grid-column: #{day + 1}/#{day + 2}; background-color: #{statuses.size > 8 ? season.cicle_colors.last : season.cicle_colors[(statuses.size/3)-3]};" }
                 %a{ style: 'display:block; width: 100%; height: 100%;', 'data-target': "#modal#{status.first}#{day}", 'data-toggle': 'modal', href: ""}
-                  .text-white.text-center= statuses.count
+                  .text-white.text-center= statuses.size
               .modal.modal_status.fade{ id: "modal#{status.first}#{day}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
                 .modal-dialog{role: "document"}
                   .modal-content
@@ -41,7 +41,7 @@
                             %small (#{(season.start_date + day).strftime('%d/%m/%y')})      
                         .box-body.no-padding
                           .row
-                            - if @season.cows.take(statuses.count).blank?
+                            - if @season.cows.take(statuses.size).blank?
                               %center.col-lg-12
                                 No existen ganados asignados
                             - statuses.each do |status|

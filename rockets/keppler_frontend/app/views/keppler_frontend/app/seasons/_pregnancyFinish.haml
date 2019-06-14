@@ -19,22 +19,22 @@
                       %img{src:"https://images.pexels.com/photos/433635/pexels-photo-433635.jpeg?cs=srgb&dl=adult-care-cure-433635.jpg&fm=jpg", alt:""}
                     .content-profile.ml-4{style: "width:100%"}
                       %strong.name= inseminador.name
-                      .count-cow.d-flex.justify-content-around
+                      .size-cow.d-flex.justify-content-around
                         %div.d-flex.flex-column{style: "width:50%"}
                           %span
                             Preñadas
                           %span
-                            #{inseminador.status_where('Pregnancy', @season.id).count}
+                            #{inseminador.status_where('Pregnancy', @season.id).size}
                         %div.d-flex.flex-column{style: "width:31%"}
                           %span
                             Vacias
                           %span
-                            #{inseminador.inefectivities.count}
+                            #{inseminador.inefectivities.size}
                         %div.d-flex.flex-column{style: "width:33%"}
                           %span
                             Efectividad
                           %span
-                            #{(((inseminador.status_where('Pregnancy', @season.id).count.to_f) / (inseminador.status_where('Pregnancy', @season.id).count.to_f + inseminador.inefectivities.count.to_f)) * 100).round(2)}%
+                            #{(((inseminador.status_where('Pregnancy', @season.id).size.to_f) / (inseminador.status_where('Pregnancy', @season.id).size.to_f + inseminador.inefectivities.size.to_f)) * 100).round(2)}%
                 %canvas{ id: "inseminador-#{inseminador.id}-chart", height: "95", width: "250"}
 
 
@@ -51,7 +51,7 @@
     .name {
       font-size: 17px
     }
-    .count-cow{
+    .size-cow{
       font-size: 15px;
     }
   }
@@ -78,8 +78,8 @@
           datasets: [{
               label: 'Vacas en celo',
               data: [
-                #{@season.cows.select { |x| x.status&.status_type == 'Pregnancy' && x.status.farm_id.eql?(@farm.id) }.count},
-                #{@season.cows.reject { |x| x.status&.status_type == 'Pregnancy' && x.status.farm_id.eql?(@farm.id) }.count}
+                #{@season.cows.select { |x| x.status&.status_type == 'Pregnancy' && x.status.farm_id.eql?(@farm.id) }.size},
+                #{@season.cows.reject { |x| x.status&.status_type == 'Pregnancy' && x.status.farm_id.eql?(@farm.id) }.size}
               ],
               backgroundColor: [
                 green_gradient,
@@ -104,7 +104,7 @@
   });
 
 - @season.users.each do |inseminador|
-  - unless inseminador.status_where('Pregnancy', @season.id).count.zero? || inseminador.name.blank?
+  - unless inseminador.status_where('Pregnancy', @season.id).size.zero? || inseminador.name.blank?
     :javascript
       // inseminador
       var inseminador_ctx = document.getElementById('inseminador-#{inseminador.id}-chart').getContext('2d');
@@ -122,7 +122,7 @@
           data: {
               labels: ["Acertados", "Errados"],
               datasets: [{
-                  data: [#{inseminador.status_where('Pregnancy', @season.id).count}, #{inseminador.inefectivities.count}],
+                  data: [#{inseminador.status_where('Pregnancy', @season.id).size}, #{inseminador.inefectivities.size}],
                   backgroundColor:[ 
                     green_gradient,
                     gray_gradient,

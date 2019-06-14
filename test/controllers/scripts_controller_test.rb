@@ -17,7 +17,7 @@ class ScriptsControllerTest < ActionController::TestCase
   end
 
   test "should create script" do
-    assert_difference('Script.count') do
+    assert_difference('Script.size') do
       post :create, script: { name: @script.name, script: @script.script, url: @script.url }
     end
 
@@ -40,7 +40,7 @@ class ScriptsControllerTest < ActionController::TestCase
   end
 
   test "should destroy script" do
-    assert_difference('Script.count', -1) do
+    assert_difference('Script.size', -1) do
       delete :destroy, id: @script
     end
 

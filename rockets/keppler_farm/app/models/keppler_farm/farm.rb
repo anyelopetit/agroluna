@@ -15,7 +15,7 @@ module KepplerFarm
 
     has_many :photos
 
-    has_many :users
+    has_many :users, -> { distinct }, class_name: 'KepplerFarm::Responsable'
     has_many :assignments, through: :users
 
     # Farm
@@ -41,7 +41,7 @@ module KepplerFarm
     end
 
     def none_cover?
-      photos.where(cover: true).count.zero?
+      photos.where(cover: true).size.zero?
     end
 
     # def cows

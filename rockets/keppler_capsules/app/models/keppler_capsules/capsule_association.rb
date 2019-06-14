@@ -27,7 +27,7 @@ module KepplerCapsules
         capsule_id: self.capsule,
         association_type: self.association_type,
         capsule_name: self.capsule_name)
-      association.count == 0 ? false : true
+      association.size == 0 ? false : true
     end
 
     private

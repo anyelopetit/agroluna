@@ -67,7 +67,7 @@
                       %th Serie
                       %th Fecha de servicio
                       %th Inseminador
-                      %th Pajuela (cant.)
+                      %th Padrote / Pajuela (cant.)
                   %tbody
                     - @next_palpation_cows.each do |cow|
                       %tr
@@ -75,7 +75,7 @@
                         %td= cow.statuses.where(status_type: 'Service').last&.date&.strftime('%d-%m-%Y')
                         %td= cow.statuses.where(status_type: 'Service').last.user&.name || 'Desconocido'
                         %td
-                          - if cow.statuses.where(status_type: 'Service').count > 0
+                          - if cow.statuses.where(status_type: 'Service').size > 0
                             = @farm.inseminations.find(cow.statuses.where(status_type: 'Service')&.last&.insemination_id)&.serie_number || 'Sin pajuela'
                             (#{cow.statuses.where(status_type: 'Service')&.last&.insemination_quantity})
         .row
@@ -83,7 +83,7 @@
           %hr.my-1
           %b
             Cantidad de series:
-          #{@next_palpation_cows.count}
+          #{@next_palpation_cows.size}
 :scss
   body {
     font-size: 15px;

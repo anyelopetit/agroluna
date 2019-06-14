@@ -82,7 +82,7 @@
                     .badge.badge-secondary= strategic_lot&.function
                 %td
                   = link_to({action: :show, farm_id: farm&.id, id: strategic_lot.id}, {title: strategic_lot.description}) do
-                    = strategic_lot&.cows&.count
+                    = strategic_lot&.cows&.size
                 
                 %td
                   .dropdown{ style: 'justify-content: center; cursor:pointer' }

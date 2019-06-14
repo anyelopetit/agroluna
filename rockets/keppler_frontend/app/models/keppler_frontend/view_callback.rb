@@ -17,7 +17,7 @@ module KepplerFrontend
       callback = ViewCallback.where(
         function_type: self.function_type,
         name: self.name)
-      callback.count == 0 ? false : true
+      callback.size == 0 ? false : true
     end
 
     private

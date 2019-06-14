@@ -12,7 +12,7 @@
     .header-right
       %p= Time.now.strftime('%d-%m-%Y')
       %p Pág. 1
-      %p #{@strategic_lot.cows.count} / #{@strategic_lot.cows.count}
+      %p #{@strategic_lot.cows.size} / #{@strategic_lot.cows.size}
     %table.cow-table
       - if @strategic_lots.size.zero?
         %thead

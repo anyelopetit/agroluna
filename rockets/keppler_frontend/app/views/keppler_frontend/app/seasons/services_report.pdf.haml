@@ -73,6 +73,7 @@
                       %th Último servicio
                       %th Pajuela (cant.)
                       %th Próximo celo
+                      %th Próx. Palpación
                   %tbody
                     - @services_cows.each do |cow|
                       %tr
@@ -84,21 +85,22 @@
                         %td= cow&.typology_name
                         %td= cow.statuses.where(status_type: 'Service').last&.date&.strftime('%d-%m-%Y')
                         %td
-                          - if cow.statuses.where(status_type: 'Service').count > 0
+                          - if cow.statuses.where(status_type: 'Service').size > 0
                             = @farm.inseminations.find(cow.statuses.where(status_type: 'Service')&.last&.insemination_id)&.serie_number || 'Sin pajuela'
                             (#{cow.statuses.where(status_type: 'Service')&.last&.insemination_quantity})
                         %td
-                          - if cow.statuses.where(status_type: 'Service').count > 2
+                          - if cow.statuses.where(status_type: 'Service').size > 2
                             = ((cow.statuses.where(status_type: 'Service')[-1].date) - cow.statuses.where(status_type: 'Service')[-2].date).to_s.split('/').first.to_i
                           - else
                             21
                           días
+                        %td= (cow.statuses.where(status_type: 'Service').last&.date + 45.days)&.strftime('%d-%m-%Y')
         .row
           %hr.my-1
           %hr.my-1
           %b
             Cantidad de series:
-          #{@services_cows.count}
+          #{@services_cows.size}
 :scss
   body {
     font-size: 15px;

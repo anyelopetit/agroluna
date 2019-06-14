@@ -5,11 +5,11 @@
         -# %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#mfg", role: "tab"}
         -# %a#mfg-tab.nav-link.active{ href: "#mfg", role: "tab" }
         = link_to({ action: :index }, { class: "nav-link #{'active' if action_name.eql?('index')}" }) do
-          Activos (#{@active_cows.count})
+          Activos (#{@active_cows.size})
       %li.nav-item
         -# %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#ale", role: "tab"}
         = link_to({action: :index_inactives}, { class: "nav-link #{'active' if action_name.eql?('index_inactives')}" }) do
-          Inactivos (#{@inactive_cows.count})
+          Inactivos (#{@inactive_cows.size})
     -# %hr{ :style => "margin-top: 0;width: 90%; margin-bottom: 20px;"}
     .container_custom
       .card_show

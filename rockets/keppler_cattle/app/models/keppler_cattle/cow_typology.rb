@@ -33,7 +33,7 @@ module KepplerCattle
         cow_id: cow_id,
         typology_id: typology_id
       )
-      cow_typologies.count.zero?
+      cow_typologies.size.zero?
     end
 
     def verify_age_and_weight

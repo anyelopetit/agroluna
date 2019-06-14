@@ -17,7 +17,7 @@ class ScaffoldsControllerTest < ActionController::TestCase
   end
 
   test "should create scaffold" do
-    assert_difference('Scaffold.count') do
+    assert_difference('Scaffold.size') do
       post :create, scaffold: { fields: @scaffold.fields, name: @scaffold.name }
     end
 
@@ -40,7 +40,7 @@ class ScaffoldsControllerTest < ActionController::TestCase
   end
 
   test "should destroy scaffold" do
-    assert_difference('Scaffold.count', -1) do
+    assert_difference('Scaffold.size', -1) do
       delete :destroy, id: @scaffold
     end
 

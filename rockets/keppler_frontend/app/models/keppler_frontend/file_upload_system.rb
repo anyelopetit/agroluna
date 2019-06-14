@@ -113,9 +113,9 @@ module KepplerFrontend
         files = Dir.entries("#{url_front}/app/assets/#{folder}/keppler_frontend/app")
         folder_img = select_folder(file)
         files = files.select { |f| f.eql?(file) && folder_img.eql?('images') }
-        return true if !files.count.zero? && folder.eql?('html')
+        return true if !files.size.zero? && folder.eql?('html')
       end
-      return false if files.count.zero?
+      return false if files.size.zero?
     end
 
     def url_front

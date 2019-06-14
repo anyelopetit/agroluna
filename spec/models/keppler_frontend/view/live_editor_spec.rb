@@ -11,7 +11,7 @@ RSpec.describe KepplerFrontend::View, type: :model do
     #     @editor = @view.live_editor_render
     #   end    
 
-    #   it { expect(@editor.count).to eq(5) }
+    #   it { expect(@editor.size).to eq(5) }
 
     #   it { expect(@editor[:view_id]).not_to eq(nil) }
     #   it { expect(@editor[:view_id]).to be_a(Numeric) }

@@ -23,7 +23,7 @@ module KepplerCapsules
         field: self.field,
         name: self.name,
         capsule_id: self.capsule)
-      validation.count == 0 ? false : true
+      validation.size == 0 ? false : true
     end
 
     private

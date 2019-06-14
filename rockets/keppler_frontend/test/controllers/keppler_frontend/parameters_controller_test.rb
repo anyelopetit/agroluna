@@ -19,7 +19,7 @@ module KepplerFrontend
     end
 
     test "should create parameter" do
-      assert_difference('Parameter.count') do
+      assert_difference('Parameter.size') do
         post parameters_url, params: { parameter: { deleted_at: @parameter.deleted_at, name: @parameter.name, position: @parameter.position } }
       end
 
@@ -42,7 +42,7 @@ module KepplerFrontend
     end
 
     test "should destroy parameter" do
-      assert_difference('Parameter.count', -1) do
+      assert_difference('Parameter.size', -1) do
         delete parameter_url(@parameter)
       end
 

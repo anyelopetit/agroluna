@@ -19,7 +19,7 @@ module KepplerFrontend
     end
 
     test "should create view" do
-      assert_difference('View.count') do
+      assert_difference('View.size') do
         post views_url, params: { view: { active: @view.active, deleted_at: @view.deleted_at, format_result: @view.format_result, method: @view.method, name: @view.name, position: @view.position, root_path: @view.root_path, url: @view.url } }
       end
 
@@ -42,7 +42,7 @@ module KepplerFrontend
     end
 
     test "should destroy view" do
-      assert_difference('View.count', -1) do
+      assert_difference('View.size', -1) do
         delete view_url(@view)
       end
 

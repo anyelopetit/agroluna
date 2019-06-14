@@ -74,7 +74,7 @@ module KepplerCapsules
         if value[:name_field]
           field = CapsuleField.where(name_field: value[:name_field])
           add_mount_image(table, value[:name_field]) if attachments.include?(value[:name_field])
-          if field.count <= 1
+          if field.size <= 1
             add_field_pg_table(value, table)
           else
             field.last.delete
@@ -90,7 +90,7 @@ module KepplerCapsules
       attributes.each do |key, value|
         if value[:name]
           validation = CapsuleValidation.where(name: value[:name], field: value[:field])
-          add_validation_to(table, value) if validation.count == 1
+          add_validation_to(table, value) if validation.size == 1
         end
       end
     end
@@ -103,7 +103,7 @@ module KepplerCapsules
             association_type: value[:association_type],
             capsule_name: value[:capsule_name],
             capsule_id: self.id)
-          add_association_to(table, value) if association.count == 1
+          add_association_to(table, value) if association.size == 1
           if value[:association_type].eql?('belongs_to')
             CapsuleField.create(name_field: "#{value[:capsule_name].singularize}_id", format_field: 'association', capsule_id: self.id)
             attributes = { "0" =>{ name_field: "#{value[:capsule_name].singularize}_id", format_field: 'integer' }}

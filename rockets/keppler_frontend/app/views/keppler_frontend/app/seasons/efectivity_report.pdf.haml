@@ -65,12 +65,12 @@
                   %small.mt-1.float-right.w-50.text-right
                     %span
                       %b Preñadas:
-                      #{responsable.pregnants(@season.id).count}
+                      #{responsable.pregnants(@season.id).size}
                       %b Vacías:
-                      #{responsable.inefectivities.count}
+                      #{responsable.inefectivities.size}
                       \/
                       %b Efectividad:
-                      #{responsable.pregnants(@season.id).count.zero? ? 0 : (((responsable.pregnants(@season.id).count.to_f) / (responsable.pregnants(@season.id).count.to_f + responsable.inefectivities.count.to_f)) * 100).round(2)}%
+                      #{responsable.pregnants(@season.id).size.zero? ? 0 : (((responsable.pregnants(@season.id).size.to_f) / (responsable.pregnants(@season.id).size.to_f + responsable.inefectivities.size.to_f)) * 100).round(2)}%
                 %hr
                 %table.mt-none.mb-4
                   %thead
@@ -91,7 +91,7 @@
           %hr.my-1
           %b
             Cantidad de series:
-          #{@services.count}
+          #{@services.size}
 :scss
   body {
     font-size: 15px;

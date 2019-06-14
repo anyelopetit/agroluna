@@ -17,7 +17,7 @@ class MetaTagsControllerTest < ActionController::TestCase
   end
 
   test "should create meta_tag" do
-    assert_difference('MetaTag.count') do
+    assert_difference('MetaTag.size') do
       post :create, meta_tag: { description: @meta_tag.description, meta_tags: @meta_tag.meta_tags, title: @meta_tag.title, url: @meta_tag.url }
     end
 
@@ -40,7 +40,7 @@ class MetaTagsControllerTest < ActionController::TestCase
   end
 
   test "should destroy meta_tag" do
-    assert_difference('MetaTag.count', -1) do
+    assert_difference('MetaTag.size', -1) do
       delete :destroy, id: @meta_tag
     end
 

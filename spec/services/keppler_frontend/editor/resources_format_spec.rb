@@ -21,7 +21,7 @@ RSpec.describe KepplerFrontend::Editor::ResourcesFormat, type: :services do
       end
 
       it { expect(@resources.output).to be_a(Hash) }
-      it { expect(@resources.output.count).to eq(11) }
+      it { expect(@resources.output.size).to eq(11) }
       it { expect(@resources.output[:name]).to eq("test.png") }
       it { expect(@resources.output[:format]).to eq("png") }
     end
@@ -32,7 +32,7 @@ RSpec.describe KepplerFrontend::Editor::ResourcesFormat, type: :services do
       end
 
       it { expect(@resources.output).to be_a(Hash) }
-      it { expect(@resources.output.count).to eq(11) }
+      it { expect(@resources.output.size).to eq(11) }
       it { expect(@resources.output[:name]).to eq("test.html") }
       it { expect(@resources.output[:format]).to eq("html") }
     end

@@ -16,7 +16,7 @@ class FrontsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create front" do
-    assert_difference('Front.count') do
+    assert_difference('Front.size') do
       post fronts_url, params: { front: { index: @front.index } }
     end
 
@@ -39,7 +39,7 @@ class FrontsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy front" do
-    assert_difference('Front.count', -1) do
+    assert_difference('Front.size', -1) do
       delete front_url(@front)
     end
 

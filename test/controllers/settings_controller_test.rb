@@ -17,7 +17,7 @@ class SettingsControllerTest < ActionController::TestCase
   end
 
   test "should create setting" do
-    assert_difference('Setting.count') do
+    assert_difference('Setting.size') do
       post :create, setting: { description: @setting.description, favicon: @setting.favicon, logo: @setting.logo, name: @setting.name }
     end
 
@@ -40,7 +40,7 @@ class SettingsControllerTest < ActionController::TestCase
   end
 
   test "should destroy setting" do
-    assert_difference('Setting.count', -1) do
+    assert_difference('Setting.size', -1) do
       delete :destroy, id: @setting
     end
 

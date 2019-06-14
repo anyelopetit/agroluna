@@ -31,7 +31,7 @@
           - @transferences.each do |transference|
             %tr{ style: "border-bottom: 1px #eee solid;" }
               %td
-                = transference&.cows&.count
+                = transference&.cows&.size
               %td
                 = transference&.from_farm&.title
               %td

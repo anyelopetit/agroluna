@@ -17,8 +17,8 @@ module KepplerFrontend
     ]
     before_action :strategic_lot_variables, only: strategic_lot_states
     before_action :attachments
-    before_action :respond_to_formats, except: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report births_report efectivity_report]
-    before_action :report_variables, only: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report births_report efectivity_report]
+    before_action :respond_to_formats, except: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report births_report calfs_report twins_report efectivity_report vet_efectivity_report]
+    before_action :report_variables, only: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report births_report calfs_report twins_report efectivity_report vet_efectivity_report]
     helper KepplerFarm::ApplicationHelper
     include ObjectQuery
 
@@ -349,10 +349,26 @@ module KepplerFrontend
       respond_to_formats
     end
 
+    def calfs_report
+      @calfs = @season.cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten
+      respond_to_formats
+    end
+
+    def twins_report
+      @twins = @season.cows.where_status('Birth', @season.id).select { |c| c.statuses }
+      respond_to_formats
+    end
+
     def efectivity_report
-      @responsables = KepplerFarm::Responsable.where(farm_id: @farm.id)
+      @responsables = @farm.responsables.where(farm_id: @farm.id)
       @services = @season.statuses.where(status_type: 'Service', season_id: @season.id)
       respond_to_formats
+    end
+
+    def vet_efectivity_report
+      @vets = @season.users.where(farm_id: @farm.id)
+      @services = @season.statuses.where(status_type: 'Service', season_id: @season.id)
+      respond_to_formats(@vets)
     end
 
     private
@@ -393,11 +409,12 @@ module KepplerFrontend
     end
 
     def index_variables
-      @q = @farm.seasons.ransack(params[:q])
-      set_season = @q.result(distinct: true)
-      @seasons = set_season.page(@current_page).order(position: :desc)
-      @total = @seasons.size
+      @q = @farm.cows.ransack(params[:q])
+      cows = @q.result(distinct: true)
+      @cows = cows.page(@current_page).order(position: :desc)
+      @total = @cows.size
       @attributes = KepplerReproduction::Season.index_attributes
+      @seasons = @farm.seasons
     end
 
     def strategic_lot_variables
@@ -420,7 +437,7 @@ module KepplerFrontend
         @locations = KepplerFarm::Assignment.where(user_id: current_user&.id)
         @farms = KepplerFarm::Farm.where(
           id: @locations&.map(&:keppler_farm_farm_id)
-        ) unless @locations.count.zero?
+        ) unless @locations.size.zero?
       end
     end
 
@@ -482,8 +499,8 @@ module KepplerFrontend
         baby_weight = baby.create_first_weight(
           weight_params,
           {
-            user: KepplerFarm::Responsable.find_or_create_by(name: this_status.user.name),
-            user_id: KepplerFarm::Responsable.find_or_create_by(name: this_status.user.name).id,
+            user: @farm.responsables.find_or_create_by(name: this_status.user.name),
+            user_id: @farm.responsables.find_or_create_by(name: this_status.user.name).id,
             cow_id: this_status.cow_id
           }
         )
@@ -511,7 +528,7 @@ module KepplerFrontend
       )
     end
 
-    def respond_to_formats
+    def respond_to_formats(options = nil)
       respond_to do |format|
         format.html
         format.csv # { send_data KepplerReproduction::Season.all.to_csv, filename: "lotes estratégicos.csv" }

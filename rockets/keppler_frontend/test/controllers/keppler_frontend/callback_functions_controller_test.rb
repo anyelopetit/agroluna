@@ -19,7 +19,7 @@ module KepplerFrontend
     end
 
     test "should create callback_function" do
-      assert_difference('CallbackFunction.count') do
+      assert_difference('CallbackFunction.size') do
         post callback_functions_url, params: { callback_function: { deleted_at: @callback_function.deleted_at, description: @callback_function.description, name: @callback_function.name, position: @callback_function.position } }
       end
 
@@ -42,7 +42,7 @@ module KepplerFrontend
     end
 
     test "should destroy callback_function" do
-      assert_difference('CallbackFunction.count', -1) do
+      assert_difference('CallbackFunction.size', -1) do
         delete callback_function_url(@callback_function)
       end
 

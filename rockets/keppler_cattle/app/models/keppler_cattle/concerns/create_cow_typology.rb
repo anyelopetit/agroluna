@@ -33,7 +33,7 @@ module KepplerCattle
             cow_id: polymorphic_cow(self).id,
             typology_id: typology.id
           )
-          cow_typologies.count.zero?
+          cow_typologies.size.zero?
         end
 
         def verify_counter(typology)

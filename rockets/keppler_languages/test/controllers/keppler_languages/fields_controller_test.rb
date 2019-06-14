@@ -19,7 +19,7 @@ module KepplerLanguages
     end
 
     test "should create field" do
-      assert_difference('Field.count') do
+      assert_difference('Field.size') do
         post fields_url, params: { field: { deleted_at: @field.deleted_at, key: @field.key, position: @field.position, value: @field.value } }
       end
 
@@ -42,7 +42,7 @@ module KepplerLanguages
     end
 
     test "should destroy field" do
-      assert_difference('Field.count', -1) do
+      assert_difference('Field.size', -1) do
         delete field_url(@field)
       end
 

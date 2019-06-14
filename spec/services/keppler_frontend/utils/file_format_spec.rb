@@ -24,7 +24,7 @@ RSpec.describe KepplerFrontend::Utils::FileFormat, type: :services do
 
     context 'valid formats' do
       it { expect(@file_format.formats).to be_a(Hash) }
-      it { expect(@file_format.formats.count).to eq(@folders.count) }
+      it { expect(@file_format.formats.size).to eq(@folders.size) }
       it { expect(@file_format.formats[:audios]).to eq(['.mp3']) }
       it { expect(@file_format.formats[:fonts]).to eq(['.eot', '.otf', '.ttf', '.woff', '.woff2']) }
       it { expect(@file_format.formats[:images]).to eq(['.jpg', '.jpeg', '.png', '.svg', '.gif', '.tiff', '.bmp']) }

@@ -107,7 +107,7 @@ module KepplerFrontend
         @farms = KepplerFarm::Farm.all
       else
         @assignments = KepplerFarm::Assignment.where(user_id: current_user&.id)
-        @farms = KepplerFarm::Farm.where(id: @assignments&.map(&:keppler_farm_farm_id)) unless @assignments.count.zero?
+        @farms = KepplerFarm::Farm.where(id: @assignments&.map(&:keppler_farm_farm_id)) unless @assignments.size.zero?
       end
     end
 

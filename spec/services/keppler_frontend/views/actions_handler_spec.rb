@@ -18,7 +18,7 @@ RSpec.describe KepplerFrontend::Views::ActionsHandler, type: :services do
     search = KepplerFrontend::Utils::CodeSearch.new(controller)
     idx_one, idx_two = search.search_section("    # begin #{@view.name}\n", 
                                              "    # end #{@view.name}\n")
-    controller[idx_one..idx_two].count == 1 ? false : true
+    controller[idx_one..idx_two].size == 1 ? false : true
   end
   
   context 'install' do

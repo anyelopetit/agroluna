@@ -19,7 +19,7 @@ module KepplerLanguages
     end
 
     test "should create language" do
-      assert_difference('Language.count') do
+      assert_difference('Language.size') do
         post languages_url, params: { language: { deleted_at: @language.deleted_at, name: @language.name, position: @language.position } }
       end
 
@@ -42,7 +42,7 @@ module KepplerLanguages
     end
 
     test "should destroy language" do
-      assert_difference('Language.count', -1) do
+      assert_difference('Language.size', -1) do
         delete language_url(@language)
       end
 

@@ -1,0 +1,139 @@
+!!!
+%html{ lang: 'en' }
+  %head
+    %meta{ charset: 'UTF-8' }
+    %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
+    %meta{ name: 'theme-color', content: '#fff' }
+    %title Toros Padrotes | #{@season.name}
+    = wicked_pdf_stylesheet_link_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'
+    = wicked_pdf_stylesheet_link_tag '/assets/keppler_frontend/app/application.css'
+    :javascript
+      function number_pages() {
+        var vars={};
+        var x=document.location.search.substring(1).split('&');
+        for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = decodeURIComponent(z[1]);}
+        var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+        for(var i in x) {
+          var y = document.getElementsByClassName(x[i]);
+          for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+        }
+      }
+  %body{ onload: 'number_pages()' }
+    .header-left
+      %h1.farm-title= @farm.try(:title)&.upcase
+      %h3.report-title #{@season.name}
+      %h5 Toros padrotes
+    .header-right
+      %p= Time.now.strftime('%d-%m-%Y')
+      -# %p 
+        Pág.
+        %span.page
+        \/
+        %span.topage
+    .app_wrapper
+      .container_custom
+        .row
+          %hr.my-1
+          %hr.my-1
+          .d-flex.justify-content-between
+            .w-50
+              %b Fecha de inicio:
+              %span= @season.start_date.strftime('%d-%m-%Y')
+            .w-50
+              %b Fecha de cierre:
+              %span= @season.finish_date.strftime('%d-%m-%Y')
+          %hr.my-1
+          %hr.my-1
+        .row
+          - if @strategic_lots.size.zero?
+            %table.mt-none.mb-4
+              %thead
+                %tr
+                  %th.not-records.center
+                    %center No se encontraron lotes estratégicos asociados a ganados
+          - elsif @bulls&.blank?
+            %table.mt-none.mb-4
+              %thead
+                %tr
+                  %th.not-records.center
+                    %center No se encontraron partos registrados en esta temporada de monta
+          - else
+            - @strategic_lots.each do |strategic_lot|
+              - unless @bulls&.total_season_cows(strategic_lot)&.size.zero?
+                .strategic_lot_name= strategic_lot.name
+                %table.mt-none.mb-4
+                  %thead
+                    %tr
+                      %th Nro. Serie
+                      %th Raza
+                      %th Tipología
+                      %th Fecha de entrada
+                      %th Última temporada
+                  %tbody
+                    - @bulls.each do |cow|
+                      %tr
+                        %td= cow&.serie_number
+                        %td= cow&.race&.name
+                        %td= cow&.season_cows&.last&.created_at&.strftime('%d-%m-%Y')
+                        %td= cow.seasons&.last&.name
+        .row
+          %hr.my-1
+          %hr.my-1
+          %b
+            Cantidad de series:
+          #{@bulls.size}
+:scss
+  body {
+    font-size: 15px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr {
+    border-top: solid 1px #eee;
+  }
+  th {
+    text-align: left;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+  }
+  td {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .header-left {
+    float: left;
+  }
+  .header-right {
+    float: right;
+  }
+  .farm-title{
+    width: 150%
+  }
+  .report-title {
+    width: 150%
+  }
+
+  .app_wrapper {
+    padding-top: 40px;
+  }
+
+  .container_custom {
+    margin: 100px 20px 0;
+  }
+
+  .mb-none {
+    margin-bottom: 0;
+  }
+
+  .mt-4 {
+    margin-top: 40px;
+  }
+
+  .strategic_lot_name {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }

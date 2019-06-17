@@ -17,8 +17,8 @@ module KepplerFrontend
     ]
     before_action :strategic_lot_variables, only: strategic_lot_states
     before_action :attachments
-    before_action :respond_to_formats, except: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report births_report calfs_report twins_report efectivity_report vet_efectivity_report]
-    before_action :report_variables, only: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report births_report calfs_report twins_report efectivity_report vet_efectivity_report]
+    before_action :respond_to_formats, except: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report births_report calfs_report twins_report abort_cows_report efectivity_report vet_efectivity_report bulls_report]
+    before_action :report_variables, only: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report births_report calfs_report twins_report abort_cows_report efectivity_report vet_efectivity_report bulls_report]
     helper KepplerFarm::ApplicationHelper
     include ObjectQuery
 
@@ -359,6 +359,11 @@ module KepplerFrontend
       respond_to_formats
     end
 
+    def abort_cows_report
+      @abort_cows = @season.cows.select { |c| !c.aborts.blank? }
+      respond_to_formats
+    end
+
     def efectivity_report
       @responsables = @farm.responsables.where(farm_id: @farm.id)
       @services = @season.statuses.where(status_type: 'Service', season_id: @season.id)
@@ -367,8 +372,12 @@ module KepplerFrontend
 
     def vet_efectivity_report
       @vets = @season.users.where(farm_id: @farm.id)
-      @services = @season.statuses.where(status_type: 'Service', season_id: @season.id)
-      respond_to_formats(@vets)
+      respond_to_formats
+    end
+
+    def bulls_report
+      @bulls = @season.cows.where(gender: 'male')
+      respond_to_formats
     end
 
     private

@@ -89,6 +89,8 @@ KepplerFrontend::Engine.routes.draw do
         get :births_report, action: :births_report, as: :births_report
         get :calfs_report, action: :calfs_report, as: :calfs_report
         get :twins_report, action: :twins_report, as: :twins_report
+        get :abort_cows_report, action: :abort_cows_report, as: :abort_cows_report
+        get :bulls_report, action: :bulls_report, as: :bulls_report
         get :vet_efectivity_report, action: :vet_efectivity_report, as: :vet_efectivity_report
         get :efectivity_report, action: :efectivity_report, as: :efectivity_report
       end

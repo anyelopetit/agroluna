@@ -91,6 +91,11 @@ KepplerFrontend::Engine.routes.draw do
         get :twins_report, action: :twins_report, as: :twins_report
         get :abort_cows_report, action: :abort_cows_report, as: :abort_cows_report
         get :bulls_report, action: :bulls_report, as: :bulls_report
+        get :belly_report, action: :belly_report, as: :belly_report
+        get :weans_report, action: :weans_report, as: :weans_report
+        get :inseminations_report, action: :inseminations_report, as: :inseminations_report
+        get :typologies_report, action: :typologies_report, as: :typologies_report
+        get :inactive_cows_report, action: :inactive_cows_report, as: :inactive_cows_report
         get :vet_efectivity_report, action: :vet_efectivity_report, as: :vet_efectivity_report
         get :efectivity_report, action: :efectivity_report, as: :efectivity_report
       end

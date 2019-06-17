@@ -31,7 +31,7 @@ module KepplerCattle
     has_many :weights, class_name: 'KepplerCattle::Weight', dependent: :destroy
     has_many :cow_activities, class_name: 'KepplerCattle::Activity', dependent: :destroy
     has_many :cow_typologies, class_name: 'KepplerCattle::CowTypology', dependent: :destroy
-    has_many :typologies, class_name: 'KepplerCattle::Typology', through: :cow_typologies, dependent: :destroy
+    has_many :typologies, class_name: 'KepplerCattle::Typology', through: :cow_typologies
 
     has_many :statuses, class_name: 'KepplerCattle::Status', dependent: :destroy
     has_many :aborts, class_name: 'KepplerCattle::Abort', dependent: :destroy

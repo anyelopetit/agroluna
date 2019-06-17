@@ -17,8 +17,14 @@ module KepplerFrontend
     ]
     before_action :strategic_lot_variables, only: strategic_lot_states
     before_action :attachments
-    before_action :respond_to_formats, except: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report births_report calfs_report twins_report abort_cows_report efectivity_report vet_efectivity_report bulls_report]
-    before_action :report_variables, only: %i[reproduction_cows zeals_report services_report next_palpation_report pregnants_report births_report calfs_report twins_report abort_cows_report efectivity_report vet_efectivity_report bulls_report]
+    report_actions = %i[
+      reproduction_cows zeals_report services_report next_palpation_report
+      pregnants_report births_report calfs_report twins_report abort_cows_report
+      efectivity_report vet_efectivity_report bulls_report weans_report
+      inseminations_report typologies_report inactive_cows_report
+    ]
+    after_action :respond_to_formats, except: report_actions
+    before_action :report_variables, only: report_actions
     helper KepplerFarm::ApplicationHelper
     include ObjectQuery
 
@@ -377,6 +383,31 @@ module KepplerFrontend
 
     def bulls_report
       @bulls = @season.cows.where(gender: 'male')
+      respond_to_formats
+    end
+
+    def belly_report
+      @calfs = @season.cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten
+      respond_to_formats
+    end
+
+    def weans_report
+      @calfs = @season.cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten
+      respond_to_formats
+    end
+
+    def inseminations_report
+      @inseminations = @farm.inseminations
+      respond_to_formats
+    end
+
+    def typologies_report
+      @typologies = KepplerCattle::Typology.includes(:cows).all
+      respond_to_formats
+    end
+
+    def inactive_cows_report
+      @inactive_cows = @farm.cows.inactives
       respond_to_formats
     end
 

@@ -12,6 +12,9 @@ module KepplerCattle
     acts_as_list
     acts_as_paranoid
 
+    has_many :cow_typologies, class_name: 'KepplerCattle::CowTypology', dependent: :destroy
+    has_many :cows, class_name: 'KepplerCattle::Cow', through: :cow_typologies
+
     belongs_to :species
 
     validates_presence_of :name

@@ -96,6 +96,7 @@ KepplerFrontend::Engine.routes.draw do
         get :inseminations_report, action: :inseminations_report, as: :inseminations_report
         get :typologies_report, action: :typologies_report, as: :typologies_report
         get :inactive_cows_report, action: :inactive_cows_report, as: :inactive_cows_report
+        get :analytic_weight_report, action: :analytic_weight_report, as: :analytic_weight_report
         get :vet_efectivity_report, action: :vet_efectivity_report, as: :vet_efectivity_report
         get :efectivity_report, action: :efectivity_report, as: :efectivity_report
       end

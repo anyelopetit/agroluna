@@ -22,6 +22,7 @@ module KepplerFrontend
       pregnants_report births_report calfs_report twins_report abort_cows_report
       efectivity_report vet_efectivity_report bulls_report weans_report
       inseminations_report typologies_report inactive_cows_report
+      analytic_weight_report
     ]
     after_action :respond_to_formats, except: report_actions
     before_action :report_variables, only: report_actions
@@ -408,6 +409,11 @@ module KepplerFrontend
 
     def inactive_cows_report
       @inactive_cows = @farm.cows.inactives
+      respond_to_formats
+    end
+
+    def analytic_weight_report
+      @cows = @season.cows
       respond_to_formats
     end
 

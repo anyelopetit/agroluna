@@ -35,15 +35,15 @@ module KepplerFrontend
     def show
       # @cicle = KepplerReproduction::Cicle.new
       # @strategic_lot = KepplerFarm::StrategicLot.new
-      @cows = @season.cows.where(gender: 'female').order(:serie_number)
-      @bulls = @season.cows.where(gender: 'male')
+      @cows = @season&.cows.where(gender: 'female').order(:serie_number)
+      @bulls = @season&.cows.where(gender: 'male')
       @season_cow = KepplerReproduction::SeasonCow.new
       @strategic_lots = @farm.strategic_lots
       @cow_strategic_lots = @strategic_lots.includes(:locations).where(
         keppler_cattle_locations: { cow_id: @cows.ids }
       ).distinct
       @possible_mothers = @farm.cows.possible_mothers
-      @inseminated_cows = @season.cows.select do |c|
+      @inseminated_cows = @season&.cows.select do |c|
         c.status&.status_type&.eql?('Service')
       end
       @pregnants = @cows.where_status('Pregnancy', @season.id)
@@ -126,24 +126,24 @@ module KepplerFrontend
     def strategic_lot
       strategic_lot_id = params[:strategic_lot_id]
       @strategic_lot = @farm.strategic_lots.find(strategic_lot_id) if strategic_lot_id
-      @bulls = @season.cows.total_season_bulls(@strategic_lot)
+      @bulls = @season&.cows.total_season_bulls(@strategic_lot)
       @season_cow = KepplerReproduction::SeasonCow.new
     end
 
     def availables
-      @cows = @season.cows.total_season_cows(@strategic_lot).type_is(['Nil', nil])
+      @cows = @season&.cows.total_season_cows(@strategic_lot).type_is(['Nil', nil])
     end
 
     def zeals
-      @cows = @season.cows.total_season_cows(@strategic_lot).type_is(['Zeal'])
+      @cows = @season&.cows.total_season_cows(@strategic_lot).type_is(['Zeal'])
     end
 
     def services
-      @cows = @season.cows.total_season_cows(@strategic_lot).type_is(['Service'])
+      @cows = @season&.cows.total_season_cows(@strategic_lot).type_is(['Service'])
     end
 
     def pregnants
-      @cows = @season.cows.includes(:species).total_season_cows(
+      @cows = @season&.cows.includes(:species).total_season_cows(
         @strategic_lot).type_is(['Pregnancy']
       )
       # @species = KepplerCattle::Species.all
@@ -154,7 +154,7 @@ module KepplerFrontend
     end
 
     def births
-      @cows = @season.cows.total_season_cows(@strategic_lot).type_is(['Birth'])
+      @cows = @season&.cows.total_season_cows(@strategic_lot).type_is(['Birth'])
     end
 
     def assign_bulls
@@ -203,12 +203,12 @@ module KepplerFrontend
     end
       
     def new_services
-      @cows = @season.cows.where(id: params[:multiple_ids].split(','))
+      @cows = @season&.cows.where(id: params[:multiple_ids].split(','))
       @found = false
     end
       
     def create_services
-      cow = @season.cows.find(params[:status][:cow_id])
+      cow = @season&.cows.find(params[:status][:cow_id])
       insemination = @farm.inseminations.find(params[:status][:insemination_id])
       if params[:status][:insemination_quant].to_i > insemination.quantity.to_i
         flash[:error] = 'La cantidad de cartuchos no puede ser mayor a la existente'
@@ -233,7 +233,7 @@ module KepplerFrontend
     end
 
     def new_pregnancies
-      @cows = @season.cows.where(id: params[:multiple_ids].split(','))
+      @cows = @season&.cows.where(id: params[:multiple_ids].split(','))
       @possible_fathers = @farm.cows.possible_fathers_select2
       @found = false
     end
@@ -275,7 +275,7 @@ module KepplerFrontend
     end
 
     def make_abort
-      @cow = @season.cows.find(params[:abort][:cow_id])
+      @cow = @season&.cows.find(params[:abort][:cow_id])
       @abort = @cow.aborts.new(
         abort_date: params[:abort][:date],
         reason: params[:abort][:reason],
@@ -332,42 +332,47 @@ module KepplerFrontend
     end
 
     def zeals_report
-      @zeals_cows = @season.cows.where_status('Zeal', @season.id)
+      @zeals_cows = @season&.cows.where_status('Zeal', @season.id)
       respond_to_formats
     end
 
     def services_report
-      @services_cows = @season.cows.where_status('Service', @season.id)
+      @services_cows = @season&.cows.where_status('Service', @season.id)
       respond_to_formats
     end
 
     def next_palpation_report
-      @next_palpation_cows = @season.cows.to_next_palpation(@season.id)
+      @next_palpation_cows = @season&.cows.to_next_palpation(@season.id)
       respond_to_formats
     end
 
     def pregnants_report
-      @pregnants_cows = @season.cows.where_status('Pregnancy', @season.id)
+      @pregnants_cows = @season&.cows.where_status('Pregnancy', @season.id)
       respond_to_formats
     end
 
     def births_report
-      @births_cows = @season.cows.where_status('Birth', @season.id)
+      @births_cows = @season&.cows.where_status('Birth', @season.id)
+      respond_to_formats
+    end
+
+    def next_births_report
+      @births_cows = @season&.cows.where_status('Pregnancy', @season.id).map { |x| Date.today > (x.status.date + 240) }
       respond_to_formats
     end
 
     def calfs_report
-      @calfs = @season.cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten
+      @calfs = @season&.cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten
       respond_to_formats
     end
 
     def twins_report
-      @twins = @season.cows.where_status('Birth', @season.id).select { |c| c.statuses }
+      @twins = @season&.cows.where_status('Birth', @season.id).select { |c| c.statuses }
       respond_to_formats
     end
 
     def abort_cows_report
-      @abort_cows = @season.cows.select { |c| !c.aborts.blank? }
+      @abort_cows = @season&.cows.select { |c| !c.aborts.blank? }
       respond_to_formats
     end
 
@@ -383,17 +388,17 @@ module KepplerFrontend
     end
 
     def bulls_report
-      @bulls = @season.cows.where(gender: 'male')
+      @bulls = @farm&.cows.where(gender: 'male')
       respond_to_formats
     end
 
     def belly_report
-      @calfs = @season.cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten
+      @calfs = @season&.cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten
       respond_to_formats
     end
 
     def weans_report
-      @calfs = @season.cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten
+      @calfs = @season&.cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten
       respond_to_formats
     end
 
@@ -413,7 +418,7 @@ module KepplerFrontend
     end
 
     def analytic_weight_report
-      @cows = @season.cows
+      @cows = @season&.cows
       respond_to_formats
     end
 
@@ -429,8 +434,14 @@ module KepplerFrontend
 
     def report_variables
       @strategic_lots = @farm.strategic_lots
-      @cows = @season.cows.order(:serie_number)
-      @cow_strategic_lots = @strategic_lots.cows_strategic_lots(@cows.ids)
+      @cows = if @season
+                @season&.cows.order(:serie_number)
+              else 
+                @farm.cows.order(:serie_number)
+              end
+      if @season
+        @cow_strategic_lots = @strategic_lots.cows_strategic_lots(@cows.ids)
+      end
     end
 
     def change_status(params)
@@ -468,8 +479,8 @@ module KepplerFrontend
       strategic_lot_id = params[:strategic_lot_id]
       @strategic_lot = @farm.strategic_lots.find_by(id: strategic_lot_id)
       return false unless @strategic_lot
-      @bulls = @season.cows.total_season_bulls(@strategic_lot)
-      @cows = @season.cows.total_season_cows(@strategic_lot)
+      @bulls = @season&.cows.total_season_bulls(@strategic_lot)
+      @cows = @season&.cows.total_season_cows(@strategic_lot)
     end
 
     def set_farm
@@ -508,7 +519,7 @@ module KepplerFrontend
     end
     
     def new_birth(params)
-      @mother = @season.cows.find_by_id(params[:status][:cow_id])
+      @mother = @season&.cows.find_by_id(params[:status][:cow_id])
       @status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id})
       if params[:status][:successfully] == '1'
         @baby_saved = create_cow(

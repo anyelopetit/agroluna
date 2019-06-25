@@ -63,7 +63,7 @@ module KepplerFrontend
 
     def set_season
       @season = KepplerReproduction::Season.find_by(id: params[:season_id])
-      @cows = @season.cows
+      @cows = @season&.cows
     end
 
     def set_cicle

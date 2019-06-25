@@ -81,24 +81,30 @@ KepplerFrontend::Engine.routes.draw do
         post :reopen
 
         # Reportes
-        get :reproduction_cows, action: :reproduction_cows, as: :reproduction_cows
         get :zeals_report, action: :zeals_report, as: :zeals_report
         get :services_report, action: :services_report, as: :services_report
+        get :inseminated_cows, action: :inseminated_cows, as: :inseminated_cows
         get :next_palpation_report, action: :next_palpation_report, as: :next_palpation_report
         get :pregnants_report, action: :pregnants_report, as: :pregnants_report
         get :births_report, action: :births_report, as: :births_report
+        get :next_births_report, action: :next_births_report, as: :next_births_report
         get :calfs_report, action: :calfs_report, as: :calfs_report
         get :twins_report, action: :twins_report, as: :twins_report
         get :abort_cows_report, action: :abort_cows_report, as: :abort_cows_report
-        get :bulls_report, action: :bulls_report, as: :bulls_report
         get :belly_report, action: :belly_report, as: :belly_report
         get :weans_report, action: :weans_report, as: :weans_report
+        get :vet_efectivity_report, action: :vet_efectivity_report, as: :vet_efectivity_report
+        get :efectivity_report, action: :efectivity_report, as: :efectivity_report
+      end
+
+      collection do
+        # Reportes
+        get :bulls_report, action: :bulls_report, as: :bulls_report
         get :inseminations_report, action: :inseminations_report, as: :inseminations_report
+        get :reproduction_cows, action: :reproduction_cows, as: :reproduction_cows
         get :typologies_report, action: :typologies_report, as: :typologies_report
         get :inactive_cows_report, action: :inactive_cows_report, as: :inactive_cows_report
         get :analytic_weight_report, action: :analytic_weight_report, as: :analytic_weight_report
-        get :vet_efectivity_report, action: :vet_efectivity_report, as: :vet_efectivity_report
-        get :efectivity_report, action: :efectivity_report, as: :efectivity_report
       end
       resources :cicles, controller: 'app/cicles', only: %i[new create destroy]
     end

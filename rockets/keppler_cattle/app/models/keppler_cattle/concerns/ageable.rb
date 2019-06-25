@@ -10,7 +10,7 @@ module KepplerCattle
           age = birthdate&.nil? ? created_at : birthdate
           now = Time.now.utc.to_date 
           now.year > age.year ?
-            now.year - age.year - (age.to_date.change(:year => now.year) <= now.year ? 0 : 1) :
+            now.year - age.year - (age.month <= now.month ? 0 : 1) :
             0
         end 
 

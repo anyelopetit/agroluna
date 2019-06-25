@@ -38,10 +38,10 @@
           .d-flex.justify-content-between
             .w-50
               %b Fecha de inicio:
-              %span= @season.start_date.strftime('%d-%m-%Y')
+              %span= @season&.start_date&.strftime('%d-%m-%Y')
             .w-50
               %b Fecha de cierre:
-              %span= @season.finish_date.strftime('%d-%m-%Y')
+              %span= @season&.finish_date&.strftime('%d-%m-%Y')
           %hr.my-1
           %hr.my-1
         .row

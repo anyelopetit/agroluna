@@ -41,7 +41,7 @@
                             %small (#{(season.start_date + day).strftime('%d/%m/%y')})      
                         .box-body.no-padding
                           .row
-                            - if @season.cows.take(statuses.size).blank?
+                            - if @season&.cows.take(statuses.size).blank?
                               %center.col-lg-12
                                 No existen ganados asignados
                             - statuses.each do |status|

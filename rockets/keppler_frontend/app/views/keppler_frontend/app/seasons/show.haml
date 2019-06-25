@@ -45,7 +45,7 @@
             .left
               %h1
                 Ganados por lotes
-                %small (#{@season.cows.where(gender: 'female').size})
+                %small (#{@season&.cows.where(gender: 'female').size})
             - unless @season.type_id.zero?
               .right
                 .d-flex.justify-content-end
@@ -361,7 +361,7 @@
 :javascript
   $('#season_cow_strategic_lot').select2()
 
-  var $ids = #{@season.cows.pluck(:id)}
+  var $ids = #{@season&.cows.pluck(:id)}
   var $final_array = []
 
   function checkboxes() {

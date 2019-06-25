@@ -76,9 +76,9 @@
           datasets: [{
               label: 'Vacas en celo',
               data: [
-                #{@season.cows.select { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) && x.status.successfully }.size },
-                #{@season.cows.select { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) && !x.status.successfully }.size },
-                #{@season.cows.reject { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) }.size}
+                #{@season&.cows.select { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) && x.status.successfully }.size },
+                #{@season&.cows.select { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) && !x.status.successfully }.size },
+                #{@season&.cows.reject { |x| x.status&.status_type == 'Birth' && x.status.farm_id.eql?(@farm.id) }.size}
               ],
               backgroundColor: [
                 green_gradient,

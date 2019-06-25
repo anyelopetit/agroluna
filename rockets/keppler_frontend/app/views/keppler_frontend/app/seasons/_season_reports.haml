@@ -12,6 +12,14 @@
       Hembras inseminadas
     = link_to({action: :reproduction_cows, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
       Hembras reproductivas
+    = link_to({action: :pregnants_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+      Hembras preñadas
+    = link_to({action: :inseminated_cows, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+      Hembras inseminadas
+    = link_to({action: :next_births_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+      Próx. Partos
+    = link_to({action: :abort_cows_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+      Hembras con abortos
   - when 1
     = link_to farm_season_path(@farm, @season, format: :pdf), {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'} do
       Efectividad de la temporada
@@ -23,12 +31,20 @@
       Efectividad de servicios
     = link_to({action: :vet_efectivity_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
       Efectividad de veterinarios
+    = link_to({action: :inseminated_cows, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+      Hembras inseminadas
+    = link_to({action: :next_births_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+      Próx. Partos
+    = link_to({action: :abort_cows_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+      Hembras con abortos
   - when 2, 3
-    = link_to({action: :next_palpation_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-      Próx. Palpaciones
-    = link_to({action: :pregnants_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-      Hembras preñadas
     = link_to({action: :efectivity_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
       Efectividad de servicios
     = link_to({action: :births_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
       Partos registrados
+    = link_to({action: :twins_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+      Series con parto morocho
+    = link_to({action: :belly_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+      Reporte de vientre
+    = link_to({action: :weans_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+      Reporte de destete

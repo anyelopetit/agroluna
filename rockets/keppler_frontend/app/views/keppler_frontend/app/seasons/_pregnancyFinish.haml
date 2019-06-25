@@ -78,8 +78,8 @@
           datasets: [{
               label: 'Vacas en celo',
               data: [
-                #{@season.cows.select { |x| x.status&.status_type == 'Pregnancy' && x.status.farm_id.eql?(@farm.id) }.size},
-                #{@season.cows.reject { |x| x.status&.status_type == 'Pregnancy' && x.status.farm_id.eql?(@farm.id) }.size}
+                #{@season&.cows.select { |x| x.status&.status_type == 'Pregnancy' && x.status.farm_id.eql?(@farm.id) }.size},
+                #{@season&.cows.reject { |x| x.status&.status_type == 'Pregnancy' && x.status.farm_id.eql?(@farm.id) }.size}
               ],
               backgroundColor: [
                 green_gradient,

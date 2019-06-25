@@ -4,7 +4,7 @@
     %meta{ charset: 'UTF-8' }
     %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
     %meta{ name: 'theme-color', content: '#fff' }
-    %title Reporte de temporada de monta (#{@season.name})
+    %title Reporte de temporada de monta (#{@farm&.title})
     = wicked_pdf_stylesheet_link_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'
     = wicked_pdf_stylesheet_link_tag '/assets/keppler_frontend/app/application.css'
     :javascript
@@ -21,7 +21,7 @@
   %body{ onload: 'number_pages()' }
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
-      %h3.report-title Temporada de monta (#{@season.name})
+      %h3.report-title Temporada de monta (#{@farm&.title}) if @farm
       %h5 Reporte de pajuelas
     .header-right
       %p= Time.now.strftime('%d-%m-%Y')
@@ -35,13 +35,13 @@
         .row
           %hr.my-1
           %hr.my-1
-          .d-flex.justify-content-between
+          -# .d-flex.justify-content-between
             .w-50
               %b Fecha de inicio:
-              %span= @season.start_date.strftime('%d-%m-%Y')
+              %span= @farm&.start_date&.strftime('%d-%m-%Y')
             .w-50
               %b Fecha de cierre:
-              %span= @season.finish_date.strftime('%d-%m-%Y')
+              %span= @farm&.finish_date&.strftime('%d-%m-%Y')
           %hr.my-1
           %hr.my-1
         .row
@@ -59,7 +59,7 @@
                     %center No se encontraron hembras inseminadas en esta temporada de monta
           - else
             - @strategic_lots.each do |strategic_lot|
-              - unless @inseminations&.total_season_inseminations(strategic_lot)&.size.zero?
+              - unless @inseminations&.size.zero?
                 .strategic_lot_name= strategic_lot.name
                 %table.mt-none.mb-4
                   %thead

@@ -50,16 +50,22 @@
               %thead
                 %tr
                   %th.not-records.center
-                    %center No se encontraron lotes estratégicos asociados a ganados
+                    %center No se encontraron lotes estratégicos asociados a toros
           - elsif @bulls&.blank?
             %table.mt-none.mb-4
               %thead
                 %tr
                   %th.not-records.center
-                    %center No se encontraron partos registrados en esta temporada de monta
+                    %center No se encontraron toros padrotes registrados en esta finca
           - else
             - @strategic_lots.each do |strategic_lot|
-              - unless @bulls&.total_season_cows(strategic_lot)&.size.zero?
+              - if @bulls&.total_season_cows(strategic_lot)&.size.zero?
+                %table.mt-none.mb-4
+                  %thead
+                    %tr
+                      %th.not-records.center
+                        %center No se encontraron toros padrotes registrados en esta finca
+              - else
                 .strategic_lot_name= strategic_lot.name
                 %table.mt-none.mb-4
                   %thead

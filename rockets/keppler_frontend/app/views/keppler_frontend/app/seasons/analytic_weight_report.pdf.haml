@@ -45,7 +45,7 @@
           %hr.my-1
           %hr.my-1
         .row
-          - if @calfs&.blank?
+          - if @cows&.blank?
             %table.mt-none.mb-4
               %thead
                 %tr
@@ -53,7 +53,7 @@
                     %center No se encontraron crías registradas en esta temporada
           - else
             - @strategic_lots.each do |strategic_lot|
-              - unless @calfs&.total_farm_calfs(strategic_lot)&.size.zero?
+              - unless @cows&.total_farm_cows(strategic_lot)&.size.zero?
                 .strategic_lot_name= strategic_lot.name
                 %table.mt-none.mb-4
                   %thead
@@ -64,7 +64,7 @@
                       %th Días Nac.
                       %th Género
                   %tbody
-                    - @calfs.each do |calf|
+                    - @cows.each do |calf|
                       %tr
                         %td= calf&.mother&.serie_number
                         %td= calf&.serie_number
@@ -75,7 +75,7 @@
           %hr.my-1
           %b
             Cantidad de series:
-          #{@calfs.size}
+          #{@cows.size}
 :scss
   body {
     font-size: 15px;

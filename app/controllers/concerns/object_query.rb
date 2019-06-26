@@ -106,7 +106,7 @@ module ObjectQuery
       # outline: {   outline:           true,
       #             outline_depth:     LEVEL },
       margin:  {
-        top:               5,                     # default 10 (mm)
+        top:               15,                     # default 10 (mm)
         bottom:            5,
         left:              5,
         right:             5 

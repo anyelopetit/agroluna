@@ -108,7 +108,7 @@ module KepplerFrontend
     end
 
     def males
-      @male = KepplerCattle::Male.find_or_create_by(cow_id: @cow.id)
+      @male = KepplerCattle::Male.find_or_create_by(cow_id: @cow&.id)
       if @male.update!(male_params)
         flash[:notice] = 'Estado de ganado macho ha sido cambiado'
       else

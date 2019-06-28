@@ -23,7 +23,7 @@
                         = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: create_pregnancies_farm_season_path(@farm.id, @season.id), method: :post, html: { style: 'width: 100%' } do |f|
                           .row.mt-4
                             = f.input :user_id, input_html: { name: "status[user_id]", value: current_user.id }, as: :hidden
-                            = f.input :cow_id, input_html: { name: "status[cow_id]", value: cow.id }, as: :hidden
+                            = f.input :cow_id, input_html: { name: "status[cow_id]", value: cow&.id }, as: :hidden
                             = f.input :status_type, input_html: { name: "status[type]", value: 'Pregnancy' }, as: :hidden
                             %input{ name: 'status[farm_id]', value: @farm.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
                             %input{ name: 'status[season_id]', value: @season.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
@@ -102,11 +102,11 @@
                     
                   %tbody#cows
                     - @cows.each do |cow|
-                      %tr.cow{ style: "border-bottom: 1px #eee solid;", id: "cow-#{cow.id}" }
+                      %tr.cow{ style: "border-bottom: 1px #eee solid;", id: "cow-#{cow&.id}" }
                         -# %td
                           .checkbox{ style: 'margin: 3px' }
-                            %label{ for: "checkbox-#{cow.id}" }
-                              %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
+                            %label{ for: "checkbox-#{cow&.id}" }
+                              %input{ type:"checkbox", id: "checkbox-#{cow&.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow&.id}", '@click' => "listDelete(#{cow&.id})"}
                               %span.cr
                                 %i.cr-icon.icofont-check
                         %td
@@ -232,7 +232,7 @@
   - unless cow.status&.status_type&.eql?('Pregnancy')  
     :javascript
       $(document).ready(function(){
-        var id = #{cow.id}
+        var id = #{cow&.id}
         $('.cow').not('#cow-'+id).addClass('tr-active')
       })
     - break   

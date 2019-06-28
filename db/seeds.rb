@@ -295,7 +295,7 @@ puts "Responsables creados"
   farm = KepplerFarm::Farm.find([1,2].sample)
   KepplerCattle::Location.create!(
     user_id: 1,
-    cow_id: cow.id,
+    cow_id: cow&.id,
     farm_id: farm&.id,
     strategic_lot_id: farm.strategic_lots.sample.id 
   )
@@ -303,7 +303,7 @@ puts "Responsables creados"
   if cow.gender?('male')
     KepplerCattle::Male.create!(
       user_id: User.all.sample.id,
-      cow_id: cow.id,
+      cow_id: cow&.id,
       reproductive: [true, false].sample,
       defiant: [true, false].sample
     )
@@ -313,7 +313,7 @@ puts "Responsables creados"
       date: Faker::Date.backward(40),
       months: Faker::Number.between(1, 2),
       user_id: User.all.sample,
-      cow_id: cow.id
+      cow_id: cow&.id
     )
   end
 
@@ -323,7 +323,7 @@ puts "Responsables creados"
     responsable = KepplerFarm::Responsable.all.sample
     KepplerCattle::Weight.create!(
       user: responsable,
-      cow_id: cow.id,
+      cow_id: cow&.id,
       weight: actual_weight.to_f,
       gained_weight: 26.04.nil? ? 0 : (actual_weight.to_f - 24.50),
       average_weight: 26.04.nil? ? 0 : ((actual_weight.to_f - 24.50) / cow.days),
@@ -333,7 +333,7 @@ puts "Responsables creados"
 
     KepplerCattle::Activity.create!(
       active: true,
-      cow_id: cow.id,
+      cow_id: cow&.id,
       observations: Faker::Lorem.paragraph
     )
   end
@@ -396,7 +396,7 @@ species = KepplerCattle::Species.first
   actual_weight = Faker::Number.decimal(3)
   KepplerCattle::Weight.create!(
     user_id: 1,
-    cow_id: cow.id,
+    cow_id: cow&.id,
     weight: actual_weight.to_f,
     gained_weight: 26.04.nil? ? 0 : (actual_weight.to_f - 24.50),
     average_weight: 26.04.nil? ? 0 : ((actual_weight.to_f - 24.50) / cow.days),
@@ -406,14 +406,14 @@ species = KepplerCattle::Species.first
 
   KepplerCattle::Activity.create!(
     active: true,
-    cow_id: cow.id,
+    cow_id: cow&.id,
     observations: Faker::Lorem.paragraph
   )
 
   farm = KepplerFarm::Farm.find([1,2].sample)
   KepplerCattle::Location.create!(
     user_id: 1,
-    cow_id: cow.id,
+    cow_id: cow&.id,
     farm_id: farm&.id,
     strategic_lot_id: farm.strategic_lots.sample.id 
   )
@@ -441,7 +441,7 @@ puts 'Bisabuelos creados'
   actual_weight = Faker::Number.decimal(2)
   KepplerCattle::Weight.create!(
     user_id: 1,
-    cow_id: cow.id,
+    cow_id: cow&.id,
     weight: actual_weight.to_f,
     gained_weight: 26.04.nil? ? 0 : (actual_weight.to_f - 24.50),
     average_weight: 26.04.nil? ? 0 : ((actual_weight.to_f - 24.50) / cow.days),
@@ -451,14 +451,14 @@ puts 'Bisabuelos creados'
 
   KepplerCattle::Activity.create!(
     active: true,
-    cow_id: cow.id,
+    cow_id: cow&.id,
     observations: Faker::Lorem.paragraph
   )
 
   farm = KepplerFarm::Farm.find([1,2].sample)
   KepplerCattle::Location.create!(
     user_id: 1,
-    cow_id: cow.id,
+    cow_id: cow&.id,
     farm_id: farm&.id,
     strategic_lot_id: farm.strategic_lots.sample.id 
   )
@@ -486,7 +486,7 @@ puts 'Abuelos creados'
   actual_weight = Faker::Number.decimal(2)
   KepplerCattle::Weight.create!(
     user_id: 1,
-    cow_id: cow.id,
+    cow_id: cow&.id,
     weight: actual_weight.to_f,
     gained_weight: 26.04.nil? ? 0 : (actual_weight.to_f - 24.50),
     average_weight: 26.04.nil? ? 0 : ((actual_weight.to_f - 24.50) / cow.days),
@@ -496,14 +496,14 @@ puts 'Abuelos creados'
 
   KepplerCattle::Activity.create!(
     active: true,
-    cow_id: cow.id,
+    cow_id: cow&.id,
     observations: Faker::Lorem.paragraph
   )
 
   farm = KepplerFarm::Farm.find([1,2].sample)
   KepplerCattle::Location.create!(
     user_id: 1,
-    cow_id: cow.id,
+    cow_id: cow&.id,
     farm_id: farm&.id,
     strategic_lot_id: farm.strategic_lots.sample.id 
   )
@@ -531,7 +531,7 @@ cow = KepplerCattle::Cow.create!(
 actual_weight = Faker::Number.decimal(2)
 KepplerCattle::Weight.create!(
   user_id: 1,
-  cow_id: cow.id,
+  cow_id: cow&.id,
   weight: (50.05 * 1),
   gained_weight: 26.04.nil? ? 0 : ((50.05 * 1) - 24.50),
   average_weight: 26.04.nil? ? 0 : (((50.05 * 1) - 24.50) / cow.days),
@@ -541,14 +541,14 @@ KepplerCattle::Weight.create!(
 
 KepplerCattle::Activity.create!(
   active: true,
-  cow_id: cow.id,
+  cow_id: cow&.id,
   observations: Faker::Lorem.paragraph
 )
 
 farm = KepplerFarm::Farm.all.sample
 KepplerCattle::Location.create!(
   user_id: 1,
-  cow_id: cow.id,
+  cow_id: cow&.id,
   farm_id: farm&.id,
   strategic_lot_id: farm.strategic_lots.sample.id 
 )

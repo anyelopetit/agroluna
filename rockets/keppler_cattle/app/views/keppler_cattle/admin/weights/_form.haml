@@ -21,7 +21,7 @@
                 .form-padding
                   .row
                     = f.input :user_id, include_blank: false, input_html: { value: current_user.id }, as: :hidden
-                    = f.input :cow_id, include_blank: false, input_html: { value: @cow.id }, as: :hidden
+                    = f.input :cow_id, include_blank: false, input_html: { value: @cow&.id }, as: :hidden
                     .col-sm-12.col-md-6
                       = f.input :weight, autofocus: true, placeholder: '0.00 KG', label: 'Peso (KG)', input_html: { min: 0, value: (@last_weight&.weight.blank? ? 0 : @last_weight&.weight) }
                     .col-sm-12.col-md-6

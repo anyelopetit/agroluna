@@ -1,4 +1,4 @@
-.modal.modal_status.fade{ id: "modalPregnant-#{cow.id}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog" }
+.modal.modal_status.fade{ id: "modalPregnant-#{cow&.id}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog" }
   .modal-dialog{role: "document"}
     .modal-content
       .modal-header
@@ -15,10 +15,10 @@
                   %h3
                     Número de Serie
                     %b #{cow.serie_number}
-                  = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: create_pregnancies_farm_season_path(@farm.id, @season.id, cow.id, cow.strategic_lot.id), method: :post, html: { style: 'width: 100%' } do |f|
+                  = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: create_pregnancies_farm_season_path(@farm.id, @season.id, cow&.id, cow.strategic_lot.id), method: :post, html: { style: 'width: 100%' } do |f|
                     .row.mt-4
                       = f.input :user_id, input_html: { name: "status[user_id]", value: current_user.id }, as: :hidden
-                      = f.input :cow_id, input_html: { name: "status[cow_id]", value: cow.id }, as: :hidden
+                      = f.input :cow_id, input_html: { name: "status[cow_id]", value: cow&.id }, as: :hidden
                       = f.input :status_type, input_html: { name: "status[type]", value: 'Pregnancy' }, as: :hidden
                       %input{ name: 'status[farm_id]', value: @farm.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
                       %input{ name: 'status[season_id]', value: @season.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
@@ -158,7 +158,7 @@
   - unless cow.status&.status_type&.eql?('Pregnancy')  
     :javascript
       $(document).ready(function(){
-        var id = #{cow.id}
+        var id = #{cow&.id}
         $('.cow').not('#cow-'+id).addClass('tr-active')
       })
     - break   

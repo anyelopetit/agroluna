@@ -182,7 +182,7 @@
     $.ajax(
         {
           type: "get",
-          url: `/admin/cattle/cows/#{@cow.id}/weights/${weight_id}.json`,
+          url: `/admin/cattle/cows/#{@cow&.id}/weights/${weight_id}.json`,
           success: function(data){
           }
         }
@@ -213,7 +213,7 @@
   function weightPreview(weight_id) {
     Swal({
       preConfirm: (login) => {
-        return fetch(`/admin/cattle/cows/#{@cow.id}/weights/${weight_id}.json`)
+        return fetch(`/admin/cattle/cows/#{@cow&.id}/weights/${weight_id}.json`)
           .then(response => {
             if (!response.ok) {
               throw new Error(response.weightText)

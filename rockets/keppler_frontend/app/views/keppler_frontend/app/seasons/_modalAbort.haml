@@ -1,4 +1,4 @@
-.modal.modal_status.fade{ id: "modalAbort-#{cow.id}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog" }
+.modal.modal_status.fade{ id: "modalAbort-#{cow&.id}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog" }
   .modal-dialog{role: "document"}
     .modal-content
       .modal-header
@@ -12,20 +12,20 @@
               -# %form.multiple_ids{ action: "finca/#{@farm.id}/temporadas/#{@season.id}/marcar-celos/" }
             .col-lg-12
               = simple_form_for [@farm, @season, cow.aborts.new], url: make_abort_farm_season_path(@farm, @season), html: { onkeypress: "if(event.keyCode == 13) event.returnValue = false;" } do |f|
-                %input{ type: 'hidden', name: "abort[cow_id]", value: cow.id }
+                %input{ type: 'hidden', name: "abort[cow_id]", value: cow&.id }
                 %input{ name: 'abort[season_id]', value: @season.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
                 #form-total
                   
-                  .row.setup-content{ id: "cow-#{cow.id}-step-1" }
+                  .row.setup-content{ id: "cow-#{cow&.id}-step-1" }
                     .col-md-12
                       .row
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Fecha del aborto
-                          %input.form-control.input_custom.datepicker{ id: "abort_#{cow.id}_date", name: "abort[date]", autocomplete: 'off', value: Date.today }
+                          %input.form-control.input_custom.datepicker{ id: "abort_#{cow&.id}_date", name: "abort[date]", autocomplete: 'off', value: Date.today }
                         .col-sm-12.col-md-6
                           -# = f.input :name, label: 'Nombre del Responsable', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
                           %label.label_custom--strong Razón o motivo
-                          %input.form-control.input_custom{ id: "abort_#{cow.id}_reason", name: "abort[reason]" }
+                          %input.form-control.input_custom{ id: "abort_#{cow&.id}_reason", name: "abort[reason]" }
                             
                         .col-sm-12
                           %label.label_custom--strong Observaciones

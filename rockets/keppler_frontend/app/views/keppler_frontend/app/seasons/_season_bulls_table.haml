@@ -40,23 +40,23 @@
             %tr.cow{ style: "border-bottom: 1px #eee solid;" }
               %td
                 .checkbox{ style: 'margin: 3px' }
-                  %label{ for: "checkbox-#{cow.id}" }
-                    %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model-bull' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
+                  %label{ for: "checkbox-#{cow&.id}" }
+                    %input{ type:"checkbox", id: "checkbox-#{cow&.id}", 'checklist-model-bull' => 'check', 'checklist-value' => "#{cow&.id}", '@click' => "listDelete(#{cow&.id})"}
                     %span.cr
                       %i.cr-icon.icofont-check
               %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow&.id},{title: cow.observations}) do
                   = cow&.serie_number
               -# %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow&.id}) do
                   = image_tag cow&.image&.url if cow.image.url
               %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow&.id},{title: cow.observations}) do
                   = cow&.short_name
                   = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-xs ml-2', style: ('height: 12px' if cow.gender?('male')) unless cow.gender.blank?
               %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow&.id},{title: cow.observations}) do
                   = cow&.race&.name
               %td
-                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow&.id},{title: cow.observations}) do
                   = cow&.typology_name

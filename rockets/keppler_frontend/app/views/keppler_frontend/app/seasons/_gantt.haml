@@ -46,7 +46,7 @@
                                 No existen ganados asignados
                             - statuses.each do |status|
                               .col-lg-12
-                                = link_to(action: :show, id: status.cow.id) do
+                                = link_to(action: :show, id: status.cow&.id) do
                                   .cow-item.d-flex.p-3
                                     = image_tag "/assets/keppler_cattle/#{status.cow.gender}", class: 'svg-icon-md p-absolute r-0' unless status.cow.gender.blank?
                                     %strong #{status.cow.serie_number} &nbsp;

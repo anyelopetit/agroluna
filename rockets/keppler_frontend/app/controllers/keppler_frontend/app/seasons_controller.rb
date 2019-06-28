@@ -506,7 +506,7 @@ module KepplerFrontend
       )
       strategic_lot.cows.possible_mothers.each do |cow|
         season_cow = @season.season_cows.new(
-          cow_id: cow.id,
+          cow_id: cow&.id,
           strategic_lot_id: strategic_lot_id
         )
         if season_cow.save

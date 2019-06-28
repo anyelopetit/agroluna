@@ -165,8 +165,8 @@
                     %tr
                       -# %td
                         .checkbox{ style: 'margin: 3px' }
-                          %label{ for: "checkbox-#{cow.id}" }
-                            %input{ type:"checkbox", id: "checkbox-#{cow.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow.id}", '@click' => "listDelete(#{cow.id})"}
+                          %label{ for: "checkbox-#{cow&.id}" }
+                            %input{ type:"checkbox", id: "checkbox-#{cow&.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow&.id}", '@click' => "listDelete(#{cow&.id})"}
                             %span.cr
                               %i.cr-icon.icofont-check
                       %td
@@ -184,7 +184,7 @@
                           = cow.status.insemination&.serie_number
                       %td
                         -# - if Date.today > cow.status.date + 30.days
-                        %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalPregnant-#{cow.id}", 'data-toggle': 'modal' }
+                        %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalPregnant-#{cow&.id}", 'data-toggle': 'modal' }
                           %i.icofont-plus
                           Preñez
                         = render 'keppler_frontend/app/seasons/modalPregnant', season: @season, cow: cow
@@ -264,12 +264,12 @@
                           = cow.status.insemination&.serie_number.blank? ? 'Toro Desconocido' : cow.status.insemination&.serie_number
                       %td
                         -# - if Date.today > cow.status.date + 270.days
-                        %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
+                        %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow&.id}", 'data-toggle': 'modal' }
                           %i.icofont-plus
                           Parto
                         = render 'keppler_frontend/app/seasons/modalBirth', season: @season, cow: cow
                       %td
-                        %button.btn.btn_custom.btn--filled-secundary.btn--medium{'data-target': "#modalAbort-#{cow.id}", 'data-toggle': 'modal' }
+                        %button.btn.btn_custom.btn--filled-secundary.btn--medium{'data-target': "#modalAbort-#{cow&.id}", 'data-toggle': 'modal' }
                           %i.icofont-plus
                           Aborto
                         = render 'keppler_frontend/app/seasons/modalAbort', season: @season, cow: cow
@@ -308,7 +308,7 @@
                             = cow.days
                         %td
                           -# - if cow.days > 190
-                          %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal' }
+                          %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow&.id}", 'data-toggle': 'modal' }
                             %i.icofont-plus
                             Destete
                           = render 'keppler_frontend/app/seasons/modalDestete', season: @season, cow: cow

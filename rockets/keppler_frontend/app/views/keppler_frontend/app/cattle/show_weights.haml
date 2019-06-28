@@ -35,23 +35,23 @@
                 - @cows.each do |cow|
                   %tr
                     %th
-                      = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                      = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow&.id},{title: cow.observations}) do
                         = cow.serie_number
                     %td
-                      = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                      = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow&.id},{title: cow.observations}) do
                         = cow.short_name
                         = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-xs ml-2', style: ('height: 12px' if cow.gender?('male')) unless cow.gender.blank?
                     %td
-                      = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                      = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow&.id},{title: cow.observations}) do
                         = cow.typology_name
                     %td
-                      = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                      = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow&.id},{title: cow.observations}) do
                         #{cow.weight&.weight&.round(2)} KG
                     %td
-                      = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                      = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow&.id},{title: cow.observations}) do
                         #{cow.weight&.gained_weight&.round(2)} KG
                     %td
-                      = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow.id},{title: cow.observations}) do
+                      = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: cow&.id},{title: cow.observations}) do
                         #{cow.weight&.average_weight&.round(2)} KG
 :scss
   .cow-table {

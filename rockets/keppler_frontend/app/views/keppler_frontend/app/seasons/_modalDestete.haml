@@ -1,4 +1,4 @@
-.modal.modal_wean.fade{ id: "modalBirth-#{cow.id}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog" }
+.modal.modal_wean.fade{ id: "modalBirth-#{cow&.id}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog" }
   .modal-dialog{role: "document"}
     .modal-content
       .modal-header
@@ -12,7 +12,7 @@
               -# %form.multiple_ids{ action: "finca/#{@farm.id}/temporadas/#{@season.id}/marcar-celos/" }
             .col-lg-12
               = simple_form_for [@farm, @season, KepplerCattle::Weight.new], url: wean_farm_cow_path(@farm, cow), html: { onkeypress: "if(event.keyCode == 13) event.returnValue = false;" } do |f|
-                %input{ type: 'hidden', name: "wean[cow_id]", value: cow.id }
+                %input{ type: 'hidden', name: "wean[cow_id]", value: cow&.id }
                 #form-total
                   
                   .row.setup-content
@@ -21,11 +21,11 @@
                       .row
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Fecha del destete
-                          %input.form-control.input_custom.datepicker{ id: "wean_#{cow.id}_date", name: "wean[date]", autocomplete: 'off', value: Date.today }
+                          %input.form-control.input_custom.datepicker{ id: "wean_#{cow&.id}_date", name: "wean[date]", autocomplete: 'off', value: Date.today }
                         .col-sm-12.col-md-6
                           -# = f.input :name, label: 'Nombre del Responsable', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
                           %label.label_custom--strong Nuevo lote estratégico
-                          %select.form-control.input_custom{ id: "wean_#{cow.id}_strategic_lot", name: "wean[strategic_lot]", autocomplete: 'off' }
+                          %select.form-control.input_custom{ id: "wean_#{cow&.id}_strategic_lot", name: "wean[strategic_lot]", autocomplete: 'off' }
                             - @farm.strategic_lots.each do |strategic_lot|
                               %option{ value: strategic_lot.id }= strategic_lot.name
                         .col-sm-12.col-md-6

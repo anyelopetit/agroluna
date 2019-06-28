@@ -41,7 +41,7 @@ module KepplerCattle
 
         if @cow.save! && @cow.weights.blank?
           @cow.mother.create_typology unless @cow.mother.blank?
-          redirect_to new_admin_cattle_cow_weight_path(@cow.id)
+          redirect_to new_admin_cattle_cow_weight_path(@cow&.id)
         else
           flash[:error] = 'Revisa los datos del formulario'
           render :new

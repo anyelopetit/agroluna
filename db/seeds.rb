@@ -155,9 +155,9 @@ if defined?(KepplerFrontend) && KepplerFrontend.is_a?(Module)
   puts 'Frontend functions has been created'
 end
 
-# App
+### App
 
-# Fincas
+Fincas
 ['Agropecuaria La Luna', 'Finca Agrocabrita'].each do |farm|
   farm = KepplerFarm::Farm.create!(
     title: farm,

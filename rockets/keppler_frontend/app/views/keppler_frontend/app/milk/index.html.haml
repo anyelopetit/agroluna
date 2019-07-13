@@ -1,0 +1,12 @@
+-# = render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
+.app_wrapper
+  .container_custom
+    .float-left
+      -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
+    .d
+      .float-left.mt-4.mb-4{ style: 'width: 80%' }
+        %h1 Producción lechera
+      %a.float-right.mt-4.mb-4{ href:'' }
+        %button.btn.btn_custom.btn--filled.btn--medium
+          %i.icofont-plus
+          Agregar Lote

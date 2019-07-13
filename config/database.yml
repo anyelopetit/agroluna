@@ -21,6 +21,5 @@ development:
 test:
   <<: *default
 
-production:
-  <<: *default
+production: &default
   host: localhost

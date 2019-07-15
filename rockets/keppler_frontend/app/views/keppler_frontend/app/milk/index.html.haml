@@ -1,12 +1,47 @@
--# = render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
 .app_wrapper
-  .container_custom
-    .float-left
-      -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
-    .d
-      .float-left.mt-4.mb-4{ style: 'width: 80%' }
-        %h1 Producción lechera
-      %a.float-right.mt-4.mb-4{ href:'' }
-        %button.btn.btn_custom.btn--filled.btn--medium
-          %i.icofont-plus
-          Agregar Lote
+  .container.d-flex.justify-content-between
+    .left
+      %h1 Producción lechera
+    .right
+      %button.btn.btn_custom.btn--filled.btn--medium.mt-4.mb-4{'data-target': "#modalLote", 'data-toggle': 'modal'}
+        %i.icofont-plus
+        = @milk_lot ? 'Cambiar' : 'Asignar'
+        Lote Estratégico
+  .container
+    %h2.mb-4= @milk_lot&.name
+    %table
+      - if @milk_lot
+        %thead
+          %tr
+            %th Nro. Serie
+            %th Nombre corto
+            %th Tipología
+            %th Peso
+            %th Estado actual
+            %th Días
+            %th Leche/Mes
+            %th
+        %tbody
+          - @milk_lot.cows.where(gender: 'female').each do |cow|
+            %tr
+              %td= cow.serie_number
+              %td= cow.short_name
+              %td= cow.typology&.name
+              %td #{cow.weight&.weight} KG
+              %td= milk_status(cow)
+              %td= milk_status_date(cow)
+              %td 0KG
+              %td
+                %a#milkDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+                  %i.bx.bx-dots-vertical-rounded
+                .dropdown-menu.profile_dropdown{"aria-labelledby" => "milkDropdown"}
+                  %a.mt-4.mb-4.ml-1{ href: new_farm_cow_path(farm),class: "dropdown-item" }
+                    Agregar
+                  %a.open-status-history{class: "dropdown-item"}
+                    Historial
+                  = link_to({action: :index, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    Reporte
+      - else
+        %tbody
+          %th No se encuentra ningún lote estratégico asignado
+= render 'keppler_frontend/app/milk/modalLote'

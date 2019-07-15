@@ -109,7 +109,11 @@ KepplerFrontend::Engine.routes.draw do
       resources :cicles, controller: 'app/cicles', only: %i[new create destroy]
     end
 
-    resources :milk, path: 'lechera', controller: 'app/milk', only: %i[index]
+    resources :milk, path: 'lechera', controller: 'app/milk', only: %i[index] do
+      collection do
+        patch :assign_lot
+      end
+    end
   end
   
   # Farm strategic_lot

@@ -35,4 +35,25 @@ module FrontsHelper
     end
     redirect_to path if permit.eql?(false)
   end
+
+  def milk_status(cow)
+    if cow&.milking
+      case cow.status.status_type
+      when 'Service'
+        'Lactando con servicio'
+      when 'Pregnancy'
+        'Lactando preñada'
+      when 'Dry'
+        'En secado'
+      else
+        'Lactando sin servicio'
+      end
+    else
+      'Sin lactar'
+    end
+  end
+
+  def milk_status_date(cow)
+    cow.status ? (Date.today - cow.status&.date).to_s.remove('/1') : 'N/A'
+  end
 end

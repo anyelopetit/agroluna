@@ -37,7 +37,7 @@
                       %label.control-label= t('activerecord.attributes.processes').humanize
                       %select.form-control.select.optional{ name: 'farm[processes][]', id: 'farm_processes', multiple: true }
                         - KepplerFarm::Process.all.each do |process|
-                          %option{ value: process.title, selected: (f.object.processes.include?(process.title)) }= process.title
+                          %option{ value: process.title, selected: (f.object&.processes&.include?(process.title)) }= process.title
                   .col-xs-12
                     .pull-right
                       = f.button :submit, t('keppler.actions.save'), name: '_save', class: 'btn-primary'

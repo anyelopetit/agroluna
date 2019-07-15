@@ -58,9 +58,8 @@
               .farm_menu{ class: ('visibility' if %w[seasons].include?(controller_name))}
                 = link_to farm_seasons_path(farm),style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item #{('active_sub' if %w[seasons].include?(controller_name))}" do
                   Temporadas de monta
-            %li.nav-item{ style: "position: relative;"}
-              = link_to farm_milk_index_path(farm),style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item #{('active_sub' if %w[seasons].include?(controller_name))}" do
-                Producción Lechera
+                = link_to farm_milk_index_path(farm),style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item #{('active_sub' if %w[seasons].include?(controller_name))}" do
+                  Producción Lechera
           %li.nav-item.d-lg-none
             = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: "nav-link"
       

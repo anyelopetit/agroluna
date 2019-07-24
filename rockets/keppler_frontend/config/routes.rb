@@ -112,8 +112,14 @@ KepplerFrontend::Engine.routes.draw do
     resources :milk, path: 'lechera', controller: 'app/milk', only: %i[index] do
       collection do
         patch :assign_lot
+        patch :edit_params
       end
     end
+
+    resources :cheese_types, path: 'tipos-de-queso', controller: 'app/cheese_types'
+    resources :milk_tanks, path: 'tanques-de-leche', controller: 'app/milk_tanks'
+    resources :deliveries, path: 'entregas', controller: 'app/deliveries'
+    resources :cheese_processes, path: 'quesera', controller: 'app/cheese_processes'
   end
   
   # Farm strategic_lot

@@ -27,6 +27,15 @@ module KepplerFrontend
       redirect_back fallback_location: farm_milk_index_path
     end
 
+    def edit_params
+      if @farm.update(milk_params)
+        flash[:notice] = 'Parámetros actualizados'
+      else
+        flash[:error] = 'No se pudieron actualizar los parámetros'
+      end
+      redirect_back fallback_location: farm_milk_index_path
+    end
+
     private
 
     def set_farm

@@ -1,0 +1,23 @@
+.app_wrapper.pb-5
+  .container.pb-5
+    = simple_form_for [@farm, @delivery] do |f|
+      = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
+      = f.input :date, input_html: { class: 'form-control' }
+      = f.input :liters, input_html: { class: 'form-control' }
+      = f.input :destination, input_html: { class: 'form-control', list: 'tanks', placeholder: 'Escriba el nombre de un cliente o seleccione un tanque' }
+      %datalist#tanks
+        - KepplerReproduction::MilkTank.all.each do |milk_tank|
+          %option{ value: milk_tank.name }= milk_tank.name
+      -# #client_name.d-none
+        = f.input :client_name, input_html: { class: 'form-control' }
+      = f.submit 'Guardar', input_html: { class: 'form-control' }
+
+-# :javascript
+  $('#delivery_destination').change(function() {
+    console.log($('#delivery_destination :selected').val())
+    if ($('#delivery_destination :selected').val() == 'Cliente') {
+      $('#client_name').removeClass('d-none')
+    } else {
+      $('#client_name').addClass('d-none')
+    }
+  })

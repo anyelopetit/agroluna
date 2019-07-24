@@ -1,0 +1,20 @@
+.modal.modal_status.fade{ id: "editParams", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+  .modal-dialog{role: "document", style: "max-width: 800px;"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body{ style: "padding: 20px;"}
+        .container_custom
+          .row
+            .col-lg-12
+              %h1.mb-4 Elegir un lote
+              = simple_form_for @farm, url: edit_params_farm_milk_index_path(@farm) do |f|
+                .row
+                  - %i[days_to_service days_to_pregnancy days_to_dry days_to_rest].each do |day|
+                    .col-md-6
+                      = f.input day, label: t("days.#{day}"), input_html: { class: 'form-control required input_custom', value: @farm.try(day).to_i }
+                .float-right.mt-3
+                  %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                    %i.icofont-save
+                    Guardar

@@ -1,4 +1,4 @@
-.app_wrapper
+.app_wrapper.pb-5
   .container.d-flex.justify-content-between
     .left
       %h1 Producción lechera
@@ -7,8 +7,16 @@
         %i.icofont-plus
         = @milk_lot ? 'Cambiar' : 'Asignar'
         Lote Estratégico
-  .container
-    %h2.mb-4= @milk_lot&.name
+  = render 'keppler_frontend/app/milk/tabs'
+  .container.pb-5
+    %h2.py-5= @milk_lot&.name
+    .container.d-flex.justify-content-between.mb-5
+      - %i[days_to_service days_to_pregnancy days_to_dry days_to_rest].each do |day|
+        .day
+          %b #{t("days.#{day}")}:
+          %span= @farm.try(day).to_i
+      %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#editParams", 'data-toggle': 'modal'}
+        %i.bx.bx-pencil
     %table
       - if @milk_lot
         %thead
@@ -25,7 +33,9 @@
           - @milk_lot.cows.where(gender: 'female').each do |cow|
             %tr
               %td= cow.serie_number
-              %td= cow.short_name
+              %td
+                = cow.short_name
+                = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-xs ml-2', style: ('height: 12px' if cow.gender?('male')) unless cow.gender.blank?
               %td= cow.typology&.name
               %td #{cow.weight&.weight} KG
               %td= milk_status(cow)
@@ -45,3 +55,4 @@
         %tbody
           %th No se encuentra ningún lote estratégico asignado
 = render 'keppler_frontend/app/milk/modalLote'
+= render 'keppler_frontend/app/milk/editParams'

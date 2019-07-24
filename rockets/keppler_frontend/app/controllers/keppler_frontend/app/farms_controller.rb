@@ -38,7 +38,6 @@ module KepplerFrontend
     
     def import_xls
     end
-
     private
 
     def set_farm

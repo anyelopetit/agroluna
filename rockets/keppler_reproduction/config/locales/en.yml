@@ -37,3 +37,9 @@ en:
       messages:
   errors:
   helpers:
+
+  days:
+    days_to_service: Días para servicio
+    days_to_pregnancy: Días para preñez
+    days_to_dry: Días para secado
+    days_to_rest: Días para descanso

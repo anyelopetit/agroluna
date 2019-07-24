@@ -29,6 +29,7 @@ module KepplerFarm
 
     # Reproduction
     has_many :seasons, class_name: 'KepplerReproduction::Season'
+    has_many :milk_tanks, class_name: "KepplerReproduction::MilkTank"
 
     # accepts_nested_attributes_for :cows
 

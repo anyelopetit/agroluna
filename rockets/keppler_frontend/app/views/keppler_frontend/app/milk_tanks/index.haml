@@ -1,0 +1,31 @@
+.app_wrapper.pb-5
+  .container.d-flex.justify-content-between
+    .left
+      %h1 Tanques de leche
+    .right
+      = link_to (:back == request.url ? :back : farm_deliveries_path(@farm)) do
+        %button.btn.btn_custom.btn--medium.mt-4.mb-4
+          %i.icofont-arrow-left
+          Atrás
+      = link_to new_farm_milk_tank_path do
+        %button.btn.btn_custom.btn--filled.btn--medium.mt-4.mb-4
+          %i.icofont-plus
+          Crear nuevo tanque de leche
+  .container.pb-5
+    %table.table
+      %thead
+        %tr
+          - if @milk_tanks.blank?
+            %th Por favor cree un nuevo tanque de leche
+          - else
+            %th Nombre
+            %th Litros x Kg
+            %th{ colspan: 2 }
+      %tbody
+        - unless @milk_tanks.blank?
+          - @milk_tanks.each do |milk_tank|
+            %tr{ title: milk_tank.address }
+              %td= milk_tank.name
+              %td #{milk_tank.milk_capacity} Lts
+              %td= link_to 'Editar', edit_farm_milk_tank_path(@farm, milk_tank)
+              %td= link_to 'Eliminar', farm_milk_tank_path(@farm, milk_tank), method: :delete, data: { confirm: '¿Estás seguro?' }

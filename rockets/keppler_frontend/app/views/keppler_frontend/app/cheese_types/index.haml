@@ -1,0 +1,32 @@
+.app_wrapper.pb-5
+  .container.d-flex.justify-content-between
+    .left
+      %h1 Tipos de queso
+    .right
+      = link_to (:back == request.url ? :back : farm_cheese_processes_path(@farm)) do
+        %button.btn.btn_custom.btn--medium.mt-4.mb-4
+          %i.icofont-arrow-left
+          Atrás
+      = link_to new_farm_cheese_type_path do
+        %button.btn.btn_custom.btn--filled.btn--medium.mt-4.mb-4
+          %i.icofont-plus
+          Crear nuevo tipo de queso
+  -# = render 'keppler_frontend/app/milk/tabs'
+  .container
+    %table.table
+      %thead
+        %tr
+          - if @cheese_types.blank?
+            %th Por favor cree tipos de queso
+          - else
+            %th Nombre
+            %th Litros x Kg
+            %th{ colspan: 2 }
+      %tbody
+        - unless @cheese_types.blank?
+          - @cheese_types.each do |cheese_type|
+            %tr
+              %td= cheese_type.name
+              %td #{cheese_type.liters_needed} Lts
+              %td= link_to 'Editar', edit_farm_cheese_type_path(@farm, cheese_type)
+              %td= link_to 'Eliminar', farm_cheese_type_path(@farm, cheese_type), method: :delete, data: { confirm: '¿Estás seguro?' }

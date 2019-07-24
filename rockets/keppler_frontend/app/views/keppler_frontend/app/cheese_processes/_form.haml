@@ -1,0 +1,19 @@
+.app_wrapper.pb-5
+  .container.pb-5
+    = simple_form_for [@farm, @cheese_process] do |f|
+      = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
+      = f.input :date, input_html: { class: 'form-control' }
+      = f.input :received_liters, input_html: { class: 'form-control' }
+      = f.input :processed_liters, input_html: { class: 'form-control' }
+      = f.input :cheese_type_id, collection: KepplerReproduction::CheeseType.all, include_blank: false, input_html: { class: 'form-control' }
+      = f.submit 'Guardar', input_html: { class: 'form-control' }
+
+:javascript
+  $('#cheese_process_destination').change(function() {
+    console.log($('#cheese_process_destination :selected').val())
+    if ($('#cheese_process_destination :selected').val() == 'Cliente') {
+      $('#client_name').removeClass('d-none')
+    } else {
+      $('#client_name').addClass('d-none')
+    }
+  })

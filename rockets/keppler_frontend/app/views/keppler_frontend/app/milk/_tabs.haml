@@ -1,0 +1,14 @@
+.container
+  %ul#moduleTabs.nav.nav-tabs.d-none.d-md-flex{role: "tablist", style: "padding: 0;"}
+    %li.nav-item.tabs-season
+      = link_to farm_milk_index_path do
+        .nav-link{ class: ('active' if controller_name.eql?('milk')) }
+          General
+    %li.nav-item.tabs-season
+      = link_to farm_deliveries_path do
+        .nav-link{ class: ('active' if controller_name.eql?('deliveries')) }
+          Entrega
+    %li.nav-item.tabs-season
+      = link_to farm_cheese_processes_path do
+        .nav-link{ class: ('active' if controller_name.eql?('cheese_processes')) }
+          Quesera

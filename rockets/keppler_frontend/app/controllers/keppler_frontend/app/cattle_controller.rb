@@ -7,7 +7,7 @@ module KepplerFrontend
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
     before_action :set_farm
-    before_action :set_cow, only: %i[show edit update destroy males]
+    before_action :set_cow, only: %i[show edit update destroy males toggle_milking]
     before_action :cow_attributes, only: %i[new edit create]
     before_action :set_farms
     before_action :index_variables
@@ -115,6 +115,11 @@ module KepplerFrontend
         flash[:error] = 'No se ha podido guardar el estado del ganado'
       end
       redirect_to [@farm, @cow]
+    end
+
+    def toggle_milking
+      @cow.update!(milking: !@cow.milking)
+      redirect_back fallback_location: farm_milk_index_path(@farm)
     end
 
     private

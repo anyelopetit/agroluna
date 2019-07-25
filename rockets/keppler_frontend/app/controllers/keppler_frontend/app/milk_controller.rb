@@ -36,6 +36,40 @@ module KepplerFrontend
       redirect_back fallback_location: farm_milk_index_path
     end
 
+    def create_service
+      cow = KepplerCattle::Cow.find(params[:id])
+      insemination = @farm.inseminations.find(params[:status][:insemination_id])
+      if params[:status][:insemination_quant].to_i > insemination.quantity.to_i
+        flash[:error] = 'La cantidad de cartuchos no puede ser mayor a la existente'
+      else
+        if params[:status][:insemination_quant].to_i < 1
+          flash[:error] = 'La cantidad de cartuchos debe ser superior a cero'
+        else
+          status = KepplerCattle::Status.new_status(params, {farm_id: @farm.id, cow_id: cow.id, user: params[:status][:user_name]})
+          unless insemination.quantity.to_i.zero?
+            insemination.update(
+              quantity: insemination.quantity.to_i - params[:status][:insemination_quant].to_i
+            )
+          end
+          flash[:notice] = 'Servicio guardado' if status.save!
+        end
+      end
+      redirect_back fallback_location: farm_milk_index_path(@farm)
+    end
+
+    def create_pregnancy
+      cow = KepplerCattle::Cow.find_by_id(
+        params.dig(:status, :cow_id) || params[:id]
+      )
+      status = KepplerCattle::Status.new_status(params, {cow_id: @cow.id, farm_id: @farm.id})
+      if status.save!
+        flash[:notice] = 'Servicio guardado'
+      else
+        flash[:error] = 'No se pudo guardar el servicio'
+      end
+      redirect_back fallback_location: farm_milk_index_path(@farm)
+    end
+
     private
 
     def set_farm

@@ -1,4 +1,4 @@
-- array = [['Sin Servicio', 'NoService'], ['Con Servicio', 'Service'], ['Preñadas', 'Pregnancy'], ['En Secado', 'Dry']]
+- array = [['Sin Servicio', 'Nil'], ['Con Servicio', 'Service'], ['Preñadas', 'Pregnancy'], ['En Secado', 'Dry']]
 
 .gantt-wrapper
   .gantt.mb-5.mt-5
@@ -19,11 +19,12 @@
           #{status}
         %ul.gantt__row-bars{ style: "grid-template-columns: repeat(#{array.size}, 1fr);" }
           - array.each_with_index do |process, index|
-            %li.stripes{ style: "z-index: 2; padding: 0 10px; grid-column: #{index + 1}/#{index + 2}; background-color: #{['#54c6f9', '#2ecaac', '#ff6252'].sample}; max-width: 30px; margin: 0 auto" }
-              %a{ style: 'display:block; width: 100%; height: 100%;', 'data-target': "#modal#{process.last}", 'data-toggle': 'modal', href: ""}
+            %a{ style: 'display:block; width: 100%; height: 100%;', 'data-target': "#modal#{process.last}", 'data-toggle': 'modal', href: ""}
+              %li.stripes{ style: "z-index: 2; padding: 0 10px; grid-column: #{index + 1}/#{index + 2}; background-color: #{['#54c6f9', '#2ecaac', '#ff6252'].sample}; max-width: 30px; margin: 0 auto" }
                 .text-white.text-center
-                  = KepplerCattle::Cow.select { |s| s.status&.status_type&.eql?(process.last) }.size
-            -# .modal.modal_status.fade{ id: "modal#{process}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+                  - cows_in_this_process = @milk_lot.cows.select { |c| c.status_name.inspect.camelcase&.eql?(process.last) }
+                  = cows_in_this_process.size
+            .modal.modal_status.fade{ id: "modal#{process.last}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
               .modal-dialog{role: "document"}
                 .modal-content
                   .modal-header
@@ -33,21 +34,21 @@
                     .card_status
                       %center.card_status--title   
                         %h1.modal-title
-                          = process    
+                          = process.first
                       .box-body.no-padding
                         .row
-                          - if @season&.cows.take(process).blank?
+                          - if @milk_lot.cows.where(milking: true).blank?
                             %center.col-lg-12
                               No existen ganados asignados
-                          - statuses.each do |status|
+                          - @milk_lot.cows.where(milking: true).each do |cow|
                             .col-lg-12
-                              = link_to(action: :show, id: status.cow&.id) do
+                              = link_to(controller: :cattle, action: :show, id: cow&.id) do
                                 .cow-item.d-flex.p-3
-                                  = image_tag "/assets/keppler_cattle/#{status.cow.gender}", class: 'svg-icon-md p-absolute r-0' unless status.cow.gender.blank?
-                                  %strong #{status.cow.serie_number} &nbsp;
+                                  = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-md p-absolute r-0' unless cow.gender.blank?
+                                  %strong #{cow.serie_number} &nbsp;
                                   %span
-                                    = "(#{status.cow.short_name})" unless status.cow.short_name.blank?
-                                    \- #{status.cow.typology_name} (#{status.cow.weight&.weight} KG)
+                                    = "(#{cow.short_name})" unless cow.short_name.blank?
+                                    \- #{cow.typology_name} (#{cow.weight&.weight} KG)
 :scss
   .months {
     display: grid;

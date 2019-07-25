@@ -41,18 +41,34 @@
               %td= cow.typology&.name
               %td #{cow.weight&.weight} KG
               %td= milk_status(cow)
-              %td= milk_status_date(cow)
-              %td 0KG
+              %td= cow.milking? ? milk_status_date(cow) : 'N/A'
+              %td
+                - if cow.milking?
+                  = cow.milk_weights.last&.total_liters&.to_s.to_f&.round(2)
+                  Lts
+                - else
+                  N/A
               %td
                 %a#milkDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
                   %i.bx.bx-dots-vertical-rounded
                 .dropdown-menu.profile_dropdown{"aria-labelledby" => "milkDropdown"}
-                  %a.mt-4.mb-4.ml-1{ href: new_farm_cow_path(farm),class: "dropdown-item" }
-                    Agregar
-                  %a.open-status-history{class: "dropdown-item"}
-                    Historial
-                  = link_to({action: :index, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                    Reporte
+                  = link_to({ controller: :cattle, action: :toggle_milking, id: cow }, { method: :post, class: 'py-2 dropdown-item' }) do
+                    = cow.milking ? 'Cerrar' : 'Comenzar'
+                    Ordeño
+                  - if cow.milking?
+                    = link_to '#', class: 'py-2 dropdown-item', rel: "nofollow", 'data-target': "#milkWeight", 'data-toggle': 'modal' do
+                      Pesaje de leche
+                    = link_to farm_cow_milk_weights_path(@farm, cow), class: 'py-2 dropdown-item' do
+                      Historial de pesajes
+                    = link_to '#', class: 'py-2 dropdown-item', rel: "nofollow", 'data-target': "#createService", 'data-toggle': 'modal'  do
+                      Registrar Servicio
+                    = link_to '#', class: 'py-2 dropdown-item', rel: "nofollow", 'data-target': "#createPregnancy", 'data-toggle': 'modal'  do
+                      Registrar Preñez
+                  = link_to '#', class: 'py-2 dropdown-item' do
+                    Transferir de lote
+            = render 'keppler_frontend/app/milk/milkWeight', cow: cow
+            = render 'keppler_frontend/app/milk/createService', cow: cow
+            = render 'keppler_frontend/app/milk/createPregnancy', cow: cow
       - else
         %tbody
           %th No se encuentra ningún lote estratégico asignado

@@ -13,25 +13,6 @@
             .form-padding
               - @cows.each do |cow|
                 .row
-                  -# .col-sm-12
-                    %h3
-                      %li
-                        Serie
-                        %b #{cow.serie_number}
-                        %small
-                          = "(#{cow.short_name})" unless cow.short_name.blank?
-                          \- #{cow.typology_name} (#{cow.weight&.weight.to_f} KG)
-                        \-
-                        %small
-                          - if cow.statuses.where(status_type: 'Service').exists?
-                            %b Último servicio:
-                            %span= cow.statuses.where(status_type: 'Service').last&.date&.strftime('%d/%m/%y')
-                            \-
-                            Pajuela
-                            %b= @farm.inseminations.find_by_id(cow.statuses.where(status_type: 'Service').last&.insemination_id)&.serie_number
-                            (#{cow.statuses.where(status_type: 'Service').last&.insemination_quantity.to_i} cartuchos)
-                          - else
-                            %b Sin servicios realizados
                   - unless @found
                     - unless cow.status&.status_type&.eql?('Service')
                       - @found = true

@@ -39,6 +39,8 @@ module KepplerCattle
     has_many :season_cows, class_name: 'KepplerReproduction::SeasonCow', dependent: :destroy
     has_many :seasons, class_name: 'KepplerReproduction::Season', through: :season_cows
 
+    has_many :milk_weights, class_name: 'KepplerReproduction::MilkWeight', dependent: :destroy
+
     validates_presence_of :birthdate, :serie_number, :species_id, :race_id
     validates_uniqueness_of :serie_number
 
@@ -97,6 +99,10 @@ module KepplerCattle
 
     def status
       statuses.last
+    end
+
+    def status_name
+      statuses.last&.status_type
     end
 
     def typology_counter_count

@@ -18,8 +18,6 @@ module KepplerReproduction
     has_many :users, -> { distinct }, class_name: 'KepplerFarm::Responsable', through: :statuses
     has_many :inefectivities, -> { distinct }, class_name: 'KepplerReproduction::Inefectivity', through: :users
 
-    has_many :cicles, class_name: 'KepplerReproduction::Cicle'
-
     validates_presence_of :farm_id, :start_date, :duration_days, on: :create, message: "can't be blank"
 
     def self.index_attributes

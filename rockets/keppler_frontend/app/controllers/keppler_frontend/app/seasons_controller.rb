@@ -33,8 +33,6 @@ module KepplerFrontend
     end
 
     def show
-      # @cicle = KepplerReproduction::Cicle.new
-      # @strategic_lot = KepplerFarm::StrategicLot.new
       @cows = @season&.cows.where(gender: 'female').order(:serie_number)
       @bulls = @season&.cows.where(gender: 'male')
       @season_cow = KepplerReproduction::SeasonCow.new

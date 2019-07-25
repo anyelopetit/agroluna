@@ -43,3 +43,10 @@ en:
     days_to_pregnancy: Días para preñez
     days_to_dry: Días para secado
     days_to_rest: Días para descanso
+
+  milk_weight:
+    date: Fecha
+    morning_liters: Litros en la mañana
+    evening_liters: Litros en la tarde
+    total_liters: Litros totales
+    description: Descripción

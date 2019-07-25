@@ -1,0 +1,31 @@
+.app_wrapper.pb-5
+  .container.d-flex.justify-content-between
+    .left
+      %h1 Pesajes de leche de serie #{@cow.serie_number}
+    .right
+      = link_to (:back == request.url ? :back : farm_milk_index_path(@farm)) do
+        %button.btn.btn_custom.btn--medium.mt-4.mb-4
+          %i.icofont-arrow-left
+          Atrás
+  .container.pb-5
+    %table.table
+      %thead
+        %tr
+          - if @cow.milk_weights.blank?
+            %th No tiene pesajes de leche
+          - else
+            %th Fecha
+            %th Litros por la mañana
+            %th Litros por la tarde
+            %th Litros totales
+            %th{ colspan: 2 }
+      %tbody
+        - unless @cow.milk_weights.blank?
+          - @cow.milk_weights.each do |milk_tank|
+            %tr{ title: milk_tank.description }
+              %td= milk_tank.date.strftime('%d-%m-%y')
+              %td #{milk_tank.morning_liters.inspect.to_f&.round(2)} Lts
+              %td #{milk_tank.evening_liters.inspect.to_f&.round(2)} Lts
+              %td #{milk_tank.total_liters.inspect.to_f&.round(2)} Lts
+              %td= link_to 'Editar', edit_farm_milk_tank_path(@farm, milk_tank)
+              %td= link_to 'Eliminar', farm_milk_tank_path(@farm, milk_tank), method: :delete, data: { confirm: '¿Estás seguro?' }

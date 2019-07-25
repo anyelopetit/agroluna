@@ -18,6 +18,7 @@ KepplerFrontend::Engine.routes.draw do
         match 'buscar-ganado' => 'search', via: %i[get post], as: :search
         post :males
         post :wean, to: 'app/seasons#wean', as: :wean
+        post :toggle_milking, as: :toggle_milking
       end
       collection do
         get 'inactivos', to: 'app/cattle#index_inactives', as: :inactives
@@ -28,6 +29,8 @@ KepplerFrontend::Engine.routes.draw do
         get 'pesajes/:multiple_ids', to: 'app/cattle#show_weights', as: :weights
       end
       resources :weights, path: 'pesos', controller: 'app/weights', path_names: { new: 'nuevo', edit: 'editar'}, only: %i[new create]
+
+      resources :milk_weights, path: 'pesajes-de-leche', controller: 'app/milk_weights'
     end
 
     resources :strategic_lots, path: 'lotes-estrategicos', controller: 'app/strategic_lots', path_names: { new: 'nuevo', edit: 'editar'} do
@@ -106,69 +109,24 @@ KepplerFrontend::Engine.routes.draw do
         get :inactive_cows_report, action: :inactive_cows_report, as: :inactive_cows_report
         get :analytic_weight_report, action: :analytic_weight_report, as: :analytic_weight_report
       end
-      resources :cicles, controller: 'app/cicles', only: %i[new create destroy]
     end
 
     resources :milk, path: 'lechera', controller: 'app/milk', only: %i[index] do
       collection do
         patch :assign_lot
         patch :edit_params
+        post 'create_service/:id', action: :create_service, as: :create_service
+        post 'create_pregnancy/:id', action: :create_pregnancy, as: :create_pregnancy
       end
     end
-
     resources :cheese_types, path: 'tipos-de-queso', controller: 'app/cheese_types'
     resources :milk_tanks, path: 'tanques-de-leche', controller: 'app/milk_tanks'
     resources :deliveries, path: 'entregas', controller: 'app/deliveries'
     resources :cheese_processes, path: 'quesera', controller: 'app/cheese_processes'
   end
   
-  # Farm strategic_lot
-  # get '/finca/:farm_id/lotes-estrategicos', to: 'app/strategic_lots#index', as: :farm_strategic_lots
-  # get '/finca/:farm_id/lote-estrategico/:strategic_lot_id', to: 'app/strategic_lots#show', as: :farm_strategic_lot
-  # get '/finca/:farm_id/editar-lote/:strategic_lot_id', to: 'app/strategic_lots#edit', as: :farm_strategic_lot_edit
-  # get '/finca/:farm_id/nuevo-lote', to: 'app/strategic_lots#new', as: :farm_strategic_lot_new
-  # post '/finca/:farm_id/lotes-estrategicos', to: 'app/strategic_lots#create', as: :farm_strategic_lot_create
-  # post '/finca/:farm_id/lote-estrategico/:strategic_lot_id/asignar-ganado', to: 'app/strategic_lots#assign_cattle', as: :farm_strategic_lot_assign_cattle
-  # delete '/finca/:farm_id/lote-estrategico/:strategic_lot_id/eliminar-ganado/(:multiple_ids)', to: 'app/strategic_lots#delete_assignment', as: :farm_strategic_lot_delete_assignment
-  # patch '/finca/:farm_id/lote-estrategico/:strategic_lot_id', to: 'app/strategic_lots#update', as: :farm_strategic_lot_update
-  # get '/finca/:farm_id/lote-estrategico/:strategic_lot_id/eliminar', to: 'app/strategic_lots#destroy', as: :farm_strategic_lot_destroy
-  # delete '/finca/:farm_id/lotes-estrategicos/destroy_multiple', to: 'app/strategic_lots#destroy_multiple', as: :farm_strategic_lot_destroy_multiple
+  # Admin
   
-  # Farm Cattle
-  # get '/finca/:farm_id/ganado', to: 'app/cattle#index', as: :farm_cattle
-  # get '/finca/:farm_id/ganado-inactivo', to: 'app/cattle#index_inactives', as: :farm_cattle_inactive
-  # get '/finca/:farm_id/ganado/:cow_id', to: 'app/cattle#show', as: :farm_cow
-  # get '/finca/:farm_id/editar-ganado/:cow_id', to: 'app/cattle#edit', as: :farm_cow_edit
-  # get '/finca/:farm_id/nuevo-ganado', to: 'app/cattle#new', as: :farm_cow_new
-  # post '/finca/:farm_id/ganado', to: 'app/cattle#create', as: :farm_cow_create
-  # patch '/finca/:farm_id/ganado/:cow_id', to: 'app/cattle#update', as: :farm_cow_update
-  # delete '/finca/:farm_id/ganado/:cow_id/eliminar', to: 'app/cattle#destroy', as: :farm_cow_destroy
-  # match '/finca/:farm_id/buscar-ganado' => 'app/cattle#search', via: [:get, :post], as: :cattle_search
-  
-  # Farm Cattle Status
-  # get '/finca/:farm_id/ganado/:cow_id/nuevo-estado', to: 'app/status#new', as: :farm_cow_status_new
-  # post '/finca/:farm_id/ganado/:cow_id/crear-status', to: 'app/status#create', as: :farm_cow_statuses
-
-  # Farm Transferences
-  # get '/finca/:farm_id/transferencias', to: 'app/transferences#index', as: :farm_transferences
-  # get '/finca/:farm_id/transferencias/:transference_id', to: 'app/transferences#show', as: :farm_transference
-  # # get '/finca/:farm_id/editar-transferencias/:transference_id', to: 'app/transferences#edit', as: :farm_transference_edit
-  # get '/finca/:farm_id/nueva-transferencia', to: 'app/transferences#new', as: :farm_transference_new
-  # post '/finca/:farm_id/transferencias', to: 'app/transferences#create', as: :farm_transference_create
-  # # patch '/finca/:farm_id/transferencias/:transference_id', to: 'app/transferences#update', as: :farm_transference_update
-  # # delete '/finca/:farm_id/transferencias/:transference_id/eliminar', to: 'app/transferences#destroy', as: :farm_transference_destroy
-
-  # Farm Inseminations
-  # get '/finca/:farm_id/pajuelas', to: 'app/inseminations#index', as: :farm_inseminations
-  # get '/finca/:farm_id/pajuelas-usadas', to: 'app/inseminations#index_used', as: :farm_inseminations_used
-  # get '/finca/:farm_id/pajuela/:insemination_id', to: 'app/inseminations#show', as: :farm_insemination
-  # get '/finca/:farm_id/editar-pajuela/:insemination_id', to: 'app/inseminations#edit', as: :farm_insemination_edit
-  # get '/finca/:farm_id/nueva-pajuela', to: 'app/inseminations#new', as: :farm_insemination_new
-  # get '/finca/:farm_id/marcar-como-usada/:insemination_id', to: 'app/inseminations#mark_as_used', as: :farm_insemination_mark_as_used
-  # post '/finca/:farm_id/pajuelas', to: 'app/inseminations#create', as: :farm_insemination_create
-  # patch '/finca/:farm_id/pajuela/:insemination_id', to: 'app/inseminations#update', as: :farm_insemination_update
-  # delete '/finca/:farm_id/pajuela/:insemination_id/eliminar', to: 'app/inseminations#destroy', as: :farm_insemination_destroy
-
   namespace :admin do
     scope :frontend, as: :frontend do
       resources :parameters do

@@ -13,13 +13,6 @@ menu:
           current: ['/admin/reproduction/inefectivities']
           model: KepplerReproduction::Inefectivity
 
-      - cicle:
-          name: cicle
-          url_path: /admin/reproduction/cicles
-          icon: layers
-          current: ['/admin/reproduction/cicles']
-          model: KepplerReproduction::Cicle
-
       - season_cow:
           name: season cow
           url_path: /admin/reproduction/season_cows

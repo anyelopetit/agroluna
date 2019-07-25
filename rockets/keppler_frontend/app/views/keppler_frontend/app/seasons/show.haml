@@ -1,8 +1,11 @@
--# = render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
 .app_wrapper
   .container_custom
+<<<<<<< HEAD
     -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
     .d-flex.justify-content-between.xs-column
+=======
+    .d-flex.justify-content-between
+>>>>>>> 10d9e6d461634fe2bb1f848983a68a36eda54ea8
       .left
         .mb-4
           %h1
@@ -14,14 +17,6 @@
           %button.btn.btn_custom.btn--filled.btn--medium.float-right.m-1
             %i.icofont-pencil
             Editar
-        -# %a#add-cicle{ href: '#' }
-          %button.btn.btn_custom.btn--filled.btn--medium
-          +
-          Agregar ciclo
-    -# - if @season.finished || Date.today > @season.finish_date
-      = render 'keppler_frontend/app/seasons/seasonFinish', season: @season
-    -# - case @season.phase.to_i
-    -# - when 0
     - unless @season.season_type.to_i.eql?(0)
       = render 'keppler_frontend/app/seasons/gantt', season: @season
     .d-flex.justify-content-end
@@ -163,12 +158,6 @@
                 %tbody
                   - @inseminated_cows.each do |cow|
                     %tr
-                      -# %td
-                        .checkbox{ style: 'margin: 3px' }
-                          %label{ for: "checkbox-#{cow&.id}" }
-                            %input{ type:"checkbox", id: "checkbox-#{cow&.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow&.id}", '@click' => "listDelete(#{cow&.id})"}
-                            %span.cr
-                              %i.cr-icon.icofont-check
                       %td
                         = link_to farm_cow_path(@farm, cow) do
                           = cow.serie_number
@@ -183,7 +172,6 @@
                         = link_to farm_cow_path(@farm, cow) do
                           = cow.status.insemination&.serie_number
                       %td
-                        -# - if Date.today > cow.status.date + 30.days
                         %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalPregnant-#{cow&.id}", 'data-toggle': 'modal' }
                           %i.icofont-plus
                           Preñez
@@ -263,7 +251,6 @@
                         = link_to farm_cow_path(@farm, cow) do
                           = cow.status.insemination&.serie_number.blank? ? 'Toro Desconocido' : cow.status.insemination&.serie_number
                       %td
-                        -# - if Date.today > cow.status.date + 270.days
                         %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#modalBirth-#{cow&.id}", 'data-toggle': 'modal' }
                           %i.icofont-plus
                           Parto
@@ -314,50 +301,8 @@
                           = render 'keppler_frontend/app/seasons/modalDestete', season: @season, cow: cow
         - else
           = render 'keppler_frontend/app/seasons/birthFinish', season: @season
--# = simple_form_for [@farm, @season, @cicle] do |f|
-  = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
-  = f.input :season_id, as: :hidden, input_html: { value: @season.id }
-  = f.input :days_count, as: :hidden
-  
 
 = render 'keppler_frontend/app/seasons/modalLote', season: @season
-
--# = render 'keppler_frontend/app/seasons/modalCattle', season: @season
--# :javascript
-  $('#add-cicle').click(function() {
-    swal({
-      input: 'number',
-      title: "Agregar Ciclo #{@season.cicles.size + 1}",
-      text: "Cantidad de días",
-      confirmButtonText: "Agregar",
-      cancelButtonText: "Cancelar",
-      showCancelButton: true
-    }).then((result) => {
-      var result_values = result.value;
-      console.log(result_values == '')
-      if (!result_values) return false
-      if (!result_values == '') {
-        var cicle_days_count = result.value
-        swal({
-          title: 'Ciclo #{@season.cicles.size + 1}:',
-          html:
-            `<b>Cantidad de dias:</b> ${cicle_days_count}`,
-          confirmButtonText: 'Correcto'
-        }).then((result) => {
-          var form = $(`#new_cicle`)
-          form.find('#cicle_days_count').val(cicle_days_count)
-          form.submit()
-        })
-      } else {
-        swal({
-          title: 'Error:',
-          type: 'error',
-          html: `<b>Campos vacíos:</b> </br>
-            Cantidad de días`
-        })
-      }
-    })
-  })
 :javascript
   $('#season_cow_strategic_lot').select2()
 

@@ -1,0 +1,95 @@
+- array = [['Sin Servicio', 'NoService'], ['Con Servicio', 'Service'], ['Preñadas', 'Pregnancy'], ['En Secado', 'Dry']]
+
+.gantt-wrapper
+  .gantt.mb-5.mt-5
+    .gantt__row.gantt__row--months
+      .gantt__row-first
+      -# %ul.months{ style: "grid-template-columns: repeat(#{array.size}, 1fr);" }
+        - array.each do |process|
+          %li.month{ style: "grid-column: #{process}/#{array.size};" }
+            = process
+    .gantt__row.gantt__row--months{ style: "grid-template-columns: 150px repeat(#{array.size}, 1fr);" }
+      .gantt__row-first
+      - array.each do |process|
+        %span= process.first
+    .gantt__row.gantt__row--lines{"data-month" => "5", style: "grid-template-columns: 150px repeat(#{array.size}, 1fr);"}
+    - ['Cant. Series'].each do |status|
+      .gantt__row
+        .gantt__row-first
+          #{status}
+        %ul.gantt__row-bars{ style: "grid-template-columns: repeat(#{array.size}, 1fr);" }
+          - array.each_with_index do |process, index|
+            %li.stripes{ style: "z-index: 2; padding: 0 10px; grid-column: #{index + 1}/#{index + 2}; background-color: #{['#54c6f9', '#2ecaac', '#ff6252'].sample}; max-width: 30px; margin: 0 auto" }
+              %a{ style: 'display:block; width: 100%; height: 100%;', 'data-target': "#modal#{process.last}", 'data-toggle': 'modal', href: ""}
+                .text-white.text-center
+                  = KepplerCattle::Cow.select { |s| s.status&.status_type&.eql?(process.last) }.size
+            -# .modal.modal_status.fade{ id: "modal#{process}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+              .modal-dialog{role: "document"}
+                .modal-content
+                  .modal-header
+                    %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+                      %span{"aria-hidden" => "true"} ×
+                  .modal-body{ style: "padding: 20px;"}
+                    .card_status
+                      %center.card_status--title   
+                        %h1.modal-title
+                          = process    
+                      .box-body.no-padding
+                        .row
+                          - if @season&.cows.take(process).blank?
+                            %center.col-lg-12
+                              No existen ganados asignados
+                          - statuses.each do |status|
+                            .col-lg-12
+                              = link_to(action: :show, id: status.cow&.id) do
+                                .cow-item.d-flex.p-3
+                                  = image_tag "/assets/keppler_cattle/#{status.cow.gender}", class: 'svg-icon-md p-absolute r-0' unless status.cow.gender.blank?
+                                  %strong #{status.cow.serie_number} &nbsp;
+                                  %span
+                                    = "(#{status.cow.short_name})" unless status.cow.short_name.blank?
+                                    \- #{status.cow.typology_name} (#{status.cow.weight&.weight} KG)
+:scss
+  .months {
+    display: grid;
+    padding: 0 10px;
+    margin: 0;
+
+    .month {
+      font-size: 14px;
+      overflow: hidden;
+      padding: 9px 0;
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+      text-align: center;
+      font-weight: 700;
+    }
+  }
+
+
+:scss
+  .cow-item {
+    border-bottom: 1px solid #e9e9e9;
+
+    &:hover {
+      background: #fafafa;
+    }
+  }
+
+  .modal a {
+    color: inherit;
+    transition: .2s;
+
+    &:hover {
+      color: #28C76F;
+      transition: .2s;
+    }
+  }
+
+  .modal-title {
+    text-transform: uppercase;
+    font-size: 25px;
+    color: #28C76F;
+    position: relative;
+    margin-bottom: 5px;
+    //border-bottom: 2px solid #f98105;
+    //width: 20%;
+  }

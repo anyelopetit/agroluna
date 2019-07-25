@@ -8,6 +8,8 @@
         = @milk_lot ? 'Cambiar' : 'Asignar'
         Lote Estratégico
   = render 'keppler_frontend/app/milk/tabs'
+  .container
+    = render 'keppler_frontend/app/milk/calendar'
   .container.pb-5
     %h2.py-5= @milk_lot&.name
     .container.d-flex.justify-content-between.mb-5

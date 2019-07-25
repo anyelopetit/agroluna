@@ -7,10 +7,14 @@ $red: #ff6252;
 body {
 	color: $navbar-color;
 }
-h1, h2 {
+
+h1,
+h2 {
 	font-weight: 600;
 }
-h3, h4 {
+
+h3,
+h4 {
 	font-weight: 500;
 }
 
@@ -18,9 +22,11 @@ p {
 	font-weight: 400;
 }
 
-b, strong {
+b,
+strong {
 	font-weight: 600;
 }
+
 // }
 
 .gantt-header {
@@ -30,6 +36,7 @@ b, strong {
 .gantt-wrapper {
 	min-width: 700px;
 	margin: 0 auto;
+
 	// padding: 40px;
 	@include respond-to(xs) {
 		min-width: 100%;
@@ -45,7 +52,7 @@ b, strong {
 	overflow-y: hidden;
 	box-sizing: border-box;
 	box-shadow: 0 25px 125px -40px #7e8f94;
-	
+
 	&__row {
 		display: grid;
 		grid-template-columns: 150px 1fr;
@@ -66,6 +73,7 @@ b, strong {
 			.gantt__row-bars {
 				border-top: 0;
 			}
+
 			.gantt__row-first {
 				border-top: 0;
 			}
@@ -74,6 +82,7 @@ b, strong {
 		&--empty {
 			background-color: lighten($red, 25%) !important;
 			z-index: 1;
+
 			.gantt__row-first {
 				border-width: 1px 1px 0 0;
 			}
@@ -81,14 +90,16 @@ b, strong {
 
 		&--lines {
 			position: absolute;
-    	height: calc(100% - 40px);
+			height: calc(100% - 40px);
 			width: 100%;
 			background-color: transparent;
 			bottom: 0;
+
 			// grid-template-columns: 150px repeat(12, 1fr);
 			span {
 				display: block;
 				border-right: 1px solid rgba(0, 0, 0, 0.1);
+
 				&.marker {
 					background-color: rgba(10, 52, 68, 0.13);
 					z-index: 2;
@@ -112,7 +123,7 @@ b, strong {
 
 			.gantt__row-first {
 				border-top: 0 !important;
-			  background-color: $navbar-color !important;
+				background-color: $navbar-color !important;
 			}
 
 			span {
@@ -121,6 +132,10 @@ b, strong {
 				align-self: center;
 				font-weight: bold;
 				padding: 10px 0;
+
+				&.letters {
+					padding: 10px 50px;
+				}
 			}
 		}
 
@@ -156,11 +171,11 @@ b, strong {
 				position: relative;
 				cursor: pointer;
 				border-radius: 20px;
-				
+
 				&.stripes {
-					background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,.1) 5px, rgba(255,255,255,.1) 12px);
+					background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, .1) 5px, rgba(255, 255, 255, .1) 12px);
 				}
-				
+
 				&:before,
 				&:after {
 					content: "";

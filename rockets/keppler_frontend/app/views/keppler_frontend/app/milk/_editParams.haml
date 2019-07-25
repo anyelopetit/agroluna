@@ -8,7 +8,7 @@
         .container_custom
           .row
             .col-lg-12
-              %h1.mb-4 Elegir un lote
+              %h1.mb-4 Elegir
               = simple_form_for @farm, url: edit_params_farm_milk_index_path(@farm) do |f|
                 .row
                   - %i[days_to_service days_to_pregnancy days_to_dry days_to_rest].each do |day|

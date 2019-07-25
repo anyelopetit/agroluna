@@ -20,6 +20,7 @@
     position: relative;
     // width: 50%;
     margin-bottom: 30px;
+
     @include respond-to(xs) {
       width: 100%;
     }
@@ -32,5 +33,12 @@
     //   height: 3px;
     //   background-color: $secundary;
     // }
+  }
+}
+
+.xs-column {
+
+  @include respond-to(xs) {
+    flex-direction: column;
   }
 }

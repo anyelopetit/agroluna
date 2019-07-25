@@ -2,7 +2,7 @@
 .app_wrapper
   .container_custom
     -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
-    .d-flex.justify-content-between
+    .d-flex.justify-content-between.xs-column
       .left
         .mb-4
           %h1
@@ -41,7 +41,7 @@
     .tab-content
       #mount.tab-pane{ class: ('active' if @season.phase.to_i.eql?(0))}
         - if @season.phase.to_i.eql?(0)
-          .d-flex.justify-content-between.mt-5.mb-3.mt-4
+          .d-flex.justify-content-between.mt-5.mb-3.mt-4.xs-column
             .left
               %h1
                 Ganados por lotes
@@ -226,7 +226,7 @@
       #reproduction.tab-pane{ class: ('active' if @season.phase.to_i > 1)}
         - if @season.phase.to_i > 1
           #index-container
-            .d-flex.justify-content-between.mt-5.mb-3.mt-4
+            .d-flex.justify-content-between.mt-5.mb-3.mt-4.flex-column
               .left
                 %h1 Preñadas
               .right

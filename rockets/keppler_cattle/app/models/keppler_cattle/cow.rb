@@ -184,14 +184,16 @@ module KepplerCattle
     def self.where_status(status_name, season_id)
       # select { |cow| cow.status&.status_type == status_name }.pluck(:id)
       if status_name.is_a?(Array)
-        select { |c| status_name.include?(c.status&.status_type) }
+        ids = select { |c| status_name.include?(c.status&.status_type) }.pluck(:id)
+        where(id: ids)
       else
         # includes(:statuses).where(
         #   keppler_cattle_statuses: {
         #     status_type: status_name, season_id: season_id
         #   }
         # ).distinct
-        select { |c| status_name.eql?(c.status&.status_type) }
+        ids = select { |c| status_name.eql?(c.status&.status_type) }.pluck(:id)
+        where(id: ids)
       end
     end
 
@@ -211,7 +213,7 @@ module KepplerCattle
         total_weights += son&.weight&.weight
         sons_count += 1
       end
-      total_weights / sons_count
+      sons_count.zero? ? 0 : total_weights / sons_count
     end
 
     def strategic_lot
@@ -250,6 +252,14 @@ module KepplerCattle
         select { |c| !c.location.strategic_lot_id.eql?(strategic_lot_id) }
           .pluck(:id)
       where(id: ids)
+    end
+
+    def self.where_milking
+      where(milking: true)
+    end
+
+    def self.in_this_process(process)
+      select { |x| x.status_name == process.camelcase }
     end
 
     def self.total_season_cows(strategic_lot)

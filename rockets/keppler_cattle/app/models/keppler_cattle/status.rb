@@ -104,7 +104,7 @@ module KepplerCattle
       if cow_is_pregnant && !this_is_birth
         KepplerReproduction::Inefectivity.create(
           responsable_id: cow.status&.user_id,
-          season_id: season.id,
+          season_id: season&.id,
           cow_id: cow&.id
         )
       end

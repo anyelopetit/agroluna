@@ -15,7 +15,7 @@ module KepplerCattle
           # puts "*** #{polymorphic_cow(self).possible_typologies.map {|x| [x.name, x.min_age]}} ***"
           polymorphic_cow(self).possible_typologies.order(min_age: :asc).each do |typology|
             break if typology_created
-            if verify_existence(typology) && verify_counter(typology) # && verify_min_age(typology) && verify_min_weight(typology)
+            if verify_existence(typology) && verify_counter(typology) && verify_min_age(typology) && verify_min_weight(typology)
               new_typology = polymorphic_cow(self).cow_typologies.new(
                 cow_id: polymorphic_cow(self).id,
                 typology_id: typology.id

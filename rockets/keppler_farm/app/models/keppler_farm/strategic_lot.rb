@@ -15,6 +15,8 @@ module KepplerFarm
     has_many :locations, class_name: 'KepplerCattle::Location', dependent: :destroy
     has_many :cows, class_name: 'KepplerCattle::Cow', through: :locations
 
+    validates_presence_of :id, :name, :farm_id
+
     belongs_to :farm
 
     def self.index_attributes

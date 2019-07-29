@@ -1,4 +1,4 @@
-.modal.modal_status.fade{ id: "createService", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+.modal.modal_status.fade{ id: "createService-#{cow.id}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
   .modal-dialog{role: "document", style: "max-width: 800px;"}
     .modal-content
       .modal-header
@@ -14,8 +14,8 @@
                 .form-padding
                   .row
                     .col-sm-12  
-                    - if cow.status&.status_type&.eql?('Service')
-                      %h3.text-center Ya posee un servicio
+                    - if cow.status_name&.eql?('Service')
+                      %h3.pl-5.text-center Ya posee un servicio
                     - else
                       %h3
                         Número de Serie
@@ -87,7 +87,7 @@
     yearRange: "c-1:c+1",
   }, $.datepicker.regional[ "es" ])
 
-- @milk_lot.cows.each do |cow|            
+- @cows.each do |cow|            
   - unless cow.status&.status_type&.eql?('Service')  
     :javascript
       $(document).ready(function(){

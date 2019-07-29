@@ -5,8 +5,6 @@
     %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
     %meta{ name: 'theme-color', content: '#fff' }
     %title Toros Padrotes | #{@farm&.title}
-    = wicked_pdf_stylesheet_link_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'
-    = wicked_pdf_stylesheet_link_tag '/assets/keppler_frontend/app/application.css'
     :javascript
       function number_pages() {
         var vars={};
@@ -19,9 +17,10 @@
         }
       }
   %body{ onload: 'number_pages()' }
+    - @bulls = @season&.cows.where(gender: 'male')
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
-      %h3.report-title #{@farm&.title}
+      %h3.report-title #{@season&.name}
       %h5 Toros padrotes
     .header-right
       %p= Time.now.strftime('%d-%m-%Y')
@@ -45,34 +44,29 @@
           %hr.my-1
           %hr.my-1
         .row
-          - if @strategic_lots.size.zero?
-            %table.mt-none.mb-4
-              %thead
-                %tr
+          %table.mt-none.mb-4
+            %thead
+              %tr
+                - if @strategic_lots.size.zero?
                   %th.not-records.center
                     %center No se encontraron lotes estratégicos asociados a toros
-          - elsif @bulls&.blank?
-            %table.mt-none.mb-4
-              %thead
-                %tr
+                - elsif @bulls&.blank?
                   %th.not-records.center
                     %center No se encontraron toros padrotes registrados en esta finca
-          - else
-              %table.mt-none.mb-4
-                %thead
-                  %tr
-                    %th Nro. Serie
-                    %th Raza
-                    %th Tipología
-                    %th Fecha de entrada
-                    %th Última temporada
-                %tbody
-                  - @bulls.each do |cow|
-                    %tr
-                      %td= cow&.serie_number
-                      %td= cow&.race&.name
-                      %td= cow&.farm_cows&.last&.created_at&.strftime('%d-%m-%Y')
-                      %td= cow.farms&.last&.name
+                - else
+                  %th Nro. Serie
+                  %th Raza
+                  %th Tipología
+                  %th Fecha de entrada
+                  %th Última temporada
+            %tbody
+              - @bulls.each do |cow|
+                %tr
+                  %td= cow&.serie_number
+                  %td= cow&.race&.name
+                  %td= cow&.typology&.name
+                  %td= cow&.season_cows&.last&.created_at&.strftime('%d-%m-%Y')
+                  %td= cow.season_cows.find_by(season_id: @season.id)&.date
         .row
           %hr.my-1
           %hr.my-1

@@ -1,0 +1,18 @@
+.modal.modal_status.fade{ id: "transferToLot-#{cow.id}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+  .modal-dialog{role: "document", style: "max-width: 800px;"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body{ style: "padding: 20px;"}
+        .container_custom
+          .row
+            .col-lg-12
+              %h1.mb-4 Transferir a otro lote estratéfico
+              = simple_form_for [@farm, cow], url: transfer_to_lot_farm_milk_index_path(@farm, cow) do |f|
+                = f.fields_for cow.location do |l|
+                  = l.input :strategic_lot_id, collection: @collection, include_blank: false, label: false, input_html: { class: 'form-control select required form-control input_custom' }
+                  .float-right.mt-3
+                    %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                      %i.icofont-save
+                      Guardar

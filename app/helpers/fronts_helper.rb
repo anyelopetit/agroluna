@@ -40,20 +40,33 @@ module FrontsHelper
     if cow&.milking
       case cow.status.status_type
       when 'Service'
-        'Lactando con servicio'
+        'Lac. C/Servicio'
       when 'Pregnancy'
-        'Lactando preñada'
+        'Preñada'
       when 'Dry'
-        'En secado'
+        'En Secado'
       else
-        'Lactando sin servicio'
+        'Lac. S/Servicio'
       end
     else
       'Sin lactar'
     end
   end
 
-  def milk_status_date(cow)
-    cow.status ? (Date.today - cow.status&.date).to_s.remove('/1') : 'N/A'
+  def milk_status_days(cow)
+    cow.status ? (Date.today - cow.status&.date).to_s.remove('/1').to_i : 'N/A'
+  end
+
+  def next_process(cow)
+    case cow.status_name
+    when 'Nil'
+      :days_to_service
+    when 'Service'
+      :days_to_pregnancy
+    when 'Pregnancy'
+      :days_to_dry
+    when 'Dry'
+      :days_to_rest
+    end
   end
 end

@@ -31,18 +31,22 @@
       = link_to({controller: :races, action: :index, species_id: object}, { style: "display: flex;" }) do
         .btn.btn-default
           = t('activerecord.attributes.races').humanize
+          (#{object&.races&.size})
     %td
       = link_to({controller: :typologies, action: :index, species_id: object}, { style: "display: flex;" }) do
         .btn.btn-default
           = t('activerecord.attributes.typologies').humanize
+          (#{object&.typologies&.size})
     %td
       = link_to({controller: :weighing_days, action: :index, species_id: object}, { style: "display: flex;" }) do
         .btn.btn-default
           = t('activerecord.attributes.weighing_days').humanize
+          (#{object&.weighing_days&.size})
     %td
       = link_to({controller: :corporal_conditions, action: :index, species_id: object}, { style: "display: flex;" }) do
         .btn.btn-default
           = t('activerecord.attributes.corporal_conditions').humanize
+          (#{object&.corporal_conditions&.size})
 
     %td.dropdown{ style: 'width: 15px;padding-right:15px;' }
       %a.action-btn.pull-right{:id => "menu-#{object.id}", 'aria-expanded': 'false', 'aria-haspopup': 'true', 'data-toggle': 'dropdown' }

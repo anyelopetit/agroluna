@@ -1,4 +1,4 @@
-.modal.modal_status.fade{ id: "createPregnancy", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+.modal.modal_status.fade{ id: "createPregnancy-#{cow.id}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
   .modal-dialog{role: "document", style: "max-width: 800px;"}
     .modal-content
       .modal-header
@@ -12,53 +12,52 @@
                 %h1
                   Nueva preñez
                 .form-padding
-                  - @milk_lot.cows.each do |cow|
-                    .row
-                      .col-sm-12  
-                      - if cow.status&.status_type&.eql?('Pregnancy')
-                        %h3.text-center Ya esta serie está preñada
-                      - else
-                        %h3
-                          Número de Serie
-                          %b #{cow.serie_number}
-                        = simple_form_for [@farm, KepplerCattle::Status.new], url: create_pregnancy_farm_milk_index_path(@farm.id, cow.id), method: :post, html: { style: 'width: 100%' } do |f|
-                          .row.mt-4
-                            = f.input :user_id, input_html: { name: "status[user_id]", value: current_user.id }, as: :hidden
-                            = f.input :cow_id, input_html: { name: "status[cow_id]", value: cow&.id }, as: :hidden
-                            = f.input :status_type, input_html: { name: "status[type]", value: 'Pregnancy' }, as: :hidden
-                            %input{ name: 'status[farm_id]', value: @farm.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
-                            .col-sm-12.col-md-6
-                              .form-group
-                                %label.label_custom--strong Fecha de registro
-                                %input.form-control.input_custom.datepicker#status_date{ name: "status[date]", autocomplete: 'off', value: Date.today }
-                            .col-sm-12.col-md-6
-                              .form-group
-                                %label.label_custom--strong Meses de preñez
-                                %input.form-control.input_custom#status_months{ name: "status[months]", type: 'number', autocomplete: 'off', value: 0, min: 0, max: 9, step: 0.5 }
-                            .col-sm-12.col-md-6
-                              .form-group
-                                %label.label_custom--strong Pajuela
-                                %select.form-control.input_custom.selexct2{ name: "status[insemination_id]"  }
-                                  - @farm.inseminations.each do |father|
-                                    - if cow.status_name.eql?('Service')
-                                      - insemination_used = father&.id == cow.statuses.where(status_type: 'Service').last&.insemination_id
-                                      %option{ value: father&.id, selected: insemination_used, disabled: !insemination_used } #{father&.serie_number} #{'(' + father&.short_name + ')' if father&.short_name}
-                                    - else
-                                      %option{ value: father&.id } #{father&.serie_number} #{'(' + father&.short_name + ')' if father&.short_name}
-                            .col-sm-12.col-md-6
-                              .form-group.ui-widget
-                                %label.label_custom--strong Nombre del responsable
-                                %input.form-control.input_custom{ name: "status[user_name]", autocomplete: 'off', list: 'responsables' }
-                                %datalist#responsables
-                                  - KepplerFarm::Responsable.all.each do |responsable|
-                                    %option{ value: responsable.name }
-                            .col-sm-12
-                              .form-group
-                                %label.label_custom--strong Observaciones
-                                %input.form-control.input_custom{ name: "status[observations]" }
-                    
-                            .col-sm-12
-                              .float-right
-                                %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
-                                  %i.icofont-save
-                                  Guardar
+                  .row
+                    .col-sm-12  
+                    - if cow.status&.status_type&.eql?('Pregnancy')
+                      %h3.text-center Ya esta serie está preñada
+                    - else
+                      %h3
+                        Número de Serie
+                        %b #{cow.serie_number}
+                      = simple_form_for [@farm, KepplerCattle::Status.new], url: create_pregnancy_farm_milk_index_path(@farm.id, cow.id), method: :post, html: { style: 'width: 100%' } do |f|
+                        .row.mt-4
+                          = f.input :user_id, input_html: { name: "status[user_id]", value: current_user.id }, as: :hidden
+                          = f.input :cow_id, input_html: { name: "status[cow_id]", value: cow&.id }, as: :hidden
+                          = f.input :status_type, input_html: { name: "status[type]", value: 'Pregnancy' }, as: :hidden
+                          %input{ name: 'status[farm_id]', value: @farm.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
+                          .col-sm-12.col-md-6
+                            .form-group
+                              %label.label_custom--strong Fecha de registro
+                              %input.form-control.input_custom.datepicker#status_date{ name: "status[date]", autocomplete: 'off', value: Date.today }
+                          .col-sm-12.col-md-6
+                            .form-group
+                              %label.label_custom--strong Meses de preñez
+                              %input.form-control.input_custom#status_months{ name: "status[months]", type: 'number', autocomplete: 'off', value: 0, min: 0, max: 9, step: 0.5 }
+                          .col-sm-12.col-md-6
+                            .form-group
+                              %label.label_custom--strong Pajuela
+                              %select.form-control.input_custom.selexct2{ name: "status[insemination_id]"  }
+                                - @farm.inseminations.each do |father|
+                                  - if cow.status_name.eql?('Service')
+                                    - insemination_used = father&.id == cow.statuses.where(status_type: 'Service').last&.insemination_id
+                                    %option{ value: father&.id, selected: insemination_used, disabled: !insemination_used } #{father&.serie_number} #{'(' + father&.short_name + ')' if father&.short_name}
+                                  - else
+                                    %option{ value: father&.id } #{father&.serie_number} #{'(' + father&.short_name + ')' if father&.short_name}
+                          .col-sm-12.col-md-6
+                            .form-group.ui-widget
+                              %label.label_custom--strong Nombre del responsable
+                              %input.form-control.input_custom{ name: "status[user_name]", autocomplete: 'off', list: 'responsables' }
+                              %datalist#responsables
+                                - KepplerFarm::Responsable.all.each do |responsable|
+                                  %option{ value: responsable.name }
+                          .col-sm-12
+                            .form-group
+                              %label.label_custom--strong Observaciones
+                              %input.form-control.input_custom{ name: "status[observations]" }
+                  
+                          .col-sm-12
+                            .float-right
+                              %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                                %i.icofont-save
+                                Guardar

@@ -98,11 +98,11 @@ KepplerFrontend::Engine.routes.draw do
         get :weans_report, action: :weans_report, as: :weans_report
         get :vet_efectivity_report, action: :vet_efectivity_report, as: :vet_efectivity_report
         get :efectivity_report, action: :efectivity_report, as: :efectivity_report
+        get :bulls_report, action: :bulls_report, as: :bulls_report
       end
 
       collection do
         # Reportes
-        get :bulls_report, action: :bulls_report, as: :bulls_report
         get :inseminations_report, action: :inseminations_report, as: :inseminations_report
         get :reproduction_cows, action: :reproduction_cows, as: :reproduction_cows
         get :typologies_report, action: :typologies_report, as: :typologies_report
@@ -117,6 +117,7 @@ KepplerFrontend::Engine.routes.draw do
         patch :edit_params
         post 'create_service/:id', action: :create_service, as: :create_service
         post 'create_pregnancy/:id', action: :create_pregnancy, as: :create_pregnancy
+        patch 'transfer_to_lot/:id', action: :transfer_to_lot, as: :transfer_to_lot
       end
     end
     resources :cheese_types, path: 'tipos-de-queso', controller: 'app/cheese_types'

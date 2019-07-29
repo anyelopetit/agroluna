@@ -12,6 +12,7 @@ module KepplerFrontend
     before_action :attachments
     before_action :last_page
     before_action :user_authenticate
+    before_action :redirect_to_species
     
     include ObjectQuery
 
@@ -50,6 +51,15 @@ module KepplerFrontend
       else
         @assignments = KepplerFarm::Assignment.where(user_id: current_user&.id)
         @farms = KepplerFarm::Farm.where(id: @assignments&.map(&:keppler_farm_farm_id)) unless @assignments.size.zero?
+      end
+    end
+
+    def redirect_to_species
+      @species = KepplerCattle::Species.all
+      @races = KepplerCattle::Race.all
+      @typologies = KepplerCattle::Typology.all
+      if @species.blank? || @species.select { |s| s.races.blank? }.size > 0 || @typologies.blank?
+        redirect_to admin_cattle_species_index_path
       end
     end
 

@@ -6,17 +6,17 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    before_action :set_season, except: %i[index new destroy_multiple]
-    before_action :season_types, only: %i[new edit create update]
     before_action :set_farm
     before_action :set_farms
-    before_action :index_variables
-    strategic_lot_states = %i[
-      availables zeals services pregnants births new_services create_services
-      new_pregnancies create_pregnancies make_birth
-    ]
-    before_action :strategic_lot_variables, only: strategic_lot_states
-    before_action :attachments
+    before_action :set_season, except: %i[index new destroy_multiple]
+    # before_action :season_types, only: %i[new edit create update]
+    # before_action :index_variables
+    # strategic_lot_states = %i[
+    #   availables zeals services pregnants births new_services create_services
+    #   new_pregnancies create_pregnancies make_birth
+    # ]
+    # before_action :strategic_lot_variables, only: strategic_lot_states
+    # before_action :attachments
     report_actions = %i[
       reproduction_cows zeals_report services_report next_palpation_report
       pregnants_report births_report calfs_report twins_report abort_cows_report
@@ -24,8 +24,8 @@ module KepplerFrontend
       inseminations_report typologies_report inactive_cows_report
       analytic_weight_report
     ]
-    after_action :respond_to_formats, except: report_actions
     before_action :report_variables, only: report_actions
+    before_action :respond_to_formats
     helper KepplerFarm::ApplicationHelper
     include ObjectQuery
 
@@ -323,102 +323,43 @@ module KepplerFrontend
       redirect_to farm_season_path(@farm, @season)
     end
 
-    def reproduction_cows
-      @possible_mothers = @farm.cows.possible_mothers
-      @weight_average = @possible_mothers.weight_average(@possible_mothers)
-      respond_to_formats
-    end
+    def reproduction_cows; end
 
-    def zeals_report
-      @zeals_cows = @season&.cows.where_status('Zeal', @season.id)
-      respond_to_formats
-    end
+    def zeals_report; end
 
-    def services_report
-      @services_cows = @season&.cows.where_status('Service', @season.id)
-      respond_to_formats
-    end
+    def services_report; end
 
-    def next_palpation_report
-      @next_palpation_cows = @season&.cows.to_next_palpation(@season.id)
-      respond_to_formats
-    end
+    def next_palpation_report; end
 
-    def pregnants_report
-      @pregnants_cows = @season&.cows.where_status('Pregnancy', @season.id)
-      respond_to_formats
-    end
+    def pregnants_report; end
 
-    def births_report
-      @births_cows = @season&.cows.where_status('Birth', @season.id)
-      respond_to_formats
-    end
+    def births_report; end
 
-    def next_births_report
-      @births_cows = @season&.cows.where_status('Pregnancy', @season.id).map { |x| Date.today > (x.status.date + 240) }
-      respond_to_formats
-    end
+    def next_births_report; end
 
-    def calfs_report
-      @calfs = @season&.cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten
-      respond_to_formats
-    end
+    def calfs_report; end
 
-    def twins_report
-      @twins = @season&.cows.where_status('Birth', @season.id).select { |c| c.statuses }
-      respond_to_formats
-    end
+    def twins_report; end
 
-    def abort_cows_report
-      @abort_cows = @season&.cows.select { |c| !c.aborts.blank? }
-      respond_to_formats
-    end
+    def abort_cows_report; end
 
-    def efectivity_report
-      @responsables = @farm.responsables.where(farm_id: @farm.id)
-      @services = @season.statuses.where(status_type: 'Service', season_id: @season.id)
-      respond_to_formats
-    end
+    def efectivity_report; end
 
-    def vet_efectivity_report
-      @vets = @season.users.where(farm_id: @farm.id)
-      respond_to_formats
-    end
+    def vet_efectivity_report; end
 
-    def bulls_report
-      @bulls = @farm&.cows.where(gender: 'male')
-      respond_to_formats
-    end
+    def bulls_report; end
 
-    def belly_report
-      @calfs = @season&.cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten
-      respond_to_formats
-    end
+    def belly_report; end
 
-    def weans_report
-      @calfs = @season&.cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten
-      respond_to_formats
-    end
+    def weans_report; end
 
-    def inseminations_report
-      @inseminations = @farm.inseminations
-      respond_to_formats
-    end
+    def inseminations_report; end
 
-    def typologies_report
-      @typologies = KepplerCattle::Typology.includes(:cows).all
-      respond_to_formats
-    end
+    def typologies_report; end
 
-    def inactive_cows_report
-      @inactive_cows = @farm.cows.inactives
-      respond_to_formats
-    end
+    def inactive_cows_report; end
 
-    def analytic_weight_report
-      @cows = @season&.cows
-      respond_to_formats
-    end
+    def analytic_weight_report; end
 
     private
 
@@ -583,13 +524,14 @@ module KepplerFrontend
       )
     end
 
-    def respond_to_formats(options = nil)
+    def respond_to_formats
       respond_to do |format|
         format.html
-        format.csv # { send_data KepplerReproduction::Season.all.to_csv, filename: "lotes estratégicos.csv" }
-        format.xls # { send_data KepplerReproduction::Season.all.to_a.to_xls, filename: "lotes estratégicos.xls" }
+        format.csv #{ send_data KepplerCattle::Cow.all.to_csv, filename: "ganado.csv" }
+        format.xls #{ send_data KepplerCattle::Cow.all.to_a.to_xls, filename: "ganado.xls" }
         format.json
         format.pdf { render pdf_options }
+        format.js
       end
     end
 

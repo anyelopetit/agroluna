@@ -11,9 +11,11 @@ module KepplerFrontend
     include ObjectQuery
 
     def index
-      @strategic_lots = @farm.strategic_lots
+      @strategic_lots = @farm.strategic_lots.where.not(id: nil)
       @new_lot = @farm.strategic_lots.new
       @milk_lot = @farm.strategic_lots.find_by(id: @farm.milk_lot_id)
+      @collection = @milk_lot.nil? ? @strategic_lots : (@strategic_lots - [@milk_lot])
+      @cows = @milk_lot.cows.where(gender: 'female')
     end
 
     def assign_lot
@@ -37,7 +39,7 @@ module KepplerFrontend
     end
 
     def create_service
-      cow = KepplerCattle::Cow.find(params[:id])
+      @cow = KepplerCattle::Cow.find(params[:id])
       insemination = @farm.inseminations.find(params[:status][:insemination_id])
       if params[:status][:insemination_quant].to_i > insemination.quantity.to_i
         flash[:error] = 'La cantidad de cartuchos no puede ser mayor a la existente'
@@ -45,7 +47,7 @@ module KepplerFrontend
         if params[:status][:insemination_quant].to_i < 1
           flash[:error] = 'La cantidad de cartuchos debe ser superior a cero'
         else
-          status = KepplerCattle::Status.new_status(params, {farm_id: @farm.id, cow_id: cow.id, user: params[:status][:user_name]})
+          status = KepplerCattle::Status.new_status(params, {farm_id: @farm.id, cow_id: @cow.id, user: params[:status][:user_name]})
           unless insemination.quantity.to_i.zero?
             insemination.update(
               quantity: insemination.quantity.to_i - params[:status][:insemination_quant].to_i
@@ -58,14 +60,31 @@ module KepplerFrontend
     end
 
     def create_pregnancy
-      cow = KepplerCattle::Cow.find_by_id(
+      @cow = KepplerCattle::Cow.find_by_id(
         params.dig(:status, :cow_id) || params[:id]
       )
       status = KepplerCattle::Status.new_status(params, {cow_id: @cow.id, farm_id: @farm.id})
       if status.save!
-        flash[:notice] = 'Servicio guardado'
+        flash[:notice] = 'Preñez registrada'
       else
-        flash[:error] = 'No se pudo guardar el servicio'
+        flash[:error] = 'No se pudo guardar la preñez'
+      end
+      redirect_back fallback_location: farm_milk_index_path(@farm)
+    end
+
+    def transfer_to_lot
+      @cow = @farm.cows.find_by_id(params[:id])
+      @strategic_lot = @farm.strategic_lots.find_by_id(params.dig(:cow, :location, :strategic_lot_id))
+      if @cow && @strategic_lot
+        new_location = @cow.locations.new(farm_id: @farm.id, strategic_lot_id: @strategic_lot.id, user_id: current_user.id)
+        new_location.clean_other_cow_locations
+        if new_location.save!
+          flash[:notice] = "Serie #{@cow.serie_number} ha sido asignada a lote #{@strategic_lot.name}"
+        else
+          flash[:error] = 'No se pudo realizar la transferencia de lote'
+        end
+      else
+        flash[:error] = "No se encontró #{('serie' if @cow.blank?) + ('ni' if @cow.blank? && @strategic_lot.blank?) + ('lote estratégico' if @strategic_lot.blank?)}"
       end
       redirect_back fallback_location: farm_milk_index_path(@farm)
     end

@@ -10,58 +10,6 @@
           Lote Estratégico
     = render 'keppler_frontend/app/milk/tabs'
     = render 'keppler_frontend/app/milk/calendar'
-<<<<<<< HEAD
-    .pb-5
-      %h2.py-5= @milk_lot&.name
-      .d-flex.justify-content-between.mb-5.xs-column
-        - %i[days_to_service days_to_pregnancy days_to_dry days_to_rest].each do |day|
-          .day
-            %b #{t("days.#{day}")}:
-            %span= @farm.try(day).to_i
-        %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#editParams", 'data-toggle': 'modal'}
-          %i.bx.bx-pencil
-      .content-table
-        %table
-          - if @milk_lot
-            %thead
-              %tr
-                %th Nro. Serie
-                %th Nombre corto
-                %th Tipología
-                %th Peso
-                %th Estado actual
-                %th Días
-                %th Leche/Mes
-                %th
-            %tbody
-              - @milk_lot.cows.where(gender: 'female').each do |cow|
-                %tr
-                  %td= cow.serie_number
-                  %td
-                    = cow.short_name
-                    = image_tag "/assets/keppler_cattle/#{cow.gender}", class: 'svg-icon-xs ml-2', style: ('height: 12px' if cow.gender?('male')) unless cow.gender.blank?
-                  %td= cow.typology&.name
-                  %td #{cow.weight&.weight} KG
-                  %td= milk_status(cow)
-                  %td= milk_status_date(cow)
-                  %td 0KG
-                  %td
-                    %a#milkDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
-                      %i.bx.bx-dots-vertical-rounded
-                    .dropdown-menu.profile_dropdown{"aria-labelledby" => "milkDropdown"}
-                      %a.mt-4.mb-4.ml-1{ href: new_farm_cow_path(farm),class: "dropdown-item" }
-                        Agregar
-                      %a.open-status-history{class: "dropdown-item"}
-                        Historial
-                      = link_to({action: :index, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                        Reporte
-          - else
-            %tbody
-              %th No se encuentra ningún lote estratégico asignado
-  = render 'keppler_frontend/app/milk/modalLote'
-  = render 'keppler_frontend/app/milk/editParams'
- 
-=======
   .container.pb-5
     %h2.py-5= @milk_lot&.name
     .container.d-flex.justify-content-between.mb-5
@@ -71,6 +19,7 @@
           %span= @farm.try(day).to_i
       %button.btn.btn_custom.btn--filled.btn--medium{'data-target': "#editParams", 'data-toggle': 'modal'}
         %i.bx.bx-pencil
+        Editar
     %table
       - if @milk_lot
         %thead
@@ -82,10 +31,11 @@
             %th Estado actual
             %th Días
             %th Leche/Mes
+            %th Sig. Proceso
             %th
         %tbody
-          - @milk_lot.cows.where(gender: 'female').each do |cow|
-            %tr
+          - @cows.where(gender: 'female').each do |cow|
+            %tr{ style: ("color: red" if cow.milking? && milk_status_days(cow) >= @farm.try(next_process(cow)).to_i ) }
               %td= cow.serie_number
               %td
                 = cow.short_name
@@ -93,13 +43,29 @@
               %td= cow.typology&.name
               %td #{cow.weight&.weight} KG
               %td= milk_status(cow)
-              %td= cow.milking? ? milk_status_date(cow) : 'N/A'
+              %td= cow.milking? ? milk_status_days(cow) : 'N/A'
               %td
                 - if cow.milking?
                   = cow.milk_weights.last&.total_liters&.to_s.to_f&.round(2)
                   Lts
                 - else
                   N/A
+              %td
+                - if !cow.milking?
+                  = link_to({ controller: :cattle, action: :toggle_milking, id: cow }, { method: :post })  do
+                    %button.btn.btn_custom
+                      Comenzar Ordeño
+                - else
+                  - if ['Nil', nil].include?(cow.status_name)
+                    = link_to '#', rel: "nofollow", 'data-target': "#createService-#{cow.id}", 'data-toggle': 'modal'  do
+                      %button.btn.btn_custom
+                        Registrar Servicio
+                  - elsif ['Service'].include?(cow.status_name)
+                    = link_to '#', rel: "nofollow", 'data-target': "#createPregnancy-#{cow.id}", 'data-toggle': 'modal'  do
+                      %button.btn.btn_custom
+                        Registrar Preñez
+                  -# - elsif cow.status_name.inspect.camelcase.eql?('Pregnancy')
+                  -# - elsif cow.status_name.inspect.camelcase.eql?('Dry')
               %td
                 %a#milkDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
                   %i.bx.bx-dots-vertical-rounded
@@ -108,22 +74,22 @@
                     = cow.milking ? 'Cerrar' : 'Comenzar'
                     Ordeño
                   - if cow.milking?
-                    = link_to '#', class: 'py-2 dropdown-item', rel: "nofollow", 'data-target': "#milkWeight", 'data-toggle': 'modal' do
+                    = link_to '#', class: 'py-2 dropdown-item', rel: "nofollow", 'data-target': "#milkWeight-#{cow.id}", 'data-toggle': 'modal' do
                       Pesaje de leche
                     = link_to farm_cow_milk_weights_path(@farm, cow), class: 'py-2 dropdown-item' do
                       Historial de pesajes
-                    = link_to '#', class: 'py-2 dropdown-item', rel: "nofollow", 'data-target': "#createService", 'data-toggle': 'modal'  do
+                    = link_to '#', class: 'py-2 dropdown-item', rel: "nofollow", 'data-target': "#createService-#{cow.id}", 'data-toggle': 'modal'  do
                       Registrar Servicio
-                    = link_to '#', class: 'py-2 dropdown-item', rel: "nofollow", 'data-target': "#createPregnancy", 'data-toggle': 'modal'  do
+                    = link_to '#', class: 'py-2 dropdown-item', rel: "nofollow", 'data-target': "#createPregnancy-#{cow.id}", 'data-toggle': 'modal'  do
                       Registrar Preñez
-                  = link_to '#', class: 'py-2 dropdown-item' do
+                  = link_to '#', class: 'py-2 dropdown-item', rel: "nofollow", 'data-target': "#transferToLot-#{cow.id}", 'data-toggle': 'modal'   do
                     Transferir de lote
             = render 'keppler_frontend/app/milk/milkWeight', cow: cow
             = render 'keppler_frontend/app/milk/createService', cow: cow
             = render 'keppler_frontend/app/milk/createPregnancy', cow: cow
+            = render 'keppler_frontend/app/milk/transferToLot', cow: cow
       - else
         %tbody
           %th No se encuentra ningún lote estratégico asignado
 = render 'keppler_frontend/app/milk/modalLote'
 = render 'keppler_frontend/app/milk/editParams'
->>>>>>> 10d9e6d461634fe2bb1f848983a68a36eda54ea8

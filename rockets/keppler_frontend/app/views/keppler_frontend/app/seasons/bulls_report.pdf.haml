@@ -65,8 +65,8 @@
                   %td= cow&.serie_number
                   %td= cow&.race&.name
                   %td= cow&.typology&.name
+                  %td= cow.season_cows.find_by(season_id: @season.id)&.created_at&.strftime('%d-%m-%Y')
                   %td= cow&.season_cows&.last&.created_at&.strftime('%d-%m-%Y')
-                  %td= cow.season_cows.find_by(season_id: @season.id)&.date
         .row
           %hr.my-1
           %hr.my-1

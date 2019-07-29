@@ -67,8 +67,6 @@
                   .dropdown-menu{"aria-labelledby" => "reportDropdown"}
                     = link_to({controller: :seasons, action: :reproduction_cows, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
                       Hembras reproductivas
-                    = link_to({controller: :seasons, action: :bulls_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                      Toros padrotes
                     = link_to({controller: :seasons, action: :inseminations_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
                       Reporte de Pajuelas
                     = link_to({controller: :seasons, action: :typologies_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do

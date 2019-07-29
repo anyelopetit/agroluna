@@ -9,13 +9,13 @@ module KepplerFrontend
     before_action :set_farm
     before_action :set_farms
     before_action :set_season, except: %i[index new destroy_multiple]
-    # before_action :season_types, only: %i[new edit create update]
-    # before_action :index_variables
-    # strategic_lot_states = %i[
-    #   availables zeals services pregnants births new_services create_services
-    #   new_pregnancies create_pregnancies make_birth
-    # ]
-    # before_action :strategic_lot_variables, only: strategic_lot_states
+    before_action :season_types, only: %i[new edit create update]
+    before_action :index_variables
+    strategic_lot_states = %i[
+      availables zeals services pregnants births new_services create_services
+      new_pregnancies create_pregnancies make_birth
+    ]
+    before_action :strategic_lot_variables, only: strategic_lot_states
     # before_action :attachments
     report_actions = %i[
       reproduction_cows zeals_report services_report next_palpation_report
@@ -29,8 +29,7 @@ module KepplerFrontend
     helper KepplerFarm::ApplicationHelper
     include ObjectQuery
 
-    def index
-    end
+    def index; end
 
     def show
       @cows = @season&.cows.where(gender: 'female').order(:serie_number)

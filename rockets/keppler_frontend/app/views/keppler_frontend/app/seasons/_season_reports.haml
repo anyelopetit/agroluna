@@ -18,6 +18,8 @@
       Próx. Partos
     = link_to({action: :abort_cows_report, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
       Hembras con abortos
+    = link_to({action: :bulls_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+      Toros padrotes
   - when 1
     = link_to farm_season_path(@farm, @season, format: :pdf), {class: ' py-3 mr-1 dropdown-item', target: '_blank'} do
       Efectividad de la temporada
@@ -35,6 +37,8 @@
       Próx. Partos
     = link_to({action: :abort_cows_report, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
       Hembras con abortos
+    = link_to({action: :bulls_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+      Toros padrotes
   - when 2, 3
     = link_to({action: :efectivity_report, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
       Efectividad de servicios
@@ -46,3 +50,5 @@
       Reporte de vientre
     = link_to({action: :weans_report, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
       Reporte de destete
+    = link_to({action: :bulls_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+      Toros padrotes

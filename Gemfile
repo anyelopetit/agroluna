@@ -5,7 +5,7 @@ ruby '2.5.1'
 gem 'rails', '5.2.0'
 # gem 'keppler'
 gem 'httparty'
-gem "sprockets", ">= 3.7.2"
+gem 'sprockets', '>= 3.7.2'
 
 # Javascript
 gem 'ckeditor', '4.2.4'
@@ -70,7 +70,7 @@ end
 
 # Soft delete
 gem 'paranoia', '2.4.1'
-gem "loofah", ">= 2.2.3"
+gem 'loofah', '>= 2.2.3'
 gem 'goldiloader', '2.1.1'
 #
 # gem 'codemirror-rails', '5.15.2'
@@ -123,7 +123,7 @@ group :development do
   gem 'better_errors', '2.4.0'
   gem 'binding_of_caller', '~> 0.8.0'
   gem 'byebug', '10.0.2'
-  gem 'bullet' # otify you when you should add eager loading (N+1 queries)
+  gem 'bullet' # notify you when you should add eager loading (N+1 queries)
   gem 'commands', '0.2.1'
   gem 'brakeman', '4.3.0'
   gem 'htmlbeautifier', '1.3.1'
@@ -145,7 +145,7 @@ group :development, :test do
   gem 'jshint' # JavaScripts Linter
   gem 'rspec-rails', '~> 3.7'
   gem 'rubocop', '~> 0.54.0', require: false
-  gem "rubycritic", '3.4.0', require: false
+  gem 'rubycritic', '3.4.0', require: false
   gem 'scss_lint', '~> 0.57.0', require: false
   gem 'shoulda-matchers', '~> 3.0', require: false
   gem 'pundit-matchers', '~> 1.4.1'

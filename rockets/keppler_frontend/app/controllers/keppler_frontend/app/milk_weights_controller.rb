@@ -8,13 +8,14 @@ module KepplerFrontend
     # layout 'layouts/templates/application'
     before_action :set_farm
     before_action :set_cow
-    before_action :set_milk_weight, except: %i[index new create destroy_multiple]
+    before_action :set_milk_weight, except: %i[index new create destroy_multiple report]
+    before_action :respond_to_formats
     helper KepplerFarm::ApplicationHelper
     include ObjectQuery
 
-    def index
-      @milk_weights = KepplerReproduction::MilkWeight.all
-    end
+    def index; end
+
+    def report; end
 
     def show; end
 
@@ -76,6 +77,17 @@ module KepplerFrontend
 
     def set_milk_weight
       @milk_weight = KepplerReproduction::MilkWeight.find(params[:id])
+    end
+
+    def respond_to_formats
+      respond_to do |format|
+        format.html
+        format.csv #{ send_data KepplerCattle::Cow.all.to_csv, filename: "ganado.csv" }
+        format.xls #{ send_data KepplerCattle::Cow.all.to_a.to_xls, filename: "ganado.xls" }
+        format.json
+        format.pdf { render pdf_options }
+        format.js
+      end
     end
 
     # Only allow a trusted parameter "white list" through.

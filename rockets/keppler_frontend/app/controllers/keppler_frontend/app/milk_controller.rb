@@ -7,6 +7,7 @@ module KepplerFrontend
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
     before_action :set_farm
+    before_action :respond_to_formats
     helper KepplerFarm::ApplicationHelper
     include ObjectQuery
 
@@ -89,6 +90,34 @@ module KepplerFrontend
       redirect_back fallback_location: farm_milk_index_path(@farm)
     end
 
+    def farm_milk_average
+    end
+
+    def milking_start
+    end
+
+    def milking_finish
+    end
+
+    def no_services_cows
+    end
+
+    def services_cows
+    end
+
+    def next_births
+    end
+
+    def pregnancies
+    end
+
+    def next_to_dry
+    end
+
+    def next_to_birth
+    end
+
+
     private
 
     def set_farm
@@ -101,6 +130,17 @@ module KepplerFrontend
       else
         @assignments = KepplerFarm::Assignment.where(user_id: current_user&.id)
         @farms = KepplerFarm::Farm.where(id: @assignments&.map(&:keppler_farm_farm_id)) unless @assignments.size.zero?
+      end
+    end
+
+    def respond_to_formats
+      respond_to do |format|
+        format.html
+        format.csv #{ send_data KepplerCattle::Cow.all.to_csv, filename: "ganado.csv" }
+        format.xls #{ send_data KepplerCattle::Cow.all.to_a.to_xls, filename: "ganado.xls" }
+        format.json
+        format.pdf { render pdf_options }
+        format.js
       end
     end
 

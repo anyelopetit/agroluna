@@ -100,5 +100,9 @@ module KepplerFarm
           |x| [x.serie_number + ("(#{x&.short_name}) - Pajuela" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] 
         }) 
     end
+    
+    def total_milking_days
+      days_to_service + days_to_pregnancy + days_to_dry + days_to_rest
+    end
   end
 end

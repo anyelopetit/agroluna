@@ -30,7 +30,9 @@ KepplerFrontend::Engine.routes.draw do
       end
       resources :weights, path: 'pesos', controller: 'app/weights', path_names: { new: 'nuevo', edit: 'editar'}, only: %i[new create]
 
-      resources :milk_weights, path: 'pesajes-de-leche', controller: 'app/milk_weights'
+      resources :milk_weights, path: 'pesajes-de-leche', controller: 'app/milk_weights' do
+        get :report, as: :report, on: :collection
+      end
     end
 
     resources :strategic_lots, path: 'lotes-estrategicos', controller: 'app/strategic_lots', path_names: { new: 'nuevo', edit: 'editar'} do
@@ -118,6 +120,18 @@ KepplerFrontend::Engine.routes.draw do
         post 'create_service/:id', action: :create_service, as: :create_service
         post 'create_pregnancy/:id', action: :create_pregnancy, as: :create_pregnancy
         patch 'transfer_to_lot/:id', action: :transfer_to_lot, as: :transfer_to_lot
+        # get '/pesajes/:cow_id', action: :weights, as: :weights
+
+        # Reports
+        get 'farm_milk_average', action: :farm_milk_average, as: :farm_milk_average # 10
+        get 'milking_start', action: :milking_start, as: :milking_start
+        get 'milking_finish', action: :milking_finish, as: :milking_finish
+        get 'no_services_cows', action: :no_services_cows, as: :no_services_cows
+        get 'services_cows', action: :services_cows, as: :services_cows
+        get 'next_births', action: :next_births, as: :next_births
+        get 'pregnancies', action: :pregnancies, as: :pregnancies
+        get 'next_to_dry', action: :next_to_dry, as: :next_to_dry
+        get 'next_to_birth', action: :next_to_birth, as: :next_to_birth
       end
     end
     resources :cheese_types, path: 'tipos-de-queso', controller: 'app/cheese_types'

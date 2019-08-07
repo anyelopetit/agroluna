@@ -1,0 +1,116 @@
+!!!
+%html{ lang: 'en' }
+  %head
+    %meta{ charset: 'UTF-8' }
+    %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
+    %meta{ name: 'theme-color', content: '#fff' }
+    %title Ficha de ganado (#{@cow.serie_number})
+  %body
+    .header-left
+      %h1.farm-title= @farm.try(:title)&.upcase
+      %h2.report-title Descripción de la serie: #{@cow.serie_number}
+    .header-right
+      %p= Time.now.strftime('%d-%m-%Y')
+    .app_wrapper
+      .container_custom
+        .row
+          %table.card_show.cow_info
+            %tbody
+              -# %tr
+              -#   %th Número de serie
+              -#   %th Nombre corto
+              -#   %th Género
+              -#   %th Fecha de Nacimiento
+              -# %tr
+              -#   %td= @cow.serie_number
+              -#   %td= @cow.short_name
+              -#   %td= @cow.gender?('male') ? 'Macho' : 'Hembra'
+              -#   %td= @cow.birthdate
+              -# %tr
+              -#   %th Especie
+              -#   %th Raza
+              -#   %th Tipología
+              -#   %th Condición corporal
+              -# %tr
+              -#   %td= @cow.species&.name
+              -#   %td= @cow.race&.name
+              -#   %td= @cow.typology_name
+              -#   %td= @cow.weight&.corporal_condition.name unless @cow.weight&.blank?
+              -# %tr
+              -#   %th Peso
+              -#   %th Años
+              -#   %th Meses
+              -#   %th Días de nacido
+              -# %tr
+              -#   %td #{@cow.weight&.weight} KG
+              -#   %td= @cow.years
+              -#   %td= @cow.months
+              -#   %td= @cow.days
+              %tr
+                %th Fecha de inicio de ordeño
+                %th Fecha de fin de ordeño
+                %th Días de lactancia estimados
+                %th Días de lactancia transcurridos
+              %tr
+                %td= (@cow.milking_date || @cow.status.date).strftime('%d-%m-%y')
+                %td= ((@cow.milking_date || @cow.status.date) + @farm.total_milking_days.days).strftime('%d-%m-%y')
+                %td= @farm.total_milking_days.to_i
+                %td= (Date.today - (@cow.milking_date || @cow.status.date)).to_s.remove('/1')
+          %h2 Pesajes de leche (#{@cow.last_milk_weights&.size})
+          %table.cow-table
+            - if @cow.last_milk_weights&.size&.zero?
+              %thead
+                %tr
+                  %th.not-records.center
+                    %center No se han realizado pesajes de leche
+            - else
+              %thead
+                %tr
+                  %th Fecha
+                  %th Litros por la mañana
+                  %th Litros por la tarde
+                  %th Litros totales
+              %tbody
+                - unless @cow.last_milk_weights.blank?
+                  - @cow.last_milk_weights.each do |milk_weight|
+                    %tr
+                      %td= milk_weight.date.strftime('%d-%m-%y')
+                      %td #{milk_weight.morning_liters.inspect.to_f&.round(2)} Lts
+                      %td #{milk_weight.evening_liters.inspect.to_f&.round(2)} Lts
+                      %td #{milk_weight.total_liters.inspect.to_f&.round(2)} Lts
+          %p
+            %b Total de litros:
+            %span #{@cow.last_milk_weights.total_liters.round(2)} KG
+:scss
+  body {
+    font-size: 15px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr {
+    border-top: solid 1px #eee;
+  }
+  th {
+    text-align: left;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+  }
+  td {
+    margin: 0;
+    padding: 0;
+  }
+  .header-left {
+    float: left;
+  }
+  .header-right {
+    float: right;
+  }
+  .farm-title{
+    width: 150%
+  }
+  .report-title {
+    width: 150%
+  }

@@ -258,6 +258,11 @@ module KepplerCattle
       where(milking: true)
     end
 
+    def last_milk_weights
+      return milk_weights if milking_date.blank?
+      milk_weights.where("created_at >= #{milking_date}")
+    end
+
     def self.in_this_process(process)
       select { |x| x.status_name == process.camelcase }
     end

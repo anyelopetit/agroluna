@@ -1,0 +1,24 @@
+%a#reportDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+  %button.btn.btn_custom.btn--medium
+    %i.icofont-clip-board
+    Reportes
+    %i.icofont-simple-down
+.dropdown-menu{"aria-labelledby" => "reportDropdown"}
+  = link_to({action: :farm_milk_average, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
+    Promedio de leche mesual
+  = link_to({action: :milking_start, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
+    Inicio de Ordeño
+  = link_to({action: :milking_finish, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
+    Fin de Ordeño
+  = link_to({action: :no_services_cows, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
+    Series Sin Servicios
+  = link_to({action: :services_cows, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
+    Series Con Servicios
+  = link_to({action: :next_births, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
+    Próximas a Palpar
+  = link_to({action: :pregnancies, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
+    Series preñadas
+  = link_to({action: :next_to_dry, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
+    Próximas a Secar
+  = link_to({action: :next_to_birth, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
+    Próximas a parir

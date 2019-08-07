@@ -1,12 +1,25 @@
+%script{:src => "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.0/Chart.min.js"}
 .app_wrapper.pb-5
   .container.d-flex.justify-content-between
     .left
       %h1 Pesajes de leche de serie #{@cow.serie_number}
     .right
+      = link_to report_farm_cow_milk_weights_path(@farm, @cow, format: :pdf), target: '_blank' do
+        %button.btn.btn_custom.btn--medium.btn--filled.mt-4.mb-4
+          %i.bx.bxs-report
+          Reporte
       = link_to (:back == request.url ? :back : farm_milk_index_path(@farm)) do
         %button.btn.btn_custom.btn--medium.mt-4.mb-4
           %i.icofont-arrow-left
           Atrás
+  .container
+    .row
+      .col-sm-12
+        %button.btn.btn_custom.btn--medium.btn--filled{"aria-controls" => "collapseChart", "aria-expanded" => "false", "data-target" => "#collapseChart", "data-toggle" => "collapse", type: "button"}
+          Mostrar gráfico
+        #collapseChart.collapse.p-5
+          .card_show{ style: 'max-width: 1000px; margin: 0 auto' }
+            %canvas#milk_weights{ height: '100', width: '200' }
   .container.pb-5
     %table.table
       %thead
@@ -21,11 +34,45 @@
             %th{ colspan: 2 }
       %tbody
         - unless @cow.milk_weights.blank?
-          - @cow.milk_weights.each do |milk_tank|
-            %tr{ title: milk_tank.description }
-              %td= milk_tank.date.strftime('%d-%m-%y')
-              %td #{milk_tank.morning_liters.inspect.to_f&.round(2)} Lts
-              %td #{milk_tank.evening_liters.inspect.to_f&.round(2)} Lts
-              %td #{milk_tank.total_liters.inspect.to_f&.round(2)} Lts
-              %td= link_to 'Editar', edit_farm_milk_tank_path(@farm, milk_tank)
-              %td= link_to 'Eliminar', farm_milk_tank_path(@farm, milk_tank), method: :delete, data: { confirm: '¿Estás seguro?' }
+          - @cow.milk_weights.each do |milk_weight|
+            %tr{ title: milk_weight.description }
+              %td= milk_weight.date.strftime('%d-%m-%y')
+              %td #{milk_weight.morning_liters.inspect.to_f&.round(2)} Lts
+              %td #{milk_weight.evening_liters.inspect.to_f&.round(2)} Lts
+              %td #{milk_weight.total_liters.inspect.to_f&.round(2)} Lts
+              %td= link_to 'Editar', edit_farm_cow_milk_weight_path(@farm, @cow, milk_weight)
+              %td= link_to 'Eliminar', farm_cow_milk_weight_path(@farm, @cow, milk_weight), method: :delete, data: { confirm: '¿Estás seguro?' }
+
+- labels = @cow.milking_date.blank? ? TimeService.months_between_dates(Date.today - 1.month, Date.today) : TimeService.months_between_dates(@cow.milking_date, Date.today)
+- data = labels.map { |month| @cow.milk_weights.select { |mw| I18n.l(mw.created_at, format: "%B").eql?(month) }.size }
+:javascript
+  var ctx = document.getElementById('milk_weights').getContext('2d');
+  var green_gradient = ctx.createLinearGradient(0, 0, 0, 450);
+  green_gradient.addColorStop(0, ' #4AC29A');
+  green_gradient.addColorStop(1, '#3CD3AD');
+  // green_gradient.addColorStop(1, 'rgba(255, 255, 255, .5)');
+
+  var chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labelString: '20',
+      labels: #{raw labels},
+      datasets: [{
+        label: 'Cantidad de pesajes por mes',
+        data: #{raw data},
+        backgroundColor: green_gradient,
+        hoverBackgroundColor: green_gradient,
+        hoverBorderWidth: 2
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            stepSize: 1
+          }
+        }]
+      }
+    }
+  });

@@ -1,12 +1,19 @@
-.app_wrapper.pb-5
-  .container.pb-5
-    = simple_form_for [@farm, @cheese_process] do |f|
-      = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
-      = f.input :date, input_html: { class: 'form-control' }
-      = f.input :received_liters, input_html: { class: 'form-control' }
-      = f.input :processed_liters, input_html: { class: 'form-control' }
-      = f.input :cheese_type_id, collection: KepplerReproduction::CheeseType.all, include_blank: false, input_html: { class: 'form-control' }
-      = f.submit 'Guardar', input_html: { class: 'form-control' }
+= simple_form_for [@farm, @cheese_process] do |f|
+  = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
+  .row
+    .col-sm-12
+      = f.input :date, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+    .col-sm-12
+      = f.input :received_liters, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+    .col-sm-12
+      = f.input :processed_liters, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+    .col-sm-12
+      = f.input :cheese_type_id, collection: KepplerReproduction::CheeseType.all, include_blank: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+    .col-sm-12
+      .float-right
+        %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+          %i.icofont-save
+          Guardar
 
 :javascript
   $('#cheese_process_destination').change(function() {

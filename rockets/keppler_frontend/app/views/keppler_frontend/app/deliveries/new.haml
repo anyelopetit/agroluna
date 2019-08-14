@@ -3,9 +3,10 @@
     .left
       %h1 Nueva entrega de leche
     .right
-      = link_to (:back == request.url ? :back : farm_milk_path(@farm)) do
+      = link_to (:back == request.url ? :back : farm_deliveries_path(@farm)) do
         %button.btn.btn_custom.btn--medium.mt-4.mb-4
           %i.icofont-arrow-left
           Atrás
-  .container
-    = render 'form'
+  .container_carousel
+    .card_new
+      = render 'form'

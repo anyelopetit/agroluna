@@ -1,4 +1,4 @@
-.app_wrapper.pb-5
+.app_wrapper
   .container.d-flex.justify-content-between
     .left
       %h1 Nuevo tanque de leche
@@ -8,4 +8,5 @@
           %i.icofont-arrow-left
           Atrás
   .container
-    = render 'form'
+    .card_new
+      = render 'form'

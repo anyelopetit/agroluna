@@ -1,16 +1,23 @@
-.app_wrapper.pb-5
-  .container.pb-5
-    = simple_form_for [@farm, @delivery] do |f|
-      = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
-      = f.input :date, input_html: { class: 'form-control' }
-      = f.input :liters, input_html: { class: 'form-control' }
-      = f.input :destination, input_html: { class: 'form-control', list: 'tanks', placeholder: 'Escriba el nombre de un cliente o seleccione un tanque' }
-      %datalist#tanks
-        - KepplerReproduction::MilkTank.all.each do |milk_tank|
-          %option{ value: milk_tank.name }= milk_tank.name
-      -# #client_name.d-none
-        = f.input :client_name, input_html: { class: 'form-control' }
-      = f.submit 'Guardar', input_html: { class: 'form-control' }
+= simple_form_for [@farm, @delivery] do |f|
+  = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
+  .form-padding
+    .row
+      .col-sm-12
+        = f.input :date, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-12
+        = f.input :liters, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-12
+        = f.input :destination, input_html: { class: 'form-control input_custom', list: 'tanks', placeholder: 'Escriba el nombre de un cliente o seleccione un tanque' }
+        %datalist#tanks
+          - KepplerReproduction::MilkTank.all.each do |milk_tank|
+            %option{ value: milk_tank.name }= milk_tank.name
+        -# #client_name.d-none
+          = f.input :client_name, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-12
+        .float-right
+          %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+            %i.icofont-save
+            Guardar
 
 -# :javascript
   $('#delivery_destination').change(function() {

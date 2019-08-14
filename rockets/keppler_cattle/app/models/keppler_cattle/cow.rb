@@ -181,17 +181,11 @@ module KepplerCattle
         .inject { |sum, weight| sum + weight } / cows.size
     end
 
-    def self.where_status(status_name, season_id)
-      # select { |cow| cow.status&.status_type == status_name }.pluck(:id)
+    def self.where_status(status_name, season_id = nil)
       if status_name.is_a?(Array)
         ids = select { |c| status_name.include?(c.status&.status_type) }.pluck(:id)
         where(id: ids)
       else
-        # includes(:statuses).where(
-        #   keppler_cattle_statuses: {
-        #     status_type: status_name, season_id: season_id
-        #   }
-        # ).distinct
         ids = select { |c| status_name.eql?(c.status&.status_type) }.pluck(:id)
         where(id: ids)
       end

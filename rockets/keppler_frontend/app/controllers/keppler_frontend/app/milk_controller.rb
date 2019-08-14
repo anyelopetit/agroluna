@@ -105,7 +105,7 @@ module KepplerFrontend
     def services_cows
     end
 
-    def next_births
+    def next_palpations
     end
 
     def pregnancies

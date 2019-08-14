@@ -1,0 +1,135 @@
+!!!
+%html{ lang: 'en' }
+  %head
+    %meta{ charset: 'UTF-8' }
+    %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
+    %meta{ name: 'theme-color', content: '#fff' }
+    %title Producción de leche
+    :javascript
+      function number_pages() {
+        var vars={};
+        var x=document.location.search.substring(1).split('&');
+        for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = decodeURIComponent(z[1]);}
+        var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+        for(var i in x) {
+          var y = document.getElementsByClassName(x[i]);
+          for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+        }
+      }
+  %body{ onload: 'number_pages()' }
+    - @no_services_cows = @farm&.cows.select { |c| c.status_name.eql?('Service') }
+    .header-left
+      %h1.farm-title= @farm.try(:title)&.upcase
+      %h5 Reporte de series con servicios
+    .header-right
+      %p= Time.now.strftime('%d-%m-%Y')
+      -# %p 
+        Pág.
+        %span.page
+        \/
+        %span.topage
+    .app_wrapper
+      .container_custom
+        .row
+          - if @no_services_cows&.blank?
+            %table.mt-none.mb-4
+              %thead
+                %tr
+                  %th.not-records.center
+                    %center No se encontraron series con servicios
+          - else
+            %table.mt-none.mb-4
+              %thead
+                %tr
+                  %th Nro. Serie
+                  %th
+                    Edad
+                    %br
+                    A - M
+                  %th Tipología
+                  %th Último servicio
+                  %th Pajuela (cant.)
+                  %th Próximo celo
+                  %th Próx. Palpación
+              %tbody
+                - @no_services_cows.each do |cow|
+                  %tr
+                    %td= cow&.serie_number
+                    %td
+                      = cow&.years
+                      \-
+                      = cow&.months
+                    %td= cow&.typology_name
+                    %td= cow.statuses.where(status_type: 'Service').last&.date&.strftime('%d-%m-%Y')
+                    %td
+                      - if cow.statuses.where(status_type: 'Service').size > 0
+                        = @farm.inseminations.find(cow.statuses.where(status_type: 'Service')&.last&.insemination_id)&.serie_number || 'Sin pajuela'
+                        (#{cow.statuses.where(status_type: 'Service')&.last&.insemination_quantity})
+                    %td
+                      - if cow.statuses.where(status_type: 'Service').size > 2
+                        = ((cow.statuses.where(status_type: 'Service')[-1].date) - cow.statuses.where(status_type: 'Service')[-2].date).to_s.split('/').first.to_i
+                      - else
+                        21
+                      días
+                    %td= cow.statuses.where(status_type: 'Service').last&.date.blank? ? 'N/A' : (cow.statuses.where(status_type: 'Service').last&.date + 45.days)&.strftime('%d-%m-%Y')
+        .row
+          %hr.my-1
+          %hr.my-1
+          %b
+            Cantidad de series:
+          #{@no_services_cows.size}
+:scss
+  body {
+    font-size: 15px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr {
+    border-top: solid 1px #eee;
+  }
+  th {
+    text-align: left;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+  }
+  td {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .header-left {
+    float: left;
+  }
+  .header-right {
+    float: right;
+  }
+  .farm-title{
+    width: 150%
+  }
+  .report-title {
+    width: 150%
+  }
+
+  .app_wrapper {
+    padding-top: 40px;
+  }
+
+  .container_custom {
+    margin: 100px 20px 0;
+  }
+
+  .mb-none {
+    margin-bottom: 0;
+  }
+
+  .mt-4 {
+    margin-top: 40px;
+  }
+
+  .strategic_lot_name {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }

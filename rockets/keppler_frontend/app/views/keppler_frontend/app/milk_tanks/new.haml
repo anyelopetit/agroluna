@@ -1,12 +1,1 @@
-.app_wrapper
-  .container.d-flex.justify-content-between
-    .left
-      %h1 Nuevo tanque de leche
-    .right
-      = link_to (:back == request.url ? :back : farm_deliveries_path(@farm)) do
-        %button.btn.btn_custom.btn--medium.mt-4.mb-4
-          %i.icofont-arrow-left
-          Atrás
-  .container
-    .card_new
-      = render 'form'
+= render 'form', title: 'Nuevo tanque de leche'

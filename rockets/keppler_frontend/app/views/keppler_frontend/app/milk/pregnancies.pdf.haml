@@ -1,0 +1,132 @@
+!!!
+%html{ lang: 'en' }
+  %head
+    %meta{ charset: 'UTF-8' }
+    %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
+    %meta{ name: 'theme-color', content: '#fff' }
+    %title Preñadas | Producción de leche
+    :javascript
+      function number_pages() {
+        var vars={};
+        var x=document.location.search.substring(1).split('&');
+        for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = decodeURIComponent(z[1]);}
+        var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+        for(var i in x) {
+          var y = document.getElementsByClassName(x[i]);
+          for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+        }
+      }
+  %body{ onload: 'number_pages()' }
+    - @pregnants_cows = @farm&.cows.where_status('Pregnancy', @farm.id)
+    .header-left
+      %h1.farm-title= @farm.try(:title)&.upcase
+      %h5 Hembras preñadas
+    .header-right
+      %p= Time.now.strftime('%d-%m-%Y')
+      -# %p 
+        Pág.
+        %span.page
+        \/
+        %span.topage
+    .app_wrapper
+      .container_custom
+        .row
+          - if @pregnants_cows&.blank?
+            %table.mt-none.mb-4
+              %thead
+                %tr
+                  %th.not-records.center
+                    %center No se encontraron hembras preñadas en esta temporada de monta
+          - else
+            %table.mt-none.mb-4
+              %thead
+                %tr
+                  %th Nro. Serie
+                  %th
+                    Edad
+                    %br
+                    A - M
+                  %th Tipología
+                  %th Último servicio
+                  %th Tiempo de preñez
+                  %th Tiempo restante
+                  %th Parto tentativo
+              %tbody
+                - @pregnants_cows.each do |cow|
+                  %tr
+                    %td= cow&.serie_number
+                    %td
+                      = cow&.years
+                      \-
+                      = cow&.months
+                    %td= cow&.typology_name
+                    %td= cow.statuses.where(status_type: 'Service').last&.date&.strftime('%d-%m-%Y')
+
+                    %td
+                      = (Date.today - cow.statuses.where(status_type: 'Pregnancy').last&.date).to_s.split('/').first.to_i
+                      días
+                    %td
+                      = ((cow.statuses.where(status_type: 'Pregnancy').last&.date + 280.days) - Date.today).to_s.split('/').first.to_i
+                      días
+                    %td= (cow.statuses.where(status_type: 'Pregnancy').last&.date + 9.months).strftime('%d-%m-%Y')
+        .row
+          %hr.my-1
+          %hr.my-1
+          %b
+            Cantidad de series:
+          #{@pregnants_cows.size}
+:scss
+  body {
+    font-size: 15px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr {
+    border-top: solid 1px #eee;
+  }
+  th {
+    text-align: left;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+  }
+  td {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .header-left {
+    float: left;
+  }
+  .header-right {
+    float: right;
+  }
+  .farm-title{
+    width: 150%
+  }
+  .report-title {
+    width: 150%
+  }
+
+  .app_wrapper {
+    padding-top: 40px;
+  }
+
+  .container_custom {
+    margin: 100px 20px 0;
+  }
+
+  .mb-none {
+    margin-bottom: 0;
+  }
+
+  .mt-4 {
+    margin-top: 40px;
+  }
+
+  .strategic_lot_name {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }

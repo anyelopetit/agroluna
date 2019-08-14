@@ -123,15 +123,15 @@ KepplerFrontend::Engine.routes.draw do
         # get '/pesajes/:cow_id', action: :weights, as: :weights
 
         # Reports
-        get 'farm_milk_average', action: :farm_milk_average, as: :farm_milk_average # 10
-        get 'milking_start', action: :milking_start, as: :milking_start
-        get 'milking_finish', action: :milking_finish, as: :milking_finish
-        get 'no_services_cows', action: :no_services_cows, as: :no_services_cows
-        get 'services_cows', action: :services_cows, as: :services_cows
-        get 'next_births', action: :next_births, as: :next_births
-        get 'pregnancies', action: :pregnancies, as: :pregnancies
-        get 'next_to_dry', action: :next_to_dry, as: :next_to_dry
-        get 'next_to_birth', action: :next_to_birth, as: :next_to_birth
+        get 'promedio-leche', action: :farm_milk_average, as: :farm_milk_average # 10
+        get 'inicio-ordeño', action: :milking_start, as: :milking_start
+        get 'final-ordeño', action: :milking_finish, as: :milking_finish
+        get 'series-sin-servicio', action: :no_services_cows, as: :no_services_cows
+        get 'series-con-servicio', action: :services_cows, as: :services_cows
+        get 'proximas-palpaciones', action: :next_palpations, as: :next_palpations
+        get 'series-preñadas', action: :pregnancies, as: :pregnancies
+        get 'proximas-a-secar', action: :next_to_dry, as: :next_to_dry
+        get 'proximas-a-parir', action: :next_to_birth, as: :next_to_birth
       end
     end
     resources :cheese_types, path: 'tipos-de-queso', controller: 'app/cheese_types'

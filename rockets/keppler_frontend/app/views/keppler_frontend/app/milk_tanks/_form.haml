@@ -1,15 +1,26 @@
-= simple_form_for [@farm, @milk_tank] do |f|
-  = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
-  .form-padding
-    .row
-      .col-sm-12
-        = f.input :name, placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
-      .col-sm-12
-        = f.input :milk_capacity, placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
-      .col-sm-12
-        = f.input :address, placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
-      .col-sm-12
-        .float-right
-          %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
-            %i.icofont-save
-            Guardar
+.app_wrapper
+  .container.d-flex.justify-content-between
+    .left
+      %h1= title
+    .right
+      = link_to (:back == request.url ? :back : farm_deliveries_path(@farm)) do
+        %button.btn.btn_custom.btn--medium.mt-4.mb-4
+          %i.icofont-arrow-left
+          Atrás
+  .container
+    .card_new
+      = simple_form_for [@farm, @milk_tank] do |f|
+        = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
+        .form-padding
+          .row
+            .col-sm-12
+              = f.input :name, placeholder: false, label: 'Nombre', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+            .col-sm-12
+              = f.input :milk_capacity, placeholder: false, label: 'Capacidad de leche (Lts)', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+            .col-sm-12
+              = f.input :address, placeholder: false, label: 'Ubicación', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+            .col-sm-12
+              .float-right
+                %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                  %i.icofont-save
+                  Guardar

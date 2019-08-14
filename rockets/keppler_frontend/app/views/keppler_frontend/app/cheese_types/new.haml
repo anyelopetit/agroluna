@@ -1,12 +1,1 @@
-.app_wrapper.pb-5
-  .container.d-flex.justify-content-between
-    .left
-      %h1 Nuevo tipo de queso
-    .right
-      = link_to (:back == request.url ? :back : farm_cheese_processes_path(@farm)) do
-        %button.btn.btn_custom.btn--medium.mt-4.mb-4
-          %i.icofont-arrow-left
-          Atrás
-  .container_carousel
-    .card_new
-      = render 'form'
+= render 'form', title: 'Nuevo tipo de queso'

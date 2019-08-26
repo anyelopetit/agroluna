@@ -17,7 +17,7 @@
         }
       }
   %body{ onload: 'number_pages()' }
-    - @no_services_cows = @farm&.cows.select { |c| c.status_name.eql?('Service') }
+    - @no_services_cows = @farm&.milk_lot.cows.select { |c| c.status_name.eql?('Service') }
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
       %h5 Reporte de series con servicios

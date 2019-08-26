@@ -1,0 +1,133 @@
+!!!
+%html{ lang: 'en' }
+  %head
+    %meta{ charset: 'UTF-8' }
+    %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
+    %meta{ name: 'theme-color', content: '#fff' }
+    %title Litros mensuales | #{@farm&.title}
+    :javascript
+      function number_pages() {
+        var vars={};
+        var x=document.location.search.substring(1).split('&');
+        for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = decodeURIComponent(z[1]);}
+        var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+        for(var i in x) {
+          var y = document.getElementsByClassName(x[i]);
+          for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+        }
+      }
+  %body{ onload: 'number_pages()' }
+
+    - @milk_lot = @farm.strategic_lots.find_by(id: @farm.milk_lot_id)
+    - @milk_weights = @milk_lot.milk_weights
+
+    .header-left
+      %h1.farm-title= @farm.try(:title)&.upcase
+      %h3 Pesajes realizados mensualmente desde hace 6 meses
+    .header-right
+      %p= Time.now.strftime('%d-%m-%Y')
+      -# %p 
+        Pág.
+        %span.page
+        \/
+        %span.topage
+    .app_wrapper
+      .container_custom
+        .row
+          - @total = 0
+          - if @milk_weights.blank?
+            %table.mt-none.mb-4
+              %thead
+                %tr
+                  %td.not-records.center
+                    %center Aún no se han realizado pesajes de leche en esta finca
+          - else
+            - 6.times do |num|
+              - month_num = (Date.today - (num).months).month
+              - year_num = month_num <= Date.today.month ? Date.today.year : (Date.today.year - 1) 
+              - monthly_weights = @milk_weights.select { |x| x.date.month == month_num && x.date.year == year_num }
+              - @total += monthly_weights.size
+              %h4 #{TimeService.months[month_num - 1]} - #{year_num}
+              - if monthly_weights&.blank?
+                %table.mt-none.mb-4
+                  %thead
+                    %tr
+                      %td.not-records.center
+                        %center No se encontraron pesajes mensuales en #{TimeService.months[month_num - 1]} - #{year_num}
+              - else
+                %table.mt-none.mb-4
+                  %thead
+                    %tr
+                      %th Fecha
+                      %th Litros en la mañana
+                      %th Litros en la tarde
+                      %th Total Litros
+                  %tbody
+                    - monthly_weights.each do |milk_weight|
+                      %tr
+                        %td #{milk_weight&.date.strftime('%d-%m-%Y')}
+                        %td #{milk_weight&.morning_liters} Lts
+                        %td #{milk_weight&.evening_liters} Lts
+                        %td #{milk_weight&.total_liters} Lts
+                        -# %t #{milk_weight&.description}
+        .row
+          %hr.my-1  
+          %hr.my-1
+          %b
+            Cantidad total:
+          #{@milk_weights.size}
+:scss
+  body {
+    font-size: 15px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr {
+    border-top: solid 1px #eee;
+  }
+  th {
+    text-align: left;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+  }
+  td {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .header-left {
+    float: left;
+  }
+  .header-right {
+    float: right;
+  }
+  .farm-title{
+    width: 150%
+  }
+  .report-title {
+    width: 150%
+  }
+
+  .app_wrapper {
+    padding-top: 40px;
+  }
+
+  .container_custom {
+    margin: 100px 20px 0;
+  }
+
+  .mb-none {
+    margin-bottom: 0;
+  }
+
+  .mt-4 {
+    margin-top: 40px;
+  }
+
+  .strategic_lot_name {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }

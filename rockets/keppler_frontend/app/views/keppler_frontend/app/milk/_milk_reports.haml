@@ -4,12 +4,12 @@
     Reportes
     %i.icofont-simple-down
 .dropdown-menu{"aria-labelledby" => "reportDropdown"}
-  -# = link_to({action: :farm_milk_average, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
-  -#   Promedio de leche mesual
-  -# = link_to({action: :milking_start, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
-  -#   Inicio de Ordeño
-  -# = link_to({action: :milking_finish, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
-  -#   Fin de Ordeño
+  = link_to({action: :farm_milk_average}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
+    Promedio de leche mesual
+  = link_to({action: :milking_start, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
+    Inicio de Ordeño
+  = link_to({action: :milking_finish, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
+    Fin de Ordeño
   = link_to({action: :no_services_cows, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do
     Series Sin Servicios
   = link_to({action: :services_cows, format: :pdf}, {class: ' py-3 mr-1 dropdown-item', target: '_blank'}) do

@@ -2,9 +2,9 @@
 .app_wrapper.pb-5
   .container.d-flex.justify-content-between
     .left
-      %h1 Pesajes de leche de serie #{@cow.serie_number}
+      %h1 Pesajes de leche mensuales
     .right
-      = link_to report_farm_cow_milk_weights_path(@farm, @cow, format: :pdf), target: '_blank' do
+      = link_to = link_to({format: :pdf}, {target: '_blank'}) do
         %button.btn.btn_custom.btn--medium.btn--filled.mt-4.mb-4
           %i.bx.bxs-report
           Reporte
@@ -12,6 +12,10 @@
         %button.btn.btn_custom.btn--medium.mt-4.mb-4
           %i.icofont-arrow-left
           Atrás
+
+  - @milk_lot = @farm.strategic_lots.find_by(id: @farm.milk_lot_id)
+  - @milk_weights = @milk_lot.milk_weights
+
   .container
     .row
       .col-sm-12
@@ -24,27 +28,24 @@
     %table.table
       %thead
         %tr
-          - if @cow.milk_weights.blank?
+          - if @milk_weights.blank?
             %th No tiene pesajes de leche
           - else
             %th Fecha
             %th Litros por la mañana
             %th Litros por la tarde
             %th Litros totales
-            %th{ colspan: 2 }
       %tbody
-        - unless @cow.milk_weights.blank?
-          - @cow.milk_weights.each do |milk_weight|
-            %tr{ title: milk_weight.description }
-              %td= milk_weight.date.strftime('%d-%m-%y')
-              %td #{milk_weight.morning_liters.inspect.to_f&.round(2)} Lts
-              %td #{milk_weight.evening_liters.inspect.to_f&.round(2)} Lts
-              %td #{milk_weight.total_liters.inspect.to_f&.round(2)} Lts
-              %td= link_to 'Editar', edit_farm_cow_milk_weight_path(@farm, @cow, milk_weight)
-              %td= link_to 'Eliminar', farm_cow_milk_weight_path(@farm, @cow, milk_weight), method: :delete, data: { confirm: '¿Estás seguro?' }
+        - unless @milk_weights.blank?
+          - @milk_weights.each do |milk_weight|
+            %tr{ title: milk_weight&.description }
+              %td= milk_weight&.date.strftime('%d-%m-%y')
+              %td #{milk_weight&.morning_liters.inspect.to_f&.round(2)} Lts
+              %td #{milk_weight&.evening_liters.inspect.to_f&.round(2)} Lts
+              %td #{milk_weight&.total_liters.inspect.to_f&.round(2)} Lts
 
-- labels = @cow.milking_date.blank? ? TimeService.months_between_dates(Date.today - 1.month, Date.today) : TimeService.months_between_dates(@cow.milking_date, Date.today)
-- data = labels.map { |month| @cow.milk_weights.select { |mw| I18n.l(mw.created_at, format: "%B").eql?(month) }.sum { |x| x.morning_liters + x.evening_liters } }
+- labels = TimeService.months_between_dates(Date.today - 6.months, Date.today)
+- data = labels.map { |month| @milk_weights.select { |mw| I18n.l(mw.created_at, format: "%B").eql?(month) }.sum { |x| x.morning_liters + x.evening_liters } }
 :javascript
   var ctx = document.getElementById('milk_weights').getContext('2d');
   var green_gradient = ctx.createLinearGradient(0, 0, 0, 450);

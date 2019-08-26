@@ -4,13 +4,15 @@ KepplerFrontend::Engine.routes.draw do
   root to: 'app/farms#root'
 
   get '/import-xls', to: 'app/farm#import_xls', as: :import_xls
-
-  get 'species/:species_id/races', to: 'app/cattle#get_races', as: :get_races
   
   resources :farms, path: 'finca', controller: 'app/farms', path_names: { new: 'nuevo', edit: 'editar'} do
     collection do
       get 'landing'
       get 'login'
+    end
+
+    member do
+      get 'species/:species_id/get_races', to: 'app/cattle#get_races', as: :get_races
     end
 
     resources :cows, path: 'ganado', controller: 'app/cattle', path_names: { new: 'nuevo', edit: 'editar'} do

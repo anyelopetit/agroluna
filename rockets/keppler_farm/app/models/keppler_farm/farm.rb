@@ -30,6 +30,9 @@ module KepplerFarm
     # Reproduction
     has_many :seasons, class_name: 'KepplerReproduction::Season'
     has_many :milk_tanks, class_name: "KepplerReproduction::MilkTank"
+    has_many :milk_weights, class_name: "KepplerReproduction::MilkWeight"
+
+    has_one :milk_lot, class_name: 'KepplerFarm::StrategicLot'
 
     # accepts_nested_attributes_for :cows
 

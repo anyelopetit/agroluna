@@ -61,7 +61,7 @@ module KepplerReproduction
     end
 
     def all_months
-      %w[Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octumbre Noviembre Diciembre]
+      %w[Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre]
     end
 
     def cicle_colors

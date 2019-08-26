@@ -186,8 +186,9 @@ module KepplerCattle
         ids = select { |c| status_name.include?(c.status&.status_type) }.pluck(:id)
         where(id: ids)
       else
-        ids = select { |c| status_name.eql?(c.status&.status_type) }.pluck(:id)
-        where(id: ids)
+        includes(:statuses).where(keppler_cattle_statuses: { status_type: status_name })
+        # ids = select { |c| status_name.eql?(c.status&.status_type) }.pluck(:id)
+        # where(id: ids)
       end
     end
 
@@ -254,7 +255,19 @@ module KepplerCattle
 
     def last_milk_weights
       return milk_weights if milking_date.blank?
-      milk_weights.where("created_at >= #{milking_date}")
+      milk_weights.where("keppler_reproduction_milk_weights.created_at >= ?", milking_date)
+    end
+
+    def morning_liters
+      last_milk_weights.sum(:morning_liters)
+    end
+
+    def evening_liters
+      last_milk_weights.sum(:evening_liters)
+    end
+
+    def total_liters
+      last_milk_weights.sum { |x| x.morning_liters + x.evening_liters }
     end
 
     def self.in_this_process(process)

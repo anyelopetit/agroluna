@@ -1,5 +1,8 @@
 module KepplerReproduction
   class MilkWeight < ApplicationRecord
+    belongs_to :farm, class_name: "KepplerFarm::Farm", foreign_key: "farm_id"
+    belongs_to :cow, class_name: "KepplerCattle::Cow", foreign_key: "cow_id"
+
     validates_presence_of :farm_id, :cow_id, :date
 
     def self.in_month(month = Date.today.month)

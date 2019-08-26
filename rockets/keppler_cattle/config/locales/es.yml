@@ -63,7 +63,7 @@ es:
   activerecord:
     attributes:
       serie_number: número de serie
-      short_name: nobre corto
+      short_name: nombre corto
       long_name: nombre largo
       species: especie
       gender: género

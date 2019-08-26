@@ -130,7 +130,7 @@ module KepplerFrontend
     end
 
     def index_variables
-      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
+      @farm = KepplerFarm::Farm.find_by(id: (params[:farm_id] || params[:id]))
       @q = @farm.cows.ransack(params[:q])
       @cows = @q.result(distinct: true)
       @active_cows = @cows.actives.page(params[:page]).per(50)
@@ -164,7 +164,6 @@ module KepplerFrontend
 
     def redirect_to_species
       @species = KepplerCattle::Species.all
-      @races = KepplerCattle::Race.all
       @typologies = KepplerCattle::Typology.all
       if @species.blank? || @species.select { |s| s.races.blank? }.size > 0 || @typologies.blank?
         redirect_to admin_cattle_species_index_path

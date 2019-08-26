@@ -129,7 +129,7 @@
   //});
 
   $('#cow_species_id').change(function() {
-    var url = `/species/${$(this).val()}/races`
+    var url = `/finca/#{@farm.id}/species/${$(this).val()}/get_races`
     var races = $.getScript(url)
   })
 

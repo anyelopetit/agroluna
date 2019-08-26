@@ -1,0 +1,121 @@
+!!!
+%html{ lang: 'en' }
+  %head
+    %meta{ charset: 'UTF-8' }
+    %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
+    %meta{ name: 'theme-color', content: '#fff' }
+    %title Litros mensuales | #{@farm&.title}
+    :javascript
+      function number_pages() {
+        var vars={};
+        var x=document.location.search.substring(1).split('&');
+        for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = decodeURIComponent(z[1]);}
+        var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+        for(var i in x) {
+          var y = document.getElementsByClassName(x[i]);
+          for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+        }
+      }
+  %body{ onload: 'number_pages()' }
+    - @milking_cows = @farm.milk_lot.cows.where(milking: true)
+    .header-left
+      %h1.farm-title= @farm.try(:title)&.upcase
+      %h3 Series en proceso de lactancia
+    .header-right
+      %p= Time.now.strftime('%d-%m-%Y')
+      -# %p 
+        Pág.
+        %span.page
+        \/
+        %span.topage
+    .app_wrapper
+      .container_custom
+        .row
+          - if @milking_cows&.blank?
+            %table.mt-none.mb-4
+              %thead
+                %tr
+                  %th.not-records.center
+                    %center No se han encontrado series lactando
+          - else
+            %table.mt-none.mb-4
+              %thead
+                %tr
+                  %td
+                    %b Nro. Serie
+                  %td
+                    %b Lts en la Mañana.
+                  %td
+                    %b Lts en la Tarde. 
+                  %td
+                    %b Total de Leche producida. 
+                  %td
+                    %b Fecha de Inicio de Ordeño. 
+                - @milking_cows.each do |cow|
+                  %tr
+                    %td= cow&.serie_number
+                    %td #{cow&.morning_liters} Lts
+                    %td #{cow&.evening_liters} Lts
+                    %td #{cow&.total_liters} Lts
+                    %td #{cow&.milking_date.strftime('%d-%m-%Y')}
+        .row
+          %hr.my-1  
+          %hr.my-1
+          %b
+            Cantidad total:
+          #{@milking_cows.size}
+:scss
+  body {
+    font-size: 15px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr {
+    border-top: solid 1px #eee;
+  }
+  th {
+    text-align: left;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+  }
+  td {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .header-left {
+    float: left;
+  }
+  .header-right {
+    float: right;
+  }
+  .farm-title{
+    width: 150%
+  }
+  .report-title {
+    width: 150%
+  }
+
+  .app_wrapper {
+    padding-top: 40px;
+  }
+
+  .container_custom {
+    margin: 100px 20px 0;
+  }
+
+  .mb-none {
+    margin-bottom: 0;
+  }
+
+  .mt-4 {
+    margin-top: 40px;
+  }
+
+  .strategic_lot_name {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }

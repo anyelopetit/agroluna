@@ -17,7 +17,7 @@
         }
       }
   %body{ onload: 'number_pages()' }
-    - @next_palpation_cows = @farm&.cows.to_next_palpation(@farm.id)
+    - @next_palpation_cows = @farm&.milk_lot.cows.to_next_palpation(@farm.id)
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
       %h5 Hembras próximas a palpar

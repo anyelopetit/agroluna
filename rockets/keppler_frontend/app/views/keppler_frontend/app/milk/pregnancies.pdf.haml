@@ -17,7 +17,7 @@
         }
       }
   %body{ onload: 'number_pages()' }
-    - @pregnants_cows = @farm&.cows.where_status('Pregnancy', @farm.id)
+    - @pregnants_cows = @farm&.milk_lot.cows.where_status('Pregnancy', @farm.id)
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
       %h5 Hembras preñadas
@@ -36,7 +36,7 @@
               %thead
                 %tr
                   %th.not-records.center
-                    %center No se encontraron hembras preñadas en esta temporada de monta
+                    %center No se encontraron hembras preñadas
           - else
             %table.mt-none.mb-4
               %thead

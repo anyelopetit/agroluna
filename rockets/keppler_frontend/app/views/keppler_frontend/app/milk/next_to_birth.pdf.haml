@@ -17,7 +17,7 @@
         }
       }
   %body{ onload: 'number_pages()' }
-    - @births_cows = @farm&.cows.where_status('Pregnancy').select { |x| Date.today > (x.status.date + 240) }
+    - @births_cows = @farm&.milk_lot.cows.where_status('Pregnancy').select { |x| Date.today > (x.status.date + 240) }
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
       %h5 Partos registrados
@@ -33,69 +33,52 @@
         .row
           %hr.my-1
           %hr.my-1
-          .d-flex.justify-content-between
-            .w-50
-              %b Fecha de inicio:
-              %span= @farm&.start_date&.strftime('%d-%m-%Y')
-            .w-50
-              %b Fecha de cierre:
-              %span= @farm&.finish_date&.strftime('%d-%m-%Y')
-          %hr.my-1
-          %hr.my-1
         .row
-          - if @strategic_lots.size.zero?
+          - if @births_cows&.blank?
             %table.mt-none.mb-4
               %thead
                 %tr
                   %th.not-records.center
-                    %center No se encontraron lotes estratégicos asociados a ganados
-          - elsif @births_cows&.blank?
-            %table.mt-none.mb-4
-              %thead
-                %tr
-                  %th.not-records.center
-                    %center No se encontraron partos registrados en esta temporada de monta
+                    %center No se encontraron series próximas a parir
           - else
-            - @strategic_lots.each do |strategic_lot|
-              - unless @births_cows&.total_farm_cows(strategic_lot)&.size.zero?
-                .strategic_lot_name= strategic_lot.name
-                %table.mt-none.mb-4
-                  %thead
+            - unless @births_cows&.total_farm_cows(strategic_lot)&.size.zero?
+              %table.mt-none.mb-4
+                %thead
+                  %tr
+                    %th Nro. Serie
+                    %th
+                      Edad
+                      %br
+                      A - M
+                    %th Tipología
+                    %th Último servicio
+                    %th Tiempo de preñez
+                    %th Fecha de parto
+                    %th Tipo de parto
+                %tbody
+                  - @births_cows.each do |cow|
                     %tr
-                      %th Nro. Serie
-                      %th
-                        Edad
-                        %br
-                        A - M
-                      %th Tipología
-                      %th Último servicio
-                      %th Tiempo de preñez
-                      %th Fecha de parto
-                      %th Tipo de parto
-                  %tbody
-                    - @births_cows.each do |cow|
-                      %tr
-                        %td= cow&.serie_number
-                        %td
-                          = cow&.years
-                          \-
-                          = cow&.months
-                        %td= cow&.typology_name
-                        %td= cow.statuses.where(status_type: 'Service').last&.date&.strftime('%d-%m-%Y')
-                        %td
-                          = (Date.today - cow.statuses.where(status_type: 'Pregnancy').last&.date).to_s.split('/').first.to_i
-                          días
-                        %td= cow.statuses.where(status_type: 'Birth').last&.date&.strftime('%d-%m-%Y')
-                        %td
-                          - status = cow.statuses.where(status_type: 'Birth').last
-                          - if status.successfully && status.twins
-                            Exitoso Morochos
-                          - if status.successfully && !status.twins
-                            Exitoso Único
-                          - if !status.successfully && status.twins
-                            No Exitoso Morochos
-                          - if !status.successfully && !status.twins
-                            No Exitoso Único
+                      %td= cow&.serie_number
+                      %td
+                        = cow&.years
+                        \-
+                        = cow&.months
+                      %td= cow&.typology_name
+                      %td= cow.statuses.where(status_type: 'Service').last&.date&.strftime('%d-%m-%Y')
+                      %td
+                        = (Date.today - cow&.statuses.where(status_type: 'Pregnancy').last&.date).to_s.split('/').first.to_i
+                        días
+                      %td= cow.statuses.where(status_type: 'Birth').last&.date&.strftime('%d-%m-%Y')
+                      %td
+                        - status = cow.statuses.where(status_type: 'Birth').last
+                        - if status.successfully && status.twins
+                          Exitoso Morochos
+                        - if status.successfully && !status.twins
+                          Exitoso Único
+                        - if !status.successfully && status.twins
+                          No Exitoso Morochos
+                        - if !status.successfully && !status.twins
+                          No Exitoso Único
         .row
           %hr.my-1
           %hr.my-1

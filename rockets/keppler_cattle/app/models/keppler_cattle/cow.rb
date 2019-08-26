@@ -105,6 +105,24 @@ module KepplerCattle
       statuses.last&.status_type
     end
 
+    def status_name_es
+      this_status =
+        if ['Nil', nil].include?(status_name)
+          'Vacía'
+        elsif ['Zeal'].include?(status_name)
+          'En Celo'
+        elsif ['Service'].include?(status_name)
+          'Inseminada'
+        elsif ['Pregnancy'].include?(status_name)
+          'Preñada'
+        elsif ['Birth'].include?(status_name)
+          'Parida'
+        elsif ['Dry'].include?(status_name)
+          'En secado'
+        end
+      "#{this_status}#{' Lactando' if milking}" if gender?('female')
+    end
+
     def typology_counter_count
       case typology&.counter&.to_i
       when 1
@@ -117,7 +135,7 @@ module KepplerCattle
     end
 
     def typology_name
-      "#{typology&.name} #{typology_counter_count}"
+      "#{typology&.name} #{typology_counter_count} #{status_name_es}".titleize
     end
 
     def gender?(g)

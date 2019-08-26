@@ -96,6 +96,7 @@ module KepplerFrontend
       if params[:multiple_ids].blank?
         flash[:error] = 'No se pudo remover ninguna serie del lote'
       else
+        counter = 0
         params[:multiple_ids].remove("[", "]").split(',').each do |id|
           location = KepplerCattle::Location.find_by(
             strategic_lot_id: params[:id],
@@ -103,16 +104,14 @@ module KepplerFrontend
           )
 
           if location&.exists?
-            if location.destroy
-              flash[:notice] = 
-                t('keppler.messages.cattle.deleted', cattle: location.cow.serie_number) if location.destroy!
-            # else
-            #   flash[:error] = t('keppler.messages.cattle.not_deleted', cattle: location.cow.serie_number)
-            end
-          # else
-          #   flash[:error] = t('keppler.messages.cattle.doesnt_exist', cattle: location.cow.serie_number)
+            counter += 1 if location.update(strategic_lot_id: nil)
           end
         end
+      end
+      if counter.zero?
+        flash[:error] = 'No se removió ninguna serie'
+      else 
+        flash[:notice] = "Se removieron #{counter} series del lote"
       end
       redirect_to action: :show, id: @farm&.id, strategic_lot_id: @strategic_lot.id
     end

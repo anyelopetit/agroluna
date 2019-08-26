@@ -33,11 +33,16 @@ module KepplerFrontend
     end
 
     def new
-      @cow = KepplerCattle::Cow.new
+      @cow = @farm.cows.new
     end
 
     def create
-      @cow = KepplerCattle::Cow.new(cow_params)
+      if @farm.cows.find_by(serie_number: cow_params[:serie_number])
+        flash[:error] = 'El número de serie ya está tomado'
+        redirect_to new_farm_cow_path(@farm)
+        return false
+      end
+      @cow = @farm.cows.new(cow_params)
       @cow.father_type = params[:cow][:father_id].split(',').first
       @cow.father_id = params[:cow][:father_id].split(',').last.to_i
 
@@ -77,7 +82,7 @@ module KepplerFrontend
     end
 
     def destroy_multiple
-      KepplerCattle::Cow.destroy redefine_ids(params[:multiple_ids])
+      @farm.cows.destroy redefine_ids(params[:multiple_ids])
       redirect_to farm_cows_path(@farm)
     end
 
@@ -126,7 +131,7 @@ module KepplerFrontend
     private
 
     def set_cow
-      @cow = KepplerCattle::Cow.find_by(id: params[:id])
+      @cow = @farm.cows.find_by(id: params[:id])
     end
 
     def index_variables

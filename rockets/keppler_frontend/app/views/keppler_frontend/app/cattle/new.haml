@@ -2,10 +2,10 @@
 .app_wrapper
   .container_carousel
     .single-item
-      %a.mt-4.mb-4{ href: farm_cows_path(@farm) }
-        %button.btn.btn_custom.btn--medium
-          %i.icofont-circled-left
-          Listado
+      = link_to (:back == request.url ? :back : farm_cows_path(@farm)) do
+        %button.btn.btn_custom.btn--medium.mt-4.mb-4
+          %i.icofont-arrow-left
+          Atrás
       .card_new
         .float-left
         %h1 Datos generales

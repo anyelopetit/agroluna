@@ -2,6 +2,10 @@
 .app_wrapper
   .container_carousel
     .single-item
+      = link_to (:back == request.url ? :back : farm_cow_path(@farm, @cow)) do
+        %button.btn.btn_custom.btn--medium.mt-4.mb-4
+          %i.icofont-arrow-left
+          Atrás
       .card_new
         %h1 Datos generales
         = render 'keppler_frontend/app/cattle/partials/form', farm: @farm

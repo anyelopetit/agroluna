@@ -144,7 +144,7 @@
                     %dt Cantidad de hijos
                     %a{ 'data-target': "#modalSons", 'data-toggle': 'modal', href: ""}
                       %dd= @cow.sons&.size
-              - if @cow.gender?('male')
+              - if @cow.gender?('male') && @cow.typology.reproductive
                 = simple_form_for [@farm, @cow, KepplerCattle::Male.new], url: males_farm_cow_path do |f|
                   .row
                     .col-md-4

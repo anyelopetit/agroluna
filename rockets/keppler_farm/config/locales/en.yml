@@ -38,9 +38,9 @@ en:
         cannot_unselect: You cannot unselect a cover
         please_select_anyone_else: Please select anyone else
     actions:
-      add_photo: Add Photo
-      upload_photo: Upload Photo
-      drop: Drop a %{model} or press here
+      add_photo: Añadir foto
+      upload_photo: Cargar foto
+      drop: Arrastra un %{model} o presiona aquí
   activerecord:
     attributes:
       processes: processes

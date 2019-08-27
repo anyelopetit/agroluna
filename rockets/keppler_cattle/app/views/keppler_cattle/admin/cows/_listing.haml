@@ -22,7 +22,7 @@
       - elsif attribute.eql?(:gender)
         %td
           = link_to({ action: :show, id: object.id, search: @query }, { class: 'show-row' }) do
-            %span= value.eql?('male') ? 'Macho' : 'Hembra'
+            %span= object.try(attribute).eql?('male') ? 'Macho' : 'Hembra'
       - elsif attribute.to_s.include?('_id')
         %td
           = link_to({ action: :show, id: object.id, search: @query }, { class: 'show-row' }) do

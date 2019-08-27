@@ -7,6 +7,13 @@
             = t("keppler.models.pluralize.cows").humanize
           = entries(@total, @objects)
         %section.content-actions
+          %div
+            = simple_form_for KepplerCattle::Species.last, url: filter_by_species_admin_cattle_cows_path, method: :post, remote: true do
+              .select-filter
+                %select.form-control#filter_by_specie{ name: 'species_id', onchange: '$(this).parent().submit()' }
+                  %option{ value: '0' } Todos
+                  - KepplerCattle::Species.all.each do |specie|
+                    %option{ value: specie.id }= specie.name
           .toolbar
             .toolbar-item
               = link_to reload_admin_cattle_cows_path, class: 'tool-btn', remote: true, title: t('keppler.actions.reload_page') do

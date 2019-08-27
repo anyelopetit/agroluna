@@ -50,6 +50,9 @@
                     - elsif ['mother_id', 'father_id'].include?(attribute) && value
                       = link_to admin_cattle_cow_path(value) do
                         = cow_parent_id(value)&.serie_number
+                    - elsif attribute.include?('milking')
+                      - if @cow.gender?('female')
+                        = value
                     - else 
                       = sanitize raw value
     // Current Status

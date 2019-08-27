@@ -121,7 +121,7 @@ es:
       title: Título
       subtitle: Subtítulo
       tags: Etiquetas
-      name: Nombre
+      name: Nombre corto
       quantity: Cantidad
       first_name: 'Nombre'
       last_name: 'Apellido'
@@ -145,6 +145,8 @@ es:
       little_childs: Bebés
       motive: Motivo
       procedence: Procedencia
+      milking: Lactando
+      milking_date: Lactando desde
       payment_method: Método de pago
       observations: Observaciones
       image: Imagen

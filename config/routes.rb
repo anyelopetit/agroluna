@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # root to: 'app/front#index'
 
   devise_for :users, skip: KepplerConfiguration.skip_module_devise
-  post '/filter', to: 'admin/users#filter_by_role', as: :filter_by_role
+  post '/filter_by_role', to: 'admin/users#filter_by_role', as: :filter_by_role
 
   namespace :admin do
     root to: 'admin#root'

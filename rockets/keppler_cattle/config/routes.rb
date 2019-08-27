@@ -81,6 +81,7 @@ KepplerCattle::Engine.routes.draw do
         post '/upload', action: 'upload', as: :upload
         get '/reload', action: :reload, on: :collection
         delete '/destroy_multiple', action: :destroy_multiple, on: :collection
+        post '/filter_by_species', action: :filter_by_species, as: :filter_by_species, on: :collection
 
         resources :statuses  do
           post '/sort', action: :sort, on: :collection

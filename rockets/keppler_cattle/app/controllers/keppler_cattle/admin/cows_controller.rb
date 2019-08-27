@@ -17,6 +17,13 @@ module KepplerCattle
         redirect_to_index(@objects)
       end
 
+      def filter_by_species
+        puts "=========== #{params[:species_id]} ==================="
+        return @cows = @objects if params[:species_id].eql?('all')
+        @cows = @objects.where(species_id: params[:species_id]).page(@current_page).order(:serie_number)
+        puts "=========== #{@cows.size} ==================="
+      end
+
       # GET /cattles/1
       def show
         @statuses = @cow.statuses.order(created_at: :desc)
@@ -51,11 +58,7 @@ module KepplerCattle
       # PATCH/PUT /cattles/1
       def update
         if @cow.update(cow_params)
-          if @cow.statuses.blank?
-            redirect_to new_admin_cattle_cow_status_path(@cow)
-          else 
-            redirect(@cow, params)
-          end
+          redirect(@cow, params)
         else
           render :edit
         end

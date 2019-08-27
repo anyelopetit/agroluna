@@ -75,6 +75,8 @@ es:
       nose_color: color de morro
       tassel_color: color de borla
       provenance: procedencia
+      milking: lactando
+      milking_date: lactando desde
       observations: observaciones
       weight: peso (kg)
       gained_weight: peso ganado (kg)

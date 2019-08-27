@@ -20,7 +20,7 @@
       .hide-search
         %i.icon-arrow-left-circle
     .navbar-custom-menu
-      %ul.nav.navbar-nav.language-select
+      -# %ul.nav.navbar-nav.language-select
         %li.dropdown.messages-menu
           %a.dropdown-toggle.language-option{ 'aria-expanded' => 'false', 'data-toggle' => 'dropdown', :href => '#' }
             = image_tag "admin/#{Appearance.first.language.eql?('es') ? 'es' : 'en'}.png", class: 'small-profile-img keppler-background'

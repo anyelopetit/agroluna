@@ -113,7 +113,7 @@ module KepplerFrontend
       else 
         flash[:notice] = "Se removieron #{counter} series del lote"
       end
-      redirect_to action: :show, id: @farm&.id, strategic_lot_id: @strategic_lot.id
+      redirect_to action: :show, farm_id: @farm&.id, id: @strategic_lot.id
     end
 
     def transfer

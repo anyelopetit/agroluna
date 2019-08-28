@@ -43,7 +43,7 @@
           %hr.my-1
           %hr.my-1
         .row
-          - if @cows&.blank?
+          - if @cows&.blank? || @strategic_lots.blank?
             %table.mt-none.mb-4
               %thead
                 %tr
@@ -66,6 +66,7 @@
                       %tr
                         %td= calf&.mother&.serie_number
                         %td= calf&.serie_number
+                        %td #{calf&.weights&.first&.weight} KG
                         %td= calf&.days
                         %td= calf&.gender?('female') ? 'Hembra' : 'Macho'
         .row

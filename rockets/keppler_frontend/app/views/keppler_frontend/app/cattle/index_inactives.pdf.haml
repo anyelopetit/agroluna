@@ -4,6 +4,18 @@
     %meta{ charset: 'UTF-8' }
     %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
     %meta{ name: 'theme-color', content: '#fff' }
+    %title #{@farm&.title}
+    :javascript
+      function number_pages() {
+        var vars={};
+        var x=document.location.search.substring(1).split('&');
+        for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = decodeURIComponent(z[1]);}
+        var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+        for(var i in x) {
+          var y = document.getElementsByClassName(x[i]);
+          for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+        }
+      }
   %body
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
@@ -22,34 +34,16 @@
         %thead
           %tr
             %th Serie
-            %th Raza
-            %th
-              Edad
-              %br
-              A - M
-            %th Tipología
-            %th Madre
-            %th Padre
-            %th Fecha Nac.
-            %th KG
-            %th Pelaje
-            %th Lote
+            %th Inactiva desde
+            %th Responsable
+            %th Motivo o desc.
         %tbody
           - @inactive_cows.each do |cow|
             %tr
               %td= cow&.serie_number
-              %td= cow&.race&.name
-              %td
-                = cow&.years
-                \-
-                = cow&.status&.months
-              %td= cow&.typology_name
-              %td= cow&.mother&.serie_number
-              %td= cow&.father&.serie_number
-              %td= cow&.birthdate&.strftime('%d-%m-%Y')
-              %td= cow&.weight&.weight
-              %td= cow&.coat_color
-              %td= cow&.strategic_lot&.name
+              %td= cow&.cow_activities&.last&.created_at.strftime('%d-%m-%Y')
+              %td= cow&.cow_activities&.last&.user&.name
+              %td= cow&.cow_activities&.last&.observations
 :scss
   body {
     font-size: 10px;

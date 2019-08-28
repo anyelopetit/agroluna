@@ -120,7 +120,7 @@ module KepplerCattle
         elsif ['Dry'].include?(status_name)
           'En secado'
         end
-      "#{this_status}#{' Lactando' if milking}" if gender?('female')
+      "#{this_status}#{' Lactando' if milking}" if gender?('female') && [1, 2].include?(typology.counter.to_i)
     end
 
     def typology_counter_count
@@ -244,12 +244,18 @@ module KepplerCattle
 
     def self.inactives
       cows = select do |cow|
-        (cow&.locations.pluck(:farm_id).include?(farm&.id) &&
-        cow&.location&.farm_id != farm&.id) || 
+        (cow&.locations.pluck(:farm_id).include?(farm&.id) && cow&.location&.farm_id != farm&.id) || 
         !cow&.activity&.active
       end
       inactive_ids = cows.pluck(:id).uniq
       includes(:locations).where(id: inactive_ids)
+    end
+
+    def is_inactive?
+      puts "############ FINCA #{farm.id} ######################"
+      locations.pluck(:farm_id).include?(farm&.id) &&
+        location&.farm_id != farm&.id ||
+        !activity&.active
     end
 
     def self.reproductive_males(season)

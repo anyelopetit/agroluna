@@ -15,10 +15,18 @@
           -# %a.tool-btn{ 'data-confirm': '¿Estás seguro?', 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
           = link_to farm_transference_destroy_multiple_path(@farm), method: :delete, class: 'destroy_multiple' do
             %i.icofont-trash
-      = link_to({action: :show, format: :pdf}, {class: 'float-right mt-4 mb-4', target: '_blank'}) do
+      %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-clip-board
           Reporte
+          %i.icofont-simple-down
+      .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
+        = link_to({action: action_name.to_sym, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+          PDF
+        = link_to({action: action_name.to_sym, format: :xls}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+          XLS
+        = link_to({action: action_name.to_sym, format: :csv}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+          CSV
       -# %a.float-right.mt-4.mb-4.ml-3{ href: new_farm_cow_path(farm) }
         %button.btn.btn_custom.btn--filled.btn--medium
           %i.icofont-plus

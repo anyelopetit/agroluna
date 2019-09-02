@@ -4,14 +4,13 @@
     %meta{ charset: 'UTF-8' }
     %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
     %meta{ name: 'theme-color', content: '#fff' }
-    %title Pajuelas
+    %title #{@farm.title} | Pajuelas
   %body
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
       %h2.report-title Catálogo de Pajuelas por orden de Serie
     .header-right
       %p= Time.now.strftime('%d-%m-%Y')
-      %p Pág. 1
     %table.insemination-table
       - if @active_inseminations.size.zero?
         %thead
@@ -25,8 +24,8 @@
             %th Nombre corto
             %th Madre
             %th Padre
-            %th Especie
             %th Raza
+            %th Cantidad
             %th Fecha de nacimiento
         %tbody
           - @active_inseminations.each do |insemination|
@@ -35,9 +34,9 @@
               %td= insemination&.short_name
               %td= insemination&.mother&.serie_number
               %td= insemination&.father&.serie_number
-              %td= insemination&.species&.name
               %td= insemination&.race&.name
-              %td= insemination&.birthdate
+              %td= insemination&.quantity
+              %td= insemination&.birthdate.strftime('%d-%m-%Y')
 :scss
   body {
     font-size: 10px;

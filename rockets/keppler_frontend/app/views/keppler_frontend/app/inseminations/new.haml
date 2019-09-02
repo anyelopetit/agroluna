@@ -7,6 +7,21 @@
           %i.icofont-circled-left
           Listado
       .card_new
-        .float-left
-        %h1 Datos generales
+        %h1 Nueva pajuela
         = render 'keppler_frontend/app/inseminations/partials/form', farm: @farm
+
+  = stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.css'
+  = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.js'
+  = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/i18n/datepicker.ca-ES.js'
+  :javascript
+    $('.keppler-switch').click(function(event) {
+      event.preventDefault()
+      var input = $(this).find('input')
+      var label = $(this).find('.inline-label')
+      input
+        .toggleClass('active')
+        .val(input.hasClass('active'))
+      label
+        .toggleClass('active')
+        //.text(label.hasClass('active'))
+    })

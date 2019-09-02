@@ -23,7 +23,7 @@ module KepplerFarm
 
     # Cattle
     has_many :cow_locations, class_name: 'KepplerCattle::Location'
-    has_many :cows, -> { distinct }, class_name: 'KepplerCattle::Cow', through: :cow_locations
+    # has_many :cows, -> (farm) { distinct }, class_name: 'KepplerCattle::Cow', through: :cow_locations
     has_many :inseminations, class_name: 'KepplerCattle::Insemination'
     has_many :transferences, class_name: 'KepplerCattle::Transference', foreign_key: 'from_farm_id'
 
@@ -48,11 +48,11 @@ module KepplerFarm
       photos.where(cover: true).size.zero?
     end
 
-    # def cows
-    #   cow_ids = KepplerCattle::Cow.all.select { |c| c&.location&.farm_id&.eql?(id) if c&.location&.farm_id }.pluck(:id)
+    def cows
+      cow_ids = KepplerCattle::Cow.all.select { |c| c&.location&.farm_id&.eql?(id) if c&.location&.farm_id }.pluck(:id)
 
-    #   KepplerCattle::Cow.where(id: cow_ids)
-    # end
+      KepplerCattle::Cow.where(id: cow_ids)
+    end
 
     # def transferences
     #   transference_ids = KepplerCattle::Transference.all.select { |t| t&.from_farm_id&.eql?(id) || t&.to_farm_id&.eql?(id) }.pluck(:id)

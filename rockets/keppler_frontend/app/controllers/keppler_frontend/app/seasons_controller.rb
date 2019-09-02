@@ -56,19 +56,18 @@ module KepplerFrontend
       @season = KepplerReproduction::Season.new(season_params)
       # @season.finish_date = params[:season][:finish_date]
 
-      if @season.type_id.zero?
-        counter = 0
-        @farm.strategic_lots.each do |strategic_lot|
-          counter += assign_cattle_each_lot(strategic_lot.id)
-          if counter.zero?
-            flash[:error] = 'No se agregaron series a la temporada'
-          else
-            flash[:notice] = "Se agregaron #{counter} series a la temporada"
+      if @season.save
+        if @season.type_id.zero?
+          counter = 0
+          @farm.strategic_lots.each do |strategic_lot|
+            counter += assign_cattle_each_lot(strategic_lot.id)
+            if counter.zero?
+              flash[:error] = 'No se agregaron series a la temporada'
+            else
+              flash[:notice] = "Se agregaron #{counter} series a la temporada"
+            end
           end
         end
-      end
-
-      if @season.save
         redirect_to farm_season_path(@farm, @season)
       else
         flash[:error] = 'Revisa los datos del formulario'

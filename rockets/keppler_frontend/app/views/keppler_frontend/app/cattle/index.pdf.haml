@@ -4,6 +4,7 @@
     %meta{ charset: 'UTF-8' }
     %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
     %meta{ name: 'theme-color', content: '#fff' }
+    %title #{@farm&.title} | Reporte General
   %body
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase

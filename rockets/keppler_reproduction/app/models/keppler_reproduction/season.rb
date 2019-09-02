@@ -11,9 +11,10 @@ module KepplerReproduction
     include Searchable
     acts_as_list
     acts_as_paranoid
-
+    
+    belongs_to :farm, class_name: 'KepplerFarm::Farm', foreign_key: 'farm_id'
     has_many :season_cows, class_name: 'KepplerReproduction::SeasonCow', inverse_of: :season
-    has_many :cows, class_name: 'KepplerCattle::Cow', through: :season_cows
+    # has_many :cows, class_name: 'KepplerCattle::Cow', through: :season_cows
     has_many :statuses, ->(season){ where(season_id: season.id) }, class_name: 'KepplerCattle::Status', through: :cows
     has_many :users, -> { distinct }, class_name: 'KepplerFarm::Responsable', through: :statuses
     has_many :inefectivities, -> { distinct }, class_name: 'KepplerReproduction::Inefectivity', through: :users
@@ -22,6 +23,13 @@ module KepplerReproduction
 
     def self.index_attributes
       %i[name]
+    end
+
+    def cows
+      cow_ids = KepplerCattle::Cow.all.select do |c|
+        c.location&.farm_id == farm&.id && c.season&.id == id
+      end.pluck(:id)
+      KepplerCattle::Cow.where(id: cow_ids)
     end
 
     def duration_days

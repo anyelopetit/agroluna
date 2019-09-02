@@ -131,15 +131,19 @@ module KepplerFrontend
     private
 
     def set_cow
-      @cow = @farm.cows.find_by(id: params[:id])
+      @cow = KepplerCattle::Cow.find_by(id: params[:id])
     end
 
     def index_variables
       @farm = KepplerFarm::Farm.find_by(id: (params[:farm_id] || params[:id]))
       @q = @farm.cows.ransack(params[:q])
       @cows = @q.result(distinct: true)
-      @active_cows = @cows.actives.page(params[:page]).per(50)
-      @inactive_cows = @cows.inactives.page(params[:page]).per(50)
+      @active_cows = @cows.actives.order(:serie_number)
+      @inactive_cows = @cows.inactives.order(:serie_number)
+      if request.format.symbol.eql?(:html)
+        @active_cows = @active_cows.page(params[:page]).per(50)
+        @inactive_cows = @inactive_cows.page(params[:page]).per(50)
+      end
       @attributes = KepplerCattle::Cow.index_attributes
       @typologies = KepplerCattle::Typology.all
       @strategic_lots = @farm.strategic_lots.map { |x| "'#{x.id}': '#{x.name}'" }.join(', ')

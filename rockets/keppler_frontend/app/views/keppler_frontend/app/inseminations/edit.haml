@@ -2,8 +2,12 @@
 .app_wrapper
   .container_carousel
     .single-item
+      %a.mt-4.mb-4{ href: farm_inseminations_path(@farm) }
+        %button.btn.btn_custom.btn--medium
+          %i.icofont-circled-left
+          Listado
       .card_new
-        %h1 Datos generales
+        %h1 Editar pajuela
         = render 'keppler_frontend/app/inseminations/partials/form', farm: @farm
 
   = stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.css'

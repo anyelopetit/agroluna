@@ -60,7 +60,16 @@
   .container_custom
     .row
       .col-md-12
-        .card_show.cow_info.p-5{ style: ("filter: grayscale(110%);" if @cow.is_inactive?)}
+        .card_show.cow_info.p-5{ style: ("filter: grayscale(110%);" unless @cow.active? && @farm.cows.include?(@cow))}
+          - unless @cow.active? && @farm.cows.include?(@cow)
+            %h2 Serie inactiva
+            %h3
+              %b Motivo:
+              %ul
+                - unless @cow.activity&.active
+                  %li= @cow.activity&.observations.blank? ? 'Marcada como inactiva por motivo desconocido' : @cow.activity&.observations
+                - unless @farm.cows.include?(@cow)
+                  %li= "Transferida fuera de la finca"
           .float-right
             -# = image_tag "/assets/keppler_cattle/#{@cow.species}", class: 'svg-icon-md p-absolute r-0' unless @cow.species.blank?
             = image_tag "/assets/keppler_cattle/#{@cow.gender}", class: 'svg-icon-md p-absolute r-0' unless @cow.gender.blank?

@@ -71,14 +71,16 @@
                       Reporte de Pajuelas
                     = link_to({controller: :seasons, action: :typologies_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
                       Reporte de Tipologías
-                    = link_to({controller: :cattle, action: :index_inactives, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                      Series inactivas
+                    - if action_name.eql?('index_inactives')
+                      = link_to({controller: :cattle, action: :index_inactives, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                        Series inactivas
                     = link_to({controller: :seasons, action: :analytic_weight_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
                       Análisis de pesos
                     -# = link_to({controller: :transferences, action: :index, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
                     -#   Transferencias
-                    = link_to({controller: :cattle, action: :index, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
-                      Reporte General
+                    - if action_name.eql?('index')
+                      = link_to({controller: :cattle, action: :index, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                        Reporte General
               %a.mt-4.mb-4.open-status-history
                 %button.btn.btn_custom.btn--filled.btn--medium
                   %i.icofont-clock-time

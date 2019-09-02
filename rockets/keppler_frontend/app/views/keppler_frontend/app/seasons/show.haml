@@ -3,6 +3,10 @@
     -# = render 'keppler_frontend/app/cattle/partials/search', farm: farm, search: search
     .d-flex.justify-content-between.xs-column
       .left
+        = link_to (:back == request.url ? :back : {action: :index}) do
+          %button.btn.btn_custom.btn--medium.mt-4.mb-4
+            %i.icofont-arrow-left
+            Atrás
         .mb-4
           %h1
             #{@season.name}
@@ -13,10 +17,9 @@
           %button.btn.btn_custom.btn--filled.btn--medium.float-right.m-1
             %i.icofont-pencil
             Editar
+        = render 'season_reports'
     - unless @season.season_type.to_i.eql?(0)
       = render 'keppler_frontend/app/seasons/gantt', season: @season
-    .d-flex.justify-content-end
-      = render 'season_reports'
     - unless @season.phase.to_i.eql?(0)
       %ul.nav.nav-tabs.mt-4{role: "tablist", style: "padding: 0;"}
         %li.nav-item

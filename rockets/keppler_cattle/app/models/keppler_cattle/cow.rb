@@ -56,6 +56,10 @@ module KepplerCattle
       KepplerFarm::Farm.find_by(id: $request.params[:farm_id])
     end
 
+    def season
+      season_cows&.last&.season
+    end
+
     # def species
     #   KepplerCattle::Species.find_by(id: species_id)
     # end
@@ -204,7 +208,8 @@ module KepplerCattle
         ids = select { |c| status_name.include?(c.status&.status_type) }.pluck(:id)
         where(id: ids)
       else
-        includes(:statuses).where(keppler_cattle_statuses: { status_type: status_name })
+        # includes(:statuses).where(keppler_cattle_statuses: { status_type: status_name })
+        select { |c| c.status_name == status_name }
         # ids = select { |c| status_name.eql?(c.status&.status_type) }.pluck(:id)
         # where(id: ids)
       end
@@ -235,7 +240,7 @@ module KepplerCattle
 
     def self.actives
       cows = select do |cow|
-        # cow&.location&.farm_id == farm&.id &&
+        (cow&.locations.pluck(:farm_id).include?(farm&.id) && cow&.location&.farm_id == farm&.id) &&
         cow&.activity&.active
       end
       active_ids = cows.pluck(:id).uniq
@@ -251,11 +256,9 @@ module KepplerCattle
       includes(:locations).where(id: inactive_ids)
     end
 
-    def is_inactive?
-      puts "############ FINCA #{farm.id} ######################"
-      locations.pluck(:farm_id).include?(farm&.id) &&
-        location&.farm_id != farm&.id ||
-        !activity&.active
+    def active?
+      # puts "############ FINCA #{farm.id} ######################"
+      activity&.active # locations.pluck(:farm_id).include?(farm&.id) && location&.farm_id == farm&.id && 
     end
 
     def self.reproductive_males(season)

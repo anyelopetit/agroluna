@@ -99,11 +99,11 @@ module KepplerFarm
     def possible_fathers_select2
       possible_fathers
         .map { |x| [x.serie_number + ("(#{x&.short_name})" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] }
-        .concat(KepplerCattle::Insemination.order(:serie_number).map { 
-          |x| [x.serie_number + ("(#{x&.short_name}) - Pajuela" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] 
-        }) 
+        .concat(KepplerCattle::Insemination.order(:serie_number).map {
+          |x| [x.serie_number + ("(#{x&.short_name}) - Pajuela" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"]
+        })
     end
-    
+
     def total_milking_days
       days_to_service + days_to_pregnancy + days_to_dry + days_to_rest
     end

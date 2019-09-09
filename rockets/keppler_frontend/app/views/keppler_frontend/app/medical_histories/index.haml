@@ -1,0 +1,42 @@
+.app_wrapper.pb-5
+  .container.d-flex.justify-content-between
+    .left
+      %h1 Historias médicas
+    .right
+      = link_to (:back == request.url ? :back : farm_cow_path(@farm, @cow)) do
+        %button.btn.btn_custom.btn--medium.mt-4.mb-4
+          %i.icofont-arrow-left
+          Atrás
+      = link_to new_farm_cow_medical_history_path(@farm, @cow) do
+        %button.btn.btn_custom.btn--filled.btn--medium.mt-4.mb-4
+          %i.icofont-plus
+          Crear nueva historia médica
+  -# = render 'keppler_frontend/app/milk/tabs'
+  .container
+    - if @cow.medical_history
+      = render 'keppler_frontend/app/medical_histories/medical_history', medical_history: @cow.medical_history
+  .container
+    %table.table
+      %thead
+        %tr
+          - if @medical_histories.blank?
+            %th Por favor cree una historia médica
+          - else
+            %th Fecha de evaluación
+            %th Responsable
+            %th Evaluación
+            %th Diagnóstico
+            %th Próxima cita
+            %th{ colspan: 3 }
+      %tbody
+        - unless @medical_histories.blank?
+          - @medical_histories.each do |medical_history|
+            %tr
+              %td= medical_history.evaluation_date.strftime('%d-%m-%Y')
+              %td= medical_history.responsable_name
+              %td= medical_history.evualuation.truncate(10)
+              %td= medical_history.diagnostic.truncate(10)
+              %td= medical_history.next_date.strftime('%d-%m-%Y')
+              %td= link_to 'Ver', farm_cow_medical_history_path(@farm, @cow, medical_history)
+              %td= link_to 'Editar', edit_farm_cow_medical_history_path(@farm, @cow, medical_history)
+              %td= link_to 'Eliminar', farm_cow_medical_history_path(@farm, @cow, medical_history), method: :delete, data: { confirm: '¿Estás seguro?' }

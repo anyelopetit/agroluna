@@ -10,6 +10,7 @@ es:
     permissions:
     models:
       singularize:
+        medical_history: medical history
         status: status
         insemination: pajuela
         species: species
@@ -23,6 +24,7 @@ es:
         weight: peso
         corporal_condition: condición corporal
       pluralize:
+        medical_histories: medical histories
         statuses: statuses
         inseminations: pajuela
         weighing_days: días de pesaje
@@ -35,6 +37,7 @@ es:
         cows: ganados
         weights: pesos
     modules:
+      admin/medical-history: Medical history
       admin/status: Status
       admin/insemination: Pajuela
       admin/species: Species

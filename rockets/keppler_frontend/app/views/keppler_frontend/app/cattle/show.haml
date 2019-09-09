@@ -19,7 +19,7 @@
             %i.icofont-download
         .actions.d-none.d-sm-block
           .float-right
-            %a.mt-4.mb-4
+            = link_to farm_cow_medical_histories_path(@farm, @cow), class: 'mt-4.mb-4' do
               %button.btn.btn_custom.btn--filled.btn--medium
                 %i.icofont-prescription
                 Ficha medica
@@ -40,7 +40,7 @@
               %button.btn.btn_custom.btn--filled.btn--medium
                 %i.icofont-clock-time
                 Historial
-        
+
         .actions_movil.d-sm-none
           .float-right
             %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
@@ -61,8 +61,8 @@
     .row
       .col-md-12
         .card_show.cow_info.p-5{ style: ("filter: grayscale(110%);" unless @cow.active? && @farm.cows.include?(@cow))}
+          %h2= @cow.active? && @farm.cows.include?(@cow) ? 'Serie activa' : 'Serie inactiva'
           - unless @cow.active? && @farm.cows.include?(@cow)
-            %h2 Serie inactiva
             %h3
               %b Motivo:
               %ul
@@ -88,7 +88,9 @@
                         = @cow.typology_name unless @cow.typology&.blank?
                       %span= @cow.race&.name
                       -# %p= @cow.observations
-                      
+                      %a{ 'data-target': "#activate", 'data-toggle': 'modal', href: ""}
+                        = @cow.activity.active ? 'Inhabilitar' : 'Habilitar'
+
             .col-lg-9
               .row
                 .col-lg-4.col-sm-4
@@ -140,12 +142,12 @@
                     %dt
                       Tipología
                     %dd= @cow.typology_name
-                    
+
                 .col-lg-4.col-sm-4
                   %dl
                     %dt Lote estrátegico
                     %dd= @cow&.strategic_lot&.name
-                   
+
                 .col-lg-4.col-sm-4
                   %dl
                     -# %dt= @cow.status.dead ? 'Inactivo' : 'Activo'
@@ -160,17 +162,17 @@
                       %dl
                         %dt Reproductor
                       = f.input :reproductive, as: :keppler_boolean, label: false, input_html: { class: 'keppler_boolean' }, value: @cow.male&.reproductive
-                  
+
                     .col-md-4
                       %dl
                         %dt Recelador
                       = f.input :defiant, as: :keppler_boolean, label: false, input_html: { class: 'keppler_boolean' }, value: @cow.male&.defiant
                   = f.input :user_id, as: :hidden, input_html: { value: current_user.id }
                   = f.input :cow_id, as: :hidden, input_html: { value: @cow&.id }
-                      
-                    
-              
-              
+
+
+
+
       // Current Status
       .col-lg-4.col-md-6
         .card_status_specific.card_status_parent
@@ -184,7 +186,7 @@
                   %dl
                     %dd
                       = @cow.weight&.weight&.round(2)
-                      %small KG 
+                      %small KG
                 .row
                   .col-lg-6
                     %dl
@@ -194,7 +196,7 @@
                       %dd.card_status_details
                         = @cow.weight&.gained_weight.to_f.round(2)
                         KG
-           
+
                   .col-lg-6
                     -# %dl
                       %dt.card_status_details
@@ -228,7 +230,7 @@
                     %dl
                       %dt.card_status_details Fecha de Nacimiento
                       %dd.card_status_details= @cow.birthdate
-           
+
                   .col-lg-6
                     %dl
                       %dt.card_status_details
@@ -254,7 +256,7 @@
                               = @cow.mother&.serie_number
                             %dt{:style => "font-weight:400; color: #6f6f6f;"} Madre
                       - else
-                        
+
                         %h3 SIN MADRE
                   .col-lg-6.col-md-6
                     .parent_card
@@ -266,7 +268,7 @@
                             %dt{:style => "font-weight: 700; color: #6f6f6f;"}
                               = @cow.father&.serie_number
                             %dt{:style => "font-weight:400; color: #6f6f6f;"} Padre
-                          
+
                       - else
                         %h3 SIN PADRE
       .col-lg-4
@@ -274,6 +276,22 @@
 
     = render 'keppler_frontend/app/cattle/partials/family_tree'
     = render 'keppler_frontend/app/cattle/partials/modal_sons'
+
+  .modal.modal_status.fade{ id: "activate", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+    .modal-dialog{role: "document"}
+      .modal-content
+        .modal-header
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+            %span{"aria-hidden" => "true"} ×
+        .modal-body{ style: "padding: 20px;"}
+          %h1= @cow.activity&.active ? 'Inhabilitar serie' : 'Habilitar serie'
+          = simple_form_for [@farm, @cow, KepplerCattle::Activity.new] do |f|
+            = f.input :active, as: :hidden, input_html: { value: !@cow.activity&.active }
+            = f.input :observations, label: 'Motivo / Observaciones'
+            .float-right
+              %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                %i.icofont-save
+                Guardar
   -# - @statuses.each do |status|
     = render 'keppler_frontend/app/cattle/partials/modal_status', cow: @cow, status: status
 :javascript
@@ -314,7 +332,7 @@
     //border: 2px solid #f4f5f6;
     border-radius: 4px;
     padding: 10px;
-    
+
     img {
       max-height: 70px;
       max-width: 200px;

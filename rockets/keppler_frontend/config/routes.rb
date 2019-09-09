@@ -1,10 +1,10 @@
 KepplerFrontend::Engine.routes.draw do
-  
+
   # Root
   root to: 'app/farms#root'
 
   get '/import-xls', to: 'app/farm#import_xls', as: :import_xls
-  
+
   resources :farms, path: 'finca', controller: 'app/farms', path_names: { new: 'nuevo', edit: 'editar'} do
     collection do
       get 'landing'
@@ -16,6 +16,7 @@ KepplerFrontend::Engine.routes.draw do
     end
 
     resources :cows, path: 'ganado', controller: 'app/cattle', path_names: { new: 'nuevo', edit: 'editar'} do
+      post 'activities', to: 'app/cattle#create_activities', as: :activities
       member do
         match 'buscar-ganado' => 'search', via: %i[get post], as: :search
         post :males
@@ -35,6 +36,8 @@ KepplerFrontend::Engine.routes.draw do
       resources :milk_weights, path: 'pesajes-de-leche', controller: 'app/milk_weights' do
         get :report, as: :report, on: :collection
       end
+
+      resources :medical_histories, path: 'historial-medico', controller: 'app/medical_histories', path_names: { new: 'nuevo', edit: 'editar' }
     end
 
     resources :strategic_lots, path: 'lotes-estrategicos', controller: 'app/strategic_lots', path_names: { new: 'nuevo', edit: 'editar'} do
@@ -52,7 +55,7 @@ KepplerFrontend::Engine.routes.draw do
     end
 
     resources :transferences, path: 'transferencias', controller: 'app/transferences', path_names: { new: 'nuevo', edit: 'editar'}, only: %w[index show new create]
-    
+
     resources :inseminations, path: 'pajuelas', controller: 'app/inseminations', path_names: { new: 'nuevo', edit: 'editar'} do
       get :index_used, on: :collection, path: 'usadas'
       get :mark_as_used, on: :member, path: 'marcar-como-usada'
@@ -66,7 +69,7 @@ KepplerFrontend::Engine.routes.draw do
 
         post 'lote-estrategico/:strategic_lot_id/assign_bulls', action: :assign_bulls, as: :assign_bulls
         delete 'lote-estrategico/:strategic_lot_id/destroy_season_cows/:multiple_ids', action: :destroy_season_cows, as: :destroy_season_cows
-        
+
         get 'lote-estrategico/:strategic_lot_id/disponibles', action: :availables, as: :availables
         get 'lote-estrategico/:strategic_lot_id/celos', action: :zeals, as: :zeals
         get 'lote-estrategico/:strategic_lot_id/servicios', action: :services, as: :services
@@ -141,9 +144,9 @@ KepplerFrontend::Engine.routes.draw do
     resources :deliveries, path: 'entregas', controller: 'app/deliveries'
     resources :cheese_processes, path: 'quesera', controller: 'app/cheese_processes'
   end
-  
+
   # Admin
-  
+
   namespace :admin do
     scope :frontend, as: :frontend do
       resources :parameters do

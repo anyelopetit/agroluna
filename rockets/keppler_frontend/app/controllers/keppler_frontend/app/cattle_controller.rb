@@ -7,7 +7,7 @@ module KepplerFrontend
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
     before_action :set_farm
-    before_action :set_cow, only: %i[show edit update destroy males toggle_milking]
+    before_action :set_cow, only: %i[show edit update destroy males toggle_milking create_activities]
     before_action :cow_attributes, only: %i[new edit create]
     before_action :set_farms
     before_action :index_variables
@@ -64,7 +64,7 @@ module KepplerFrontend
         @cow.update(father_id: params[:cow][:father_id].split(',').last.to_i)
         if @cow.weights.blank?
           redirect_to new_farm_cow_weight_path(@farm, @cow)
-        else 
+        else
           redirect_to farm_cow_path(@farm, @cow)
         end
       else
@@ -128,10 +128,21 @@ module KepplerFrontend
       redirect_back fallback_location: farm_milk_index_path(@farm)
     end
 
+    def create_activities
+      @activity = @cow.cow_activities.new(activity_params)
+
+      if @activity.save
+        flash[:notice] = 'Serie actualizada'
+      else
+        flash[:error] = 'No se pudo actualzar la serie'
+      end
+      redirect_to [@farm, @cow]
+    end
+
     private
 
     def set_cow
-      @cow = KepplerCattle::Cow.find_by(id: params[:id])
+      @cow = KepplerCattle::Cow.find_by(id: (params[:cow_id] || params[:id]))
     end
 
     def index_variables
@@ -235,6 +246,13 @@ module KepplerFrontend
     def male_params
       params.require(:male).permit(
         KepplerCattle::Male.attribute_names.map(&:to_sym)
+      )
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def activity_params
+      params.require(:activity).permit(
+        KepplerCattle::Activity.attribute_names.map(&:to_sym)
       )
     end
 

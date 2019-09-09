@@ -1,0 +1,35 @@
+= simple_form_for [:admin, :cattle, @medical_history] do |f|
+  .container
+    .row
+      .col-lg-2
+        = link_to admin_cattle_medical_histories_path, 'data-position': 'bottom', 'data-tooltip': t('keppler.actions.back') do
+          .arrow-back.btn.btn-default
+            %i.fa.fa-angle-left
+            = t('keppler.actions.back')
+
+    .row
+      .col-lg-12
+        .box.slice-box
+          .box-header.with-border
+            %h3.box-title= t('keppler.models.pluralize.medical_histories').humanize
+            .box-tools.pull-right
+              %a.btn.btn-box-tool{'data-widget': 'collapse', type: 'button'}
+                %i.fa.fa-minus
+          .box-body
+            %table.table.table-bordered
+              %tbody
+                .form-padding
+                  .col-xs-12
+                    = f.input :evaluation_date, as: :string, input_html: { class: 'datepicker' }
+                  .col-xs-12
+                    = f.association :user, include_blank: false
+                  .col-xs-12
+                    = f.input :evualuation
+                  .col-xs-12
+                    = f.input :diagnostic
+                  .col-xs-12
+                    = f.input :next_date, as: :string, input_html: { class: 'datepicker' }
+                  .col-xs-12
+                    .pull-right
+                      = f.button :submit, t('keppler.actions.save'), name: '_save', class: 'btn-primary'
+                      = f.button :submit, t('keppler.actions.save_and_add_another'), name: '_add_other'

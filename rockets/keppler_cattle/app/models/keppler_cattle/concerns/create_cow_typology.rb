@@ -30,8 +30,8 @@ module KepplerCattle
 
         def verify_existence(typology)
           cow_typologies = KepplerCattle::CowTypology.where(
-            cow_id: polymorphic_cow(self).id,
-            typology_id: typology.id
+            cow_id: polymorphic_cow(self)&.id,
+            typology_id: typology&.id
           )
           cow_typologies.size.zero?
         end
@@ -51,7 +51,7 @@ module KepplerCattle
         end
 
         def verify_min_weight(typology)
-          
+
           polymorphic_cow(self).weight&.weight.to_f >= typology.min_weight.to_f
         end
 

@@ -1,0 +1,7 @@
+.app_wrapper.pb-5
+  .container
+    = link_to (:back == request.url ? :back : farm_cow_path(@farm, @cow)) do
+      %button.btn.btn_custom.btn--medium.mt-4.mb-4
+        %i.icofont-arrow-left
+        Atrás
+    = render 'medical_history', medical_history: @cow.medical_history

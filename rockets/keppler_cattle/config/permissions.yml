@@ -1,4 +1,11 @@
 modules:
+  medical_histories:
+    name: MedicalHistory
+    model: KepplerCattleMedicalHistory
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
   inseminations:
     name: Insemination
     model: KepplerCattleInsemination

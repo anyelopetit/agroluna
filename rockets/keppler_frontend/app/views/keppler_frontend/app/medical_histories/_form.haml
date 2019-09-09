@@ -1,0 +1,91 @@
+.single-item
+  = link_to (:back == request.url ? :back : farm_cow_path(@farm, @cow)) do
+    %button.btn.btn_custom.btn--medium.mt-4.mb-4
+      %i.icofont-arrow-left
+      Atrás
+  .row
+    .col-lg-9.col-md-12
+      .card_new
+        %h1
+          Crear Historial Medico
+          %span.ml-3{style: "color:#797979 !important;"} (#{@cow.serie_number})
+        = simple_form_for [@farm, @cow, @medical_history] do |f|
+          = f.input :cow_id, input_html: { value: @cow.id }, as: :hidden
+          = f.input :user_id, input_html: { value: current_user.id }, as: :hidden
+          .row
+            .col-sm-12.col-md-6
+              = f.input :evaluation_date, as: 'string', label: 'Fecha de Evaluación', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom evaluation', value: Date.today }
+            .col-sm-12.col-md-6
+              -# = f.input :name, label: 'Nombre del Responsable', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+              = f.input :responsable_name, as: 'string', label: 'Responsable', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom', list: 'responsables' }
+              %datalist#responsables
+                - KepplerFarm::Responsable.all.each do |responsable|
+                  %option{ value: responsable.name }
+            .col-sm-12.col-md-6
+              = f.input :evualuation, as: 'string', label: 'Evaluación', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+            .col-sm-12.col-md-6
+              = f.input :diagnostic, as: 'string', label: 'Diagnóstico', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+            .col-sm-12.col-md-6
+            .col-sm-12
+              = f.input :next_date, as: 'string', label: 'Próxima cita', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom next_date', value: Date.today }
+            .col-sm-12.mt-4
+              .float-right
+                %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                  %i.icofont-save
+                  Guardar
+    .col-lg-3.d-md-none.d-lg-block
+      .card_new
+        .float-right
+          -# = image_tag "/assets/keppler_cattle/#{@cow.species}", class: 'svg-icon-md p-absolute r-0' unless @cow.species.blank?
+          = image_tag "/assets/keppler_cattle/#{@cow.gender}", class: 'svg-icon-md p-absolute r-0' unless @cow.gender.blank?
+        .row
+          .col-sm-12{ :style =>"display: flex; justify-content: center;"}
+            .card_cow
+              %center.row
+                .col-lg-12
+                  = image_tag (@cow.image&.url || (@cow.gender?('male') ? 'https://image.flaticon.com/icons/svg/1495/1495074.svg' : 'https://image.flaticon.com/icons/svg/523/523448.svg')), class: 'avatar_cow'
+                .col-lg-12
+                  .card_cow_content{ :style => "text-align: center;"}
+                    %h2= @cow.serie_number
+                    %small= "(#{@cow.short_name})" unless @cow.short_name.blank?
+                    %strong
+                      = @cow.typology_name unless @cow.typology&.blank?
+                    %span= @cow.race&.name
+                .col-lg-12.mt-5
+                  .row
+                    .col-lg-12
+                      %dl
+                        %dt.card_status_details Años - Meses
+                        %dd.card_status_details #{@cow.years} - #{@cow.months}
+                    .col-lg-12
+                      %dl
+                        %dt.card_status_details Fecha de Nacimiento
+                        %dd.card_status_details= @cow.birthdate
+
+
+:javascript
+  $(document).ready(function() {
+    $('.evaluation').datepicker({
+      dateFormat: 'yy-mm-dd',
+      showOtherMonths: true,
+      selectOtherMonths: true,
+      changeMonth: true,
+      changeYear: true,
+      maxDate: 0,
+      setDate: 0,
+      yearRange: "c-1:c"
+
+    })
+
+    $('.next_date').datepicker({
+      dateFormat: 'yy-mm-dd',
+      showOtherMonths: true,
+      selectOtherMonths: true,
+      changeMonth: true,
+      changeYear: true,
+      minDate: 1,
+      maxDate: 365,
+      setDate: 0,
+      yearRange: "c:c+1"
+    })
+  })

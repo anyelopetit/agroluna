@@ -10,6 +10,7 @@ en:
     permissions:
     models:
       singularize:
+        medical_history: medical history
         insemination: insemination
         species: species
         weighing_day: weighing day
@@ -19,6 +20,7 @@ en:
         status: status
         cow: cow
       pluralize:
+        medical_histories: medical histories
         inseminations: inseminations
         weighing_days: weighing days
         corporal_conditions: corporal conditions
@@ -28,6 +30,7 @@ en:
         statuses: statuses
         cows: cows
     modules:
+      admin/medical-history: Medical history
       admin/insemination: Insemination
       admin/species: Species
       admin/weighing-days: Weighing days

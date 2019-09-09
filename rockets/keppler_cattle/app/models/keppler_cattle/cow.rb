@@ -41,6 +41,8 @@ module KepplerCattle
 
     has_many :milk_weights, class_name: 'KepplerReproduction::MilkWeight', dependent: :destroy
 
+    has_many :medical_histories, class_name: 'KepplerCattle::MedicalHistory', dependent: :destroy
+
     validates_presence_of :birthdate, :serie_number, :species_id, :race_id
     validates_uniqueness_of :serie_number
 
@@ -58,6 +60,10 @@ module KepplerCattle
 
     def season
       season_cows&.last&.season
+    end
+
+    def medical_history
+      medical_histories.last
     end
 
     # def species
@@ -172,9 +178,9 @@ module KepplerCattle
     def self.possible_fathers_select2
       possible_fathers
         .map { |x| [x.serie_number + ("(#{x&.short_name})" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] }
-        .concat(KepplerCattle::Insemination.order(:serie_number).map { 
-          |x| [x.serie_number + ("(#{x&.short_name}) - Pajuela" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"] 
-        }) 
+        .concat(KepplerCattle::Insemination.order(:serie_number).map {
+          |x| [x.serie_number + ("(#{x&.short_name}) - Pajuela" unless x&.short_name.blank?).to_s, "#{x.class.to_s}, #{x.id}"]
+        })
     end
 
     def mother
@@ -249,7 +255,7 @@ module KepplerCattle
 
     def self.inactives
       cows = select do |cow|
-        (cow&.locations.pluck(:farm_id).include?(farm&.id) && cow&.location&.farm_id != farm&.id) || 
+        (cow&.locations.pluck(:farm_id).include?(farm&.id) && cow&.location&.farm_id != farm&.id) ||
         !cow&.activity&.active
       end
       inactive_ids = cows.pluck(:id).uniq
@@ -258,7 +264,7 @@ module KepplerCattle
 
     def active?
       # puts "############ FINCA #{farm.id} ######################"
-      activity&.active # locations.pluck(:farm_id).include?(farm&.id) && location&.farm_id == farm&.id && 
+      activity&.active # locations.pluck(:farm_id).include?(farm&.id) && location&.farm_id == farm&.id &&
     end
 
     def self.reproductive_males(season)

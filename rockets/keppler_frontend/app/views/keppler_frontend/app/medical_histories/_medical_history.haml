@@ -1,0 +1,67 @@
+.single-item
+  .row
+    .col-lg-12
+      .card_new
+        %h1
+          Ficha medica
+          %span.ml-3{style: "color:#797979 !important;"} (#{@cow.serie_number})
+        -# .cow_info
+        -#   .row.mt-5.mb-5
+        -#     .col-lg-3.col-md-12.d-none{ :style =>"display: flex; justify-content: center;"}
+        -#       .card_cow
+        -#         .row
+        -#           .col-lg-12
+        -#             .card_cow_content{ :style => "text-align: center;"}
+        -#               %center
+        -#                 = image_tag (@cow.image&.url || (@cow.gender?('male') ? 'https://image.flaticon.com/icons/svg/1495/1495074.svg' : 'https://image.flaticon.com/icons/svg/523/523448.svg')), class: 'avatar_cow'
+        -#               %h1
+        -#                 = @cow.serie_number
+        -#               %small= "(#{@cow.short_name})" unless @cow.short_name.blank?
+        -#               %strong
+        -#                 = @cow.typology_name unless @cow.typology&.blank?
+        -#               %span= @cow.race&.name
+        .row
+          .col-lg-12.col-sm-12.col-md-12
+            .row
+              .col-lg-4.col-md-6.col-sm-6
+                %dl
+                  %dt Fecha de evaluación
+                  %dd= medical_history.evaluation_date.strftime('%d-%m-%Y')
+                  %dt.mt-3 Responsable
+                  %dd= medical_history.user.name
+                  %dt.mt-3 Evaluación
+                  %dd= medical_history.evualuation
+              .col-lg-4.col-md-6.col-sm-6
+                %dl
+                  %dt Diagnóstico
+                  %dd= medical_history.diagnostic
+                  %dt.mt-3 Faltan
+                  %dd
+                    %strong= (medical_history.next_date - Date.today).to_s.remove('/1')
+                    %span días para su proxima cita
+                    %br
+                    %small (#{medical_history.next_date.strftime('%d-%m-%Y')})
+              %center.col-lg-4.col-md-12.col-sm-12.mt-2
+                #datepicker
+:css
+  .ui-datepicker-month{
+    color: #4d5663 !important;
+  }
+  .ui-datepicker-year{
+    color: #4d5663 !important;
+  }
+  .ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
+    opacity: 1 !important;
+  }
+:javascript
+  $(function () {
+    $.datepicker.setDefaults($.datepicker.regional["es"]);
+    var pickerOpts = {
+       rangeSelect: true,
+       rangeSeparator: " to "
+    };
+    $("#datepicker").datepicker({
+      setDate: #{medical_history.evaluation_date.strftime('%d-%m-%y')},
+      disabled: true
+    });
+  });

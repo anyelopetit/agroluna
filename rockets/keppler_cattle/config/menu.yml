@@ -34,4 +34,3 @@ menu:
           icon: layers
           current: ['/admin/cattle/inseminations']
           model: KepplerCattle::Insemination
-      

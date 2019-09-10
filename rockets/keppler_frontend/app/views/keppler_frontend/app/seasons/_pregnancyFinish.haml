@@ -6,7 +6,9 @@
       %h1.text-center Efectividad de preñez
       %canvas#pregnants-chart{ height: "150", width: "400"}
 
-    - if @season.users.select { |inseminador| inseminador.status_where('Service', @season.id).exists? && !inseminador.name.blank? }
+    - if @season.statuses.blank? || @season.users.blank?
+      %h1.mb-4{style:"text-transform: uppercase"} No existen responsables en la temporada
+    - elsif @season.users.select { |inseminador| inseminador.status_where('Service', @season.id).exists? && !inseminador.name.blank? }
       %h1.mb-4{style:"text-transform: uppercase"} Inseminadores - Pajuelas Aplicadas
       .row
         - @season.users.each do |inseminador|
@@ -42,10 +44,10 @@
   .profile-img {
     img{
       width:70px;
-      height:70px; 
+      height:70px;
       border-radius: 50%;
       object-fit: cover;
-    }  
+    }
   }
   .content-profile {
     .name {
@@ -78,8 +80,8 @@
           datasets: [{
               label: 'Vacas en celo',
               data: [
-                #{@season&.cows.select { |x| x.status&.status_type == 'Pregnancy' && x.status.farm_id.eql?(@farm.id) }.size},
-                #{@season&.cows.reject { |x| x.status&.status_type == 'Pregnancy' && x.status.farm_id.eql?(@farm.id) }.size}
+                #{@season&.cows.select { |x| x.status&.status_type == 'Pregnancy' && x.status&.farm_id.eql?(@farm.id) }.size},
+                #{@season&.cows.reject { |x| x.status&.status_type == 'Pregnancy' && x.status&.farm_id.eql?(@farm.id) }.size}
               ],
               backgroundColor: [
                 green_gradient,
@@ -122,8 +124,8 @@
           data: {
               labels: ["Acertados", "Errados"],
               datasets: [{
-                  data: [#{inseminador.status_where('Pregnancy', @season.id).size}, #{inseminador.inefectivities.size}],
-                  backgroundColor:[ 
+                  data: [#{inseminador.status_where('Pregnancy', @season.id).size}, #{inseminador&.inefectivities&.size}],
+                  backgroundColor:[
                     green_gradient,
                     gray_gradient,
                   ],

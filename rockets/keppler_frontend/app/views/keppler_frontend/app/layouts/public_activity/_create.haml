@@ -5,29 +5,29 @@
         %b
           = activity.owner&.name
       %small
-        - case activity.trackable_type
+        - case activity&.trackable_type
         - when 'KepplerCattle::Cow'
           creó ganado
-          #{activity.trackable.species&.name}
-          #{activity.trackable.race&.name}
+          #{activity&.trackable.species&.name}
+          #{activity&.trackable.race&.name}
           %b
-            = activity.trackable.try('serie_number') || activity.trackable_id
+            = activity&.trackable.try('serie_number') || activity&.trackable_id
 
         - when 'KepplerCattle::Transference'
           transfirió
-          #{activity.trackable&.cattle.size}
+          #{activity&.trackable&.cattle.size}
           ganados hacia
-          #{activity.trackable&.to_farm&.title}
+          #{activity&.trackable&.to_farm&.title}
 
         - when 'KepplerFarm::StrategicLot'
           creó lote estratégico
-          %b #{activity.trackable&.name}
+          %b #{activity&.trackable&.name}
           con la función de
-          %b #{activity.trackable&.function}
+          %b #{activity&.trackable&.function}
 
         - else
           actualizó
-          = t("public_activities.#{activity.trackable_type.split('::').last.downcase}")
+          = t("public_activities.#{activity&.trackable_type.split('::').last.downcase}")
           de ganado
           #{activity.recipient&.species&.name}
           #{activity.recipient&.race&.name}

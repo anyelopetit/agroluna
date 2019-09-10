@@ -6,10 +6,10 @@
           = activity.owner&.name
       %small
         actualizó ganado
-        #{activity.trackable.species&.name}
-        #{activity.trackable.race&.name}
+        #{activity&.trackable.species&.name}
+        #{activity&.trackable.race&.name}
         %b
-          = activity.trackable.send(method) if activity.trackable
+          = activity&.trackable.send(method) if activity&.trackable
       %span.time
         %i.icofont-clock-time
         a las

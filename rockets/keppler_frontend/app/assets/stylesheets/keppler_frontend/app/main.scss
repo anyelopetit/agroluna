@@ -9,20 +9,22 @@
 }
 
 .app_wrapper {
-  padding-top: 40px;
+  padding-top: 55px;
   background-color: #f8f8f8;
   min-height: calc(110vh - 115px);
   overflow: hidden;
 
   a {
     color: #28c76f;
+
     &:hover {
       filter: brightness(80%);
     }
   }
 }
 
-.description_land, .photos_land {
+.description_land,
+.photos_land {
   background-color: $white;
   border-radius: 5px;
   padding: 30px;
@@ -48,7 +50,8 @@
   right: -20px;
 }
 
-.slick-prev::before, .slick-next::before {
+.slick-prev::before,
+.slick-next::before {
   color: $secundary;
   font-family: 'IcoFont';
   font-size: 30px;
@@ -82,12 +85,14 @@
 
 .dropdown-item.active,
 .dropdown-item:active {
-    color: #fff;
-    text-decoration: none;
-    background-color: #28C76F33;
+  color: #fff;
+  text-decoration: none;
+  background-color: #28C76F33;
 }
 
-button, a, .btn {
+button,
+a,
+.btn {
 
   &:disabled {
     cursor: not-allowed;

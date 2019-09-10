@@ -7,7 +7,7 @@
       %small
         creó status
         %b
-          = activity&.trackable.send(method) if activity&.trackable
+          = activity&.trackable&.send(method) if activity&.trackable
       %span.time
         %i.icofont-clock-time
         a las

@@ -5,15 +5,15 @@
         %b
           = activity.owner&.name
       %small
-        - if activity&.trackable_type.eql?("KepplerCattle::Cow")
+        - if activity&.trackable_type&.eql?("KepplerCattle::Cow")
           eliminó ganado
-          #{activity&.trackable.species&.name}
-          #{activity&.trackable.race&.name}
+          #{activity&.trackable&.species&.name}
+          #{activity&.trackable&.race&.name}
           %b
-            = activity&.trackable.try('serie_number')
+            = activity&.trackable&.try('serie_number')
         - else
           eliminó
-          = t("activerecord.attributes.#{activity&.trackable_type.split('::').last.downcase}")
+          = t("activerecord.attributes.#{activity&.trackable_type&.split('::').last.downcase}")
           de ganado
           #{activity.recipient&.species&.name}
           #{activity.recipient&.race&.name}

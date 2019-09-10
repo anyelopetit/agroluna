@@ -8,10 +8,10 @@
         - case activity&.trackable_type
         - when 'KepplerCattle::Cow'
           creó ganado
-          #{activity&.trackable.species&.name}
-          #{activity&.trackable.race&.name}
+          #{activity&.trackable&.species&.name}
+          #{activity&.trackable&.race&.name}
           %b
-            = activity&.trackable.try('serie_number') || activity&.trackable_id
+            = activity&.trackable&.try('serie_number') || activity&.trackable_id
 
         - when 'KepplerCattle::Transference'
           transfirió
@@ -27,7 +27,7 @@
 
         - else
           actualizó
-          = t("public_activities.#{activity&.trackable_type.split('::').last.downcase}")
+          = t("public_activities.#{activity&.trackable_type&.split('::').last.downcase}")
           de ganado
           #{activity.recipient&.species&.name}
           #{activity.recipient&.race&.name}

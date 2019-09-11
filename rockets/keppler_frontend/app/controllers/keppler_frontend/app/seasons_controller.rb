@@ -56,7 +56,7 @@ module KepplerFrontend
       @season = KepplerReproduction::Season.new(season_params)
       # @season.finish_date = params[:season][:finish_date]
 
-      if @season.save
+      if @season.save!
         if @season.type_id.zero?
           counter = 0
           @farm.strategic_lots.each do |strategic_lot|
@@ -100,7 +100,7 @@ module KepplerFrontend
       end
       redirect_to farm_seasons_path(@farm)
     end
-    
+
     def new_assign_cattle
       @bulls = @farm.possible_fathers
       @cows = @farm.possible_mothers
@@ -197,12 +197,12 @@ module KepplerFrontend
         params[:strategic_lot_id]
       )
     end
-      
+
     def new_services
       @cows = @season&.cows.where(id: params[:multiple_ids].split(','))
       @found = false
     end
-      
+
     def create_services
       cow = @season&.cows.find(params[:status][:cow_id])
       insemination = @farm.inseminations.find(params[:status][:insemination_id])
@@ -245,8 +245,8 @@ module KepplerFrontend
         flash[:error] = 'No se pudo guardar el servicio'
       end
       redirect_back fallback_location: pregnants_farm_season_path(
-        @farm, 
-        @season, 
+        @farm,
+        @season,
         @strategic_lot || cow.strategic_lot.id
       )
     end
@@ -264,8 +264,8 @@ module KepplerFrontend
         flash[:error] = 'No se pudo realizar el parto'
       end
       redirect_back fallback_location: births_farm_season_path(
-        @farm, 
-        @season, 
+        @farm,
+        @season,
         @strategic_lot || @mother.strategic_lot.id
       )
     end
@@ -287,11 +287,11 @@ module KepplerFrontend
       end
 
       redirect_back fallback_location: farm_season_path(
-        @farm, 
+        @farm,
         @season
       )
     end
-    
+
     def wean
       @cow = KepplerCattle::Cow.find(params[:wean][:cow_id])
       @cow.weights.create(
@@ -373,7 +373,7 @@ module KepplerFrontend
       @strategic_lots = @farm.strategic_lots
       @cows = if @season
                 @season&.cows.order(:serie_number)
-              else 
+              else
                 @farm.cows.order(:serie_number)
               end
       if @season
@@ -454,7 +454,7 @@ module KepplerFrontend
       end
       counter
     end
-    
+
     def new_birth(params)
       @mother = @season&.cows.find_by_id(params[:status][:cow_id])
       @status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id})
@@ -488,7 +488,7 @@ module KepplerFrontend
         baby.father_type = father.class.to_s
         baby.father_id = father&.id
       end
-      
+
       if baby.save!
         baby_weight = baby.create_first_weight(
           weight_params,

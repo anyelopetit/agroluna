@@ -37,7 +37,7 @@ module KepplerFarm
       def create
         @strategic_lot = StrategicLot.new(strategic_lot_params)
 
-        if @strategic_lot.save
+        if @strategic_lot.save!
           redirect(@strategic_lot, params)
         else
           render :new
@@ -81,7 +81,7 @@ module KepplerFarm
       def sort
         StrategicLot.sorter(params[:row])
       end
-      
+
       def delete_assignment
         @assignment = KepplerCattle::Location.find_by(
           strategic_lot_id: params[:strategic_lot_id],
@@ -90,7 +90,7 @@ module KepplerFarm
 
         if @assignment.try(:exists?)
           if @assignment.destroy!
-            flash[:notice] = 
+            flash[:notice] =
               t('keppler.messages.cattle.deleted', cattle: @assignment.cow.serial_number) if @assignment.destroy!
           else
             flash[:error] = t('keppler.messages.cattle.not_deleted', cattle: @assignment.cow.serial_number)

@@ -35,7 +35,7 @@ module KepplerFrontend
     def create
       @strategic_lot = KepplerFarm::StrategicLot.new(strategic_lot_params)
 
-      if @strategic_lot.save
+      if @strategic_lot.save!
         redirect_to farm_strategic_lot_path(@farm, @strategic_lot)
       else
         flash[:error] = 'Revisa los datos del formulario'
@@ -91,7 +91,7 @@ module KepplerFrontend
       end
       redirect_to action: :show
     end
-      
+
     def delete_assignment
       if params[:multiple_ids].blank?
         flash[:error] = 'No se pudo remover ninguna serie del lote'
@@ -110,7 +110,7 @@ module KepplerFrontend
       end
       if counter.zero?
         flash[:error] = 'No se removió ninguna serie'
-      else 
+      else
         flash[:notice] = "Se removieron #{counter} series del lote"
       end
       redirect_to action: :show, farm_id: @farm&.id, id: @strategic_lot.id

@@ -16,9 +16,9 @@ module KepplerFarm
     has_many :locations, class_name: 'KepplerCattle::Location', dependent: :destroy
     has_many :cows, class_name: 'KepplerCattle::Cow', through: :locations
     has_many :milk_weights, class_name: 'KepplerReproduction::MilkWeight', through: :cows
-    
 
-    validates_presence_of :id, :name, :farm_id
+
+    validates_presence_of :name, :farm_id
 
 
     def self.index_attributes

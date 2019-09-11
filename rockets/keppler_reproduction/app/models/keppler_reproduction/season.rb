@@ -11,10 +11,17 @@ module KepplerReproduction
     include Searchable
     acts_as_list
     acts_as_paranoid
-    
+
     belongs_to :farm, class_name: 'KepplerFarm::Farm', foreign_key: 'farm_id'
     has_many :season_cows, class_name: 'KepplerReproduction::SeasonCow', inverse_of: :season
-    # has_many :cows, class_name: 'KepplerCattle::Cow', through: :season_cows
+    has_many :cows, -> (season) {
+      # joins(locations: :farm, seasons: :season_cows).where('keppler_cattle_locations.farm_id = ? AND keppler_cattle_locations.id = (SELECT MAX(keppler_cattle_locations.id) FROM keppler_cattle_locations) AND keppler_reproduction_seasons.id = ? AND keppler_reproduction_seasons.id = (SELECT MAX(keppler_reproduction_seasons.id) FROM keppler_reproduction_seasons)', $request&.params&.dig('farm_id'), season.id)
+      ids = select do |cow|
+        cow.locations&.last&.farm_id == $request&.params&.dig('farm_id').to_i && cow.seasons&.last&.id == season.id
+      end.pluck(:id)
+      where(id: ids)
+    }, class_name: 'KepplerCattle::Cow', through: :season_cows
+    # end
     has_many :statuses, ->(season){ where(season_id: season.id) }, class_name: 'KepplerCattle::Status', through: :cows
     has_many :users, -> { distinct }, class_name: 'KepplerFarm::Responsable', through: :statuses
     has_many :inefectivities, -> { distinct }, class_name: 'KepplerReproduction::Inefectivity', through: :users
@@ -25,11 +32,8 @@ module KepplerReproduction
       %i[name]
     end
 
-    def cows
-      cow_ids = KepplerCattle::Cow.all.select do |c|
-        c.location&.farm_id == farm&.id && c.season&.id == id
-      end.pluck(:id)
-      KepplerCattle::Cow.where(id: cow_ids)
+    def self.farm
+      KepplerFarm::Farm.find_by(id: ($request.params[:farm_id]))
     end
 
     def duration_days

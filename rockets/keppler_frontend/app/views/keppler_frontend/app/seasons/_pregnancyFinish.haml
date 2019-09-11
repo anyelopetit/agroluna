@@ -5,7 +5,7 @@
       %h1.text-center Efectividad de preñez
       %canvas#pregnants-chart{ height: "150", width: "400"}
 
-    - if @season.statuses.blank? || @season.users.blank?
+    - if @season.statuses.blank? #  || @season.users.blank?
       %h1.mb-4{style:"text-transform: uppercase"} No existen responsables en la temporada
     - elsif @season.users.select { |inseminador| inseminador.status_where('Service', @season.id).exists? && !inseminador.name.blank? }
       %h1.mb-4{style:"text-transform: uppercase"} Inseminadores - Pajuelas Aplicadas

@@ -25,7 +25,7 @@
       - if @milk_lot
         - if @cows.blank?
           %tbody
-            %th El lote estratégico no posee series reproductivas
+            %th El lote estratégico no posee series en período de lactancia
         - else
           %thead
             %tr
@@ -110,4 +110,3 @@
           %th No se encuentra ningún lote estratégico asignado
 = render 'keppler_frontend/app/milk/modalLote'
 = render 'keppler_frontend/app/milk/editParams'
-

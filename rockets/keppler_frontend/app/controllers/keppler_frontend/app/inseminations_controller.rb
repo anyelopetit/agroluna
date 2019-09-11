@@ -78,10 +78,10 @@ module KepplerFrontend
     end
 
     def index_variables
-      @q = KepplerCattle::Insemination.ransack(params[:q])
-      @inseminations = @q.result(distinct: true).order(:serie_number)
-      @active_inseminations = @inseminations
-      @inactive_inseminations = @inseminations
+      @q = @farm.inseminations.ransack(params[:q])
+      @inseminations = @q.result(distinct: true)
+      @active_inseminations = @inseminations.actives.order(:serie_number)
+      @inactive_inseminations = @inseminations.inactives.order(:serie_number)
       if request.format.symbol.eql?(:html)
         @active_inseminations = @active_inseminations.page(params[:page]).per(50)
         @inactive_inseminations = @inactive_inseminations.page(params[:page]).per(50)

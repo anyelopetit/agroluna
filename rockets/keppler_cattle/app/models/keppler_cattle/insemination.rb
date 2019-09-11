@@ -35,14 +35,14 @@ module KepplerCattle
     def self.farm
       KepplerFarm::Farm.find_by(id: $request.params[:farm_id])
     end
-    
-    # def self.actives
-    #   farm.inseminations.where(used_date: nil)
-    # end
-    
-    # def self.inactives
-    #   farm.inseminations.where.not(used_date: nil)
-    # end
+
+    def self.actives
+      farm.inseminations.where('quantity > 0')
+    end
+
+    def self.inactives
+      farm.inseminations.where('quantity = 0')
+    end
 
     def self.colors
       ['No Registrado',

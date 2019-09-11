@@ -73,16 +73,16 @@
                         %i.cr-icon.icofont-check
             -# %th Imagen
             %th
-              = sort_link(@q, 'serie_number') do 
+              = sort_link(@q, 'serie_number') do
                 Serie
-            %th 
+            %th
               = sort_link(@q, 'weight&.weight') do
                 Especie
-            %th 
-              = sort_link(@q, 'race.name') do 
+            %th
+              = sort_link(@q, 'race.name') do
                 Raza
-            %th 
-              = sort_link(@q, 'quantity') do 
+            %th
+              = sort_link(@q, 'quantity') do
                 Cantidad
             -# - if action_name.eql?('index')
               %th
@@ -116,3 +116,4 @@
                     %button.btn.btn_custom.btn--filled.btn--medium
                       %i.icofont-check
                       Usar
+= paginate inseminations unless inseminations.blank?

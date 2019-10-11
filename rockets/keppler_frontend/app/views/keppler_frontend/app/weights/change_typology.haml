@@ -1,0 +1,23 @@
+.app_wrapper
+  .container_custom
+    .single-item
+      .card.shadow.p-5
+        %center
+          Tipología actual:
+          %h1= @cow.typology&.name
+          %br
+          = simple_form_for [@farm, @cow], html: { style: 'max-width: 500px' } do |f|
+            .toggle.hidden
+              = f.association :typologies, as: :select, label: 'Seleccione una tipología', collection: KepplerCattle::Typology.by_gender_and_species(@cow), input_html: { multiple: false }, include_blank: 'No cambiar'
+            .btn.btn_custom.btn--medium.toggle#click Cambiar tipología
+            %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' } Aceptar
+
+:scss
+  .hidden {
+    display: none
+  }
+
+:javascript
+  $('#click').click(function() {
+    $('.toggle').toggleClass('hidden')
+  })

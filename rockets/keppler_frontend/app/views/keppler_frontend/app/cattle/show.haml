@@ -191,23 +191,22 @@
                   .col-lg-6
                     %dl
                       %dt.card_status_details
-                        -# %i.icofont-dumbbell
                         Peso Ganado
                       %dd.card_status_details
                         = @cow.weight&.gained_weight.to_f.round(2)
                         KG
 
                   .col-lg-6
-                    -# %dl
-                      %dt.card_status_details
-                        -# %i.icofont-muscle
-                        Condición corporal
-                      %dd.card_status_details= @cow.weight&.corporal_condition&.name
                     %dl
                       %dt.card_status_details
-                        -# %i.icofont-muscle
                         Peso ganado por día
                       %dd.card_status_details #{@cow.weight&.average_weight&.round(2)} KG
+
+                  .col-lg-12
+                    %dl
+                      %dt.card_status_details
+                        Peso al destete
+                      %dd.card_status_details #{@cow.weights.where(weaning: true).last&.weight&.round(2)} KG
       .col-lg-4.col-md-6
         .card_status_specific
           .card_status--title.card_status_title
@@ -287,7 +286,7 @@
           %h1= @cow.activity&.active ? 'Inhabilitar serie' : 'Habilitar serie'
           = simple_form_for [@farm, @cow, KepplerCattle::Activity.new] do |f|
             = f.input :active, as: :hidden, input_html: { value: !@cow.activity&.active }
-            = f.input :observations, label: 'Motivo / Observaciones'
+            = f.input :observations, label: 'Motivo / Observaciones', collection: %w[Transferencia Venta Muerte Extravío Otro], include_blank: false, input_html: { style: 'padding: 0' }
             .float-right
               %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
                 %i.icofont-save

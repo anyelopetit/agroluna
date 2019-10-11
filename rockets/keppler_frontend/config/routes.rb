@@ -31,7 +31,9 @@ KepplerFrontend::Engine.routes.draw do
         post :create_weights
         get 'pesajes/:multiple_ids', to: 'app/cattle#show_weights', as: :weights
       end
-      resources :weights, path: 'pesos', controller: 'app/weights', path_names: { new: 'nuevo', edit: 'editar'}, only: %i[new create]
+      resources :weights, path: 'pesos', controller: 'app/weights', path_names: { new: 'nuevo', edit: 'editar'}, only: %i[new create] do
+        get :change_typology, on: :collection
+      end
 
       resources :milk_weights, path: 'pesajes-de-leche', controller: 'app/milk_weights' do
         get :report, as: :report, on: :collection

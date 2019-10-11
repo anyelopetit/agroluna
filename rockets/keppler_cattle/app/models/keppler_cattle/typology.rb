@@ -28,7 +28,7 @@ module KepplerCattle
     end
 
     def self.by_gender_and_species(cattle)
-      where(gender: cattle.gender).or(where(species_id: cattle.species_id))
+      where(gender: cattle.gender, species_id: cattle.species_id)
     end
   end
 end

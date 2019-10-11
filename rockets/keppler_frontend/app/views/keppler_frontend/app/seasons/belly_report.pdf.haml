@@ -17,7 +17,8 @@
         }
       }
   %body{ onload: 'number_pages()' }
-    - @calfs = @season&.cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten
+    - calfs_ids = @season&.cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten.pluck(:id)
+    - @calfs = @farm.cows.where(id: calfs_ids)
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
       %h3.report-title #{@season.name}
@@ -51,23 +52,23 @@
                   %th.not-records.center
                     %center No se encontraron vientres registrados en esta temporada de monta
           - else
-            - @strategic_lots.each do |strategic_lot|
-              - unless @calfs&.total_season_calfs(strategic_lot)&.size.zero?
+            -# - @farm.strategic_lots.each do |strategic_lot|
+              - unless @calfs&.total_season_cows(strategic_lot)&.size.zero?
                 .strategic_lot_name= strategic_lot.name
-                %table.mt-none.mb-4
-                  %thead
-                    %tr
-                      %th Serie Madre
-                      %th Nro. Serie
-                      %th Días Nac.
-                      %th Género
-                  %tbody
-                    - @calfs.each do |calf|
-                      %tr
-                        %td= calf&.mother&.serie_number
-                        %td= calf&.serie_number
-                        %td= calf&.days
-                        %td= calf&.gender?('female') ? 'Hembra' : 'Macho'
+            %table.mt-none.mb-4
+              %thead
+                %tr
+                  %th Serie Madre
+                  %th Nro. Serie
+                  %th Días Nac.
+                  %th Género
+              %tbody
+                - @calfs.each do |calf|
+                  %tr
+                    %td= calf&.mother&.serie_number
+                    %td= calf&.serie_number
+                    %td= calf&.days
+                    %td= calf&.gender?('female') ? 'Hembra' : 'Macho'
         .row
           %hr.my-1
           %hr.my-1

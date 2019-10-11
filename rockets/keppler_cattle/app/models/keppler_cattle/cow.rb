@@ -308,13 +308,15 @@ module KepplerCattle
     end
 
     def self.total_season_cows(strategic_lot)
-      includes(:race).includes(:locations)
-        .where(gender: 'female')
-        .where(keppler_cattle_locations: { strategic_lot_id: strategic_lot.id })
+      includes(:race, :locations)
+        .where(
+          gender: 'female',
+          keppler_cattle_locations: { strategic_lot_id: strategic_lot.id }
+        )
     end
 
     def self.total_season_bulls(strategic_lot)
-      includes(:race).includes(:season_cows)
+      includes(:race, :season_cows)
         .where(gender: 'male')
         .where(keppler_reproduction_season_cows: {
           strategic_lot_id: strategic_lot.id

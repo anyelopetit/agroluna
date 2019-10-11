@@ -43,8 +43,10 @@ module KepplerFrontend
         return false
       end
       @cow = @farm.cows.new(cow_params)
-      @cow.father_type = params[:cow][:father_id].split(',').first
-      @cow.father_id = params[:cow][:father_id].split(',').last.to_i
+      if params.dig(:cow, :father_id)
+        @cow.father_type = params.dig(:cow, :father_id)&.split(',')&.first
+        @cow.father_id = params.dig(:cow, :father_id)&.split(',')&.last&.to_i
+      end
 
       if @cow.save! && @cow.weights.blank?
         @cow.create_first_location({farm_id: @farm.id})
@@ -60,8 +62,15 @@ module KepplerFrontend
 
     def update
       if @cow.update(cow_params)
-        @cow.update(father_type: params[:cow][:father_id].split(',').first)
-        @cow.update(father_id: params[:cow][:father_id].split(',').last.to_i)
+        if params.dig(:cow, :father_id)
+          @cow.update(father_type: params.dig(:cow, :father_id)&.split(',')&.first)
+          @cow.update(father_id: params.dig(:cow, :father_id)&.split(',')&.last&.to_i)
+        end
+        if params.dig(:cow, :typology_ids)
+          typology_id = params.dig(:cow, :typology_ids)
+          cow_typology = @cow.cow_typologies.new(typology_id: typology_id)
+          flash[:notice] = "La tipología ha sido actualizada a #{cow_typology&.typology&.name}" if cow_typology.save
+        end
         if @cow.weights.blank?
           redirect_to new_farm_cow_weight_path(@farm, @cow)
         else

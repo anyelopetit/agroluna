@@ -7,7 +7,7 @@ module KepplerFrontend
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
     before_action :set_farm
-    before_action :set_cow, only: %i[new create]
+    before_action :set_cow
     before_action :set_farms
     before_action :index_variables
     before_action :attachments
@@ -31,10 +31,13 @@ module KepplerFrontend
       @weight = KepplerCattle::Weight.new(weight_params)
 
       if @weight.save
-        redirect_to farm_cow_path(@farm, @cow)
+        redirect_to change_typology_farm_cow_weights_path(@farm, @cow)
       else
         render :new
       end
+    end
+
+    def change_typology
     end
 
     def create_multiple

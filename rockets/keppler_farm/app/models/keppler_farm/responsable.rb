@@ -26,7 +26,7 @@ module KepplerFarm
     end
 
     def status_where(status_type, season_id)
-      includes(:statuses).cow_statuses.where(status_type: status_type, season_id: season_id)
+      cow_statuses.where(status_type: status_type, season_id: season_id)
     end
   end
 end

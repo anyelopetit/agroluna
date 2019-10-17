@@ -193,20 +193,23 @@
                       %dt.card_status_details
                         Peso Ganado
                       %dd.card_status_details
-                        = @cow.weight&.gained_weight.to_f.round(2)
+                        #{@cow.weight&.average_weight&.round(2)}
                         KG
 
                   .col-lg-6
                     %dl
                       %dt.card_status_details
                         Peso ganado por día
-                      %dd.card_status_details #{@cow.weight&.average_weight&.round(2)} KG
-
-                  .col-lg-12
-                    %dl
-                      %dt.card_status_details
-                        Peso al destete
-                      %dd.card_status_details #{@cow.weights.where(weaning: true).last&.weight&.round(2)} KG
+                      %dd.card_status_details
+                        = @cow.weight&.gained_weight.to_f.round(2)
+                        KG
+                  - if @cow.weights.find_by(weaning: true)
+                    .col-lg-12
+                      %dl
+                        %dt.card_status_details
+                          Peso al destete
+                        %dd.card_status_details
+                        #{@cow.weights.find_by(weaning: true)&.weight&.round(2)} KG
       .col-lg-4.col-md-6
         .card_status_specific
           .card_status--title.card_status_title

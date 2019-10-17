@@ -33,7 +33,7 @@
                 %th Condición corporal
               %tr
                 %td= @cow.species&.name
-                %td= @cow.race&.name
+                %td= @cow.race&.abbreviation
                 %td= @cow.typology_name
                 %td= @cow.weight&.corporal_condition.name unless @cow.weight&.blank?
               %tr
@@ -110,9 +110,9 @@
     margin: 0;
     padding: 0;
   }
-  td {
+    td {
     margin: 0;
-    padding: 0;
+    padding: 10px 20px 0 0;
   }
   .header-left {
     float: left;

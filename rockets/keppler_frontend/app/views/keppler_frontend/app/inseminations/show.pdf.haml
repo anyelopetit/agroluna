@@ -31,7 +31,7 @@
                 %th Fecha de Nacimiento
               %tr
                 %td= @insemination.species&.name
-                %td= @insemination.race&.name
+                %td= @insemination.race&.abbreviation
                 %td= @insemination.birthdate
               %tr
                 %th Años
@@ -58,9 +58,9 @@
     margin: 0;
     padding: 0;
   }
-  td {
+    td {
     margin: 0;
-    padding: 0;
+    padding: 10px 20px 0 0;
   }
   .header-left {
     float: left;

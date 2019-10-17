@@ -36,7 +36,7 @@
               %td= insemination&.mother&.serie_number
               %td= insemination&.father&.serie_number
               %td= insemination&.species&.name
-              %td= insemination&.race&.name
+              %td= insemination&.race&.abbreviation
               %td= insemination&.birthdate
 :scss
   body {
@@ -55,9 +55,9 @@
     margin: 0;
     padding: 0;
   }
-  td {
+    td {
     margin: 0;
-    padding: 0;
+    padding: 10px 20px 0 0;
   }
   .header-left {
     float: left;

@@ -67,6 +67,8 @@ module FrontsHelper
       :days_to_dry
     when 'Dry'
       :days_to_rest
+    else
+      ''
     end
   end
 end

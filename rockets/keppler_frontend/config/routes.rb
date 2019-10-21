@@ -63,6 +63,10 @@ KepplerFrontend::Engine.routes.draw do
       get :mark_as_used, on: :member, path: 'marcar-como-usada'
     end
 
+    resources :inventories, path: 'inventarios', controller: 'app/inventories', path_names: { new: 'nuevo', edit: 'editar'} do
+      patch :assign_cattle
+    end
+
     resources :seasons, path: 'temporadas', controller: 'app/seasons', path_names: { new: 'nuevo', edit: 'editar'} do
       member do
 

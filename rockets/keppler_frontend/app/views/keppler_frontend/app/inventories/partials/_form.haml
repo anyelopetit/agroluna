@@ -1,0 +1,156 @@
+= simple_form_for [@farm, @inventory] do |f|
+  .form-padding
+    .row
+      = f.input :farm_id, as: :hidden, input_html: { value: @farm&.id }
+      .col-sm-12
+        = f.input :name, as: :string, label: 'Nombre del inventario', required: true, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-12
+        .float-right
+          %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+            %i.icofont-save
+            Guardar
+
+:javascript
+
+  window.I18n = #{es_translations.to_json.html_safe}
+
+  function doesFileExist(urlToFile) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('HEAD', urlToFile, false);
+    xhr.send();
+
+    return xhr.status == "404" ? false : true;
+  }
+  
+  function imageSelect (option) {
+    var optionTxt = option.text.toLowerCase()
+    if (!option.id) return optionTxt;
+    var baseUrl = '/assets/keppler_cattle/';
+    var url = baseUrl + (doesFileExist(baseUrl + optionTxt) ? optionTxt : '/ternera')
+    var $option = $(
+      '<span class="inventories-option">' +
+        `<div style="background-image: url(${url})" class="img-inventories-list"></div>` + 
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+  
+  function motherSelect (option) {
+    var optionTxt = option.text
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="inventories-option">' +
+        `<div style="background-image: url(/assets/keppler_cattle/female)" class="img-inventories-list"></div>` + 
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+  
+  function fatherSelect (option) {
+    var optionTxt = option.text
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="inventories-option">' +
+        `<div style="background-image: url(/assets/keppler_cattle/male)" class="img-inventories-list"></div>` + 
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+  
+  function noImageSelect (option) {
+    var optionTxt = option.text
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="inventories-option">' +
+        optionTxt +
+      '</span>'
+    );
+    return $option;
+  };
+
+  $('#inventory_species_id').select2({
+    placeholder: "Elige una especie",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });
+
+  $('#inventory_race_id').select2({
+    placeholder: "Elige una raza",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });
+
+  $('#inventory_mother_id').select2({
+    placeholder: "Elige una madre",
+    templateResult: motherSelect,
+    templateSelection: motherSelect
+  });
+
+  $('#inventory_father_id').select2({
+    placeholder: "Elige un padre",
+    templateResult: fatherSelect,
+    templateSelection: fatherSelect
+  });
+
+  $('.color').select2({
+    placeholder: "Elige un color",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });
+
+  $.datepicker.regional['es'] = {
+    closeText: 'Cerrar',
+    prevText: '< Ant',
+    nextText: 'Sig >',
+    currentText: 'Hoy',
+    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+    weekHeader: 'Sm',
+    dateFormat: 'dd/mm/yy',
+    firstDay: 1,
+    isRTL: false,
+    showMonthAfterYear: false,
+    yearSuffix: ''
+  };
+
+  $.datepicker.setDefaults($.datepicker.regional['es']);
+
+  $('.datepicker').datepicker({
+    dateFormat: 'yy-mm-dd',
+    showOtherMonths: true,
+    selectOtherMonths: true,
+    changeMonth: true,
+    changeYear: true,
+    maxDate: 0,
+    setDate: 0,
+    yearRange: "c-40:c",
+  }, $.datepicker.regional[ "es" ])
+
+:scss
+
+
+  .inventories-list {
+    height: 187px;
+    overflow: scroll;
+  }
+
+  .inventories-option {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+
+    .img-inventories-list {
+      height: 20px;
+      margin: 0 5px;
+      width: 20px;
+      display: inline-flex;
+      background-size: cover;
+      background-position: top center;
+    }
+  }

@@ -10,6 +10,8 @@ en:
     permissions:
     models:
       singularize:
+        inventory_cow: inventory cow
+        inventory: inventory
         medical_history: medical history
         insemination: insemination
         species: species
@@ -20,6 +22,8 @@ en:
         status: status
         cow: cow
       pluralize:
+        inventory_cows: inventory cows
+        inventories: inventories
         medical_histories: medical histories
         inseminations: inseminations
         weighing_days: weighing days
@@ -30,6 +34,8 @@ en:
         statuses: statuses
         cows: cows
     modules:
+      admin/inventory-cow: Inventory cow
+      admin/inventory: Inventory
       admin/medical-history: Medical history
       admin/insemination: Insemination
       admin/species: Species

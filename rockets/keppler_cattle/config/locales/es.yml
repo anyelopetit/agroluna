@@ -10,6 +10,8 @@ es:
     permissions:
     models:
       singularize:
+        inventory_cow: inventory cow
+        inventory: inventory
         medical_history: medical history
         status: status
         insemination: pajuela
@@ -24,6 +26,8 @@ es:
         weight: peso
         corporal_condition: condición corporal
       pluralize:
+        inventory_cows: inventory cows
+        inventories: inventories
         medical_histories: medical histories
         statuses: statuses
         inseminations: pajuela
@@ -37,6 +41,8 @@ es:
         cows: ganados
         weights: pesos
     modules:
+      admin/inventory-cow: Inventory cow
+      admin/inventory: Inventory
       admin/medical-history: Medical history
       admin/status: Status
       admin/insemination: Pajuela

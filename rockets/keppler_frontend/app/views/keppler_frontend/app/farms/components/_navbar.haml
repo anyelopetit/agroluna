@@ -39,7 +39,7 @@
                 -# Inicio
                 -# = farm&.title
             %li.nav-item{ style: "position: relative;"}
-              %a.click.nav-link{ class: "#{'active' if %w[cattle strategic_lots transferences].include?(controller_name)} dropdown-toggle", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+              %a.click.nav-link{ class: "#{'active' if %w[cattle strategic_lots transferences inseminations inventories].include?(controller_name)} dropdown-toggle", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
                 Ganadería
                 %i.icofont-simple-down
               .farm_menu{ class: ('visibility' if %w[cattle strategic_lots transferences inseminations status].include?(controller_name))}
@@ -51,6 +51,8 @@
                   Transferencias
                 = link_to farm_inseminations_path(farm),style: "background-color: transparent !important; color: white;",  class: "modelOne dropdown-item  #{('active_sub' if %w[inseminations].include?(controller_name))}" do
                   Pajuelas
+                = link_to farm_inventories_path(farm),style: "background-color: transparent !important; color: white;",  class: "modelOne dropdown-item  #{('active_sub' if %w[inventories].include?(controller_name))}" do
+                  Inventarios
             %li.nav-item{ style: "position: relative;"}
               %a.click.nav-link{ class: "#{'active' if %w[seasons].include?(controller_name)} dropdown-toggle", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
                 Reproducción

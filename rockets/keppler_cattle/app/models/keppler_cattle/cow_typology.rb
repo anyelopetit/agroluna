@@ -37,9 +37,9 @@ module KepplerCattle
     end
 
     def verify_age_and_weight
-      age = cow.days.to_i > typology.min_age.to_i
-      weight = cow.weight&.weight.to_f > typology.min_weight.to_f
-      age && weight
+      age_is_able = cow&.days.to_i > typology&.min_age.to_i
+      weight_is_able = cow.weight&.weight.to_f > typology&.min_weight.to_f
+      age_is_able && weight_is_able
     end
 
     def verify_counter

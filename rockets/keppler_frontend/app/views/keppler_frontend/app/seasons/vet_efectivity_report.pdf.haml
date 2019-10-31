@@ -17,7 +17,7 @@
         }
       }
   %body{ onload: 'number_pages()' }
-    - @vets = @season.users.where(farm_id: @farm.id)
+    - @vets = @season.responsables.where(farm_id: @farm.id)
     .app_wrapper.d-flex.justify-content-between
       .header-left
         %h1.farm-title= @farm.try(:title)&.upcase

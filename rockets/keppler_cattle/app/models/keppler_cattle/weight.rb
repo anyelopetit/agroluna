@@ -15,7 +15,7 @@ module KepplerCattle
     acts_as_paranoid
     after_save :create_typology
 
-    belongs_to :user, class_name: 'KepplerFarm::Responsable', optional: true
+    belongs_to :user, class_name: 'KepplerFarm::Responsable', foreign_key: :user_id, optional: true
     belongs_to :cow, class_name: 'KepplerCattle::Cow'
     belongs_to :corporal_condition, class_name: 'KepplerCattle::CorporalCondition'
 

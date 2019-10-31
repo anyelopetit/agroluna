@@ -12,7 +12,18 @@
             #{@season.name}
             %label.badge (#{@season.type_name})
           %small.badge.badge-secondary #{@season.start_date&.strftime("%d/%m/%Y")} - #{@season.finish_date&.strftime("%d/%m/%Y")}
+          %strong{ style: (@season.finished? ? 'color: #ea7f2e' : 'color: #28C76F') }= @season.finished? ? 'CERRADA' : 'ABIERTA'
       .right
+        - if @season.finished?
+          = link_to reopen_farm_season_path(@farm, @season), data: { confirm: '¿Estás seguro?' } do
+            %button.btn.btn_custom.btn--medium.float-right.m-1
+              %i.icofont-unlock
+              Reabrir
+        - else
+          = link_to finish_farm_season_path(@farm, @season), data: { confirm: '¿Estás seguro?' } do
+            %button.btn.btn_custom.btn--medium.float-right.m-1
+              %i.icofont-close
+              Cerrar
         = link_to edit_farm_season_path(@farm, @season) do
           %button.btn.btn_custom.btn--filled.btn--medium.float-right.m-1
             %i.icofont-pencil
@@ -32,7 +43,7 @@
           %li.nav-item
             %a.nav-link{ class: ('active' if @season.phase.to_i > 1), "aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#reproduction", role: "tab"}
               Reproducción
-    .tab-content
+    .tab-content{ style: (@season.finished? ? 'filter: grayscale(100%)' : 'filter: none') }
       #mount.tab-pane{ class: ('active' if @season.phase.to_i.eql?(0))}
         - if @season.phase.to_i.eql?(0)
           .d-flex.justify-content-between.mt-5.mb-3.mt-4.xs-column

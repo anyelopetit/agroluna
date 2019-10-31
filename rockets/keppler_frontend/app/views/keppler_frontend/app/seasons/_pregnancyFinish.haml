@@ -5,12 +5,12 @@
       %h1.text-center Efectividad de preñez
       %canvas#pregnants-chart{ height: "150", width: "400"}
 
-    - if @season.statuses.blank? #  || @season.users.blank?
+    - if @season.statuses.blank? #  || @season.responsables.blank?
       %h1.mb-4{style:"text-transform: uppercase"} No existen responsables en la temporada
-    - elsif @season.users.select { |inseminador| inseminador.status_where('Service', @season.id).exists? && !inseminador.name.blank? }
+    - elsif @season.responsables.select { |inseminador| inseminador.status_where('Service', @season.id).exists? && !inseminador.name.blank? }
       %h1.mb-4{style:"text-transform: uppercase"} Inseminadores - Pajuelas Aplicadas
       .row
-        - @season.users.each do |inseminador|
+        - @season.responsables.each do |inseminador|
           - if inseminador.status_where('Service', @season.id).exists? && !inseminador.name.blank?
             .col-lg-6.col-md-6
               .card_show{style:"min-height: 254px;"}
@@ -104,7 +104,7 @@
       }
   });
 
-- @season.users.each do |inseminador|
+- @season.responsables.each do |inseminador|
   - unless inseminador.status_where('Pregnancy', @season.id).size.zero? || inseminador.name.blank?
     :javascript
       // inseminador

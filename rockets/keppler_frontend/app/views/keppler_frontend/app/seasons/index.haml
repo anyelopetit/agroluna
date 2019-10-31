@@ -59,8 +59,8 @@
                     = season&.finish_date&.strftime('%d/%m/%y')
                 %td
                   = link_to({action: :show, farm_id: @farm&.id, id: season.id}, {title: season.name}) do
-                    %div{ style: "color: #{season&.finished ? 'red' : 'green'}" }
-                      = season&.finished ? 'Cerrada' : 'Abierta'
+                    %div{ style: "color: #{season&.finished? ? 'red' : 'green'}" }
+                      = season&.finished? ? 'Cerrada' : 'Abierta'
                 
                 %td
                   .dropdown{ style: 'justify-content: center; cursor:pointer' }

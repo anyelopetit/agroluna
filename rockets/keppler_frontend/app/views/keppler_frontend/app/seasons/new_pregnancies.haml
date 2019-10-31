@@ -74,8 +74,8 @@
             -# .d-flex
               .toolbar
                 .toolbar-item
-                  -# %a.tool-btn{ 'data-confirm': t('keppler.messages.data_confirm'), 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
-                  = link_to class: 'destroy_multiple', method: :delete, data: { confirm: t('keppler.messages.data_confirm') }   do
+                  -# %a.tool-btn{ 'data-confirm': '¿Estás seguro?', 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+                  = link_to class: 'destroy_multiple', method: :delete, data: { confirm: '¿Estás seguro?' }   do
                     %i.icofont-trash
                     Eliminar
             .content-table{style: "margin-top: 65px!important;"}

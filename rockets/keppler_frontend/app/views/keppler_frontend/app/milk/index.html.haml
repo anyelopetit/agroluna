@@ -40,7 +40,7 @@
               %th
           %tbody
             - @cows.where(gender: 'female').each do |cow|
-              %tr{ style: ("color: red" if cow.milking? && (milk_status_days(cow) >= @farm.try(next_process(cow).to_sym)).to_i ) }
+              %tr{ style: ("color: red" if cow.milking? && (milk_status_days(cow) >= @farm.try(next_process(cow).to_sym).to_i) ) }
                 %td
                   = link_to farm_cow_milk_weights_path(@farm, cow) do
                     = cow.serie_number

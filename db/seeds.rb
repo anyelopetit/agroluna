@@ -322,7 +322,7 @@ puts "Responsables creados"
     actual_weight = Faker::Number.decimal(3)
     responsable = KepplerFarm::Responsable.all.sample
     KepplerCattle::Weight.create!(
-      user: responsable,
+      responsable: responsable,
       cow_id: cow&.id,
       weight: actual_weight.to_f,
       gained_weight: 26.04.nil? ? 0 : (actual_weight.to_f - 24.50),

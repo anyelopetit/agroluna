@@ -38,5 +38,5 @@
                 .cow-item
                   .cow-avatar= image_tag "/assets/keppler_cattle/#{cow.species}"
                   .cow-name= cow.serie_number
-                  = link_to({ action: :delete_assignment, strategic_lot_id: strategic_lot.id, cow_id: cow&.id }, { method: :delete, class: 'cow-option', data: { confirm: t('keppler.messages.data_confirm') } }) do
+                  = link_to({ action: :delete_assignment, strategic_lot_id: strategic_lot.id, cow_id: cow&.id }, { method: :delete, class: 'cow-option', data: { confirm: '¿Estás seguro?' } }) do
                     %i.bx.bx-trash

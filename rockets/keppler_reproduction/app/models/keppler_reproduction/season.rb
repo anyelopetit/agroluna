@@ -23,8 +23,8 @@ module KepplerReproduction
     }, class_name: 'KepplerCattle::Cow', through: :season_cows
     # end
     has_many :statuses, ->(season){ where(season_id: season.id) }, class_name: 'KepplerCattle::Status', through: :cows
-    has_many :responsables,   -> { distinct }, class_name: 'KepplerFarm::Responsable', through: :statuses
-    has_many :inefectivities, -> { distinct }, class_name: 'KepplerReproduction::Inefectivity', through: :responsables
+    has_many :users,   -> { distinct }, class_name: 'KepplerFarm::Responsable', through: :statuses
+    has_many :inefectivities, -> { distinct }, class_name: 'KepplerReproduction::Inefectivity', through: :users
 
     validates_presence_of :farm_id, :start_date, :duration_days, on: :create, message: "can't be blank"
 

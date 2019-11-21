@@ -133,7 +133,17 @@ module KepplerFrontend
     end
 
     def toggle_milking
-      @cow.update!(milking: !@cow.milking, milking_date: Date.today)
+      @cow.update!(milking: true, milking_date: Date.today)
+      redirect_back fallback_location: farm_milk_index_path(@farm)
+    end
+
+    def start_milking
+      @cow.update!(milking: true, milking_date: Date.today)
+      redirect_back fallback_location: farm_milk_index_path(@farm)
+    end
+
+    def stop_milking
+      @cow.update!(milking: nil)
       redirect_back fallback_location: farm_milk_index_path(@farm)
     end
 

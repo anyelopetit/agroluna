@@ -23,6 +23,10 @@ module KepplerFrontend
 
     def create
       @cheese_process = KepplerReproduction::CheeseProcess.new(cheese_process_params)
+      @cheese_process.responsable = KepplerFarm::Responsable.find_or_create_by(name: params[:cheese_process][:responsable])
+
+      puts "========= #{@cheese_process.responsable.inspect}"
+
 
       if @cheese_process.save
         redirect_to farm_cheese_processes_path(@farm)

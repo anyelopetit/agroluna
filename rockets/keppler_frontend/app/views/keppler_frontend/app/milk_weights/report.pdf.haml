@@ -74,13 +74,13 @@
                 - unless @cow.last_milk_weights.blank?
                   - @cow.last_milk_weights.each do |milk_weight|
                     %tr
-                      %td= milk_weight.date.strftime('%d-%m-%y')
-                      %td #{milk_weight.morning_liters.inspect.to_f&.round(2)} Lts
-                      %td #{milk_weight.evening_liters.inspect.to_f&.round(2)} Lts
-                      %td #{milk_weight.total_liters.inspect.to_f&.round(2)} Lts
+                      %td= milk_weight.date&.strftime('%d-%m-%y')
+                      %td #{milk_weight.morning_liters&.inspect&.to_f&.round(2)} Lts
+                      %td #{milk_weight.evening_liters&.inspect&.to_f&.round(2)} Lts
+                      %td #{milk_weight.total_liters&.inspect&.to_f&.round(2)} Lts
           %p
             %b Total de litros:
-            %span #{@cow.last_milk_weights.total_liters.round(2)} KG
+            %span #{@cow.last_milk_weights&.total_liters&.round(2)} KG
 :scss
   body {
     font-size: 15px;

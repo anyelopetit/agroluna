@@ -1,4 +1,4 @@
-.modal.modal_status.fade{ id: "milkWeight-#{cow.id}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+.modal.modal_status.fade{ id: "milkWeight_#{cow.id}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
   .modal-dialog{role: "document", style: "max-width: 800px;"}
     .modal-content
       .modal-header
@@ -16,14 +16,14 @@
                   .col-sm-12
                     = f.input :date, label: t("milk_weight.date")
                   .col-sm-6
-                    = f.input :morning_liters, label: t("milk_weight.morning_liters")
+                    = f.input :morning_liters, label: t("milk_weight.morning_liters"), input_html: { id: "milk_weight_morning_liters_#{cow.id}" }
                   .col-sm-6
-                    = f.input :evening_liters, label: t("milk_weight.evening_liters")
+                    = f.input :evening_liters, label: t("milk_weight.evening_liters"), input_html: { id: "milk_weight_evening_liters_#{cow.id}" }
                   .col-sm-12
                     %input#milk_weight_total_liters.form-control.hidden{name: "milk_weight[total_liters]", type: "hidden" }
                     %label= t("milk_weight.total_liters")
                     %h1.form-group
-                      %span#total_liters 0.0
+                      %span{ id: "total_liters_#{cow.id}"} 0.0
                       %span Lts
                   .col-sm-12
                     = f.input :description, label: t("milk_weight.description")
@@ -32,24 +32,19 @@
                     %i.icofont-save
                     Guardar
 :javascript
-  var input1 = $('#milk_weight_morning_liters')
-  var input2 = $('#milk_weight_evening_liters')
-  var text = $('#total_liters')
-  var final_input = $('#milk_weight_total_liters')
 
-  function sumLiters() {
-    var val1 = isNaN(parseFloat(input1.val())) ? 0 : parseFloat(input1.val())
-    var val2 = isNaN(parseFloat(input2.val())) ? 0 : parseFloat(input2.val())
+  $("#milk_weight_morning_liters_#{cow.id}").keyup(function() {
+    var val1 = isNaN(parseFloat($("#milk_weight_morning_liters_#{cow.id}").val())) ? 0 : parseFloat($("#milk_weight_morning_liters_#{cow.id}").val())
+    var val2 = isNaN(parseFloat($("#milk_weight_evening_liters_#{cow.id}").val())) ? 0 : parseFloat($("#milk_weight_evening_liters_#{cow.id}").val())
     final_value = parseFloat(val1 + val2)
-    text.text(final_value)
-    console.log(final_value)
-    final_input.val(final_value)
-  }
-
-  input1.keyup(function() {
-    sumLiters()
+    $("#total_liters_#{cow.id}").text(final_value)
+    $("#milk_weight_total_liters_#{cow.id}").val(final_value)
   })
 
-  input2.keyup(function() {
-    sumLiters()
+  $("#milk_weight_evening_liters_#{cow.id}").keyup(function() {
+    var val1 = isNaN(parseFloat($("#milk_weight_morning_liters_#{cow.id}").val())) ? 0 : parseFloat($("#milk_weight_morning_liters_#{cow.id}").val())
+    var val2 = isNaN(parseFloat($("#milk_weight_evening_liters_#{cow.id}").val())) ? 0 : parseFloat($("#milk_weight_evening_liters_#{cow.id}").val())
+    final_value = parseFloat(val1 + val2)
+    $("#total_liters_#{cow.id}").text(final_value)
+    $("#milk_weight_total_liters_#{cow.id}").val(final_value)
   })

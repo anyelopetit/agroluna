@@ -37,18 +37,16 @@
                   .col-xs-12
                     .checkbox{ style: 'margin: 20px 0'}
                       %input{ type: 'checkbox', id: "checkbox-reproductive", name: "typology[reproductive]"}
-                      -# = f.input :reproductive # , input_html: {}
                       %span.cr
                         %i.cr-icon.glyphicon.glyphicon-ok
                       %label{ for: "checkbox-reproductive", style: 'margin-left: 10px' }
                         %b ¿Es una tipología reproductiva?
-                    -# .checkbox{ style: 'margin: 20px 0'}
-                      %label{ for: "checkbox-reproductive" }
-                        %input{ type: 'checkbox', id: "checkbox-reproductive", name: "typology[reproductive]"}
-                        -# = f.input :reproductive # , input_html: {}
-                        %b{ style: 'margin-left: 10px'} ¿Es una tipología reproductiva?
-                        %span.cr
-                          %i.cr-icon.glyphicon.glyphicon-ok
+                    .checkbox{ style: 'margin: 20px 0'}
+                      %input{ type: 'checkbox', id: "checkbox-milking", name: "typology[milking]"}
+                      %span.cr
+                        %i.cr-icon.glyphicon.glyphicon-ok
+                      %label{ for: "checkbox-milking", style: 'margin-left: 10px' }
+                        %b ¿Es una tipología lactante?
                   .col-xs-12
                     = f.input :description
                   .col-xs-12

@@ -22,6 +22,8 @@ KepplerFrontend::Engine.routes.draw do
         post :males
         post :wean, to: 'app/seasons#wean', as: :wean
         post :toggle_milking, as: :toggle_milking
+        post :start_milking, as: :start_milking
+        post :stop_milking, as: :stop_milking
       end
       collection do
         get 'inactivos', to: 'app/cattle#index_inactives', as: :inactives

@@ -1,0 +1,104 @@
+.app_wrapper
+  .container_custom
+    %h1 #{@inventory.name}
+          
+    .row
+      .col-sm-8.mb-4
+        -# = @assign.inspect
+        = simple_form_for [:cattle, @inventory], url: farm_inventory_assign_cattle_path(@farm, @inventory), html: { style: 'width: 100%' } do |f|
+          .row.mb-4
+            .col-sm-8
+              %input#inventory_cattle{ name: 'cattle[serie_number]', placeholder: 'Escribe un número de serie', class: 'form-control input_custom', onkeyup: "validateCattle()", list: "cattle" }
+              %datalist#cattle
+                - @farm.cows.out_of_lot(@inventory.id).order(:serie_number).each do |cow|
+                  %option= cow.serie_number
+            .col-sm-4
+              %button{ type: 'submit', id: 'add-cattle', class: 'btn btn_custom btn--filled btn--medium', disabled: true }
+                Agregar
+    - if @inventory_cows.blank? && @inventory.cows.exists?
+      = link_to 'Mostrar todos', farm_cows_path(@farm)
+    = render 'keppler_frontend/app/inventories/partials/cattle_table', inventory_cows: @inventory_cows
+:javascript
+
+  var $ids = #{@inventory_cows.pluck(:id)}
+  var $final_array = []
+  var href = $('.destroy_multiple').attr('href')
+
+  function ids_loop() {
+    $ids.forEach(function (id) {
+      $('[checklist-model="check"]:checked').each(function( index ) {
+        if ($(this).prop('id').includes(id)) {
+          if ( !$final_array.includes(id) ) {
+            $final_array.push(id)
+          }
+        }
+      });
+      $('[checklist-model="check"]:not(:checked)').each(function( index ) {
+        if ($(this).prop('id').includes(id)) {
+          if ($final_array.includes(id)) {
+            $final_array.splice($final_array.indexOf(id), 1);
+          }
+        }
+      });
+    });
+    $('.destroy_multiple').attr('href', (`${href}${$final_array}`))
+    if ($final_array.length === 0) {
+      document.getElementById('remove_from_lot').disabled = true
+    } else {
+      document.getElementById('remove_from_lot').disabled = false
+    }
+  }
+
+  $('#checkbox-all').click(function() {
+    $('[checklist-model="check"]').prop( "checked", $(this).prop( "checked" ) )
+    ids_loop()
+  })
+
+  $('[checklist-model="check"]').click(function() {
+    ids_loop()
+    $('#checkbox-all').prop(
+      'checked',
+      JSON.stringify($ids) === JSON.stringify($final_array)
+    )
+  })
+
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+
+  function validateCattle() {
+    var ar = $('#inventory_cattle')
+    document.getElementById('add-cattle').disabled = ($('#inventory_cattle').val() == "")
+  }
+
+
+-# $('.select2').select2()
+-# $('.select2-multiple').select2({
+-#   multiple: true,
+-#   placeholder: 'Agrega una o más series',
+-#   allowClear: true
+-# })
+
+-# $('.select2-selection__choice').remove()
+-# $('#inventory_cattle').val('')
+-# $('.select2-search__field').attr('placeholder', 'Agrega una o más series')
+-# $('.select2-search__field').css({
+-#   'width': 'auto'
+-# })
+
+-# $('#select-search').change(function() {
+-#   $('.select-field').hide()
+-#   var $id = $(this).find('option:selected').val()
+-#   $("#" + $id).show()
+-# })
+
+-# $('#open-status-history').click(function() {
+-#   $('#status-history').css({
+-#     right: '0'
+-#   })
+-# })
+-# $('#close-status-history').click(function() {
+-#   $('#status-history').css({
+-#     right: '-300px'
+-#   })
+-# })

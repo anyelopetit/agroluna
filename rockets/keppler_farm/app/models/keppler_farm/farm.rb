@@ -34,6 +34,8 @@ module KepplerFarm
 
     has_one :milk_lot, class_name: 'KepplerFarm::StrategicLot'
 
+    has_many :inventories, class_name: 'KepplerCattle::Inventory'
+
     # accepts_nested_attributes_for :cows
 
     def self.index_attributes

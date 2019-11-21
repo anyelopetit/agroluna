@@ -1,4 +1,18 @@
 modules:
+  inventory_cows:
+    name: InventoryCow
+    model: KepplerCattleInventoryCow
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
+  inventories:
+    name: Inventory
+    model: KepplerCattleInventory
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
   medical_histories:
     name: MedicalHistory
     model: KepplerCattleMedicalHistory

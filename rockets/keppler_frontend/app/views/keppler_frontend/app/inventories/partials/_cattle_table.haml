@@ -1,0 +1,64 @@
+.content-table
+  .row
+    .col-md-6
+      %h1 Encontrados
+      %table.cow-table
+        - if inventory_cows.where(found: true).size.zero?
+          %thead
+            %tr
+              %th.not-records.center
+                %center No se encontraron ganados
+        - else
+          %thead
+            %tr
+              %th
+                %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
+                %label{for: "styled-checkbox-all"}
+              %th
+                .toolbar-item
+                  .item-check
+                    .checkbox
+                      %label{ for: 'checkbox-all' }
+                        %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+                        %span.cr
+                          %i.cr-icon.icofont-check
+              %th
+                = sort_link(@q, :serie_number) do 
+                  Serie
+              %th Menu
+          %tbody#inventory_cows
+            = render 'keppler_frontend/app/inventories/partials/cattle_item', inventory_cows: inventory_cows.where(found: true)
+    .col-md-6
+      %h1 No Encontrados
+      %table.cow-table
+        - if inventory_cows.where.not(found: true).size.zero?
+          %thead
+            %tr
+              %th.not-records.center
+                %center No se encontraron ganados
+        - else
+          %thead
+            %tr
+              %th
+                %input#styled-checkbox-all.styled-checkbox{type: "checkbox"}
+                %label{for: "styled-checkbox-all"}
+              %th
+                .toolbar-item
+                  .item-check
+                    .checkbox
+                      %label{ for: 'checkbox-all' }
+                        %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+                        %span.cr
+                          %i.cr-icon.icofont-check
+              %th
+                = sort_link(@q, :serie_number) do 
+                  Serie
+              %th Menu
+          %tbody#inventory_cows
+            = render 'keppler_frontend/app/inventories/partials/cattle_item', inventory_cows: inventory_cows.where.not(found: true)
+= paginate inventory_cows unless inventory_cows.blank?
+#loading
+:scss
+  .pagination {
+    visibility: hidden
+  }

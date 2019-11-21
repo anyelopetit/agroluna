@@ -6,6 +6,20 @@ menu:
     icon: rocket
     model: KepplerCattle::Cow
     submenu:
+      - inventory_cow:
+          name: inventory cow
+          url_path: /admin/cattle/inventory_cows
+          icon: layers
+          current: ['/admin/cattle/inventory_cows']
+          model: KepplerCattle::InventoryCow
+
+      # - inventory:
+      #     name: inventory
+      #     url_path: /admin/cattle/inventories
+      #     icon: layers
+      #     current: ['/admin/cattle/inventories']
+      #     model: KepplerCattle::Inventory
+
 
       - cow:
           name: cow

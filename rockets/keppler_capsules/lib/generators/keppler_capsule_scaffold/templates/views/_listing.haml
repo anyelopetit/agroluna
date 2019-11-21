@@ -36,6 +36,6 @@
               = t('keppler.actions.clone')
         - if can?(model).destroy?
           %li
-            = link_to admin_<%= namespaced_path.split('_').drop(1).join('_') %>_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'new-menu', title: t('keppler.actions.delete'), method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
+            = link_to admin_<%= namespaced_path.split('_').drop(1).join('_') %>_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'new-menu', title: t('keppler.actions.delete'), method: :delete, data: { confirm: '¿Estás seguro?' } do
               %i.icon-trash
               = t('keppler.actions.delete')

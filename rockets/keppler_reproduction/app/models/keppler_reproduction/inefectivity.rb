@@ -12,7 +12,7 @@ module KepplerReproduction
     acts_as_list
     acts_as_paranoid
 
-    belongs_to :responsable, class_name: 'KepplerFarm::Responsable', foreign_key: 'responsable_id', optional: true
+    belongs_to :user, class_name: 'KepplerFarm::Responsable', foreign_key: 'responsable_id', optional: true
     belongs_to :season, class_name: 'KepplerReproduction::Season', foreign_key: 'season_id', optional: true
     belongs_to :cow, class_name: 'KepplerCattle::Cow', foreign_key: 'cow_id'
 

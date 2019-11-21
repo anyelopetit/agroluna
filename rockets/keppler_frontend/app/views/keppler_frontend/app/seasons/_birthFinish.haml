@@ -9,7 +9,8 @@
           
     %h1.mb-4{style:"text-transform: uppercase"} Veterinarios - Palpaciones Realizadas
     .row
-      - @season.users.each do |veterinario|
+      - @season.statuses.each do |status|
+        - veterinario = status.user
         - unless veterinario.status_where('Birth', @season.id).size.zero? || veterinario.name.blank?
           .col-lg-6.col-md-6
             .card_show{style:"min-height: 254px;"}

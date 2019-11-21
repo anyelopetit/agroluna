@@ -272,7 +272,7 @@ end
 puts "Responsables creados"
 
 # Series
-100.times do |i|
+500.times do |i|
   species = KepplerCattle::Species.all.sample
   cow = KepplerCattle::Cow.create!(
     serie_number: Faker::Number.between(111111, 999999),
@@ -322,7 +322,7 @@ puts "Responsables creados"
     actual_weight = Faker::Number.decimal(3)
     responsable = KepplerFarm::Responsable.all.sample
     KepplerCattle::Weight.create!(
-      user: responsable,
+      user_id: responsable.id,
       cow_id: cow&.id,
       weight: actual_weight.to_f,
       gained_weight: 26.04.nil? ? 0 : (actual_weight.to_f - 24.50),

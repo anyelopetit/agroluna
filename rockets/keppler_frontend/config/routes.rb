@@ -22,6 +22,8 @@ KepplerFrontend::Engine.routes.draw do
         post :males
         post :wean, to: 'app/seasons#wean', as: :wean
         post :toggle_milking, as: :toggle_milking
+        post :start_milking, as: :start_milking
+        post :stop_milking, as: :stop_milking
       end
       collection do
         get 'inactivos', to: 'app/cattle#index_inactives', as: :inactives
@@ -93,8 +95,8 @@ KepplerFrontend::Engine.routes.draw do
         post '(lote-estrategico/:strategic_lot_id)/make_abort', action: :make_abort, as: :make_abort
 
         post :change_phase
-        post :finish
-        post :reopen
+        get :finish
+        get :reopen
 
         # Reportes
         get :zeals_report, action: :zeals_report, as: :zeals_report

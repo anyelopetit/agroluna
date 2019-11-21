@@ -27,10 +27,12 @@
             %th No se han realizado procesos de queso
           - else
             %th Fecha
-            %th Litros recibidos
-            %th Litros procesados
+            %th Lts recibidos
+            %th Lts procesados
             %th Tipo de queso
-            %th Total KG
+            %th Queso calculado
+            %th Queso obtenido
+            %th Responsable
             %th{ colspan: 2 }
       %tbody
         - unless @cheese_processes.blank?
@@ -43,5 +45,7 @@
               - dividend = cheese_process.processed_liters.to_f
               - divider = KepplerReproduction::CheeseType.find(cheese_process.cheese_type_id).liters_needed.to_f
               %td #{(dividend.zero? || divider.zero? ? 0 : (dividend / divider).round(2))} KG
+              %td #{cheese_process.real_cheese.to_f} KG
+              %td #{cheese_process.responsable&.name}
               %td= link_to 'Editar', edit_farm_cheese_process_path(@farm, cheese_process)
               %td= link_to 'Eliminar', farm_cheese_process_path(@farm, cheese_process), method: :delete, data: { confirm: '¿Estás seguro?' }

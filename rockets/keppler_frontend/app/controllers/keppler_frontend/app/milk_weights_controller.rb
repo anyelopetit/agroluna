@@ -25,6 +25,7 @@ module KepplerFrontend
 
     def create
       @milk_weight = KepplerReproduction::MilkWeight.new(milk_weight_params)
+      @cow.update!(milking: true, milking_date: milk_weight_params[:date])
 
       if @milk_weight.save!
         flash[:notice] = 'Pesaje de leche registrado'

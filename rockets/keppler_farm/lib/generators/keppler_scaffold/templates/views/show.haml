@@ -16,7 +16,7 @@
                 = link_to edit_admin_<%= namespaced_path.split('_').drop(1).join('_') %>_<%= singular_table_name %>_path(@<%= singular_table_name %>), class: 'btn btn-box-tool', title: t('keppler.actions.edit') do
                   %i.icon-pencil
               - if can?(model).destroy?
-                = link_to admin_<%= namespaced_path.split('_').drop(1).join('_') %>_<%= singular_table_name %>_path(@<%= singular_table_name %>), class: 'btn btn-box-tool', title: t('keppler.actions.delete'), method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
+                = link_to admin_<%= namespaced_path.split('_').drop(1).join('_') %>_<%= singular_table_name %>_path(@<%= singular_table_name %>), class: 'btn btn-box-tool', title: t('keppler.actions.delete'), method: :delete, data: { confirm: '¿Estás seguro?' } do
                   %i.icon-trash
 
           .box-body.no-padding

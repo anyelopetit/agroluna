@@ -15,8 +15,8 @@ module KepplerFarm
 
     has_many :photos
 
-    has_many :users, -> { distinct }, class_name: 'KepplerFarm::Responsable'
-    has_many :assignments, through: :users
+    has_many :responsables, -> { distinct }, class_name: 'KepplerFarm::Responsable', foreign_key: :farm_id
+    has_many :assignments, through: :responsables
 
     # Farm
     has_many :strategic_lots, class_name: 'KepplerFarm::StrategicLot'

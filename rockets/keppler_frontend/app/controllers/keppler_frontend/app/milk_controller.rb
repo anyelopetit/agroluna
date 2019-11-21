@@ -17,7 +17,7 @@ module KepplerFrontend
       @milk_lot = @farm.strategic_lots.find_by(id: @farm.milk_lot_id)
       @collection = @milk_lot.nil? ? @strategic_lots : (@strategic_lots - [@milk_lot])
       cows = (@milk_lot.blank? ? @farm.cows : @milk_lot.cows).where(gender: 'female')
-      ids = cows.select { |c| c.typology&.reproductive }.pluck(:id)
+      ids = cows.select { |c| c.typology&.milking }.pluck(:id)
       @cows = cows.where(id: ids)
     end
 

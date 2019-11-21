@@ -38,7 +38,7 @@ module FrontsHelper
 
   def milk_status(cow)
     if cow&.milking
-      case cow.status.status_type
+      case cow.status&.status_type
       when 'Service'
         'Lac. C/Servicio'
       when 'Pregnancy'
@@ -59,7 +59,7 @@ module FrontsHelper
 
   def next_process(cow)
     case cow.status_name
-    when 'Nil'
+    when 'Nil' || nil
       :days_to_service
     when 'Service'
       :days_to_pregnancy

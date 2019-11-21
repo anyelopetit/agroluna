@@ -42,6 +42,6 @@
         - if can?(User).destroy?
           - unless user.id.eql?(current_user.id)
             %li
-              = link_to admin_user_path(user), title: t('keppler.actions.delete'), method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
+              = link_to admin_user_path(user), title: t('keppler.actions.delete'), method: :delete, data: { confirm: '¿Estás seguro?' } do
                 %i.icon-trash
                 = t('keppler.actions.delete')

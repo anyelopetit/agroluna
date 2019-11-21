@@ -37,6 +37,6 @@
                 = t('keppler.actions.clone')
           - if can?(Role).destroy?
             %li
-              = link_to admin_role_path(role), title: t('keppler.actions.delete'), method: :delete, data: { confirm: t('keppler.messages.data_confirm') } do
+              = link_to admin_role_path(role), title: t('keppler.actions.delete'), method: :delete, data: { confirm: '¿Estás seguro?' } do
                 %i.icon-trash
                 = t('keppler.actions.delete')

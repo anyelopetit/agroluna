@@ -35,18 +35,20 @@
                   .col-xs-6
                     = f.input :min_weight, input_html: { min: 0 }
                   .col-xs-12
-                    .checkbox{ style: 'margin: 20px 0'}
+                    -# .checkbox{ style: 'margin: 20px 0'}
                       %input{ type: 'checkbox', id: "checkbox-reproductive", name: "typology[reproductive]"}
                       %span.cr
                         %i.cr-icon.glyphicon.glyphicon-ok
                       %label{ for: "checkbox-reproductive", style: 'margin-left: 10px' }
                         %b ¿Es una tipología reproductiva?
-                    .checkbox{ style: 'margin: 20px 0'}
+                    = f.input :reproductive, as: :keppler_boolean, label: 'Reproductiva'
+                    -# .checkbox{ style: 'margin: 20px 0'}
                       %input{ type: 'checkbox', id: "checkbox-milking", name: "typology[milking]"}
                       %span.cr
                         %i.cr-icon.glyphicon.glyphicon-ok
                       %label{ for: "checkbox-milking", style: 'margin-left: 10px' }
                         %b ¿Es una tipología lactante?
+                    = f.input :milking, as: :keppler_boolean, label: 'Lactante'
                   .col-xs-12
                     = f.input :description
                   .col-xs-12

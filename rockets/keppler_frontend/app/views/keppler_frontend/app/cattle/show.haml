@@ -203,12 +203,13 @@
                       %dd.card_status_details
                         = @cow.weight&.gained_weight.to_f.round(2)
                         KG
-                  .col-lg-6
-                    %dl
-                      %dt.card_status_details
-                        Fecha del pesaje
-                      %dd.card_status_details
-                        = @cow.weight&.weighting_date&.strftime('%d-%m-%Y')
+                  - if @cow.weighting_date
+                    .col-lg-6
+                      %dl
+                        %dt.card_status_details
+                          Fecha del pesaje
+                        %dd.card_status_details
+                          = @cow.weight&.weighting_date&.strftime('%d-%m-%Y')
                   - if @cow.weights.find_by(weaning: true)
                     .col-lg-6
                       %dl

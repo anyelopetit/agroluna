@@ -208,7 +208,7 @@
                       %dt.card_status_details
                         Fecha del pesaje
                       %dd.card_status_details
-                        = @cow.weight&.weighting_date.strftime('%d-%m-%Y')
+                        = @cow.weight&.weighting_date&.strftime('%d-%m-%Y')
                   - if @cow.weights.find_by(weaning: true)
                     .col-lg-6
                       %dl

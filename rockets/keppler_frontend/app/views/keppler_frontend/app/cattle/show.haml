@@ -203,7 +203,7 @@
                       %dd.card_status_details
                         = @cow.weight&.gained_weight.to_f.round(2)
                         KG
-                  - if @cow.weighting_date
+                  - if @cow.weight&.weighting_date
                     .col-lg-6
                       %dl
                         %dt.card_status_details

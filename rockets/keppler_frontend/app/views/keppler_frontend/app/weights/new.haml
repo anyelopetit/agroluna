@@ -1,5 +1,5 @@
 
-%script{src: "/assets/keppler_frontend/app/jquery.min.js"}
+-# %script{src: "/assets/keppler_frontend/app/jquery.min.js"}
 -# = render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
 .app_wrapper
   .container_carousel
@@ -20,8 +20,6 @@
                 .row
                   = f.input :user_id, include_blank: false, input_html: { class: 'form-control input_custom', value: current_user.id }, as: :hidden, label_html: { class: 'label_custom--strong' }
                   = f.input :cow_id, include_blank: false, input_html: { class: 'form-control input_custom', value: @cow&.id }, as: :hidden, label_html: { class: 'label_custom--strong' }
-                  .col-sm-6
-                    = f.input :weighting_date, label: 'Fecha de pesaje', input_html: { class: 'form-control input_custom', min: 0 }, label_html: { class: 'label_custom--strong' }
                   - unless @cow.weights.where(weaning: true).exists?
                     .col-sm-6
                       = f.input :weaning, label: 'Destete', as: :keppler_boolean
@@ -33,6 +31,8 @@
                     = f.input :average_weight, input_html: { class: 'form-control input_custom' }, readonly: true, placeholder: '0.00 KG', label: 'Peso promedio (KG)', label_html: { class: 'label_custom--strong' }
                   .col-sm-12.col-md-6
                     = f.input :corporal_condition_id, collection: @corporal_conditions, selected: (@last_weight&.corporal_condition if @last_status), include_blank: false, label: 'Condición corporal', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+                  .col-sm-12.col-md-6
+                    = f.input :weighting_date, as: :string, label: 'Fecha de pesaje', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom datepicker', autocomplete: 'off', value: (Date.current) }
                   .col-sm-12
                     = f.input :observations, label: 'Observaciones', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
                   .col-sm-12
@@ -139,3 +139,35 @@
       born_days == 0 ? 0 : $('#weight_weight').val() - last_weight / born_days
     )
   })
+
+:javascript
+  $.datepicker.regional['es'] = {
+    closeText: 'Cerrar',
+    prevText: '< Ant',
+    nextText: 'Sig >',
+    currentText: 'Hoy',
+    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+    weekHeader: 'Sm',
+    dateFormat: 'dd/mm/yy',
+    firstDay: 1,
+    isRTL: false,
+    showMonthAfterYear: false,
+    yearSuffix: ''
+  };
+
+  $.datepicker.setDefaults($.datepicker.regional['es']);
+
+  $('.datepicker').datepicker({
+    dateFormat: 'yy-mm-dd',
+    showOtherMonths: true,
+    selectOtherMonths: true,
+    changeMonth: true,
+    changeYear: true,
+    maxDate: 0,
+    setDate: 0,
+    yearRange: "c-40:c",
+  }, $.datepicker.regional[ "es" ]) 

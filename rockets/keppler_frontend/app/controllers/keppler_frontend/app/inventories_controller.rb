@@ -59,14 +59,29 @@ module KepplerFrontend
     end
 
     def assign_cattle
+      if params[:cattle][:serie_number].blank?
+        flash[:error] = 'Numero de serie no puede estar en blanco'
+        return redirect_to action: :show, id: params[:inventory_id]
+      end
       serie_number = params[:cattle][:serie_number]
+      in_farm = params[:inventory][:inventory_cows_found]
       cow = KepplerCattle::Cow.find_by(serie_number: serie_number)
-      inventory_cow = @inventory.inventory_cows.new(cow_id: cow.id, serie_number: cow.serie_number)
-      inventory_cow.found = cow.present?
+
+      inventory_cow = @inventory.inventory_cows.new(
+        cow_id: cow&.id,
+        serie_number: serie_number,
+        found: cow.present?,
+        in_farm: in_farm.to_i.zero? ? false : true
+      )
+
       if inventory_cow.save!
-        flash[:notice] = "La serie #{serie_number} fue encontrada"
+        if inventory_cow.found
+          flash[:notice] = "La serie #{serie_number} fue encontrada en el sistema"
+        else
+          flash[:error] = "No se pudo encontrar la serie #{serie_number} en el sistema"
+        end
       else
-        flash[:error] = "No se pudo encontrar la serie #{serie_number}"
+        flash[:error] = "No se pudo guardar la serie #{serie_number} en este inventario"
       end
       redirect_to [@farm, @inventory]
     end

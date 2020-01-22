@@ -9,6 +9,12 @@
     %td
       = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: inventory_cow&.id}) do
         = inventory_cow&.serie_number
+    %td
+      = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: inventory_cow&.id}) do
+        = inventory_cow&.in_farm ? 'Sí' : 'No'
+    %td
+      = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: inventory_cow&.id}) do
+        = inventory_cow&.found ? 'Sí' : 'No'
     -# %td
       = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: inventory_cow&.id}) do
         %i.fa{ class: "icofont-#{inventory_cow&.found ? 'check' : 'not-allowed'}", style: "color: #{inventory_cow&.found ? 'green' : 'red'}" }
@@ -19,9 +25,10 @@
           %i.icofont-navigation-menu
         %ul.actions.dropdown-menu.actions-dropdown{ 'aria-labelledby': "menu-#{inventory_cow&.id}" }
           %li
-            = link_to({ controller: :cattle, action: :show, farm_id: @farm&.id, id: inventory_cow.cow&.id}) do
-              %i.icofont-eye
-              Ver ficha de ganado
+            - if inventory_cow.cow
+              = link_to({ controller: :cattle, action: :show, farm_id: @farm&.id, id: inventory_cow.cow&.id}) do
+                %i.icofont-eye
+                Ver ficha de ganado
           -# - if inventory_cow.farm&.id == @farm&.id
           -#   %li
           -#     -# = link_to([{ controller: :weights, action: :new, farm_id: @farm&.id, id: inventory_cow&.id }]) do

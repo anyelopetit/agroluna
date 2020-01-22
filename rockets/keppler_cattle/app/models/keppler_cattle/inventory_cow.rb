@@ -13,9 +13,11 @@ module KepplerCattle
     acts_as_paranoid
 
     belongs_to :inventory, class_name: 'KepplerCattle::Inventory'
-    belongs_to :cow, class_name: 'KepplerCattle::Cow'
+    belongs_to :cow, class_name: 'KepplerCattle::Cow', optional: true
 
     delegate :farm, to: :inventory
+
+    validates_presence_of :serie_number
 
     def self.index_attributes
       %i[serie_number]

@@ -18,6 +18,8 @@ module KepplerCattle
 
     validates_presence_of :name
 
+    attr_accessor :inventory_cows_found
+
     def self.index_attributes
       %i[]
     end

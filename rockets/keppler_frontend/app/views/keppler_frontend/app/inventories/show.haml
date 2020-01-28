@@ -1,5 +1,9 @@
 .app_wrapper
   .container_custom
+    = link_to farm_inventories_path(@farm) do
+      %button.btn.btn_custom.btn--medium.mt-4.mb-4
+        %i.icofont-arrow-left
+        Atrás
     %h1 ##{@inventory.id}: #{@inventory.name}
           
     .row
@@ -7,13 +11,13 @@
         -# = @assign.inspect
         = simple_form_for [:cattle, @inventory], url: farm_inventory_assign_cattle_path(@farm, @inventory), html: { style: 'width: 100%' } do |f|
           .row.mb-4
-            .col-sm-8
+            .col-sm-6
               %input#inventory_cattle{ name: 'cattle[serie_number]', placeholder: 'Escribe un número de serie', class: 'form-control input_custom', onkeyup: "validateCattle()", list: "cattle" }
               %datalist#cattle
                 - @farm.cows.out_of_lot(@inventory.id).order(:serie_number).each do |cow|
                   %option= cow.serie_number
-            .col-sm-2
-              = f.input :inventory_cows_found, as: :select, collection: [[1, 'Sí'], [0, 'No']], label: 'En finca:', label_method: :second, value_method: :first, selected: 1
+            .col-sm-4
+              = f.input :inventory_cows_found, as: :select, collection: [[1, 'Sí pasó'], [0, 'No pasó']], label: 'Condición:', label_method: :second, value_method: :first, selected: 1
             .col-sm-2
               %button{ type: 'submit', id: 'add-cattle', class: 'btn btn_custom btn--filled btn--medium add-cattle' }
                 Agregar
@@ -114,6 +118,10 @@
     margin-right: 10px;
   }
 
-  #inventory_inventory_cows_found {
+  .select {
     height: calc(3rem + 2px) !important;
+  }
+
+  .keppler-custom-field.form-group.select.optional.inventory_inventory_cows_found {
+    display: flex;
   }

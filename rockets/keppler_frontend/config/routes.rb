@@ -67,6 +67,10 @@ KepplerFrontend::Engine.routes.draw do
 
     resources :inventories, path: 'inventarios', controller: 'app/inventories', path_names: { new: 'nuevo', edit: 'editar'} do
       patch :assign_cattle
+      post :filter
+      get 'comparar-inventarios', action: :compare_inventories, on: :collection, as: :compare_inventories
+      post 'comparar', action: :compare, on: :collection, as: :compare
+      get 'comparacion/:from/con/:to', action: :comparation, on: :collection, as: :comparation
     end
 
     resources :seasons, path: 'temporadas', controller: 'app/seasons', path_names: { new: 'nuevo', edit: 'editar'} do

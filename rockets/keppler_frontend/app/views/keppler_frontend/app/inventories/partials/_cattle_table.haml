@@ -1,13 +1,29 @@
 .content-table
   .row
     .col-md-12
-      %h1 Encontrados
+      %h1 Series de inventario
+      .d-inline-flex.float-right
+        Filtrar por:
+        = simple_form_for [@farm, @inventory], url: farm_inventory_filter_path(@farm, @inventory), method: 'post', html: { class: 'd-inline-flex flex-row' } do |f|
+          %select{ class: 'form-control select optional', name: 'filter_by_farm', id: 'filter_by_farm' }
+            %option{ disabled: 'disabled' } ¿En finca?
+            %option{ selected: (!!params['en-finca'].to_i), value: 1 } Sí pasó
+            %option{ selected: (!params['en-finca'].to_i), value: 0 } No pasó
+          %select{ class: 'form-control select optional', name: 'filter_by_system', id: 'filter_by_system' }
+            %option{ disabled: 'disabled' } ¿En sistema?
+            %option{ selected: (!!params['en-sistema'].to_i), value: 1 } En sistema
+            %option{ selected: (!params['en-sistema'].to_i), value: 0 } Para revisión
+          %button{ type: 'submit', class: 'btn btn_custom btn--filled' } Filtrar
+        = link_to farm_inventory_path(@farm, @inventory) do
+          %button{ class: 'btn btn_custom' } Limpiar filtros
       %table.cow-table
-        - if inventory_cows.where(found: true).size.zero?
+        - inventory_cows = inventory_cows.where(in_farm: params['en-finca']) if params['en-finca']
+        - inventory_cows = inventory_cows.where(found: params['en-sistema']) if params['en-sistema']
+        - if inventory_cows.blank?
           %thead
             %tr
               %th.not-records.center
-                %center No se encontraron ganados
+                %center No se encontraron series
         - else
           %thead
             %tr
@@ -23,12 +39,12 @@
                 = sort_link(@q, :serie_number) do 
                   Serie
               %th
-                = sort_link(@q, :in_farm) do 
+                = sort_link(@q, 'en-finca') do 
                   En Finca
               %th
                 = sort_link(@q, :found) do 
                   En Sistema
-              %th Menu
+              -# %th Menu
           %tbody#inventory_cows
             = render 'keppler_frontend/app/inventories/partials/cattle_item', inventory_cows: inventory_cows
 = paginate inventory_cows unless inventory_cows.blank?

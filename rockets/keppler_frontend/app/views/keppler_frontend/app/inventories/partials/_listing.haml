@@ -1,7 +1,12 @@
 .container_custom
+  %h1 Inventarios
   .d-flex.justify-content-end
     .actions.d-none.d-sm-block
       .float-right
+        %a.mb-3.ml-2{ href: compare_inventories_farm_inventories_path() }
+          %button.btn.btn_custom.btn--filled.btn--medium
+            %i.icofont-copy
+            Comparar
         - unless inventories.size.zero?
           %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
             %button.btn.btn_custom.btn--filled.btn--medium

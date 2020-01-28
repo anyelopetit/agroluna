@@ -11,15 +11,15 @@
         = inventory_cow&.serie_number
     %td
       = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: inventory_cow&.id}) do
-        = inventory_cow&.in_farm ? 'Sí' : 'No'
+        = inventory_cow&.in_farm ? 'Sí pasó' : 'No pasó'
     %td
       = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: inventory_cow&.id}) do
-        = inventory_cow&.found ? 'Sí' : 'No'
+        = inventory_cow&.found ? 'Sí' : 'Para revisión'
     -# %td
       = link_to({controller: :cattle, action: :show, farm_id: @farm&.id, id: inventory_cow&.id}) do
         %i.fa{ class: "icofont-#{inventory_cow&.found ? 'check' : 'not-allowed'}", style: "color: #{inventory_cow&.found ? 'green' : 'red'}" }
         
-    %td
+    -# %td
       .dropdown{ style: 'justify-content: center; cursor:pointer' }
         %a.action-btn.pull-right{:id => "menu-#{inventory_cow&.id}", 'aria-expanded': 'false', 'aria-haspopup': 'true', 'data-toggle': 'dropdown' }
           %i.icofont-navigation-menu

@@ -1,0 +1,72 @@
+!!!
+%html{ lang: 'en' }
+  %head
+    %meta{ charset: 'UTF-8' }
+    %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
+    %meta{ name: 'theme-color', content: '#fff' }
+    %title #{@farm&.title} | Reporte General
+  %body
+    .header-left
+      %h1.farm-title= @farm.try(:title)&.upcase
+      %h2.report-title Inventario ##{@inventory.id}: #{@inventory.name}
+      %h3
+        Series de inventario
+        %small
+          (Total #{@inventory.inventory_cows.size} / Pasaron #{@inventory.inventory_cows.in_farm.size} / No pasaron #{@inventory.inventory_cows.not_found_in_farm.size})
+          %small - Creado: #{@inventory.created_at&.strftime('%d/%m/%Y')}
+    .header-right
+      %p= Time.now.strftime('%d-%m-%Y')
+      %p Pág. 1
+      %p #{@inventory.inventory_cows.in_farm.size} / #{@inventory.inventory_cows.in_farm.size}
+    %table.cow-table
+      - if @inventory.inventory_cows.in_farm.size.zero?
+        %thead
+          %tr
+            %th.not-records.center
+              %center No se encontraron series
+      - else
+        %thead
+          %tr
+            %th Serie
+            %th En finca
+            %th En sistema
+        %tbody
+          - @inventory.inventory_cows.in_farm.each do |cow|
+            %tr
+              %td= cow&.serie_number
+              %td= cow&.in_farm ? 'Sí pasó' : 'No pasó'
+              %td= cow&.found ? 'Sí' : 'Para revisión'
+:scss
+  body {
+    font-size: 16px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr {
+    border-top: solid 1px #eee;
+  }
+  th {
+    text-align: left;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+  }
+    td {
+    margin: 0;
+    padding: 10px 20px 0 0;
+  }
+  .header-left {
+    float: left;
+    width: 80%;
+  }
+  .header-right {
+    float: right;
+  }
+  .farm-title{
+    width: 150%
+  }
+  .report-title {
+    width: 150%
+  }

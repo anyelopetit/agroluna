@@ -12,7 +12,6 @@
                 %h1 Elegir Padrotes
                 = simple_form_for [@farm, @season, @season_cow], url: assign_bulls_farm_season_path(@farm, @season) do |f|
                   = f.input :season_id, as: :hidden, input_html: { value: @season.id }
-                  = f.input :_id, as: :hidden, input_html: { value: @season.id }
                   .form-padding
                     .row
                       -# = f.input :cow_id, input_html: { value: @farm&.id, class: 'form-control input_custom' }, as: :hidden

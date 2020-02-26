@@ -1,7 +1,11 @@
 .content-table
   .row
     .col-md-12
-      %h1 Series de inventario
+      %h1
+        Series de inventario
+        %small
+          (Total #{inventory_cows.size} / Pasaron #{inventory_cows.in_farm.size} / No pasaron #{inventory_cows.not_found_in_farm.size})
+          %small - #{@inventory.created_at&.strftime('%d/%m/%Y')}
       .d-inline-flex.float-right
         Filtrar por:
         = simple_form_for [@farm, @inventory], url: farm_inventory_filter_path(@farm, @inventory), method: 'post', html: { class: 'd-inline-flex flex-row' } do |f|
@@ -16,6 +20,19 @@
           %button{ type: 'submit', class: 'btn btn_custom btn--filled' } Filtrar
         = link_to farm_inventory_path(@farm, @inventory) do
           %button{ class: 'btn btn_custom' } Limpiar filtros
+        - unless inventory_cows.size.zero?
+          %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-clip-board
+              Reporte
+              %i.icofont-simple-down
+          .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
+            = link_to({action: action_name.to_sym, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+              PDF
+            = link_to({action: action_name.to_sym, format: :xls}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+              XLS
+            = link_to({action: action_name.to_sym, format: :csv}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+              CSV
       %table.cow-table
         - inventory_cows = inventory_cows.where(in_farm: params['en-finca']) if params['en-finca']
         - inventory_cows = inventory_cows.where(found: params['en-sistema']) if params['en-sistema']

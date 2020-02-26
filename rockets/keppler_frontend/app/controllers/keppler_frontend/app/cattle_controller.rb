@@ -158,6 +158,34 @@ module KepplerFrontend
       redirect_to [@farm, @cow]
     end
 
+    def create_pregnancies
+      status = KepplerCattle::Status.new_status(params, {farm_id: @farm.id })
+      cow = KepplerCattle::Cow.find_by_id(
+        params.dig(:status, :cow_id) || params[:cow_id]
+      )
+      if status.save!
+        flash[:notice] = 'Servicio guardado'
+      else
+        flash[:error] = 'No se pudo guardar el servicio'
+      end
+      redirect_back fallback_location: farm_cows_path(@farm)
+    end
+
+    def make_birth
+      new_birth(params) if params
+      if @status.save! && @baby_saved
+        flash[:notice] =
+          if @other_baby_saved
+            'Parto realizado y morochos guardados'
+          else
+            'Parto realizado y becerro/a guardado'
+          end
+      else
+        flash[:error] = 'No se pudo realizar el parto'
+      end
+      redirect_back fallback_location: farm_cows_path(@farm)
+    end
+
     private
 
     def set_cow
@@ -167,7 +195,7 @@ module KepplerFrontend
     def index_variables
       @farm = KepplerFarm::Farm.find_by(id: (params[:farm_id] || params[:id]))
       @q = @farm.cows.ransack(params[:q])
-      @cows = @q.result(distinct: true)
+      @cows = @q.result(distinct: true).includes(:locations)
       @active_cows = @cows.actives.order(:serie_number)
       @inactive_cows = @cows.inactives.order(:serie_number)
       if request.format.symbol.eql?(:html)
@@ -241,6 +269,85 @@ module KepplerFrontend
           recipient_id: @cow&.id.to_s
         )
       ).order('created_at desc').limit(50)
+    end
+
+    def new_birth(params)
+      @mother = @farm&.cows.find_by_id(params[:status][:cow_id])
+      @status = KepplerCattle::Status.new_status(params, { farm_id: @farm.id })
+      if params[:status][:successfully] == '1'
+        @baby_saved = create_cow(
+          @mother,
+          @status,
+          new_cow_params,
+          new_cow_weight_params
+        )
+      end
+      unless params[:other_new_cow][:serie_number].blank?
+        @other_baby_saved = create_cow(
+          @mother,
+          @status,
+          other_new_cow_params,
+          other_new_cow_weight_params
+        )
+      end
+    end
+
+    def create_cow(mother, this_status, params, weight_params)
+      baby = @farm.cows.new(params)
+      baby.species_id = mother&.species_id
+      baby.mother_id = mother&.id
+      baby.birthdate = this_status&.date || Date.today
+      baby.provenance = mother&.farm.title
+      if mother.statuses.where(status_type: 'Service')&.last&.insemination_id
+        last_pregnancy = mother.statuses.where(status_type: 'Service')&.last
+        father = @farm.inseminations.find_by_id(last_pregnancy&.insemination_id)
+        baby.father_type = father.class.to_s
+        baby.father_id = father&.id
+      end
+
+      if baby.save!
+        baby_weight = baby.create_first_weight(
+          weight_params,
+          {
+            user: @farm.responsables.find_or_create_by(name: this_status.user.name),
+            user_id: @farm.responsables.find_or_create_by(name: this_status.user.name).id,
+            cow_id: this_status.cow_id
+          }
+        )
+        baby.create_first_location(
+          {
+            user_id: this_status.user,
+            farm_id: @farm.id,
+            strategic_lot_id: mother.strategic_lot&.id
+          }
+        )
+        baby.create_first_activity({user_id: current_user.id})
+        baby.create_typology
+      end
+    end
+
+    def new_cow_params
+      params.require(:new_cow).permit(
+        KepplerCattle::Cow.attribute_names.map(&:to_sym)
+      )
+    end
+
+    def other_new_cow_params
+      params.require(:other_new_cow).permit(
+        KepplerCattle::Cow.attribute_names.map(&:to_sym)
+      )
+    end
+
+    def new_cow_weight_params
+      params.require(:new_cow_weight).permit(
+        KepplerCattle::Weight.attribute_names.map(&:to_sym)
+      )
+    end
+
+    def other_new_cow_weight_params
+      params.require(:other_new_cow_weight).permit(
+        KepplerCattle::Weight.attribute_names.map(&:to_sym)
+      )
     end
 
     def respond_to_formats

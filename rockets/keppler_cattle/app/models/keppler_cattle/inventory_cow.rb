@@ -19,6 +19,10 @@ module KepplerCattle
 
     validates_presence_of :serie_number
 
+    scope :in_system, -> { where(found: true) }
+    scope :in_farm, -> { where(in_farm: true) }
+    scope :not_found_in_farm, -> { where(in_farm: [nil, false]) }
+
     def self.index_attributes
       %i[serie_number]
     end

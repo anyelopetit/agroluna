@@ -29,24 +29,27 @@ module KepplerCattle
     private
 
     def verify_existence
-      cow_typologies = KepplerCattle::CowTypology.where(
+      same_cow_typologies = KepplerCattle::CowTypology.where(
         cow_id: cow_id,
         typology_id: typology_id
       )
-      cow_typologies.size.zero?
+      errors.add(:typology, 'no puede agregarse la misma tipología') unless same_cow_typologies.size.zero?
     end
 
     def verify_age_and_weight
       age_is_able = cow&.days.to_i > typology&.min_age.to_i
       weight_is_able = cow.weight&.weight.to_f > typology&.min_weight.to_f
-      age_is_able && weight_is_able
+      unless age_is_able && weight_is_able
+        errors.add(:age, 'debe cumplir con la condiciónd de tipología')
+        errors.add(:weight, 'debe cumplir con la condiciónd de tipología')
+      end
     end
 
     def verify_counter
       if typology.counter.to_i == 1
-        true # TOCHANGE
+        errors.add(:typology, 'aún es una cría para esta tipología') unless weights.where(weaning: true).present?
       elsif typology.counter.to_i == 2
-        cow.sons.exists?
+        errors.add(:typology, 'aún no posee crías para este tipología') unless cow.sons.exists?
       else
         true
       end

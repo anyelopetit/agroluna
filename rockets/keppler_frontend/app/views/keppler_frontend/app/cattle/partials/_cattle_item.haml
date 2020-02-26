@@ -41,3 +41,14 @@
               = link_to new_farm_cow_weight_path(@farm, cow) do
                 %i.icofont-refresh
                 Actualizar peso
+            %li
+              %a{'data-target': "#modalPregnancy-#{cow.id}", 'data-toggle': 'modal', disabled: true }
+                %i.icofont-plus
+                Registrar preñez
+            %li
+              %a{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal', disabled: true }
+                %i.icofont-baby
+                Registrar parto
+  
+  = render 'keppler_frontend/app/cattle/partials/modalBirth', cow: cow
+  = render 'keppler_frontend/app/cattle/partials/modalPregnant', cow: cow

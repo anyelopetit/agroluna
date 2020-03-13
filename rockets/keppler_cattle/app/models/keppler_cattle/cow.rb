@@ -14,9 +14,8 @@ module KepplerCattle
     mount_uploader :image, AttachmentUploader
     acts_as_list
     acts_as_paranoid
-    # after_save :create_first_location
-    # after_save :create_first_activity
-    # after_save :create_typology
+
+    after_save :create_typology
 
     belongs_to :race, class_name: 'KepplerCattle::Race'
     belongs_to :species, class_name: 'KepplerCattle::Species'
@@ -356,6 +355,13 @@ module KepplerCattle
         user_id: hash.dig(:user_id),
         user: hash.dig(:user)
       )
+    end
+
+    def create_typology
+      return unless possible_typologies
+      
+      first_typology = possible_typologies.order(:min_age).first
+      cow_typologies.create!(typology_id: first_typology.id)
     end
   end
 end

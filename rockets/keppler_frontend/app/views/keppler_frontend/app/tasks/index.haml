@@ -1,0 +1,131 @@
+.container
+  .notes
+    - @tasks.each do |note|
+      %a
+        .note{'data-target': "#note-#{note.id}", 'data-toggle': 'modal'}
+          .note-inner{ style: "background-color: ##{note.color}"}
+            %h2
+              = note.title
+            %hr
+            %p= note.text
+      .modal.modal_status.fade{ id: "note-#{note.id}", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+        .modal-dialog{role: "document", style: "max-width: 1000px;"}
+          .modal-content{ style: 'border-radius: 5px'}
+            .note-inner{ style: "background-color: ##{note.color}"}
+              = simple_form_for [@farm, note] do |f|
+                = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
+                = f.input :title, label: false, input_html: { value: note.title, style: 'font-size: 25px !important; font-weight: bold' }
+                %hr
+                = f.input :text, label: false, input_html: { value: note.text }
+                = f.input :color, collection: f.object.colors, selected: note.color, label: false, include_blank: 'Selecciona un color'
+                = link_to farm_task_path(@farm, note), method: :delete, data: { confirm: '¿Estás seguro?' }, style: 'color: #202124 !important;' do
+                  %i.icofont-ui-delete
+                  Eliminar
+                .float-right.mt-3
+                  %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                    %i.icofont-save
+                    Guardar
+
+  %button.big-add.show-add-note{'data-target': "#modalTask", 'data-toggle': 'modal'}
+    %i.icofont-ui-add add
+
+  .modal.modal_status.fade{ id: "modalTask", "aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", role: "dialog", tabindex: "-1"}
+    .modal-dialog{role: "document", style: "max-width: 1000px;"}
+      .modal-content
+        .modal-header
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+            %span{"aria-hidden" => "true"} ×
+        .modal-body{ style: "padding: 20px;"}
+          .container_custom
+            .row
+              .col-lg-12
+                %h1.mb-4 Crear una nota
+                = simple_form_for [@farm, KepplerFarm::Task.new] do |f|
+                  = f.input :farm_id, as: :hidden, input_html: { value: @farm.id }
+                  = f.input :title, label: 'Título de la nota'
+                  = f.input :text, label: 'Descripción', input_html: { class: 'form-control form-control input_custom' }
+                  = f.input :color, collection: f.object.colors, label: 'Color', include_blank: 'Selecciona un color', input_html: { class: 'form-control form-control input_custom' }
+                  .float-right.mt-3
+                    %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                      %i.icofont-save
+                      Guardar
+
+:scss
+  body {
+    background-color: #f8f8f8;
+  }
+  .notes {
+    //max-width: 240px*4 + 16px*5 + 32px; 
+    margin: 0 auto;
+    column-count: 4;
+    column-gap: 1em;
+  }
+  .note {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  @media screen and (min-width: (240px*2 + 16px*3 + 32px)) {
+    .notes {
+      column-count: 1;
+    }
+  }
+  @media screen and (min-width: (240px*3 + 16px*4 + 32px)) {
+    .notes {
+      column-count: 2;
+    }
+  }
+  @media screen and (min-width: (240px*4 + 16px*5 + 32px)) {
+    .notes {
+      column-count: 3;
+    }
+  }
+
+  .note-inner {
+    background-color: #fff;
+    min-height: 4em;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.2),0 1px 5px 0 rgba(0,0,0,0.12);
+    transition: box-shadow 0.2s;
+    padding: 10px;
+    color: #202124;
+  }
+  .note:hover .note-inner {
+    box-shadow: 0 2px 15px rgba(0,0,0,0.30);
+  }
+  // really not sure where to put this. Kinda requires more body padding, but then that gets tricky at mobile resolutions where the padding just takes up too much screen space
+  .big-add {
+    background-color: #F44336;
+    color: #fff;
+    padding: 0;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    border: none;
+    box-shadow: none;
+    width: 56px;
+    height: 56px;
+    padding: 16px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    i {
+      font-size: 24px;
+      line-height: 24px;
+    }
+  }
+  
+  .note-inner .form-control {
+    color: #202124 !important;
+    background: none !important;
+    border: none !important;
+  }
+
+  .note-inner input,
+  input::focus {
+    font-size: 25px !important;
+    font-weight: 600;
+  }

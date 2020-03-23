@@ -36,6 +36,8 @@ module KepplerFarm
 
     has_many :inventories, class_name: 'KepplerCattle::Inventory'
 
+    has_many :tasks
+
     # accepts_nested_attributes_for :cows
 
     def self.index_attributes

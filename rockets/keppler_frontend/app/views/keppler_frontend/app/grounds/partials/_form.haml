@@ -1,0 +1,186 @@
+= simple_form_for [@farm, @ground] do |f|
+  .form-padding
+    .row
+      -# .col-sm-12
+        %center.file-uploader
+          .file-container{ class: ('already-uploaded' unless @ground.image&.url.blank?), style: ("background-image: url(#{f.object&.image&.url})" unless @ground.image&.url.blank?) }
+            = f.input :image, label: 'Imagen'
+            %i.file-icon.icofont-image{ style: 'font-size: 50px'}
+            %h5.file-text Arrastra una imagen o haz click aquí
+          %br
+          %span (.JPG, .JPEG, .PNG)
+      = f.input :farm_id, as: :hidden, input_html: { value: @farm&.id }
+      .col-sm-4
+        = f.input :identifier, as: :string, label: 'Código de campo', required: true, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :name, as: :string, label: 'Nombre', placeholder: '', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :location, as: :string, label: 'Ubicación', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :total_area, as: :float, label: 'Área total (has)', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :used_area, as: :float, label: 'Área usada (has)', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :cultivation, label: 'Cultivo', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :efficiency, as: :float, label: 'Eficiencia (%)', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :forage_offer, as: :float, label: 'Oferta forrajera en base a humedad (%)', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :description, as: :text, placeholder: '', label: 'Descripción / Características', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :rest_days, label: 'Días de descanso', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :busy_days, label: 'Días de ocupación', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-4
+        = f.input :fecal_effectiveness, as: :float, label: 'Efectividad de materia seca (%)', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+      .col-sm-12
+        .float-right
+          %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+            %i.icofont-save
+            Guardar
+
+:javascript
+
+  window.I18n = #{es_translations.to_json.html_safe}
+
+  function doesFileExist(urlToFile) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('HEAD', urlToFile, false);
+    xhr.send();
+
+    return xhr.status == "404" ? false : true;
+  }
+  
+  function imageSelect (option) {
+    var optionTxt = option.text.toLowerCase()
+    if (!option.id) return optionTxt;
+    var baseUrl = '/assets/keppler_cattle/';
+    var url = baseUrl + (doesFileExist(baseUrl + optionTxt) ? optionTxt : '/ternera')
+    var $option = $(
+      '<span class="grounds-option">' +
+        `<div style="background-image: url(${url})" class="img-grounds-list"></div>` + 
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+  
+  function motherSelect (option) {
+    var optionTxt = option.text
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="grounds-option">' +
+        `<div style="background-image: url(/assets/keppler_cattle/female)" class="img-grounds-list"></div>` + 
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+  
+  function fatherSelect (option) {
+    var optionTxt = option.text
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="grounds-option">' +
+        `<div style="background-image: url(/assets/keppler_cattle/male)" class="img-grounds-list"></div>` + 
+        (I18n.keppler_cattle[optionTxt] || optionTxt) +
+      '</span>'
+    );
+    return $option;
+  };
+  
+  function noImageSelect (option) {
+    var optionTxt = option.text
+    if (!option.id) return optionTxt;
+    var $option = $(
+      '<span class="grounds-option">' +
+        optionTxt +
+      '</span>'
+    );
+    return $option;
+  };
+
+  $('#ground_species_id').select2({
+    placeholder: "Elige una especie",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });
+
+  $('#ground_race_id').select2({
+    placeholder: "Elige una raza",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });
+
+  $('#ground_mother_id').select2({
+    placeholder: "Elige una madre",
+    templateResult: motherSelect,
+    templateSelection: motherSelect
+  });
+
+  $('#ground_father_id').select2({
+    placeholder: "Elige un padre",
+    templateResult: fatherSelect,
+    templateSelection: fatherSelect
+  });
+
+  $('.color').select2({
+    placeholder: "Elige un color",
+    templateResult: noImageSelect,
+    templateSelection: noImageSelect
+  });
+
+  $.datepicker.regional['es'] = {
+    closeText: 'Cerrar',
+    prevText: '< Ant',
+    nextText: 'Sig >',
+    currentText: 'Hoy',
+    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+    weekHeader: 'Sm',
+    dateFormat: 'dd/mm/yy',
+    firstDay: 1,
+    isRTL: false,
+    showMonthAfterYear: false,
+    yearSuffix: ''
+  };
+
+  $.datepicker.setDefaults($.datepicker.regional['es']);
+
+  $('.datepicker').datepicker({
+    dateFormat: 'yy-mm-dd',
+    showOtherMonths: true,
+    selectOtherMonths: true,
+    changeMonth: true,
+    changeYear: true,
+    maxDate: 0,
+    setDate: 0,
+    yearRange: "c-40:c",
+  }, $.datepicker.regional[ "es" ])
+
+:scss
+
+
+  .grounds-list {
+    height: 187px;
+    overflow: scroll;
+  }
+
+  .grounds-option {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+
+    .img-grounds-list {
+      height: 20px;
+      margin: 0 5px;
+      width: 20px;
+      display: inline-flex;
+      background-size: cover;
+      background-position: top center;
+    }
+  }

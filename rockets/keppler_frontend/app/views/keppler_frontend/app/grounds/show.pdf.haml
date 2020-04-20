@@ -1,0 +1,84 @@
+!!!
+%html{ lang: 'en' }
+  %head
+    %meta{ charset: 'UTF-8' }
+    %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }
+    %meta{ name: 'theme-color', content: '#fff' }
+    %title campo (#{@ground.identifier})
+    -# = wicked_pdf_stylesheet_link_tag '/assets/keppler_frontend/app/application.css'
+  %body
+    .header-left
+      %h1.farm-title= @farm.try(:title)&.upcase
+      %h2.report-title Campo (#{@ground.identifier})
+    .header-right
+      %p= Time.now.strftime('%d-%m-%Y')
+    .app_wrapper
+      .container_custom
+        .row
+          %table.card_show
+            %tbody
+              %tr
+                %th Código
+                %th Nombre
+                %th Ubicación
+              %tr
+                %td= @ground&.identifier
+                %td= @ground&.name
+                %td= @ground&.location
+              %tr
+                %th Área total
+                %th Área usada
+                %th Cultivo
+              %tr
+                %td= @ground&.total_area
+                %td= @ground&.used_area
+                %td= @ground&.cultivation
+              %tr
+                %th Eficiencia
+                %th Ofer.forrajera 
+                %th Caract.
+              %tr
+                %td= @ground&.efficiency
+                %td= @ground&.forage_offer
+                %td= @ground&.description
+              %tr
+                %th Días/descanso
+                %th Días/ocupación
+                %th Efect. materia seca
+              %tr
+                %td= @ground&.rest_days
+                %td= @ground&.busy_days
+                %td= @ground&.fecal_effectiveness
+:scss
+  body {
+    font-size: 12px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr {
+    border-top: solid 1px #eee;
+  }
+  th {
+    text-align: left;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+  }
+    td {
+    margin: 0;
+    padding: 10px 20px 0 0;
+  }
+  .header-left {
+    float: left;
+  }
+  .header-right {
+    float: right;
+  }
+  .farm-title{
+    width: 150%
+  }
+  .report-title {
+    width: 150%
+  }

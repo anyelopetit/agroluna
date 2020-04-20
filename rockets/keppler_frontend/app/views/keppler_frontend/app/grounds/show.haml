@@ -1,0 +1,169 @@
+-# = render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
+.app_wrapper
+  .container_custom
+    .float-left
+      -# %a.mt-4.mb-4.ml-3{ href: farm_grounds_path(@farm) }
+      =# request.env['HTTP_REFERER']
+      = link_to({action: :index}, { class: 'mt-4 mb-4 ml-3' }) do
+        %button.btn.btn_custom.btn--medium
+          %i.icofont-circled-left
+          Listado
+    .d-flex.justify-content-end.mb-5
+      -# .toolbar
+        %a{ href: '' }
+          %i.icofont-trash
+        %a{ href: '' }
+          %i.icofont-refresh
+        %a{ href: '' }
+          %i.icofont-download
+      .actions.d-none.d-sm-block
+        .float-right
+          = link_to({action: :show, format: :pdf}, {class: 'mt-4 mb-4', target: '_blank'}) do
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-clip-board
+              Reporte
+          %a.mt-4.mb-4{ href: edit_farm_ground_path(@farm, @ground) }
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-ui-edit
+              Editar
+          -# %a.mt-4.mb-4.open-status-history
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-clock-time
+              Historial
+          = link_to({action: :destroy}, {class: 'mt-4 mb-4', target: '_blank', data: { confirm: '¿Estás seguro?' }}) do
+            %button.btn.btn_custom.btn--medium
+              %i.icofont-trash
+              Eliminar
+      
+      .actions_movil.d-sm-none
+        .float-right
+          %a#profileDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+            %button.btn.btn_custom.btn--filled.btn--medium
+              %i.icofont-simple-down
+              Acciones
+          .dropdown-menu.profile_dropdown{"aria-labelledby" => "profileDropdown"}
+            -# - if @ground.used
+              .btn.btn_custom.btn--medium.disabled{ disabled: true }
+                %i.icofont-check
+                Usada
+            -# - else
+              = link_to({action: :mark_as_used, farm_id: @farm&.id, ground_id: @ground.id}, { class: 'mt-4 mb-4' }) do
+                %button.btn.btn_custom.btn--filled.btn--medium
+                  %i.icofont-check
+                  Marcar como usada
+            %a{ class: 'dropdown-item', href: edit_farm_ground_path(@farm, @ground) }
+              Editar
+            -# %a.open-status-history{class: "dropdown-item"}
+              Historial
+            = link_to({action: :show, format: :pdf}, {class: 'dropdown-item', target: '_blank'}) do
+              Reporte
+          = link_to({action: :destroy}, {class: 'mt-4 mb-4', target: '_blank', data: { confirm: '¿Estás seguro?' }}) do
+            %button.btn.btn_custom.btn--medium
+              %i.icofont-trash
+              Eliminar
+
+  
+  .container_custom
+    .row
+      .col-md-12
+        .card_show.ground_info.p-5
+          .float-right
+            -# = image_tag "/assets/keppler_cattle/#{@ground.species}", class: 'svg-icon-md p-absolute r-0' unless @ground.species.blank?
+            -# = image_tag "/assets/keppler_cattle/male", class: 'svg-icon-md p-absolute r-0'
+          .row.mt-5
+            .col-lg-3{ :style =>"display: flex; justify-content: center;"}
+              .card_ground
+                .row
+                  %center.col-lg-12
+                    -# = image_tag 'https://image.flaticon.com/icons/svg/2548/2548754.svg', class: 'avatar_cow'
+                    = image_tag 'https://image.flaticon.com/icons/svg/2548/2548679.svg', class: 'avatar_cow'
+                  .col-lg-12
+                    .card_ground_content{ :style => "text-align: center;"}
+                      %h1
+                        = @ground.identifier
+                      %small= "(#{@ground.name})" unless @ground.name.blank?
+                      %br
+                      %span= @ground.location
+                      %br
+                      %b Cultivo:
+                      %span= @ground.cultivation
+                      
+            .col-lg-9
+              .row
+                .col-lg-4.col-sm-4
+                  %dl
+                    %dt Código de campo
+                    %dd= @ground.identifier
+                    %dt Nombre
+                    %dd= @ground.name
+                    %dt Ubicación
+                    %dd= @ground.location
+                .col-lg-4.col-sm-4
+                  %dl
+                    %dt Cultivo
+                    %dd= @ground.cultivation
+                    %dt Eficiencia
+                    %dd= @ground.efficiency
+                    %dt Oferta forrajera en base a humedad
+                    %dd= @ground.forage_offer
+                .col-lg-4.col-sm-4
+                  %dl
+                    %dt Área total
+                    %dd= @ground.total_area
+                    %dt Área usada
+                    %dd= @ground.used_area
+                .col-sm-12
+                  %dl
+                    %dt Descripción / Características
+                    - unless @ground.description.blank?
+                      %p= @ground.description 
+                    - else
+                      %p Sin Observación
+              %hr/
+              .row
+                .col-lg-4.col-sm-4
+                  %dl
+                    %dt Días de descanso
+                    %dd= @ground.rest_days
+                .col-lg-4.col-sm-4
+                  %dl
+                    %dt Días de ocupación
+                    %dd= @ground.busy_days
+                .col-lg-4.col-sm-4
+                  %dl
+                    %dt Efectividad de materia seca
+                    %dd= @ground.fecal_effectiveness
+
+:scss
+  #status-history {
+    height: 100vh;
+    width: 300px;
+    position: fixed;
+    right: -300px;
+    top: 0;
+    z-index: 4;
+    transition: .3s;
+  }
+
+  #close-status-history {
+    color: #28C76F;
+    z-index: 4;
+  }
+
+  .parent_card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    //border: 2px solid #f4f5f6;
+    border-radius: 4px;
+    padding: 10px;
+    
+    img {
+      max-height: 70px;
+      max-width: 200px;
+    }
+  }
+  .close-status-history {
+    z-index: 5;
+  }

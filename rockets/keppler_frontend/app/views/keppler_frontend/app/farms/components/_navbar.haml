@@ -62,6 +62,13 @@
                   Temporadas de monta
                 = link_to farm_milk_index_path(farm),style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item #{('active_sub' if %w[milk].include?(controller_name))}" do
                   Producción Lechera
+            %li.nav-item{ style: "position: relative;"}
+              %a.click.nav-link{ class: "#{'active' if %w[grounds].include?(controller_name)} dropdown-toggle", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+                General
+                %i.icofont-simple-down
+              .farm_menu{ class: ('visibility' if %w[seasons].include?(controller_name))}
+                = link_to farm_grounds_path(farm),style: "background-color: transparent !important; color: white;", class: "modelOne dropdown-item #{('active_sub' if %w[grounds].include?(controller_name))}" do
+                  Campos
           %li.nav-item.d-lg-none
             = link_to t('keppler.devise.sign_out'), destroy_session_path(current_user), class: "nav-link"
       
@@ -69,8 +76,8 @@
         %ul.navbar-nav.ml-auto.user_logo
           %li.nav-item.d-none.d-lg-block{ style: 'display: flex;align-items: center;' }
             = link_to farm_tasks_path(@farm), class: 'nav-link' do
-              %i.icofont-ui-note
               Notas
+              %i.icofont-ui-note
           %li.nav-item.d-none.d-lg-block
             %a#profileDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
               %span= current_user&.name

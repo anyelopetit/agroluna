@@ -3,6 +3,7 @@ en:
     sidebar-menu:
       keppler-farm: Farms
       keppler-farm-submenu:
+        ground: Ground
         responsable: Responsable
         strategic-lot: Strategic lots
         process: Processes
@@ -10,18 +11,21 @@ en:
     permissions:
     models:
       singularize:
+        ground: ground
         responsable: responsable
         strategic_lot: strategic lot
         photo: photo
         process: process
         farm: farm
       pluralize:
+        grounds: grounds
         responsables: responsables
         strategic_lots: strategic lots
         photos: photos
         processes: processes
         farms: farms
     modules:
+      admin/ground: Ground
       admin/responsable: Responsable
       admin/strategic-lot: Strategic lot
       admin/photo: Photo

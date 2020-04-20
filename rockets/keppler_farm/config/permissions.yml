@@ -1,4 +1,11 @@
 modules:
+  grounds:
+    name: Ground
+    model: KepplerFarmGround
+    actions: [
+      'index', 'create', 'update', 'destroy', 'download', 'upload', 'clone'
+    ]
+
   responsables:
     name: Responsable
     model: KepplerFarmResponsable

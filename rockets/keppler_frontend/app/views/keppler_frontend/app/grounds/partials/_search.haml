@@ -1,0 +1,40 @@
+= search_form_for [@farm, search] do |f|
+  .flex-search
+    .select#select-search
+      %select{ name: 'search[field]'}
+        %option{ value: 'identifier' } Número de serie
+        %option{ value: 'short_name' } Nombre corto
+        %option{ value: 'typology' } Tipología
+        %option{ value: 'weight' } Peso
+        %option{ value: 'age' } Edad
+    .select-field#identifier
+      = f.search_field :identifier_cont_any, placeholder: 'Número de serie', class: 'form-control search-bar'
+    .select-field#short_name
+      = f.search_field :short_name_cont_any, placeholder: 'Nombre corto', class: 'form-control search-bar'
+    .select-field#typology
+      .search-typology
+        %select#min-typology{ name: 'search[typology]' }
+          %option Sin tipología
+          - @typologies.each do |typology|
+            %option{ value: typology } #{typology}
+    .select-field#weight
+      .search-weight
+        %select#min-weight{ name: 'search[weight][min]' }
+          %option Min
+          - %w[30 50 100 150 200 250 300 400 500 600].each do |weight|
+            %option{ value: weight } #{weight} KG
+        %select#max-weight{ name: 'search[weight][max]' }
+          %option Max
+          - %w[100 150 200 250 300 400 500 600 800].each do |weight|
+            %option{ value: weight } #{weight} KG
+    .select-field#age
+      .search-age
+        %select#min-age{ name: 'search[age][min]' }
+          %option Min
+          - %w[0 1 2 5 10 15].each do |age|
+            %option{ value: age } #{age} años
+        %select#max-age{ name: 'search[age][max]' }
+          %option Max
+          - %w[1 2 5 10 15 20].each do |age|
+            %option{ value: age } #{age} años
+    = f.submit "Buscar"

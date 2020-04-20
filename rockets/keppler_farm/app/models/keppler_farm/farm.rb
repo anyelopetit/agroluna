@@ -38,6 +38,8 @@ module KepplerFarm
 
     has_many :tasks
 
+    has_many :grounds, class_name: 'KepplerFarm::Ground'
+
     # accepts_nested_attributes_for :cows
 
     def self.index_attributes

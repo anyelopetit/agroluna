@@ -158,6 +158,9 @@ KepplerFrontend::Engine.routes.draw do
     resources :deliveries, path: 'entregas', controller: 'app/deliveries'
     resources :cheese_processes, path: 'quesera', controller: 'app/cheese_processes'
     resources :tasks, path: 'tareas', controller: 'app/tasks', except: %i[new show edit]
+
+    resources :grounds, path: 'campos', controller: 'app/grounds', path_names: { new: 'nuevo', edit: 'editar'} do
+    end
   end
 
   # Admin

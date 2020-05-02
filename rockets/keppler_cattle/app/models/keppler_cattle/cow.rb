@@ -129,7 +129,7 @@ module KepplerCattle
         elsif ['Dry'].include?(status_name)
           'En secado'
         end
-      "#{this_status}#{' Lactando' if milking}" if gender?('female') && [1, 2].include?(typology.counter.to_i)
+      "#{this_status}#{' Lactando' if milking}" if gender?('female') && [1, 2].include?(typology&.counter&.to_i)
     end
 
     def typology_counter_count

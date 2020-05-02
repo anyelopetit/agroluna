@@ -1,0 +1,7 @@
+"name","type","length","leftDigits","rightDigits"
+"LOTE","STRING","13","0","0"
+"CICLO","STRING","17","0","0"
+"FECINIREA","STRING","19","0","0"
+"FECFINREA","STRING","19","0","0"
+"AÑO1","STRING","19","0","0"
+"AÑO2","STRING","19","0","0"

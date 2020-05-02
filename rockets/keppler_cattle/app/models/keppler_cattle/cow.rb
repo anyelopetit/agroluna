@@ -358,7 +358,7 @@ module KepplerCattle
     end
 
     def create_typology
-      return unless possible_typologies
+      return unless possible_typologies.present?
       
       first_typology = possible_typologies.order(:min_age).first
       cow_typologies.create!(typology_id: first_typology.id)

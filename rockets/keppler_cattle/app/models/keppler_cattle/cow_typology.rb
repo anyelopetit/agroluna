@@ -19,7 +19,7 @@ module KepplerCattle
 
     validates_presence_of :cow_id, :typology_id
     validate :verify_existence, on: :create
-    validate :verify_age_and_weight, on: :create
+    # validate :verify_age_and_weight, on: :create
     validate :verify_counter, on: :create
 
     def self.index_attributes
@@ -39,17 +39,19 @@ module KepplerCattle
     def verify_age_and_weight
       age_is_able = cow&.days.to_i > typology&.min_age.to_i
       weight_is_able = cow.weight&.weight.to_f > typology&.min_weight.to_f
-      unless age_is_able && weight_is_able
+      unless age_is_able
         errors.add(:age, 'debe cumplir con la condiciónd de tipología')
+      end
+      unless weight_is_able
         errors.add(:weight, 'debe cumplir con la condiciónd de tipología')
       end
     end
 
     def verify_counter
-      if typology.counter.to_i == 1
-        errors.add(:typology, 'aún es una cría para esta tipología') unless weights.where(weaning: true).present?
-      elsif typology.counter.to_i == 2
-        errors.add(:typology, 'aún no posee crías para este tipología') unless cow.sons.exists?
+      if typology.counter.to_i == 1 && weights.where(weaning: true).blank?
+        errors.add(:typology, 'aún es una cría para esta tipología')
+      elsif typology.counter.to_i == 2 && cow.sons.blank?
+        errors.add(:typology, 'aún no posee crías para este tipología')
       else
         true
       end

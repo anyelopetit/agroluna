@@ -1,0 +1,8 @@
+"name","type","length","leftDigits","rightDigits"
+"COD","INTEGER","3","3","0"
+"C1","STRING","4","0","0"
+"C2","STRING","18","0","0"
+"C3","STRING","9","0","0"
+"C4","STRING","16","0","0"
+"C5","STRING","16","0","0"
+"C6","STRING","11","0","0"

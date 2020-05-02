@@ -1,0 +1,7 @@
+"name","type","length","leftDigits","rightDigits"
+"ESTADO","STRING","3","0","0"
+"DESDE","INTEGER","2","2","0"
+"HASTA","INTEGER","3","3","0"
+"COMENT","STRING","9","0","0"
+"PUNTAJE","INTEGER","2","2","0"
+"NP","INTEGER","1","1","0"

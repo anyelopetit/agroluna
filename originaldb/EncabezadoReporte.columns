@@ -1,0 +1,4 @@
+"name","type","length","leftDigits","rightDigits"
+"FechaInicial","STRING","0","0","0"
+"FechaFinal","STRING","0","0","0"
+"Titulo","STRING","0","0","0"

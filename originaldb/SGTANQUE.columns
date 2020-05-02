@@ -1,0 +1,6 @@
+"name","type","length","leftDigits","rightDigits"
+"TANQUE","STRING","6","0","0"
+"CAPACIDAD","INTEGER","1","1","0"
+"ENTRADA","INTEGER","4","4","0"
+"SALIDA","INTEGER","1","1","0"
+"QUEDA","INTEGER","4","4","0"

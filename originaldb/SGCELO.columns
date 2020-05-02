@@ -1,0 +1,7 @@
+"name","type","length","leftDigits","rightDigits"
+"SERIE","STRING","12","3","0"
+"FECR","STRING","19","0","0"
+"DIAS","INTEGER","1","1","0"
+"RESP","STRING","16","0","0"
+"INTDIAABI","INTEGER","4","4","0"
+"FECESTPROCEL","STRING","19","0","0"

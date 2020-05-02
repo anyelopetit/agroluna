@@ -1,0 +1,8 @@
+"name","type","length","leftDigits","rightDigits"
+"SERIE","STRING","12","0","0"
+"FECS","STRING","19","0","0"
+"MOTIVO","STRING","6","0","0"
+"DESTINO","STRING","27","0","0"
+"PESOS","STRING","6","3","2"
+"INGBS","STRING","9","6","2"
+"OBSER","STRING","63","0","0"

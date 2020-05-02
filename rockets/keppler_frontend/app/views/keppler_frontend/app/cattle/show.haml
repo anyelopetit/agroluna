@@ -89,7 +89,7 @@
                       %span= @cow.race&.name
                       -# %p= @cow.observations
                       %a{ 'data-target': "#activate", 'data-toggle': 'modal', href: ""}
-                        = @cow.activity.active ? 'Inhabilitar' : 'Habilitar'
+                        = @cow.activity&.active ? 'Inhabilitar' : 'Habilitar'
 
             .col-lg-9
               .row

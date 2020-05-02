@@ -150,7 +150,7 @@ module KepplerFrontend
     def create_activities
       @activity = @cow.cow_activities.new(activity_params)
 
-      if @activity.save
+      if @activity&.save
         flash[:notice] = 'Serie actualizada'
       else
         flash[:error] = 'No se pudo actualzar la serie'

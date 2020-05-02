@@ -2,7 +2,7 @@
 	%h6.timeline-header.no-border
 		%small
 			%b
-				= activity.owner&.name
+				= activity&.owner&.name
 		%small
 			= t('keppler.messages.has')
 			= t('keppler.actions.deleted').downcase
@@ -10,6 +10,6 @@
 	%span.time
 		%i.icon-clock
 		= t('keppler.messages.at')
-		= activity.created_at.to_formatted_s(:time)
+		= activity&.created_at.to_formatted_s(:time)
 		= t('keppler.messages.to')
-		= activity.created_at.to_formatted_s(:day)
+		= activity&.created_at.to_formatted_s(:day)

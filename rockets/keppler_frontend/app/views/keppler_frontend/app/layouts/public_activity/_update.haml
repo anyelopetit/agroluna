@@ -3,7 +3,7 @@
     %h6.timeline-header.no-border
       %small
         %b
-          = activity.owner&.name
+          = activity&.owner&.name
       %small
         - if activity&.trackable_type&.eql?("KepplerCattle::Cow")
           actualizó ganado
@@ -15,13 +15,13 @@
           actualizó
           = t("activerecord.attributes.#{activity&.trackable_type&.split('::').last.downcase}")
           de ganado
-          #{activity.recipient&.species&.name}
-          #{activity.recipient&.race&.name}
+          #{activity&.recipient&.species&.name}
+          #{activity&.recipient&.race&.name}
           %b
-            = activity.recipient.try('serie_number') || activity.recipient_id
+            = activity&.recipient.try('serie_number') || activity&.recipient_id
       %span.time
         %i.icofont-clock-time
         a las
-        = activity.created_at.to_formatted_s(:time)
+        = activity&.created_at.to_formatted_s(:time)
         del día
-        = activity.created_at.to_formatted_s(:day)
+        = activity&.created_at.to_formatted_s(:day)

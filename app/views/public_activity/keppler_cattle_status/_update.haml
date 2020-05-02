@@ -3,7 +3,7 @@
     %h6.timeline-header.no-border
       %small
         %b
-          = activity.owner&.name
+          = activity&.owner&.name
       %small
         actualizó ganado
         #{activity&.trackable&.species&.name}
@@ -13,6 +13,6 @@
       %span.time
         %i.icofont-clock-time
         a las
-        = activity.created_at.to_formatted_s(:time)
+        = activity&.created_at.to_formatted_s(:time)
         del día
-        = activity.created_at.to_formatted_s(:day)
+        = activity&.created_at.to_formatted_s(:day)

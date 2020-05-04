@@ -1,5 +1,5 @@
 -# = render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
-= render 'keppler_frontend/app/cattle/partials/listing', farm: @farm, cows: @active_cows, search: @q
+= render 'keppler_frontend/app/cattle/partials/listing', farm: @farm, cows: @page_active_cows, search: @q
 
 :javascript
   $('#select-search').change(function() {

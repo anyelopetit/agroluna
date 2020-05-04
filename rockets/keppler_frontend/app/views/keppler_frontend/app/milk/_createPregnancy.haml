@@ -20,20 +20,20 @@
                       %h3
                         Número de Serie
                         %b #{cow.serie_number}
-                      = simple_form_for [@farm, KepplerCattle::Status.new], url: create_pregnancy_farm_milk_index_path(@farm.id, cow.id), method: :post, html: { style: 'width: 100%' } do |f|
+                      = simple_form_for [@farm, KepplerCattle::Status.new], url: create_pregnancy_farm_milk_index_path(@farm.id, cow.id), method: :post, html: { id: "new_#{cow.id}_status",  style: 'width: 100%' } do |f|
                         .row.mt-4
-                          = f.input :user_id, input_html: { name: "status[user_id]", value: current_user.id }, as: :hidden
-                          = f.input :cow_id, input_html: { name: "status[cow_id]", value: cow&.id }, as: :hidden
-                          = f.input :status_type, input_html: { name: "status[type]", value: 'Pregnancy' }, as: :hidden
+                          = f.input :user_id, input_html: { id: "status_#{cow&.id}_user_id", name: "status[user_id]", value: current_user.id }, as: :hidden
+                          = f.input :cow_id, input_html: { id: "status_cow_id-#{cow.id}", name: "status[cow_id]", value: cow&.id }, as: :hidden
+                          = f.input :status_type, input_html: { id: "status_#{cow&.id}_status_type", name: "status[type]", value: 'Pregnancy' }, as: :hidden
                           %input{ name: 'status[farm_id]', value: @farm.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
                           .col-sm-12.col-md-6
                             .form-group
                               %label.label_custom--strong Fecha de registro
-                              %input.form-control.input_custom.datepicker#status_date{ name: "status[date]", autocomplete: 'off', value: Date.today }
+                              %input.form-control.input_custom.datepicker{ id: "status_#{cow&.id}_date", name: "status[date]", autocomplete: 'off', value: Date.today }
                           .col-sm-12.col-md-6
                             .form-group
                               %label.label_custom--strong Meses de preñez
-                              %input.form-control.input_custom#status_months{ name: "status[months]", type: 'number', autocomplete: 'off', value: 0, min: 0, max: 9, step: 0.5 }
+                              %input.form-control.input_custom{ id: "status_#{cow&.id}_months",  name: "status[months]", type: 'number', autocomplete: 'off', value: 0, min: 0, max: 9, step: 0.5 }
                           .col-sm-12.col-md-6
                             .form-group
                               %label.label_custom--strong Pajuela

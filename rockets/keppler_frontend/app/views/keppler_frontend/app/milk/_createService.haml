@@ -20,15 +20,15 @@
                       %h3
                         Número de Serie
                         %b #{cow.serie_number}
-                      = simple_form_for [@farm, KepplerCattle::Status.new], url: create_service_farm_milk_index_path(@farm, cow), html: { style: 'width: 100%' } do |f|
+                      = simple_form_for [@farm, KepplerCattle::Status.new], url: create_service_farm_milk_index_path(@farm, cow), html: { id: "new_#{cow.id}_status", style: 'width: 100%' } do |f|
                         .row
-                          = f.input :user_id, input_html: { name: "status[user_id]", value: current_user.id }, as: :hidden
-                          = f.input :cow_id, input_html: { name: "status[cow_id]", value: cow&.id }, as: :hidden
-                          = f.input :status_type, input_html: { name: "status[type]", value: 'Service' }, as: :hidden
+                          = f.input :user_id, input_html: { id: "status_#{cow&.id}_user_id", name: "status[user_id]", value: current_user.id }, as: :hidden
+                          = f.input :cow_id, input_html: { id: "status_cow_id-#{cow.id}", name: "status[cow_id]", value: cow&.id }, as: :hidden
+                          = f.input :status_type, input_html: { id: "status_#{cow&.id}_status_type", name: "status[type]", value: 'Service' }, as: :hidden
                           .col-sm-6.col-md-6
                             .form-group
                               %label.label_custom--strong Fecha de servicio
-                              %input.form-control.input_custom.datepicker{ name: "status[date]", value: Date.today }
+                              %input.form-control.input_custom.datepicker{ id: "status_#{cow}_date", name: "status[date]", value: Date.today }
                           .col-sm-6.col-md-6
                             .form-group
                               %label.label_custom--strong Pajuela a colocar

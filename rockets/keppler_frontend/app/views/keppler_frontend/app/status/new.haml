@@ -18,7 +18,7 @@
             = simple_form_for [@farm, @cow, @weight] do |f|
               .form-padding
                 .row
-                  = f.input :user_id, include_blank: false, input_html: { class: 'form-control input_custom', value: current_user.id }, as: :hidden, label_html: { class: 'label_custom--strong' }
+                  = f.input :user_id, include_blank: false, input_html: { id: "status_#{cow&.id}_user_id", class: 'form-control input_custom', value: current_user.id }, as: :hidden, label_html: { class: 'label_custom--strong' }
                   = f.input :cow_id, include_blank: false, input_html: { class: 'form-control input_custom', value: @cow&.id }, as: :hidden, label_html: { class: 'label_custom--strong' }
                   .col-sm-12.col-md-6
                     = f.input :weight, autofocus: true, placeholder: '0.00 KG', label: 'Peso (KG)', input_html: { class: 'form-control input_custom', min: 0, value: (@last_weight&.weight.blank? ? 0 : @last_weight&.weight) }, label_html: { class: 'label_custom--strong' }

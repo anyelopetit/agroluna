@@ -11,7 +11,7 @@
           %span.ml-3{style: "color:#797979 !important;"} (#{@cow.serie_number})
         = simple_form_for [@farm, @cow, @medical_history] do |f|
           = f.input :cow_id, input_html: { value: @cow.id }, as: :hidden
-          = f.input :user_id, input_html: { value: current_user.id }, as: :hidden
+          = f.input :user_id, input_html: { id: "status_#{cow&.id}_user_id", value: current_user.id }, as: :hidden
           .row
             .col-sm-12.col-md-6
               = f.input :evaluation_date, as: 'string', label: 'Fecha de Evaluación', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom evaluation', value: Date.today }

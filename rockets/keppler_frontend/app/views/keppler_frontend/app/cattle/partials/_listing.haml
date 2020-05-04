@@ -45,7 +45,7 @@
                       Transferir a
                       %i.icofont-simple-down
                   .dropdown-menu{"aria-labelledby" => "profileDropdown"}
-                    = link_to '#', class: 'multiple_ids mt-4 mb-4 mr-1 dropdown-item', onclick: 'strategic_lots()' do
+                    = link_to '#', class: 'multiple_ids mt-2 mb-2 mr-1 dropdown-item', onclick: 'strategic_lots()' do
                       Lote estratégico
                 -# = link_to new_weights_farm_cows_path(@farm, []), class: 'multiple_ids' do
                   %button.btn.btn_custom.btn--filled.btn--medium
@@ -58,28 +58,28 @@
                       Reporte
                       %i.icofont-simple-down
                   -# .dropdown-menu{"aria-labelledby" => "reportDropdown"}
-                    = link_to({action: action_name.to_sym, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    = link_to({action: action_name.to_sym, format: :pdf}, {class: ' mt-2 mb-2 mr-1 dropdown-item', target: '_blank'}) do
                       PDF
-                    = link_to({action: action_name.to_sym, format: :xls}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    = link_to({action: action_name.to_sym, format: :xls}, {class: ' mt-2 mb-2 mr-1 dropdown-item', target: '_blank'}) do
                       XLS
-                    = link_to({action: action_name.to_sym, format: :csv}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    = link_to({action: action_name.to_sym, format: :csv}, {class: ' mt-2 mb-2 mr-1 dropdown-item', target: '_blank'}) do
                       CSV
                   .dropdown-menu{"aria-labelledby" => "reportDropdown"}
-                    = link_to({controller: :seasons, action: :reproduction_cows, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    = link_to({controller: :seasons, action: :reproduction_cows, format: :pdf}, {class: ' mt-2 mb-2 mr-1 dropdown-item', target: '_blank'}) do
                       Hembras reproductivas
-                    = link_to({controller: :seasons, action: :inseminations_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    = link_to({controller: :seasons, action: :inseminations_report, format: :pdf}, {class: ' mt-2 mb-2 mr-1 dropdown-item', target: '_blank'}) do
                       Reporte de Pajuelas
-                    = link_to({controller: :seasons, action: :typologies_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    = link_to({controller: :seasons, action: :typologies_report, format: :pdf}, {class: ' mt-2 mb-2 mr-1 dropdown-item', target: '_blank'}) do
                       Reporte de Tipologías
                     - if action_name.eql?('index_inactives')
-                      = link_to({controller: :cattle, action: :index_inactives, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                      = link_to({controller: :cattle, action: :index_inactives, format: :pdf}, {class: ' mt-2 mb-2 mr-1 dropdown-item', target: '_blank'}) do
                         Series inactivas
-                    = link_to({controller: :seasons, action: :analytic_weight_report, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    = link_to({controller: :seasons, action: :analytic_weight_report, format: :pdf}, {class: ' mt-2 mb-2 mr-1 dropdown-item', target: '_blank'}) do
                       Análisis de pesos
-                    -# = link_to({controller: :transferences, action: :index, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                    -# = link_to({controller: :transferences, action: :index, format: :pdf}, {class: ' mt-2 mb-2 mr-1 dropdown-item', target: '_blank'}) do
                     -#   Transferencias
                     - if action_name.eql?('index')
-                      = link_to({controller: :cattle, action: :index, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                      = link_to({controller: :cattle, action: :index, format: :pdf}, {class: ' mt-2 mb-2 mr-1 dropdown-item', target: '_blank'}) do
                         Reporte General
               %a.mt-4.mb-4.open-status-history
                 %button.btn.btn_custom.btn--filled.btn--medium
@@ -100,7 +100,7 @@
                   Agregar
                 %a.open-status-history{class: "dropdown-item"}
                   Historial
-                = link_to({action: :index, format: :pdf}, {class: ' mt-4 mb-4 mr-1 dropdown-item', target: '_blank'}) do
+                = link_to({action: :index, format: :pdf}, {class: ' mt-2 mb-2 mr-1 dropdown-item', target: '_blank'}) do
                   Reporte
               
       

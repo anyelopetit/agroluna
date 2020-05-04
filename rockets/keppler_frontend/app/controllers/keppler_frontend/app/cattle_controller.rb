@@ -198,9 +198,9 @@ module KepplerFrontend
       @cows = @q.result(distinct: true).includes(:locations)
       @active_cows = @cows.actives.order(:serie_number)
       @inactive_cows = @cows.inactives.order(:serie_number)
-      if request.format.symbol.eql?(:html)
-        @active_cows = @active_cows.page(params[:page]).per(50)
-        @inactive_cows = @inactive_cows.page(params[:page]).per(50)
+      if %i[html js].include? request.format.symbol
+        @page_active_cows = @active_cows.page(params[:page]).per(50)
+        @page_inactive_cows = @inactive_cows.page(params[:page]).per(50)
       end
       @attributes = KepplerCattle::Cow.index_attributes
       @typologies = KepplerCattle::Typology.all

@@ -604,7 +604,7 @@
 /* Slider */
 /* line 45, /home/estrellita/Documentos/Slice Group/agroluna-a/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/slick-theme.scss */
 .slick-loading .slick-list {
-  background: #fff url(/images/ajax-loader.gif) center center no-repeat;
+  background: #fff url(/assets/ajax-loader.gif) center center no-repeat;
 }
 
 /* Icons */

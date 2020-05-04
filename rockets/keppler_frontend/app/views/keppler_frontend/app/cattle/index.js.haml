@@ -1,9 +1,9 @@
 =# infinite_append "#cows", { partial: "keppler_frontend/app/cattle/partials/cattle_item", collection: @active_cows }
 
 
-- if @active_cows.next_page
-  $('#cows').append("#{j render "keppler_frontend/app/cattle/partials/cattle_item", cows: @active_cows }");
-  $('.pagination').replaceWith("#{j paginate @active_cows }");
+- if @page_active_cows.next_page
+  $('#cows').append("#{j render "keppler_frontend/app/cattle/partials/cattle_item", cows: @page_active_cows }");
+  $('.pagination').replaceWith("#{j paginate @page_active_cows }");
   $('#loading').html('')
 
 - else

@@ -22,9 +22,9 @@
                           %b #{cow.serie_number}
                         = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: create_services_farm_season_path(@farm, @season, @strategic_lot), action: :create_weights, method: :post, html: { style: 'width: 100%' } do |f|
                           .row
-                            = f.input :user_id, input_html: { name: "status[user_id]", value: current_user.id }, as: :hidden
+                            = f.input :user_id, input_html: { id: "status_#{cow&.id}_user_id", name: "status[user_id]", value: current_user.id }, as: :hidden
                             = f.input :cow_id, input_html: { name: "status[cow_id]", value: cow&.id }, as: :hidden
-                            = f.input :status_type, input_html: { name: "status[type]", value: 'Service' }, as: :hidden
+                            = f.input :status_type, input_html: { id: "status_#{cow&.id}_status_type", name: "status[type]", value: 'Service' }, as: :hidden
                             .col-sm-6.col-md-6
                               .form-group
                                 %label.label_custom--strong Fecha de servicio

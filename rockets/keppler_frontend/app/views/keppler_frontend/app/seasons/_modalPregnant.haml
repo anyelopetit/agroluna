@@ -17,9 +17,9 @@
                     %b #{cow.serie_number}
                   = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: create_pregnancies_farm_season_path(@farm.id, @season.id, cow&.id, cow.strategic_lot.id), method: :post, html: { style: 'width: 100%' } do |f|
                     .row.mt-4
-                      = f.input :user_id, input_html: { name: "status[user_id]", value: current_user.id }, as: :hidden
-                      = f.input :cow_id, input_html: { name: "status[cow_id]", value: cow&.id }, as: :hidden
-                      = f.input :status_type, input_html: { name: "status[type]", value: 'Pregnancy' }, as: :hidden
+                      = f.input :user_id, input_html: { id: "status_#{cow&.id}_user_id", name: "status[user_id]", value: current_user.id }, as: :hidden
+                      = f.input :cow_id, input_html: { id: "status_cow_id-#{cow.id}", name: "status[cow_id]", value: cow&.id }, as: :hidden
+                      = f.input :status_type, input_html: { id: "status_#{cow&.id}_status_type", name: "status[type]", value: 'Pregnancy' }, as: :hidden
                       %input{ name: 'status[farm_id]', value: @farm.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
                       %input{ name: 'status[season_id]', value: @season.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
                       .col-sm-12.col-md-6
@@ -29,7 +29,7 @@
                       .col-sm-12.col-md-6
                         .form-group
                           %label.label_custom--strong Meses de preñez
-                          %input.form-control.input_custom#status_months{ name: "status[months]", type: 'number', autocomplete: 'off', value: 0, min: 0, max: 9, step: 0.5 }
+                          %input.form-control.input_custom{ id: "status_#{cow&.id}_months",  name: "status[months]", type: 'number', autocomplete: 'off', value: 0, min: 0, max: 9, step: 0.5 }
                       .col-sm-12.col-md-6
                         .form-group
                           %label.label_custom--strong Pajuela / Padrote

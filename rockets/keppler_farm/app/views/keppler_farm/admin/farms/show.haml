@@ -45,7 +45,7 @@
           .box-body.no-padding  
             = simple_form_for [:admin, :farm, @assignment], url: admin_farm_farm_assign_operator_path(@farm) do |f|
               .col-sm-8
-                = f.input :user_id, collection: @users, label: false, placeholder: 'hola', input_html: { onchange: 'validateOperator()' }
+                = f.input :user_id, collection: @users, label: false, placeholder: 'hola', input_html: { id: "status_#{cow&.id}_user_id", onchange: 'validateOperator()' }
                 = f.input :keppler_farm_farm_id, value: @farm&.id, as: :hidden
               .col-sm-4
                 = f.submit :add, value: t('keppler.actions.add'), id: 'add-operator', disabled: true

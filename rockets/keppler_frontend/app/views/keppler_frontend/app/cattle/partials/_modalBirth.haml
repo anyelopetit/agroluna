@@ -25,7 +25,7 @@
                   -# .stepwizard-step
                     %a.btn.btn-inactive.btn-circle.disabled{ disabled: "disabled", id: "cow-#{cow&.id}-step-4-circle", href: "#cow-#{cow&.id}-step-4", type: "button" } 4
                     %p Paso 4
-              = simple_form_for [@farm, KepplerCattle::Status.new], url: make_birth_farm_cow_path(@farm, cow), html: { onkeypress: "if(event.keyCode == 13) event.returnValue = false;" } do |f|
+              = simple_form_for [@farm, KepplerCattle::Status.new], url: make_birth_farm_cow_path(@farm, cow), html: { id: "new_status-#{cow.id}", onkeypress: "if(event.keyCode == 13) event.returnValue = false;" } do |f|
                 %input{ type: 'hidden', name: "status[type]", value: 'Birth' }
                 %input{ type: 'hidden', name: "status[cow_id]", value: cow&.id }
                 %input{ name: 'status[farm_id]', value: @farm.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
@@ -37,21 +37,21 @@
                       .row
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Parto Exitoso
-                          %select.form-control.select.input_custom{ id: "status_#{cow&.id}_successfully", "aria-hidden" => "true", name: "status[successfully]"  }
+                          %select.form-control.select.input_custom{ id: "birth_#{cow&.id}_successfully", "aria-hidden" => "true", name: "status[successfully]"  }
                             %option{ value: 1 } Si
                             %option{ value: 0 } No
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Parto de Morochos
-                          %select.form-control.select.input_custom{ id: "status_#{cow&.id}_twins", "aria-hidden" => "true", name: "status[twins]"  }
+                          %select.form-control.select.input_custom{ id: "birth_#{cow&.id}_twins", "aria-hidden" => "true", name: "status[twins]"  }
                             %option{ value: 0 } No
                             %option{ value: 1 } Si
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Fecha del parto
-                          %input.form-control.input_custom.datepicker{ id: "status_#{cow&.id}_date", name: "status[date]", autocomplete: 'off', value: Date.today }
+                          %input.form-control.input_custom.datepicker{ id: "birth_#{cow&.id}_date", name: "status[date]", autocomplete: 'off', value: Date.today }
                         .col-sm-12.col-md-6
                           -# = f.input :name, label: 'Nombre del Responsable', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
                           %label.label_custom--strong Nombre del responsable
-                          %input.form-control.input_custom{ id: "status_#{cow&.id}_user_name", name: "status[user_name]", autocomplete: 'off', list: 'responsables' }
+                          %input.form-control.input_custom{ id: "birth_#{cow&.id}_user_name", name: "status[user_name]", autocomplete: 'off', list: 'responsables' }
                           %datalist#responsables
                             - KepplerFarm::Responsable.all.each do |responsable|
                               %option{ value: responsable.name }
@@ -80,13 +80,9 @@
                           %select.form-control.select.input_custom{"aria-hidden" => "true", name: "new_cow[gender]"  }
                             %option{ value: 'female' } Hembra
                             %option{ value: 'male' } Macho
-                        -# .col-sm-12.col-md-6
-                          %label.label_custom--strong Especie
-                          %select#new_cow_strategic_lot.form-control.select.input_custom{"aria-hidden" => "true", name: "new_cow[strategic_lot]"  }
-                            %option Vacuno
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Raza
-                          %select#new_cow_strategic_lot.form-control.select.input_custom{"aria-hidden" => "true", name: "new_cow[race_id]"  }
+                          %select.form-control.select.input_custom{id: "new_cow_strategic_lot-#{cow.id}", "aria-hidden" => "true", name: "new_cow[race_id]"  }
                             - [cow&.race, @farm.inseminations.find_by(id: cow.statuses.where(status_type: 'Pregnancy')&.last&.insemination_id)&.race].each_with_index do |race, index|
                               - if race
                                 %option{ value: race.id } #{race.name} (#{index.zero? ? 'Raza de la madre' : 'Raza del padre'})
@@ -387,7 +383,7 @@
             curStepBtn = curStep.attr("id"),
             prevStepWizard = $('#modalBirth-#{cow&.id} div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a");
 
-        if ($('#cow-#{cow&.id}-step-1 #status_#{cow&.id}_successfully').val() == 0) {
+        if ($('#cow-#{cow&.id}-step-1 #birth_#{cow&.id}_successfully').val() == 0) {
           $('#cow-#{cow&.id}-step-1-circle').trigger('click');
         } else {
           prevStepWizard.removeAttr('disabled').trigger('click');
@@ -410,7 +406,7 @@
         }
 
         if (isValid) {
-          if ($('#cow-#{cow&.id}-step-1 #status_#{cow&.id}_successfully').val() == 0) {
+          if ($('#cow-#{cow&.id}-step-1 #birth_#{cow&.id}_successfully').val() == 0) {
             $('#cow-#{cow&.id}-step-4-circle').trigger('click');
           } else {
             nextStepWizard.removeAttr('disabled').trigger('click');
@@ -486,7 +482,7 @@
       $('#cow-#{cow&.id}-step-3-circle').addClass('disabled')
       $('#cow-#{cow&.id}-step-2 .nextBtn').prop('disabled', true)
     } else {
-      if ($('#status_#{cow&.id}_twins').val() == 1) {
+      if ($('#birth_#{cow&.id}_twins').val() == 1) {
         if ( $('#cow-#{cow&.id}-step-2 #other_new_cow_#{cow&.id}_serie_number').val() == '') {
           $('#cow-#{cow&.id}-step-3-circle').addClass('disabled')
           $('#cow-#{cow&.id}-step-2 .nextBtn').prop('disabled', true)
@@ -508,7 +504,7 @@
     if ($('#cow-#{cow&.id}-step-3 #new_cow_weight_#{cow&.id}_weight').val() == '') {
       weight_is_empty = true
     } else {
-      if ($('#status_#{cow&.id}_twins').val() == 1) {
+      if ($('#birth_#{cow&.id}_twins').val() == 1) {
         if ($('#cow-#{cow&.id}-step-3 #other_new_cow_weight_#{cow&.id}_weight').val() == '') {
           weight_is_empty = true
         }
@@ -520,8 +516,8 @@
     }
   })
 
-  $('#cow-#{cow&.id}-step-1 #status_#{cow&.id}_successfully').change(function() {
-    if ($('#status_#{cow&.id}_successfully').val() == 1) {
+  $('#cow-#{cow&.id}-step-1 #birth_#{cow&.id}_successfully').change(function() {
+    if ($('#birth_#{cow&.id}_successfully').val() == 1) {
       $('#cow-#{cow&.id}-step-2-circle').removeClass('disabled')
       $('#cow-#{cow&.id}-step-1 [type=submit]').hide()
       $('#cow-#{cow&.id}-step-1 .nextBtn').show()
@@ -533,8 +529,8 @@
     }
   })
 
-  $('#cow-#{cow&.id}-step-1 #status_#{cow&.id}_twins').change(function() {
-    if ($('#status_#{cow&.id}_twins').val() == 1) {
+  $('#cow-#{cow&.id}-step-1 #birth_#{cow&.id}_twins').change(function() {
+    if ($('#birth_#{cow&.id}_twins').val() == 1) {
       $('.other_new_cow_#{cow&.id}').show()
     } else {
       $('.other_new_cow_#{cow&.id}').hide()
@@ -545,43 +541,43 @@
   // Detalles de verificación
 
   // Status
-  function change_status_successfully() {
-    $('#value_#{cow&.id}_successfully').text($('#status_#{cow&.id}_successfully').val() == 1 ? 'Sí' : 'No')
+  function change_birth_successfully() {
+    $('#value_#{cow&.id}_successfully').text($('#birth_#{cow&.id}_successfully').val() == 1 ? 'Sí' : 'No')
   }
   function change_twins() {
-    $('#value_#{cow&.id}_twins').text($('#status_#{cow&.id}_twins').val() == 1 ? 'Sí' : 'No')
+    $('#value_#{cow&.id}_twins').text($('#birth_#{cow&.id}_twins').val() == 1 ? 'Sí' : 'No')
   }
   function change_twins() {
-    $('#value_#{cow&.id}_twins').text($('#status_#{cow&.id}_twins').val() == 1 ? 'Sí' : 'No')
+    $('#value_#{cow&.id}_twins').text($('#birth_#{cow&.id}_twins').val() == 1 ? 'Sí' : 'No')
   }
   function change_user_name() {
-    $('#value_#{cow&.id}_user_name').text($('#status_#{cow&.id}_user_name').val() == 1 ? 'Sí' : 'No')
+    $('#value_#{cow&.id}_user_name').text($('#birth_#{cow&.id}_user_name').val() == 1 ? 'Sí' : 'No')
   }
   function change_date() {
-    $('#value_#{cow&.id}_date').text($('#status_#{cow&.id}_date').val() == 1 ? 'Sí' : 'No')
+    $('#value_#{cow&.id}_date').text($('#birth_#{cow&.id}_date').val() == 1 ? 'Sí' : 'No')
   }
 
-  function change_status_successfully() {
-    $('#value_#{cow&.id}_successfully').text($('#status_#{cow&.id}_successfully').val() == 1 ? 'Sí' : 'No')
+  function change_birth_successfully() {
+    $('#value_#{cow&.id}_successfully').text($('#birth_#{cow&.id}_successfully').val() == 1 ? 'Sí' : 'No')
   }
   function change_twins() {
-    $('#value_#{cow&.id}_twins').text($('#status_#{cow&.id}_twins').val() == 1 ? 'Sí' : 'No')
+    $('#value_#{cow&.id}_twins').text($('#birth_#{cow&.id}_twins').val() == 1 ? 'Sí' : 'No')
   }
   function change_twins() {
-    $('#value_#{cow&.id}_twins').text($('#status_#{cow&.id}_twins').val() == 1 ? 'Sí' : 'No')
+    $('#value_#{cow&.id}_twins').text($('#birth_#{cow&.id}_twins').val() == 1 ? 'Sí' : 'No')
   }
   function change_user_name() {
-    $('#value_#{cow&.id}_user_name').text($('#status_#{cow&.id}_user_name').val() == 1 ? 'Sí' : 'No')
+    $('#value_#{cow&.id}_user_name').text($('#birth_#{cow&.id}_user_name').val() == 1 ? 'Sí' : 'No')
   }
   function change_date() {
-    $('#value_#{cow&.id}_date').text($('#status_#{cow&.id}_date').val() == 1 ? 'Sí' : 'No')
+    $('#value_#{cow&.id}_date').text($('#birth_#{cow&.id}_date').val() == 1 ? 'Sí' : 'No')
   }
 
   // New_cow
 
   $(function() {
     // Status
-    change_status_successfully()
+    change_birth_successfully()
     change_twins()
     change_user_name()
     change_date()
@@ -589,20 +585,20 @@
   })
 
   // Status (Paso 1)
-  $('#status_#{cow&.id}_successfully').change(function() {
-    change_status_successfully()
+  $('#birth_#{cow&.id}_successfully').change(function() {
+    change_birth_successfully()
   })
 
-  $('#status_#{cow&.id}_twins').change(function() {
-    $('#value_#{cow&.id}_twins').text($('#status_#{cow&.id}_twins').val() == 1 ? 'Sí' : 'No')
+  $('#birth_#{cow&.id}_twins').change(function() {
+    $('#value_#{cow&.id}_twins').text($('#birth_#{cow&.id}_twins').val() == 1 ? 'Sí' : 'No')
   })
 
-  $('#status_#{cow&.id}_user_name').change(function() {
-    $('#value_#{cow&.id}_user_name').text($('#status_#{cow&.id}_user_name').val())
+  $('#birth_#{cow&.id}_user_name').change(function() {
+    $('#value_#{cow&.id}_user_name').text($('#birth_#{cow&.id}_user_name').val())
   })
 
-  $('#status_#{cow&.id}_date').change(function() {
-    $('#value_#{cow&.id}_date').text($('#status_#{cow&.id}_date').val())
+  $('#birth_#{cow&.id}_date').change(function() {
+    $('#value_#{cow&.id}_date').text($('#birth_#{cow&.id}_date').val())
   })
 
   // Becerro (Paso 2)

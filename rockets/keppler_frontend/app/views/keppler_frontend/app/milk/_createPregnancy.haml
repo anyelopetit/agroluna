@@ -20,7 +20,7 @@
                       %h3
                         Número de Serie
                         %b #{cow.serie_number}
-                      = simple_form_for [@farm, KepplerCattle::Status.new], url: create_pregnancy_farm_milk_index_path(@farm.id, cow.id), method: :post, html: { id: "new_#{cow.id}_status",  style: 'width: 100%' } do |f|
+                      = simple_form_for [@farm, KepplerCattle::Status.new], url: create_pregnancy_farm_milk_index_path(@farm.id, cow.id), method: :post, html: { id: "new_#{cow.id}_status", style: 'width: 100%' } do |f|
                         .row.mt-4
                           = f.input :user_id, input_html: { id: "status_#{cow&.id}_user_id", name: "status[user_id]", value: current_user.id }, as: :hidden
                           = f.input :cow_id, input_html: { id: "status_cow_id-#{cow.id}", name: "status[cow_id]", value: cow&.id }, as: :hidden

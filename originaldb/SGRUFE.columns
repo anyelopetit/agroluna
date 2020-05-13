@@ -1,7 +1,0 @@
-"name","type","length","leftDigits","rightDigits"
-"REF","INTEGER","3","3","0"
-"MAY","STRING","3","0","0"
-"AUX","STRING","0","0","0"
-"DESC","STRING","4","0","0"
-"VALOR","INTEGER","1","1","0"
-"CANTIDAD","INTEGER","1","1","0"

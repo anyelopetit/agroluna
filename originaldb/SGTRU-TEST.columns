@@ -1,8 +1,0 @@
-"name","type","length","leftDigits","rightDigits"
-"LOTE","STRING","0","0","0"
-"SERIE","STRING","0","0","0"
-"PESO","STRING","0","0","0"
-"RAZA","STRING","0","0","0"
-"COLOR","STRING","0","0","0"
-"CONDICION","STRING","0","0","0"
-"FECHA","STRING","0","0","0"

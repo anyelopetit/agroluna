@@ -1,6 +1,0 @@
-"name","type","length","leftDigits","rightDigits"
-"NOMBRE","STRING","12","0","0"
-"TIPOREPORTE","INTEGER","1","1","0"
-"DESCRIPCION","STRING","30","0","0"
-"COMENTARIO","STRING","100","0","0"
-"CATEGORIA","INTEGER","1","1","0"

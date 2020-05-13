@@ -157,16 +157,82 @@ end
 
 ### App
 
+SERIE = 0
+FNAC = 1
+FECR = 2
+TIPO = 3
+RAZA = 4
+SEXO = 5
+COLORPE = 6
+OBSER = 7
+PROCEDE = 8
+ESTADO = 9
+PESOI = 10
+PRECIO = 11
+PPIES = 12
+PESACT = 13
+FULPES = 14
+NPARTO = 15
+DPARTO = 16
+NSERVI = 17
+FECUP = 18
+ABORTO = 19
+EDADPP = 20
+TIPOAP = 21
+LOTE = 22
+LTEMP = 23
+ULTGDP = 24
+COD = 25
+CODAP = 26
+Pa1 = 27
+Pa2 = 28
+Pa3 = 29
+Pa4 = 30
+UA = 31
+EsPajuelaPadre = 32
+Vaquera = 33
+Historia = 34
+NCRIAS = 35
+NPARREPOR = 36
+NABOREPOR = 37
+PESOPP = 38
+LPAST = 39
+FECS = 40
+FECUA = 41
+PESDES = 42
+COLORBO = 43
+COLORMO = 44
+CODP = 45
+NOMBRE = 46
+ASOC1 = 47
+SERIE1 = 48
+FECDES = 49
+TIPOPS = 50
+CODPS = 51
+CODM = 52
+PAJU = 53
+RAZAMADRE = 54
+FECNACMADRE = 55
+RAZAPADRE = 56
+FECNACPADRE = 57
+NOMBREP = 58
+NOMBREM = 59
+NROREGMADRE1 = 60
+ASOCMADRE1 = 61
+ASOCPADRE1 = 62
+NROREGPADRE1 = 63
+ASOCPADRE2 = 64
+
 COWS =
   CSV
-    .read('originaldb/SGANIM.csv') # Cows Table
-    .reject { |row| row[75].eql?('True') } # Reject EsPajuelaPadre == 'True'
-    .sort_by { |row| row[7].blank? ? row[0] : row[7] } # Sort by FNAC
+    .read('originaldb/SGANIM.csv')[1..-1] # Cows Table
+    .reject { |row| row[EsPajuelaPadre].eql?('True') } # Reject EsPajuelaPadre == 'True'
+    .sort_by { |row| row[FNAC].blank? ? row[SERIE] : row[FNAC] } # Sort by FNAC
 INSEMINATIONS =
   CSV
-    .read('originaldb/SGANIM.csv') # Cows Table
-    .select { |row| row[75].eql?('True') } # Select EsPajuelaPadre == 'True'
-    .sort_by { |row| row[7].blank? ? row[0] : row[7] } # Sort by FNAC
+    .read('originaldb/SGANIM.csv')[1..-1] # Cows Table
+    .select { |row| row[EsPajuelaPadre].eql?('True') } # Select EsPajuelaPadre == 'True'
+    .sort_by { |row| row[FNAC].blank? ? row[SERIE] : row[FNAC] } # Sort by FNAC
 
 # Fincas
 ['Agropecuaria La Luna'].each do |farm_name|
@@ -197,14 +263,13 @@ end
 
   # Razas
   COWS
-    .sort_by { |row| row[11].blank? ? row[0] : row[11] } # Sort by RAZA
+    .sort_by { |row| row[RAZA].blank? ? row[SERIE] : row[RAZA] } # Sort by RAZA
     .each_with_index do |row, index|
-    next if index.zero? || row[11].blank?
-    next if KepplerCattle::Race.find_by(name: row[11])
+    next if KepplerCattle::Race.find_by(name: row[RAZA]) || row[RAZA].blank?
     race = KepplerCattle::Race.find_or_create_by!(
-      name: row[11],
-      abbreviation: row[11].remove('a', 'e', 'i', 'o', 'u').first(6),
-      description: "Raza #{row[11]}",
+      name: row[RAZA],
+      abbreviation: row[RAZA].remove('a', 'e', 'i', 'o', 'u').first(6),
+      description: "Raza #{row[RAZA]}",
       species_id: 1
     )
     puts race.inspect
@@ -226,14 +291,13 @@ end
 
   # Condiciones corporales
   COWS
-    .sort_by { |row| row[18].blank? ? row[0] : row[18] }.uniq # sort by ESTADO
+    .sort_by { |row| row[ESTADO].blank? ? row[SERIE] : row[ESTADO] }.uniq # sort by ESTADO
     .each_with_index do |row, index|
-    next if index.zero? || row[18].blank?
-    next if KepplerCattle::CorporalCondition.find_by(name: row[18])
+    next if KepplerCattle::CorporalCondition.find_by(name: row[ESTADO]) || row[ESTADO].blank?
     condition = KepplerCattle::CorporalCondition.find_or_create_by!(
-      name: row[18],
-      number: row[18].to_i,
-      description: "Condición Corporal #{row[18].to_i} de especie #{species_name}",
+      name: row[ESTADO],
+      number: row[ESTADO].to_i,
+      description: "Condición Corporal #{index + 1} de especie #{species_name}",
       species_id: 1
     )
     puts condition.inspect
@@ -305,30 +369,40 @@ puts "\n# ===> Responsables creados\n\n\n"
 # "FECNACPADRE (55)", "FECNACMADRE (56)", "NROREGPADRE1 (57)", "NROREGPADRE2 (58)", "NROREGMADRE1 (59)", "NROREGMADRE2 (60)", 
 # "ASOCPADRE1 (61)", "ASOCPADRE2 (62)", "ASOCMADRE1 (63)", "ASOCMADRE2 (64)", "TIPOREGPADRE1 (65)", "TIPOREGPADRE2 (66)", 
 # "TIPOREGMADRE1 (67)", "TIPOREGMADRE2 (68)", "CODAINIORD (69)", "Pa1 (70)", "Pa2 (71)", "Pa3 (72)", "Pa4 (73)", "UA (74)", 
-# "EsPajuelaPadre (75)", "Vaquera (76)", "Historia (77)", "NCRIAS (78)", "NPARREPOR (79)", "NABOREPOR (80)"]
+# "EsPajuelaPadre (32)", "Vaquera (76)", "Historia (77)", "NCRIAS (78)", "NPARREPOR (79)", "NABOREPOR (80)"]
+
+# ["SERIE (0)", "FNAC (1)", "FECR (2)", "TIPO (3)", "RAZA (4)", "SEXO (5)", "COLORPE (6)", "OBSER (7)", "PROCEDE (8)",
+# "ESTADO (9)", "PESOI (10)", "PRECIO (11)", "PPIES (12)", "PESACT (13)", "FULPES (14)", "NPARTO (15)", "DPARTO (16)",
+# "NSERVI (17)", "FECUP (18)", "ABORTO (19)", "EDADPP (20)", "TIPOAP (21)", "LOTE (22)", "LTEMP (23)", "ULTGDP (24)",
+# "COD (25)", "CODAP (26)", "Pa1 (27)", "Pa2 (28)", "Pa3 (29)", "Pa4 (30)", "UA (31)", "EsPajuelaPadre (32)", "Vaquera (33)",
+# "Historia (34)", "NCRIAS (35)", "NPARREPOR (36)", "NABOREPOR (37)", "PESOPP (38)", "LPAST (39)", "FECS (40)", "FECUA (41)",
+# "PESDES (42)", "COLORBO (43)", "COLORMO (44)", "CODP (45)", "NOMBRE (46)", "ASOC1 (47)", "SERIE1 (48)", "FECDES (49)",
+# "TIPOPS (50)", "CODPS (51)", "CODM (52)", "PAJU (53)", "RAZAMADRE (54)", "FECNACMADRE (55)", "RAZAPADRE (56)",
+# "FECNACPADRE (57)", "NOMBREP (58)", "NOMBREM (59)", "NROREGMADRE1 (60)", "ASOCMADRE1 (61)", "ASOCPADRE1 (62)",
+# "NROREGPADRE1 (63)", "ASOCPADRE2 (64)"]
 COWS.each_with_index do |row, i|
-  next if i.zero?
+  next if KepplerCattle::Cow.find_by(serie_number: row[SERIE])
   species = KepplerCattle::Species.first
-  date = row[7]
+  date = row[FNAC]
   puts "===> DATE ANTES = #{date}"
-  date = (row[7].blank? ? Date.current : row[7].to_date rescue Date.current)
+  date = (row[FNAC].blank? ? Date.current : row[FNAC].to_date rescue Date.current)
   puts "===> DATE DESPUES = #{date}"
   cow = KepplerCattle::Cow.create!(
-    serie_number: row[0],
-    short_name: row[1],
+    serie_number: row[SERIE],
+    short_name: row[FNAC],
     # farm_id: [1,2].sample,
-    gender: row[12].eql?('True') ? 'male' : 'female',
+    gender: row[SEXO].eql?('True') ? 'male' : 'female',
     species_id: species.id,
-    race_id: KepplerCattle::Race.find_by(name: row[11])&.id || 1, # <========
+    race_id: KepplerCattle::Race.find_by(name: row[RAZA])&.id || 1,
     birthdate: date,
-    coat_color: row[14],
-    nose_color: row[15],
-    tassel_color: row[13],
-    provenance: row[17],
-    observations: row[16],
-    mother_id: KepplerCattle::Cow.find_by(serie_number: row[2])&.id || 1, # <========
+    coat_color: row[COLORPE],
+    nose_color: row[COLORMO],
+    tassel_color: row[COLORBO],
+    provenance: row[PROCEDE],
+    observations: row[OBSER],
+    mother_id: KepplerCattle::Cow.find_by(serie_number: row[CODM])&.id || 1,
     father_type: KepplerCattle::Cow.to_s,
-    father_id: KepplerCattle::Cow.find_by(serie_number: row[4])&.id
+    father_id: KepplerCattle::Cow.find_by(serie_number: row[CODP])&.id
   )
   puts cow.inspect
 
@@ -369,7 +443,7 @@ COWS.each_with_index do |row, i|
     weight: actual_weight.to_f,
     gained_weight: 0,
     average_weight: row[19].to_f / cow.days,
-    corporal_condition_id: KepplerCattle::CorporalCondition.find_by(name: row[18])&.id || 1, # <========
+    corporal_condition_id: KepplerCattle::CorporalCondition.find_by(name: row[ESTADO])&.id || 1,
     observations: "Peso Inicial fue de #{row[19]}"
   )
   puts weight.inspect
@@ -385,23 +459,22 @@ puts "\n# ===> Series creadas\n\n\n"
 
 # Pajuelas
 INSEMINATIONS.each_with_index do |row, index|
-  next if index.zero?
   species = KepplerCattle::Species.first
   inse = KepplerCattle::Insemination.create!(
-    serie_number: row[0],
-    short_name: row[1],
+    serie_number: row[SERIE],
+    short_name: row[FNAC],
     farm_id: [1].sample,
     species_id: species.id,
-    race_id: KepplerCattle::Race.find_by(name: row[11])&.id || 1, # <========
-    birthdate: (row[7].blank? ? Date.current : row[7].to_date rescue Date.current),
-    coat_color: row[14],
-    nose_color: row[15],
-    tassel_color: row[13],
-    provenance: row[17],
+    race_id: KepplerCattle::Race.find_by(name: row[RAZA])&.id || 1,
+    birthdate: (row[FNAC].blank? ? Date.current : row[FNAC].to_date rescue Date.current),
+    coat_color: row[COLORPE],
+    nose_color: row[COLORMO],
+    tassel_color: row[COLORBO],
+    provenance: row[PROCEDE],
     quantity: Faker::Number.between(1,10),
-    observations: row[16],
-    mother_id: KepplerCattle::Cow.find_by(serie_number: row[2])&.id || 1, # <========
-    father_id: KepplerCattle::Cow.find_by(serie_number: row[4])&.id
+    observations: row[OBSER],
+    mother_id: KepplerCattle::Cow.find_by(serie_number: row[CODM])&.id || 1,
+    father_id: KepplerCattle::Cow.find_by(serie_number: row[RAZA])&.id
   )
   puts inse.inspect
 end
@@ -447,7 +520,7 @@ end
 #     weight: actual_weight.to_f,
 #     gained_weight: row[19],
 #     average_weight: row[19].to_f / cow.days,
-#     corporal_condition_id: KepplerCattle::CorporalCondition.find_by(name: row[18]),
+#     corporal_condition_id: KepplerCattle::CorporalCondition.find_by(name: row[ESTADO]),
 #     observations: Faker::Lorem.paragraph
 #   )
 
@@ -492,7 +565,7 @@ end
 #     weight: actual_weight.to_f,
 #     gained_weight: row[19],
 #     average_weight: row[19].to_f / cow.days,
-#     corporal_condition_id: KepplerCattle::CorporalCondition.find_by(name: row[18]),
+#     corporal_condition_id: KepplerCattle::CorporalCondition.find_by(name: row[ESTADO]),
 #     observations: Faker::Lorem.paragraph
 #   )
 
@@ -537,7 +610,7 @@ end
 #     weight: actual_weight.to_f,
 #     gained_weight: row[19],
 #     average_weight: row[19].to_f / cow.days,
-#     corporal_condition_id: KepplerCattle::CorporalCondition.find_by(name: row[18]),
+#     corporal_condition_id: KepplerCattle::CorporalCondition.find_by(name: row[ESTADO]),
 #     observations: Faker::Lorem.paragraph
 #   )
 
@@ -582,7 +655,7 @@ end
 #   weight: (50.05 * 1),
 #   gained_weight: 26.04.nil? ? 0 : ((50.05 * 1) - 24.50),
 #   average_weight: 26.04.nil? ? 0 : (((50.05 * 1) - 24.50) / cow.days),
-#   corporal_condition_id: KepplerCattle::CorporalCondition.find_by(name: row[18]),
+#   corporal_condition_id: KepplerCattle::CorporalCondition.find_by(name: row[ESTADO]),
 #   observations: Faker::Lorem.paragraph
 # )
 

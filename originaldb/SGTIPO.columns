@@ -1,6 +1,0 @@
-"name","type","length","leftDigits","rightDigits"
-"COD","INTEGER","2","2","0"
-"DESCSIMEF","STRING","19","0","0"
-"DESCUSU","STRING","0","0","0"
-"UAS","DECIMAL","4","1","2"
-"UAU","DECIMAL","4","1","2"

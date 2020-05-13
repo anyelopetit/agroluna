@@ -1,6 +1,0 @@
-"name","type","length","leftDigits","rightDigits"
-"TipoGrafico","INTEGER","1","1","0"
-"Descripcion","STRING","31","0","0"
-"Comentario","STRING","76","0","0"
-"Categoria","INTEGER","1","1","0"
-"Identificador","INTEGER","2","2","0"

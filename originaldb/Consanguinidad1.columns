@@ -1,7 +1,0 @@
-"name","type","length","leftDigits","rightDigits"
-"Serie","STRING","0","0","0"
-"Nombre","STRING","0","0","0"
-"SeriePariente","STRING","0","0","0"
-"NombrePariente","STRING","0","0","0"
-"Consanguinidad","STRING","0","0","0"
-"Comentario","STRING","0","0","0"

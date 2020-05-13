@@ -1,4 +1,0 @@
-"FECHA","CANT","COSLT","LTAM","LTPM","PROMAnimalesDia","LecheporAnimal","Perdida","PORCPerdida","BsPerdidos","PerdidaAnimal","PerdidaDia","IngresosBrutos","AnimalesenOrdeño","Entregada","LecheRecibida","DestinoEntrega","PORCPerdidaporAnimal","CODI","CLIENTE","FECHARECIBO","Vaquera","Tanque"
-"1999-08-02 00:00:00","1300","200","500","800","82","15.85","0","0","0.0000","0","0","260000","82","False","0","","","","","","Rebaño de la Finca","TANQUE"
-"1999-11-26 00:00:00","1000","150","500","500","81","0.11","0","0","0.0000","0","0","150000","81","False","0","","","","","","Rebaño de la Finca","TANQUE"
-"1999-11-28 00:00:00","500","150","500","0","81","3.09","0","0","0.0000","0","0","75000","81","False","0","","","","","","Rebaño de la Finca","TANQUE"

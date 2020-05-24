@@ -15,7 +15,8 @@ module KepplerCattle
     acts_as_list
     acts_as_paranoid
 
-    after_save :create_typology
+    after_save :create_first_typology
+    after_save :change_mother_typology
 
     belongs_to :race, class_name: 'KepplerCattle::Race'
     belongs_to :species, class_name: 'KepplerCattle::Species'
@@ -357,11 +358,17 @@ module KepplerCattle
       )
     end
 
-    def create_typology
+    def create_first_typology
       return unless possible_typologies.present?
       
       first_typology = possible_typologies.order(:min_age).first
       cow_typologies.create!(typology_id: first_typology.id)
+    end
+
+    def change_mother_typology
+      return unless mother_id
+
+      mother.create_typology
     end
   end
 end

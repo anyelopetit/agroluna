@@ -15,18 +15,28 @@ module KepplerCattle
           # puts "*** #{polymorphic_cow(self).possible_typologies.map {|x| [x.name, x.min_age]}} ***"
           polymorphic_cow(self).possible_typologies.order(min_age: :asc).each do |typology|
             break if typology_created
-            if verify_existence(typology) && verify_counter(typology) && verify_min_age(typology) && verify_min_weight(typology)
-              new_typology = polymorphic_cow(self).cow_typologies.new(
-                cow_id: polymorphic_cow(self).id,
-                typology_id: typology.id
-              )
-              typology_created = new_typology.save ? true : false
-              puts "*** Tipología #{typology&.name} creada para #{polymorphic_cow(self).serie_number} (#{polymorphic_cow(self).short_name}) ***" if typology_created
-            end
+            break unless create_typology?(typology)
+
+            new_typology = polymorphic_cow(self).cow_typologies.new(
+              cow_id: polymorphic_cow(self).id,
+              typology_id: typology.id
+            )
+
+            break unless new_typology.save
+
+            typology_created = true
+            puts "*** Tipología #{typology&.name} creada para #{polymorphic_cow(self).serie_number} (#{polymorphic_cow(self).short_name}) ***"
           end
         end
 
         private
+
+        def create_typology?(typology)
+          verify_existence(typology) &&
+            verify_counter(typology) &&
+            verify_min_age(typology) &&
+            verify_min_weight(typology)
+        end
 
         def verify_existence(typology)
           cow_typologies = KepplerCattle::CowTypology.where(
@@ -51,7 +61,6 @@ module KepplerCattle
         end
 
         def verify_min_weight(typology)
-
           polymorphic_cow(self).weight&.weight.to_f >= typology.min_weight.to_f
         end
 

@@ -225,7 +225,7 @@ ASOCPADRE2 = 64
 
 COWS =
   CSV
-    .read('originaldb/SGANIM.csv')[1..100] # Cows Table
+    .read('originaldb/SGANIM.csv')[1..5000] # Cows Table
     .reject { |row| row[EsPajuelaPadre].eql?('True') } # Reject EsPajuelaPadre == 'True'
     .sort_by { |row| row[FNAC].blank? ? row[SERIE] : row[FNAC] } # Sort by FNAC
 INSEMINATIONS =
@@ -383,13 +383,12 @@ puts "\n# ===> Responsables creados\n\n\n"
 COWS.each_with_index do |row, i|
   next if KepplerCattle::Cow.find_by(serie_number: row[SERIE])
   species = KepplerCattle::Species.first
-  date = row[FNAC]
-  puts "===> DATE ANTES = #{date}"
   date = (row[FNAC].blank? ? Date.current : row[FNAC].to_date rescue Date.current)
-  puts "===> DATE DESPUES = #{date}"
+  mother = KepplerCattle::Cow.find_by(serie_number: row[CODM])
+  puts "\n\n ##########  MADRE ID = #{mother&.id} | MADRE SERIE = #{mother&.serie_number}\n\n"
   cow = KepplerCattle::Cow.create!(
     serie_number: row[SERIE],
-    short_name: row[FNAC],
+    short_name: row[NOMBRE],
     # farm_id: [1,2].sample,
     gender: row[SEXO].eql?('True') ? 'male' : 'female',
     species_id: species.id,
@@ -400,7 +399,7 @@ COWS.each_with_index do |row, i|
     tassel_color: row[COLORBO],
     provenance: row[PROCEDE],
     observations: row[OBSER],
-    mother_id: KepplerCattle::Cow.find_by(serie_number: row[CODM])&.id || 1,
+    mother_id: mother&.id || 1,
     father_type: KepplerCattle::Cow.to_s,
     father_id: KepplerCattle::Cow.find_by(serie_number: row[CODP])&.id
   )
@@ -462,7 +461,7 @@ INSEMINATIONS.each_with_index do |row, index|
   species = KepplerCattle::Species.first
   inse = KepplerCattle::Insemination.create!(
     serie_number: row[SERIE],
-    short_name: row[FNAC],
+    short_name: row[NOMBRE],
     farm_id: [1].sample,
     species_id: species.id,
     race_id: KepplerCattle::Race.find_by(name: row[RAZA])&.id || 1,
@@ -474,7 +473,7 @@ INSEMINATIONS.each_with_index do |row, index|
     quantity: Faker::Number.between(1,10),
     observations: row[OBSER],
     mother_id: KepplerCattle::Cow.find_by(serie_number: row[CODM])&.id || 1,
-    father_id: KepplerCattle::Cow.find_by(serie_number: row[RAZA])&.id
+    father_id: KepplerCattle::Cow.find_by(serie_number: row[CODP])&.id
   )
   puts inse.inspect
 end

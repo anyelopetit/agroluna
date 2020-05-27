@@ -15,7 +15,6 @@ module KepplerCattle
     acts_as_list
     acts_as_paranoid
 
-    after_save :create_first_typology
     after_save :change_mother_typology
 
     belongs_to :race, class_name: 'KepplerCattle::Race'
@@ -356,13 +355,6 @@ module KepplerCattle
         user_id: hash.dig(:user_id),
         user: hash.dig(:user)
       )
-    end
-
-    def create_first_typology
-      return unless possible_typologies.present?
-      
-      first_typology = possible_typologies.order(:min_age).first
-      cow_typologies.create!(typology_id: first_typology.id)
     end
 
     def change_mother_typology

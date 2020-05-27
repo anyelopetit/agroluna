@@ -186,6 +186,84 @@ module KepplerFrontend
       redirect_back fallback_location: farm_cows_path(@farm)
     end
 
+    def new_services
+      @cows = @farm&.cows.where(id: params[:multiple_ids].split(','))
+      @found = false
+    end
+
+    def create_services
+      cow = @season&.cows.find(params[:status][:cow_id])
+      insemination = @farm.inseminations.find(params[:status][:insemination_id])
+      if params[:status][:insemination_quant].to_i > insemination.quantity.to_i
+        flash[:error] = 'La cantidad de cartuchos no puede ser mayor a la existente'
+      else
+        if params[:status][:insemination_quant].to_i < 1
+          flash[:error] = 'La cantidad de cartuchos debe ser superior a cero'
+        else
+          status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id, user: params[:status][:user_name]})
+          unless insemination.quantity.to_i.zero?
+            insemination.update(
+              quantity: insemination.quantity.to_i - params[:status][:insemination_quant].to_i
+            )
+          end
+          flash[:notice] = 'Servicio guardado' if status.save!
+        end
+      end
+      redirect_back fallback_location: farm_cows_path(@farm)
+    end
+
+    def new_pregnancies
+      @cows = @season&.cows.where(id: params[:multiple_ids].split(','))
+      @possible_fathers = @farm.cows.possible_fathers_select2
+      @found = false
+    end
+
+    def create_pregnancies
+      status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id})
+      cow = KepplerCattle::Cow.find_by_id(
+        params.dig(:status, :cow_id) || hash[:cow_id]
+      )
+      if status.save!
+        flash[:notice] = 'Servicio guardado'
+      else
+        flash[:error] = 'No se pudo guardar el servicio'
+      end
+      redirect_back fallback_location: farm_cows_path(@farm)
+    end
+
+    def make_abort
+      @cow = @season&.cows.find(params[:abort][:cow_id])
+      @abort = @cow.aborts.new(
+        abort_date: params[:abort][:date],
+        reason: params[:abort][:reason],
+        observations: params[:abort][:observations],
+        season_id: @season.id
+      )
+
+      if @abort.save!
+        @cow.statuses.new_status(params, status_type: 'Nil')
+        flash[:notice] = 'Aborto realizado satisfactoriamente'
+      else
+        flash[:error] = 'No se pudo realizar el parto'
+      end
+
+      redirect_back fallback_location: farm_cows_path(@farm)
+    end
+
+    def wean
+      @cow = KepplerCattle::Cow.find(params[:wean][:cow_id])
+      @cow.weights.create(
+        weight_date: params[:wean][:date],
+        weight: params[:wean][:weight]
+      )
+      @strategic_lot = @farm.strategic_lots.find(params[:wean][:strategic_lot])
+      @cow.locations.create(farm_id: @farm.id, strategic_lot_id: @strategic_lot.id)
+      @cow.create_typology
+
+      flash[:notice] = 'Becerro destetado satisfactoriamente'
+      redirect_back fallback_location: farm_seasons_path
+    end
+
     private
 
     def set_cow

@@ -13,22 +13,22 @@
 
   function checkboxes() {
     function ids_loop(ids) {
-      $ids.forEach(function (id) {
-        $('[checklist-model="check"]:not(:checked)').each(function( index ) {
-          if ($(this).prop('id').includes(id)) {
-            if ($final_array.includes(id)) {
-              $final_array.splice($final_array.indexOf(id), 1);
-            }
-          }
-        });
-        $('[checklist-model="check"]:checked').each(function( index ) {
-          if ($(this).prop('id').includes(id)) {
-            if ( !$final_array.includes(id) ) {
-              $final_array.push(id)
-            }
-          }
-        });
-      });
+      // ids.forEach(function (id) {
+      //   $('[checklist-model="check"]:not(:checked)').each(function( index ) {
+      //     if ($(this).prop('id').includes(id)) {
+      //       if ($final_array.includes(id)) {
+      //         $final_array.splice($final_array.indexOf(id), 1);
+      //       }
+      //     }
+      //   });
+      //   $('[checklist-model="check"]:checked').each(function( index ) {
+      //     if ($(this).prop('id').includes(id)) {
+      //       if ( !$final_array.includes(id) ) {
+      //         $final_array.push(id)
+      //       }
+      //     }
+      //   });
+      // });
       $('.multiple_ids').each(function(index, elem) {
         href = $(elem).attr('href')
         var result = href.split(',').filter(function(e) {
@@ -50,15 +50,28 @@
     })
 
     $('[checklist-model="check"]').click(function() {
-      ids_loop($ids)
+      var id = 
+      $('.multiple_ids').each(function(index, elem) {
+        if ($(this).prop('id').includes(id)) {
+          if ($final_array.includes(id)) {
+            $final_array.splice($final_array.indexOf(id), 1);
+          } else {
+            $final_array.push(id)
+          }
+        }
+        href = $(elem).attr('href')
+        var result = href.split('/').last // .filter(function(e) { return $final_array.indexOf(parseInt(e)) != -1 });
+        console.log('href: ' + href)
+        console.log('$final_array: ' + $final_array)
+        console.log('result: ' + result)
+        $(elem).attr('href', (`${href}${result}`))
+      })
       $('#checkbox-all').prop(
         'checked',
         JSON.stringify($ids) === JSON.stringify($final_array)
       )
     })
   }
-
-  checkboxes()
 
   function strategic_lots() {
     Swal.fire({

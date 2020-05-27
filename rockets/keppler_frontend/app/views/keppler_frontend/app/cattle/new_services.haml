@@ -1,0 +1,201 @@
+.app_wrapper
+  .container_carousel
+    .single-item
+      = link_to({ controller: :seasons, action: :show, id: @season.id }, { class: 'mt-4 mb-4 ml-3' }) do
+        %button.btn.btn_custom.btn--medium
+          %i.icofont-circled-left
+          Listado
+      .row
+        .col-sm-12
+          .card_new
+            %h1
+              Nuevos servicios
+            .form-padding
+              - @cows.each do |cow|
+                .row
+                  - unless @found
+                    - unless cow.status&.status_type&.eql?('Service')
+                      - @found = true
+                      .col-sm-12
+                        %h3
+                          Número de Serie
+                          %b #{cow.serie_number}
+                        = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: create_services_farm_season_path(@farm, @season, @strategic_lot), action: :create_weights, method: :post, html: { style: 'width: 100%' } do |f|
+                          .row
+                            = f.input :user_id, input_html: { id: "status_#{cow&.id}_user_id", name: "status[user_id]", value: current_user.id }, as: :hidden
+                            = f.input :cow_id, input_html: { name: "status[cow_id]", value: cow&.id }, as: :hidden
+                            = f.input :status_type, input_html: { id: "status_#{cow&.id}_status_type", name: "status[type]", value: 'Service' }, as: :hidden
+                            .col-sm-6.col-md-6
+                              .form-group
+                                %label.label_custom--strong Fecha de servicio
+                                %input.form-control.input_custom.datepicker{ name: "status[date]", value: Date.today }
+                            .col-sm-6.col-md-6
+                              .form-group
+                                %label.label_custom--strong Pajuela a colocar
+                                %select.form-control.input_custom.select2{ name: "status[insemination_id]" }
+                                  - @farm.inseminations.all.each do |insemination|
+                                    %option{ value: insemination.id } #{insemination.serie_number} #{' - ' + insemination.short_name} (#{insemination.quantity})
+                            .col-sm-6.col-md-6
+                              .form-group
+                                %label.label_custom--strong Cantidad de cartuchos
+                                %input.form-control.input_custom{ name: "status[insemination_quant]", type: 'number', value: 0, min: 0 }
+                            .col-sm-6.col-md-6
+                              .form-group
+                                %label.label_custom--strong Nombre del responsable
+                                %input.form-control.input_custom{ name: "status[user_name]", autocomplete: 'off', list: 'responsables' }
+                                %datalist#responsables
+                                  - KepplerFarm::Responsable.all.each do |responsable|
+                                    %option{ value: responsable.name }
+                            .col-sm-12
+                              .float-right
+                                %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                                  %i.icofont-save
+                                  Guardar
+            - unless @found
+              .row
+                .col-sm-12
+                  .float-right
+                    = link_to farm_season_path(@farm, @season) do
+                      %button.btn.btn_custom.btn--medium
+                        %i.icofont-circled-left
+                        Ver en el inicio
+                    = link_to services_farm_season_path(@farm.id, @season.id, @strategic_lot.id), class: 'mt-4 mb-4 ml-3' do
+                      %button.btn.btn_custom.btn--medium.btn--filled
+                        %i.icofont-external-link
+                        Ver hembras inseminadas
+            -# .d-flex
+              .toolbar
+                .toolbar-item
+                  -# %a.tool-btn{ 'data-confirm': '¿Estás seguro?', 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+                  = link_to destroy_multiple_farm_strategic_lots_path(@farm), class: 'destroy_multiple', method: :delete, data: { confirm: '¿Estás seguro?' }   do
+                    %i.icofont-trash
+                    Eliminar
+            .content-table{style: "margin-top: 65px!important;"}
+              %table.cow-table
+                %thead
+                  %tr
+                    -# %th
+                      .toolbar-item
+                        .item-check
+                          .checkbox
+                            %label{ for: 'checkbox-all' }
+                              %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+                              %span.cr
+                                %i.cr-icon.icofont-check
+                    %th
+                      Serie
+                    %th
+                      Nombre
+                    %th Tipología
+                    %th Peso
+                    %th Último servicio
+                    %th Pajuelas
+                    %th Servicio
+                    
+                  %tbody#cows
+                    - @cows.each do |cow|
+                      %tr.cow{ style: "border-bottom: 1px #eee solid;", id: "cow-#{cow&.id}" }
+                        -# %td
+                          .checkbox{ style: 'margin: 3px' }
+                            %label{ for: "checkbox-#{cow&.id}" }
+                              %input{ type:"checkbox", id: "checkbox-#{cow&.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow&.id}", '@click' => "listDelete(#{cow&.id})"}
+                              %span.cr
+                                %i.cr-icon.icofont-check
+                        %td
+                          #{cow.serie_number}
+                        %td
+                          = "#{cow.short_name}" unless cow.short_name.blank?
+                        %td
+                          #{cow.typology_name}
+                        %td
+                          #{cow.weight&.weight.to_f} KG
+                        - if cow.status.status_type.eql?('Service')
+                          %td= cow.status&.date&.strftime('%d/%m/%y')  
+                          %td
+                            = @farm.inseminations.find(cow.status.insemination_id).serie_number
+                            #{cow.status.insemination_quantity.to_i} cartuchos
+                          %td.d-flex.justify-content-center
+                            .service.service-active
+                        - else
+                          %td Sin servicio
+                          %td Sin pajuela
+                          %td.d-flex.justify-content-center
+                            .service.service-inactive
+:css
+  .service{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+  .service-active {
+    background-color: #28C76F;
+  }
+  .service-inactive {
+    background-color: #ff0000c7;
+  }
+  dt {
+    float: left;
+    margin-right: 2%;
+    max-width: 40%;
+    font-weight: bold;
+  }
+  
+  dd {
+    color: grey;
+    margin-left: 0%;
+    margin-bottom: .5em;
+  }
+  
+  dd::after {
+    content: " ";
+    display: block;
+    clear: left;
+  } 
+:javascript
+
+  $('.select2').select2()
+
+  $.datepicker.regional['es'] = {
+    closeText: 'Cerrar',
+    prevText: '< Ant',
+    nextText: 'Sig >',
+    currentText: 'Hoy',
+    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+    monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+    weekHeader: 'Sm',
+    dateFormat: 'yy-mm-dd',
+    firstDay: 1,
+    isRTL: false,
+    showMonthAfterYear: false,
+    yearSuffix: ''
+  };
+
+  $.datepicker.setDefaults($.datepicker.regional['es']);
+
+  $('.datepicker').datepicker({
+    dateFormat: 'yy-mm-dd',
+    showOtherMonths: true,
+    selectOtherMonths: true,
+    changeMonth: true,
+    changeYear: true,
+    maxDate: 0,
+    setDate: 0,
+    yearRange: "c-1:c+1",
+  }, $.datepicker.regional[ "es" ])
+
+- @cows.each do |cow|            
+  - unless cow.status&.status_type&.eql?('Service')  
+    :javascript
+      $(document).ready(function(){
+        var id = #{cow&.id}
+        $('.cow').not('#cow-'+id).addClass('tr-active')
+      })
+    - break   
+
+:scss
+  .tr-active {
+    opacity: 0.4 !important;
+  }

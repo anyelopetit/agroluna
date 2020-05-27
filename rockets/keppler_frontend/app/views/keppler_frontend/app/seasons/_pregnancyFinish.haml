@@ -5,6 +5,7 @@
       %h1.text-center Efectividad de preñez
       %canvas#pregnants-chart{ height: "150", width: "400"}
 
+    -# - season_statuses = @farm.seasons.includes(:joined_statuses).where({ id: @season.id }, kepppler_cattle_statuses: { season_id: @season.id })
     - if @season.statuses.blank? #  || @season.users.blank?
       %h1.mb-4{style:"text-transform: uppercase"} No existen responsables en la temporada
     - elsif @season.users.select { |inseminador| inseminador.status_where('Service', @season.id).exists? && !inseminador.name.blank? }

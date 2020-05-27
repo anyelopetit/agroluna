@@ -21,8 +21,9 @@ module KepplerReproduction
       end.pluck(:id)
       where(id: ids)
     }, class_name: 'KepplerCattle::Cow', through: :season_cows
+    has_many :joined_cows, class_name: 'KepplerCattle::Cow', through: :season_cows
     # end
-    has_many :statuses, ->(season){ where(season_id: season.id) }, class_name: 'KepplerCattle::Status', through: :cows
+    has_many :statuses, class_name: 'KepplerCattle::Status', through: :cows
     has_many :users,   -> { distinct }, class_name: 'KepplerFarm::Responsable', through: :statuses
     has_many :inefectivities, -> { distinct }, class_name: 'KepplerReproduction::Inefectivity', through: :users
 

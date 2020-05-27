@@ -34,6 +34,17 @@ KepplerFrontend::Engine.routes.draw do
         get 'nuevos-pesajes/:multiple_ids', to: 'app/cattle#new_weights', as: :new_weights
         post :create_weights
         get 'pesajes/:multiple_ids', to: 'app/cattle#show_weights', as: :weights
+
+        # Procesos en lote
+        get '/nuevos-servicios/:multiple_ids', action: :new_services, as: :new_services
+        post '/create_services/:multiple_ids', action: :create_services, as: :create_services
+
+        get '/nuevas-preñadas/:multiple_ids', action: :new_pregnancies, as: :new_pregnancies
+        post '/create_pregnancies/:multiple_ids', action: :create_pregnancies, as: :create_pregnancies
+
+        post '/statuses', action: :statuses, as: :statuses
+        post '/make_birth', action: :make_birth, as: :make_birth
+        post '/make_abort', action: :make_abort, as: :make_abort
       end
       resources :weights, path: 'pesos', controller: 'app/weights', path_names: { new: 'nuevo', edit: 'editar'}, only: %i[new create] do
         get :change_typology, on: :collection

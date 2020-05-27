@@ -13,19 +13,19 @@ module KepplerCattle
           typology_created = false
           # puts "*** Posibles tipologías para #{polymorphic_cow(self).serie_number}: ***"
           # puts "*** #{polymorphic_cow(self).possible_typologies.map {|x| [x.name, x.min_age]}} ***"
-          polymorphic_cow(self).possible_typologies.order(min_age: :asc).each do |typology|
+          polymorphic_cow(self).possible_typologies.order(min_age: :desc).each do |typology|
             break if typology_created
-            break unless create_typology?(typology)
+            next unless create_typology?(typology)
 
             new_typology = polymorphic_cow(self).cow_typologies.new(
               cow_id: polymorphic_cow(self).id,
               typology_id: typology.id
             )
 
-            break unless new_typology.save
-
-            typology_created = true
-            puts "*** Tipología #{typology&.name} creada para #{polymorphic_cow(self).serie_number} (#{polymorphic_cow(self).short_name}) ***"
+            if new_typology.save
+              typology_created = true
+              puts "*** Tipología #{typology&.name} creada para #{polymorphic_cow(self).serie_number} (#{polymorphic_cow(self).short_name}) ***"
+            end
           end
         end
 

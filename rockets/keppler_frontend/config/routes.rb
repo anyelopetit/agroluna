@@ -13,6 +13,7 @@ KepplerFrontend::Engine.routes.draw do
 
     member do
       get 'species/:species_id/get_races', to: 'app/cattle#get_races', as: :get_races
+      get 'historial', to: 'app/cattle#history', as: :history
     end
 
     resources :cows, path: 'ganado', controller: 'app/cattle', path_names: { new: 'nuevo', edit: 'editar'} do
@@ -39,7 +40,7 @@ KepplerFrontend::Engine.routes.draw do
         get '/nuevos-servicios/:multiple_ids', action: :new_services, as: :new_services
         post '/create_services/:multiple_ids', action: :create_services, as: :create_services
 
-        get '/nuevas-preñadas/:multiple_ids', action: :new_pregnancies, as: :new_pregnancies
+        get '/nuevas-prenadas/:multiple_ids', action: :new_pregnancies, as: :new_pregnancies
         post '/create_pregnancies/:multiple_ids', action: :create_pregnancies, as: :create_pregnancies
 
         post '/statuses', action: :statuses, as: :statuses

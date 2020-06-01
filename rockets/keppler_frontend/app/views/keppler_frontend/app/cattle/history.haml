@@ -1,0 +1,19 @@
+.container
+  = 'No hay actividades' if @activities.empty?
+  -# = render_activities(@activities, locals: { method: 'serie_number' })
+  - @activities.each do |activity|
+    = render partial: "keppler_frontend/app/layouts/public_activity/#{activity&.key.split('.').second}", locals: { activity: activity }
+
+:scss
+  h6 {
+    font-size: 2rem;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  .timeline-item {
+    padding: 10px;
+    border-bottom: solid 1px #aaaa;
+  }

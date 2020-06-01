@@ -1,7 +1,7 @@
 .app_wrapper
   .container_carousel
     .single-item
-      = link_to({ controller: :seasons, action: :show, id: @season.id }, { class: 'mt-4 mb-4 ml-3' }) do
+      = link_to({ controller: :cattle, action: :index }, { class: 'mt-4 mb-4 ml-3' }) do
         %button.btn.btn_custom.btn--medium
           %i.icofont-circled-left
           Listado
@@ -20,7 +20,7 @@
                         %h3
                           Número de Serie
                           %b #{cow.serie_number}
-                        = simple_form_for [@farm, @season, KepplerCattle::Status.new], url: create_services_farm_season_path(@farm, @season, @strategic_lot), action: :create_weights, method: :post, html: { style: 'width: 100%' } do |f|
+                        = simple_form_for [@farm, KepplerCattle::Status.new], url: create_services_farm_cows_path(@farm), action: :create_weights, method: :post, html: { style: 'width: 100%' } do |f|
                           .row
                             = f.input :user_id, input_html: { id: "status_#{cow&.id}_user_id", name: "status[user_id]", value: current_user.id }, as: :hidden
                             = f.input :cow_id, input_html: { name: "status[cow_id]", value: cow&.id }, as: :hidden
@@ -55,11 +55,11 @@
               .row
                 .col-sm-12
                   .float-right
-                    = link_to farm_season_path(@farm, @season) do
+                    = link_to farm_path(@farm) do
                       %button.btn.btn_custom.btn--medium
                         %i.icofont-circled-left
                         Ver en el inicio
-                    = link_to services_farm_season_path(@farm.id, @season.id, @strategic_lot.id), class: 'mt-4 mb-4 ml-3' do
+                    -# = link_to services_farm_path(@farm.id), class: 'mt-4 mb-4 ml-3' do
                       %button.btn.btn_custom.btn--medium.btn--filled
                         %i.icofont-external-link
                         Ver hembras inseminadas

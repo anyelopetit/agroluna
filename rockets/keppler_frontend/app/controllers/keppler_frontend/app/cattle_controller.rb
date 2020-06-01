@@ -12,16 +12,26 @@ module KepplerFrontend
     before_action :set_farms
     before_action :index_variables
     before_action :attachments
-    before_action :index_history, only: %i[index index_inactives]
+    # before_action :index_history, only: %i[index index_inactives]
     before_action :show_history, only: %i[show]
     before_action :respond_to_formats
     before_action :user_authenticate
     before_action :redirect_to_species
     include ObjectQuery
 
-    def index; end
+    def index
+      @active_cows = @cows.actives.order(:serie_number)
+      if %i[html js].include? request.format.symbol
+        @page_active_cows = @active_cows.page(params[:page]).per(50)
+      end
+    end
 
-    def index_inactives; end
+    def index_inactives
+      @inactive_cows = @cows.inactives.order(:serie_number)
+      if %i[html js].include? request.format.symbol
+        @page_inactive_cows = @inactive_cows.page(params[:page]).per(50)
+      end
+    end
 
     def search
       url = Rails.application.routes.recognize_path(request.referrer)
@@ -213,7 +223,7 @@ module KepplerFrontend
     end
 
     def new_pregnancies
-      @cows = @season&.cows.where(id: params[:multiple_ids].split(','))
+      @cows = @farm&.cows.where(id: params[:multiple_ids].split(','))
       @possible_fathers = @farm.cows.possible_fathers_select2
       @found = false
     end
@@ -264,6 +274,16 @@ module KepplerFrontend
       redirect_back fallback_location: farm_seasons_path
     end
 
+    def history
+      @activities = PublicActivity::Activity.includes(:trackable, :owner, recipient: [:species, :race]).where(
+        trackable_type: KepplerCattle::Cow.to_s
+      ).or(
+        PublicActivity::Activity.includes(:trackable, :owner, recipient: [:species, :race]).where(
+          recipient_type: KepplerCattle::Cow.to_s
+        )
+      ).order('created_at desc').limit(50)
+    end
+
     private
 
     def set_cow
@@ -274,15 +294,11 @@ module KepplerFrontend
       @farm = KepplerFarm::Farm.find_by(id: (params[:farm_id] || params[:id]))
       @q = @farm.cows.ransack(params[:q])
       @cows = @q.result(distinct: true).includes(:locations)
-      @active_cows = @cows.actives.order(:serie_number)
-      @inactive_cows = @cows.inactives.order(:serie_number)
-      if %i[html js].include? request.format.symbol
-        @page_active_cows = @active_cows.page(params[:page]).per(50)
-        @page_inactive_cows = @inactive_cows.page(params[:page]).per(50)
-      end
+      @active_cows_size = @cows.actives.size
+      @inactive_cows_size = @cows.inactives.size
       @attributes = KepplerCattle::Cow.index_attributes
       @typologies = KepplerCattle::Typology.all
-      @strategic_lots = @farm.strategic_lots.map { |x| "'#{x.id}': '#{x.name}'" }.join(', ')
+      # @strategic_lots = @farm.strategic_lots.map { |x| "'#{x.id}': '#{x.name}'" }.join(', ')
     end
 
     def cow_attributes

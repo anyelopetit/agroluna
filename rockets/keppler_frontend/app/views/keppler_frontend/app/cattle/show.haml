@@ -36,7 +36,7 @@
                 %button.btn.btn_custom.btn--filled.btn--medium
                   %i.icofont-plus
                   Pesar
-            %a.mt-4.mb-4.open-status-history
+            %a.mt-4.mb-4{ href: history_farm_path(@farm) }
               %button.btn.btn_custom.btn--filled.btn--medium
                 %i.icofont-clock-time
                 Historial
@@ -52,7 +52,7 @@
                 Editar
               %a{ class: 'dropdown-item', href: new_farm_cow_weight_path(@farm, @cow) }
                 Actualizar
-              %a.open-status-history{class: "dropdown-item"}
+              %a{class: "dropdown-item", href: history_farm_path(@farm) }
                 Historial
               = link_to({action: :show, format: :pdf}, {class: 'mt-4 mb-4 dropdown-item', target: '_blank'}) do
                 Reporte

@@ -11743,7 +11743,15 @@ body {
 
 /* line 171, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/partials/_form.scss */
 [type="checkbox"] {
-  display: none;
+  display: block;
+  margin: 0 auto;
+  transition: all .3s ease-in;
+}
+
+/* line 171, /home/estrellita/Documentos/Slice Group/agroluna-a/app/assets/stylesheets/admin/pages/_form.scss */
+[type="checkbox"].checbox-cow {
+  display: block;
+  margin: 0 auto;
   transition: all .3s ease-in;
 }
 /* line 175, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/partials/_form.scss */
@@ -11758,6 +11766,7 @@ body {
   background: #28C76F;
   border: solid 1px #28C76F;
   transition: all .3s ease-in;
+  display: none;
 }
 /* line 187, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/partials/_form.scss */
 [type="checkbox"]:checked + .cr .cr-icon {
@@ -11771,6 +11780,7 @@ body {
   cursor: not-allowed;
   opacity: .5;
   transition: all .3s ease-in;
+  display: none;
 }
 
 /* line 3, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/partials/_navbar.scss */
@@ -13556,7 +13566,15 @@ button:disabled, a:disabled, .btn:disabled {
 
 /* line 171, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/partials/_form.scss */
 [type="checkbox"] {
-  display: none;
+  display: block;
+  margin: 0 auto;
+  transition: all .3s ease-in;
+}
+
+/* line 171, /home/estrellita/Documentos/Slice Group/agroluna-a/app/assets/stylesheets/admin/pages/_form.scss */
+[type="checkbox"].checbox-cow {
+  display: block;
+  margin: 0 auto;
   transition: all .3s ease-in;
 }
 /* line 175, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/partials/_form.scss */
@@ -13571,6 +13589,7 @@ button:disabled, a:disabled, .btn:disabled {
   background: #28C76F;
   border: solid 1px #28C76F;
   transition: all .3s ease-in;
+  display: none;
 }
 /* line 187, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/partials/_form.scss */
 [type="checkbox"]:checked + .cr .cr-icon {
@@ -13584,6 +13603,7 @@ button:disabled, a:disabled, .btn:disabled {
   cursor: not-allowed;
   opacity: .5;
   transition: all .3s ease-in;
+  display: none;
 }
 
 /* line 1, /media/starklord/RESPALDO/Proyectos/Ruby/agroluna/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/components/_body.scss */

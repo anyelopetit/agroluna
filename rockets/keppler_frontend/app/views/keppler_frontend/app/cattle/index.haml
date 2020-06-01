@@ -9,69 +9,75 @@
   })
 
   var $ids = #{@farm.cows.pluck(:id)}
-  var $final_array = []
+  var $multiple_ids = []
 
-  function checkboxes() {
-    function ids_loop(ids) {
-      // ids.forEach(function (id) {
-      //   $('[checklist-model="check"]:not(:checked)').each(function( index ) {
-      //     if ($(this).prop('id').includes(id)) {
-      //       if ($final_array.includes(id)) {
-      //         $final_array.splice($final_array.indexOf(id), 1);
-      //       }
-      //     }
-      //   });
-      //   $('[checklist-model="check"]:checked').each(function( index ) {
-      //     if ($(this).prop('id').includes(id)) {
-      //       if ( !$final_array.includes(id) ) {
-      //         $final_array.push(id)
-      //       }
-      //     }
-      //   });
-      // });
-      $('.multiple_ids').each(function(index, elem) {
-        href = $(elem).attr('href')
-        var result = href.split(',').filter(function(e) {
-          return $final_array.indexOf(parseInt(e)) != -1
-        });
-        console.log('href: ' + href)
-        console.log('$final_array: ' + $final_array)
-        console.log('result: ' + result)
-        $(elem).attr('href', (`${href}${result}`))
-      })
-      $(".disable").each(function(index) {
-        $(this).attr("disabled", $final_array == '');
-      })
+  // function checkboxes() {
+  //   function ids_loop(ids) {
+  //     // ids.forEach(function (id) {
+  //     //   $('[checklist-model="check"]:not(:checked)').each(function( index ) {
+  //     //     if ($(this).prop('id').includes(id)) {
+  //     //       if ($multiple_ids.includes(id)) {
+  //     //         $multiple_ids.splice($multiple_ids.indexOf(id), 1);
+  //     //       }
+  //     //     }
+  //     //   });
+  //     //   $('[checklist-model="check"]:checked').each(function( index ) {
+  //     //     if ($(this).prop('id').includes(id)) {
+  //     //       if ( !$multiple_ids.includes(id) ) {
+  //     //         $multiple_ids.push(id)
+  //     //       }
+  //     //     }
+  //     //   });
+  //     // });
+  //     $('.multiple_ids').each(function(index, elem) {
+  //       href = $(elem).attr('href')
+  //       var result = href.split(',').filter(function(e) {
+  //         return $multiple_ids.indexOf(parseInt(e)) != -1
+  //       });
+  //       console.log('href: ' + href)
+  //       console.log('$multiple_ids: ' + $multiple_ids)
+  //       console.log('result: ' + result)
+  //       $(elem).attr('href', (`${href}${result}`))
+  //     })
+  //     $(".disable").each(function(index) {
+  //       $(this).attr("disabled", $multiple_ids == '');
+  //     })
+  //   }
+
+  $('#checkbox-all').click(function() {
+    $multiple_ids = []
+    checked = $(this).prop('checked')
+    $('.checkbox').each(function(index, elem) {
+      var id = $(elem).prop('id').replace('checkbox-', '');
+      if (checked) {
+        $multiple_ids.splice($multiple_ids.indexOf(id), 1);
+      } else {
+        $multiple_ids.push(id)
+      }
+      $(elem).click()
+    })
+  })
+
+  $('.checkbox').click(function() {
+    console.log('click')
+    var id = $(this).prop('id').replace('checkbox-', '')
+    if ($multiple_ids.includes(id)) {
+      $multiple_ids.splice($multiple_ids.indexOf(id), 1);
+    } else {
+      $multiple_ids.push(id)
     }
-
-    $('#checkbox-all').click(function() {
-      $('[checklist-model="check"]').prop( "checked", $(this).prop( "checked" ) )
-      ids_loop($ids)
+    $('.multiple_ids').each(function(index, elem) {
+      split_href = $(elem).attr('href').split('/').filter(Boolean)
+      href_root = split_href.filter(function(e) {
+        return window.location.href.split('/').includes(e) || isNaN(parseInt(e))
+      }).join('/')
+      href_ids = split_href[split_href.length - 1].split(',').filter(Number).join(',')
+      var final_result = `${href_root}/${$multiple_ids.join(',')}`
+      $(elem).attr('href', final_result)
+      console.log('final_result: ' + final_result)
+      console.log('')
     })
-
-    $('[checklist-model="check"]').click(function() {
-      var id = 
-      $('.multiple_ids').each(function(index, elem) {
-        if ($(this).prop('id').includes(id)) {
-          if ($final_array.includes(id)) {
-            $final_array.splice($final_array.indexOf(id), 1);
-          } else {
-            $final_array.push(id)
-          }
-        }
-        href = $(elem).attr('href')
-        var result = href.split('/').last // .filter(function(e) { return $final_array.indexOf(parseInt(e)) != -1 });
-        console.log('href: ' + href)
-        console.log('$final_array: ' + $final_array)
-        console.log('result: ' + result)
-        $(elem).attr('href', (`${href}${result}`))
-      })
-      $('#checkbox-all').prop(
-        'checked',
-        JSON.stringify($ids) === JSON.stringify($final_array)
-      )
-    })
-  }
+  })
 
   function strategic_lots() {
     Swal.fire({
@@ -91,16 +97,28 @@
 
 :coffee
   $ ->
-    if $('.pagination').length && $('#cows').length
-      $(window).scroll ->
-        next_page = $('a[rel=next]').attr('href')
-        if $(window).scrollTop() > $(document).height() - $(window).height() - 5
-          $('.next_page').remove()
-          $('#loading').html('<center class="loading"><img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." /></center>')
-          if next_page
-            $.getScript(next_page)
-            console.log(next_page)
-        
-        checkboxes()
+    # if $('.pagination').length && $('#cows').length
+    #   $(window).scroll ->
+    #     next_page = $('a[rel=next]').attr('href')
+    #     if $(window).scrollTop() > $(document).height() - $(window).height() - 5
+    #       $('.next_page').remove()
+    #       $('#loading').html('<center class="loading"><img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." /></center>')
+    #       if next_page
+    #         $.getScript(next_page)
+    #         console.log(next_page)
+    #     checkboxes()
+    #   $(window).scroll()
 
-      $(window).scroll()
+
+    $('#show_more').click ->
+      console.log(1)
+      next_page = $('a[rel=next]').attr('href')
+      $('.next_page').remove()
+      $('#loading').html('<center class="loading"><img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." /></center>')
+      if next_page
+        $.getScript(next_page)
+        console.log('next_page: ', next_page)
+    if $('.pagination').length && $('#cows').length
+      $('#show_more').show()
+    else
+      $('#show_more').hide()

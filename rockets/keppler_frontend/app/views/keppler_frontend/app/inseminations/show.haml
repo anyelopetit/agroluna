@@ -35,7 +35,7 @@
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-ui-edit
               Editar
-          %a.mt-4.mb-4.open-status-history
+          %a.mt-4.mb-4{ href: history_farm_path(@farm) }
             %button.btn.btn_custom.btn--filled.btn--medium
               %i.icofont-clock-time
               Historial
@@ -58,7 +58,7 @@
                   Marcar como usada
             %a{ class: 'dropdown-item', href: edit_farm_insemination_path(@farm, @insemination) }
               Editar
-            %a.open-status-history{class: "dropdown-item"}
+            %a.open-status-history{class: "dropdown-item", href: history_farm_path(@farm) }
               Historial
             = link_to({action: :show, format: :pdf}, {class: 'dropdown-item', target: '_blank'}) do
               Reporte

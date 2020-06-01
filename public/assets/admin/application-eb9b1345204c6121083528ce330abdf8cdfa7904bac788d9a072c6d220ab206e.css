@@ -34328,7 +34328,15 @@ td.ui-datepicker-unselectable.ui-state-disabled span.ui-state-default {
 
 /* line 171, /home/estrellita/Documentos/Slice Group/agroluna-a/app/assets/stylesheets/admin/pages/_form.scss */
 [type="checkbox"] {
-  display: none;
+  display: block;
+  margin: 0 auto;
+  transition: all .3s ease-in;
+}
+
+/* line 171, /home/estrellita/Documentos/Slice Group/agroluna-a/app/assets/stylesheets/admin/pages/_form.scss */
+[type="checkbox"].checbox-cow {
+  display: block;
+  margin: 0 auto;
   transition: all .3s ease-in;
 }
 /* line 175, /home/estrellita/Documentos/Slice Group/agroluna-a/app/assets/stylesheets/admin/pages/_form.scss */
@@ -34343,6 +34351,7 @@ td.ui-datepicker-unselectable.ui-state-disabled span.ui-state-default {
   background: #f44336;
   border: solid 1px #f44336;
   transition: all .3s ease-in;
+  display: none;
 }
 /* line 187, /home/estrellita/Documentos/Slice Group/agroluna-a/app/assets/stylesheets/admin/pages/_form.scss */
 [type="checkbox"]:checked + .cr .cr-icon {
@@ -34356,6 +34365,7 @@ td.ui-datepicker-unselectable.ui-state-disabled span.ui-state-default {
   cursor: not-allowed;
   opacity: .5;
   transition: all .3s ease-in;
+  display: none;
 }
 
 /* line 203, /home/estrellita/Documentos/Slice Group/agroluna-a/app/assets/stylesheets/admin/pages/_form.scss */

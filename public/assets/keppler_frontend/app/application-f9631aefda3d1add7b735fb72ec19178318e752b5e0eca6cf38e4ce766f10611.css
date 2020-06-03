@@ -11805,6 +11805,7 @@ body {
   position: relative;
   transition: .3s;
   width: 15px;
+  display: none;
 }
 /* line 160, /home/estrellita/Documentos/Slice Group/agroluna-a/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/partials/_form.scss */
 .checkbox .cr .cr-icon {
@@ -13976,6 +13977,7 @@ button:disabled, a:disabled, .btn:disabled {
   position: relative;
   transition: .3s;
   width: 15px;
+  display: none;
 }
 /* line 160, /home/estrellita/Documentos/Slice Group/agroluna-a/rockets/keppler_frontend/app/assets/stylesheets/keppler_frontend/app/partials/_form.scss */
 .checkbox .cr .cr-icon {

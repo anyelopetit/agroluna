@@ -34315,6 +34315,7 @@ td.ui-datepicker-unselectable.ui-state-disabled span.ui-state-default {
   position: relative;
   transition: .3s;
   width: 15px;
+  display: none;
 }
 /* line 160, /home/estrellita/Documentos/Slice Group/agroluna-a/app/assets/stylesheets/admin/pages/_form.scss */
 .checkbox .cr .cr-icon {

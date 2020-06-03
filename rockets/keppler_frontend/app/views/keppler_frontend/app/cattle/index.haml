@@ -45,16 +45,12 @@
   //   }
 
   $('#checkbox-all').click(function() {
-    $multiple_ids = []
-    checked = $(this).prop('checked')
+    console.log('checkbox-all')
+    this_is_checked = $(this).prop('checked')
     $('.checkbox').each(function(index, elem) {
-      var id = $(elem).prop('id').replace('checkbox-', '');
-      if (checked) {
-        $multiple_ids.splice($multiple_ids.indexOf(id), 1);
-      } else {
-        $multiple_ids.push(id)
+      if ($(elem).prop('checked', !this_is_checked)) {
+        $(elem).click()
       }
-      $(elem).click()
     })
   })
 
@@ -71,12 +67,13 @@
       href_root = split_href.filter(function(e) {
         return window.location.href.split('/').includes(e) || isNaN(parseInt(e))
       }).join('/')
-      href_ids = split_href[split_href.length - 1].split(',').filter(Number).join(',')
+      // href_ids = split_href[split_href.length - 1].split(',').filter(Number).join(',')
       var final_result = `${href_root}/${$multiple_ids.join(',')}`
       $(elem).attr('href', final_result)
+      console.log('$multiple_ids: ' + $multiple_ids)
       console.log('final_result: ' + final_result)
-      console.log('')
     })
+    console.log('')
   })
 
   function strategic_lots() {
@@ -96,29 +93,28 @@
 
 
 :coffee
-  $ ->
-    # if $('.pagination').length && $('#cows').length
-    #   $(window).scroll ->
-    #     next_page = $('a[rel=next]').attr('href')
-    #     if $(window).scrollTop() > $(document).height() - $(window).height() - 5
-    #       $('.next_page').remove()
-    #       $('#loading').html('<center class="loading"><img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." /></center>')
-    #       if next_page
-    #         $.getScript(next_page)
-    #         console.log(next_page)
-    #     checkboxes()
-    #   $(window).scroll()
+  # $ ->
+  #   if $('.pagination').length && $('#cows').length
+  #     $(window).scroll ->
+  #       next_page = $('a[rel=next]').attr('href')
+  #       if $(window).scrollTop() > $(document).height() - $(window).height() - 5
+  #         $('.next_page').remove()
+  #         $('#loading').html('<center class="loading"><img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." /></center>')
+  #         if next_page
+  #           $.getScript(next_page)
+  #           console.log(next_page)
+  #       checkboxes()
+  #     $(window).scroll()
 
-
-    $('#show_more').click ->
-      console.log(1)
-      next_page = $('a[rel=next]').attr('href')
-      $('.next_page').remove()
-      $('#loading').html('<center class="loading"><img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." /></center>')
-      if next_page
-        $.getScript(next_page)
-        console.log('next_page: ', next_page)
-    if $('.pagination').length && $('#cows').length
-      $('#show_more').show()
-    else
-      $('#show_more').hide()
+  $('#show_more').click ->
+    console.log('#show_more click')
+    next_page = $('a[rel=next]').attr('href')
+    $('.next_page').remove()
+    $('#loading').html('<center class="loading"><img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." /></center>')
+    if next_page
+      $.getScript(next_page)
+      console.log('next_page: ', next_page)
+  if $('.pagination').length && $('#cows').length
+    $('#show_more').show()
+  else
+    $('#show_more').hide()

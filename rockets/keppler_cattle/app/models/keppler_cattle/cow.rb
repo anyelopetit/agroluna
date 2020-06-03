@@ -244,15 +244,21 @@ module KepplerCattle
     end
 
     def self.actives
-      locations = KepplerCattle::Location.where('keppler_cattle_locations.farm_id = ?', farm&.id)
-      last_locations = KepplerCattle::Location.where('keppler_cattle_locations.cow_id IN (?)', ids)
-      cow_ids = KepplerCattle::Location.select('MAX(cow_id) as max_cow_id').group(:cow_id).map(&:max_cow_id)
       cows = select do |cow|
         (cow&.locations.pluck(:farm_id).include?(farm&.id) && cow&.location&.farm_id == farm&.id) &&
         cow&.activity&.active
       end
       active_ids = cows.pluck(:id).uniq
-      where(id: active_ids)
+      # location_cow_ids =
+      #   KepplerCattle::Location.where(
+      #     'keppler_cattle_locations.farm_id = ? AND keppler_cattle_locations.cow_id IN (?)', farm&.id, ids
+      #   ).select('MAX(cow_id) as max_cow_id').group(:cow_id).map(&:max_cow_id)
+      # activity_cow_ids =
+      #   KepplerCattle::Activity
+      #     .where(active: true)
+      #     .select('MAX(cow_id) as max_cow_id').group(:cow_id).map(&:max_cow_id)
+      # active_ids = location_cow_ids&activity_cow_ids
+      includes(:locations).where(id: active_ids)
     end
 
     def self.inactives
@@ -261,6 +267,15 @@ module KepplerCattle
         !cow&.activity&.active
       end
       inactive_ids = cows.pluck(:id).uniq
+      # farm_locations =
+      #   KepplerCattle::Location.where(
+      #     'keppler_cattle_locations.farm_id = ? AND keppler_cattle_locations.cow_id IN (?)', farm&.id, ids
+      #   ).select('MAX(cow_id) as max_cow_id').group(:cow_id).map(&:max_cow_id)
+      # activity_cow_ids =
+      #   KepplerCattle::Activity
+      #     .where.not(active: true)
+      #     .select('MAX(cow_id) as max_cow_id').group(:cow_id).map(&:max_cow_id)
+      # inactive_ids = location_cow_ids&activity_cow_ids
       includes(:locations).where(id: inactive_ids)
     end
 

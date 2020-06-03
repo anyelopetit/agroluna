@@ -1,4 +1,4 @@
-- cows.includes(:species, :race).each do |cow|
+- cows.includes(:species, :race).each_with_index do |cow, index|
   %tr.cow{ style: "border-bottom: 1px #eee solid;" }
     %td
       -# .checkbox{ style: 'margin: 3px' }

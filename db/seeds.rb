@@ -470,7 +470,7 @@ INSEMINATIONS.each_with_index do |row, index|
     nose_color: row[COLORMO],
     tassel_color: row[COLORBO],
     provenance: row[PROCEDE],
-    quantity: Faker::Number.between(1,10),
+    quantity: Rails.env.development? ? Faker::Number.between(1,10) : 0,
     observations: row[OBSER],
     mother_id: KepplerCattle::Cow.find_by(serie_number: row[CODM])&.id || 1,
     father_id: KepplerCattle::Cow.find_by(serie_number: row[CODP])&.id

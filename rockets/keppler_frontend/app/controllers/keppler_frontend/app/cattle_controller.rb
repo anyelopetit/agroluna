@@ -230,13 +230,10 @@ module KepplerFrontend
 
     def create_pregnancies
       status = KepplerCattle::Status.new_status(params, {farm_id: @farm.id})
-      cow = KepplerCattle::Cow.find_by_id(
-        params.dig(:status, :cow_id) || hash[:cow_id]
-      )
       if status.save!
-        flash[:notice] = 'Servicio guardado'
+        flash[:notice] = 'Preñez guardada'
       else
-        flash[:error] = 'No se pudo guardar el servicio'
+        flash[:error] = 'No se pudo guardar la preñez'
       end
       redirect_back fallback_location: farm_cows_path(@farm)
     end

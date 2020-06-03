@@ -34,7 +34,7 @@
                                 %label.label_custom--strong Pajuela a colocar
                                 %select.form-control.input_custom.select2{ name: "status[insemination_id]" }
                                   - @farm.inseminations.all.each do |insemination|
-                                    %option{ value: insemination.id } #{insemination.serie_number} #{' - ' + insemination.short_name} (#{insemination.quantity})
+                                    %option{ value: insemination.id } Pajuela #{insemination.serie_number.to_s} #{'- ' + insemination.short_name.to_s if insemination.short_name} (#{insemination.quantity})
                             .col-sm-6.col-md-6
                               .form-group
                                 %label.label_custom--strong Cantidad de cartuchos

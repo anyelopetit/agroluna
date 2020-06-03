@@ -202,7 +202,7 @@ module KepplerFrontend
     end
 
     def create_services
-      cow = @season&.cows.find(params[:status][:cow_id])
+      cow = @farm&.cows.find(params[:status][:cow_id])
       insemination = @farm.inseminations.find(params[:status][:insemination_id])
       if params[:status][:insemination_quant].to_i > insemination.quantity.to_i
         flash[:error] = 'La cantidad de cartuchos no puede ser mayor a la existente'
@@ -210,7 +210,7 @@ module KepplerFrontend
         if params[:status][:insemination_quant].to_i < 1
           flash[:error] = 'La cantidad de cartuchos debe ser superior a cero'
         else
-          status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id, user: params[:status][:user_name]})
+          status = KepplerCattle::Status.new_status(params, {farm_id: @farm.id, user: params[:status][:user_name]})
           unless insemination.quantity.to_i.zero?
             insemination.update(
               quantity: insemination.quantity.to_i - params[:status][:insemination_quant].to_i
@@ -229,7 +229,7 @@ module KepplerFrontend
     end
 
     def create_pregnancies
-      status = KepplerCattle::Status.new_status(params, {season_id: @season.id, farm_id: @farm.id})
+      status = KepplerCattle::Status.new_status(params, {farm_id: @farm.id})
       cow = KepplerCattle::Cow.find_by_id(
         params.dig(:status, :cow_id) || hash[:cow_id]
       )
@@ -242,12 +242,11 @@ module KepplerFrontend
     end
 
     def make_abort
-      @cow = @season&.cows.find(params[:abort][:cow_id])
+      @cow = @farm&.cows.find(params[:abort][:cow_id])
       @abort = @cow.aborts.new(
         abort_date: params[:abort][:date],
         reason: params[:abort][:reason],
-        observations: params[:abort][:observations],
-        season_id: @season.id
+        observations: params[:abort][:observations]
       )
 
       if @abort.save!

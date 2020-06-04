@@ -84,7 +84,7 @@
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Raza
                           %select.form-control.select.input_custom{ id: "new_cow_strategic_lot-#{cow.id}", "aria-hidden" => "true", name: "new_cow[race_id]"  }
-                            - [cow&.race, @farm.inseminations.find_by(id: cow.statuses.where(status_type: 'Pregnancy')&.last&.insemination_id)&.race].each_with_index do |race, index|
+                            - [cow&.race, @farm.inseminations.find_by(id: KepplerCattle::Status.where(cow_id: cow.id, status_type: 'Pregnancy')&.last&.insemination_id)&.race].each_with_index do |race, index|
                               - if race
                                 %option{ value: race.id } #{race.name} (#{index.zero? ? 'Raza de la madre' : 'Raza del padre'})
                         .col-sm-12
@@ -114,7 +114,7 @@
                         .col-sm-12.col-md-6
                           %label.label_custom--strong Raza
                           %select.form-control.select.input_custom{"aria-hidden" => "true", name: "other_new_cow[race_id]"  }
-                            - [cow&.race, @farm.inseminations.find_by(id: cow.statuses.where(status_type: 'Pregnancy')&.last&.insemination_id)&.race].each_with_index do |race, index|
+                            - [cow&.race, @farm.inseminations.find_by(id: KepplerCattle::Status.where(cow_id: cow.id, status_type: 'Pregnancy')&.last&.insemination_id)&.race].each_with_index do |race, index|
                               - if race
                                 %option{ value: race.id } #{race.name} (#{index.zero? ? 'Raza de la madre' : 'Raza del padre'})
                         -# .col-sm-12.col-md-6
@@ -135,8 +135,8 @@
                         -# .col-sm-12.col-md-6
                           %label.label_custom--strong Padre
                           %select.other_new_cow_father_id.form-control.select.input_custom{ id: "other_new_cow_#{cow&.id}_father_id", "aria-hidden" => "true", name: "other_new_cow[father_id]"  }
-                            - @farm.cows.reproductive_males(@season).each do |bull|
-                              %option{ value: bull.id, selected: bull.id == @farm.inseminations.find_by(id: cow.statuses.where(status_type: 'Pregnancy')&.last&.insemination_id).id } #{bull&.serie_number} #{'(' + bull&.short_name + ')' if bull&.short_name}
+                            - @farm_cows.reproductive_males(@season).each do |bull|
+                              %option{ value: bull.id, selected: bull.id == @farm.inseminations.find_by(id: KepplerCattle::Status.where(cow_id: cow.id, status_type: 'Pregnancy')&.last&.insemination_id).id } #{bull&.serie_number} #{'(' + bull&.short_name + ')' if bull&.short_name}
                         .col-sm-12
                           %label.label_custom--strong Observaciones
                           %input.form-control.input_custom{ name: "other_new_cow[observations]" }

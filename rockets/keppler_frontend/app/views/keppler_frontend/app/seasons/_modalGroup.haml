@@ -19,8 +19,8 @@
                         -# = f.input :cattle, collection: @cows, label: 'Ganado', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom select2-multiple' }
                         -# %label.control-label.select.optional.label_custom--strong Series
                         %select.form-control.select.optional.form-control.input_custom.select2-multiple.select2-hidden-accessible#season_cow_bulls{ name: 'season_cow[bulls][]' }
-                          -# - @farm.cows.includes(:season_cows, :locations).where.not(keppler_reproduction_season_cows: { id: @season.id }).each do |cow|
-                          - @farm.cows.reproductive_males(@season).each do |cow|
+                          -# - @farm_cows.includes(:season_cows, :locations).where.not(keppler_reproduction_season_cows: { id: @season.id }).each do |cow|
+                          - @farm_cows.reproductive_males(@season).each do |cow|
                             %option{ value: cow&.id } #{cow&.serie_number} #{'(' + cow&.short_name + ')' if cow&.short_name}
                       .col-sm-6.col-md-2
                         .d-flex.justify-content-end
@@ -30,7 +30,7 @@
                 .row.mt-4
                   .col-sm-10
                     %select#strategic_lot_cattle{ name: 'strategic_lot[cattle][]', label: 'Ganado', class: 'form-control input_custom select2-multiple', onchange: "validateCattle()" }
-                      - @farm.cows.where(gender: 'male').order(:serie_number).each do |cow|
+                      - @farm_cows.where(gender: 'male').order(:serie_number).each do |cow|
                         %option{ value: cow&.id } #{cow.serie_number}
                   .col-sm-2
                     .float-right

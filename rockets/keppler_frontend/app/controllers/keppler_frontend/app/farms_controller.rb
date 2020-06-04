@@ -39,10 +39,16 @@ module KepplerFrontend
     
     def import_xls
     end
+
     private
 
     def set_farm
-      @farm = KepplerFarm::Farm.find_by(id: params[:id]) if params[:id]
+      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
+      return unless @farm
+
+      @farm_cows =
+        KepplerCattle::Cow.includes(:locations)
+          .where(keppler_cattle_locations: { farm_id: @farm.id })
     end
 
     def set_farms

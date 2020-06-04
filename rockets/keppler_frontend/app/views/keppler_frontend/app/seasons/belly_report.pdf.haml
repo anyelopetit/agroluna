@@ -18,7 +18,7 @@
       }
   %body{ onload: 'number_pages()' }
     - calfs_ids = @season&.cows.map { |c| c.sons.select { |s| s.typology.min_age < 210 } }.flatten.pluck(:id)
-    - @calfs = @farm.cows.where(id: calfs_ids)
+    - @calfs = @farm_cows.where(id: calfs_ids)
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
       %h3.report-title #{@season.name}

@@ -6,8 +6,6 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    before_action :set_farm
-    before_action :set_farms
     before_action :set_season, except: %i[index new destroy_multiple]
     before_action :season_types, only: %i[new edit create update]
     before_action :index_variables
@@ -39,7 +37,7 @@ module KepplerFrontend
       @cow_strategic_lots = @strategic_lots.includes(:locations).where(
         keppler_cattle_locations: { cow_id: @cows.ids }
       ).distinct
-      @possible_mothers = @farm.cows.possible_mothers
+      @possible_mothers = @farm_cows.possible_mothers
       @inseminated_cows = @season&.cows.select do |c|
         c.status&.status_type&.eql?('Service')
       end
@@ -144,8 +142,8 @@ module KepplerFrontend
       )
       # @species = KepplerCattle::Species.all
       @genders = KepplerCattle::Cow.genders
-      # @possible_mothers = @farm.cows.possible_mothers_select2
-      @possible_fathers = @farm.cows.possible_fathers_select2
+      # @possible_mothers = @farm_cows.possible_mothers_select2
+      @possible_fathers = @farm_cows.possible_fathers_select2
       @colors = KepplerCattle::Cow.colors
     end
 
@@ -159,7 +157,7 @@ module KepplerFrontend
       strategic_lot_id = params[:strategic_lot_id]
       @strategic_lot = @farm.strategic_lots.find(strategic_lot_id) if strategic_lot_id
       params[:season_cow][:bulls].each do |bull_id|
-        season_bull = @farm.cows.find(bull_id).season_cows.new(
+        season_bull = @farm_cows.find(bull_id).season_cows.new(
           cow_id: bull_id,
           season_id: @season.id,
           strategic_lot_id: strategic_lot_id
@@ -230,7 +228,7 @@ module KepplerFrontend
 
     def new_pregnancies
       @cows = @season&.cows.where(id: params[:multiple_ids].split(','))
-      @possible_fathers = @farm.cows.possible_fathers_select2
+      @possible_fathers = @farm_cows.possible_fathers_select2
       @found = false
     end
 
@@ -374,7 +372,7 @@ module KepplerFrontend
       @cows = if @season
                 @season&.cows.order(:serie_number)
               else
-                @farm.cows.order(:serie_number)
+                @farm_cows.order(:serie_number)
               end
       if @season
         @cow_strategic_lots = @strategic_lots.cows_strategic_lots(@cows.ids)
@@ -403,7 +401,7 @@ module KepplerFrontend
     end
 
     def index_variables
-      @q = @farm.cows.ransack(params[:q])
+      @q = @farm_cows.ransack(params[:q])
       cows = @q.result(distinct: true)
       @cows = cows.page(@current_page).order(position: :desc)
       @total = @cows.size
@@ -418,10 +416,6 @@ module KepplerFrontend
       return false unless @strategic_lot
       @bulls = @season&.cows.total_season_bulls(@strategic_lot)
       @cows = @season&.cows.total_season_cows(@strategic_lot)
-    end
-
-    def set_farm
-      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
     end
 
     def set_farms
@@ -477,7 +471,7 @@ module KepplerFrontend
     end
 
     def create_cow(mother, this_status, params, weight_params)
-      baby = @farm.cows.new(params)
+      baby = @farm_cows.new(params)
       baby.species_id = mother&.species_id
       baby.mother_id = mother&.id
       baby.birthdate = this_status&.date || Date.today

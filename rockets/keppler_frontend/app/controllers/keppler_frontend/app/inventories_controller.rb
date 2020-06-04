@@ -113,10 +113,6 @@ module KepplerFrontend
 
     private
 
-    def set_farm
-      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
-    end
-
     def set_inventory
       @inventory = @farm.inventories.find_by(id: params[:inventory_id] || params[:id])
     end

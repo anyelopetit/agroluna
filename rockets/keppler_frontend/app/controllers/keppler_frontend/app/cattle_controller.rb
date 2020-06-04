@@ -6,10 +6,8 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    before_action :set_farm
     before_action :set_cow, only: %i[show edit update destroy males toggle_milking create_activities]
     before_action :cow_attributes, only: %i[new edit create]
-    before_action :set_farms
     before_action :index_variables
     before_action :attachments
     # before_action :index_history, only: %i[index index_inactives]
@@ -43,16 +41,16 @@ module KepplerFrontend
     end
 
     def new
-      @cow = @farm.cows.new
+      @cow = @farm_cows.new
     end
 
     def create
-      if @farm.cows.find_by(serie_number: cow_params[:serie_number])
+      if @farm_cows.find_by(serie_number: cow_params[:serie_number])
         flash[:error] = 'El número de serie ya está tomado'
         redirect_to new_farm_cow_path(@farm)
         return false
       end
-      @cow = @farm.cows.new(cow_params)
+      @cow = @farm_cows.new(cow_params)
       if params.dig(:cow, :father_id)
         @cow.father_type = params.dig(:cow, :father_id)&.split(',')&.first
         @cow.father_id = params.dig(:cow, :father_id)&.split(',')&.last&.to_i
@@ -101,7 +99,7 @@ module KepplerFrontend
     end
 
     def destroy_multiple
-      @farm.cows.destroy redefine_ids(params[:multiple_ids])
+      @farm_cows.destroy redefine_ids(params[:multiple_ids])
       redirect_to farm_cows_path(@farm)
     end
 
@@ -113,7 +111,7 @@ module KepplerFrontend
     end
 
     def new_weights
-      @cows = @farm.cows.where(id: params[:multiple_ids].split(','))
+      @cows = @farm_cows.where(id: params[:multiple_ids].split(','))
     end
 
     def create_weights
@@ -129,7 +127,7 @@ module KepplerFrontend
     end
 
     def show_weights
-      @cows = @farm.cows.where(id: params[:multiple_ids].split(',')).order(:serie_number)
+      @cows = @farm_cows.where(id: params[:multiple_ids].split(',')).order(:serie_number)
     end
 
     def males
@@ -197,12 +195,12 @@ module KepplerFrontend
     end
 
     def new_services
-      @cows = @farm&.cows.where(id: params[:multiple_ids].split(','))
+      @cows = @farm_cows.where(id: params[:multiple_ids].split(','))
       @found = false
     end
 
     def create_services
-      cow = @farm&.cows.find(params[:status][:cow_id])
+      cow = @farm_cows.find(params[:status][:cow_id])
       insemination = @farm.inseminations.find(params[:status][:insemination_id])
       if params[:status][:insemination_quant].to_i > insemination.quantity.to_i
         flash[:error] = 'La cantidad de cartuchos no puede ser mayor a la existente'
@@ -223,8 +221,8 @@ module KepplerFrontend
     end
 
     def new_pregnancies
-      @cows = @farm&.cows.where(id: params[:multiple_ids].split(','))
-      @possible_fathers = @farm.cows.possible_fathers_select2
+      @cows = @farm_cows.where(id: params[:multiple_ids].split(','))
+      @possible_fathers = @farm_cows.possible_fathers_select2
       @found = false
     end
 
@@ -238,8 +236,24 @@ module KepplerFrontend
       redirect_back fallback_location: farm_cows_path(@farm)
     end
 
+    def new_birth
+      @cows = @farm_cows.where(id: params[:multiple_ids].split(','))
+      @possible_fathers = @farm_cows.possible_fathers_select2
+      @found = false
+    end
+
+    def create_birth
+      status = KepplerCattle::Status.new_status(params, {farm_id: @farm.id})
+      if status.save!
+        flash[:notice] = 'Preñez guardada'
+      else
+        flash[:error] = 'No se pudo guardar la preñez'
+      end
+      redirect_back fallback_location: farm_cows_path(@farm)
+    end
+
     def make_abort
-      @cow = @farm&.cows.find(params[:abort][:cow_id])
+      @cow = @farm_cows.find(params[:abort][:cow_id])
       @abort = @cow.aborts.new(
         abort_date: params[:abort][:date],
         reason: params[:abort][:reason],
@@ -288,8 +302,8 @@ module KepplerFrontend
 
     def index_variables
       @farm = KepplerFarm::Farm.find_by(id: (params[:farm_id] || params[:id]))
-      @q = @farm.cows.ransack(params[:q])
-      @cows = @q.result(distinct: true).includes(:locations)
+      @q = KepplerCattle::Cow.includes(:locations).where(keppler_cattle_locations: { farm_id: @farm.id }).ransack(params[:q])
+      @cows = @q.result(distinct: true)
       @active_cows_size = @cows.actives.size
       @inactive_cows_size = @cows.inactives.size
       @attributes = KepplerCattle::Cow.index_attributes
@@ -301,29 +315,16 @@ module KepplerFrontend
       @species = KepplerCattle::Species.all
       @genders = KepplerCattle::Cow.genders
       @races   = @species.first.races
-      @possible_mothers = @farm.cows.possible_mothers_select2
-      @possible_fathers = @farm.cows.possible_fathers_select2
+      @possible_mothers = @farm_cows.possible_mothers_select2
+      @possible_fathers = @farm_cows.possible_fathers_select2
       @colors = KepplerCattle::Cow.colors
-    end
-
-    def set_farm
-      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
-    end
-
-    def set_farms
-      if current_user&.has_role?('keppler_admin')
-        @farms = KepplerFarm::Farm.all
-      else
-        @assignments = KepplerFarm::Assignment.where(user_id: current_user&.id)
-        @farms = KepplerFarm::Farm.where(id: @assignments&.map(&:keppler_farm_farm_id)) unless @assignments.size.zero?
-      end
     end
 
     def redirect_to_species
       @species = KepplerCattle::Species.all
       @typologies = KepplerCattle::Typology.all
       if @species.blank? || @species.select { |s| s.races.blank? }.size > 0 || @typologies.blank?
-        redirect_to admin_cattle_species_index_path
+        redirect_to admin_cattle_species_index_path, notice: 'Debe llenar las especies con sus respectivas razas'
       end
     end
 
@@ -362,7 +363,7 @@ module KepplerFrontend
     end
 
     def new_birth(params)
-      @mother = @farm&.cows.find_by_id(params[:status][:cow_id])
+      @mother = @farm_cows.find_by_id(params[:status][:cow_id])
       @status = KepplerCattle::Status.new_status(params, { farm_id: @farm.id })
       if params[:status][:successfully] == '1'
         @baby_saved = create_cow(
@@ -383,7 +384,7 @@ module KepplerFrontend
     end
 
     def create_cow(mother, this_status, params, weight_params)
-      baby = @farm.cows.new(params)
+      baby = @farm_cows.new(params)
       baby.species_id = mother&.species_id
       baby.mother_id = mother&.id
       baby.birthdate = this_status&.date || Date.today

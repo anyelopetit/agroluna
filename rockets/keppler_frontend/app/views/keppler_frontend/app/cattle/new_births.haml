@@ -1,0 +1,675 @@
+.app_wrapper
+  .container_carousel
+    .single-item
+      = link_to({ controller: :cattle, action: :index }, { class: 'mt-4 mb-4 ml-3' }) do
+        %button.btn.btn_custom.btn--medium
+          %i.icofont-circled-left
+          Listado
+      .row
+        .col-sm-12
+          .card_new
+            %h1
+              - if @found
+                Nuevos partos
+              - else
+                Partos creados
+            
+            - @cows.includes(species: :races).each do |cow|
+              .row
+                - unless @found
+                  - unless cow.status&.status_type&.eql?('Pregnancy')
+                    - @found = true
+                    .col-lg-12
+                      .stepwizard.mb-4
+                        .stepwizard-row.setup-panel
+                          .stepwizard-step
+                            %a.btn.btn-active.btn-circle{ href: "#cow-#{cow&.id}-step-1", id: "cow-#{cow&.id}-step-1-circle", type: "button"} 1
+                            %p Paso 1
+                          .stepwizard-step
+                            %a.btn.btn-inactive.btn-circle{ disabled: "disabled", id: "cow-#{cow&.id}-step-2-circle", href: "#cow-#{cow&.id}-step-2", type: "button" } 2
+                            %p Paso 2
+                          .stepwizard-step
+                            %a.btn.btn-inactive.btn-circle.disabled{ disabled: "disabled", id: "cow-#{cow&.id}-step-3-circle", href: "#cow-#{cow&.id}-step-3", type: "button" } 3
+                            %p Paso 3
+                          -# .stepwizard-step
+                            %a.btn.btn-inactive.btn-circle.disabled{ disabled: "disabled", id: "cow-#{cow&.id}-step-4-circle", href: "#cow-#{cow&.id}-step-4", type: "button" } 4
+                            %p Paso 4
+                      = simple_form_for [@farm, KepplerCattle::Status.new], url: make_birth_farm_cow_path(@farm, cow), html: { id: "new_status-#{cow.id}", onkeypress: "if(event.keyCode == 13) event.returnValue = false;" } do |f|
+                        %input{ type: 'hidden', name: "status[type]", value: 'Birth' }
+                        %input{ type: 'hidden', name: "status[cow_id]", value: cow&.id }
+                        %input{ name: 'status[farm_id]', value: @farm.id, type: (Rails.env.eql?('development') ? :hidden : :hidden) }
+                        #form-total
+                          
+                          .row.setup-content{ id: "cow-#{cow&.id}-step-1" }
+                            .col-md-12
+                              -# %h3 Step 1
+                              .row
+                                .col-sm-12.col-md-6
+                                  %label.label_custom--strong Parto Exitoso
+                                  %select.form-control.select.input_custom{ id: "birth_#{cow&.id}_successfully", "aria-hidden" => "true", name: "status[successfully]"  }
+                                    %option{ value: 1 } Si
+                                    %option{ value: 0 } No
+                                .col-sm-12.col-md-6
+                                  %label.label_custom--strong Parto de Morochos
+                                  %select.form-control.select.input_custom{ id: "birth_#{cow&.id}_twins", "aria-hidden" => "true", name: "status[twins]"  }
+                                    %option{ value: 0 } No
+                                    %option{ value: 1 } Si
+                                .col-sm-12.col-md-6
+                                  %label.label_custom--strong Fecha del parto
+                                  %input.form-control.input_custom.datepicker{ id: "birth_#{cow&.id}_date", name: "status[date]", autocomplete: 'off', value: Date.today }
+                                .col-sm-12.col-md-6
+                                  -# = f.input :name, label: 'Nombre del Responsable', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+                                  %label.label_custom--strong Nombre del responsable
+                                  %input.form-control.input_custom{ id: "birth_#{cow&.id}_user_name", name: "status[user_name]", autocomplete: 'off', list: 'responsables' }
+                                  %datalist#responsables
+                                    - KepplerFarm::Responsable.all.each do |responsable|
+                                      %option{ value: responsable.name }
+                                .col-sm-12
+                                  %label.label_custom--strong Observaciones
+                                  %input.form-control.input_custom{ name: "status[observations]" }
+                              .float-right.mt-4
+                                %button.btn.btn_custom.btn--filled.btn--medium.nextBtn{type: "button"} Siguente
+                                %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit', style: 'display: none' }
+                                  %i.icofont-save
+                                  Guardar
+                          
+                          .row.setup-content{ id: "cow-#{cow&.id}-step-2" }
+                            .col-md-12
+                              .row
+                                .col-sm-12.col-md-6
+                                  %label.label_custom--strong Número de serie
+                                  %input.form-control.input_custom.serie_number{ id: "new_cow_#{cow&.id}_serie_number", name: 'new_cow[serie_number]', required: true }
+                                  .invalid-feedback
+                                    El número de serie es requerido
+                                .col-sm-12.col-md-6
+                                  %label.label_custom--strong Nombre corto
+                                  %input.form-control.input_custom{ id: "new_cow_#{cow&.id}_short_name", name: 'new_cow[short_name]' }
+                                .col-sm-12.col-md-6
+                                  %label.label_custom--strong Género
+                                  %select.form-control.select.input_custom{"aria-hidden" => "true", name: "new_cow[gender]"  }
+                                    %option{ value: 'female' } Hembra
+                                    %option{ value: 'male' } Macho
+                                .col-sm-12.col-md-6
+                                  %label.label_custom--strong Raza
+                                  %select.form-control.select.input_custom{id: "new_cow_strategic_lot-#{cow.id}", "aria-hidden" => "true", name: "new_cow[race_id]"  }
+                                    - [cow&.race, @farm.inseminations.includes(species: :races).find_by(id: cow.statuses.where(status_type: 'Pregnancy')&.last&.insemination_id)&.race].each_with_index do |race, index|
+                                      - if race
+                                        %option{ value: race.id } #{race.name} (#{index.zero? ? 'Raza de la madre' : 'Raza del padre'})
+                                .col-sm-12
+                                  %label.label_custom--strong Observaciones
+                                  %input.form-control.input_custom{ name: "new_cow[observations]" }
+                      
+                              .row{ class: "other_new_cow_#{cow&.id}", style: 'display: none' }
+                                .col-sm-12.mt-4
+                                  %h1 Morocho
+                                .col-sm-12.col-md-6
+                                  %label.label_custom--strong Número de serie
+                                  %input.form-control.input_custom.serie_number{ id: "other_new_cow_#{cow&.id}_serie_number", name: 'other_new_cow[serie_number]' }
+                                  .invalid-feedback
+                                    El número de serie es requerido
+                                .col-sm-12.col-md-6
+                                  %label.label_custom--strong Nombre corto
+                                  %input.form-control.input_custom{ id: "other_new_cow_#{cow&.id}_short_name", name: 'other_new_cow[short_name]' }
+                                .col-sm-12.col-md-6
+                                  %label.label_custom--strong Género
+                                  %select.form-control.select.input_custom{"aria-hidden" => "true", name: "other_new_cow[gender]"  }
+                                    %option{ value: 'female' } Hembra
+                                    %option{ value: 'male' } Macho
+                                -# .col-sm-12.col-md-6
+                                  %label.label_custom--strong Especie
+                                  %select.form-control.select.input_custom{"aria-hidden" => "true", name: "other_new_cow[strategic_lot]"  }
+                                    %option Vacuno
+                                .col-sm-12.col-md-6
+                                  %label.label_custom--strong Raza
+                                  %select.form-control.select.input_custom{"aria-hidden" => "true", name: "other_new_cow[race_id]"  }
+                                    - [cow&.race, @farm.inseminations.find_by(id: cow.statuses.where(status_type: 'Pregnancy')&.last&.insemination_id)&.race].each_with_index do |race, index|
+                                      - if race
+                                        %option{ value: race.id } #{race.name} (#{index.zero? ? 'Raza de la madre' : 'Raza del padre'})
+                                -# .col-sm-12.col-md-6
+                                  %label.label_custom--strong Color de pelaje
+                                  %select.form-control.select.input_custom{"aria-hidden" => "true", name: "other_new_cow[coat_color]"  }
+                                    - @colors.each do |color|
+                                      %option{ value: color }= color
+                                -# .col-sm-12.col-md-6
+                                  %label.label_custom--strong Color de morro
+                                  %select.form-control.select.input_custom{"aria-hidden" => "true", name: "other_new_cow[nose_color]"  }
+                                    - @colors.each do |color|
+                                      %option{ value: color }= color
+                                -# .col-sm-12.col-md-6
+                                  %label.label_custom--strong Color de borla
+                                  %select.form-control.select.input_custom{"aria-hidden" => "true", name: "other_new_cow[tassel_color]"  }
+                                    - @colors.each do |color|
+                                      %option{ value: color }= color
+                                -# .col-sm-12.col-md-6
+                                  %label.label_custom--strong Padre
+                                  %select.other_new_cow_father_id.form-control.select.input_custom{ id: "other_new_cow_#{cow&.id}_father_id", "aria-hidden" => "true", name: "other_new_cow[father_id]"  }
+                                    - @farm_cows.reproductive_males(@season).each do |bull|
+                                      %option{ value: bull.id, selected: bull.id == @farm.inseminations.find_by(id: cow.statuses.where(status_type: 'Pregnancy')&.last&.insemination_id).id } #{bull&.serie_number} #{'(' + bull&.short_name + ')' if bull&.short_name}
+                                .col-sm-12
+                                  %label.label_custom--strong Observaciones
+                                  %input.form-control.input_custom{ name: "other_new_cow[observations]" }
+                              .col-sm-12.mt-4
+                                .form-group
+                                  .float-left
+                                    %button.btn.btn_custom.btn--medium.prevBtn{ type: "button"} Regresar
+                                  .float-right
+                                    %button.btn.btn_custom.btn--filled.btn--medium.nextBtn{ type: "button", disabled: true } Siguente
+                          
+                          .row.setup-content{ id: "cow-#{cow&.id}-step-3" }
+                            .col-md-12
+                              -# = simple_form_for [@farm, cow, KepplerCattle::Weight.new], url: statuses_farm_season_path(@farm, @season) do |f|
+                              .row
+                                .col-sm-12.col-md-6
+                                  -# = f.input :weight, autofocus: true, placeholder: '0.00 KG', label: 'Peso (KG)', input_html: { class: 'form-control input_custom', min: 0, value: (@last_weight&.weight.blank? ? 0 : @last_weight&.weight) }, label_html: { class: 'label_custom--strong' }
+                                  %label.label_custom--strong Peso (KG)
+                                  %input.form-control.input_custom.new_cow_weight{ id: "new_cow_weight_#{cow&.id}_weight", name: 'new_cow_weight[weight]', placeholder: '0.00 KG', type: 'number', min: 0 }
+                                .col-sm-12.col-md-6.d-none
+                                  -# = f.input :gained_weight, input_html: { class: 'form-control input_custom new_cow_weight_gainded_weight' }, disabled: true, placeholder: '0.00 KG', label: 'Peso ganado (KG)', label_html: { class: 'label_custom--strong' }
+                                  %label.label_custom--strong Peso ganado (KG)
+                                  %input.form-control.input_custom{ id: "new_cow_weight_#{cow&.id}_gained_weight", name: 'new_cow_weight[gained_weight]', placeholder: '0.00 KG', min: 0, readonly: true }
+                                .col-sm-12.col-md-6.d-none
+                                  -# = f.input :average_weight, input_html: { class: 'form-control input_custom new_cow_weight_average_weight' }, disabled: true, placeholder: '0.00 KG', label: 'Peso promedio (KG)', label_html: { class: 'label_custom--strong' }
+                                  %label.label_custom--strong Peso promedio (KG)
+                                  %input.form-control.input_custom{ id: "new_cow_weight_#{cow&.id}_average_weight", name: 'new_cow_weight[average_weight]', placeholder: '0.00 KG', min: 0, readonly: true }
+                                .col-sm-12.col-md-6
+                                  -# = f.input :corporal_condition, collection: @corporal_conditions, selected: (@last_weight&.corporal_condition if @last_status), include_blank: false, label: 'Condición corporal', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+                                  %label.label_custom--strong Condición corporal
+                                  %select.form-control.input_custom{  id: "new_cow_weight_#{cow&.id}_corporal_condition", name: 'new_cow_weight[corporal_condition_id]' }
+                                    - cow.species.corporal_conditions.each do |corporal_condition|
+                                      %option{ value: corporal_condition.id }= corporal_condition.name
+                              .row{ class: "other_new_cow_#{cow&.id}", style: 'display: none' }
+                                .col-sm-12
+                                  %h1 Morocho
+                                .col-sm-12.col-md-6
+                                  -# = f.input :weight, autofocus: true, placeholder: '0.00 KG', label: 'Peso (KG)', input_html: { class: 'form-control input_custom', min: 0, value: (@last_weight&.weight.blank? ? 0 : @last_weight&.weight) }, label_html: { class: 'label_custom--strong' }
+                                  %label.label_custom--strong Peso (KG)
+                                  %input.form-control.input_custom.new_cow_weight{ id: "other_new_cow_weight_#{cow&.id}_weight", name: 'other_new_cow_weight[weight]', placeholder: '0.00 KG', type: 'number', min: 0 }
+                                .col-sm-12.col-md-6.d-none
+                                  -# = f.input :gained_weight, input_html: { class: 'form-control input_custom other_new_cow_weight_gainded_weight' }, disabled: true, placeholder: '0.00 KG', label: 'Peso ganado (KG)', label_html: { class: 'label_custom--strong' }
+                                  %label.label_custom--strong Peso ganado (KG)
+                                  %input.form-control.input_custom{ id: "other_new_cow_weight_#{cow&.id}_gained_weight", name: 'other_new_cow_weight[gained_weight]', placeholder: '0.00 KG', min: 0, readonly: true }
+                                .col-sm-12.col-md-6.d-none
+                                  -# = f.input :average_weight, input_html: { class: 'form-control input_custom other_new_cow_weight_average_weight' }, disabled: true, placeholder: '0.00 KG', label: 'Peso promedio (KG)', label_html: { class: 'label_custom--strong' }
+                                  %label.label_custom--strong Peso promedio (KG)
+                                  %input.form-control.input_custom{ id: "other_new_cow_weight_#{cow&.id}_average_weight", name: 'other_new_cow_weight[average_weight]', placeholder: '0.00 KG', min: 0, readonly: true }
+                                .col-sm-12.col-md-6
+                                  -# = f.input :corporal_condition, collection: @corporal_conditions, selected: (@last_weight&.corporal_condition if @last_status), include_blank: false, label: 'Condición corporal', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+                                  %label.label_custom--strong Condición corporal
+                                  %select.form-control.input_custom{  id: "other_new_cow_weight_#{cow&.id}_corporal_condition", name: 'other_new_cow_weight[corporal_condition_id]' }
+                                    - cow.species.corporal_conditions.each do |corporal_condition|
+                                      %option{ value: corporal_condition.id }= corporal_condition.name
+                              .col-sm-12.mt-4
+                                .float-left
+                                  %button.btn.btn_custom.btn--medium.prevBtn{ type: "button" } Regresar
+                                .float-right
+                                  -# %button.btn.btn_custom.btn--filled.btn--medium.nextBtn{ type: "button", disabled: true } Siguente
+                                  %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit', disabled: true }
+                                    %i.icofont-save
+                                    Guardar
+                          
+                          -# .row.setup-content{ id: "cow-#{cow&.id}-step-4" }
+                            .col-md-12
+                              %h3.title-modal Detalles del parto
+                              .row
+                                .col-md-6
+                                  .list-data
+                                    %dl
+                                      %dt Parto Exitoso
+                                      %dd{ id: "value_#{cow&.id}_successfully" }
+                                      %dt Parto de Morochos
+                                      %dd{ id: "value_#{cow&.id}_twins" }
+                                      %dt Responsable
+                                      %dd{ id: "value_#{cow&.id}_user_name" }
+                                      %dt Fecha del parto
+                                      %dd{ id: "value_#{cow&.id}_date" }
+                                      %dt Número de serie
+                                      %dd{ id: "value_#{cow&.id}_user_name" }
+                                      %dt Nombre corto
+                                      %dd{ id: "value_#{cow&.id}_short_name" }
+                                      %dt Género
+                                      %dd{ id: "value_#{cow&.id}_gender" }
+                                      
+                                .col-md-6
+                                  .list-data
+                                    %dl
+                                      %dt Raza
+                                      %dd{ id: "value_#{cow&.id}_race" }
+                                      %dt Color de pelaje
+                                      %dd{ id: "value_#{cow&.id}_coat_color" }
+                                      %dt Color de morro
+                                      %dd{ id: "value_#{cow&.id}_nose_color" }
+                                      %dt Color de borla
+                                      %dd{ id: "value_#{cow&.id}_tassel_color" }
+                                      %dt Padre
+                                      %dd{ id: "value_#{cow&.id}_insemination_id" }
+                                      %dt Peso
+                                      %dd{ id: "value_#{cow&.id}_weight" }
+                                      %dt Condición corporal
+                                      %dd{ id: "value_#{cow&.id}_corporal_condition" }
+                                    
+
+                            .col-sm-12.mt-4
+                              .float-left
+                                %button.btn.btn_custom.btn--medium.prevBtn{ type: "button"} Regresar
+                              .float-right
+                                %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                                  %i.icofont-save
+                                  Guardar
+
+
+                          -# %input{ name: 'status[type]', value: 'Birth', type: (Rails.env.eql?('development') ? :string : :hidden) }
+                          -# %input.multiple_ids{ name: 'status[multiple_ids]', value: '', type: (Rails.env.eql?('development') ? :string : :hidden) }
+                          -# .form-padding
+                          -#   .row
+                          -#     .col-sm-12.col-md-6
+                          -#       -# = f.input :start_date, as: :string, label: 'Fecha del celo', label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom', autocomplete: 'off' }
+                          -#       .form-group
+                          -#         %label.label_custom--strong Fecha del parto
+                          -#         %input.form-control.input_custom.datepicker{ name: "status[date]", autocomplete: 'off', value: Date.today }
+                          -#     .col-sm-12.col-md-6
+                          -#       -# = f.input :name, label: 'Nombre del Responsable', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+                          -#       .form-group
+                          -#         %label.label_custom--strong Nombre del responsable
+                          -#         %input.form-control.input_custom{ name: "status[user_name]", autocomplete: 'off', list: 'responsables' }
+                          -#         %datalist#responsables
+                          -#           - KepplerFarm::Responsable.all.each do |responsable|
+                          -#             %option{ value: responsable.name }
+                          -#     .col-sm-12
+                          -#       -# = f.input :name, label: 'Observaciones', placeholder: false, label_html: { class: 'label_custom--strong' }, input_html: { class: 'form-control input_custom' }
+                          -#       .form-group
+                          -#         %label.label_custom--strong Observaciones
+                          -#         %input.form-control.input_custom{ name: "status[observations]" }
+                          -#     .col-sm-12
+                          -#       .float-right
+                          -#         %button.btn.btn_custom.btn--filled.btn--medium{ type: 'submit' }
+                          -#           %i.icofont-save
+                          -#           Guardar
+                        -# .d-flex
+                          .toolbar
+                            .toolbar-item
+                              -# %a.tool-btn{ 'data-confirm': '¿Estás seguro?', 'data-method': 'delete', 'v-bind:href': 'link', rel: 'nofollow', ':class': '{disabled: !checks}' }
+                              = link_to class: 'destroy_multiple', method: :delete, data: { confirm: '¿Estás seguro?' }   do
+                                %i.icofont-trash
+                                Eliminar
+              :javascript
+                $(document).ready(function () {
+                  var navListItems = $('#modalBirth-#{cow&.id} .setup-panel a'),
+                          allWells = $('#modalBirth-#{cow&.id} .setup-content'),
+                          allNextBtn = $('#modalBirth-#{cow&.id} .nextBtn'),
+                        allPrevBtn = $('#modalBirth-#{cow&.id} .prevBtn');
+
+                  allWells.hide();
+
+                  navListItems.click(function (e) {
+                    e.preventDefault();
+                    var $target = $($(this).attr('href')),
+                        $item = $(this);
+
+                    if (!$item.hasClass('disabled')) {
+                      navListItems.removeClass('btn-active').addClass('btn-inactive');
+                      $item.addClass('btn-active');
+                      allWells.hide();
+                      $target.show();
+                      $target.find('input:eq(0)').focus();
+                    }
+                  });
+                  
+                  allPrevBtn.click(function(){
+                      var curStep = $(this).closest(".setup-content"),
+                          curStepBtn = curStep.attr("id"),
+                          prevStepWizard = $('#modalBirth-#{cow&.id} div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a");
+
+                      if ($('#cow-#{cow&.id}-step-1 #birth_#{cow&.id}_successfully').val() == 0) {
+                        $('#cow-#{cow&.id}-step-1-circle').trigger('click');
+                      } else {
+                        prevStepWizard.removeAttr('disabled').trigger('click');
+                      }
+                  });
+
+                  allNextBtn.click(function(){
+                      var curStep = $(this).closest(".setup-content"),
+                          curStepBtn = curStep.attr("id"),
+                          nextStepWizard = $('#modalBirth-#{cow&.id} div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+                          curInputs = curStep.find("input[type='text'],input[type='url']"),
+                          isValid = true;
+
+                      $(".form-group").removeClass("has-error");
+                      for(var i=0; i<curInputs.length; i++){
+                          if (!curInputs[i].validity.valid){
+                              isValid = false;
+                              $(curInputs[i]).closest(".form-group").addClass("has-error");
+                          }
+                      }
+
+                      if (isValid) {
+                        if ($('#cow-#{cow&.id}-step-1 #birth_#{cow&.id}_successfully').val() == 0) {
+                          $('#cow-#{cow&.id}-step-4-circle').trigger('click');
+                        } else {
+                          nextStepWizard.removeAttr('disabled').trigger('click');
+                        }
+                      }
+                    
+                  });
+
+                  $('#modalBirth-#{cow&.id} .setup-panel a.btn-active').trigger('click');
+                });
+
+
+
+
+                window.I18n = #{es_translations.to_json.html_safe}
+
+                
+                function fatherSelect (option) {
+                  var optionTxt = option.text
+                  if (!option.id) return optionTxt;
+                  var $option = $(
+                    '<span class="cattle-option">' +
+                      `<div style="background-image: url(/assets/keppler_cattle/male)" class="img-cattle-list"></div>` + 
+                      (I18n.keppler_cattle[optionTxt] || optionTxt) +
+                    '</span>'
+                  );
+                  return $option;
+                };
+
+                // $('#new_cow_#{cow&.id}_father_id').select2();
+
+              :scss
+                .select2.select2-container.select2-container--default.select2-hidden-accessible {
+                  height: 50px !important;
+                  width: 100% !important;
+                  position: relative !important;
+                }
+
+                .select2.select2-container.select2-container--default {
+                  border: 0 !important;
+                  clip: rect(0 0 0 0) !important;
+                  height: 1px !important;
+                  margin: -1px !important;
+                  overflow: hidden !important;
+                  padding: 0 !important;
+                  position: absolute !important;
+                  width: 1px !important;
+                }
+
+                
+              :javascript
+
+                $('#new_cow_weight_#{cow&.id}_weight').keyup(function() {
+                  $('#new_cow_weight_#{cow&.id}_gained_weight').val(
+                    $('#new_cow_weight_#{cow&.id}_weight').val()
+                  )
+                  $('#new_cow_weight_#{cow&.id}_average_weight').val(
+                    $('#new_cow_weight_#{cow&.id}_weight').val()
+                  )
+                }) 
+
+                $('#other_new_cow_weight_#{cow&.id}_weight').keyup(function() {
+                  $('#other_new_cow_weight_#{cow&.id}_gained_weight').val(
+                    $('#other_new_cow_weight_#{cow&.id}_weight').val()
+                  )
+                  $('#other_new_cow_weight_#{cow&.id}_average_weight').val(
+                    $('#other_new_cow_weight_#{cow&.id}_weight').val()
+                  )
+                }) 
+
+                $('#cow-#{cow&.id}-step-2 .serie_number').keyup(function() {
+                  if ( $('#cow-#{cow&.id}-step-2 #new_cow_#{cow&.id}_serie_number').val() == '') {
+                    $('#cow-#{cow&.id}-step-3-circle').addClass('disabled')
+                    $('#cow-#{cow&.id}-step-2 .nextBtn').prop('disabled', true)
+                  } else {
+                    if ($('#birth_#{cow&.id}_twins').val() == 1) {
+                      if ( $('#cow-#{cow&.id}-step-2 #other_new_cow_#{cow&.id}_serie_number').val() == '') {
+                        $('#cow-#{cow&.id}-step-3-circle').addClass('disabled')
+                        $('#cow-#{cow&.id}-step-2 .nextBtn').prop('disabled', true)
+                      } else {
+                        $('#cow-#{cow&.id}-step-3-circle').removeClass('disabled')
+                        $('#cow-#{cow&.id}-step-2 .nextBtn').prop('disabled', false)
+                      }
+                    } else {
+                      $('#cow-#{cow&.id}-step-3-circle').removeClass('disabled')
+                      $('#cow-#{cow&.id}-step-2 .nextBtn').prop('disabled', false)
+                    }
+                  }
+                })
+
+                $('#cow-#{cow&.id}-step-3 .new_cow_weight').keyup(function() {
+                  $('#cow-#{cow&.id}-step-3 [type=submit]').prop('disabled', false)
+                
+                  var weight_is_empty = false
+                  if ($('#cow-#{cow&.id}-step-3 #new_cow_weight_#{cow&.id}_weight').val() == '') {
+                    weight_is_empty = true
+                  } else {
+                    if ($('#birth_#{cow&.id}_twins').val() == 1) {
+                      if ($('#cow-#{cow&.id}-step-3 #other_new_cow_weight_#{cow&.id}_weight').val() == '') {
+                        weight_is_empty = true
+                      }
+                    }
+                  }
+                  if (weight_is_empty) {
+                    $('#cow-#{cow&.id}-step-4-circle').addClass('disabled')
+                    $('#cow-#{cow&.id}-step-3 .nextBtn').prop('disabled', true)
+                  }
+                })
+
+                $('#cow-#{cow&.id}-step-1 #birth_#{cow&.id}_successfully').change(function() {
+                  if ($('#birth_#{cow&.id}_successfully').val() == 1) {
+                    $('#cow-#{cow&.id}-step-2-circle').removeClass('disabled')
+                    $('#cow-#{cow&.id}-step-1 [type=submit]').hide()
+                    $('#cow-#{cow&.id}-step-1 .nextBtn').show()
+                  } else {
+                    $('#cow-#{cow&.id}-step-2-circle').addClass('disabled')
+                    $('#cow-#{cow&.id}-step-3-circle').addClass('disabled')
+                    $('#cow-#{cow&.id}-step-1 .nextBtn').hide()
+                    $('#cow-#{cow&.id}-step-1 [type=submit]').show()
+                  }
+                })
+
+                $('#cow-#{cow&.id}-step-1 #birth_#{cow&.id}_twins').change(function() {
+                  if ($('#birth_#{cow&.id}_twins').val() == 1) {
+                    $('.other_new_cow_#{cow&.id}').show()
+                  } else {
+                    $('.other_new_cow_#{cow&.id}').hide()
+                  }
+                })
+
+              -# :javascript
+                // Detalles de verificación
+
+                // Status
+                function change_birth_successfully() {
+                  $('#value_#{cow&.id}_successfully').text($('#birth_#{cow&.id}_successfully').val() == 1 ? 'Sí' : 'No')
+                }
+                function change_twins() {
+                  $('#value_#{cow&.id}_twins').text($('#birth_#{cow&.id}_twins').val() == 1 ? 'Sí' : 'No')
+                }
+                function change_twins() {
+                  $('#value_#{cow&.id}_twins').text($('#birth_#{cow&.id}_twins').val() == 1 ? 'Sí' : 'No')
+                }
+                function change_user_name() {
+                  $('#value_#{cow&.id}_user_name').text($('#birth_#{cow&.id}_user_name').val() == 1 ? 'Sí' : 'No')
+                }
+                function change_date() {
+                  $('#value_#{cow&.id}_date').text($('#birth_#{cow&.id}_date').val() == 1 ? 'Sí' : 'No')
+                }
+
+                function change_birth_successfully() {
+                  $('#value_#{cow&.id}_successfully').text($('#birth_#{cow&.id}_successfully').val() == 1 ? 'Sí' : 'No')
+                }
+                function change_twins() {
+                  $('#value_#{cow&.id}_twins').text($('#birth_#{cow&.id}_twins').val() == 1 ? 'Sí' : 'No')
+                }
+                function change_twins() {
+                  $('#value_#{cow&.id}_twins').text($('#birth_#{cow&.id}_twins').val() == 1 ? 'Sí' : 'No')
+                }
+                function change_user_name() {
+                  $('#value_#{cow&.id}_user_name').text($('#birth_#{cow&.id}_user_name').val() == 1 ? 'Sí' : 'No')
+                }
+                function change_date() {
+                  $('#value_#{cow&.id}_date').text($('#birth_#{cow&.id}_date').val() == 1 ? 'Sí' : 'No')
+                }
+
+                // New_cow
+
+                $(function() {
+                  // Status
+                  change_birth_successfully()
+                  change_twins()
+                  change_user_name()
+                  change_date()
+                  // New cow
+                })
+
+                // Status (Paso 1)
+                $('#birth_#{cow&.id}_successfully').change(function() {
+                  change_birth_successfully()
+                })
+
+                $('#birth_#{cow&.id}_twins').change(function() {
+                  $('#value_#{cow&.id}_twins').text($('#birth_#{cow&.id}_twins').val() == 1 ? 'Sí' : 'No')
+                })
+
+                $('#birth_#{cow&.id}_user_name').change(function() {
+                  $('#value_#{cow&.id}_user_name').text($('#birth_#{cow&.id}_user_name').val())
+                })
+
+                $('#birth_#{cow&.id}_date').change(function() {
+                  $('#value_#{cow&.id}_date').text($('#birth_#{cow&.id}_date').val())
+                })
+
+                // Becerro (Paso 2)
+                $('#new_cow_#{cow&.id}_serie_number').change(function() {
+                  $('#value_#{cow&.id}_serie_number')
+                })
+            .content-table{style: "margin-top: 65px!important;"}
+              %table.cow-table
+                %thead
+                  %tr
+                    -# %th
+                      .toolbar-item
+                        .item-check
+                          .checkbox
+                            %label{ for: 'checkbox-all' }
+                              %input{ type: 'checkbox', id: 'checkbox-all', '@click': 'selectAll()', name: 'multiple_ids' }
+                              %span.cr
+                                %i.cr-icon.icofont-check
+                    %th
+                      Serie
+                    %th
+                      Nombre
+                    %th Tipología
+                    %th Peso
+                    %th Último servicio
+                    %th Pajuelas
+                    %th Registrada
+                    
+                  %tbody#cows
+                    - @cows.each do |cow|
+                      %tr.cow{ style: "border-bottom: 1px #eee solid;", id: "cow-#{cow&.id}" }
+                        -# %td
+                          .checkbox{ style: 'margin: 3px' }
+                            %label{ for: "checkbox-#{cow&.id}" }
+                              %input{ type:"checkbox", id: "checkbox-#{cow&.id}", 'checklist-model' => 'check', 'checklist-value' => "#{cow&.id}", '@click' => "listDelete(#{cow&.id})"}
+                              %span.cr
+                                %i.cr-icon.icofont-check
+                        %td
+                          #{cow.serie_number}
+                        %td
+                          = "#{cow.short_name}" unless cow.short_name.blank?
+                        %td
+                          #{cow.typology_name}
+                        %td
+                          #{cow.weight&.weight.to_f} KG
+                        - if cow.statuses.where(status_type: 'Service').exists?
+                          %td= cow.statuses.where(status_type: 'Service').last&.date&.strftime('%d/%m/%y')  
+                          %td
+                            = @farm.inseminations.find_by(id: cow.statuses.where(status_type: 'Service').last.insemination_id)&.serie_number
+                            #{cow.statuses.where(status_type: 'Service').last&.insemination_quantity&.to_i} cartuchos
+                        - else
+                          %td Sin servicio
+                          %td Sin pajuela
+                        - if cow.statuses.where(status_type: 'Birth').exists?
+                          %td.d-flex.justify-content-center
+                            .service.service-active 
+                        - else
+                          %td.d-flex.justify-content-center
+                            .service.service-inactive 
+
+:css
+  .label_custom--strong {
+    float: left !important;
+    margin-top: 10px;
+  }
+  .list-data {
+    margin-top: 20px;
+  }
+  dt {
+    float: left;
+    margin-right: 10%;
+    max-width: 40%;
+    font-weight: bold;
+  }
+  
+  dd {
+    color: grey;
+    margin-left: 50%;
+    margin-bottom: .5em;
+  }
+  
+  dd::after {
+    content: " ";
+    display: block;
+    clear: left;
+  }  
+  
+  .title-modal{
+    text-align: left !important;
+    text-transform: unset !important;
+    color: #6f6f6f !important;
+    position: relative;
+    margin-bottom: 5px;
+  }
+  .label_custom--strong {
+    text-align: left !important;
+  }
+  [type=reset], [type=submit], button, html [type=button] {
+    -webkit-appearance: unset !important;
+  }
+  .stepwizard-step p {
+    margin-top: 10px;
+  }
+  .stepwizard-row {
+    display: table-row;
+  }
+  .stepwizard {
+    display: table;
+    width: 100%;
+    position: relative;
+    margin-top: 20px;
+  }
+  .stepwizard-step button[disabled] {
+    opacity: 1 !important;
+    filter: alpha(opacity=100) !important;
+  }
+  .stepwizard-row:before {
+    top: 14px;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 66%;
+    height: 2px;
+    background-color: #ccc;
+    z-order: 0;
+    left: 15%;
+  }
+  .stepwizard-step {
+    display: table-cell;
+    text-align: center;
+    position: relative;
+  }
+  
+  a.btn {
+    color: white !important;
+    border-radius: 50%;
+  }
+

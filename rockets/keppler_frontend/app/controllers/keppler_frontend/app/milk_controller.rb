@@ -6,7 +6,6 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    before_action :set_farm
     before_action :respond_to_formats
     helper KepplerFarm::ApplicationHelper
     include ObjectQuery
@@ -16,7 +15,7 @@ module KepplerFrontend
       @new_lot = @farm.strategic_lots.new
       @milk_lot = @farm.strategic_lots.find_by(id: @farm.milk_lot_id)
       @collection = @milk_lot.nil? ? @strategic_lots : (@strategic_lots - [@milk_lot])
-      cows = (@milk_lot.blank? ? @farm.cows : @milk_lot.cows).where(gender: 'female')
+      cows = (@milk_lot.blank? ? @farm_cows : @milk_lot.cows).where(gender: 'female')
       ids = cows.select { |c| c.typology&.milking }.pluck(:id)
       @cows = cows.where(id: ids)
     end
@@ -76,7 +75,7 @@ module KepplerFrontend
     end
 
     def transfer_to_lot
-      @cow = @farm.cows.find_by_id(params[:id])
+      @cow = @farm_cows.find_by_id(params[:id])
       @strategic_lot = @farm.strategic_lots.find_by_id(params.dig(:cow, :location, :strategic_lot_id))
       if @cow && @strategic_lot
         new_location = @cow.locations.new(farm_id: @farm.id, strategic_lot_id: @strategic_lot.id, user_id: current_user.id)
@@ -121,19 +120,6 @@ module KepplerFrontend
 
 
     private
-
-    def set_farm
-      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
-    end
-
-    def set_farms
-      if current_user&.has_role?('keppler_admin')
-        @farms = KepplerFarm::Farm.all
-      else
-        @assignments = KepplerFarm::Assignment.where(user_id: current_user&.id)
-        @farms = KepplerFarm::Farm.where(id: @assignments&.map(&:keppler_farm_farm_id)) unless @assignments.size.zero?
-      end
-    end
 
     def respond_to_formats
       respond_to do |format|

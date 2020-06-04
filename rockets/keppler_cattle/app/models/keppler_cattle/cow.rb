@@ -116,18 +116,19 @@ module KepplerCattle
 
     def status_name_es
       this_status =
-        if ['Nil', nil].include?(status_name)
-          'Vacía'
-        elsif ['Zeal'].include?(status_name)
+        case status_name
+        when 'Zeal'
           'En Celo'
-        elsif ['Service'].include?(status_name)
+        when 'Service'
           'Inseminada'
-        elsif ['Pregnancy'].include?(status_name)
+        when 'Pregnancy'
           'Preñada'
-        elsif ['Birth'].include?(status_name)
+        when 'Birth'
           'Parida'
-        elsif ['Dry'].include?(status_name)
+        when 'Dry'
           'En secado'
+        else
+          'Vacía'
         end
       "#{this_status}#{' Lactando' if milking}" if gender?('female') && [1, 2].include?(typology&.counter&.to_i)
     end
@@ -244,43 +245,45 @@ module KepplerCattle
     end
 
     def self.actives
-      cows = select do |cow|
-        (cow&.locations.pluck(:farm_id).include?(farm&.id) && cow&.location&.farm_id == farm&.id) &&
-        cow&.activity&.active
-      end
-      active_ids = cows.pluck(:id).uniq
-      # location_cow_ids =
-      #   KepplerCattle::Location.where(
-      #     'keppler_cattle_locations.farm_id = ? AND keppler_cattle_locations.cow_id IN (?)', farm&.id, ids
-      #   ).select('MAX(cow_id) as max_cow_id').group(:cow_id).map(&:max_cow_id)
-      # activity_cow_ids =
-      #   KepplerCattle::Activity
-      #     .where(active: true)
-      #     .select('MAX(cow_id) as max_cow_id').group(:cow_id).map(&:max_cow_id)
-      # active_ids = location_cow_ids&activity_cow_ids
-      includes(:locations).where(id: active_ids)
+      # cows = select do |cow|
+      #   (cow&.locations.pluck(:farm_id).include?(farm&.id) && cow&.location&.farm_id == farm&.id) &&
+      #   cow&.activity&.active
+      # end
+      # active_ids = cows.pluck(:id).uniq
+      cows_with_locations_in_farm =
+        KepplerCattle::Location.where(farm_id: farm&.id).pluck(:cow_id).uniq
+      cows_in_farm =
+        KepplerCattle::Location.where(farm_id: farm&.id)
+          .select('MAX(cow_id) as max_cow_id').group(:cow_id).map(&:max_cow_id)
+      active_cows =
+        KepplerCattle::Activity
+          .where(active: true)
+          .select('MAX(cow_id) as max_cow_id').group(:cow_id).map(&:max_cow_id)
+      active_ids = cows_with_locations_in_farm&cows_in_farm&active_cows
+      where(id: active_ids)
     end
 
     def self.inactives
-      cows = select do |cow|
-        (cow&.locations.pluck(:farm_id).include?(farm&.id) && cow&.location&.farm_id != farm&.id) ||
-        !cow&.activity&.active
-      end
-      inactive_ids = cows.pluck(:id).uniq
-      # farm_locations =
-      #   KepplerCattle::Location.where(
-      #     'keppler_cattle_locations.farm_id = ? AND keppler_cattle_locations.cow_id IN (?)', farm&.id, ids
-      #   ).select('MAX(cow_id) as max_cow_id').group(:cow_id).map(&:max_cow_id)
-      # activity_cow_ids =
-      #   KepplerCattle::Activity
-      #     .where.not(active: true)
-      #     .select('MAX(cow_id) as max_cow_id').group(:cow_id).map(&:max_cow_id)
-      # inactive_ids = location_cow_ids&activity_cow_ids
-      includes(:locations).where(id: inactive_ids)
+      # cows = select do |cow|
+      #   (cow&.locations.pluck(:farm_id).include?(farm&.id) && cow&.location&.farm_id != farm&.id) ||
+      #   !cow&.activity&.active
+      # end
+      # inactive_ids = cows.pluck(:id).uniq
+      cows_with_locations_in_farm =
+        KepplerCattle::Location.where(farm_id: farm&.id).pluck(:cow_id)
+      cows_out_of_farm =
+        KepplerCattle::Location.where.not(farm_id: farm&.id)
+          .select('MAX(cow_id) as max_cow_id').group(:cow_id).map(&:max_cow_id)
+      inactive_cows =
+        KepplerCattle::Activity
+          .where.not(active: true)
+          .select('MAX(cow_id) as max_cow_id').group(:cow_id).map(&:max_cow_id)
+      inactive_ids = cows_with_locations_in_farm&cows_out_of_farm|inactive_cows
+      where(id: inactive_ids)
     end
 
     def active?
-      # puts "############ FINCA #{farm.id} ######################"
+    
       activity&.active # locations.pluck(:farm_id).include?(farm&.id) && location&.farm_id == farm&.id &&
     end
 

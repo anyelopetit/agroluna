@@ -6,9 +6,7 @@ module KepplerFrontend
     include FrontsHelper
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
-    before_action :set_farm
     before_action :set_transference, only: %i[show edit update destroy]
-    before_action :set_farms
     before_action :index_variables
     before_action :attachments
     before_action :index_history
@@ -26,7 +24,7 @@ module KepplerFrontend
     end
 
     def new
-      @cows = @farm.cows.order(:serie_number)
+      @cows = @farm_cows.order(:serie_number)
       @transference = @farm.transferences.new
       @farms = KepplerFarm::Farm.where.not(id: @farm&.id)
       # @reasons = KepplerCattle::Transference.reasons
@@ -96,19 +94,6 @@ module KepplerFrontend
       end
       @total = @transferences.size
       @attributes = KepplerCattle::Transference.index_attributes
-    end
-
-    def set_farm
-      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
-    end
-
-    def set_farms
-      if current_user&.has_role?('keppler_admin')
-        @farms = KepplerFarm::Farm.all
-      else
-        @assignments = KepplerFarm::Assignment.where(user_id: current_user&.id)
-        @farms = KepplerFarm::Farm.where(id: @assignments&.map(&:keppler_farm_farm_id)) unless @assignments.size.zero?
-      end
     end
 
     # begin callback user_authenticate

@@ -43,13 +43,17 @@
                 %i.icofont-refresh
                 Actualizar peso
             %li
-              %a{'data-target': "#modalPregnancy-#{cow.id}", 'data-toggle': 'modal', disabled: true }
+              = link_to new_services_farm_cows_path(@farm.id, [cow.id]) do
+                %i.icofont-plus
+                Registrar servicio
+            %li
+              = link_to new_pregnancies_farm_cows_path(@farm.id, [cow.id]) do
                 %i.icofont-plus
                 Registrar preñez
             %li
-              %a{'data-target': "#modalBirth-#{cow.id}", 'data-toggle': 'modal', disabled: true }
+              = link_to new_births_farm_cows_path(@farm.id, [cow.id]) do
                 %i.icofont-baby
                 Registrar parto
   
-  = render 'keppler_frontend/app/cattle/partials/modalBirth', cow: cow
-  = render 'keppler_frontend/app/cattle/partials/modalPregnant', cow: cow
+  -# = render 'keppler_frontend/app/cattle/partials/modalBirth', cow: cow
+  -# = render 'keppler_frontend/app/cattle/partials/modalPregnant', cow: cow

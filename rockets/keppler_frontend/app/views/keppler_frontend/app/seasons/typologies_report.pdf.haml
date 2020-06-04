@@ -50,7 +50,7 @@
                 %tr
                   %th.not-records.center
                     %center No se encontraron tipologías registradas
-          - elsif @farm&.cows&.blank?
+          - elsif @farm_cows&.blank?
             %table.mt-none.mb-4
               %thead
                 %tr
@@ -90,7 +90,7 @@
           %hr.my-1
           %b
             Cantidad de series:
-          #{@farm&.cows.size}
+          #{@farm_cows.size}
 :scss
   body {
     font-size: 15px;

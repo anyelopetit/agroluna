@@ -17,7 +17,7 @@
         }
       }
   %body{ onload: 'number_pages()' }
-    - @inactive_cows = @farm.cows.inactives
+    - @inactive_cows = @farm_cows.inactives
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase
       %h3.report-title #{@farm&.title}

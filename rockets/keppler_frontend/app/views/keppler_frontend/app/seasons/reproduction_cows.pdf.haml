@@ -6,7 +6,7 @@
     %meta{ name: 'theme-color', content: '#fff' }
     %title Reporte de temporada de monta (#{@farm&.title})
   %body
-    - @possible_mothers = @farm.cows.possible_mothers
+    - @possible_mothers = @farm_cows.possible_mothers
     - @weight_average = @possible_mothers.weight_average(@possible_mothers)
     .header-left
       %h1.farm-title= @farm.try(:title)&.upcase

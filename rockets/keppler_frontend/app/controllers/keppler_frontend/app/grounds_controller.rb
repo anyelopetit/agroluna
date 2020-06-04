@@ -64,10 +64,6 @@ module KepplerFrontend
 
     private
 
-    def set_farm
-      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
-    end
-
     def set_ground
       @ground = KepplerFarm::Ground.find_by(id: params[:id])
     end

@@ -18,15 +18,13 @@ module KepplerCattle
       end
 
       def filter_by_species
-        puts "=========== #{params[:species_id]} ==================="
         return @cows = @objects if params[:species_id].eql?('all')
         @cows = @objects.where(species_id: params[:species_id]).page(@current_page).order(:serie_number)
-        puts "=========== #{@cows.size} ==================="
       end
 
       # GET /cattles/1
       def show
-        @statuses = @cow.statuses.order(created_at: :desc)
+        @statuses = KepplerCattlle::Status.where(cow_id: @cow_id).order(created_at: :desc)
       end
 
       # GET /cattles/new

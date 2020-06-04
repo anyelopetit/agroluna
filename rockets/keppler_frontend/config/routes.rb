@@ -43,6 +43,9 @@ KepplerFrontend::Engine.routes.draw do
         get '/nuevas-prenadas/:multiple_ids', action: :new_pregnancies, as: :new_pregnancies
         post '/create_pregnancies/:multiple_ids', action: :create_pregnancies, as: :create_pregnancies
 
+        get '/nuevos-partos/:multiple_ids', action: :new_births, as: :new_births
+        post '/create_births/:multiple_ids', action: :create_births, as: :create_births
+
         post '/statuses', action: :statuses, as: :statuses
         post '/make_birth', action: :make_birth, as: :make_birth
         post '/make_abort', action: :make_abort, as: :make_abort

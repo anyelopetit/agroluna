@@ -7,8 +7,6 @@ module KepplerFrontend
     layout 'keppler_frontend/app/layouts/application'
     # layout 'layouts/templates/application'
     before_action :set_strategic_lot, only: %i[show edit update destroy assign_cattle delete_assignment]
-    before_action :set_farm
-    before_action :set_farms
     before_action :index_variables
     before_action :attachments
     before_action :respond_to_formats
@@ -18,7 +16,7 @@ module KepplerFrontend
     def index
       @strategic_lots = @farm.strategic_lots
       @assign = KepplerCattle::Location.new
-      @cows = @farm.cows.map { |c| [c.serie_number, c.id] }
+      @cows = @farm_cows.map { |c| [c.serie_number, c.id] }
       # respond_to_formats(@farm.strategic_lots)
     end
 
@@ -117,7 +115,7 @@ module KepplerFrontend
     end
 
     def transfer
-      @cows = @farm.cows.where(id: params[:multiple_ids].split(','))
+      @cows = @farm_cows.where(id: params[:multiple_ids].split(','))
     end
 
     def create_transfer
@@ -133,7 +131,7 @@ module KepplerFrontend
     end
 
     def transfered
-      @cows = @farm.cows.where(id: params[:multiple_ids].split(',')).order(:serie_number)
+      @cows = @farm_cows.where(id: params[:multiple_ids].split(',')).order(:serie_number)
     end
 
     private
@@ -148,19 +146,6 @@ module KepplerFrontend
       @strategic_lots = set_strategic_lot.page(@current_page).order(position: :desc)
       @total = @strategic_lots.size
       @attributes = KepplerFarm::StrategicLot.index_attributes
-    end
-
-    def set_farm
-      @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
-    end
-
-    def set_farms
-      if current_user&.has_role?('keppler_admin')
-        @farms = KepplerFarm::Farm.all
-      else
-        @assignments = KepplerFarm::Assignment.where(user_id: current_user&.id)
-        @farms = KepplerFarm::Farm.where(id: @assignments&.map(&:keppler_farm_farm_id)) unless @assignments.size.zero?
-      end
     end
 
     # begin callback user_authenticate

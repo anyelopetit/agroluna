@@ -62,7 +62,9 @@
                     = link_to(new_services_farm_cows_path(@farm.id, []), { class: 'multiple_ids mt-2 mb-2 mr-1 dropdown-item', target: '_blank' }) do
                       Agregar Servicios
                     = link_to(new_pregnancies_farm_cows_path(@farm.id, []), { class: 'multiple_ids mt-2 mb-2 mr-1 dropdown-item', target: '_blank' }) do
-                      Añadir Preñez
+                      Agregar Preñeces
+                    = link_to(new_births_farm_cows_path(@farm.id, []), { class: 'multiple_ids mt-2 mb-2 mr-1 dropdown-item', target: '_blank' }) do
+                      Agregar Partos
                 .d-inline-flex
                   %a#reportDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
                     %button.btn.btn_custom.btn--filled.btn--medium

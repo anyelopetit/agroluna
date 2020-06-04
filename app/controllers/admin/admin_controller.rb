@@ -14,6 +14,7 @@ module Admin
     before_action :attachments
     before_action :authorization
     before_action :history
+    before_action :set_farm, only: %i[show edit update destroy]
 
     def root
       if current_user
@@ -35,6 +36,17 @@ module Admin
     end
 
     private
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_farm
+      @farm = Farm.find_by(id: (params[:id] || params[:farm_id]))
+      return unless @farm
+
+      @farm_cows =
+        KepplerCattle::Cow
+        .includes(:locations)
+        .where(keppler_cattle_locations: { farm_id: @farm&.id })
+    end
 
     def attachments
       @attachments = YAML.load_file(

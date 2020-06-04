@@ -14,7 +14,7 @@
             .col-sm-6
               %input#inventory_cattle{ name: 'cattle[serie_number]', placeholder: 'Escribe un número de serie', class: 'form-control input_custom', onkeyup: "validateCattle()", list: "cattle" }
               %datalist#cattle
-                - @farm.cows.out_of_lot(@inventory.id).order(:serie_number).each do |cow|
+                - @farm_cows.out_of_lot(@inventory.id).order(:serie_number).each do |cow|
                   %option= cow.serie_number
             .col-sm-4
               = f.input :inventory_cows_found, as: :select, collection: [[1, 'Sí pasó'], [0, 'No pasó']], label: 'Condición:', label_method: :second, value_method: :first, selected: 1

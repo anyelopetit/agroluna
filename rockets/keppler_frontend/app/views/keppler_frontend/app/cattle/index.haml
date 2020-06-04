@@ -8,7 +8,6 @@
     $("#" + $id).show()
   })
 
-  var $ids = #{@farm.cows.pluck(:id)}
   var $multiple_ids = []
 
   // function checkboxes() {
@@ -34,9 +33,9 @@
   //       var result = href.split(',').filter(function(e) {
   //         return $multiple_ids.indexOf(parseInt(e)) != -1
   //       });
-  //       console.log('href: ' + href)
-  //       console.log('$multiple_ids: ' + $multiple_ids)
-  //       console.log('result: ' + result)
+  //       // console.log('href: ' + href)
+  //       // console.log('$multiple_ids: ' + $multiple_ids)
+  //       // console.log('result: ' + result)
   //       $(elem).attr('href', (`${href}${result}`))
   //     })
   //     $(".disable").each(function(index) {
@@ -45,7 +44,7 @@
   //   }
 
   $('#checkbox-all').click(function() {
-    console.log('#checkbox-all click')
+    // console.log('#checkbox-all click')
     this_is_checked = $(this).prop('checked')
     $('.checkbox').each(function(index, elem) {
       if ($(elem).prop('checked') == !this_is_checked) {
@@ -55,7 +54,7 @@
   })
 
   $('.checkbox').click(function() {
-    console.log('click')
+    // console.log('click')
     var id = $(this).prop('id').replace('checkbox-', '')
     if ($multiple_ids.includes(id)) {
       $multiple_ids.splice($multiple_ids.indexOf(id), 1);
@@ -63,7 +62,7 @@
       $multiple_ids.push(id)
     }
     $('.multiple_ids').each(function(index, elem) {
-      console.log('href: ' + $(elem).attr('href'))
+      // console.log('href: ' + $(elem).attr('href'))
       split_href = $(elem).attr('href').split('/').filter(Boolean)
       href_root = split_href.filter(function(e) {
         var path = window.location.pathname.split('/').splice(0, 3)
@@ -72,12 +71,12 @@
       // href_ids = split_href[split_href.length - 1].split(',').filter(Number).join(',')
       var final_href = `${href_root}/${$multiple_ids.join(',')}`
       $(elem).attr('href', final_href)
-      console.log('split_href: ' + split_href)
-      console.log('href_root: ' + href_root)
-      console.log('$multiple_ids: ' + $multiple_ids)
-      console.log('final_href: ' + final_href)
+      // console.log('split_href: ' + split_href)
+      // console.log('href_root: ' + href_root)
+      // console.log('$multiple_ids: ' + $multiple_ids)
+      // console.log('final_href: ' + final_href)
     })
-    console.log('')
+    // console.log('')
   })
 
   function strategic_lots() {

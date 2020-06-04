@@ -120,7 +120,7 @@ module KepplerFarm
       private
 
       def set_farm
-        @farm = KepplerFarm::Farm.find_by(id: params[:farm_id])
+        @farm = KepplerFarm::Farm.find_by(id: (params[:farm_id] || params[:id]))
         return unless @farm
 
         @farm_cows =

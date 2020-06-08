@@ -225,7 +225,7 @@ ASOCPADRE2 = 64
 
 COWS =
   CSV
-    .read('originaldb/SGANIM.csv')[1..100] # Cows Table
+    .read('originaldb/SGANIM.csv')[1..-1] # Cows Table
     .reject { |row| row[EsPajuelaPadre].eql?('1') } # Reject EsPajuelaPadre == '1'
     .sort_by { |row| row[FNAC].blank? ? row[SERIE] : row[FNAC] } # Sort by FNAC
 INSEMINATIONS =

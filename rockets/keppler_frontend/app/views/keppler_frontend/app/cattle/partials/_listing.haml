@@ -59,11 +59,11 @@
                       %i.icofont-simple-down
                   .dropdown-menu{"aria-labelledby" => "reportDropdown"}
                     -# = link_to new_services_farm_season_path(@farm.id, @season.id, @strategic_lot.id, []), class: 'multiple_ids disable', disabled: true do
-                    = link_to(new_services_farm_cows_path(@farm.id, []), { class: 'multiple_ids mt-2 mb-2 mr-1 dropdown-item', target: '_blank' }) do
+                    = link_to(new_services_farm_cows_path(@farm.id, []), { class: 'multiple_ids mt-2 mb-2 mr-1 dropdown-item' }) do
                       Agregar Servicios
-                    = link_to(new_pregnancies_farm_cows_path(@farm.id, []), { class: 'multiple_ids mt-2 mb-2 mr-1 dropdown-item', target: '_blank' }) do
+                    = link_to(new_pregnancies_farm_cows_path(@farm.id, []), { class: 'multiple_ids mt-2 mb-2 mr-1 dropdown-item' }) do
                       Agregar Preñeces
-                    = link_to(new_births_farm_cows_path(@farm.id, []), { class: 'multiple_ids mt-2 mb-2 mr-1 dropdown-item', target: '_blank' }) do
+                    = link_to(new_births_farm_cows_path(@farm.id, []), { class: 'multiple_ids mt-2 mb-2 mr-1 dropdown-item' }) do
                       Agregar Partos
                 .d-inline-flex
                   %a#reportDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
@@ -72,11 +72,11 @@
                       Reporte
                       %i.icofont-simple-down
                   -# .dropdown-menu{"aria-labelledby" => "reportDropdown"}
-                    = link_to({action: action_name.to_sym, format: :pdf}, {class: ' mt-2 mb-2 mr-1 dropdown-item', target: '_blank'}) do
+                    = link_to({action: action_name.to_sym, format: :pdf}, {class: ' mt-2 mb-2 mr-1 dropdown-item'}) do
                       PDF
-                    = link_to({action: action_name.to_sym, format: :xls}, {class: ' mt-2 mb-2 mr-1 dropdown-item', target: '_blank'}) do
+                    = link_to({action: action_name.to_sym, format: :xls}, {class: ' mt-2 mb-2 mr-1 dropdown-item'}) do
                       XLS
-                    = link_to({action: action_name.to_sym, format: :csv}, {class: ' mt-2 mb-2 mr-1 dropdown-item', target: '_blank'}) do
+                    = link_to({action: action_name.to_sym, format: :csv}, {class: ' mt-2 mb-2 mr-1 dropdown-item'}) do
                       CSV
                   .dropdown-menu{"aria-labelledby" => "reportDropdown"}
                     = link_to({controller: :seasons, action: :reproduction_cows, format: :pdf}, {class: ' mt-2 mb-2 mr-1 dropdown-item', target: '_blank'}) do

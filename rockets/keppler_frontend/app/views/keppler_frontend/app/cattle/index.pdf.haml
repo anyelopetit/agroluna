@@ -36,6 +36,7 @@
             -# %th Pelaje
             %th Lote
         %tbody
+          - @active_cows = @cows.actives.order(:serie_number)
           - @active_cows.each do |cow|
             %tr
               %td= cow&.serie_number

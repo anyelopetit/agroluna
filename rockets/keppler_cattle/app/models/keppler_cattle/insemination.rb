@@ -67,7 +67,7 @@ module KepplerCattle
     end
 
     def typology
-      KepplerCattle::Typology.find_by(id: insemination_id)
+      KepplerCattle::Typology.find_by(id: id)
     end
 
     def mother

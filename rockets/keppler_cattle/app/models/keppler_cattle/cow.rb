@@ -205,8 +205,10 @@ module KepplerCattle
     end
 
     def self.weight_average(cows)
-      cows.map { |cow| cow.weight&.weight&.to_f }
-        .inject { |sum, weight| sum + weight } / cows.size
+      result =  cows.map do |cow|
+        cow.weight&.weight&.to_f
+      end.inject { |sum, weight| sum + weight }
+      result.nil? ? 0 : (result / cows.size)
     end
 
     def self.where_status(status_name, season_id = nil)

@@ -37,13 +37,13 @@ KepplerFrontend::Engine.routes.draw do
         get 'pesajes/:multiple_ids', to: 'app/cattle#show_weights', as: :weights
 
         # Procesos en lote
-        get '/nuevos-servicios/:multiple_ids', action: :new_services, as: :new_services
+        get '/en-lote/nuevos-servicios(/:multiple_ids)', action: :new_services, as: :new_services
         post '/create_services/:multiple_ids', action: :create_services, as: :create_services
 
-        get '/nuevas-prenadas/:multiple_ids', action: :new_pregnancies, as: :new_pregnancies
+        get '/en-lote/nuevas-prenadas(/:multiple_ids)', action: :new_pregnancies, as: :new_pregnancies
         post '/create_pregnancies/:multiple_ids', action: :create_pregnancies, as: :create_pregnancies
 
-        get '/nuevos-partos/:multiple_ids', action: :new_births, as: :new_births
+        get '/en-lote/nuevos-partos(/:multiple_ids)', action: :new_births, as: :new_births
         post '/create_births/:multiple_ids', action: :create_births, as: :create_births
 
         post '/statuses', action: :statuses, as: :statuses

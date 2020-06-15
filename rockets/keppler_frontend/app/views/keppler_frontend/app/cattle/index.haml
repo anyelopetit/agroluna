@@ -54,29 +54,22 @@
   })
 
   $('.checkbox').click(function() {
-    // console.log('click')
     var id = $(this).prop('id').replace('checkbox-', '')
     if ($multiple_ids.includes(id)) {
       $multiple_ids.splice($multiple_ids.indexOf(id), 1);
     } else {
       $multiple_ids.push(id)
     }
+    $('#en-lote').prop('disabled', ($multiple_ids.length == 0))
     $('.multiple_ids').each(function(index, elem) {
-      // console.log('href: ' + $(elem).attr('href'))
       split_href = $(elem).attr('href').split('/').filter(Boolean)
       href_root = split_href.filter(function(e) {
         var path = window.location.pathname.split('/').splice(0, 3)
         return !path.includes(e) && isNaN(parseInt(e))
       }).join('/')
-      // href_ids = split_href[split_href.length - 1].split(',').filter(Number).join(',')
       var final_href = `${href_root}/${$multiple_ids.join(',')}`
       $(elem).attr('href', final_href)
-      // console.log('split_href: ' + split_href)
-      // console.log('href_root: ' + href_root)
-      // console.log('$multiple_ids: ' + $multiple_ids)
-      // console.log('final_href: ' + final_href)
     })
-    // console.log('')
   })
 
   function strategic_lots() {

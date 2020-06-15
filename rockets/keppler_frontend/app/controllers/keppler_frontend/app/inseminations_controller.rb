@@ -16,10 +16,18 @@ module KepplerFrontend
     include ObjectQuery
 
     def index
+      @active_inseminations = @inseminations.actives.order(:serie_number)
+      if request.format.symbol.eql?(:html)
+        @active_inseminations = @active_inseminations.page(params[:page]).per(50)
+      end
       # respond_to_formats(@active_inseminations)
     end
 
     def index_used
+      @inactive_inseminations = @inseminations.inactives.order(:serie_number)
+      if request.format.symbol.eql?(:html)
+        @inactive_inseminations = @inactive_inseminations.page(params[:page]).per(50)
+      end
       # respond_to_formats(@inactive_inseminations)
     end
 
@@ -76,12 +84,8 @@ module KepplerFrontend
     def index_variables
       @q = @farm.inseminations.ransack(params[:q])
       @inseminations = @q.result(distinct: true)
-      @active_inseminations = @inseminations.actives.order(:serie_number)
-      @inactive_inseminations = @inseminations.inactives.order(:serie_number)
-      if request.format.symbol.eql?(:html)
-        @active_inseminations = @active_inseminations.page(params[:page]).per(50)
-        @inactive_inseminations = @inactive_inseminations.page(params[:page]).per(50)
-      end
+      @active_inseminations_size = @inseminations.actives.order(:serie_number).size
+      @inactive_inseminations_size = @inseminations.inactives.order(:serie_number).size
       @total = @inseminations.size
       @attributes = KepplerCattle::Insemination.index_attributes
       @typologies = KepplerCattle::Typology.all

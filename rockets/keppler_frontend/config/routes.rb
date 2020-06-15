@@ -33,7 +33,7 @@ KepplerFrontend::Engine.routes.draw do
         get :pagination
         # Weights
         get 'nuevos-pesajes/:multiple_ids', to: 'app/cattle#new_weights', as: :new_weights
-        post :create_weights
+        post '/create_weights/:multiple_ids', action: :create_weights, as: :create_weights
         get 'pesajes/:multiple_ids', to: 'app/cattle#show_weights', as: :weights
 
         # Procesos en lote

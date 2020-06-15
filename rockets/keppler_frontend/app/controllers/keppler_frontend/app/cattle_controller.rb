@@ -236,18 +236,33 @@ module KepplerFrontend
       redirect_back fallback_location: farm_cows_path(@farm)
     end
 
-    def new_birth
+    def new_births
       @cows = @farm_cows.where(id: params[:multiple_ids].split(','))
       @possible_fathers = @farm_cows.possible_fathers_select2
       @found = false
     end
 
-    def create_birth
+    def create_births
       status = KepplerCattle::Status.new_status(params, {farm_id: @farm.id})
       if status.save!
-        flash[:notice] = 'Preñez guardada'
+        flash[:notice] = 'Parto guardado'
       else
-        flash[:error] = 'No se pudo guardar la preñez'
+        flash[:error] = 'No se pudo guardar el parto'
+      end
+      redirect_back fallback_location: farm_cows_path(@farm)
+    end
+
+    def new_weights
+      @cows = @farm_cows.where(id: params[:multiple_ids].split(','))
+      @found = false
+    end
+
+    def create_weights
+      status = KepplerCattle::Status.new_status(params, {farm_id: @farm.id})
+      if status.save!
+        flash[:notice] = 'Peso guardado'
+      else
+        flash[:error] = 'No se pudo guardar el peso'
       end
       redirect_back fallback_location: farm_cows_path(@farm)
     end

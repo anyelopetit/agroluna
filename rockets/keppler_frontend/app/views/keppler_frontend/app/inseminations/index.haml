@@ -1,15 +1,15 @@
 -# = render 'keppler_frontend/app/farms/components/navbar', farm: @farm, farms: @farms
 .app_wrapper
   #index-container
-    -# %ul#moduleTabs.nav.nav-tabs.mt-4{role: "tablist"}
+    %ul#moduleTabs.nav.nav-tabs.mt-4{role: "tablist"}
       %li.nav-item
         -# %a#mfg-tab.nav-link.active{"aria-controls" => "mfg", "aria-selected" => "true", "data-toggle" => "tab", href: "#mfg", role: "tab"}
         %a#mfg-tab.nav-link.active{ href: "#mfg", role: "tab" }
-          Inventario (#{@active_inseminations.size})
+          Inventario (#{@active_inseminations_size})
       %li.nav-item
         -# %a#ale-tab.nav-link{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", href: "#ale", role: "tab"}
         = link_to({ action: :index_used }, { class: "nav-link" }) do
-          Usadas (#{@inactive_inseminations.size})
+          Usadas (#{@inactive_inseminations_size})
       -# %li.nav-item
         %a#transfers-tab.nav-link{"aria-controls" => "transfers", "aria-selected" => "false", "data-toggle" => "tab", href: "#transfers", role: "tab"} Transferencias
     %hr{ :style => "margin-top: 0;width: 90%; margin-bottom: 20px;"}

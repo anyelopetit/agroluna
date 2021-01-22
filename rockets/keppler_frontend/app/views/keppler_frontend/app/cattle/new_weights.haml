@@ -15,17 +15,21 @@
               Actualizar Pesos
             .form-padding
               = simple_form_for @farm, url: create_weights_farm_cows_path(@farm), action: :create_weights, method: :post do |f|
-                - @cows.each do |cow|
-                  .row
-                    .col-sm-12
+                - @cows.includes(:species).each do |cow|
+                  .row.mt-5
+                    .col-sm-6
                       %h3
                         Serie
                         %b #{cow.serie_number}
                         %small
                           = "(#{cow.short_name})" unless cow.short_name.blank?
                           \- #{cow.typology_name} (#{cow.weight&.weight.to_f} KG)
-                    = f.input :user_id, input_html: { name: "weight[#{cow&.id}][user_id]", value: current_user.id }, as: :hidden
-                    = f.input :cow_id, input_html: { id: "farm_cow_id-#{cow.id}",  name: "weight[#{cow&.id}][cow_id]", value: cow&.id }, as: :hidden
+                    - unless cow.weaning
+                      .col-sm-6
+                        = f.input :weaning, label: 'Destete', as: :keppler_boolean, input_html: { id: "weight_weaning-#{cow.id}" }
+                  .row
+                    = f.input :user_id, input_html: { id: "weight_user_id-#{cow.id}", name: "weight[#{cow&.id}][user_id]", value: current_user.id }, as: :hidden
+                    = f.input :cow_id, input_html: { id: "weight_cow_id-#{cow.id}",  name: "weight[#{cow&.id}][cow_id]", value: cow&.id }, as: :hidden
                     .col-sm-6.col-md-3
                       -# = f.input :weight, autofocus: true, placeholder: '0.00 KG', label: 'Peso (KG)', input_html: { class: 'form-control input_custom', min: 0, value: (cow.weight&.weight unless cow.weight&.weight.blank?) }, label_html: { class: 'label_custom--strong' }
                       .form-group
@@ -59,7 +63,7 @@
 -# %link{href: "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css", rel: "stylesheet"}/
 -# %script{src: "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"}
 
--# :javascript
+:javascript
   $('.keppler-switch').click(function(event) {
     event.preventDefault()
     var input = $(this).find('input')
@@ -71,6 +75,7 @@
       .toggleClass('active')
       //.text(label.hasClass('active'))
   })
+  
 - @cows.each do |cow|
   :javascript
     var last_weight_#{cow&.id} = #{cow.weight&.weight ? cow.weight&.weight : 0}
@@ -92,4 +97,4 @@
       $('#weight_#{cow&.id}_average_weight').val(
         ($('#weight_#{cow&.id}_weight').val() - last_weight_#{cow&.id}) / born_days_#{cow&.id}
       )
-    }) 
+    })

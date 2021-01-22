@@ -289,6 +289,10 @@ module KepplerCattle
       activity&.active # locations.pluck(:farm_id).include?(farm&.id) && location&.farm_id == farm&.id &&
     end
 
+    def weaning
+      weights.find_by(weaning: true)
+    end
+
     def self.reproductive_males(season)
       where(gender: 'male')
         .select do |c|

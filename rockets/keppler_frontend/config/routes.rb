@@ -31,18 +31,23 @@ KepplerFrontend::Engine.routes.draw do
       collection do
         get 'inactivos', to: 'app/cattle#index_inactives', as: :inactives
         get :pagination
+
+        get 'carga-en-lote', to: 'app/cattle#batch_loading', as: :batch_loading
+
         # Weights
-        get 'nuevos-pesajes/:multiple_ids', to: 'app/cattle#new_weights', as: :new_weights
+        get '/en-lote/nuevos-pesajes/:multiple_ids', to: 'app/cattle#new_weights', as: :new_weights
         post '/create_weights/:multiple_ids', action: :create_weights, as: :create_weights
         get 'pesajes/:multiple_ids', to: 'app/cattle#show_weights', as: :weights
 
-        # Procesos en lote
+        # Services
         get '/en-lote/nuevos-servicios(/:multiple_ids)', action: :new_services, as: :new_services
         post '/create_services/:multiple_ids', action: :create_services, as: :create_services
 
+        # Pregnancies
         get '/en-lote/nuevas-prenadas(/:multiple_ids)', action: :new_pregnancies, as: :new_pregnancies
         post '/create_pregnancies/:multiple_ids', action: :create_pregnancies, as: :create_pregnancies
 
+        # Births
         get '/en-lote/nuevos-partos(/:multiple_ids)', action: :new_births, as: :new_births
         post '/create_births/:multiple_ids', action: :create_births, as: :create_births
 

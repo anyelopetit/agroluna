@@ -76,6 +76,7 @@
         %ul.navbar-nav.ml-auto.user_logo
           %li.nav-item.d-none.d-lg-block{ style: 'display: flex;align-items: center;' }
             = link_to farm_tasks_path(@farm), class: 'nav-link' do
+              %label.badge.badge-danger= @farm.tasks.size if @farm.tasks.present?
               Notas
               %i.icofont-ui-note
           %li.nav-item.d-none.d-lg-block

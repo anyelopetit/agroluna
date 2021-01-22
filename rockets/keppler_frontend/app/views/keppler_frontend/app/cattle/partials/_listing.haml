@@ -52,6 +52,11 @@
                     %i.icofont-plus
                     Pesar
                 .d-inline-flex
+                  = link_to batch_loading_farm_cows_path(@farm.id) do
+                    %button.btn.btn_custom.btn--filled.btn--medium
+                      %i.icofont-plus
+                      Cargar en lote
+                -# .d-inline-flex
                   %a#reportDropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
                     %button.btn.btn_custom.btn--filled.btn--medium#en-lote{ disabled: true }
                       %i.icofont-clip-board

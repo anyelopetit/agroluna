@@ -48,7 +48,7 @@ module KepplerCattle
     end
 
     def verify_counter
-      if typology.counter.to_i == 1 && cow.weights.where(weaning: true).blank?
+      if typology.counter.to_i == 1 && cow.weaning.blank?
         errors.add(:typology, 'aún es una cría para esta tipología')
       elsif typology.counter.to_i == 2 && cow.sons.blank?
         errors.add(:typology, 'aún no posee crías para este tipología')

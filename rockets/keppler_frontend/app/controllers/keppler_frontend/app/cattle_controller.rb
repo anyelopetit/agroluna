@@ -110,13 +110,16 @@ module KepplerFrontend
       end
     end
 
+    def batch_loading
+    end
+
     def new_weights
       @cows = @farm_cows.where(id: params[:multiple_ids].split(','))
     end
 
     def create_weights
-      params.require(:weight).keys.each do |id|
-        weight = KepplerCattle::Weight.new(multiple_cows_params(id).values[0])
+      params.require(:weight).keys.each do |cow_id|
+        weight = KepplerCattle::Weight.new(multiple_cows_params(cow_id).values[0])
         if weight.save!
           flash[:notice] = "Pesos fueron guardados correctamente"
         else
@@ -248,21 +251,6 @@ module KepplerFrontend
         flash[:notice] = 'Parto guardado'
       else
         flash[:error] = 'No se pudo guardar el parto'
-      end
-      redirect_back fallback_location: farm_cows_path(@farm)
-    end
-
-    def new_weights
-      @cows = @farm_cows.where(id: params[:multiple_ids].split(','))
-      @found = false
-    end
-
-    def create_weights
-      status = KepplerCattle::Status.new_status(params, {farm_id: @farm.id})
-      if status.save!
-        flash[:notice] = 'Peso guardado'
-      else
-        flash[:error] = 'No se pudo guardar el peso'
       end
       redirect_back fallback_location: farm_cows_path(@farm)
     end

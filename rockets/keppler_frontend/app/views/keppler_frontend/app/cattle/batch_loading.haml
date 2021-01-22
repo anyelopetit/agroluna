@@ -1,0 +1,95 @@
+.app_wrapper
+  .container_custom
+    .row
+      .col-sm-12.mb-4
+        -# = @assign.inspect
+        = form_for :batch_loading, html: { style: 'width: 100%' } do |f|
+          .row.mb-4
+            .col-md-2.col-sm-12
+              %select#batch_loading_process{ name: 'batch_loading[process]', label: 'Proceso', class: 'form-control input_custom', onchange: "validateProcess()" }
+                %option{ value: 'weights' } Pesajes
+                %option{ value: 'services' } Servicios
+                %option{ value: 'pregnancies' } Preñeces
+                %option{ value: 'births' } Partos
+            .col-md-8.col-sm-12
+              %select#batch_loading_cows{ name: 'batch_loading[cattle][]', label: 'Ganado', class: 'form-control input_custom select2-multiple', onchange: "validateCattle()" }
+                - @farm_cows.order(:serie_number).each do |cow|
+                  %option{ value: cow&.id } #{cow.serie_number} #{'(' + cow&.short_name + ')' if cow&.short_name}
+            .col-md-2.col-sm-12
+              = link_to new_weights_farm_cows_path(@farm.id, []), { id: 'process_link', class: 'multiple_ids' } do
+                %button#process{ type: 'submit', class: 'btn btn_custom btn--filled btn--medium', disabled: true }
+                  Crear pesajes
+
+:javascript
+  $('.select2').select2()
+  $('.select2-multiple').select2({
+    multiple: true,
+    placeholder: 'Agrega una o más series',
+    allowClear: true
+  })
+
+  $('.select2-selection__choice').remove()
+  $('#batch_loading_cows').val('')
+  $('.select2-search__field').attr('placeholder', 'Agrega una o más series')
+  $('.select2-search__field').css({
+    'width': 'auto'
+  })
+
+  $('#select-search').change(function() {
+    $('.select-field').hide()
+    var $id = $(this).find('option:selected').val()
+    $("#" + $id).show()
+  })
+
+  function processName(process_value) {
+    switch (process_value) {
+      case 'weights': return 'Crear pesajes'
+      case 'services': return 'Crear servicios'
+      case 'pregnancies': return 'Crear preñeces'
+      case 'births': return 'Crear partos'
+    }
+  }
+
+  function processLink(pathname, process_value) {
+    var split_pathname = pathname.split('/')
+    switch (process_value) {
+      case 'weights': split_pathname[5] = 'nuevos-pesajes'; return split_pathname.join('/')
+      case 'services': split_pathname[5] = 'nuevos-servicios'; return split_pathname.join('/')
+      case 'pregnancies': split_pathname[5] = 'nuevas-prenadas'; return split_pathname.join('/')
+      case 'births': split_pathname[5] = 'nuevos-partos'; return split_pathname.join('/')
+    }
+  }
+
+  function validateProcess() {
+    var process_select = document.getElementById('batch_loading_process')
+    var process_button = document.getElementById('process')
+    var process_link = document.getElementById('process_link')
+    process_link.pathname = processLink(process_link.pathname, process_select.value)
+    process_button.innerText = processName(process_select.value)
+  }
+
+  var $multiple_ids = []
+
+  function validateCattle() {
+    var process_button = document.getElementById('process')
+    process_button.disabled = ($('#batch_loading_cows').val() == "")
+    var process_link = document.getElementById('process_link')
+    var cows_select = document.getElementById('batch_loading_cows')
+
+    $multiple_ids = $('.select2-selection__choice').map(function(index, item) {
+      return item.title.split(' ').join('')
+    })
+
+    console.log($multiple_ids)
+    console.log($multiple_ids.join(','))
+
+    $('.select2-selection__choice').each(function(index, elem1) {
+      split_href = $('#process_link').attr('href').split('/').filter(Boolean)
+      href_root = split_href.filter(function(e) {
+        var path = window.location.pathname.split('/').splice(0, 3)
+        return !path.includes(e) && isNaN(parseInt(e))
+      }).join('/')
+      var final_href = `${href_root}/${$multiple_ids.filter(Boolean).join(',')}`
+      $('#process_link').attr('href', final_href)
+    })
+  }
